@@ -4003,7 +4003,7 @@ void CvUnit::move(CvPlot& targetPlot, bool bShow)
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
 					// Denmark pays 1 MP onto walk-water (ConsumesAllMoves / CostsOnlyOne).
 					// Everyone else ends the turn.
-					if (!GET_PLAYER(getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost())
+					if (!GET_PLAYER(getOwner()).GetPlayerTraits()->IsEmbarkedToLandFlatCost() && !IsDisembarkFlatCost()) // Amphibious keeps its capped moves
 					{
 						finishMoves();
 						bShouldDeductCost = false;

@@ -5,6 +5,17 @@
 #include "CvGlobals.h"
 #include "CvUnitMovement.h"
 #include "CvGameCoreUtils.h"
+
+// Amphibious: which side of an embark/disembark a plot is on (walk-water counts as land)
+static bool IsLandLikeForEmbark(const CvPlot* pPlot)
+{
+#if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
+	return !pPlot->isWater() || pPlot->IsAllowsWalkWater();
+#else
+	return !pPlot->isWater();
+#endif
+}
+
 //	---------------------------------------------------------------------------
 void CvUnitMovement::GetCostsForMove(const CvUnit* pUnit, const CvPlot* pFromPlot, const CvPlot* pToPlot, int iBaseMoves, int& iRegularCost, int& iRouteCost, int& iRouteFlatCost)
 {
@@ -174,10 +185,10 @@ int CvUnitMovement::MovementCost(const CvUnit* pUnit, const CvPlot* pFromPlot, c
 	}
 
 	// Flat embark/disembark cost with MaxMovesAfterDomainChange cap (ZOC already handled above)
-	if (pToPlot->isWater() != pFromPlot->isWater() && pUnit->CanEverEmbark())
+	if (IsLandLikeForEmbark(pToPlot) != IsLandLikeForEmbark(pFromPlot) && pUnit->CanEverEmbark())
 	{
-		bool bFlatCost = (pToPlot->isWater() && pUnit->IsEmbarkFlatCost()) ||
-		                 (!pToPlot->isWater() && pUnit->IsDisembarkFlatCost());
+		bool bFlatCost = (!IsLandLikeForEmbark(pToPlot) && pUnit->IsEmbarkFlatCost()) ||
+		                 (IsLandLikeForEmbark(pToPlot) && pUnit->IsDisembarkFlatCost());
 		if (bFlatCost)
 		{
 			// Costs 1 MP, but leaves at most iMaxAfter MP afterwards (was off by one: left 0 MP)
@@ -216,10 +227,10 @@ int CvUnitMovement::MovementCostNoZOC(const CvUnit* pUnit, const CvPlot* pFromPl
 	}
 
 	// Flat embark/disembark cost with MaxMovesAfterDomainChange cap
-	if (pToPlot->isWater() != pFromPlot->isWater() && pUnit->CanEverEmbark())
+	if (IsLandLikeForEmbark(pToPlot) != IsLandLikeForEmbark(pFromPlot) && pUnit->CanEverEmbark())
 	{
-		bool bFlatCost = (pToPlot->isWater() && pUnit->IsEmbarkFlatCost()) ||
-		                 (!pToPlot->isWater() && pUnit->IsDisembarkFlatCost());
+		bool bFlatCost = (!IsLandLikeForEmbark(pToPlot) && pUnit->IsEmbarkFlatCost()) ||
+		                 (IsLandLikeForEmbark(pToPlot) && pUnit->IsDisembarkFlatCost());
 		if (bFlatCost)
 		{
 			// Costs 1 MP, but leaves at most iMaxAfter MP afterwards (was off by one: left 0 MP)
@@ -270,6 +281,11 @@ bool CvUnitMovement::ConsumesAllMoves(const CvUnit* pUnit, const CvPlot* pFromPl
 				return false;
 			}
 #endif
+			// Amphibious: flat embark/disembark cost (the cost itself is set in MovementCost)
+			if (!bToLandLike && pUnit->IsEmbarkFlatCost())
+				return false;
+			if (bToLandLike && pUnit->IsDisembarkFlatCost())
+				return false;
 			return true;
 		}
 

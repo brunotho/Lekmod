@@ -205,6 +205,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
    - Check prerequisites against `UnitPromotions_UnitCombats` of the same unit type.
 7d. **Off-by-one in new C++.** The Amphibious "max moves after domain change" formula left 0 MP instead of 1. Sanity-check new formulas with concrete numbers.
 8. **AI art**: icons with baked backgrounds, and one image reused for several promotions.
+9. **Upstream code that bypasses our hooks after a merge.** Our code merged cleanly but never ran: in v35.4, a new early return in `ConsumesAllMoves` bypassed Amphibious. After an upstream merge, re-read the functions around each of our hooks and retest every feature, not only the conflicting files.
 
 **Debugging lesson:** twice a confident conclusion was wrong. "Zealot will work" was wrong; "the ruins aren't changed at all" was half wrong, because the C++ computed the effects. When the user's observation conflicts with your model, find a direct measurement (database, log, diagnostic) before arguing.
 
@@ -212,7 +213,9 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 ### Current state (2026-10-07)
 - `dev` = v35.4 (`201df6c5`) + 7 commits: ruins overhaul, kill-yield fix, Demographics, promotion batch, changelog, DLL, CLAUDE.md. **Not pushed.**
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build (md5 checked 2026-10-07). The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
-- **Nothing has been playtested on the port yet.** Pre-port test results (History below) came from the old fork.
+- **Playtest on the port (2026-10-07, user):**
+  - Zealot faith after gaining another promotion works (era-flag fix). It was also confirmed on the old fork.
+  - **Amphibious was broken by the port.** Embark and disembark left 0 MP. Cause: v35.4's new `LEKMOD_WATER_WALK_IMPROVEMENT_RULES` block in `CvUnitMovement::ConsumesAllMoves` returns "all moves" for every land↔water step before our promotion check runs. Fixed, needs a retest. **Lesson: after an upstream merge, look for new early returns in front of our hooks, not just conflicts.**
 - Our promotion IDs: 344 Zealot, 345 Envelopment, 346 Glutton, 347–360 the April batch (Amphibious I–III, Bunker Busting, Repair Crew, Supply Ship, Sambuca, Carpet Bombing, Discipline, Discipline (Air), Fear Aura, Marauder, Mountaineering, Swift Transport), 361 Iaijutsu, 362 Hatamoto, 363 One Good Eye, 364 Stargazing.
 
 **How the port was done:**
@@ -231,7 +234,8 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 
 **To playtest on the port** (new game):
 - Code the port touched: heal while embarked, embarked defense, Sortie.
-- Never confirmed in game: era-flag fix (Zealot faith after a level-up), Amphibious embark no longer ending the turn, movement preview after disembark (reportedly showed uncapped moves; get an exact description if still wrong), Carpet Bombing through the "declare war?" popup, Iaijutsu, Hatamoto.
+- Amphibious I–III after the fix: embark, disembark, and walk-water tiles (pontoons).
+- Never confirmed in game: Amphibious embark no longer ending the turn, movement preview after disembark (reportedly showed uncapped moves; get an exact description if still wrong), Carpet Bombing through the "declare war?" popup, Iaijutsu, Hatamoto.
 - Ruins not yet tested: food+Glutton, tech→science, map 75%, gold+barbarian, pantheon faith, Mobility after the ancient era.
 
 **Open design questions for the user:**
@@ -248,7 +252,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 - **Iaijutsu**: column `ExtraAttackVsFullHP`. In `ResolveMeleeCombat`, if the defender was at full HP before the attack, one attack is refunded (`CvUnit::RefundAttack`), once per turn; the flag resets in `CvPlayer::DoUnitReset`. Depends on `NQ_UNIT_TURN_ENDS_ON_FINAL_ATTACK` (on).
 - **Hatamoto**: column `MovesNearGeneralChange`. +N moves in `DoUnitReset` when a friendly Great General is on the same or an adjacent tile (`CvUnit::IsGreatGeneralWithinOne`).
 - Iaijutsu and Hatamoto are lost on upgrade, and their new `CvUnit` members are serialized (old saves are incompatible). One Good Eye and Stargazing are `VisibilityChange` 1, like Scouting I.
-- **Amphibious**: the flat embark/disembark cost leaves `MaxMovesAfterDomainChange` MP (in both cost functions), and `CvUnit::move` skips `finishMoves()` after embarking when `IsEmbarkFlatCost()`.
+- **Amphibious**: I = flat embark cost, II = flat disembark cost, and I and III each add +1 to `MaxMovesAfterDomainChange` (it sums: with I–III, at most 2 MP are left after a domain change). The flat cost is 1 MP, capped so that at most that many MP remain (in both cost functions). `ConsumesAllMoves` lets flat-cost transitions through, and `CvUnit::move` skips `finishMoves()` for them. Walk-water tiles (pontoons, shallows) count as land on both sides of the check.
 - **Ruin pool** (`HandicapInfo_Goodies` in source): CULTURE, GOLD, MAP, TECH, UPGRADE_UNIT, SETTLER, WORKER, FOOD, RANDOM_FAITH, TILE_GROW, EXPERIENCE_MOVE, and PANTHEON_FAITH (re-added 2026-10-06; its rows sit at the end of the section, below upstream's commented-out rows).
   - PANTHEON_FAITH: only without a pantheon and with 0 Faith. RANDOM_FAITH (`ReligionFaith`) requires a pantheon. PROPHET_FAITH stays out of the pool, so edits to it are dead.
   - The Mobility "ancient only" limit is `BeforeEra=1` on `GOODY_EXPERIENCE_MOVE`.
@@ -269,5 +273,5 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 
 ### History (old fork, 2026-10-05/06; details in `lekbuild` branch `repair-batch-1`)
 - 16 repair commits on Ashwin's fork HEAD `a582fdf9`: compile fix (`REPLAY_MESSAGE_CHAT` define clash), ruins repair (hardcoded draft removed, values moved into `GoodyHuts` columns), kill-yield era fix, Amphibious, Carpet Bombing, Iaijutsu/Hatamoto, data and text migrated out of `Art\` XML, icons, gold ruin floating text, faith ruin rebalance, Demographics fixes, DLL rebuilds. All of it was ported (above).
-- **Verified in game on the old fork:** Envelopment; ruins (faith, culture, upgrade, border expansion); Zealot icon and faith; Bunker Busting (siege); Sortie; Amphibious river bonus and disembark cap; Repair Crew; Mountaineering.
+- **Verified in game on the old fork:** Envelopment; ruins (faith, culture, upgrade, border expansion); Zealot icon and faith, including after another promotion (era-flag fix, tested together with the user); Bunker Busting (siege); Sortie; Amphibious river bonus and disembark cap; Repair Crew; Mountaineering.
 - The upstream sync assessment (a trial `git merge-tree`) predicted the port's conflicts correctly. Its lessons are in §2 "Git notes" and the port resolutions above.
