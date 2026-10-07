@@ -1717,6 +1717,9 @@ void CvMinorCivAI::Reset()
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 		m_aiMajorPriority[iI] = MAX_MAJOR_CIVS;
 #endif
+#ifdef LEKMOD_PLEDGE_REWORK
+		m_aiTurnTributedWhilePledged[iI] = -1;
+#endif
 	}
 
 	for(iI = 0; iI < REALLY_MAX_TEAMS; iI++)
@@ -1854,6 +1857,9 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	kStream >> m_aiMajorPriority;
 #endif
+#ifdef LEKMOD_PLEDGE_REWORK
+	kStream >> m_aiTurnTributedWhilePledged;
+#endif
 }
 
 /// Serialization write
@@ -1929,6 +1935,9 @@ void CvMinorCivAI::Write(FDataStream& kStream) const
 #endif
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	kStream << m_aiMajorPriority;
+#endif
+#ifdef LEKMOD_PLEDGE_REWORK
+	kStream << m_aiTurnTributedWhilePledged;
 #endif
 }
 
@@ -5998,6 +6007,9 @@ void CvMinorCivAI::DoFriendship()
 				// Friendship amount doesn't change, but ally state could have (ex. current ally decays below our level)
 				DoFriendshipChangeEffects(ePlayer, iOldFriendship, iNewFriendship);
 			}
+#ifdef LEKMOD_PLEDGE_REWORK
+			DoPledgerInfluenceTicks(ePlayer);
+#endif
 
 			// Notification for status changes
 			if(GetPlayer()->isAlive() && IsHasMetPlayer(ePlayer))
@@ -6165,6 +6177,11 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 		iRecoveryMod += iReligionMod;
 #ifdef LEKMOD_BELIEF_CITY_STATE_FOLLOWING_RELIGION_INFLUENCE
 		iRecoveryMod += iBeliefRecoveryMod;
+#endif
+#ifdef LEKMOD_PLEDGE_REWORK
+		// An active pledge speeds up recovery towards the anchor
+		if (IsProtectedByMajor(ePlayer))
+			iRecoveryMod += /*50*/ GC.getMINOR_PLEDGE_RECOVERY_BONUS_PERCENT();
 #endif
 		
 		if (iRecoveryMod < 0)
@@ -7492,6 +7509,77 @@ void CvMinorCivAI::DoChangeProtectionFromMajor(PlayerTypes eMajor, bool bProtect
 	GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
 	GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
 }
+
+#ifdef LEKMOD_PLEDGE_REWORK
+/// A major successfully demanded tribute from us: its own pledge breaks (no re-pledge for 20 turns),
+/// pledges by others start a penalty window, and every major who knows us is told
+void CvMinorCivAI::DoPledgeTributeConsequences(PlayerTypes eBully)
+{
+	if(eBully < 0 || eBully >= MAX_MAJOR_CIVS) return;
+	const int iTurn = GC.getGame().getGameTurn();
+
+	if(IsProtectedByMajor(eBully))
+	{
+		SetTurnLastPledgeBrokenByMajor(eBully, iTurn);
+		DoChangeProtectionFromMajor(eBully, false, /*bPledgeNowBroken*/ false);
+	}
+
+	bool bPledgedByOthers = false;
+	for(int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+	{
+		if(iI != eBully && IsProtectedByMajor((PlayerTypes)iI))
+		{
+			bPledgedByOthers = true;
+			break;
+		}
+	}
+	if(bPledgedByOthers)
+		m_aiTurnTributedWhilePledged[eBully] = iTurn;
+
+	const char* strBullyKey = GET_PLAYER(eBully).getCivilizationShortDescriptionKey();
+	const char* strMinorKey = GetPlayer()->getNameKey();
+	for(int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+	{
+		PlayerTypes eNotify = (PlayerTypes)iI;
+		if(eNotify == eBully || !GET_PLAYER(eNotify).isAlive() || !IsHasMetPlayer(eNotify))
+			continue;
+
+		Localization::String strMessage = Localization::Lookup(bPledgedByOthers ? "TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_PLEDGED" : "TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED");
+		strMessage << strBullyKey << strMinorKey;
+		Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY");
+		strSummary << strBullyKey << strMinorKey;
+		AddNotification(strMessage.toUTF8(), strSummary.toUTF8(), eNotify);
+	}
+}
+
+/// Each turn, a major that pledged to protect us loses influence for every major that recently tributed us or is at war with us,
+/// unless the pledger is at war with that major (then it gains a little)
+void CvMinorCivAI::DoPledgerInfluenceTicks(PlayerTypes ePledger)
+{
+	if(!IsProtectedByMajor(ePledger))
+		return;
+
+	const int iTurn = GC.getGame().getGameTurn();
+	CvTeam& kPledgerTeam = GET_TEAM(GET_PLAYER(ePledger).getTeam());
+	for(int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+	{
+		PlayerTypes eOther = (PlayerTypes)iI;
+		if(eOther == ePledger || !GET_PLAYER(eOther).isAlive())
+			continue;
+
+		const int iTributeTurn = m_aiTurnTributedWhilePledged[eOther];
+		const bool bRecentTribute = iTributeTurn >= 0 && iTurn - iTributeTurn > 0 && iTurn - iTributeTurn <= /*10*/ GC.getMINOR_PLEDGE_TRIBUTE_PENALTY_TURNS();
+		const bool bAtWarWithUs = GET_TEAM(GET_PLAYER(eOther).getTeam()).isAtWar(GetPlayer()->getTeam());
+		if(!bRecentTribute && !bAtWarWithUs)
+			continue;
+
+		if(kPledgerTeam.isAtWar(GET_PLAYER(eOther).getTeam()))
+			ChangeFriendshipWithMajorTimes100(ePledger, /*1*/ GC.getMINOR_PLEDGE_FIGHTING_OFFENDER_INFLUENCE() * 100);
+		else
+			ChangeFriendshipWithMajorTimes100(ePledger, /*3*/ -GC.getMINOR_PLEDGE_IDLE_INFLUENCE_LOSS() * 100);
+	}
+}
+#endif
 
 bool CvMinorCivAI::CanMajorProtect(PlayerTypes eMajor)
 {
@@ -9829,6 +9917,9 @@ void CvMinorCivAI::DoMajorBullyGold(PlayerTypes eBully, int iGold)
 #ifdef ENHANCED_GRAPHS
 		ChangeBullyGoldAmountTotalByPlayer(eBully, iGold);
 #endif
+#ifdef LEKMOD_PLEDGE_REWORK
+		DoPledgeTributeConsequences(eBully);
+#endif
 	}
 
 	// Logging
@@ -9897,6 +9988,9 @@ void CvMinorCivAI::DoMajorBullyUnit(PlayerTypes eBully, UnitTypes eUnitType)
 			pNewUnit->kill(false);	// Could not find a spot for the unit!
 #ifdef ENHANCED_GRAPHS
 		ChangeBullyWorkersAmountTotalByPlayer(eBully, 1);
+#endif
+#ifdef LEKMOD_PLEDGE_REWORK
+		DoPledgeTributeConsequences(eBully);
 #endif
 	}
 

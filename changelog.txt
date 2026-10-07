@@ -382,6 +382,18 @@ City-states build roads on the land tiles around their cities once their other w
 - Dev: LEKMOD_MINOR_CIV_RING_ROADS in CvBuilderTaskingAI::UpdateMinorCivFirstRingRoutePlots (route plots flagged with value 1)
 
 
+PLEDGE TO PROTECT (CITY-STATES)
+--------------------------------
+Tags: game mechanics, ui
+Protecting a city-state is worth more and comes with obligations. Demanding tribute is announced to everyone.
+- Changed: a pledge raises your resting Influence by 10 (was 5) and your Influence recovers 50% faster below it
+- Changed: demanding tribute from a city-state you protect breaks your pledge; you cannot pledge again for 20 turns (the pledge button shows the remaining turns)
+- Added: every tribute demand is announced to all players who know the city-state
+- Added: for 10 turns after someone demands tribute from a city-state you protect, and every turn someone is at war with it, you lose 3 Influence per turn with it, or gain 1 per turn if you are at war with that player
+- Changed: the pledge tooltip explains all of this
+- Dev: LEKMOD_PLEDGE_REWORK: CvMinorCivAI::DoPledgeTributeConsequences (gold and worker tribute), DoPledgerInfluenceTicks (in DoFriendship), recovery bonus in GetFriendshipChangePerTurnTimes100; new saved member m_aiTurnTributedWhilePledged. Defines MINOR_FRIENDSHIP_ANCHOR_MOD_PROTECTED 10, MINOR_PLEDGE_RECOVERY_BONUS_PERCENT 50, MINOR_PLEDGE_TRIBUTE_PENALTY_TURNS 10, MINOR_PLEDGE_IDLE_INFLUENCE_LOSS 3, MINOR_PLEDGE_FIGHTING_OFFENDER_INFLUENCE 1
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

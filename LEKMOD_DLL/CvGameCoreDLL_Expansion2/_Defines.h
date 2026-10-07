@@ -903,6 +903,8 @@
 #define LEKMOD_PERSONAL_QUEST_RECYCLE
 // City-state workers road the land tiles around their cities (lowest priority)
 #define LEKMOD_MINOR_CIV_RING_ROADS
+// Pledge to protect rework: tribute breaks the tributing major's pledge, recovery bonus, global tribute notification, influence ticks for pledgers
+#define LEKMOD_PLEDGE_REWORK
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

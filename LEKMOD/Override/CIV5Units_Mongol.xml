@@ -101424,6 +101424,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_GAME_OPTION_DISABLE_STRATEGIC_TRADING_HELP">
 			<Text>If enabled, players cannot trade strategic resources with each other.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED">
+			<Text>{1_CivName:textkey} has demanded tribute from {2_MinorName:textkey}.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_PLEDGED">
+			<Text>{1_CivName:textkey} has demanded tribute from {2_MinorName:textkey}, a City-State under protection.[NEWLINE][NEWLINE]Players protecting {2_MinorName:textkey} lose [ICON_INFLUENCE] Influence with it each turn for the next 10 turns, unless they are at war with {1_CivName:textkey}.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
+			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_YIELD_FROM_CITY_STATES">
 			<Text>{1_Num} {2_IconString} from City-States</Text>
 		</Row>
@@ -119270,7 +119279,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POP_CSTATE_PLEDGE_TT"> 
 			<Text>
-				Pledging to protect a City-State lets the other major powers in the game know that you will protect the City-State from attacks and tribute demands. This may deter players who don't want to risk a conflict with you, but the City-State will expect you to take its side when it is attacked or bullied.[NEWLINE][NEWLINE]During protection, your resting point for [ICON_INFLUENCE] Influence with this City-State is increased by {1_InfluenceMinimum}.  Protection cannot be revoked until {2_TurnsMinimum} turns after the pledge is made.
+				Pledging to protect a City-State lets the other major powers know that you will protect it from attacks and tribute demands.[NEWLINE][NEWLINE]While you protect it:[NEWLINE]Your resting point for [ICON_INFLUENCE] Influence with this City-State is increased by {1_InfluenceMinimum}.[NEWLINE]Your [ICON_INFLUENCE] Influence recovers 50% faster while below that resting point.[NEWLINE][NEWLINE]When another player demands tribute from it, you lose 3 [ICON_INFLUENCE] Influence per turn for 10 turns. The same applies every turn another player is at war with it.[NEWLINE]If you are at war with that player, you gain 1 [ICON_INFLUENCE] Influence per turn instead.[NEWLINE][NEWLINE][COLOR_WARNING_TEXT]Demanding tribute from this City-State yourself breaks your pledge, and you cannot pledge again for 20 turns.[ENDCOLOR][NEWLINE][NEWLINE]Protection cannot be revoked until {2_TurnsMinimum} turns after the pledge is made.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POP_CSTATE_PROVIDE_GOLD_GIFT"> 

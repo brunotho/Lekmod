@@ -93006,6 +93006,22 @@
 			<Name>MINOR_CIV_PERSONAL_QUEST_RECYCLE_TURNS</Name>
 			<Value>15</Value>
 		</Row>
+		<Row>
+			<Name>MINOR_PLEDGE_RECOVERY_BONUS_PERCENT</Name>
+			<Value>50</Value>
+		</Row>
+		<Row>
+			<Name>MINOR_PLEDGE_TRIBUTE_PENALTY_TURNS</Name>
+			<Value>10</Value>
+		</Row>
+		<Row>
+			<Name>MINOR_PLEDGE_FIGHTING_OFFENDER_INFLUENCE</Name>
+			<Value>1</Value>
+		</Row>
+		<Row>
+			<Name>MINOR_PLEDGE_IDLE_INFLUENCE_LOSS</Name>
+			<Value>3</Value>
+		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 
 			<Value>20</Value> 
@@ -93616,7 +93632,7 @@
 		</Row>
 		<Row> 
 			<Name>MINOR_FRIENDSHIP_ANCHOR_MOD_PROTECTED</Name> 
-			<Value>5</Value> 
+			<Value>10</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_FRIENDSHIP_ANCHOR_MOD_WARY_OF</Name> 

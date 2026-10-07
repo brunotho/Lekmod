@@ -411,6 +411,10 @@ public:
 	bool CanMajorWithdrawProtection(PlayerTypes eMajor);
 	bool IsProtectedByMajor(PlayerTypes eMajor) const;
 	bool IsProtectedByAnyMajor() const;
+#ifdef LEKMOD_PLEDGE_REWORK
+	void DoPledgeTributeConsequences(PlayerTypes eBully);
+	void DoPledgerInfluenceTicks(PlayerTypes ePledger);
+#endif
 	
 	int GetTurnLastPledgedProtectionByMajor(PlayerTypes eMajor) const;
 	void SetTurnLastPledgedProtectionByMajor(PlayerTypes eMajor, int iTurn);
@@ -670,6 +674,9 @@ private:
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	int m_aiMajorPriority[MAX_MAJOR_CIVS];
+#endif
+#ifdef LEKMOD_PLEDGE_REWORK
+	int m_aiTurnTributedWhilePledged[MAX_MAJOR_CIVS]; // last turn this major tributed us while another major had pledged to protect us; -1 = never
 #endif
 };
 
