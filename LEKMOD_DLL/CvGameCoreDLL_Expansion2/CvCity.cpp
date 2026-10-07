@@ -15527,7 +15527,11 @@ int CvCity::GetBuyPlotCost(int iPlotX, int iPlotY) const
 	}
 
 	// Base cost
+#ifdef LEKMOD_PLOT_BUY_DISCOUNT_CAP
+	int iCost = GET_PLAYER(getOwner()).GetBuyPlotCostWithoutMod();
+#else
 	int iCost = GET_PLAYER(getOwner()).GetBuyPlotCost();
+#endif
 
 	// Influence cost factor (e.g. Hills are more expensive than flat land)
 	CvMap& thisMap = GC.getMap();
@@ -15558,8 +15562,16 @@ int CvCity::GetBuyPlotCost(int iPlotX, int iPlotY) const
 	iCost *= GC.getGame().getGameSpeedInfo().getGoldPercent();
 	iCost /= 100;
 
+#ifdef LEKMOD_PLOT_BUY_DISCOUNT_CAP
+	// Player and city discounts stack multiplicatively, but the total discount is capped
+	int iPercent = (100 + GET_PLAYER(getOwner()).GetPlotGoldCostMod()) * (100 + getPlotBuyCostModifier()) / 100;
+	iPercent = std::max(iPercent, 100 - GC.getPLOT_BUY_MAX_DISCOUNT());
+	iCost *= iPercent;
+	iCost /= 100;
+#else
 	iCost *= (100 + getPlotBuyCostModifier());
 	iCost /= 100;
+#endif
 
 	// Now round so the number looks neat
 	int iDivisor = /*5*/ GC.getPLOT_COST_APPEARANCE_DIVISOR();

@@ -30643,6 +30643,17 @@ void CvPlayer::ChangeNumPlotsBought(int iChange)
 /// Gold cost of buying a new Plot
 int CvPlayer::GetBuyPlotCost() const
 {
+#ifdef LEKMOD_PLOT_BUY_DISCOUNT_CAP
+	int iCost = GetBuyPlotCostWithoutMod();
+
+	// Cost Mod (Policies, etc.); the discount is capped
+	int iMod = std::max(GetPlotGoldCostMod(), -GC.getPLOT_BUY_MAX_DISCOUNT());
+	if(iMod != 0)
+	{
+		iCost *= (100 + iMod);
+		iCost /= 100;
+	}
+#else
 	int iCost = /*50*/ GC.getPLOT_BASE_COST();
 	iCost += (/*5*/ GC.getPLOT_ADDITIONAL_COST_PER_PLOT() * GetNumPlotsBought());
 
@@ -30652,6 +30663,23 @@ int CvPlayer::GetBuyPlotCost() const
 		iCost *= (100 + GetPlotGoldCostMod());
 		iCost /= 100;
 	}
+
+	if(isMinorCiv())
+	{
+		iCost *= /*200*/ GC.getMINOR_CIV_GOLD_PERCENT();
+		iCost /= 100;
+	}
+#endif
+
+	return iCost;
+}
+
+//	--------------------------------------------------------------------------------
+/// Plot cost before the player's cost modifier (the city adds the combined, capped discount)
+int CvPlayer::GetBuyPlotCostWithoutMod() const
+{
+	int iCost = /*50*/ GC.getPLOT_BASE_COST();
+	iCost += (/*5*/ GC.getPLOT_ADDITIONAL_COST_PER_PLOT() * GetNumPlotsBought());
 
 	if(isMinorCiv())
 	{

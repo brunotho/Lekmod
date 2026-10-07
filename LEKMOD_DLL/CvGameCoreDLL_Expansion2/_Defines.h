@@ -869,6 +869,8 @@
 #define LEKMOD_CIRCUMNAVIGATION_GOLD
 // Great Generals earned from combat experience always appear in the capital
 #define LEKMOD_GREAT_GENERAL_SPAWN_CAPITAL
+// Stacked tile purchase discounts (player + city) are capped at PLOT_BUY_MAX_DISCOUNT percent
+#define LEKMOD_PLOT_BUY_DISCOUNT_CAP
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

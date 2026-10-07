@@ -139,7 +139,9 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
 
 ## 4. Data conventions and gotchas
 - **Promotion IDs are explicit** (`<ID>`). Every row in the `UnitPromotions` section has one. New rows get the next unused ID: currently up to **365**. v35.4 uses IDs up to 343; ours are 344–365. Upstream's IDs already have gaps (e.g. 271–273), which is fine. Check uniqueness *within the section*, since other tables reuse the same numbers.
-- **Line endings: both Override files are LF.** When scripting edits, read and write **bytes** (`open(f,'rb')`). Text mode silently converts line endings.
+- **Line endings differ per file; check before scripting.** The repo stores LF, and `core.autocrlf=true` checks most files out as **CRLF** in `lek` (Override XML, most C++). Some are LF in the working copy (`_Defines.h`, `changelog.txt`, `CLAUDE.md`). The game reads either. (The old note "both Override files are LF" was about the old game folder.)
+  - Prefer the Edit tool, which keeps a file's endings.
+  - When scripting, read and write **bytes** and match the file's ending. Count with Python (`b.count(b'\r\n')`); `grep -c $'\r'` in Git Bash gave wrong answers.
 - **Valid text icons:** `[ICON_PEACE]` = Faith (`[ICON_FAITH]` does **not** exist). `[ICON_EXPERIENCE]` and `[ICON_HEALING]` do **not** exist.
   - The authority is the loaded `IconFontMapping` table in `Civ5DebugDatabase.db` (884 icons).
   - Don't judge by whether a tag appears in any text: `[ICON_STAR]` is valid but appears in no text.

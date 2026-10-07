@@ -92908,6 +92908,10 @@
 			<Name>CIRCUMNAVIGATE_GOLD</Name>
 			<Value>200</Value>
 		</Row>
+		<Row>
+			<Name>PLOT_BUY_MAX_DISCOUNT</Name>
+			<Value>75</Value>
+		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 
 			<Value>20</Value> 

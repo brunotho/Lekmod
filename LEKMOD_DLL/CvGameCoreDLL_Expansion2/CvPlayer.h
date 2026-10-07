@@ -1673,6 +1673,7 @@ public:
 	void ChangeNumPlotsBought(int iChange);
 
 	int GetBuyPlotCost() const;
+	int GetBuyPlotCostWithoutMod() const;
 
 	int GetPlotGoldCostMod() const;
 	void ChangePlotGoldCostMod(int iChange);

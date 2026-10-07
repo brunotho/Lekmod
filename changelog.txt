@@ -165,6 +165,14 @@ Great Generals earned in combat always appear in your capital.
 - Dev: LEKMOD_GREAT_GENERAL_SPAWN_CAPITAL in CvPlayer::setCombatExperience; the old city ranking is the fallback when there is no capital
 
 
+TILE PURCHASE DISCOUNTS (PLOT_BUY_MAX_DISCOUNT)
+------------------------------------------------
+Tags: game mechanics
+Discounts on buying tiles still stack, but a tile never costs less than 25% of its normal price.
+- Changed: combined tile purchase discounts (from policies, traits, buildings) are capped at 75%
+- Dev: new define PLOT_BUY_MAX_DISCOUNT (75). Player and city modifiers are combined multiplicatively in CvCity::GetBuyPlotCost and floored at 100 - cap; new CvPlayer::GetBuyPlotCostWithoutMod.
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
