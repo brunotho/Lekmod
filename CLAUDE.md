@@ -45,6 +45,12 @@ This file records what has been **verified** about how this mod works, and how t
    - Items **not yet implemented**: the user edits the spec freely. The spec as it reads at implementation time counts. Record what was implemented in the changelog and commit.
    - Items **already implemented**: the user doesn't edit the spec in place, but adds a "CHANGE (date): …" note under the item (or tells Claude). Look for these notes.
    - Don't edit the user's spec pages unless asked. Claude's own pages (audit, tracker) are sub-pages of the checklist.
+7. **Underspecified specs** (agreed 2026-10-08):
+   - Tracker items with Status = Needs spec are listed on the Notion page **"Specs to refine"** (a sub-page of the checklist). The user writes answers there and says in chat when they are done.
+   - Keep that page in sync with the tracker. Don't implement those items before the user is done.
+   - If other work depends on one of them, ask in chat **before** starting; the user answers right away.
+   - **Comments on spec pages are ignored.** Only the page text counts.
+   - Map/Lekmap items are done by the user in a separate folder, so they are Dropped from the tracker.
    - **Ticks (✓, [x], DONE) on the spec pages mean "done on an old branch". They do not mean "in the game".** Status lives only in the tracker.
 7. **The tracker is the single source of item status** (set up 2026-10-07):
    - Notion database **"Tracker (v35.4 port)"**, a sub-page of the checklist. Data source: `collection://311b2761-ecf0-448c-9f6b-81d808f4361c` (query it with the Notion tools).
