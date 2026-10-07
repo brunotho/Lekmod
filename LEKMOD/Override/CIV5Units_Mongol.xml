@@ -22080,7 +22080,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_PONTOON_BRIDGE_HELP"> 
 			<Text>
-				Both land and naval units can traverse this Coast tile. May only be constructed in a Coast tile with 2 or more land tiles adjacent to it. <!-- Thanks szope! -->
+				Both land and naval units can traverse this Coast tile.[NEWLINE]Counts as a Road.[NEWLINE][NEWLINE]Units on it have -20% [ICON_STRENGTH] Defensive Strength (-100% if land and naval units share the tile).[NEWLINE][NEWLINE]May only be constructed in a Coast tile with 2 or more land tiles adjacent to it. <!-- Thanks szope! -->
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_PONTOON_BRIDGE_REC"> 
@@ -56522,7 +56522,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_CIVIL_WAR_SCENARIO_PONTOON_BRIDGE_HELP"> 
 			<Text>
-				Allows land units to traverse this Coast tile. May only be constructed in a Coast tile with 4 or more land tiles adjacent to it. Constructed by an embarked Military Engineer, who is consumed by the construction of the Pontoon Bridge.
+				Land units can cross this Coast tile without embarking. Naval units can still pass through it.[NEWLINE]Counts as a Road, and as a Railroad once Railroad is researched.[NEWLINE][NEWLINE]Units on a Pontoon Bridge have -20% [ICON_STRENGTH] Defensive Strength.[NEWLINE]If land and naval units share the tile, they have -100% [ICON_STRENGTH] Defensive Strength instead.[NEWLINE][NEWLINE]Can only be built on a Coast tile with 2 or more adjacent land tiles.[NEWLINE]Destroyed when pillaged.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIVIL_WAR_SCENARIO_PONTOON_BRIDGE_TEXT"> 

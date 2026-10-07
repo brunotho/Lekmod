@@ -32299,7 +32299,16 @@
 	</Table> 
 	<Build_TechTimeChanges>
 		<Delete />
-
+		<Row>
+			<BuildType>BUILD_PONTOON_BRIDGE</BuildType>
+			<TechType>TECH_RAILROAD</TechType>
+			<TimeChange>-200</TimeChange>
+		</Row>
+		<Row>
+			<BuildType>BUILD_BRUNEI_PONTOON_BRIDGE</BuildType>
+			<TechType>TECH_RAILROAD</TechType>
+			<TimeChange>-200</TimeChange>
+		</Row>
 	</Build_TechTimeChanges> 
 
 	<Table name="BuildingClass_VictoryThresholds">
@@ -48504,7 +48513,7 @@
 			<ShiftDownAlt>false</ShiftDownAlt> 
 			<CtrlDown>false</CtrlDown> 
 			<CtrlDownAlt>false</CtrlDownAlt>
-			<Time>700</Time>
+			<Time>400</Time>
 			<Cost>0</Cost> 
 			<CostIncreasePerImprovement>0</CostIncreasePerImprovement>
 			<Kill>false</Kill> 
@@ -48512,7 +48521,7 @@
 			<RemoveRoute>false</RemoveRoute> 
 			<Water>true</Water> 
 			<CanBeEmbarked>true</CanBeEmbarked> 
-			<PrereqTech>TECH_ENGINEERING</PrereqTech> 
+			<PrereqTech>TECH_CONSTRUCTION</PrereqTech> 
 			<ImprovementType>IMPROVEMENT_PONTOON_BRIDGE</ImprovementType> 
 			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent> 
 			<IconIndex>0</IconIndex> 
@@ -49211,13 +49220,13 @@
 			<CtrlDownAlt>false</CtrlDownAlt> 
 			<Cost>0</Cost> 
 			<CostIncreasePerImprovement>0</CostIncreasePerImprovement>
-			<Time>700</Time>
+			<Time>400</Time>
 			<Kill>false</Kill> 
 			<Repair>false</Repair> 
 			<RemoveRoute>false</RemoveRoute> 
 			<Water>true</Water> 
 			<CanBeEmbarked>true</CanBeEmbarked> 
-			<PrereqTech>TECH_ENGINEERING</PrereqTech> 
+			<PrereqTech>TECH_CONSTRUCTION</PrereqTech> 
 			<ImprovementType>IMPROVEMENT_PONTOON_BRIDGE</ImprovementType> 
 			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent> 
 			<IconIndex>0</IconIndex> 
@@ -138633,10 +138642,10 @@
 			<OutsideBorders>true</OutsideBorders>
 			<AllowsWalkWater>true</AllowsWalkWater>
 			<ActsAsRoute>true</ActsAsRoute>
-			<ActsAsRouteTech>TECH_ENGINEERING</ActsAsRouteTech>
+			<ActsAsRouteTech>TECH_CONSTRUCTION</ActsAsRouteTech>
 			<ActsAsRailroadTech>TECH_RAILROAD</ActsAsRailroadTech>
-			<StackedDomainDefensePenalty>35</StackedDomainDefensePenalty>
-			<DefenseModifierGlobal>-15</DefenseModifierGlobal>
+			<StackedDomainDefensePenalty>80</StackedDomainDefensePenalty>
+			<DefenseModifierGlobal>-20</DefenseModifierGlobal>
 			<RequiresXAdjacentLand>2</RequiresXAdjacentLand>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>CIVIL_WAR_IMPROVEMENT_ICON_ATLAS</IconAtlas>

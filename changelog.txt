@@ -318,6 +318,17 @@ New lobby setting: when enabled, strategic resources can't be traded between pla
 - Dev: GameOptions ID 67; LEKMOD_DISABLE_STRATEGIC_TRADING_OPTION in CvDeal::IsPossibleToTradeItem. Upstream's "Disable Unrevealed Strategic Resource Trading" is unchanged.
 
 
+PONTOON BRIDGES (IMPROVEMENT_PONTOON_BRIDGE)
+---------------------------------------------
+Tags: game mechanics, movement, naval
+Pontoon bridges come earlier, build faster and are riskier to stand on.
+- Changed: available at Construction (was Engineering), and count as a road from the start
+- Changed: build time 3 turns, 2 turns after Railroad (was about 5)
+- Changed: units on a pontoon bridge have -20% defense (was -15%); with land and naval units on the same tile, -100% (was -50%)
+- Changed: the improvement and build texts describe all pontoon bridge rules
+- Dev: Builds Time 700 -> 400 and PrereqTech CONSTRUCTION (also the Brunei build), Build_TechTimeChanges RAILROAD -200, ActsAsRouteTech CONSTRUCTION, DefenseModifierGlobal -20, StackedDomainDefensePenalty 80
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
