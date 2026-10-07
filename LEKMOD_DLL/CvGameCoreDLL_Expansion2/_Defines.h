@@ -891,6 +891,8 @@
 #define LEKMOD_GPT_DEAL_FIXED_DURATION
 // Spoils of war also trigger for former city-state cities captured from a major civ (non-puppet)
 #define LEKMOD_SPOILS_OF_WAR_FROM_CAPTURED_CITY_STATES
+// Each Future Tech gives FUTURE_TECH_BONUS_PERCENT to combat strength and to food, production, gold, culture, tourism
+#define LEKMOD_FUTURE_TECH_BONUS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

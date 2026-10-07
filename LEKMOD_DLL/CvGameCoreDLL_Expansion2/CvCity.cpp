@@ -12471,6 +12471,17 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_PLAYER", iTempMod);
 
+#ifdef LEKMOD_FUTURE_TECH_BONUS
+	// Future Tech: +X% food, production, gold, culture and tourism per Future Tech researched
+	if(eIndex == YIELD_FOOD || eIndex == YIELD_PRODUCTION || eIndex == YIELD_GOLD || eIndex == YIELD_CULTURE || eIndex == YIELD_TOURISM)
+	{
+		iTempMod = kPlayer.GetFutureTechBonusModifier();
+		iModifier += iTempMod;
+		if(toolTipSink)
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_FUTURE_TECH", iTempMod);
+	}
+#endif
+
 	// Player Capital Yield Rate Modifier
 	if(isCapital())
 	{

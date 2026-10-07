@@ -1674,6 +1674,7 @@ public:
 
 	int GetBuyPlotCost() const;
 	int GetBuyPlotCostWithoutMod() const;
+	int GetFutureTechBonusModifier() const;
 
 	int GetPlotGoldCostMod() const;
 	void ChangePlotGoldCostMod(int iChange);

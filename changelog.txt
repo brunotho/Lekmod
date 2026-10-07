@@ -300,6 +300,16 @@ Spoils of war (science from conquering a city) also count when you capture a for
 - Dev: LEKMOD_SPOILS_OF_WAR_FROM_CAPTURED_CITY_STATES in CvPlayer::acquireCity (NQ_SPOILS_OF_WAR condition)
 
 
+FUTURE TECH (TECH_FUTURE_TECH)
+-------------------------------
+Tags: game mechanics, combat
+Every Future Tech you research gives +20% combat strength and +20% food, production, gold, culture and tourism. It stacks.
+- Added: +20% combat strength for all units per Future Tech
+- Added: +20% food, production, gold, culture and tourism in all cities per Future Tech
+- Added: the bonus shows in the combat preview and in the city yield tooltips; the tech's help text explains it
+- Dev: new define FUTURE_TECH_BONUS_PERCENT (20); LEKMOD_FUTURE_TECH_BONUS in CvUnit::GetGenericMaxStrengthModifier(kInfo) and CvCity::getBaseYieldRateModifier; CvPlayer::GetFutureTechBonusModifier counts the team's repeat-tech count
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

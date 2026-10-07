@@ -13997,6 +13997,16 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 	{
 		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_GENERIC", iTempModifier);
 	}
+
+#ifdef LEKMOD_FUTURE_TECH_BONUS
+	// Future Tech: +X% combat strength per Future Tech researched
+	iTempModifier = kPlayer.GetFutureTechBonusModifier();
+	iModifier += iTempModifier;
+	if (kModifierList && iTempModifier)
+	{
+		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_FUTURE_TECH", iTempModifier);
+	}
+#endif
 	
 	// If the empire is unhappy, then Units get a combat penalty
 	if (kPlayer.IsEmpireUnhappy())

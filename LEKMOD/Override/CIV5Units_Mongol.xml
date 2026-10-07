@@ -101418,6 +101418,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_YOU_CIRC_GLOBE_GOLD">
 			<Text>Your maps have proven that the world is round![NEWLINE][NEWLINE]You receive {1_Num} [ICON_GOLD] Gold.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_FUTURE_TECH">
+			<Text>[NEWLINE][ICON_BULLET]Future Tech: {1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_FUTURE_TECH">
+			<Text>Future Tech</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_DIPLO_GPT_TT">
 			<Text>Paid every turn for {1_Num} turns.</Text>
 		</Row>
@@ -134322,7 +134328,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_FUTURE_TECH_HELP"> 
 			<Text>
-				Who knows what the future holds?[NEWLINE][NEWLINE](A repeating technology that will increase your score each time it is researched.)
+				Who knows what the future holds?[NEWLINE][NEWLINE]A repeating technology. Each time it is researched:[NEWLINE]+20% [ICON_STRENGTH] Combat Strength for all units.[NEWLINE]+20% [ICON_FOOD] Food, [ICON_PRODUCTION] Production, [ICON_GOLD] Gold, [ICON_CULTURE] Culture and [ICON_TOURISM] Tourism in all cities.[NEWLINE][NEWLINE]It also increases your score.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_FUTURE_TECH_QUOTE"> 

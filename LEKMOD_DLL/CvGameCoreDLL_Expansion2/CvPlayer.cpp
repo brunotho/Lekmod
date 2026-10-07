@@ -30686,6 +30686,35 @@ int CvPlayer::GetBuyPlotCost() const
 }
 
 //	--------------------------------------------------------------------------------
+/// Percent bonus to combat and yields from Future Techs (FUTURE_TECH_BONUS_PERCENT per Future Tech researched)
+int CvPlayer::GetFutureTechBonusModifier() const
+{
+	int iPercent = GC.getFUTURE_TECH_BONUS_PERCENT();
+	if(iPercent == 0)
+		return 0;
+
+	// The repeating tech never changes during a game; look it up once
+	static int s_iRepeatTech = -2;
+	if(s_iRepeatTech == -2)
+	{
+		s_iRepeatTech = -1;
+		for(int iI = 0; iI < GC.getNumTechInfos(); iI++)
+		{
+			CvTechEntry* pkTechInfo = GC.getTechInfo((TechTypes)iI);
+			if(pkTechInfo && pkTechInfo->IsRepeat())
+			{
+				s_iRepeatTech = iI;
+				break;
+			}
+		}
+	}
+	if(s_iRepeatTech < 0)
+		return 0;
+
+	return GET_TEAM(getTeam()).GetTeamTechs()->GetTechCount((TechTypes)s_iRepeatTech) * iPercent;
+}
+
+//	--------------------------------------------------------------------------------
 /// Plot cost before the player's cost modifier (the city adds the combined, capped discount)
 int CvPlayer::GetBuyPlotCostWithoutMod() const
 {

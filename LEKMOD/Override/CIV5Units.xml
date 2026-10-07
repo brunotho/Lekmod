@@ -92949,6 +92949,10 @@
 			<Name>GOLD_PER_TURN_DEAL_DURATION</Name>
 			<Value>10</Value>
 		</Row>
+		<Row>
+			<Name>FUTURE_TECH_BONUS_PERCENT</Name>
+			<Value>20</Value>
+		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 
 			<Value>20</Value> 
