@@ -18,10 +18,15 @@ This file records what has been **verified** about how this mod works, and how t
    - **`changelog.txt` has a dual purpose.** It tracks development (and should line up with the git history), and it is the source for **player patch notes** on a future website. Keep it machine-readable:
      - `## <release>` opens a release block. New work goes under `## UNRELEASED (...)`.
      - Item: `NAME (TYPE_KEY)` + dashed underline + `Tags: a, b` + a short player-facing summary.
-     - Player-facing lines: the summary, `- Added:`, `- Changed:`, `- Removed:`, `- Fixed:`. Write them for players (effects and numbers, no internal field names if avoidable).
+     - Player-facing lines: the summary, `- Added:`, `- Changed:`, `- Removed:`, `- Fixed:`. Write them for players with no development knowledge: effects and quick-speed numbers, no column names, C++ names or file paths.
+     - **Player lines describe the net change compared to the previous release** (for the current block: upstream LEKMOD v35.4). Example: Heal Instantly "50 -> 25", not "50 -> 40" and then "40 -> 25".
+     - Bugs we introduced and fixed before a release never reached players, so they go on `Dev:` lines. Only bugs that exist in the previous release are `Fixed:`.
+     - Every line starts with one of the prefixes; no bare lines. Things that are defined but not yet reachable in game (e.g. ungranted promotions) get a `- Note:`.
      - Developer-only lines: `- Note:`, `- DLL:`, `- Dev:` (skipped by the website).
-     - Tag vocabulary (extend deliberately, and update the file header too): promotions, units, civs, policies, religion, ruins, combat, movement, naval, air, game mechanics, world congress, ui, art, bugfix.
-     - Update an item's existing section rather than adding a duplicate.
+     - **Tags:** the first tag is the item's group (the website's section header); further tags are cross-cutting filters. Vocabulary (extend deliberately, and update the file header too): promotions, units, civs, policies, religion, ruins, combat, movement, naval, air, game mechanics, world congress, ui, art, bugfix.
+     - Tags belong to changelog items, not to commits. The website reads `changelog.txt`, and the git history is for developers.
+     - Update an item's existing section rather than adding a duplicate. When a later change alters an item, rewrite its player lines to the new net state.
+     - Rewritten to these rules on 2026-10-07; the earlier entries mixed in internal names and intermediate steps.
 3. **Lekmod + quick speed always.**
    - Many things are defined in the base game and then overwritten by Lekmod. Always check the final, loaded value (§6).
    - Spec numbers are **quick-speed** numbers, while the code and data usually hold **standard-speed** values that the game scales by game speed. Convert, and check how each formula scales.
@@ -254,7 +259,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 ### Behaviour and decisions to remember
 - **Heal Instantly = 25 HP**, set by the `INSTA_HEAL_RATE` define in `CIV5Units.xml` (the DLL reads it; no rebuild needed).
 - **Naming:** the bomber line `PROMOTION_AIR_SIEGE_1..3` displays as "Air Siege I–III" (renamed, text only). The melee/gun `PROMOTION_SIEGE` displays as "Siege". Bombardment exists for both bombers and naval units. Air Siege I is the bombers' Bunker Busting prerequisite (user-approved).
-- **Carpet Bombing** (bombers, after Bombardment II): splash hits enemy units on tiles *adjacent* to the target, with `-X` floating text. No friendly fire (**this deviates from the spec**, which includes friendly units and CS war declarations; it's flagged in the tracker for the user), and no splash on the target city's garrison (user decision). Air units' range-attack missions (e.g. from the "declare war?" popup) are routed through `CvUnitCombat::AttackAir` in `CvUnitMission.cpp`; before that they skipped all air logic, including interception.
+- **Carpet Bombing** (bombers, after Bombardment II): splash hits enemy units on tiles *adjacent* to the target, with `-X` floating text. No friendly fire (**this deviates from the spec**, which includes friendly units and CS war declarations; the user keeps it this way for now and will revisit after real-game playtests, 2026-10-07), and no splash on the target city's garrison (user decision). Air units' range-attack missions (e.g. from the "declare war?" popup) are routed through `CvUnitCombat::AttackAir` in `CvUnitMission.cpp`; before that they skipped all air logic, including interception.
 - **Iaijutsu**: column `ExtraAttackVsFullHP`. In `ResolveMeleeCombat`, if the defender was at full HP before the attack, one attack is refunded (`CvUnit::RefundAttack`), once per turn; the flag resets in `CvPlayer::DoUnitReset`. Depends on `NQ_UNIT_TURN_ENDS_ON_FINAL_ATTACK` (on).
 - **Hatamoto**: column `MovesNearGeneralChange`. +N moves in `DoUnitReset` when a friendly Great General is on the same or an adjacent tile (`CvUnit::IsGreatGeneralWithinOne`).
 - Iaijutsu and Hatamoto are lost on upgrade, and their new `CvUnit` members are serialized (old saves are incompatible). One Good Eye and Stargazing are `VisibilityChange` 1, like Scouting I.

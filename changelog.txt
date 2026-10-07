@@ -1,9 +1,13 @@
 LEKMOD CHANGELOG
 ================
-Format (also used to generate player patch notes):
-- "## <release>" opens a release block; "## UNRELEASED" collects work since the last release.
+Format (also the source for player patch notes on the website):
+- "## <release>" opens a release block; "## UNRELEASED (...)" collects work since the last release.
 - Each item: NAME (TYPE_KEY), dashed underline, "Tags: a, b" line, then a short player-facing summary.
+- The first tag is the item's group (the website's section header); further tags are filters.
 - Player-facing lines: the summary and "- Added:", "- Changed:", "- Removed:", "- Fixed:".
+  They describe the net change compared to the previous release (for the first block: LEKMOD v35.4),
+  in quick-speed numbers, for players with no development knowledge. Bugs we introduced and fixed
+  before a release are not player-facing.
 - Developer-only lines (skipped for patch notes): "- Note:", "- DLL:", "- Dev:".
 - Tags: promotions, units, civs, policies, religion, ruins, combat, movement, naval, air,
   game mechanics, world congress, ui, art, bugfix.
@@ -11,20 +15,22 @@ Format (also used to generate player patch notes):
 
 ## UNRELEASED (based on LEKMOD v35.4)
 - Dev: ported from the old fork (based on v34.11) onto LEKMOD v35.4; the fork's World Congress changes were not carried over.
-- Dev: our promotion IDs moved from 340-360 to 344-364, because v35.4 uses 340-343.
+- Dev: our promotion IDs are 344-364 (v35.4 uses up to 343).
+- Dev: the April promotions were only defined in Art/Promotions/LekmodPromotions.xml, which the game never loads; they now live in the Override files.
 
 
 ALTITUDE TRAINING (PROMOTION_ALTITUDE_TRAINING)
 ------------------------------------------------
 Tags: promotions, movement
-10% movement discount in hills (hills cost 1.8 movement instead of 2.0).
-- Changed: was double movement in hills (50% discount), now 10% discount via new DLL field HillsMovementDiscountPercent
-- Changed: removed +10% attack and defense in hills
+Hills cost 10% less movement (1.8 instead of 2).
+- Changed: was double movement in hills, now a 10% movement discount in hills
+- Removed: +10% attack and defense in hills
+- Dev: new promotion column HillsMovementDiscountPercent
 
 
 FAST SWIMMER (PROMOTION_PHIL_MARINE)
 -------------------------------------
-Tags: promotions, movement
+Tags: promotions, movement, naval
 +2 movement while embarked.
 - Changed: embarked movement bonus 3 -> 2
 
@@ -32,313 +38,265 @@ Tags: promotions, movement
 SKYRANGER / EXTENDED PARADROP (PROMOTION_EXTENDED_PARADROP)
 -------------------------------------------------------------
 Tags: promotions, air
-Allows paradrops with a range of 100 hexes.
-Eligible: paratroopers (UNITCOMBAT_PARADROPPER).
+Paratroopers can paradrop up to 100 tiles away.
 - Changed: paradrop range 40 -> 100
 
 
 HEAL INSTANTLY (PROMOTION_INSTA_HEAL)
 --------------------------------------
 Tags: promotions
-Heals the unit for 25 HP instantly when activated. One-time use per acquisition.
-Eligible: all unit types (unchanged).
-- Changed: heal amount 50 -> 40
-- Changed: heal amount 40 -> 25 (INSTA_HEAL_RATE define); tooltip updated (still said 50)
+Heals the unit for 25 HP.
+- Changed: heal amount 50 -> 25
+- Fixed: the tooltip now shows the actual amount
+- Dev: value is the INSTA_HEAL_RATE define
 
 
 COASTAL RAIDER LINE (PROMOTION_COASTAL_RAIDER_1/2/3)
 ------------------------------------------------------
 Tags: promotions, naval, combat
-+25% combat strength when attacking cities per tier.
-Eligible: naval melee (UNITCOMBAT_NAVALMELEE).
-- Changed: city attack bonus per tier was 15/15/20, now 25/25/25
-- Changed: removed gold looting on city attack (CityAttackPlunderModifier was 33/33/34, now 0)
-- Fixed: tooltips still showed 15/15/20% and the gold steal
++25% combat strength when attacking cities, per level.
+- Changed: city attack bonus per level 15/15/20% -> 25/25/25%
+- Removed: no more gold stolen when attacking cities
+- Fixed: the tooltips now show the actual values
 
 
 BOARDING PARTY LINE (PROMOTION_BOARDING_PARTY_1/2/3)
 ------------------------------------------------------
 Tags: promotions, naval, combat
-+25% combat strength when attacking naval units (DOMAIN_SEA) per tier.
-Eligible: naval melee (UNITCOMBAT_NAVALMELEE).
-- Changed: bonus per tier 15% -> 25%
-- Fixed: tooltips still showed 15%
++25% combat strength when attacking naval units, per level.
+- Changed: bonus per level 15% -> 25%
+- Fixed: the tooltips now show the actual values
 
 
 ARMOR PLATING LINE (PROMOTION_ARMOR_PLATING_1/2/3)
 ----------------------------------------------------
 Tags: promotions, naval, air
-3-tier line, no prerequisites for tier 1.
-Eligible: carriers (UNITCOMBAT_CARRIER), naval melee (UNITCOMBAT_NAVALMELEE), helicopters (UNITCOMBAT_HELICOPTER).
-- Changed: was carrier-only; now also available to naval melee and helicopters.
-Unlocks (shared with other naval melee lines):
-- Armor Plating 1 -> Sentry, Mobility (unchanged, already wired)
-- Armor Plating 2 -> Supply (unchanged, already wired)
-- Armor Plating 3 -> Logistics (added; parity with Coastal Raider 3 / Boarding Party 3)
-Unlocks (helicopter-specific, added):
-- Armor Plating 2 -> Heli Repair, Air Logistics (parity with Heli Ambush 2 / Heli Mobility 2 / Anti-Naval Heli 2)
+Now also available to naval melee units and helicopters, as a starting line with no requirements.
+- Changed: was available to carriers only; now also naval melee units and helicopters
+- Added: for naval melee units, Armor Plating unlocks the same later promotions as Coastal Raider and Boarding Party (Sentry and Mobility at I, Supply at II, Logistics at III)
+- Added: for helicopters, Armor Plating II unlocks Repair and Air Logistics
 
 
 DISCIPLINE (PROMOTION_DISCIPLINE / PROMOTION_DISCIPLINE_AIR)
 ---------------------------------------------------------------
 Tags: promotions, policies
-NEW. Granted by policy (not player-selectable). Two internal variants, same icon.
-- PROMOTION_DISCIPLINE: +50% XP gained. Applies to all non-air units (melee, ranged, gunpowder, mounted, armor, naval, helicopter, etc.).
-- PROMOTION_DISCIPLINE_AIR: +25% XP gained. Applies to air units (fighters and bombers, UNITCOMBAT_AIR) only.
-Policy wiring (Honor finisher / Iron Fist) pending.
+NEW. +50% experience for non-air units, +25% for air units.
+- Added: granted by policies (cannot be chosen on level-up)
+- Note: the policy grants (Honor finisher, Iron Fist) are not wired yet
+- Dev: two promotions with the same icon; text keys TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE(_HELP), because the old keys belong to another promotion
 
 
 SWIFT TRANSPORT (PROMOTION_SWIFT_TRANSPORT)
 -------------------------------------------
 Tags: promotions, naval, movement
-NEW. Embarked units sharing this ship's tile at the start of a turn gain this ship's movement for that turn (movement only upgraded, never reduced).
-- Added: EmbarkedUnitReceivesMovement=true
-- Note: unit eligibility and assignment wired separately; not player-pickable
+NEW. An embarked unit that starts its turn on the same tile as this ship moves at the ship's speed that turn (never slower than its own).
+- Note: not granted to any unit yet (planned: naval units start with it)
+- Dev: EmbarkedUnitReceivesMovement=true
 
 
 MOBILITY (PROMOTION_MOBILITY)
 ------------------------------
-Tags: promotions, movement, ruins
-Now accessible to melee, gunpowder, and paratroopers via earlier prerequisites.
-- Added UnitCombatTypes: MELEE, GUN, PARADROPPER
-- Added prerequisites: Drill 2, Shock 2, Ambush Formation 2, Amphibious 2
-- Note: Amphibious 2 prereq is active now that the Amphibious line is loaded
-- Existing prereqs (Drill 3, Shock 3, etc.) unchanged
-- Changed: the Mobility ruin (GOODY_EXPERIENCE_MOVE) is now also available to Scout-class units (incl. Shoshone Pathfinder); ancient era only
+Tags: promotions, movement
+Easier to reach for land units.
+- Added: also available to melee, gunpowder and paratrooper units
+- Added: can now be taken after Drill II, Shock II, Ambush II or Amphibious II (in addition to the existing requirements)
+- Dev: added UnitCombats MELEE, GUN, PARADROPPER and the four PromotionPrereqOrs
 
 
 FEAR AURA (PROMOTION_FEAR_AURA)
 --------------------------------
 Tags: promotions, combat
-NEW. Enemies within 1 tile suffer -15% combat strength.
-- Added: NearbyEnemyCombatMod=-15, NearbyEnemyCombatRange=1
-- Note: no domain restriction (affects all unit types in range); Feared Elephant equivalent is -10%
+NEW. Enemy units within 1 tile have -15% combat strength.
+- Note: not granted to any unit yet (planned: GDR, Danish Berserker, Gallic swordsman)
+- Dev: NearbyEnemyCombatMod=-15, NearbyEnemyCombatRange=1; no domain restriction
 
 
 ZEALOT (PROMOTION_ZEALOT)
 -------------------------
 Tags: promotions, religion, civs
-NEW. Killing a unit yields Faith equal to their Combat Strength (max 30).
-- Added: UnitPromotions_YieldFromKills entry (YIELD_FAITH, Yield=100%, Max=30)
-- Added: free promotion for UNIT_CELT_PICTISH_WARRIOR and UNIT_ISRAEL_MACCABEE
-- Removed: unit-level Unit_YieldFromKills YIELD_FAITH entries for both units (replaced by this promotion)
-- Note: previous Pictish Warrior behavior had no cap; now capped at 30
-- Fixed: kill yields from promotions stopped after the unit gained any other promotion (era flags were overwritten); era flags are now kept while any held promotion lists the era
-- Fixed: killed units without a prereq tech (Warrior, Scout, most barbarians) counted as era -1; now treated as ancient
-- Added: UnitPromotions_KillYieldValidEras rows for all eras (previously none, so the promotion never yielded)
-- Fixed: the Pictish Warrior tooltip showed no faith icon
+NEW. Killing a unit yields Faith equal to its combat strength (max 30).
+- Changed: the Pictish Warrior and the Maccabee get Zealot instead of their own faith-from-kills ability
+- Changed: the Pictish Warrior's faith from kills is now capped at 30 (was uncapped)
+- Fixed: the Pictish Warrior tooltip now shows the faith icon
+- Dev: UnitPromotions_YieldFromKills (YIELD_FAITH, 100%, max 30) and KillYieldValidEras rows for all eras
+
+
+PROMOTION KILL YIELDS (BUGFIX)
+-------------------------------
+Tags: bugfix, promotions, combat
+Promotions that yield something from kills keep working after the unit gains another promotion.
+- Fixed: yields from kills (e.g. Zealot faith) stopped as soon as the unit gained any other promotion
+- Fixed: killing units of the earliest era (Warriors, Scouts, most barbarians) gave no promotion yields
+- Dev: CvUnit era flags are now an OR over all held promotions; killed units with era -1 count as ancient. Still an upstream bug in v35.4.
 
 
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
-Embarked unit defense is now 40% of the unit's highest combat strength (melee or ranged), scaled by EmbarkDefenseModifier. Previously era-based (fixed value per era regardless of unit strength).
-- Changed: GetEmbarkedUnitDefense() formula from era lookup to max(meleCS, rangedCS) * 40%
+Embarked units defend with 40% of their highest combat strength (melee or ranged), instead of a fixed value per era.
+- Changed: embarked defense now scales with the unit's own strength instead of the era
+- Dev: CvUnit::GetEmbarkedUnitDefense = max(melee, ranged) * 40%, then EmbarkDefenseModifier
 
 
 AMPHIBIOUS LINE (PROMOTION_AMPHIBIOUS_1/2/3)
 ---------------------------------------------
 Tags: promotions, movement, combat
-NEW 3-tier line replacing vanilla PROMOTION_AMPHIBIOUS. No prerequisites for tier 1.
-Eligible: melee (UNITCOMBAT_MELEE), gunpowder (UNITCOMBAT_GUN), mounted (UNITCOMBAT_MOUNTED), armor (UNITCOMBAT_ARMOR), ranged (UNITCOMBAT_ARCHER), mounted ranged (UNITCOMBAT_MOUNTED_RANGED).
-Tier 1 unlocks Tier 2; Tier 2 unlocks Tier 3 (and also unlocks Mobility).
-- Amphibious I: No river attack penalty. Embarked CS = 70% of base (EmbarkDefenseModifier=75 on new formula). Embarking costs 1 MP (ZOC applies); at most 1 MP remaining after.
-- Amphibious II: +1 embarked movement. Disembarking costs 1 MP (ZOC applies); at most 1 MP remaining after.
-- Amphibious III: No penalty attacking from water (Amphib). +1 embarked movement. At most 2 MP remaining after domain change. Can heal while embarked under normal land healing rules.
-- Removed: vanilla PROMOTION_AMPHIBIOUS (CannotBeChosen=true, no effects) — units that held it retain it as a dummy.
-- New DLL fields: EmbarkFlatCost, DisembarkFlatCost, MaxMovesAfterDomainChange, HealWhileEmbarked (promotion-level).
-- Fixed: flat embark/disembark cost left 0 MP instead of MaxMovesAfterDomainChange (off by one)
-- Fixed: embarking still ended the turn (CvUnit::move called finishMoves() after every embark); skipped for units with EmbarkFlatCost
-- Fixed: embarking and disembarking used up all movement again after the update to LEKMOD v35.4; also works on pontoons and shallows now
-- Dev: v35.4's water-walk rules in ConsumesAllMoves returned before the Amphibious check; flat-cost transitions are now let through there, and walk-water counts as land for the flat cost
+NEW 3-level line for melee, gunpowder, mounted, armor and ranged land units. Replaces the old Amphibious promotion.
+- Added: Amphibious I: no penalty attacking across rivers; embarked defense 70% of the unit's strength; embarking costs only 1 movement, with at most 1 movement left afterwards (enemy zone of control still applies)
+- Added: Amphibious II: +1 embarked movement; disembarking costs only 1 movement, with at most 1 movement left afterwards (enemy zone of control still applies)
+- Added: Amphibious III: no penalty attacking from water; +1 embarked movement; at most 2 movement left after embarking or disembarking; can heal while embarked
+- Added: Amphibious II also unlocks Mobility and Envelopment
+- Removed: the old Amphibious promotion (units that had it keep it, without effect)
+- Dev: new columns EmbarkFlatCost, DisembarkFlatCost, MaxMovesAfterDomainChange, HealWhileEmbarked. Walk-water tiles (pontoons, shallows) count as land for the flat cost.
+- Dev: after the v35.4 port, v35.4's water-walk rules in CvUnitMovement::ConsumesAllMoves returned before the Amphibious check; fixed in f1706839
 
 
 MOUNTAINEERING (PROMOTION_MOUNTAINEERING)
 ------------------------------------------
 Tags: promotions, movement
-NEW. Allows mountain crossing. Units ending their turn on a mountain take 50 damage (existing mechanic, same as Carthage).
-Eligible: melee (UNITCOMBAT_MELEE), gunpowder (UNITCOMBAT_GUN).
-Requires (any): Drill 2, Altitude Training.
-- Added: CanCrossMountains=true (new DLL field; patches canEnterTerrain mountain gate)
-- The 50 mountain damage reuses the existing end-of-turn attrition check (line 6473 CvUnit.cpp) — no new code needed
+NEW. Lets melee and gunpowder units cross mountains. A unit that ends its turn on a mountain takes 50 damage.
+- Added: available after Drill II or Altitude Training
+- Dev: new column CanCrossMountains; the 50 damage reuses the existing end-of-turn mountain attrition
 
 
 BUNKER BUSTING (PROMOTION_BUNKER_BUSTING)
 ------------------------------------------
 Tags: promotions, combat, air
-NEW. +33% Combat Strength attacking cities. Each attack deals 10 flat damage to all non-air units and civilians in the city.
-Eligible: siege (UNITCOMBAT_SIEGE), bomber (UNITCOMBAT_BOMBER).
-Requires (any): Volley (for siege), Air Siege I (for bombers).
-- Added: CityAttack=33 (existing field), CitySplashDamage=10 (new DLL field)
-- New DLL field CitySplashDamage triggers in ResolveRangedUnitVsCombat and ResolveAirUnitVsCombat after city takes damage
-- Fixed: bomber prerequisite pointed to PROMOTION_SIEGE (melee/gunpowder "Siege") instead of the bomber line PROMOTION_AIR_SIEGE_1
+NEW. +33% combat strength attacking cities. Each attack on a city also deals 10 damage to every unit in it (except aircraft).
+- Added: for siege units after Volley, and for bombers after Air Siege I
+- Dev: new column CitySplashDamage (ResolveRangedUnitVsCombat, ResolveAirUnitVsCombat)
 
 
 MARAUDER (PROMOTION_MARAUDER)
 ------------------------------
 Tags: promotions
-NEW. +50% gold from pillaging tiles. Not player-selectable (granted by UU or policy).
-- Added: PillageChange=50
-- Dev: uses the PillageChange promotion field that LEKMOD v35.4 also added (Buganda); our duplicate wiring was dropped in the port.
+NEW. +50% gold from pillaging.
+- Note: not granted to any unit yet (planned: Privateer, Tunisia)
+- Dev: uses the PillageChange column that v35.4 added for Buganda
 
 
 ENVELOPMENT (PROMOTION_ENVELOPMENT)
 ------------------------------------
 Tags: promotions, combat
-NEW. Doubles the flanking bonus per adjacent friendly unit (from +10% to +20% per unit).
-Eligible: melee (UNITCOMBAT_MELEE), gunpowder (UNITCOMBAT_GUN), mounted (UNITCOMBAT_MOUNTED), armor (UNITCOMBAT_ARMOR).
-Requires (any): Shock 2, Drill 2, Amphibious 2.
-- Added: FlankAttackModifier=100 (doubles the base BONUS_PER_ADJACENT_FRIEND value of 10)
+NEW. Doubles the flanking bonus: +20% per adjacent friendly unit instead of +10%.
+- Added: for melee, gunpowder, mounted and armor units after Shock II, Drill II or Amphibious II
+- Dev: FlankAttackModifier=100
 
 
 SORTIE (PROMOTION_SORTIE)
 ---------------------------
 Tags: promotions, air
-Changed: now also takes 10% less damage from Air Sweeps (air-vs-air sweep path).
-- Changed: InterceptionDefenseDamageModifier 0 -> -10
-- DLL: the air sweep damage applies the defender's GetInterceptionDefenseDamageModifier() (it was only applied
-  to regular interceptions). Since v35.4 this lives in CvGame::getCombatDamage, the unified combat calculation.
-- Field already wired for regular interception; sweep path was the only gap
+Now also takes 10% less damage from air sweeps.
+- Added: -10% damage taken from air sweeps
+- Dev: InterceptionDefenseDamageModifier=-10; the sweep path in CvGame::getCombatDamage now applies it (it only applied to interceptions)
 
 
 REPAIR CREW (PROMOTION_REPAIR_CREW)
 --------------------------------------
 Tags: promotions, naval, air
-NEW. Aircraft based on this carrier heal +15 HP per turn when skipping a turn or with Air Repair.
-Eligible: carriers (UNITCOMBAT_CARRIER).
-Requires (any): Flight Deck II (PROMOTION_FLIGHT_DECK_2), Armor Plating II (PROMOTION_ARMOR_PLATING_2).
-- Added: SameTileHealChange=15 (existing vanilla field; picked up by air unit healRate() with no domain filter)
-- No DLL changes needed
+NEW. Aircraft on this carrier heal 15 HP more per turn when they skip a turn or use Air Repair.
+- Added: for carriers after Flight Deck II or Armor Plating II
+- Dev: SameTileHealChange=15 (existing field, no DLL change)
 
 
 SAMBUCA (PROMOTION_SAMBUCA)
 ---------------------------------
 Tags: promotions, naval, combat
-NEW. Naval melee variant of the Assyrian Siege Tower's Sapper promotion.
-Eligible: naval melee (UNITCOMBAT_NAVALMELEE).
-Requires: Coastal Raider I (PROMOTION_COASTAL_RAIDER_1).
-Effects: Sapper=true (while adjacent to an enemy city, friendly units within 2 tiles get +50% Combat Strength attacking it), -33% Combat Strength on defense, -1 Movement.
-- Fixed: tooltip described the effect wrongly and contained spec notes
-- Note: PROMOTION_SAPPER (Siege Tower) is unchanged; this is a separate choosable promotion
-  with a different display name but with balance penalties for the naval melee context.
-- Penalties are built into PROMOTION_SAMBUCA; no separate PROMOTION_PENALTY_ON_DEFENSE
-  was created (vanilla Civ5 has no promotion-level FreePromotion field to auto-grant one).
+NEW. A naval version of the Siege Tower's ability: while this ship is next to an enemy city, friendly units within 2 tiles get +50% combat strength attacking that city. The ship itself gets -33% defense and -1 movement.
+- Added: for naval melee units after Coastal Raider I
+- Dev: Sapper=true plus the penalties on the same promotion; the Siege Tower's PROMOTION_SAPPER is unchanged
 
 
 CARPET BOMBING (PROMOTION_CARPET_BOMBING)
 ------------------------------------------
 Tags: promotions, air, combat
-NEW. Each attack deals 20% of inflicted damage to all enemy and neutral non-air units on adjacent tiles. Units inside a targeted city are not hit.
-Eligible: bombers (UNITCOMBAT_BOMBER).
-Requires: Bombardment 2.
-- Added: CarpetBombing=true (new DLL field)
-- War declaration: hitting a City State unit triggers declareWar(); hitting a major civ unit not at war deals damage without declaration
-- Interception: iAttackerDamageInflicted is already interception-adjusted before splash is computed, so reduced bombing naturally reduces splash
-- Splash fires in ResolveAirUnitVsCombat for both city-target and unit-target branches
-- Fixed: no longer damages the attacker's own units
-- Added: red floating damage numbers on splashed units
-- Fixed: air strikes confirmed through the "declare war?" popup used the generic ranged-combat path (no splash, no interception); air units' MISSION_RANGE_ATTACK now goes through CvUnitCombat::AttackAir
+NEW. Each bomber attack also deals 20% of its damage to all enemy and neutral land and naval units next to the target. Units inside a targeted city are not hit, and your own units are never hit.
+- Added: for bombers after Bombardment II
+- Added: hitting a city-state's unit declares war on it; hitting a major civilization you are not at war with does not
+- Dev: new column CarpetBombing; splash in ResolveAirUnitVsCombat uses the interception-reduced damage. Air units' MISSION_RANGE_ATTACK now goes through CvUnitCombat::AttackAir (the "declare war?" popup skipped all air logic before).
+- Note: the spec includes friendly units; no friendly fire is kept for now (user, 2026-10-07)
 
 
 SUPPLY SHIP (PROMOTION_SUPPLY_SHIP)
 ------------------------------------
 Tags: promotions, naval
-NEW. Adjacent naval units may heal outside friendly territory (normally impossible without HealOutsideFriendly).
-Adjacent non-air units heal +10 HP per turn when outside friendly territory.
-Eligible: naval melee (UNITCOMBAT_NAVALMELEE), naval ranged (UNITCOMBAT_NAVALRANGED).
-Requires: Coastal Raider 2, Boarding Party 2, or Armor Plating 2 (any one).
-- Added: AdjacentTileHealOutsideFriendly=10 (new DLL field)
-- healRate() DOMAIN_SEA early-return is bypassed when an adjacent allied unit has AdjacentTileHealOutsideFriendly > 0
-- canHeal() DOMAIN_SEA gate is also bypassed in the same way
-- The +10 bonus from AdjacentTileHealOutsideFriendly is only applied when the healing unit is outside friendly territory and not air domain
+NEW. Adjacent ships can heal outside friendly territory. Adjacent units (except aircraft) heal 10 HP more per turn outside friendly territory.
+- Added: for naval melee and naval ranged units after Coastal Raider II, Boarding Party II or Armor Plating II
+- Dev: new column AdjacentTileHealOutsideFriendly; bypasses the DOMAIN_SEA gates in healRate() and canHeal()
 
 
 WOODSMAN (PROMOTION_WOODSMAN)
 ------------------------------
 Tags: promotions, movement
-Double movement in forest and jungle. +15% attack and defense in forest and jungle.
-Eligible: melee (UNITCOMBAT_MELEE), gunpowder (UNITCOMBAT_GUN), paratroopers (UNITCOMBAT_PARADROPPER).
-Requires: Drill 1.
-- Changed: prerequisite was Shock 2 OR Drill 2, now Drill 1 only
+Double movement and +15% combat strength in forest and jungle.
+- Changed: requirement was Shock II or Drill II, now Drill I
+
 
 ANCIENT RUINS OVERHAUL (GOODY_*)
 ---------------------------------
 Tags: ruins, religion, game mechanics
-Era-scaled ruin rewards driven by new GoodyHuts columns (BeforeEra, UnitDamage, GoldEraFactor, EraBarbarianSpawn, ScienceEraRuin, CultureEraTurn, FaithEraTurn, FoodEraScale, FaithZeroOnly). Era index: ancient = 1.
-- Food: 7 + 2.2 * era * capital population food to the capital; unit gets Glutton (-10% Combat Strength, lost on upgrade)
-- Upgrade: available from turn 6; unit loses 15 HP
-- Tech: no free tech. 20-30 * era Science (max 90); unit loses that much HP (min 1 left) and gains half as XP
-- Map: reveal radius 6 at 75% per tile, +6 XP, before turn 10
-- Culture: turn * era Culture, from turn 6
-- Pantheon faith: 14 Faith, from turn 6, only while you have no Pantheon and 0 Faith
-- Random faith: turn * 2 * era Faith, unit fully healed; only once you have a Pantheon (and no Religion)
-- Gold: 45 + (1-10) * 5 * era Gold; 80 or more spawns an era-appropriate barbarian next to the ruin
-- Mobility: ancient era only
-- Fixed: removed a hardcoded duplicate implementation of the same overhaul (strcmp by ruin type) that slipped into the Amphibious commit; only the column-based version remains
-- Fixed: science ruin with no research selected now goes to overflow research instead of NO_TECH
-- Fixed: reward popup now shows the computed amount (was blank for era-scaled ruins)
-- Fixed: the floating text on the ruin tile showed only the base 45 Gold instead of the total
-- Changed: Pantheon faith ruin re-enabled in the ruin pool; Prophet faith ruin stays disabled
-- Changed: ruin data moved into Override/CIV5Units.xml (it was in Art/No Quitters Mod/gameplay/GoodyHutChanges.xml, which is not loaded)
-- Changed: Shoshone ruin choice entries are short one-liners; result popups rewritten (relics, plunder, maps, overpowered inhabitants, food stash, survivors joining the nearest city)
-
-IAIJUTSU (PROMOTION_IAIJUTSU)
-------------------------------
-Tags: promotions, combat
-NEW. Attacking a unit that is at full health allows this unit to attack a second time this turn (once per turn). Lost on upgrade.
-- Added: ExtraAttackVsFullHP=true (new DLL field)
-- DLL: ResolveMeleeCombat checks the defender's HP before the attack and refunds one attack (CvUnit::RefundAttack); the once-per-turn flag resets in CvPlayer::DoUnitReset
-- Note: not granted to any unit yet
-
-
-HATAMOTO (PROMOTION_HATAMOTO)
-------------------------------
-Tags: promotions, movement
-NEW. +1 Movement when starting the turn within 1 tile of a friendly Great General. Lost on upgrade.
-- Added: MovesNearGeneralChange=1 (new DLL field)
-- DLL: applied in CvPlayer::DoUnitReset after movement is restored (CvUnit::IsGreatGeneralWithinOne)
-- Note: not granted to any unit yet
-
-
-ONE GOOD EYE / STARGAZING (PROMOTION_ONE_GOOD_EYE / PROMOTION_STARGAZING)
----------------------------------------------------------------------------
-Tags: promotions
-NEW. +1 Visibility Range (same effect as Scouting I).
-- Added: VisibilityChange=1
-- Note: not granted to any unit yet
-
-APRIL PROMOTIONS: DATA LOCATION (FIX)
---------------------------------------
-Tags: promotions, bugfix
-Fixed: the promotions added in April (Amphibious I-III, Bunker Busting, Repair Crew, Supply Ship, Sambuca, Carpet Bombing, Discipline, Discipline (Air), Fear Aura, Marauder, Mountaineering, Swift Transport, Envelopment, Zealot) were only defined in Art/Promotions/LekmodPromotions.xml, which the game never loads (XML under Art/ is not game data). They did not exist in game.
-- Added: promotion rows, icon atlases and texts in Override/CIV5Units.xml and Override/CIV5Units_Mongol.xml (IDs 344-364)
-- Fixed: duplicate definitions of Repair Crew and Supply Ship merged
-- Fixed: tooltips cleaned of spec notes ("Eligible: ...", "Requires ..."), invalid icon tags ([ICON_FAITH], [ICON_EXPERIENCE], [ICON_HEALING]) and given one line per sentence
-- Note: Discipline uses new text keys (TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE) because the old ones belong to another promotion
-- Note: Discipline, Discipline (Air), Fear Aura, Marauder, Swift Transport, Iaijutsu, Hatamoto, One Good Eye and Stargazing are not granted to any unit yet
-
-
-AIR SIEGE LINE (PROMOTION_AIR_SIEGE_1/2/3)
--------------------------------------------
-Tags: promotions, air
-- Changed: renamed from "Siege I-III" to "Air Siege I-III" to distinguish the bomber line from the melee/gunpowder "Siege" promotion
-
-
-FEARED ELEPHANT (PROMOTION_FEARED_ELEPHANT)
---------------------------------------------
-Tags: promotions, art
-- Changed: uses its dedicated icon (was ABILITY_ATLAS 59)
+Ruin rewards scale with the era (ancient = 1, classical = 2, ...) and the turn.
+- Changed: Food: 7 + 2.2 x era x capital population food in the capital; the unit gets Glutton (-10% combat strength, lost on upgrade)
+- Changed: Upgrade: from turn 6; the unit loses 15 HP
+- Changed: Tech: no more free tech; 20-30 x era science instead (max 90); the unit loses that much HP (keeps at least 1) and gains half of it as experience
+- Changed: Map: reveals a patchy area of radius 6 and gives 6 experience; until turn 10
+- Changed: Culture: turn x era culture, from turn 6
+- Changed: Faith: 14 faith from turn 6 while you have no pantheon and 0 faith; turn x 2 x era faith plus a full heal once you have a pantheon (and no religion)
+- Changed: Gold: 45 + 5 x (1-10) x era gold; 80 or more also spawns an era-appropriate barbarian next to the ruin
+- Changed: Mobility: ancient era only; scouts (including the Shoshone Pathfinder) can now get it
+- Removed: the Prophet faith ruin
+- Changed: shorter Shoshone ruin choices and new result texts
+- Dev: new GoodyHuts columns (BeforeEra, UnitDamage, GoldEraFactor, EraBarbarianSpawn, ScienceEraRuin, CultureEraTurn, FaithEraTurn, FoodEraScale, FaithZeroOnly); ruin data moved out of the unloaded Art/No Quitters Mod XML. The popup shows the DLL-computed amount (Data2).
 
 
 GLUTTON (PROMOTION_GLUTTON)
 ----------------------------
 Tags: promotions, ruins
-NEW. Given by the food ruin. -10% Combat Strength. Lost on upgrade.
-- Icon: ABILITY_ATLAS 57 (same as "May Not Melee Attack")
+NEW. Given by the food ruin. -10% combat strength. Lost on upgrade.
+- Dev: icon ABILITY_ATLAS 57 (same as "May Not Melee Attack")
+
+
+IAIJUTSU (PROMOTION_IAIJUTSU)
+------------------------------
+Tags: promotions, combat
+NEW. Attacking a unit at full health lets this unit attack once more this turn (once per turn). Lost on upgrade.
+- Note: not granted to any unit yet (planned: Japanese Samurai)
+- Dev: new column ExtraAttackVsFullHP; ResolveMeleeCombat refunds one attack (CvUnit::RefundAttack); the flag resets in CvPlayer::DoUnitReset
+
+
+HATAMOTO (PROMOTION_HATAMOTO)
+------------------------------
+Tags: promotions, movement
+NEW. +1 movement when starting the turn within 1 tile of a friendly Great General. Lost on upgrade.
+- Note: not granted to any unit yet (planned: Japanese Samurai)
+- Dev: new column MovesNearGeneralChange, applied in CvPlayer::DoUnitReset (CvUnit::IsGreatGeneralWithinOne)
+
+
+ONE GOOD EYE / STARGAZING (PROMOTION_ONE_GOOD_EYE / PROMOTION_STARGAZING)
+---------------------------------------------------------------------------
+Tags: promotions
+NEW. +1 sight.
+- Note: not granted to any unit yet (planned: Expansionism opener, Chile)
+- Dev: VisibilityChange=1
+
+
+AIR SIEGE LINE (PROMOTION_AIR_SIEGE_1/2/3)
+-------------------------------------------
+Tags: promotions, air
+The bomber promotions "Siege I-III" are renamed "Air Siege I-III", so they are no longer confused with the land unit promotion "Siege".
+- Changed: renamed "Siege I-III" -> "Air Siege I-III"
+
+
+FEARED ELEPHANT (PROMOTION_FEARED_ELEPHANT)
+--------------------------------------------
+Tags: promotions, art
+- Changed: new icon
+
 
 DEMOGRAPHICS SCREEN
 --------------------
-Tags: ui, bugfix
-Value column shows yield icons; metrics adjusted (February changes).
-- Changed: Land uses the capital star icon
-- Fixed: the screen failed to load since the icon change ("manyinclude" typo on the first line), so none of the February changes were ever visible
+Tags: ui
+The Demographics screen shows plain, comparable numbers with yield icons.
+- Added: yield icons in the value column
+- Changed: Population shows the total citizens, GNP shows gold per turn, Land shows the number of owned tiles, Approval shows your excess happiness, Literacy shows the number of researched techs ("??" before Writing)
+- Dev: Lua/tmp/ui/Replays/Demographics.lua.ignore
