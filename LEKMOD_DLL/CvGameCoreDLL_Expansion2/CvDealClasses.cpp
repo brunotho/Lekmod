@@ -1302,6 +1302,9 @@ void CvDeal::AddGoldTrade(PlayerTypes eFrom, int iAmount)
 /// Insert a gold per turn trade
 void CvDeal::AddGoldPerTurnTrade(PlayerTypes eFrom, int iAmount, int iDuration)
 {
+#ifdef LEKMOD_GPT_DEAL_FIXED_DURATION
+	iDuration = GC.getGOLD_PER_TURN_DEAL_DURATION(); // fixed turns, not the speed's deal length
+#endif
 	CvAssertMsg(iAmount >= 0, "DEAL: Trying to add a negative amount of GPT to a deal.  Please send Jon this with your last 5 autosaves and what changelist # you're playing.");
 	CvAssertMsg(iDuration >= 0, "DEAL: Trying to add a negative duration to a TradeItem.  Please send Jon this with your last 5 autosaves and what changelist # you're playing.");
 	CvAssertMsg(iDuration < GC.getGame().getEstimateEndTurn() * 2, "DEAL: Trade item has a crazy long duration (probably invalid).  Please send Jon this with your last 5 autosaves and what changelist # you're playing.");
@@ -1842,6 +1845,9 @@ int CvDeal::GetGoldPerTurnTrade(PlayerTypes eFrom)
 
 bool CvDeal::ChangeGoldPerTurnTrade(PlayerTypes eFrom, int iNewAmount, int iDuration)
 {
+#ifdef LEKMOD_GPT_DEAL_FIXED_DURATION
+	iDuration = GC.getGOLD_PER_TURN_DEAL_DURATION(); // fixed turns, not the speed's deal length
+#endif
 	CvAssertMsg(iDuration >= 0, "DEAL: Trying to add a negative duration to a TradeItem.  Please send Jon this with your last 5 autosaves and what changelist # you're playing.");
 	CvAssertMsg(iDuration < GC.getGame().getEstimateEndTurn() * 2, "DEAL: Trade item has a crazy long duration (probably invalid).  Please send Jon this with your last 5 autosaves and what changelist # you're playing.");
 	CvAssertMsg(eFrom == m_eFromPlayer || eFrom == m_eToPlayer, "DEAL: Changing deal item for a player that's not actually in this deal!  Please send Jon this with your last 5 autosaves and what changelist # you're playing.");

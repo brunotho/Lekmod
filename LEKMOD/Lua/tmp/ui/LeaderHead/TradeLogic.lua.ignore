@@ -1204,6 +1204,7 @@ function ResetDisplay()
 	    Controls.UsPocketGoldPerTurn:SetDisabled(false);
 	    Controls.UsPocketGoldPerTurn:GetTextControl():SetColorByName("Beige_Black");
     end
+    Controls.UsPocketGoldPerTurn:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_LEKMOD_DIPLO_GPT_TT", GameDefines.GOLD_PER_TURN_DEAL_DURATION or g_iDealDuration));
     
     -- Them
 	iGoldPerTurn = g_pThem:CalculateGoldRate();
@@ -1219,6 +1220,7 @@ function ResetDisplay()
 	    Controls.ThemPocketGoldPerTurn:SetDisabled(false);
 	    Controls.ThemPocketGoldPerTurn:GetTextControl():SetColorByName("Beige_Black");
     end
+    Controls.ThemPocketGoldPerTurn:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_LEKMOD_DIPLO_GPT_TT", GameDefines.GOLD_PER_TURN_DEAL_DURATION or g_iDealDuration));
 
     ---------------------------------------------------------------------------------- 
     -- pocket Allow Embassy

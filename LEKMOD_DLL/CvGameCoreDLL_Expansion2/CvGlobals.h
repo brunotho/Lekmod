@@ -5920,6 +5920,10 @@ public:
 	{
 		return m_iTRADE_ROUTE_DURATION;
 	}
+	inline int getGOLD_PER_TURN_DEAL_DURATION()
+	{
+		return m_iGOLD_PER_TURN_DEAL_DURATION;
+	}
 	inline int getBASE_CAPTURE_GOLD()
 	{
 		return m_iBASE_CAPTURE_GOLD;
@@ -9391,6 +9395,7 @@ protected:
 	int m_iMINOR_CIV_TRIBUTE_RANGE;
 	int m_iOPEN_BORDERS_DURATION;
 	int m_iTRADE_ROUTE_DURATION;
+	int m_iGOLD_PER_TURN_DEAL_DURATION;
 	int m_iBASE_CAPTURE_GOLD;
 	int m_iCAPTURE_GOLD_PER_POPULATION;
 	int m_iCAPTURE_GOLD_RAND1;

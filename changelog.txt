@@ -283,6 +283,15 @@ Lump sums of Gold can no longer be traded. Gold per Turn still can.
 - Dev: LEKMOD_NO_GOLD_TRADE in CvDeal::IsPossibleToTradeItem; text TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE (only used for the gold item)
 
 
+GOLD PER TURN TRADES (GOLD_PER_TURN_DEAL_DURATION)
+---------------------------------------------------
+Tags: game mechanics, ui
+Gold per Turn in a deal is paid for 10 turns.
+- Changed: Gold per Turn deals last 10 turns (was 25)
+- Added: the trade screen tooltip on Gold per Turn shows how many turns it is paid
+- Dev: new define GOLD_PER_TURN_DEAL_DURATION (10, not speed-scaled); LEKMOD_GPT_DEAL_FIXED_DURATION in CvDeal::AddGoldPerTurnTrade and ChangeGoldPerTurnTrade; TradeLogic templates (ui and eui)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

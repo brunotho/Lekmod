@@ -92945,6 +92945,10 @@
 			<Name>TRADE_ROUTE_DURATION</Name>
 			<Value>15</Value>
 		</Row>
+		<Row>
+			<Name>GOLD_PER_TURN_DEAL_DURATION</Name>
+			<Value>10</Value>
+		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 
 			<Value>20</Value> 

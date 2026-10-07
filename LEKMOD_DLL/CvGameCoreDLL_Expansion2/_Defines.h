@@ -887,6 +887,8 @@
 #define LEKMOD_PUPPET_PRODUCTION_FOCUS
 // Lump-sum gold can't be traded in deals (declarations of friendship no longer unlock it); gold per turn can
 #define LEKMOD_NO_GOLD_TRADE
+// Gold per turn trades last GOLD_PER_TURN_DEAL_DURATION turns (not scaled by game speed)
+#define LEKMOD_GPT_DEAL_FIXED_DURATION
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

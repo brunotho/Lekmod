@@ -101418,6 +101418,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_YOU_CIRC_GLOBE_GOLD">
 			<Text>Your maps have proven that the world is round![NEWLINE][NEWLINE]You receive {1_Num} [ICON_GOLD] Gold.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_DIPLO_GPT_TT">
+			<Text>Paid every turn for {1_Num} turns.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CIRC_GLOBE_SUMMARY">
 			<Text>The World Is Round</Text>
 		</Row>
