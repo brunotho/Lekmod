@@ -356,6 +356,15 @@ City-state borders show their type at a glance: one color per type, striped with
 - Dev: new Colors COLOR_CS_TRAIT_* (IDs 377-381) and PlayerColors PLAYERCOLOR_CS_* (184-188; primary COLOR_PLAYER_MINOR_ICON, secondary the type color); every MinorCivilizations row's DefaultPlayerColor set from its MinorCivTrait
 
 
+CITY-STATE QUEST REWARDS (MINOR_QUEST_FRIENDSHIP_*)
+----------------------------------------------------
+Tags: game mechanics
+City-state quests give 5 less Influence, with a few exceptions.
+- Changed: all quest Influence rewards -5
+- Changed: clear a barbarian camp 50 -> 35, trade route 50 -> 35, road connection 50 -> 40, culture/faith/tech contests 40 -> 35
+- Dev: Defines MINOR_QUEST_FRIENDSHIP_* (INVEST stays 0)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
