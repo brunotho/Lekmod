@@ -130,6 +130,15 @@ Promotions that yield something from kills keep working after the unit gains ano
 - Dev: CvUnit era flags are now an OR over all held promotions; killed units with era -1 count as ancient. Still an upstream bug in v35.4.
 
 
+WE LOVE THE KING DAY (CITY_RESOURCE_WLTKD_TURNS)
+-------------------------------------------------
+Tags: game mechanics
+We Love the King Day lasts 10 turns, and a luxury request that isn't filled is replaced after 10 turns.
+- Changed: We Love the King Day lasts 10 turns (was 13)
+- Changed: an unfilled luxury request switches to a new luxury after 10 turns (was 26)
+- Dev: CITY_RESOURCE_WLTKD_TURNS 20 -> 15 (x67% quick speed = 10); LEKMOD_WLTKD_DEMAND_EXPIRES_AFTER_ONE_LENGTH drops the x2 on the demand expiry. Civilopedia concept text updated.
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

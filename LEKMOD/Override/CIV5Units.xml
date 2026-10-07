@@ -93261,8 +93261,8 @@
 			<Value>75</Value> 
 		</Row>
 		<Row> 
-			<Name>CITY_RESOURCE_WLTKD_TURNS</Name> 
-			<Value>20</Value> 
+			<Name>CITY_RESOURCE_WLTKD_TURNS</Name>
+			<Value>15</Value>
 		</Row>
 		<Row> 
 			<Name>MAX_SPECIALISTS_FROM_BUILDING</Name> 

@@ -863,6 +863,8 @@
 #define NQ_WLTKD_SCALES_BY_GAME_SPEED
 // We Love The King Day resource requested changes if it takes too long to fulfill
 #define NQ_WLTKD_RESOURCE_DEMAND_EXPIRES
+// An unfulfilled luxury demand expires after one WLTKD length instead of two (10 turns on quick)
+#define LEKMOD_WLTKD_DEMAND_EXPIRES_AFTER_ONE_LENGTH
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

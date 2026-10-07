@@ -123748,7 +123748,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCES_CITYREQUESTS_HEADING3_BODY"> 
 			<Text>
-				Periodically a city may request that you acquire a specific luxury resource. If you do so, the city will go into "We Love the King Day" for 20 turns, during which the city's growth rate is increased by 25%. When the 20 turns are over, the city will demand another luxury resource. Filling that request will cause the city to resume WLtKD for another 20 turns.
+				Periodically a city may request that you acquire a specific luxury resource. If you do so, the city will go into "We Love the King Day" for 10 turns, during which the city's growth rate is increased by 25%. When the 10 turns are over, the city will demand another luxury resource. Filling that request will cause the city to resume WLtKD for another 10 turns. A request that is not filled within 10 turns is replaced by a new one.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCES_CITYREQUESTS_HEADING3_TITLE"> 

@@ -4535,7 +4535,11 @@ void CvCity::DoPickResourceDemanded(bool bCurrentResourceInvalid)
 #ifdef NQ_WLTKD_RESOURCE_DEMAND_EXPIRES
 			// after doing so, reset the timer so that this demand expires and a new one
 			// will replace it if it isn't fulfilled. The duration is 2x the length of the WTLKD
+#ifdef LEKMOD_WLTKD_DEMAND_EXPIRES_AFTER_ONE_LENGTH
+			int iNumTurns = GC.getCITY_RESOURCE_WLTKD_TURNS();
+#else
 			int iNumTurns = GC.getCITY_RESOURCE_WLTKD_TURNS() * 2;
+#endif
 			iNumTurns = iNumTurns * GC.getGame().getGameSpeedInfo().getCulturePercent() / 100;
 			ChangeResourceDemandedCountdown(iNumTurns);
 #endif
