@@ -875,6 +875,8 @@
 #define LEKMOD_RESISTANCE_TURNS_MIN_ONE
 // Ships exert no zone of control on land units moving on land (embarked units on water are still affected)
 #define LEKMOD_NO_NAVAL_ZOC_VS_LAND
+// City-state tribute range (local military power comparison) is MINOR_CIV_TRIBUTE_RANGE on every map size
+#define LEKMOD_TRIBUTE_RANGE_FIXED
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

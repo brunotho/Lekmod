@@ -223,6 +223,14 @@ Ships no longer slow down land units moving on land.
 - Dev: LEKMOD_NO_NAVAL_ZOC_VS_LAND in CvUnitMovement::IsSlowedByZOC (destination plot decides)
 
 
+CITY-STATE TRIBUTE RANGE (MINOR_CIV_TRIBUTE_RANGE)
+---------------------------------------------------
+Tags: game mechanics
+When you demand tribute, only military units within 5 tiles of the city-state count, on every map size.
+- Changed: the tribute range is 5 tiles on all map sizes (it grew with the map width before)
+- Dev: new define MINOR_CIV_TRIBUTE_RANGE (5), LEKMOD_TRIBUTE_RANGE_FIXED in CvMinorCivAI::CalculateBullyMetric
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

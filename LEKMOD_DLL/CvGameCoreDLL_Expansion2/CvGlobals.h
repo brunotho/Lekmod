@@ -5908,6 +5908,10 @@ public:
 	{
 		return m_iPLOT_BUY_MAX_DISCOUNT;
 	}
+	inline int getMINOR_CIV_TRIBUTE_RANGE()
+	{
+		return m_iMINOR_CIV_TRIBUTE_RANGE;
+	}
 	inline int getBASE_CAPTURE_GOLD()
 	{
 		return m_iBASE_CAPTURE_GOLD;
@@ -9376,6 +9380,7 @@ protected:
 	int m_iCIRCUMNAVIGATE_FREE_MOVES;
 	int m_iCIRCUMNAVIGATE_GOLD;
 	int m_iPLOT_BUY_MAX_DISCOUNT;
+	int m_iMINOR_CIV_TRIBUTE_RANGE;
 	int m_iBASE_CAPTURE_GOLD;
 	int m_iCAPTURE_GOLD_PER_POPULATION;
 	int m_iCAPTURE_GOLD_RAND1;

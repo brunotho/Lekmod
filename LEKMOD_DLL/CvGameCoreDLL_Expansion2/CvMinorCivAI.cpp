@@ -9120,7 +9120,10 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 	//
 	// +0 ~ +125
 	// **************************
-#ifdef AUI_WARNING_FIXES
+#if defined(LEKMOD_TRIBUTE_RANGE_FIXED)
+	// Same tribute range on every map size
+	int iComparisonRadius = GC.getMINOR_CIV_TRIBUTE_RANGE();
+#elif defined(AUI_WARNING_FIXES)
 	int iComparisonRadius = MAX(GC.getMap().getGridWidth() / 10, uint(5));
 #else
 	int iComparisonRadius = std::max(GC.getMap().getGridWidth() / 10, 5);

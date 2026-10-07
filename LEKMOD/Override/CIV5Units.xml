@@ -92933,6 +92933,10 @@
 			<Name>PLOT_BUY_MAX_DISCOUNT</Name>
 			<Value>75</Value>
 		</Row>
+		<Row>
+			<Name>MINOR_CIV_TRIBUTE_RANGE</Name>
+			<Value>5</Value>
+		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 
 			<Value>20</Value> 
