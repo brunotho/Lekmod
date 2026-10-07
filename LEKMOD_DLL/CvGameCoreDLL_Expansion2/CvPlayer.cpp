@@ -5788,11 +5788,11 @@ void CvPlayer::DoUnitReset()
 	for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
 		// HEAL UNIT?
-		// Embarked units do not heal, unless a trait lets them use the heal mission while embarked (Buganda acts as if on land).
+		// Embarked units do not heal, unless they have HealWhileEmbarked or a trait lets them use the heal mission while embarked (Buganda acts as if on land).
 #if defined(v35_TRAITIFY)
-		const bool bEmbarkedBlocksHeal = pLoopUnit->isEmbarked() && !GET_PLAYER(pLoopUnit->getOwner()).GetPlayerTraits()->IsEmbarkedMissionAllowed(static_cast<MissionTypes>(GC.getInfoTypeForString("MISSION_HEAL")));
+		const bool bEmbarkedBlocksHeal = pLoopUnit->isEmbarked() && !pLoopUnit->IsHealWhileEmbarked() && !GET_PLAYER(pLoopUnit->getOwner()).GetPlayerTraits()->IsEmbarkedMissionAllowed(static_cast<MissionTypes>(GC.getInfoTypeForString("MISSION_HEAL")));
 #else
-		const bool bEmbarkedBlocksHeal = pLoopUnit->isEmbarked();
+		const bool bEmbarkedBlocksHeal = pLoopUnit->isEmbarked() && !pLoopUnit->IsHealWhileEmbarked();
 #endif
 		if (!bEmbarkedBlocksHeal)
 		{
@@ -5824,6 +5824,9 @@ void CvPlayer::DoUnitReset()
 #endif
 		// Finally (now that healing is done), restore movement points
 		pLoopUnit->setMoves(pLoopUnit->maxMoves());
+		// Hatamoto: extra moves when starting the turn next to a friendly Great General
+		if (pLoopUnit->GetMovesNearGeneralChange() > 0 && pLoopUnit->IsGreatGeneralWithinOne())
+			pLoopUnit->changeMoves(pLoopUnit->GetMovesNearGeneralChange() * GC.getMOVE_DENOMINATOR());
 		if (pLoopUnit->IsGreatGeneral())
 		{
 			// NQMP GJS - fix Hakkapeliitta reducing Great General movement if they would normally have more BEGIN
@@ -5886,6 +5889,7 @@ void CvPlayer::DoUnitReset()
 
 		pLoopUnit->SetIgnoreDangerWakeup(false);
 		pLoopUnit->setMadeAttack(false);
+		pLoopUnit->SetExtraAttackVsFullHPUsed(false);
 		pLoopUnit->setMadeInterception(false);
 #if defined(NQM_UNIT_FIX_NO_DOUBLE_INSTAHEAL_ON_SAME_TURN) || defined(NQM_UNIT_FIX_NO_INSTAHEAL_AFTER_PARADROP) || defined(NQM_UNIT_FIX_NO_INSTAHEAL_ON_CREATION_TURN)
 		pLoopUnit->setCanInstahealThisTurn(true);

@@ -1271,6 +1271,132 @@
 				Awards yields per citizens converted to a religion upon spread. Awards bonus yields when fully converting a city to a religion.
 			</Text>
 		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_AMPHIBIOUS_1">
+			<Text>Amphibious I</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_AMPHIBIOUS_1_HELP">
+			<Text>No [ICON_STRENGTH] Combat Strength penalty when attacking across rivers.[NEWLINE]Embarked [ICON_STRENGTH] Combat Strength increased to 70% of the unit's strength.[NEWLINE]Embarking costs only 1 [ICON_MOVES] Movement instead of ending the turn, but leaves at most 1 [ICON_MOVES] Movement afterwards (enemy Zone of Control still applies).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_AMPHIBIOUS_2">
+			<Text>Amphibious II</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_AMPHIBIOUS_2_HELP">
+			<Text>+1 [ICON_MOVES] Movement while embarked.[NEWLINE]Disembarking costs only 1 [ICON_MOVES] Movement instead of ending the turn, but leaves at most 1 [ICON_MOVES] Movement afterwards (enemy Zone of Control still applies).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_AMPHIBIOUS_3">
+			<Text>Amphibious III</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_AMPHIBIOUS_3_HELP">
+			<Text>No [ICON_STRENGTH] Combat Strength penalty when attacking from water.[NEWLINE]+1 [ICON_MOVES] Movement while embarked.[NEWLINE]Embarking and disembarking leave up to 2 [ICON_MOVES] Movement afterwards.[NEWLINE]Heals while embarked as if on land.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_BUNKER_BUSTING">
+			<Text>Bunker Busting</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_BUNKER_BUSTING_HELP">
+			<Text>+33% [ICON_STRENGTH] Combat Strength when attacking cities.[NEWLINE]Each attack also deals 10 damage to all non-air units and civilians in the city.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_REPAIR_CREW">
+			<Text>Repair Crew</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_REPAIR_CREW_HELP">
+			<Text>Friendly units on the same tile heal +15 additional HP per turn.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SUPPLY_SHIP">
+			<Text>Supply Ship</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SUPPLY_SHIP_HELP">
+			<Text>Adjacent naval units may heal outside friendly territory.[NEWLINE]Adjacent non-air units heal +10 HP per turn outside friendly territory.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SAMBUCA">
+			<Text>Sambuca</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SAMBUCA_HELP">
+			<Text>While this ship is adjacent to an enemy [COLOR_POSITIVE_TEXT]City[ENDCOLOR], friendly units within 2 tiles get +50% [ICON_STRENGTH] Combat Strength when attacking that City.[NEWLINE]-1 [ICON_MOVES] Movement.[NEWLINE]-33% [ICON_STRENGTH] Combat Strength when defending.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_CARPET_BOMBING">
+			<Text>Carpet Bombing</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_CARPET_BOMBING_HELP">
+			<Text>Each attack deals 20% of inflicted damage to all non-air units on adjacent tiles.[NEWLINE]City State units hit trigger an automatic declaration of war.[NEWLINE]Splash damage is reduced proportionally if the bomber is intercepted.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE">
+			<Text>Discipline</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE_HELP">
+			<Text>+50% Experience gained (non-air units).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_DISCIPLINE_AIR">
+			<Text>Discipline</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_DISCIPLINE_AIR_HELP">
+			<Text>+25% Experience gained (air units).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_FEAR_AURA">
+			<Text>Fear Aura</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_FEAR_AURA_HELP">
+			<Text>Enemies within 1 tile suffer -15% [ICON_STRENGTH] Combat Strength.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_MARAUDER">
+			<Text>Marauder</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_MARAUDER_HELP">
+			<Text>+50% [ICON_GOLD] Gold from pillaging tiles.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_MOUNTAINEERING">
+			<Text>Mountaineering</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_MOUNTAINEERING_HELP">
+			<Text>Can cross mountain tiles.[NEWLINE]Units ending their turn on a mountain take 50 damage.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SWIFT_TRANSPORT">
+			<Text>Swift Transport</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SWIFT_TRANSPORT_HELP">
+			<Text>Embarked units sharing this ship's tile at the start of a turn gain this ship's movement for that turn.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_IAIJUTSU">
+			<Text>Iaijutsu</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_IAIJUTSU_HELP">
+			<Text>Attacking a unit that is at full health allows this unit to attack a second time this turn.[NEWLINE]Lost on upgrade.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_HATAMOTO">
+			<Text>Hatamoto</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_HATAMOTO_HELP">
+			<Text>+1 [ICON_MOVES] Movement when starting the turn within 1 tile of a Great General.[NEWLINE]Lost on upgrade.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ONE_GOOD_EYE">
+			<Text>One Good Eye</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ONE_GOOD_EYE_HELP">
+			<Text>+1 Visibility Range.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_STARGAZING">
+			<Text>Stargazing</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_STARGAZING_HELP">
+			<Text>+1 Visibility Range.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_GLUTTON">
+			<Text>Glutton</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_GLUTTON_HELP">
+			<Text>This unit overindulged on ancient provisions.[NEWLINE]-10% [ICON_STRENGTH] Combat Strength.[NEWLINE]Lost on upgrade.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ZEALOT">
+			<Text>Zealot</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ZEALOT_HELP">
+			<Text>Killing a unit yields [ICON_PEACE] Faith equal to its [ICON_STRENGTH] Combat Strength (max 30).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ENVELOPMENT">
+			<Text>Envelopment</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ENVELOPMENT_HELP">
+			<Text>Doubles the flanking bonus: each adjacent friendly unit adds +20% [ICON_STRENGTH] Combat Strength when attacking (up from +10%).</Text>
+		</Row>
 		<Row Tag="TXT_KEY_BUY_CITY_STATE_HELP_DISABLED_TERRITORY"> 
 			<Text>
 				This Unit is not in the Territory of a City-State.
@@ -4280,7 +4406,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 		<Text>Fast Swimmer</Text>
 	</Row>
 	<Row Tag="TXT_KEY_PROMOTION_PHIL_MARINE_HELP">
-		<Text>+3 Movement while Embarked</Text>
+		<Text>+2 Movement while Embarked</Text>
 	</Row>
 	<Row Tag="TXT_KEY_PROMOTION_GOOD_FIGHT">
 		<Text>A Good Fight</Text>
@@ -120151,9 +120277,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AIR_SIEGE_1"> 
-			<Text>
-				Siege I
-			</Text>
+			<Text>Air Siege I</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AIR_SIEGE_1_HELP"> 
 			<Text>
@@ -120161,9 +120285,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AIR_SIEGE_2"> 
-			<Text>
-				Siege II
-			</Text>
+			<Text>Air Siege II</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AIR_SIEGE_2_HELP"> 
 			<Text>
@@ -120171,9 +120293,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AIR_SIEGE_3"> 
-			<Text>
-				Siege III
-			</Text>
+			<Text>Air Siege III</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AIR_SIEGE_3_HELP"> 
 			<Text>
@@ -120232,7 +120352,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_ALTITUDE_TRAINING_HELP"> 
 			<Text>
-				Double movement in hill. +10% [ICON_STRENGTH] Combat Strength when fighting in [COLOR_POSITIVE_TEXT]Hill[ENDCOLOR].
+				10% movement discount in hills.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AMBITION"> 
@@ -120541,9 +120661,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BOARDING_PARTY_1_HELP"> 
-			<Text>
-				+15% [ICON_STRENGTH] Combat Strength in melee attacks against [COLOR_POSITIVE_TEXT]Naval Units[ENDCOLOR].
-			</Text>
+			<Text>+25% [ICON_STRENGTH] Combat Strength in melee attacks against [COLOR_POSITIVE_TEXT]Naval Units[ENDCOLOR].</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BOARDING_PARTY_2"> 
 			<Text>
@@ -120551,9 +120669,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BOARDING_PARTY_2_HELP"> 
-			<Text>
-				+15% [ICON_STRENGTH] Combat Strength in melee attacks against [COLOR_POSITIVE_TEXT]Naval Units[ENDCOLOR].
-			</Text>
+			<Text>+25% [ICON_STRENGTH] Combat Strength in melee attacks against [COLOR_POSITIVE_TEXT]Naval Units[ENDCOLOR].</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BOARDING_PARTY_3"> 
 			<Text>
@@ -120561,9 +120677,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BOARDING_PARTY_3_HELP"> 
-			<Text>
-				+15% [ICON_STRENGTH] Combat Strength in melee attacks against [COLOR_POSITIVE_TEXT]Naval Units[ENDCOLOR].
-			</Text>
+			<Text>+25% [ICON_STRENGTH] Combat Strength in melee attacks against [COLOR_POSITIVE_TEXT]Naval Units[ENDCOLOR].</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BOMBARDMENT_1"> 
 			<Text>
@@ -120711,9 +120825,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_COASTAL_RAIDER_1_HELP"> 
-			<Text>
-				+15% [ICON_STRENGTH] Combat Strength when attacking [COLOR_POSITIVE_TEXT]Cities[ENDCOLOR]. Steal gold equal to 33% of the damage inflicted on a city.
-			</Text>
+			<Text>+25% [ICON_STRENGTH] Combat Strength when attacking [COLOR_POSITIVE_TEXT]Cities[ENDCOLOR].</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_COASTAL_RAIDER_DOUBLE_HELP"> 
 			<Text>
@@ -120731,9 +120843,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_COASTAL_RAIDER_2_HELP"> 
-			<Text>
-				+15% [ICON_STRENGTH] Combat Strength when attacking [COLOR_POSITIVE_TEXT]Cities[ENDCOLOR]. Steal gold equal to 33% of the damage inflicted on a city.
-			</Text>
+			<Text>+25% [ICON_STRENGTH] Combat Strength when attacking [COLOR_POSITIVE_TEXT]Cities[ENDCOLOR].</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_COASTAL_RAIDER_3"> 
 			<Text>
@@ -120741,9 +120851,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_COASTAL_RAIDER_3_HELP"> 
-			<Text>
-				+20% [ICON_STRENGTH] Combat Strength when attacking [COLOR_POSITIVE_TEXT]Cities[ENDCOLOR]. Steal gold equal to 34% of the damage inflicted on a city.
-			</Text>
+			<Text>+25% [ICON_STRENGTH] Combat Strength when attacking [COLOR_POSITIVE_TEXT]Cities[ENDCOLOR].</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_COMBAT1"> 
 			<Text>
@@ -121012,7 +121120,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_EXTENDED_PARADROP_HELP"> 
 			<Text>
-				May paradrop with extended range (40 hexes)
+				May paradrop with extended range (100 hexes)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_FAMADIAHONA"> 
@@ -121326,9 +121434,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_HEAL_INSTANTLY_HELP"> 
-			<Text>
-				[COLOR_POSITIVE_TEXT]Heal this Unit[ENDCOLOR] 50 HP. Doing so will [COLOR_POSITIVE_TEXT]Consume this Opportunity[ENDCOLOR] to choose a Promotion.
-			</Text>
+			<Text>[COLOR_POSITIVE_TEXT]Heal this Unit[ENDCOLOR] 25 HP.[NEWLINE]Doing so will [COLOR_POSITIVE_TEXT]Consume this Opportunity[ENDCOLOR] to choose a Promotion.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_HEAVY_CHARGE"> 
 			<Text>
@@ -122265,9 +122371,9 @@ The ship has weather'd every rack; the prize we sought is won."
 				Sortie
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PROMOTION_SORTIE_HELP"> 
+		<Replace Tag="TXT_KEY_PROMOTION_SORTIE_HELP">
 			<Text>
-				1 extra [COLOR_POSITIVE_TEXT]Interception[ENDCOLOR] may be made per turn.
+				1 extra [COLOR_POSITIVE_TEXT]Interception[ENDCOLOR] may be made per turn.[NEWLINE]Takes 10% less damage from Air Sweeps.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_SPAWN_GENERALS_I"> 
@@ -122567,7 +122673,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_WOODSMAN_HELP"> 
 			<Text>
-				Double movement rate and 15% [ICON_STRENGTH] Combat Strength in[COLOR_POSITIVE_TEXT]Forest and Jungle[ENDCOLOR].
+				Double movement rate and 15% [ICON_STRENGTH] Combat Strength in [COLOR_POSITIVE_TEXT]Forest and Jungle[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_XTRA_MOVES_I"> 
@@ -140227,7 +140333,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CELT_PICTISH_WARRIOR"> 
 			<Text>
-				Only the Celts may build this unit. It has a combat bonus outside of friendly territory and can pillage enemy improvements at no additional movement cost. Earns 100% of opponents' strength as [ICON_PEACE] Faith for kills.
+				Only the Celts may build this unit. It has a combat bonus outside of friendly territory and can pillage enemy improvements at no additional movement cost. Earns [ICON_PEACE] Faith equal to opponents' [ICON_STRENGTH] Combat Strength when killing a unit (max 30).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CHARIOR_ARCHER"> 

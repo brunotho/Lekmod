@@ -93576,9 +93576,9 @@
 			<Name>FRIENDLY_HEAL_RATE</Name> 
 			<Value>20</Value> 
 		</Row>
-		<Row> 
-			<Name>INSTA_HEAL_RATE</Name> 
-			<Value>50</Value> 
+		<Row>
+			<Name>INSTA_HEAL_RATE</Name>
+			<Value>25</Value>
 		</Row>
 		<Row> 
 			<Name>CITY_HEAL_RATE</Name> 
@@ -134841,7 +134841,102 @@
             <IconsPerRow>1</IconsPerRow>
             <IconsPerColumn>1</IconsPerColumn>
         </Row>
-	</IconTextureAtlases> 
+		<!-- ZEALOT promotion -->
+		<Row><Atlas>LEKMOD_ZEALOT_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>zealot_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ZEALOT_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>zealot_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ZEALOT_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>zealot_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ZEALOT_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>zealot_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- ENVELOPMENT promotion -->
+		<Row><Atlas>LEKMOD_ENVELOPMENT_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>envelopment_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ENVELOPMENT_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>envelopment_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ENVELOPMENT_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>envelopment_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ENVELOPMENT_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>envelopment_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- FEARED_ELEPHANT promotion (user art) -->
+		<Row><Atlas>LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>feared_elephant_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>feared_elephant_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>feared_elephant_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>feared_elephant_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- IAIJUTSU promotion -->
+		<Row><Atlas>LEKMOD_IAIJUTSU_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>iaijutsu_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_IAIJUTSU_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>iaijutsu_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_IAIJUTSU_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>iaijutsu_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_IAIJUTSU_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>iaijutsu_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- HATAMOTO promotion -->
+		<Row><Atlas>LEKMOD_HATAMOTO_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>hatamoto_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_HATAMOTO_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>hatamoto_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_HATAMOTO_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>hatamoto_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_HATAMOTO_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>hatamoto_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- ONE_GOOD_EYE promotion -->
+		<Row><Atlas>LEKMOD_ONE_GOOD_EYE_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>one_good_eye_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ONE_GOOD_EYE_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>one_good_eye_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ONE_GOOD_EYE_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>one_good_eye_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_ONE_GOOD_EYE_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>one_good_eye_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- STARGAZING promotion -->
+		<Row><Atlas>LEKMOD_STARGAZING_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>stargazing_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_STARGAZING_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>stargazing_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_STARGAZING_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>stargazing_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_STARGAZING_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>stargazing_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- AMPHIBIOUS_1 promotion -->
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_1_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>amphibious_1_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_1_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>amphibious_1_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_1_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>amphibious_1_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_1_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>amphibious_1_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- AMPHIBIOUS_2 promotion -->
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_2_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>amphibious_2_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_2_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>amphibious_2_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_2_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>amphibious_2_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_2_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>amphibious_2_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- AMPHIBIOUS_3 promotion -->
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_3_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>amphibious_3_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_3_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>amphibious_3_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_3_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>amphibious_3_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_AMPHIBIOUS_3_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>amphibious_3_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- BUNKER_BUSTING promotion -->
+		<Row><Atlas>LEKMOD_BUNKER_BUSTING_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>bunker_busting_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BUNKER_BUSTING_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>bunker_busting_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BUNKER_BUSTING_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>bunker_busting_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BUNKER_BUSTING_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>bunker_busting_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- REPAIR_CREW promotion -->
+		<Row><Atlas>LEKMOD_REPAIR_CREW_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>repair_crew_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_REPAIR_CREW_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>repair_crew_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_REPAIR_CREW_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>repair_crew_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_REPAIR_CREW_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>repair_crew_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- SUPPLY_SHIP promotion -->
+		<Row><Atlas>LEKMOD_SUPPLY_SHIP_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>supply_ship_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SUPPLY_SHIP_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>supply_ship_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SUPPLY_SHIP_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>supply_ship_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SUPPLY_SHIP_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>supply_ship_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- CARPET_BOMBING promotion -->
+		<Row><Atlas>LEKMOD_CARPET_BOMBING_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>carpet_bombing_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_CARPET_BOMBING_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>carpet_bombing_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_CARPET_BOMBING_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>carpet_bombing_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_CARPET_BOMBING_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>carpet_bombing_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- DISCIPLINE promotion -->
+		<Row><Atlas>LEKMOD_DISCIPLINE_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>discipline_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_DISCIPLINE_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>discipline_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_DISCIPLINE_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>discipline_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_DISCIPLINE_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>discipline_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- FEAR_AURA promotion -->
+		<Row><Atlas>LEKMOD_FEAR_AURA_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>fear_aura_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_FEAR_AURA_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>fear_aura_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_FEAR_AURA_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>fear_aura_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_FEAR_AURA_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>fear_aura_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- MARAUDER promotion -->
+		<Row><Atlas>LEKMOD_MARAUDER_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>marauder_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_MARAUDER_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>marauder_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_MARAUDER_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>marauder_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_MARAUDER_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>marauder_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- MOUNTAINEERING promotion -->
+		<Row><Atlas>LEKMOD_MOUNTAINEERING_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>mountaineering_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_MOUNTAINEERING_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>mountaineering_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_MOUNTAINEERING_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>mountaineering_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_MOUNTAINEERING_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>mountaineering_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- SWIFT_TRANSPORT promotion -->
+		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>swift_transport_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>swift_transport_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>swift_transport_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>swift_transport_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+	</IconTextureAtlases>
 
 	<Table name="Improvement_EraYieldChanges">
 		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
@@ -209942,8 +210037,18 @@
 		<Column name="KillRefreshMove" type="boolean" default="false" />
 		<Column name="KillRefreshAttack" type="boolean" default="false" />
 		<Column name="NoFortifyVsRanged" type="INTEGER" default="0" />
-		
-	</Table> 
+		<Column name="HillsMovementDiscountPercent" type="integer" default="0"/>
+		<Column name="EmbarkFlatCost" type="boolean" default="0"/>
+		<Column name="DisembarkFlatCost" type="boolean" default="0"/>
+		<Column name="MaxMovesAfterDomainChange" type="integer" default="0"/>
+		<Column name="HealWhileEmbarked" type="boolean" default="0"/>
+		<Column name="ExtraAttackVsFullHP" type="boolean" default="false"/>
+		<Column name="MovesNearGeneralChange" type="integer" default="0"/>
+		<Column name="CitySplashDamage" type="integer" default="0"/>
+		<Column name="CanCrossMountains" type="boolean" default="0"/>
+		<Column name="CarpetBombing" type="boolean" default="0"/>
+		<Column name="AdjacentTileHealOutsideFriendly" type="integer" default="0"/>
+	</Table>
 	<UnitPromotions>
 		<Delete />
 		<Row> 
@@ -212773,21 +212878,21 @@
 			<CtrlDown>false</CtrlDown> 
 			<CtrlDownAlt>false</CtrlDownAlt> 
 			<Sound>AS2D_IF_LEVELUP</Sound> 
-			<CannotBeChosen>false</CannotBeChosen> 
-			<LostWithUpgrade>false</LostWithUpgrade> 
-			<NotWithUpgrade>false</NotWithUpgrade> 
-			<InstaHeal>false</InstaHeal> 
-			<Leader>false</Leader> 
-			<Blitz>false</Blitz> 
-			<Amphib>true</Amphib> 
-			<River>true</River> 
-			<EnemyRoute>false</EnemyRoute> 
-			<RivalTerritory>false</RivalTerritory> 
-			<MustSetUpToRangedAttack>false</MustSetUpToRangedAttack> 
-			<RangedSupportFire>false</RangedSupportFire> 
-			<CanMoveAfterAttacking>false</CanMoveAfterAttacking> 
-			<AlwaysHeal>false</AlwaysHeal> 
-			<HealOutsideFriendly>false</HealOutsideFriendly> 
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>false</LostWithUpgrade>
+			<NotWithUpgrade>false</NotWithUpgrade>
+			<InstaHeal>false</InstaHeal>
+			<Leader>false</Leader>
+			<Blitz>false</Blitz>
+			<Amphib>false</Amphib>
+			<River>false</River>
+			<EnemyRoute>false</EnemyRoute>
+			<RivalTerritory>false</RivalTerritory>
+			<MustSetUpToRangedAttack>false</MustSetUpToRangedAttack>
+			<RangedSupportFire>false</RangedSupportFire>
+			<CanMoveAfterAttacking>false</CanMoveAfterAttacking>
+			<AlwaysHeal>false</AlwaysHeal>
+			<HealOutsideFriendly>false</HealOutsideFriendly>
 			<HillsDoubleMove>false</HillsDoubleMove> 
 			<RoughTerrainEndsTurn>false</RoughTerrainEndsTurn> 
 			<IgnoreTerrainCost>false</IgnoreTerrainCost> 
@@ -216694,16 +216799,16 @@
 			<HasPostCombatPromotions>false</HasPostCombatPromotions> 
 			<PostCombatPromotionsExclusive>false</PostCombatPromotionsExclusive> 
 			<RangedAttackModifier>0</RangedAttackModifier> 
-			<InterceptionCombatModifier>0</InterceptionCombatModifier> 
-			<InterceptionDefenseDamageModifier>0</InterceptionDefenseDamageModifier> 
-			<AirSweepCombatModifier>0</AirSweepCombatModifier> 
-			<ExtraAttacks>0</ExtraAttacks> 
-			<ExtraNavalMovement>0</ExtraNavalMovement> 
-			<VisibilityChange>0</VisibilityChange> 
-			<MovesChange>0</MovesChange> 
-			<MoveDiscountChange>0</MoveDiscountChange> 
-			<RangeChange>0</RangeChange> 
-			<InterceptChanceChange>0</InterceptChanceChange> 
+			<InterceptionCombatModifier>0</InterceptionCombatModifier>
+			<InterceptionDefenseDamageModifier>-10</InterceptionDefenseDamageModifier>
+			<AirSweepCombatModifier>0</AirSweepCombatModifier>
+			<ExtraAttacks>0</ExtraAttacks>
+			<ExtraNavalMovement>0</ExtraNavalMovement>
+			<VisibilityChange>0</VisibilityChange>
+			<MovesChange>0</MovesChange>
+			<MoveDiscountChange>0</MoveDiscountChange>
+			<RangeChange>0</RangeChange>
+			<InterceptChanceChange>0</InterceptChanceChange>
 			<NumInterceptionChange>1</NumInterceptionChange> 
 			<EvasionChange>0</EvasionChange> 
 			<CargoChange>0</CargoChange> 
@@ -218843,50 +218948,50 @@
 			<EnemyDamage>0</EnemyDamage> 
 			<NeutralDamage>0</NeutralDamage> 
 			<CombatPercent>0</CombatPercent> 
-			<CityAttack>15</CityAttack> 
-			<CityDefense>0</CityDefense> 
-			<RangedDefenseMod>0</RangedDefenseMod> 
-			<HillsAttack>0</HillsAttack> 
-			<HillsDefense>0</HillsDefense> 
-			<OpenAttack>0</OpenAttack> 
-			<OpenRangedAttackMod>0</OpenRangedAttackMod> 
-			<OpenDefense>0</OpenDefense> 
-			<RoughAttack>0</RoughAttack> 
-			<RoughRangedAttackMod>0</RoughRangedAttackMod> 
-			<RoughDefense>0</RoughDefense> 
-			<AttackFortifiedMod>0</AttackFortifiedMod> 
-			<AttackWoundedMod>0</AttackWoundedMod> 
-			<FlankAttackModifier>0</FlankAttackModifier> 
-			<NearbyEnemyCombatMod>0</NearbyEnemyCombatMod> 
-			<NearbyEnemyCombatRange>0</NearbyEnemyCombatRange> 
-			<UpgradeDiscount>0</UpgradeDiscount> 
-			<ExperiencePercent>0</ExperiencePercent> 
-			<AdjacentMod>0</AdjacentMod> 
-			<AttackMod>0</AttackMod> 
-			<DefenseMod>0</DefenseMod> 
-			<DropRange>0</DropRange> 
-			<GreatGeneral>false</GreatGeneral> 
-			<GreatAdmiral>false</GreatAdmiral> 
-			<GreatGeneralModifier>0</GreatGeneralModifier> 
-			<GreatGeneralReceivesMovement>false</GreatGeneralReceivesMovement> 
-			<GreatGeneralCombatModifier>0</GreatGeneralCombatModifier> 
-			<FriendlyLandsModifier>0</FriendlyLandsModifier> 
-			<FriendlyLandsAttackModifier>0</FriendlyLandsAttackModifier> 
-			<OutsideFriendlyLandsModifier>0</OutsideFriendlyLandsModifier> 
-			<HPHealedIfDestroyEnemy>0</HPHealedIfDestroyEnemy> 
-			<ExtraWithdrawal>0</ExtraWithdrawal> 
-			<EmbarkExtraVisibility>0</EmbarkExtraVisibility> 
-			<EmbarkDefenseModifier>0</EmbarkDefenseModifier> 
-			<CapitalDefenseModifier>0</CapitalDefenseModifier> 
-			<CapitalDefenseFalloff>0</CapitalDefenseFalloff> 
-			<CityAttackPlunderModifier>33</CityAttackPlunderModifier> 
-			<ReligiousStrengthLossRivalTerritory>0</ReligiousStrengthLossRivalTerritory> 
-			<TradeMissionInfluenceModifier>0</TradeMissionInfluenceModifier> 
-			<TradeMissionGoldModifier>0</TradeMissionGoldModifier> 
-			<GoldenAgeValueFromKills>0</GoldenAgeValueFromKills> 
-			<Sapper>false</Sapper> 
-			<HeavyCharge>false</HeavyCharge> 
-			<PediaType>PEDIA_NAVAL</PediaType> 
+			<CityAttack>25</CityAttack>
+			<CityDefense>0</CityDefense>
+			<RangedDefenseMod>0</RangedDefenseMod>
+			<HillsAttack>0</HillsAttack>
+			<HillsDefense>0</HillsDefense>
+			<OpenAttack>0</OpenAttack>
+			<OpenRangedAttackMod>0</OpenRangedAttackMod>
+			<OpenDefense>0</OpenDefense>
+			<RoughAttack>0</RoughAttack>
+			<RoughRangedAttackMod>0</RoughRangedAttackMod>
+			<RoughDefense>0</RoughDefense>
+			<AttackFortifiedMod>0</AttackFortifiedMod>
+			<AttackWoundedMod>0</AttackWoundedMod>
+			<FlankAttackModifier>0</FlankAttackModifier>
+			<NearbyEnemyCombatMod>0</NearbyEnemyCombatMod>
+			<NearbyEnemyCombatRange>0</NearbyEnemyCombatRange>
+			<UpgradeDiscount>0</UpgradeDiscount>
+			<ExperiencePercent>0</ExperiencePercent>
+			<AdjacentMod>0</AdjacentMod>
+			<AttackMod>0</AttackMod>
+			<DefenseMod>0</DefenseMod>
+			<DropRange>0</DropRange>
+			<GreatGeneral>false</GreatGeneral>
+			<GreatAdmiral>false</GreatAdmiral>
+			<GreatGeneralModifier>0</GreatGeneralModifier>
+			<GreatGeneralReceivesMovement>false</GreatGeneralReceivesMovement>
+			<GreatGeneralCombatModifier>0</GreatGeneralCombatModifier>
+			<FriendlyLandsModifier>0</FriendlyLandsModifier>
+			<FriendlyLandsAttackModifier>0</FriendlyLandsAttackModifier>
+			<OutsideFriendlyLandsModifier>0</OutsideFriendlyLandsModifier>
+			<HPHealedIfDestroyEnemy>0</HPHealedIfDestroyEnemy>
+			<ExtraWithdrawal>0</ExtraWithdrawal>
+			<EmbarkExtraVisibility>0</EmbarkExtraVisibility>
+			<EmbarkDefenseModifier>0</EmbarkDefenseModifier>
+			<CapitalDefenseModifier>0</CapitalDefenseModifier>
+			<CapitalDefenseFalloff>0</CapitalDefenseFalloff>
+			<CityAttackPlunderModifier>0</CityAttackPlunderModifier>
+			<ReligiousStrengthLossRivalTerritory>0</ReligiousStrengthLossRivalTerritory>
+			<TradeMissionInfluenceModifier>0</TradeMissionInfluenceModifier>
+			<TradeMissionGoldModifier>0</TradeMissionGoldModifier>
+			<GoldenAgeValueFromKills>0</GoldenAgeValueFromKills>
+			<Sapper>false</Sapper>
+			<HeavyCharge>false</HeavyCharge>
+			<PediaType>PEDIA_NAVAL</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_COASTAL_RAIDER_1</PediaEntry> 
 			<GreatGeneralOnOrAdjacentConfersMovement>0</GreatGeneralOnOrAdjacentConfersMovement> 
 			<EmbarkedUnitReceivesMovement>false</EmbarkedUnitReceivesMovement> 
@@ -218977,50 +219082,50 @@
 			<EnemyDamage>0</EnemyDamage> 
 			<NeutralDamage>0</NeutralDamage> 
 			<CombatPercent>0</CombatPercent> 
-			<CityAttack>15</CityAttack> 
-			<CityDefense>0</CityDefense> 
-			<RangedDefenseMod>0</RangedDefenseMod> 
-			<HillsAttack>0</HillsAttack> 
-			<HillsDefense>0</HillsDefense> 
-			<OpenAttack>0</OpenAttack> 
-			<OpenRangedAttackMod>0</OpenRangedAttackMod> 
-			<OpenDefense>0</OpenDefense> 
-			<RoughAttack>0</RoughAttack> 
-			<RoughRangedAttackMod>0</RoughRangedAttackMod> 
-			<RoughDefense>0</RoughDefense> 
-			<AttackFortifiedMod>0</AttackFortifiedMod> 
-			<AttackWoundedMod>0</AttackWoundedMod> 
-			<FlankAttackModifier>0</FlankAttackModifier> 
-			<NearbyEnemyCombatMod>0</NearbyEnemyCombatMod> 
-			<NearbyEnemyCombatRange>0</NearbyEnemyCombatRange> 
-			<UpgradeDiscount>0</UpgradeDiscount> 
-			<ExperiencePercent>0</ExperiencePercent> 
-			<AdjacentMod>0</AdjacentMod> 
-			<AttackMod>0</AttackMod> 
-			<DefenseMod>0</DefenseMod> 
-			<DropRange>0</DropRange> 
-			<GreatGeneral>false</GreatGeneral> 
-			<GreatAdmiral>false</GreatAdmiral> 
-			<GreatGeneralModifier>0</GreatGeneralModifier> 
-			<GreatGeneralReceivesMovement>false</GreatGeneralReceivesMovement> 
-			<GreatGeneralCombatModifier>0</GreatGeneralCombatModifier> 
-			<FriendlyLandsModifier>0</FriendlyLandsModifier> 
-			<FriendlyLandsAttackModifier>0</FriendlyLandsAttackModifier> 
-			<OutsideFriendlyLandsModifier>0</OutsideFriendlyLandsModifier> 
-			<HPHealedIfDestroyEnemy>0</HPHealedIfDestroyEnemy> 
-			<ExtraWithdrawal>0</ExtraWithdrawal> 
-			<EmbarkExtraVisibility>0</EmbarkExtraVisibility> 
-			<EmbarkDefenseModifier>0</EmbarkDefenseModifier> 
-			<CapitalDefenseModifier>0</CapitalDefenseModifier> 
-			<CapitalDefenseFalloff>0</CapitalDefenseFalloff> 
-			<CityAttackPlunderModifier>33</CityAttackPlunderModifier> 
-			<ReligiousStrengthLossRivalTerritory>0</ReligiousStrengthLossRivalTerritory> 
-			<TradeMissionInfluenceModifier>0</TradeMissionInfluenceModifier> 
-			<TradeMissionGoldModifier>0</TradeMissionGoldModifier> 
-			<GoldenAgeValueFromKills>0</GoldenAgeValueFromKills> 
-			<Sapper>false</Sapper> 
-			<HeavyCharge>false</HeavyCharge> 
-			<PediaType>PEDIA_NAVAL</PediaType> 
+			<CityAttack>25</CityAttack>
+			<CityDefense>0</CityDefense>
+			<RangedDefenseMod>0</RangedDefenseMod>
+			<HillsAttack>0</HillsAttack>
+			<HillsDefense>0</HillsDefense>
+			<OpenAttack>0</OpenAttack>
+			<OpenRangedAttackMod>0</OpenRangedAttackMod>
+			<OpenDefense>0</OpenDefense>
+			<RoughAttack>0</RoughAttack>
+			<RoughRangedAttackMod>0</RoughRangedAttackMod>
+			<RoughDefense>0</RoughDefense>
+			<AttackFortifiedMod>0</AttackFortifiedMod>
+			<AttackWoundedMod>0</AttackWoundedMod>
+			<FlankAttackModifier>0</FlankAttackModifier>
+			<NearbyEnemyCombatMod>0</NearbyEnemyCombatMod>
+			<NearbyEnemyCombatRange>0</NearbyEnemyCombatRange>
+			<UpgradeDiscount>0</UpgradeDiscount>
+			<ExperiencePercent>0</ExperiencePercent>
+			<AdjacentMod>0</AdjacentMod>
+			<AttackMod>0</AttackMod>
+			<DefenseMod>0</DefenseMod>
+			<DropRange>0</DropRange>
+			<GreatGeneral>false</GreatGeneral>
+			<GreatAdmiral>false</GreatAdmiral>
+			<GreatGeneralModifier>0</GreatGeneralModifier>
+			<GreatGeneralReceivesMovement>false</GreatGeneralReceivesMovement>
+			<GreatGeneralCombatModifier>0</GreatGeneralCombatModifier>
+			<FriendlyLandsModifier>0</FriendlyLandsModifier>
+			<FriendlyLandsAttackModifier>0</FriendlyLandsAttackModifier>
+			<OutsideFriendlyLandsModifier>0</OutsideFriendlyLandsModifier>
+			<HPHealedIfDestroyEnemy>0</HPHealedIfDestroyEnemy>
+			<ExtraWithdrawal>0</ExtraWithdrawal>
+			<EmbarkExtraVisibility>0</EmbarkExtraVisibility>
+			<EmbarkDefenseModifier>0</EmbarkDefenseModifier>
+			<CapitalDefenseModifier>0</CapitalDefenseModifier>
+			<CapitalDefenseFalloff>0</CapitalDefenseFalloff>
+			<CityAttackPlunderModifier>0</CityAttackPlunderModifier>
+			<ReligiousStrengthLossRivalTerritory>0</ReligiousStrengthLossRivalTerritory>
+			<TradeMissionInfluenceModifier>0</TradeMissionInfluenceModifier>
+			<TradeMissionGoldModifier>0</TradeMissionGoldModifier>
+			<GoldenAgeValueFromKills>0</GoldenAgeValueFromKills>
+			<Sapper>false</Sapper>
+			<HeavyCharge>false</HeavyCharge>
+			<PediaType>PEDIA_NAVAL</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_COASTAL_RAIDER_2</PediaEntry> 
 			<GreatGeneralOnOrAdjacentConfersMovement>0</GreatGeneralOnOrAdjacentConfersMovement> 
 			<EmbarkedUnitReceivesMovement>false</EmbarkedUnitReceivesMovement> 
@@ -219111,7 +219216,7 @@
 			<EnemyDamage>0</EnemyDamage> 
 			<NeutralDamage>0</NeutralDamage> 
 			<CombatPercent>0</CombatPercent> 
-			<CityAttack>20</CityAttack> 
+			<CityAttack>25</CityAttack> 
 			<CityDefense>0</CityDefense> 
 			<RangedDefenseMod>0</RangedDefenseMod> 
 			<HillsAttack>0</HillsAttack> 
@@ -219147,7 +219252,7 @@
 			<EmbarkDefenseModifier>0</EmbarkDefenseModifier> 
 			<CapitalDefenseModifier>0</CapitalDefenseModifier> 
 			<CapitalDefenseFalloff>0</CapitalDefenseFalloff> 
-			<CityAttackPlunderModifier>34</CityAttackPlunderModifier> 
+			<CityAttackPlunderModifier>0</CityAttackPlunderModifier> 
 			<ReligiousStrengthLossRivalTerritory>0</ReligiousStrengthLossRivalTerritory> 
 			<TradeMissionInfluenceModifier>0</TradeMissionInfluenceModifier> 
 			<TradeMissionGoldModifier>0</TradeMissionGoldModifier> 
@@ -232607,8 +232712,8 @@
 			<Type>PROMOTION_FEARED_ELEPHANT</Type> 
 			<Description>TXT_KEY_PROMOTION_FEARED_ELEPHANT</Description> 
 			<Help>TXT_KEY_PROMOTION_FEARED_ELEPHANT_HELP</Help> 
-			<PortraitIndex>59</PortraitIndex> 
-			<IconAtlas>ABILITY_ATLAS</IconAtlas> 
+			<PortraitIndex>0</PortraitIndex> 
+			<IconAtlas>LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS</IconAtlas> 
 			<HotKeyPriority>0</HotKeyPriority> 
 			<HotKeyPriorityAlt>0</HotKeyPriorityAlt> 
 			<OrderPriority>0</OrderPriority> 
@@ -236062,11 +236167,11 @@
 			<EmbarkedUnitReceivesMovement>false</EmbarkedUnitReceivesMovement> 
 			<HeavyChargeDownhill>0</HeavyChargeDownhill> 
 		</Row>
-		<Row> 
-			<ID>213</ID> 
-			<Type>PROMOTION_ALTITUDE_TRAINING</Type> 
-			<Description>TXT_KEY_PROMOTION_ALTITUDE_TRAINING</Description> 
-			<Help>TXT_KEY_PROMOTION_ALTITUDE_TRAINING_HELP</Help> 
+		<Row>
+			<ID>213</ID>
+			<Type>PROMOTION_ALTITUDE_TRAINING</Type>
+			<Description>TXT_KEY_PROMOTION_ALTITUDE_TRAINING</Description>
+			<Help>TXT_KEY_PROMOTION_ALTITUDE_TRAINING_HELP</Help>
 			<PortraitIndex>0</PortraitIndex> 
 			<IconAtlas>EXPANSION2_PROMOTION_ATLAS</IconAtlas> 
 			<HotKeyPriority>0</HotKeyPriority> 
@@ -236094,7 +236199,7 @@
 			<CanMoveAfterAttacking>false</CanMoveAfterAttacking> 
 			<AlwaysHeal>false</AlwaysHeal> 
 			<HealOutsideFriendly>false</HealOutsideFriendly> 
-			<HillsDoubleMove>true</HillsDoubleMove> 
+			<HillsDoubleMove>false</HillsDoubleMove> 
 			<RoughTerrainEndsTurn>false</RoughTerrainEndsTurn> 
 			<IgnoreTerrainCost>false</IgnoreTerrainCost> 
 			<HoveringUnit>false</HoveringUnit> 
@@ -236131,6 +236236,7 @@
 			<VisibilityChange>0</VisibilityChange> 
 			<MovesChange>0</MovesChange> 
 			<MoveDiscountChange>0</MoveDiscountChange> 
+			<HillsMovementDiscountPercent>10</HillsMovementDiscountPercent>
 			<RangeChange>0</RangeChange> 
 			<InterceptChanceChange>0</InterceptChanceChange> 
 			<NumInterceptionChange>0</NumInterceptionChange> 
@@ -237497,7 +237603,7 @@
 			<AdjacentMod>0</AdjacentMod> 
 			<AttackMod>0</AttackMod> 
 			<DefenseMod>0</DefenseMod> 
-			<DropRange>40</DropRange> 
+			<DropRange>100</DropRange> 
 			<GreatGeneral>false</GreatGeneral> 
 			<GreatAdmiral>false</GreatAdmiral> 
 			<GreatGeneralModifier>0</GreatGeneralModifier> 
@@ -247570,7 +247676,7 @@
 			<InterceptionDefenseDamageModifier>0</InterceptionDefenseDamageModifier> 
 			<AirSweepCombatModifier>0</AirSweepCombatModifier> 
 			<ExtraAttacks>0</ExtraAttacks> 
-			<ExtraNavalMovement>3</ExtraNavalMovement> 
+			<ExtraNavalMovement>2</ExtraNavalMovement> 
 			<VisibilityChange>0</VisibilityChange> 
 			<MovesChange>0</MovesChange> 
 			<MoveDiscountChange>0</MoveDiscountChange> 
@@ -251229,7 +251335,7 @@
 			<ShiftDownAlt>false</ShiftDownAlt> 
 			<CtrlDown>false</CtrlDown> 
 			<CtrlDownAlt>false</CtrlDownAlt> 
-			<Sound>AS2D_IF_LEVELUP</Sound> 
+			<Sound>AS2D_IF_LEVELUP</Sound>
 			<CannotBeChosen>true</CannotBeChosen>
 		</Row>
 		<Row>
@@ -251310,6 +251416,294 @@
 			<LostWithUpgrade>true</LostWithUpgrade>
 			<NoFortifyVsRanged>true</NoFortifyVsRanged>
 		</Row>
+		<Row>
+			<ID>344</ID>
+			<Type>PROMOTION_ZEALOT</Type>
+			<Description>TXT_KEY_PROMOTION_ZEALOT</Description>
+			<Help>TXT_KEY_PROMOTION_ZEALOT_HELP</Help>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_ZEALOT_PROMOTION_ATLAS</IconAtlas>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_ZEALOT</PediaEntry>
+		</Row>
+		<Row>
+			<ID>345</ID>
+			<Type>PROMOTION_ENVELOPMENT</Type>
+			<Description>TXT_KEY_PROMOTION_ENVELOPMENT</Description>
+			<Help>TXT_KEY_PROMOTION_ENVELOPMENT_HELP</Help>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_ENVELOPMENT_PROMOTION_ATLAS</IconAtlas>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>false</CannotBeChosen>
+			<FlankAttackModifier>100</FlankAttackModifier>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_ENVELOPMENT</PediaEntry>
+		</Row>
+		<Row>
+			<ID>346</ID>
+			<Type>PROMOTION_GLUTTON</Type>
+			<Description>TXT_KEY_PROMOTION_GLUTTON</Description>
+			<Help>TXT_KEY_PROMOTION_GLUTTON_HELP</Help>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<CombatPercent>-10</CombatPercent>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_GLUTTON</PediaEntry>
+		</Row>
+		<!-- April promotions, migrated from Art/Promotions/LekmodPromotions.xml (that file is not loaded) -->
+		<Row>
+			<ID>347</ID>
+			<Type>PROMOTION_AMPHIBIOUS_1</Type>
+			<Description>TXT_KEY_PROMOTION_AMPHIBIOUS_1</Description>
+			<Help>TXT_KEY_PROMOTION_AMPHIBIOUS_1_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<River>true</River>
+			<EmbarkDefenseModifier>75</EmbarkDefenseModifier>
+			<EmbarkFlatCost>true</EmbarkFlatCost>
+			<MaxMovesAfterDomainChange>1</MaxMovesAfterDomainChange>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_AMPHIBIOUS_1_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_AMPHIBIOUS_1</PediaEntry>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>348</ID>
+			<Type>PROMOTION_AMPHIBIOUS_2</Type>
+			<Description>TXT_KEY_PROMOTION_AMPHIBIOUS_2</Description>
+			<Help>TXT_KEY_PROMOTION_AMPHIBIOUS_2_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<DisembarkFlatCost>true</DisembarkFlatCost>
+			<ExtraNavalMovement>1</ExtraNavalMovement>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_AMPHIBIOUS_2_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_AMPHIBIOUS_2</PediaEntry>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>349</ID>
+			<Type>PROMOTION_AMPHIBIOUS_3</Type>
+			<Description>TXT_KEY_PROMOTION_AMPHIBIOUS_3</Description>
+			<Help>TXT_KEY_PROMOTION_AMPHIBIOUS_3_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<Amphib>true</Amphib>
+			<ExtraNavalMovement>1</ExtraNavalMovement>
+			<MaxMovesAfterDomainChange>1</MaxMovesAfterDomainChange>
+			<HealWhileEmbarked>true</HealWhileEmbarked>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_AMPHIBIOUS_3_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_AMPHIBIOUS_3</PediaEntry>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>350</ID>
+			<Type>PROMOTION_BUNKER_BUSTING</Type>
+			<Description>TXT_KEY_PROMOTION_BUNKER_BUSTING</Description>
+			<Help>TXT_KEY_PROMOTION_BUNKER_BUSTING_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CityAttack>33</CityAttack>
+			<CitySplashDamage>10</CitySplashDamage>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_BUNKER_BUSTING_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_BUNKER_BUSTING</PediaEntry>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>351</ID>
+			<Type>PROMOTION_REPAIR_CREW</Type>
+			<Description>TXT_KEY_PROMOTION_REPAIR_CREW</Description>
+			<Help>TXT_KEY_PROMOTION_REPAIR_CREW_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_REPAIR_CREW_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_REPAIR_CREW</PediaEntry>
+			<SameTileHealChange>15</SameTileHealChange>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>352</ID>
+			<Type>PROMOTION_SUPPLY_SHIP</Type>
+			<Description>TXT_KEY_PROMOTION_SUPPLY_SHIP</Description>
+			<Help>TXT_KEY_PROMOTION_SUPPLY_SHIP_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_SUPPLY_SHIP_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_SUPPLY_SHIP</PediaEntry>
+			<AdjacentTileHealOutsideFriendly>10</AdjacentTileHealOutsideFriendly>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>353</ID>
+			<Type>PROMOTION_SAMBUCA</Type>
+			<Description>TXT_KEY_PROMOTION_SAMBUCA</Description>
+			<Help>TXT_KEY_PROMOTION_SAMBUCA_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>6</PortraitIndex>
+			<IconAtlas>EXPANSION2_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_SAMBUCA</PediaEntry>
+			<Sapper>true</Sapper>
+			<DefenseMod>-33</DefenseMod>
+			<MovesChange>-1</MovesChange>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>354</ID>
+			<Type>PROMOTION_CARPET_BOMBING</Type>
+			<Description>TXT_KEY_PROMOTION_CARPET_BOMBING</Description>
+			<Help>TXT_KEY_PROMOTION_CARPET_BOMBING_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_CARPET_BOMBING_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_CARPET_BOMBING</PediaEntry>
+			<CarpetBombing>true</CarpetBombing>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>355</ID>
+			<Type>PROMOTION_DISCIPLINE</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>true</CannotBeChosen>
+			<ExperiencePercent>50</ExperiencePercent>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_DISCIPLINE_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE</PediaEntry>
+		</Row>
+		<Row>
+			<ID>356</ID>
+			<Type>PROMOTION_DISCIPLINE_AIR</Type>
+			<Description>TXT_KEY_PROMOTION_DISCIPLINE_AIR</Description>
+			<Help>TXT_KEY_PROMOTION_DISCIPLINE_AIR_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>true</CannotBeChosen>
+			<ExperiencePercent>25</ExperiencePercent>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_DISCIPLINE_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_DISCIPLINE_AIR</PediaEntry>
+		</Row>
+		<Row>
+			<ID>357</ID>
+			<Type>PROMOTION_FEAR_AURA</Type>
+			<Description>TXT_KEY_PROMOTION_FEAR_AURA</Description>
+			<Help>TXT_KEY_PROMOTION_FEAR_AURA_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>true</CannotBeChosen>
+			<NearbyEnemyCombatMod>-15</NearbyEnemyCombatMod>
+			<NearbyEnemyCombatRange>1</NearbyEnemyCombatRange>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_FEAR_AURA_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_FEAR_AURA</PediaEntry>
+		</Row>
+		<Row>
+			<ID>358</ID>
+			<Type>PROMOTION_MARAUDER</Type>
+			<Description>TXT_KEY_PROMOTION_MARAUDER</Description>
+			<Help>TXT_KEY_PROMOTION_MARAUDER_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>true</CannotBeChosen>
+			<PillageChange>50</PillageChange>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_MARAUDER_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_MARAUDER</PediaEntry>
+		</Row>
+		<Row>
+			<ID>359</ID>
+			<Type>PROMOTION_MOUNTAINEERING</Type>
+			<Description>TXT_KEY_PROMOTION_MOUNTAINEERING</Description>
+			<Help>TXT_KEY_PROMOTION_MOUNTAINEERING_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CanCrossMountains>true</CanCrossMountains>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_MOUNTAINEERING_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_MOUNTAINEERING</PediaEntry>
+			<CannotBeChosen>false</CannotBeChosen>
+		</Row>
+		<Row>
+			<ID>360</ID>
+			<Type>PROMOTION_SWIFT_TRANSPORT</Type>
+			<Description>TXT_KEY_PROMOTION_SWIFT_TRANSPORT</Description>
+			<Help>TXT_KEY_PROMOTION_SWIFT_TRANSPORT_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<CannotBeChosen>true</CannotBeChosen>
+			<EmbarkedUnitReceivesMovement>true</EmbarkedUnitReceivesMovement>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</IconAtlas>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_SWIFT_TRANSPORT</PediaEntry>
+		</Row>
+		<Row>
+			<ID>361</ID>
+			<Type>PROMOTION_IAIJUTSU</Type>
+			<Description>TXT_KEY_PROMOTION_IAIJUTSU</Description>
+			<Help>TXT_KEY_PROMOTION_IAIJUTSU_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_IAIJUTSU_PROMOTION_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<ExtraAttackVsFullHP>true</ExtraAttackVsFullHP>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_IAIJUTSU</PediaEntry>
+		</Row>
+		<Row>
+			<ID>362</ID>
+			<Type>PROMOTION_HATAMOTO</Type>
+			<Description>TXT_KEY_PROMOTION_HATAMOTO</Description>
+			<Help>TXT_KEY_PROMOTION_HATAMOTO_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_HATAMOTO_PROMOTION_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<MovesNearGeneralChange>1</MovesNearGeneralChange>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_HATAMOTO</PediaEntry>
+		</Row>
+		<Row>
+			<ID>363</ID>
+			<Type>PROMOTION_ONE_GOOD_EYE</Type>
+			<Description>TXT_KEY_PROMOTION_ONE_GOOD_EYE</Description>
+			<Help>TXT_KEY_PROMOTION_ONE_GOOD_EYE_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_ONE_GOOD_EYE_PROMOTION_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<VisibilityChange>1</VisibilityChange>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_ONE_GOOD_EYE</PediaEntry>
+		</Row>
+		<Row>
+			<ID>364</ID>
+			<Type>PROMOTION_STARGAZING</Type>
+			<Description>TXT_KEY_PROMOTION_STARGAZING</Description>
+			<Help>TXT_KEY_PROMOTION_STARGAZING_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_STARGAZING_PROMOTION_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<VisibilityChange>1</VisibilityChange>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_STARGAZING</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -251334,6 +251728,15 @@
 			<PromotionType>PROMOTION_GEORGIA_GOLDEN</PromotionType>
 			<EraType>ERA_RENAISSANCE</EraType>
 		</Row>
+		<!-- Zealot: faith from kills of any era -->
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_ANCIENT</EraType></Row>
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_CLASSICAL</EraType></Row>
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_MEDIEVAL</EraType></Row>
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_RENAISSANCE</EraType></Row>
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_INDUSTRIAL</EraType></Row>
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_MODERN</EraType></Row>
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_POSTMODERN</EraType></Row>
+		<Row><PromotionType>PROMOTION_ZEALOT</PromotionType><EraType>ERA_FUTURE</EraType></Row>
 	</UnitPromotions_KillYieldValidEras>
 
 	<Table name="UnitPromotions_YieldFromKills">
@@ -251349,6 +251752,12 @@
 			<PromotionType>PROMOTION_GEORGIA_GOLDEN</PromotionType>
 			<YieldType>YIELD_GOLDEN_AGE_POINTS</YieldType>
 			<Yield>100</Yield>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>100</Yield>
+			<Max>30</Max>
 		</Row>
 	</UnitPromotions_YieldFromKills>
 
@@ -251445,6 +251854,15 @@
     </Table>
 	<UnitPromotions_PromotionPrereqOrs>
 		<Delete />
+		<!-- Amphibious -->
+		<Row>
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType>
+			<PrerequisitePromotion>PROMOTION_AMPHIBIOUS_1</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_AMPHIBIOUS_3</PromotionType>
+			<PrerequisitePromotion>PROMOTION_AMPHIBIOUS_2</PrerequisitePromotion>
+		</Row>
 		<!-- Shock -->
 		<Row>
 			<PromotionType>PROMOTION_SHOCK_2</PromotionType>
@@ -251582,15 +252000,7 @@
 			<PromotionType>PROMOTION_MEDIC_II</PromotionType>
 			<PrerequisitePromotion>PROMOTION_MEDIC</PrerequisitePromotion>
 		</Row>
-		<!-- Amphibious -->
-		<Row>
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType>
-			<PrerequisitePromotion>PROMOTION_SHOCK_1</PrerequisitePromotion>
-		</Row>
-		<Row>
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType>
-			<PrerequisitePromotion>PROMOTION_DRILL_1</PrerequisitePromotion>
-		</Row>
+		<!-- Amphibious prereqs removed; line is now PROMOTION_AMPHIBIOUS_1/2/3 in UnitPromotions_PromotionPrereqOrs -->
 		<!-- Cover -->
 		<Row>
 			<PromotionType>PROMOTION_COVER_1</PromotionType>
@@ -251683,11 +252093,7 @@
 		<!-- Woodsman -->
 		<Row>
 			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
-			<PrerequisitePromotion>PROMOTION_SHOCK_2</PrerequisitePromotion>
-		</Row>
-		<Row>
-			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
-			<PrerequisitePromotion>PROMOTION_DRILL_2</PrerequisitePromotion>
+			<PrerequisitePromotion>PROMOTION_DRILL_1</PrerequisitePromotion>
 		</Row>
 		<!-- Logistics -->
 		<Row>
@@ -251713,6 +252119,10 @@
 		<Row>
 			<PromotionType>PROMOTION_LOGISTICS</PromotionType>
 			<PrerequisitePromotion>PROMOTION_BOARDING_PARTY_3</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_LOGISTICS</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_3</PrerequisitePromotion>
 		</Row>
 		<Row>
 			<PromotionType>PROMOTION_LOGISTICS</PromotionType>
@@ -251743,14 +252153,93 @@
 			<PromotionType>PROMOTION_RANGE</PromotionType>
 			<PrerequisitePromotion>PROMOTION_BOMBARDMENT_NAVAL_2</PrerequisitePromotion>
 		</Row>
+		<!-- Mountaineering -->
+		<Row>
+			<PromotionType>PROMOTION_MOUNTAINEERING</PromotionType>
+			<PrerequisitePromotion>PROMOTION_DRILL_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOUNTAINEERING</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ALTITUDE_TRAINING</PrerequisitePromotion>
+		</Row>
+		<!-- Repair Crew -->
+		<Row>
+			<PromotionType>PROMOTION_REPAIR_CREW</PromotionType>
+			<PrerequisitePromotion>PROMOTION_FLIGHT_DECK_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_REPAIR_CREW</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
+		</Row>
+		<!-- Supply Ship -->
+		<Row>
+			<PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType>
+			<PrerequisitePromotion>PROMOTION_COASTAL_RAIDER_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType>
+			<PrerequisitePromotion>PROMOTION_BOARDING_PARTY_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
+		</Row>
+		<!-- Sapper (Naval) -->
+		<Row>
+			<PromotionType>PROMOTION_SAMBUCA</PromotionType>
+			<PrerequisitePromotion>PROMOTION_COASTAL_RAIDER_1</PrerequisitePromotion>
+		</Row>
+		<!-- Carpet Bombing -->
+		<Row>
+			<PromotionType>PROMOTION_CARPET_BOMBING</PromotionType>
+			<PrerequisitePromotion>PROMOTION_BOMBARDMENT_2</PrerequisitePromotion>
+		</Row>
+		<!-- Bunker Busting -->
+		<Row>
+			<PromotionType>PROMOTION_BUNKER_BUSTING</PromotionType>
+			<PrerequisitePromotion>PROMOTION_VOLLEY</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_BUNKER_BUSTING</PromotionType>
+			<PrerequisitePromotion>PROMOTION_AIR_SIEGE_1</PrerequisitePromotion>
+		</Row>
+		<!-- Envelopment -->
+		<Row>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+			<PrerequisitePromotion>PROMOTION_SHOCK_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+			<PrerequisitePromotion>PROMOTION_DRILL_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+			<PrerequisitePromotion>PROMOTION_AMPHIBIOUS_2</PrerequisitePromotion>
+		</Row>
 		<!-- Mobility -->
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_SHOCK_2</PrerequisitePromotion>
+		</Row>
 		<Row>
 			<PromotionType>PROMOTION_MOBILITY</PromotionType>
 			<PrerequisitePromotion>PROMOTION_SHOCK_3</PrerequisitePromotion>
 		</Row>
 		<Row>
 			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_DRILL_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
 			<PrerequisitePromotion>PROMOTION_DRILL_3</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_AMPHIBIOUS_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_AMBUSH_FORMATION_2</PrerequisitePromotion>
 		</Row>
 		<Row>
 			<PromotionType>PROMOTION_MOBILITY</PromotionType>
@@ -251947,6 +252436,10 @@
 			<PromotionType>PROMOTION_AIR_LOGISTICS</PromotionType>
 			<PrerequisitePromotion>PROMOTION_ANTI_NAVAL_HELI_2</PrerequisitePromotion>
 		</Row>
+		<Row>
+			<PromotionType>PROMOTION_AIR_LOGISTICS</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
+		</Row>
 		<!-- Evasion -->
 		<Row>
 			<PromotionType>PROMOTION_EVASION</PromotionType>
@@ -252009,6 +252502,10 @@
 		<Row>
 			<PromotionType>PROMOTION_HELI_REPAIR</PromotionType>
 			<PrerequisitePromotion>PROMOTION_ANTI_NAVAL_HELI_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_HELI_REPAIR</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
 		</Row>
 		<!-- Coastal Raider -->
 		<Row>
@@ -252385,20 +252882,20 @@
 			<DomainType>DOMAIN_SEA</DomainType> 
 			<Modifier>15</Modifier> 
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_BOARDING_PARTY_1</PromotionType> 
-			<DomainType>DOMAIN_SEA</DomainType> 
-			<Modifier>15</Modifier> 
+		<Row>
+			<PromotionType>PROMOTION_BOARDING_PARTY_1</PromotionType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<Modifier>25</Modifier>
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_BOARDING_PARTY_2</PromotionType> 
-			<DomainType>DOMAIN_SEA</DomainType> 
-			<Modifier>15</Modifier> 
+		<Row>
+			<PromotionType>PROMOTION_BOARDING_PARTY_2</PromotionType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<Modifier>25</Modifier>
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_BOARDING_PARTY_3</PromotionType> 
-			<DomainType>DOMAIN_SEA</DomainType> 
-			<Modifier>15</Modifier> 
+		<Row>
+			<PromotionType>PROMOTION_BOARDING_PARTY_3</PromotionType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<Modifier>25</Modifier>
 		</Row>
 		<Row> 
 			<PromotionType>PROMOTION_AIR_TARGETING_1</PromotionType> 
@@ -252740,8 +253237,8 @@
 		<Row> 
 			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType> 
 			<TerrainType>TERRAIN_HILL</TerrainType> 
-			<Attack>10</Attack> 
-			<Defense>10</Defense> 
+			<Attack>0</Attack> 
+			<Defense>0</Defense> 
 			<DoubleMove>false</DoubleMove> 
 			<Impassable>false</Impassable> 
 		</Row>
@@ -253480,15 +253977,42 @@
 			<PromotionType>PROMOTION_MEDIC_II</PromotionType> 
 			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType> 
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType> 
-			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType> 
-		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType> 
-			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType> 
-		</Row>
-		<Row> 
+		<!-- Amphibious 1/2/3: melee, gunpowder, mounted, armor, ranged, mounted ranged -->
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType><UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType><UnitCombatType>UNITCOMBAT_GUN</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType><UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType><UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType><UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType><UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType><UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType><UnitCombatType>UNITCOMBAT_GUN</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType><UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType><UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType><UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType><UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_3</PromotionType><UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_3</PromotionType><UnitCombatType>UNITCOMBAT_GUN</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_3</PromotionType><UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_3</PromotionType><UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_3</PromotionType><UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_AMPHIBIOUS_3</PromotionType><UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType></Row>
+		<!-- Mountaineering: melee, gunpowder -->
+		<Row><PromotionType>PROMOTION_MOUNTAINEERING</PromotionType><UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_MOUNTAINEERING</PromotionType><UnitCombatType>UNITCOMBAT_GUN</UnitCombatType></Row>
+		<!-- Bunker Busting: siege, bomber -->
+		<Row><PromotionType>PROMOTION_BUNKER_BUSTING</PromotionType><UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_BUNKER_BUSTING</PromotionType><UnitCombatType>UNITCOMBAT_BOMBER</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_CARPET_BOMBING</PromotionType><UnitCombatType>UNITCOMBAT_BOMBER</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_REPAIR_CREW</PromotionType><UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_SAMBUCA</PromotionType><UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType><UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType><UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType></Row>
+		<!-- Envelopment: melee, gunpowder, mounted, armor -->
+		<Row><PromotionType>PROMOTION_ENVELOPMENT</PromotionType><UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_ENVELOPMENT</PromotionType><UnitCombatType>UNITCOMBAT_GUN</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_ENVELOPMENT</PromotionType><UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType></Row>
+		<Row><PromotionType>PROMOTION_ENVELOPMENT</PromotionType><UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType></Row>
+		<Row>
 			<PromotionType>PROMOTION_COVER_1</PromotionType> 
 			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType> 
 		</Row>
@@ -253603,13 +254127,25 @@
 			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType> 
 		</Row>
 		<!-- Mobility -->
-		<Row> 
-			<PromotionType>PROMOTION_MOBILITY</PromotionType> 
-			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType> 
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_MOBILITY</PromotionType> 
-			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType> 
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
 		</Row>
 		<Row> 
 			<PromotionType>PROMOTION_MOBILITY</PromotionType> 
@@ -254091,17 +254627,41 @@
 			<PromotionType>PROMOTION_FLIGHT_DECK_3</PromotionType> 
 			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType> 
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_ARMOR_PLATING_1</PromotionType> 
-			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType> 
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_1</PromotionType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_ARMOR_PLATING_2</PromotionType> 
-			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType> 
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_1</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
 		</Row>
-		<Row> 
-			<PromotionType>PROMOTION_ARMOR_PLATING_3</PromotionType> 
-			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType> 
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_1</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_2</PromotionType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_2</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_2</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_3</PromotionType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_3</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_3</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
 		</Row>
 		<Row> 
 			<PromotionType>PROMOTION_FASTER_HEAL</PromotionType> 
@@ -261537,9 +262097,17 @@
 			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType> 
 			<PromotionType>PROMOTION_FOREIGN_LANDS</PromotionType> 
 		</Row>
-		<Row> 
-			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType> 
-			<PromotionType>PROMOTION_FREE_PILLAGE_MOVES</PromotionType> 
+		<Row>
+			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType>
+			<PromotionType>PROMOTION_FREE_PILLAGE_MOVES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ISRAEL_MACCABEE</UnitType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
 		</Row>
 		<Row> 
 			<UnitType>UNIT_UPGRADED_SWORD_NO_IRON</UnitType> 
@@ -266081,11 +266649,6 @@
 		<Delete />
 
 		<Row> 
-			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType> 
-			<YieldType>YIELD_FAITH</YieldType> 
-			<Yield>100</Yield> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_MC_OMANI_BAGHLAH</UnitType> 
 			<YieldType>YIELD_FAITH</YieldType> 
 			<Yield>100</Yield> 
@@ -266114,11 +266677,6 @@
 			<UnitType>UNIT_SWITZ</UnitType> 
 			<YieldType>YIELD_FAITH</YieldType> 
 			<Yield>100</Yield> 
-		</Row>
-		<Row>
-			<UnitType>UNIT_ISRAEL_MACCABEE</UnitType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>100</Yield>
 		</Row>
 		<Row> 
 			<UnitType>UNIT_SWISS_REISLAUFER</UnitType> 

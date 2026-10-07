@@ -164,6 +164,9 @@ void CvUnitCombat::ResolveMeleeCombat(const CvCombatInfo& kCombatInfo, uint uiPa
 
 	int iActivePlayerID = GC.getGame().getActivePlayer();
 
+	// Iaijutsu: remember whether the defender was at full HP before this attack
+	const bool bDefenderWasFullHP = (pkDefender != NULL && pkDefender->getDamage() == 0);
+
 	bool bAttackerDidMoreDamage = false;
 
 	if(pkAttacker != NULL && pkDefender != NULL && pkTargetPlot != NULL &&
@@ -416,6 +419,13 @@ void CvUnitCombat::ResolveMeleeCombat(const CvCombatInfo& kCombatInfo, uint uiPa
 				}
 			}
 
+			// Iaijutsu: first attack this turn against a full-HP unit grants one more attack
+			if(bDefenderWasFullHP && !pkAttacker->IsDead() && pkAttacker->IsExtraAttackVsFullHP() && !pkAttacker->IsExtraAttackVsFullHPUsed())
+			{
+				pkAttacker->SetExtraAttackVsFullHPUsed(true);
+				pkAttacker->RefundAttack();
+			}
+
 			// If a Unit loses his moves after attacking, do so
 #ifdef NQ_UNIT_TURN_ENDS_ON_FINAL_ATTACK
 			if(!pkAttacker->canMoveAfterAttacking() && pkAttacker->isOutOfAttacks())
@@ -585,6 +595,20 @@ void CvUnitCombat::ResolveRangedUnitVsCombat(const CvCombatInfo& kCombatInfo, ui
 				{
 					bBarbarian = pCity->isBarbarian();
 					pCity->changeDamage(iDamage);
+
+					// CitySplashDamage: deal flat damage to all non-air units in the city
+					if (pkAttacker->GetCitySplashDamage() > 0)
+					{
+						int iSplash = pkAttacker->GetCitySplashDamage();
+						for (int iUnitLoop = pkTargetPlot->getNumUnits() - 1; iUnitLoop >= 0; iUnitLoop--)
+						{
+							CvUnit* pSplashUnit = pkTargetPlot->getUnitByIndex(iUnitLoop);
+							if (pSplashUnit && pSplashUnit->getDomainType() != DOMAIN_AIR)
+							{
+								pSplashUnit->changeDamage(iSplash, pkAttacker->getOwner());
+							}
+						}
+					}
 
 #ifdef ENHANCED_GRAPHS
 					GET_PLAYER(pCity->getOwner()).ChangeCitiesDamageTaken(iDamage);
@@ -1089,6 +1113,36 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 					pkAttacker->changeDamage(iDefenderDamageInflicted, pkDefender->getOwner());
 					pkDefender->changeDamage(iAttackerDamageInflicted, pkAttacker->getOwner());
 
+					// Carpet Bombing: 20% splash to adjacent non-air units
+					if (pkAttacker->IsCarpetBombing() && iAttackerDamageInflicted > 0)
+					{
+						int iCarpetSplash = std::max(1, iAttackerDamageInflicted * 20 / 100);
+						for (int iDirLoop = 0; iDirLoop < NUM_DIRECTION_TYPES; iDirLoop++)
+						{
+							CvPlot* pAdjPlot = plotDirection(pkTargetPlot->getX(), pkTargetPlot->getY(), (DirectionTypes)iDirLoop);
+							if (!pAdjPlot) continue;
+							for (int iUnitLoop = pAdjPlot->getNumUnits() - 1; iUnitLoop >= 0; iUnitLoop--)
+							{
+								CvUnit* pCarpetUnit = pAdjPlot->getUnitByIndex(iUnitLoop);
+								if (!pCarpetUnit || pCarpetUnit->getDomainType() == DOMAIN_AIR) continue;
+								if (pCarpetUnit->getTeam() == pkAttacker->getTeam()) continue; // no friendly fire
+								if (pkAttacker->getTeam() != pCarpetUnit->getTeam()
+									&& !GET_TEAM(pkAttacker->getTeam()).isAtWar(pCarpetUnit->getTeam()))
+								{
+									if (GET_PLAYER(pCarpetUnit->getOwner()).isMinorCiv())
+										GET_TEAM(pkAttacker->getTeam()).declareWar(pCarpetUnit->getTeam());
+									// Major civ not at war: damage without declaration
+								}
+								pCarpetUnit->changeDamage(iCarpetSplash, pkAttacker->getOwner());
+								{
+									char szCarpetText[64] = { 0 };
+									sprintf_s(szCarpetText, "[COLOR_RED]-%d[ENDCOLOR]", iCarpetSplash);
+									GC.GetEngineUserInterface()->AddPopupText(pAdjPlot->getX(), pAdjPlot->getY(), szCarpetText, GC.getPOST_COMBAT_TEXT_DELAY() * 2);
+								}
+							}
+						}
+					}
+
 					// Update experience
 					pkDefender->changeExperience(
 					    kCombatInfo.getExperience(BATTLE_UNIT_DEFENDER),
@@ -1201,6 +1255,51 @@ void CvUnitCombat::ResolveAirUnitVsCombat(const CvCombatInfo& kCombatInfo, uint 
 				if(pkAttacker)
 				{
 					pCity->changeDamage(iAttackerDamageInflicted);
+
+					// CitySplashDamage: deal flat damage to all non-air units in the city
+					if (pkAttacker->GetCitySplashDamage() > 0)
+					{
+						int iSplash = pkAttacker->GetCitySplashDamage();
+						for (int iUnitLoop = pkTargetPlot->getNumUnits() - 1; iUnitLoop >= 0; iUnitLoop--)
+						{
+							CvUnit* pSplashUnit = pkTargetPlot->getUnitByIndex(iUnitLoop);
+							if (pSplashUnit && pSplashUnit->getDomainType() != DOMAIN_AIR)
+							{
+								pSplashUnit->changeDamage(iSplash, pkAttacker->getOwner());
+							}
+						}
+					}
+
+					// Carpet Bombing: 20% splash to adjacent non-air units
+					if (pkAttacker->IsCarpetBombing() && iAttackerDamageInflicted > 0)
+					{
+						int iCarpetSplash = std::max(1, iAttackerDamageInflicted * 20 / 100);
+						for (int iDirLoop = 0; iDirLoop < NUM_DIRECTION_TYPES; iDirLoop++)
+						{
+							CvPlot* pAdjPlot = plotDirection(pkTargetPlot->getX(), pkTargetPlot->getY(), (DirectionTypes)iDirLoop);
+							if (!pAdjPlot) continue;
+							for (int iUnitLoop = pAdjPlot->getNumUnits() - 1; iUnitLoop >= 0; iUnitLoop--)
+							{
+								CvUnit* pCarpetUnit = pAdjPlot->getUnitByIndex(iUnitLoop);
+								if (!pCarpetUnit || pCarpetUnit->getDomainType() == DOMAIN_AIR) continue;
+								if (pCarpetUnit->getTeam() == pkAttacker->getTeam()) continue; // no friendly fire
+								if (pkAttacker->getTeam() != pCarpetUnit->getTeam()
+									&& !GET_TEAM(pkAttacker->getTeam()).isAtWar(pCarpetUnit->getTeam()))
+								{
+									if (GET_PLAYER(pCarpetUnit->getOwner()).isMinorCiv())
+										GET_TEAM(pkAttacker->getTeam()).declareWar(pCarpetUnit->getTeam());
+									// Major civ not at war: damage without declaration
+								}
+								pCarpetUnit->changeDamage(iCarpetSplash, pkAttacker->getOwner());
+								{
+									char szCarpetText[64] = { 0 };
+									sprintf_s(szCarpetText, "[COLOR_RED]-%d[ENDCOLOR]", iCarpetSplash);
+									GC.GetEngineUserInterface()->AddPopupText(pAdjPlot->getX(), pAdjPlot->getY(), szCarpetText, GC.getPOST_COMBAT_TEXT_DELAY() * 2);
+								}
+							}
+						}
+					}
+
 #ifdef ENHANCED_GRAPHS
 					GET_PLAYER(pCity->getOwner()).ChangeCitiesDamageTaken(iAttackerDamageInflicted);
 					GET_PLAYER(pkAttacker->getOwner()).ChangeCitiesDamageDealt(iAttackerDamageInflicted);

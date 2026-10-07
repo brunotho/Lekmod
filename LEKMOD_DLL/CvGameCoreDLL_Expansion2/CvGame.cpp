@@ -12917,6 +12917,11 @@ void CvGame::getCombatDamage(CvCombatInfo& kInfo)
 			{
 				iDefenderDamageDealt = 0;
 			}
+			// Defender's air sweep damage reduction (Sortie: InterceptionDefenseDamageModifier)
+			if (kInfo.getAttackIsAirSweep() && defender.GetInterceptionDefenseDamageModifier() != 0)
+			{
+				iAttackerDamageDealt = std::max(1, iAttackerDamageDealt * (100 + defender.GetInterceptionDefenseDamageModifier()) / 100);
+			}
 			// If this is an air sweep, and the defender is not an air unit, then reduce the damage dealt to both units by the air sweep modifier
 			if (kInfo.getAttackIsAirSweep() && defender.getDomainType() != DOMAIN_AIR)
 			{

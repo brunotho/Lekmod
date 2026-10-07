@@ -867,6 +867,32 @@ public:
 	int getExtraMoveDiscount() const;
 	void changeExtraMoveDiscount(int iChange);
 
+	int getHillsMovementDiscountPercent() const;
+	void changeHillsMovementDiscountPercent(int iChange);
+
+	bool IsEmbarkFlatCost() const;
+	void ChangeEmbarkFlatCostCount(int iChange);
+	bool IsDisembarkFlatCost() const;
+	void ChangeDisembarkFlatCostCount(int iChange);
+	int GetMaxMovesAfterDomainChange() const;
+	void ChangeMaxMovesAfterDomainChange(int iChange);
+	bool IsHealWhileEmbarked() const;
+	void ChangeHealWhileEmbarkedCount(int iChange);
+	bool IsExtraAttackVsFullHP() const;
+	void ChangeExtraAttackVsFullHPCount(int iChange);
+	bool IsExtraAttackVsFullHPUsed() const;
+	void SetExtraAttackVsFullHPUsed(bool bValue);
+	void RefundAttack();
+	int GetMovesNearGeneralChange() const;
+	void ChangeMovesNearGeneralChange(int iChange);
+	bool IsGreatGeneralWithinOne() const;
+	bool IsCanCrossMountains() const;
+	void ChangeCanCrossMountainsCount(int iChange);
+	bool IsCarpetBombing() const;
+	void ChangeCarpetBombingCount(int iChange);
+	int  GetAdjacentTileHealOutsideFriendly() const;
+	void ChangeAdjacentTileHealOutsideFriendly(int iChange);
+
 	int getExtraNavalMoves() const;
 	void changeExtraNavalMoves(int iChange);
 
@@ -938,6 +964,9 @@ public:
 
 	int getExtraCityDefensePercent() const;
 	void changeExtraCityDefensePercent(int iChange);
+
+	int GetCitySplashDamage() const;
+	void ChangeCitySplashDamage(int iChange);
 
 	int getExtraRangedDefenseModifier() const;
 	void changeExtraRangedDefenseModifier(int iChange);
@@ -1536,6 +1565,7 @@ protected:
 	FAutoVariable<int, CvUnit> m_iExtraVisibilityRange;
 	FAutoVariable<int, CvUnit> m_iExtraMoves;
 	FAutoVariable<int, CvUnit> m_iExtraMoveDiscount;
+	FAutoVariable<int, CvUnit> m_iHillsMovementDiscountPercent;
 	FAutoVariable<int, CvUnit> m_iExtraRange;
 	FAutoVariable<int, CvUnit> m_iExtraIntercept;
 	FAutoVariable<int, CvUnit> m_iExtraEvasion;
@@ -1562,6 +1592,7 @@ protected:
 	FAutoVariable<int, CvUnit> m_iDefenseModifier;
 	FAutoVariable<int, CvUnit> m_iExtraCombatPercent;
 	FAutoVariable<int, CvUnit> m_iExtraCityAttackPercent;
+	int m_iCitySplashDamage;
 	FAutoVariable<int, CvUnit> m_iExtraCityDefensePercent;
 	FAutoVariable<int, CvUnit> m_iExtraRangedDefenseModifier;
 	FAutoVariable<int, CvUnit> m_iExtraHillsAttackPercent;
@@ -1637,6 +1668,16 @@ protected:
 	FAutoVariable<int, CvUnit> m_iGreatGeneralModifier;
 	int m_iGreatGeneralReceivesMovementCount;
 	int m_iEmbarkedUnitReceivesMovementCount; // NQMP GJS - Danish Longship
+	int m_iEmbarkFlatCostCount;
+	int m_iDisembarkFlatCostCount;
+	int m_iMaxMovesAfterDomainChange;
+	int m_iHealWhileEmbarkedCount;
+	int m_iExtraAttackVsFullHPCount;
+	bool m_bExtraAttackVsFullHPUsed;
+	int m_iMovesNearGeneralChange;
+	int m_iCanCrossMountainsCount;
+	int m_iCarpetBombingCount;
+	int m_iAdjacentTileHealOutsideFriendly;
 #ifdef LEKMOD_LONGSHIP_ALL_PROMO
 	int m_iLandUnitReceivesMovementCount;
 #endif
