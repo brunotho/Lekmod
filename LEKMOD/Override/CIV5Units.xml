@@ -270286,7 +270286,6 @@
 			<Moves>4</Moves>
 			<Class>UNITCLASS_PROPHET</Class>
 			<Special>SPECIALUNIT_PEOPLE</Special>
-			<Capture>UNITCLASS_PROPHET</Capture>
 			<Domain>DOMAIN_LAND</Domain>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_PROPHET</DefaultUnitAI>
@@ -272021,7 +272020,6 @@
 			<Cost>-1</Cost>
 			<Moves>2</Moves>
 			<Class>UNITCLASS_FAKEPROPHET</Class>
-			<Capture>UNITCLASS_PROPHET</Capture>
 			<Domain>DOMAIN_LAND</Domain>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_PROPHET</DefaultUnitAI>
@@ -272051,7 +272049,6 @@
 			<Moves>4</Moves>
 			<Class>UNITCLASS_PROPHET</Class>
 			<Special>SPECIALUNIT_PEOPLE</Special>
-			<Capture>UNITCLASS_PROPHET</Capture>
 			<Domain>DOMAIN_LAND</Domain>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH_EARLY_GAME_ONLY</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_PROPHET</DefaultUnitAI>
@@ -272273,7 +272270,6 @@
 			<Cost>-1</Cost>
 			<Moves>2</Moves>
 			<Class>UNITCLASS_MABA</Class>
-			<Capture>UNITCLASS_PROPHET</Capture>
 			<Domain>DOMAIN_LAND</Domain>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_PROPHET</DefaultUnitAI>

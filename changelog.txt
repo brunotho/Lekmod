@@ -206,6 +206,14 @@ Clearing a marsh gives Food to the nearby city instead of Production.
 - Dev: BuildFeatures for FEATURE_MARSH: Production 20 -> 0, Food 20 (NQ_FOOD_FROM_CHOPS, same scaling as chop production). Added the missing text TXT_KEY_MISC_CLEARING_FEATURE_FOOD.
 
 
+GREAT PROPHETS (UNITCLASS_PROPHET)
+-----------------------------------
+Tags: religion, units
+Great Prophets are destroyed when an enemy captures them, like other Great People.
+- Changed: a captured Great Prophet (including Tibet's Dalai Lama) is destroyed instead of changing sides
+- Dev: removed Capture=UNITCLASS_PROPHET from UNIT_PROPHET, UNIT_FAKEPROPHET, UNIT_MABA, UNIT_DALAILAMA. Missionaries can still be captured.
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
