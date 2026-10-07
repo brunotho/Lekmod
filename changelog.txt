@@ -348,6 +348,14 @@ Food from Maritime city-states is added to the city itself instead of the city t
 - Dev: LEKMOD_MARITIME_FOOD_CITY_YIELD: CvCity::GetYieldFromMinorCivsTimes100 (sums the friend/ally food of all city-states, read live) is added in getYieldRateTimes100; the player capital/city yield change path is no longer used for it. Lua method City:GetYieldFromMinorCivsTimes100; tooltip in InfoTooltipInclude (ui) and EUI_tooltip_library (eui).
 
 
+CITY-STATE BORDER COLORS (PLAYERCOLOR_CS_*)
+--------------------------------------------
+Tags: ui
+City-state borders show their type at a glance: one color per type, striped with black.
+- Changed: Maritime green, Cultured purple, Religious light gray, Mercantile yellow, Militaristic salmon
+- Dev: new Colors COLOR_CS_TRAIT_* (IDs 377-381) and PlayerColors PLAYERCOLOR_CS_* (184-188; primary COLOR_PLAYER_MINOR_ICON, secondary the type color); every MinorCivilizations row's DefaultPlayerColor set from its MinorCivTrait
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
