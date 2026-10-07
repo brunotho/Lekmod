@@ -389,6 +389,9 @@ void CvLuaCity::PushMethods(lua_State* L, int t)
 	Method(GetBaseYieldRateFromTraits);
 	Method(GetBaseYieldRateFromLeagues);
 	Method(GetBaseYieldRateFromPolicies);
+#ifdef LEKMOD_MARITIME_FOOD_CITY_YIELD
+	Method(GetYieldFromMinorCivsTimes100);
+#endif
 	Method(ChangeBaseYieldRateFromPolicies);
 	Method(GetBaseYieldRateFromThemedBuildings);
 	Method(GetBaseYieldRateFromLandmarks);
@@ -3114,6 +3117,13 @@ int CvLuaCity::lGetBaseYieldRateFromPolicies(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvCity::GetBaseYieldRateFromPolicies);
 }
+#ifdef LEKMOD_MARITIME_FOOD_CITY_YIELD
+//int GetYieldFromMinorCivsTimes100(YieldTypes eIndex);
+int CvLuaCity::lGetYieldFromMinorCivsTimes100(lua_State* L)
+{
+	return BasicLuaMethod(L, &CvCity::GetYieldFromMinorCivsTimes100);
+}
+#endif
 //------------------------------------------------------------------------------
 int CvLuaCity::lChangeBaseYieldRateFromPolicies(lua_State* L)
 {

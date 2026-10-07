@@ -7019,8 +7019,13 @@ void CvMinorCivAI::DoSetBonus(PlayerTypes ePlayer, bool bAdd, bool bFriends, boo
 			iOtherCitiesFoodTimes100 = -iOtherCitiesFoodTimes100;
 		}
 
+#ifdef LEKMOD_MARITIME_FOOD_CITY_YIELD
+		// Maritime food is read live by CvCity::GetYieldFromMinorCivsTimes100 (keeps decimals and % modifiers)
+		GET_PLAYER(ePlayer).updateYield();
+#else
 		GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iCapitalFoodTimes100);
 		GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iOtherCitiesFoodTimes100);
+#endif
 	}
 	// Mercantile
 	else if(eTrait == MINOR_CIV_TRAIT_MERCANTILE)
@@ -7577,7 +7582,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef LEKMOD_MARITIME_FOOD_CITY_YIELD
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 			}
 
 			// Other Cities
@@ -7587,7 +7594,9 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef LEKMOD_MARITIME_FOOD_CITY_YIELD
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 			}
 		}
 
@@ -7598,22 +7607,26 @@ bool CvMinorCivAI::DoMajorCivEraChange(PlayerTypes ePlayer, EraTypes eNewEra)
 
 			// Capital
 			iOldFood = GetAlliesCapitalFoodBonus(ePlayer);
-			iNewFood = GetAlliesCapitalFoodBonus(ePlayer);
+			iNewFood = GetAlliesCapitalFoodBonus(ePlayer, eNewEra);
 
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef LEKMOD_MARITIME_FOOD_CITY_YIELD
 				GET_PLAYER(ePlayer).ChangeCapitalYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 			}
 
 			// Other Cities
 			iOldFood = GetAlliesOtherCityFoodBonus(ePlayer);
-			iNewFood = GetAlliesOtherCityFoodBonus(ePlayer);
+			iNewFood = GetAlliesOtherCityFoodBonus(ePlayer, eNewEra);
 
 			if(iOldFood != iNewFood)
 			{
 				bSomethingChanged = true;
+#ifndef LEKMOD_MARITIME_FOOD_CITY_YIELD
 				GET_PLAYER(ePlayer).ChangeCityYieldChange(YIELD_FOOD, iNewFood - iOldFood);
+#endif
 			}
 		}
 	}
@@ -7779,8 +7792,25 @@ int CvMinorCivAI::GetCurrentScienceFriendshipBonusTimes100(PlayerTypes ePlayer)
 #endif // LEKMOD_FIX_SCHOLASTICISM
 
 // Flat culture bonus when Friends with a minor
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+// Era info holding the city-state bonus totals for this player's era (Eras.CityState* columns).
+// The columns are totals per status; ally functions return the extra on top of the friend amount,
+// and capital food functions return the capital-only part (the capital also gets the other-cities amount).
+static const CvEraInfo* GetCityStateBonusEraInfo(PlayerTypes ePlayer, EraTypes eAssumeEra)
+{
+	EraTypes eEra = eAssumeEra;
+	if(eEra == NO_ERA)
+		eEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
+	return GC.getEraInfo(eEra);
+}
+#endif
+
 int CvMinorCivAI::GetCultureFlatFriendshipBonus(PlayerTypes ePlayer, EraTypes eAssumeEra)
 {
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GetCityStateBonusEraInfo(ePlayer, eAssumeEra);
+	return pkEra ? pkEra->getCityStateFriendCulture() : 0;
+#endif
 	//antonjs: consider: here it was assumed that this CS is cultured type, which is nice for me prototyping, but later maybe add in a check for this
 	int iCultureBonus = 0;
 
@@ -7815,6 +7845,10 @@ int CvMinorCivAI::GetCultureFlatFriendshipBonus(PlayerTypes ePlayer, EraTypes eA
 // Flat culture bonus when Allies with a minor
 int CvMinorCivAI::GetCultureFlatAlliesBonus(PlayerTypes ePlayer, EraTypes eAssumeEra)
 {
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GetCityStateBonusEraInfo(ePlayer, eAssumeEra);
+	return pkEra ? pkEra->getCityStateAllyCulture() - pkEra->getCityStateFriendCulture() : 0;
+#endif
 	//antonjs: consider: here it was assumed that this CS is cultured type, which is nice for me prototyping, but later maybe add in a check for this
 	int iCultureBonus = 0;
 
@@ -8106,6 +8140,10 @@ int CvMinorCivAI::GetCurrentHappinessBonus(PlayerTypes ePlayer)
 
 int CvMinorCivAI::GetFaithFlatFriendshipBonus(PlayerTypes ePlayer, EraTypes eAssumeEra) const
 {
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GetCityStateBonusEraInfo(ePlayer, eAssumeEra);
+	return pkEra ? pkEra->getCityStateFriendFaith() : 0;
+#endif
 	int iFaithBonus = 0;
 
 	EraTypes eCurrentEra = eAssumeEra;
@@ -8152,6 +8190,10 @@ int CvMinorCivAI::GetFaithFlatFriendshipBonus(PlayerTypes ePlayer, EraTypes eAss
 
 int CvMinorCivAI::GetFaithFlatAlliesBonus(PlayerTypes ePlayer, EraTypes eAssumeEra) const
 {
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GetCityStateBonusEraInfo(ePlayer, eAssumeEra);
+	return pkEra ? pkEra->getCityStateAllyFaith() - pkEra->getCityStateFriendFaith() : 0;
+#endif
 	int iFaithBonus = 0;
 
 	EraTypes eCurrentEra = eAssumeEra;
@@ -8254,6 +8296,10 @@ int CvMinorCivAI::GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssu
 	if(eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GC.getEraInfo(eCurrentEra);
+	iBonus = pkEra ? pkEra->getCityStateFriendCapitalFoodTimes100() - pkEra->getCityStateFriendCityFoodTimes100() : 0;
+#else
 	EraTypes eRenaissance = (EraTypes) GC.getInfoTypeForString("ERA_RENAISSANCE", true);
 
 	// Medieval era or sooner
@@ -8263,6 +8309,7 @@ int CvMinorCivAI::GetFriendsCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssu
 	// Renaissance era or later
 	else
 		iBonus = /*200*/ GC.getFRIENDS_CAPITAL_FOOD_BONUS_AMOUNT_POST_RENAISSANCE();
+#endif
 
 #if !defined(LEKMOD_FIX_PATRO_FOOD)
 	// Modify the bonus if called for by our trait
@@ -8292,6 +8339,10 @@ int CvMinorCivAI::GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAs
 	if(eCurrentEra == NO_ERA)
 		eCurrentEra = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetCurrentEra();
 
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GC.getEraInfo(eCurrentEra);
+	iBonus = pkEra ? pkEra->getCityStateFriendCityFoodTimes100() : 0;
+#else
 	EraTypes eRenaissance = (EraTypes) GC.getInfoTypeForString("ERA_RENAISSANCE", true);
 
 	// Medieval era or sooner
@@ -8301,6 +8352,7 @@ int CvMinorCivAI::GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAs
 	// Renaissance era or later
 	else
 		iBonus = /*0*/ GC.getFRIENDS_OTHER_CITIES_FOOD_BONUS_AMOUNT_POST_RENAISSANCE();
+#endif
 
 #if !defined(LEKMOD_FIX_PATRO_FOOD)
 	// Modify the bonus if called for by our trait
@@ -8322,9 +8374,15 @@ int CvMinorCivAI::GetFriendsOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAs
 }
 
 // Food bonus when Allies with a minor - additive with general city bonus
-int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer)
+int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra)
 {
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GetCityStateBonusEraInfo(ePlayer, eAssumeEra);
+	int iBonus = pkEra ? (pkEra->getCityStateAllyCapitalFoodTimes100() - pkEra->getCityStateAllyCityFoodTimes100())
+		- (pkEra->getCityStateFriendCapitalFoodTimes100() - pkEra->getCityStateFriendCityFoodTimes100()) : 0;
+#else
 	int iBonus = /*100*/ GC.getALLIES_CAPITAL_FOOD_BONUS_AMOUNT();
+#endif
 
 #if !defined(LEKMOD_FIX_PATRO_FOOD)
 	// Modify the bonus if called for by our trait
@@ -8346,9 +8404,14 @@ int CvMinorCivAI::GetAlliesCapitalFoodBonus(PlayerTypes ePlayer)
 }
 
 // Food bonus when Allies with a minor
-int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer)
+int CvMinorCivAI::GetAlliesOtherCityFoodBonus(PlayerTypes ePlayer, EraTypes eAssumeEra)
 {
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	const CvEraInfo* pkEra = GetCityStateBonusEraInfo(ePlayer, eAssumeEra);
+	int iBonus = pkEra ? pkEra->getCityStateAllyCityFoodTimes100() - pkEra->getCityStateFriendCityFoodTimes100() : 0;
+#else
 	int iBonus = /*100*/ GC.getALLIES_OTHER_CITIES_FOOD_BONUS_AMOUNT();
+#endif
 
 #if !defined(LEKMOD_FIX_PATRO_FOOD)
 	// Modify the bonus if called for by our trait

@@ -1726,6 +1726,9 @@ local function GetYieldTooltip( city, yieldID, baseYield, totalYield, yieldIconS
 	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_YIELD_FROM_BUILDINGS", city:GetBaseYieldRateFromBuildings( yieldID ), yieldIconString )
 
 	-- Base Yield Rate from Policies, 34.8
+	if city.GetYieldFromMinorCivsTimes100 then
+		tips:insertLocalizedBulletIfNonZero( "TXT_KEY_LEKMOD_YIELD_FROM_CITY_STATES", city:GetYieldFromMinorCivsTimes100( yieldID ) / 100, yieldIconString )
+	end
 	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_YIELD_FROM_POLICIES", city:GetBaseYieldRateFromPolicies( yieldID ), yieldIconString )
 
 	-- Base Yield Rate from Traits, 34.8
@@ -1798,7 +1801,7 @@ local function GetYieldTooltipHelper( city, yieldID, yieldIconString )
 	if yieldID == YieldTypes.YIELD_FOOD then
 		modifierTooltip = string.gsub(modifierTooltip, "Empire Modifier", "City Modifier")
 	end
-	return GetYieldTooltip( city, yieldID, city:GetBaseYieldRate( yieldID ) + city:GetYieldPerPopTimes100( yieldID ) * city:GetPopulation() / 100, yieldID == YieldTypes.YIELD_FOOD and city:FoodDifferenceTimes100()/100 or city:GetYieldRateTimes100( yieldID )/100, yieldIconString, modifierTooltip )
+	return GetYieldTooltip( city, yieldID, city:GetBaseYieldRate( yieldID ) + city:GetYieldPerPopTimes100( yieldID ) * city:GetPopulation() / 100 + (city.GetYieldFromMinorCivsTimes100 and city:GetYieldFromMinorCivsTimes100( yieldID ) / 100 or 0), yieldID == YieldTypes.YIELD_FOOD and city:FoodDifferenceTimes100()/100 or city:GetYieldRateTimes100( yieldID )/100, yieldIconString, modifierTooltip )
 end
 
 -- FOOD

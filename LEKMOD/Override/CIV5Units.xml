@@ -104700,6 +104700,14 @@
 		<Column name="AudioUnitVictoryScript" type="text"  />
 		<Column name="AudioUnitDefeatScript" type="text"  />
 		<Column name="CityArtType" type="text"  />
+		<Column name="CityStateFriendCapitalFoodTimes100" type="integer" default="0"/>
+		<Column name="CityStateFriendCityFoodTimes100" type="integer" default="0"/>
+		<Column name="CityStateAllyCapitalFoodTimes100" type="integer" default="0"/>
+		<Column name="CityStateAllyCityFoodTimes100" type="integer" default="0"/>
+		<Column name="CityStateFriendCulture" type="integer" default="0"/>
+		<Column name="CityStateAllyCulture" type="integer" default="0"/>
+		<Column name="CityStateFriendFaith" type="integer" default="0"/>
+		<Column name="CityStateAllyFaith" type="integer" default="0"/>
 	</Table> 
 	<Eras>
 		<Delete />
@@ -104707,6 +104715,14 @@
 		<Row> 
 			<ID>0</ID> 
 			<Type>ERA_ANCIENT</Type> 
+			<CityStateFriendCapitalFoodTimes100>50</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>20</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>100</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>30</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>2</CityStateFriendCulture>
+			<CityStateAllyCulture>4</CityStateAllyCulture>
+			<CityStateFriendFaith>2</CityStateFriendFaith>
+			<CityStateAllyFaith>4</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_0</Description> 
 			<ShortDescription>TXT_KEY_ERA_0_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_0_ABBREV</Abbreviation> 
@@ -104755,6 +104771,14 @@
 		<Row> 
 			<ID>1</ID> 
 			<Type>ERA_CLASSICAL</Type> 
+			<CityStateFriendCapitalFoodTimes100>100</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>30</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>200</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>70</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>4</CityStateFriendCulture>
+			<CityStateAllyCulture>8</CityStateAllyCulture>
+			<CityStateFriendFaith>4</CityStateFriendFaith>
+			<CityStateAllyFaith>8</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_1</Description> 
 			<ShortDescription>TXT_KEY_ERA_1_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_1_ABBREV</Abbreviation> 
@@ -104803,6 +104827,14 @@
 		<Row> 
 			<ID>2</ID> 
 			<Type>ERA_MEDIEVAL</Type> 
+			<CityStateFriendCapitalFoodTimes100>150</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>50</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>300</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>100</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>6</CityStateFriendCulture>
+			<CityStateAllyCulture>12</CityStateAllyCulture>
+			<CityStateFriendFaith>6</CityStateFriendFaith>
+			<CityStateAllyFaith>12</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_2</Description> 
 			<ShortDescription>TXT_KEY_ERA_2_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_2_ABBREV</Abbreviation> 
@@ -104851,6 +104883,14 @@
 		<Row> 
 			<ID>3</ID> 
 			<Type>ERA_RENAISSANCE</Type> 
+			<CityStateFriendCapitalFoodTimes100>200</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>70</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>400</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>130</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>8</CityStateFriendCulture>
+			<CityStateAllyCulture>16</CityStateAllyCulture>
+			<CityStateFriendFaith>8</CityStateFriendFaith>
+			<CityStateAllyFaith>16</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_3</Description> 
 			<ShortDescription>TXT_KEY_ERA_3_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_3_ABBREV</Abbreviation> 
@@ -104899,6 +104939,14 @@
 		<Row> 
 			<ID>4</ID> 
 			<Type>ERA_INDUSTRIAL</Type> 
+			<CityStateFriendCapitalFoodTimes100>250</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>80</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>500</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>170</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>10</CityStateFriendCulture>
+			<CityStateAllyCulture>20</CityStateAllyCulture>
+			<CityStateFriendFaith>10</CityStateFriendFaith>
+			<CityStateAllyFaith>20</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_4</Description> 
 			<ShortDescription>TXT_KEY_ERA_4_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_4_ABBREV</Abbreviation> 
@@ -104947,6 +104995,14 @@
 		<Row> 
 			<ID>5</ID> 
 			<Type>ERA_MODERN</Type> 
+			<CityStateFriendCapitalFoodTimes100>300</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>100</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>600</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>200</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>12</CityStateFriendCulture>
+			<CityStateAllyCulture>24</CityStateAllyCulture>
+			<CityStateFriendFaith>12</CityStateFriendFaith>
+			<CityStateAllyFaith>24</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_5</Description> 
 			<ShortDescription>TXT_KEY_ERA_5_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_5_ABBREV</Abbreviation> 
@@ -104995,6 +105051,14 @@
 		<Row> 
 			<ID>6</ID> 
 			<Type>ERA_POSTMODERN</Type> 
+			<CityStateFriendCapitalFoodTimes100>350</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>120</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>700</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>230</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>14</CityStateFriendCulture>
+			<CityStateAllyCulture>28</CityStateAllyCulture>
+			<CityStateFriendFaith>14</CityStateFriendFaith>
+			<CityStateAllyFaith>28</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_6</Description> 
 			<ShortDescription>TXT_KEY_ERA_6_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_6_ABBREV</Abbreviation> 
@@ -105043,6 +105107,14 @@
 		<Row> 
 			<ID>7</ID> 
 			<Type>ERA_FUTURE</Type> 
+			<CityStateFriendCapitalFoodTimes100>400</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>130</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>800</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>270</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCulture>16</CityStateFriendCulture>
+			<CityStateAllyCulture>32</CityStateAllyCulture>
+			<CityStateFriendFaith>16</CityStateFriendFaith>
+			<CityStateAllyFaith>32</CityStateAllyFaith>
 			<Description>TXT_KEY_ERA_7</Description> 
 			<ShortDescription>TXT_KEY_ERA_7_SHORT</ShortDescription> 
 			<Abbreviation>TXT_KEY_ERA_7_ABBREV</Abbreviation> 

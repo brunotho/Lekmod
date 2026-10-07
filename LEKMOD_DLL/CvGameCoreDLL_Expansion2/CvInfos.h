@@ -2286,6 +2286,17 @@ public:
 	int getTradeRouteProductionBonusTimes100() const;
 	int getLeaguePercent() const;
 	int getWarmongerPercent() const;
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	// City-state bonuses per era (totals for friend / ally status)
+	int getCityStateFriendCapitalFoodTimes100() const;
+	int getCityStateFriendCityFoodTimes100() const;
+	int getCityStateAllyCapitalFoodTimes100() const;
+	int getCityStateAllyCityFoodTimes100() const;
+	int getCityStateFriendCulture() const;
+	int getCityStateAllyCulture() const;
+	int getCityStateFriendFaith() const;
+	int getCityStateAllyFaith() const;
+#endif
 
 	const char* GetCityBombardEffectTag() const;
 	uint GetCityBombardEffectTagHash() const;
@@ -2341,6 +2352,16 @@ protected:
 	int m_iTradeRouteProductionBonusTimes100;
 	int m_iLeaguePercent;
 	int m_iWarmongerPercent;
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	int m_iCityStateFriendCapitalFoodTimes100;
+	int m_iCityStateFriendCityFoodTimes100;
+	int m_iCityStateAllyCapitalFoodTimes100;
+	int m_iCityStateAllyCityFoodTimes100;
+	int m_iCityStateFriendCulture;
+	int m_iCityStateAllyCulture;
+	int m_iCityStateFriendFaith;
+	int m_iCityStateAllyFaith;
+#endif
 
 	CvString m_strCityBombardEffectTag;
 	CvString m_strAudioUnitVictoryScript;

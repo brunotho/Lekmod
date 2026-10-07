@@ -329,6 +329,25 @@ Pontoon bridges come earlier, build faster and are riskier to stand on.
 - Dev: Builds Time 700 -> 400 and PrereqTech CONSTRUCTION (also the Brunei build), Build_TechTimeChanges RAILROAD -200, ActsAsRouteTech CONSTRUCTION, DefenseModifierGlobal -20, StackedDomainDefensePenalty 80
 
 
+CITY-STATE BONUSES PER ERA (MARITIME / CULTURED / RELIGIOUS)
+-------------------------------------------------------------
+Tags: game mechanics, religion
+Maritime, Cultured and Religious city-states give bonuses that grow with every era. Allies get twice as much as friends.
+- Changed: Cultured city-states give 2 / 4 / 6 / 8 / 10 / 12 / 14 / 16 Culture to friends (Ancient to Information era), double for allies
+- Changed: Religious city-states give 2 / 4 / 6 / 8 / 10 / 12 / 14 / 16 Faith to friends, double for allies
+- Changed: Maritime city-states give allies 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 Food in the capital and 0.3 / 0.7 / 1 / 1.3 / 1.7 / 2 / 2.3 / 2.7 Food in every other city; friends get half
+- Dev: new Eras columns CityStateFriend/AllyCapitalFoodTimes100, ...CityFoodTimes100, ...Culture, ...Faith hold the totals per status; LEKMOD_CITY_STATE_ERA_BONUSES derives the friend part and the ally extra in CvMinorCivAI. The era-change handler now passes the new era to the ally food functions too.
+
+
+MARITIME CITY-STATE FOOD (CITY YIELD)
+--------------------------------------
+Tags: game mechanics, ui
+Food from Maritime city-states is added to the city itself instead of the city tile, so it can have decimals and percentage bonuses apply in full.
+- Changed: Maritime food is a city yield; bonuses such as Siam's +50% are no longer rounded down
+- Added: the city food tooltip shows "from City-States"
+- Dev: LEKMOD_MARITIME_FOOD_CITY_YIELD: CvCity::GetYieldFromMinorCivsTimes100 (sums the friend/ally food of all city-states, read live) is added in getYieldRateTimes100; the player capital/city yield change path is no longer used for it. Lua method City:GetYieldFromMinorCivsTimes100; tooltip in InfoTooltipInclude (ui) and EUI_tooltip_library (eui).
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

@@ -632,6 +632,11 @@ function GetYieldTooltipHelper(pCity, iYieldType, strIcon)
 		iBaseYield = iBaseYield + iYieldPerPop;
 	end
 
+	-- Food from city-states (hundredths)
+	if (pCity.GetYieldFromMinorCivsTimes100) then
+		iBaseYield = iBaseYield + pCity:GetYieldFromMinorCivsTimes100(iYieldType) / 100;
+	end
+
 	-- Total Yield
 	local iTotalYield;
 	
@@ -727,6 +732,14 @@ function GetYieldTooltip(pCity, iYieldType, iBase, iTotal, strIconString, strMod
 	if (iYieldFromLeagues ~= 0) then
 		strYieldBreakdown = strYieldBreakdown .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_YIELD_FROM_LEAGUES", iYieldFromLeagues, strIconString);
 		strYieldBreakdown = strYieldBreakdown .. "[NEWLINE]";
+	end
+	-- Food from Maritime city-states (can have decimals)
+	if (pCity.GetYieldFromMinorCivsTimes100) then
+		local fYieldFromCityStates = pCity:GetYieldFromMinorCivsTimes100(iYieldType) / 100;
+		if (fYieldFromCityStates ~= 0) then
+			strYieldBreakdown = strYieldBreakdown .. "[ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_YIELD_FROM_CITY_STATES", fYieldFromCityStates, strIconString);
+			strYieldBreakdown = strYieldBreakdown .. "[NEWLINE]";
+		end
 	end
 	local iYieldFromPolicies = pCity:GetBaseYieldRateFromPolicies(iYieldType);
 	if (iYieldFromPolicies ~= 0) then

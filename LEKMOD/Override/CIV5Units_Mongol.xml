@@ -101424,6 +101424,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_GAME_OPTION_DISABLE_STRATEGIC_TRADING_HELP">
 			<Text>If enabled, players cannot trade strategic resources with each other.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_YIELD_FROM_CITY_STATES">
+			<Text>{1_Num} {2_IconString} from City-States</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_FUTURE_TECH">
 			<Text>[NEWLINE][ICON_BULLET]Future Tech: {1_Num}%</Text>
 		</Row>

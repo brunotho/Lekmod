@@ -394,6 +394,9 @@ protected:
 	static int lGetBaseYieldRateFromLeagues(lua_State* L);
 
 	static int lGetBaseYieldRateFromPolicies(lua_State* L);
+#ifdef LEKMOD_MARITIME_FOOD_CITY_YIELD
+	static int lGetYieldFromMinorCivsTimes100(lua_State* L);
+#endif
 	static int lChangeBaseYieldRateFromPolicies(lua_State* L);
 	static int lGetBaseYieldRateFromThemedBuildings(lua_State* L);
 	static int lGetBaseYieldRateFromLandmarks(lua_State* L);

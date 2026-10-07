@@ -7067,6 +7067,16 @@ CvEraInfo::CvEraInfo() :
 	m_iTradeRouteProductionBonusTimes100(0),
 	m_iLeaguePercent(0),
 	m_iWarmongerPercent(0),
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	m_iCityStateFriendCapitalFoodTimes100(0),
+	m_iCityStateFriendCityFoodTimes100(0),
+	m_iCityStateAllyCapitalFoodTimes100(0),
+	m_iCityStateAllyCityFoodTimes100(0),
+	m_iCityStateFriendCulture(0),
+	m_iCityStateAllyCulture(0),
+	m_iCityStateFriendFaith(0),
+	m_iCityStateAllyFaith(0),
+#endif
 	m_bNoGoodies(false),
 	m_bNoBarbUnits(false),
 	m_bNoReligion(false),
@@ -7232,6 +7242,41 @@ int CvEraInfo::getLeaguePercent() const
 }
 
 //------------------------------------------------------------------------------
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+int CvEraInfo::getCityStateFriendCapitalFoodTimes100() const
+{
+	return m_iCityStateFriendCapitalFoodTimes100;
+}
+int CvEraInfo::getCityStateFriendCityFoodTimes100() const
+{
+	return m_iCityStateFriendCityFoodTimes100;
+}
+int CvEraInfo::getCityStateAllyCapitalFoodTimes100() const
+{
+	return m_iCityStateAllyCapitalFoodTimes100;
+}
+int CvEraInfo::getCityStateAllyCityFoodTimes100() const
+{
+	return m_iCityStateAllyCityFoodTimes100;
+}
+int CvEraInfo::getCityStateFriendCulture() const
+{
+	return m_iCityStateFriendCulture;
+}
+int CvEraInfo::getCityStateAllyCulture() const
+{
+	return m_iCityStateAllyCulture;
+}
+int CvEraInfo::getCityStateFriendFaith() const
+{
+	return m_iCityStateFriendFaith;
+}
+int CvEraInfo::getCityStateAllyFaith() const
+{
+	return m_iCityStateAllyFaith;
+}
+#endif
+//------------------------------------------------------------------------------
 int CvEraInfo::getWarmongerPercent() const
 {
 	return m_iWarmongerPercent;
@@ -7338,6 +7383,16 @@ bool CvEraInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility& kUt
 	m_iTradeRouteProductionBonusTimes100 = kResults.GetInt("TradeRouteProductionBonusTimes100");
 	m_iLeaguePercent			= kResults.GetInt("LeaguePercent");
 	m_iWarmongerPercent			= kResults.GetInt("WarmongerPercent");
+#ifdef LEKMOD_CITY_STATE_ERA_BONUSES
+	m_iCityStateFriendCapitalFoodTimes100 = kResults.GetInt("CityStateFriendCapitalFoodTimes100");
+	m_iCityStateFriendCityFoodTimes100 = kResults.GetInt("CityStateFriendCityFoodTimes100");
+	m_iCityStateAllyCapitalFoodTimes100 = kResults.GetInt("CityStateAllyCapitalFoodTimes100");
+	m_iCityStateAllyCityFoodTimes100 = kResults.GetInt("CityStateAllyCityFoodTimes100");
+	m_iCityStateFriendCulture = kResults.GetInt("CityStateFriendCulture");
+	m_iCityStateAllyCulture = kResults.GetInt("CityStateAllyCulture");
+	m_iCityStateFriendFaith = kResults.GetInt("CityStateFriendFaith");
+	m_iCityStateAllyFaith = kResults.GetInt("CityStateAllyFaith");
+#endif
 
 	m_strCityBombardEffectTag	= kResults.GetText("CityBombardEffectTag");
 	m_uiCityBombardEffectTagHash = FString::Hash(m_strCityBombardEffectTag);

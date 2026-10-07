@@ -895,6 +895,10 @@
 #define LEKMOD_FUTURE_TECH_BONUS
 // Lobby option GAMEOPTION_DISABLE_STRATEGIC_TRADING forbids trading strategic resources
 #define LEKMOD_DISABLE_STRATEGIC_TRADING_OPTION
+// Maritime city-state food is a city yield in hundredths (decimals, % modifiers like Siam apply) instead of a city tile yield
+#define LEKMOD_MARITIME_FOOD_CITY_YIELD
+// City-state food/culture/faith per era come from Eras.CityState* columns (totals per friend/ally status)
+#define LEKMOD_CITY_STATE_ERA_BONUSES
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

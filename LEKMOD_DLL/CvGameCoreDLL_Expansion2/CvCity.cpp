@@ -12728,6 +12728,9 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	}
 	// Sum up yield rate
 	int iBaseYield = getBaseYieldRate(eIndex) * 100;
+#ifdef LEKMOD_MARITIME_FOOD_CITY_YIELD
+	iBaseYield += GetYieldFromMinorCivsTimes100(eIndex);
+#endif
 
 	iBaseYield += (GetYieldPerPopTimes100(eIndex) * getPopulation());
 #if !defined(LEKMOD_FIX_YIELD_PER_RELIGION)
@@ -12760,6 +12763,31 @@ int CvCity::getYieldRateTimes100(YieldTypes eIndex, bool bIgnoreTrade) const
 	return iModifiedYield;
 }
 
+
+#ifdef LEKMOD_MARITIME_FOOD_CITY_YIELD
+//	--------------------------------------------------------------------------------
+/// Food from Maritime city-states (friends/allies), in hundredths: the capital gets the capital amount, other cities the other-cities amount
+int CvCity::GetYieldFromMinorCivsTimes100(YieldTypes eIndex) const
+{
+	VALIDATE_OBJECT
+	if(eIndex != YIELD_FOOD || getOwner() >= MAX_MAJOR_CIVS)
+		return 0;
+
+	int iValue = 0;
+	for(int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+	{
+		CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinorLoop);
+		if(!kMinor.isAlive() || !kMinor.isMinorCiv())
+			continue;
+
+		if(isCapital())
+			iValue += kMinor.GetMinorCivAI()->GetCurrentCapitalFoodBonus(getOwner());
+		else
+			iValue += kMinor.GetMinorCivAI()->GetCurrentOtherCityFoodBonus(getOwner());
+	}
+	return iValue;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvCity::getBaseYieldRate(YieldTypes eIndex) const
