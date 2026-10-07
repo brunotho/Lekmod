@@ -116887,7 +116887,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NEW_ORDER_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Clausewitz's Legacy[ENDCOLOR][NEWLINE]Receive a 25% attack bonus to all [COLOR_POSITIVE_TEXT]Military units[ENDCOLOR] for the first 50 turns after this policy is adopted.[NEWLINE]Applies to melee, ranged and air attacks.
+				[COLOR_POSITIVE_TEXT]Clausewitz's Legacy[ENDCOLOR][NEWLINE]Melee attacks by [COLOR_POSITIVE_TEXT]Military units[ENDCOLOR] get +25% [ICON_STRENGTH] Combat Strength for the first 50 turns after this policy is adopted.[NEWLINE]Ranged and air attacks do not get this bonus.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NEW_ORDER_TEXT"> 

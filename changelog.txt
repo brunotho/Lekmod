@@ -250,10 +250,11 @@ Every trade route lasts exactly 15 turns, however long or short it is.
 
 CLAUSEWITZ'S LEGACY (POLICY_NEW_ORDER)
 --------------------------------------
-Tags: policies, combat, air
-The attack bonus from Clausewitz's Legacy now also applies to ranged units and aircraft.
-- Changed: +25% attack bonus for ranged and air attacks too (was melee only)
-- Dev: LEKMOD_CLAUSEWITZ_RANGED drops the !bRangedAttack exclusion in CvUnit::GetMaxAttackStrength(kInfo)
+Tags: policies, combat
+The +25% attack bonus from Clausewitz's Legacy applies to melee attacks only, and the policy text says so.
+- Changed: fighters' air sweeps no longer get the bonus (ranged attacks and bombing already didn't)
+- Changed: the policy text states that only melee attacks get the bonus
+- Dev: LEKMOD_CLAUSEWITZ_MELEE_ONLY in CvUnit::GetMaxAttackStrength(kInfo) also excludes air sweeps. The combat preview uses the same function (LEKMOD_COMBAT_PREDICTOR_IMPROVEMENTS), so it matches.
 
 
 FORTS (IMPROVEMENT_FORT)
