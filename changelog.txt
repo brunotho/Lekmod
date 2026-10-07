@@ -181,6 +181,15 @@ A captured city always resists for at least 1 turn, no matter how much its resis
 - Dev: LEKMOD_RESISTANCE_TURNS_MIN_ONE in CvPlayer::acquireCity; future "resistance half as long" effects must be applied before the clamp
 
 
+CITY STRENGTH (CITY_STRENGTH_DEFAULT / CITY_STRENGTH_HILL_CHANGE)
+-----------------------------------------------------------------
+Tags: game mechanics, combat
+Cities are a bit stronger everywhere, and the hill bonus is smaller.
+- Changed: base city strength +1 (8 -> 9)
+- Changed: city strength bonus for being on a hill 5 -> 3
+- Dev: defines 800 -> 900 and 500 -> 300 (units of 1/100)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

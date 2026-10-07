@@ -93642,7 +93642,7 @@
 		</Row>
 		<Row> 
 			<Name>CITY_STRENGTH_DEFAULT</Name> 
-			<Value>800</Value> 
+			<Value>900</Value> 
 		</Row>
 		<Row> 
 			<Name>CITY_STRENGTH_POPULATION_CHANGE</Name> 
@@ -93666,7 +93666,7 @@
 		</Row>
 		<Row> 
 			<Name>CITY_STRENGTH_HILL_CHANGE</Name> 
-			<Value>500</Value> 
+			<Value>300</Value> 
 		</Row>
 		<Row> 
 			<Name>CITY_ATTACKING_DAMAGE_MOD</Name> 
