@@ -157,6 +157,14 @@ The Giant Death Robot can pillage, but it doesn't heal from pillaging.
 - Dev: PROMOTION_NO_PILLAGE_HEAL (ID 365) uses upstream's PillageHealChange (-100); CvUnit::pillage clamps the heal at 0 so a negative change never damages
 
 
+GREAT GENERALS (UNITCLASS_GREAT_GENERAL)
+----------------------------------------
+Tags: game mechanics, units
+Great Generals earned in combat always appear in your capital.
+- Changed: Great Generals from combat experience appear in the capital instead of a random city
+- Dev: LEKMOD_GREAT_GENERAL_SPAWN_CAPITAL in CvPlayer::setCombatExperience; the old city ranking is the fallback when there is no capital
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

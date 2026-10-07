@@ -20851,6 +20851,11 @@ void CvPlayer::setCombatExperience(int iExperience)
 				CvCity* pBestCity = NULL;
 				int iBestValue = INT_MAX;
 				int iLoop;
+#ifdef LEKMOD_GREAT_GENERAL_SPAWN_CAPITAL
+				// Great Generals from combat experience appear in the capital; the ranking below is only a fallback
+				pBestCity = getCapitalCity();
+				if(pBestCity == NULL)
+#endif
 				for(CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 				{
 					int iValue = 4 * GC.getGame().getJonRandNum(getNumCities(), "Great General City Selection");
