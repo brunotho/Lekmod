@@ -1256,6 +1256,16 @@ public:
 	int getExcludeUnitClass() const;
 	int getCityStateInfluence() const;
 	bool isReligionFaith() const;
+	// Lekmod ruin overhaul
+	int getBeforeEra() const;
+	int getUnitDamage() const;
+	int getGoldEraFactor() const;
+	bool isEraBarbarianSpawn() const;
+	bool isScienceEraRuin() const;
+	bool isCultureEraTurn() const;
+	bool isFaithEraTurn() const;
+	bool isFoodEraScale() const;
+	bool isFaithZeroOnly() const;
 #endif
 
 	const char* getSound() const;
@@ -1307,6 +1317,16 @@ protected:
 	int m_iExcludeUnitClass;
 	int m_iCityStateInfluence;
 	bool m_bReligionFaith;
+	// Lekmod ruin overhaul
+	int m_iBeforeEra;
+	int m_iUnitDamage;
+	int m_iGoldEraFactor;
+	bool m_bEraBarbarianSpawn;
+	bool m_bScienceEraRuin;
+	bool m_bCultureEraTurn;
+	bool m_bFaithEraTurn;
+	bool m_bFoodEraScale;
+	bool m_bFaithZeroOnly;
 #endif
 
 	CvString m_strSound;

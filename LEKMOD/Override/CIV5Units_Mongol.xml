@@ -2407,7 +2407,7 @@
 			<Text>Exploring the ruins reveals ancient scriptures which provide your Unit new combat training and the promotion "{1_PromoteString}".</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CHOOSE_GOODY_EXP_MOVE">
-			<Text>Study with the lost tribe to train your unit.</Text>
+			<Text>The unit gains the Mobility promotion.</Text>
 		</Row>
 		
 		<Row Tag="TXT_KEY_LEKMOD_GOODY_IMPROVEMENT">
@@ -2418,24 +2418,24 @@
 		</Row>
 		
 		<Row Tag="TXT_KEY_LEKMOD_GOODY_TILE">
-			<Text>Among the ruins, you find relics marking ancient borders, inspiring your people to expand your city’s influence further!</Text>
+			<Text>The survivors of the ruins pledge themselves to your nearest city![NEWLINE]Its borders grow to include their lands.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CHOOSE_GOODY_TILE">
-			<Text>Study relics to expand your borders.</Text>
+			<Text>Expand the borders of your nearest city.</Text>
 		</Row>
 		
 		<Row Tag="TXT_KEY_LEKMOD_GOODY_FAITH">
-			<Text>You have found an ancient oracle. The priestess has blessed you with a divine revelation. You have received {1_Num} [ICON_PEACE] Faith.</Text>
+			<Text>You have found an ancient oracle.[NEWLINE]The priestess has blessed you with a divine revelation.[NEWLINE]You have received {1_Num} [ICON_PEACE] Faith, and your unit is fully healed.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CHOOSE_GOODY_FAITH">
-			<Text>Study the lost tribe's religion.</Text>
+			<Text>Gain [ICON_PEACE] Faith and fully heal the unit.</Text>
 		</Row>
 	
 		<Row Tag="TXT_KEY_LEKMOD_GOODY_FOOD">
-			<Text>You discover a hidden oasis among the ruins, teeming with edible plants. {1_Num} [ICON_FOOD] Food is added to your nearest city!</Text>
+			<Text>You find a stash of food hidden in the ruins![NEWLINE]You receive {1_Num} [ICON_FOOD] Food.[NEWLINE]Your unit overindulges.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CHOOSE_GOODY_FOOD">
-			<Text>Bring back edible plants to your nearest city for free [ICON_FOOD] Food.</Text>
+			<Text>[ICON_FOOD] Food for your capital. The unit overindulges.</Text>
 		</Row>
 		
 		<Row Tag="TXT_KEY_GOLDMOD_YIELD_PER_MINOR_TRADE_ROUTE"> 
@@ -72265,9 +72265,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_CULTURE"> 
-			<Text>
-				Use this contact with the lost tribe to enhance your [ICON_CULTURE] Culture.
-			</Text>
+			<Text>Recover ancient relics for [ICON_CULTURE] Culture.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_EXPERIENCE"> 
 			<Text>
@@ -72275,14 +72273,10 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_FAITH"> 
-			<Text>
-				Study the lost tribe's religion.
-			</Text>
+			<Text>Gain [ICON_PEACE] Faith toward a Pantheon.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_GOLD"> 
-			<Text>
-				Trade with the lost tribe for [ICON_GOLD] Gold.
-			</Text>
+			<Text>Plunder [ICON_GOLD] Gold. Big hauls attract barbarians.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_HEALING"> 
 			<Text>
@@ -72290,9 +72284,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_MAP"> 
-			<Text>
-				Study their maps of nearby territory and barbarians.
-			</Text>
+			<Text>Study the ancient maps hidden in the ruins.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_POPULATION"> 
 			<Text>
@@ -72325,14 +72317,10 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_TECH"> 
-			<Text>
-				Study their tools to discover a new technology.
-			</Text>
+			<Text>Gain [ICON_RESEARCH] Science and XP. The unit is wounded.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_UPGRADE_UNIT"> 
-			<Text>
-				Use equipment around the tribe to upgrade your unit.
-			</Text>
+			<Text>Upgrade the unit. It is wounded in the fight.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CHOOSE_WARRIOR"> 
 			<Text>
@@ -72345,9 +72333,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_CULTURE"> 
-			<Text>
-				You have found cultural artifacts which awe your citizens! You have received {1_Num} [ICON_CULTURE] Culture!
-			</Text>
+			<Text>You recover ancient relics that awe your citizens![NEWLINE]You receive {1_Num} [ICON_CULTURE] Culture.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_EXPERIENCE"> 
 			<Text>
@@ -72355,14 +72341,10 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_FAITH"> 
-			<Text>
-				You have found an ancient oracle. The priestess has blessed you with a divine revelation. You have received {1_Num} [ICON_PEACE] Faith.
-			</Text>
+			<Text>You have found an ancient oracle.[NEWLINE]The priestess has blessed you with a divine revelation.[NEWLINE]You have received {1_Num} [ICON_PEACE] Faith.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_GOLD"> 
-			<Text>
-				In the ruins you find the treasures of an ancient empire! You have received {1_Num} [ICON_GOLD] Gold!
-			</Text>
+			<Text>You plunder the treasures of an ancient empire![NEWLINE]You receive {1_Num} [ICON_GOLD] Gold.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_HEALING"> 
 			<Text>
@@ -72370,9 +72352,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_MAP"> 
-			<Text>
-				You discover a crudely-drawn map which outlines nearby terrain and and evidence of recent barbarian activity!
-			</Text>
+			<Text>You discover ancient maps of the surrounding lands.[NEWLINE]Your unit studies them carefully.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_POPULATION"> 
 			<Text>
@@ -72405,14 +72385,10 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_TECH"> 
-			<Text>
-				Discovered in the ruins are the secrets of an advanced technology!
-			</Text>
+			<Text>Your unit braves the treacherous depths of the ruins and returns with fragments of ancient knowledge.[NEWLINE]You gain {1_Num} [ICON_RESEARCH] Science and the unit gains experience.[NEWLINE]The expedition left it wounded.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_UPGRADE_UNIT"> 
-			<Text>
-				Your Unit equips itself with advanced weapons found in the ruins!
-			</Text>
+			<Text>Your unit overpowers the inhabitants of the ruins and takes up their weapons![NEWLINE]It was wounded in the fight.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOODY_WARRIOR"> 
 			<Text>

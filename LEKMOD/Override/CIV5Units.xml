@@ -107832,8 +107832,15 @@
 		<Column name="IncreasePerPop" type="integer"  default="0"/>
 		<Column name="ExcludeUnitClass" type="integer"  default="0"/>
 		<Column name="ReligionFaith" type="boolean"  default="false"/>
-		
-		
+		<Column name="BeforeEra" type="integer" default="0"/>
+		<Column name="UnitDamage" type="integer" default="0"/>
+		<Column name="GoldEraFactor" type="integer" default="0"/>
+		<Column name="EraBarbarianSpawn" type="boolean" default="0"/>
+		<Column name="ScienceEraRuin" type="boolean" default="0"/>
+		<Column name="CultureEraTurn" type="boolean" default="0"/>
+		<Column name="FaithEraTurn" type="boolean" default="0"/>
+		<Column name="FoodEraScale" type="boolean" default="0"/>
+		<Column name="FaithZeroOnly" type="boolean" default="0"/>		
 	</Table> 
 	<GoodyHuts>
 		<Delete />
@@ -107909,7 +107916,7 @@
 			<Healing>0</Healing> 
 			<DamagePrereq>0</DamagePrereq> 
 			<Population>0</Population> 
-			<Culture>20</Culture> 
+			<Culture>0</Culture> 
 			<Faith>0</Faith> 
 			<ProphetPercent>0</ProphetPercent> 
 			<RevealNearbyBarbariansRange>0</RevealNearbyBarbariansRange> 
@@ -107920,7 +107927,8 @@
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
 			<MinBarbarians>0</MinBarbarians>
-			<AfterTurn>12</AfterTurn>
+			<AfterTurn>6</AfterTurn>
+			<CultureEraTurn>true</CultureEraTurn>
 		</Row>
 		<Row> 
 			<ID>3</ID> 
@@ -107938,7 +107946,7 @@
 			<DamagePrereq>0</DamagePrereq> 
 			<Population>0</Population> 
 			<Culture>0</Culture> 
-			<Faith>5</Faith> 
+			<Faith>14</Faith> 
 			<ProphetPercent>0</ProphetPercent> 
 			<RevealNearbyBarbariansRange>0</RevealNearbyBarbariansRange> 
 			<Tech>false</Tech> 
@@ -107947,7 +107955,9 @@
 			<PantheonFaith>true</PantheonFaith> 
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
-			<MinBarbarians>0</MinBarbarians> 
+			<MinBarbarians>0</MinBarbarians>
+			<AfterTurn>6</AfterTurn>
+			<FaithZeroOnly>true</FaithZeroOnly>
 		</Row>
 		<Row> 
 			<ID>4</ID> 
@@ -108009,9 +108019,9 @@
 			<Description>TXT_KEY_GOODY_GOLD</Description> 
 			<ChooseDescription>TXT_KEY_GOODY_CHOOSE_GOLD</ChooseDescription> 
 			<Sound>AS2D_GOODY_GOLD</Sound> 
-			<Gold>50</Gold> 
-			<NumGoldRandRolls>5</NumGoldRandRolls> 
-			<GoldRandAmount>11</GoldRandAmount> 
+			<Gold>45</Gold> 
+			<NumGoldRandRolls>0</NumGoldRandRolls> 
+			<GoldRandAmount>0</GoldRandAmount> 
 			<MapOffset>0</MapOffset> 
 			<MapRange>0</MapRange> 
 			<MapProb>0</MapProb> 
@@ -108030,6 +108040,8 @@
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
 			<MinBarbarians>0</MinBarbarians> 
+			<GoldEraFactor>5</GoldEraFactor>
+			<EraBarbarianSpawn>true</EraBarbarianSpawn>
 		</Row>
 		<Row> 
 			<ID>7</ID> 
@@ -108041,9 +108053,9 @@
 			<NumGoldRandRolls>0</NumGoldRandRolls> 
 			<GoldRandAmount>0</GoldRandAmount> 
 			<MapOffset>1</MapOffset> 
-			<MapRange>5</MapRange> 
-			<MapProb>100</MapProb> 
-			<Experience>0</Experience> 
+			<MapRange>6</MapRange> 
+			<MapProb>75</MapProb> 
+			<Experience>6</Experience> 
 			<Healing>0</Healing> 
 			<DamagePrereq>0</DamagePrereq> 
 			<Population>0</Population> 
@@ -108086,6 +108098,7 @@
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
 			<MinBarbarians>0</MinBarbarians> 
+			<ScienceEraRuin>true</ScienceEraRuin>
 		</Row>
 		<Row> 
 			<ID>9</ID> 
@@ -108139,7 +108152,9 @@
 			<PantheonFaith>false</PantheonFaith> 
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
-			<MinBarbarians>0</MinBarbarians> 
+			<MinBarbarians>0</MinBarbarians>
+			<AfterTurn>6</AfterTurn>
+			<UnitDamage>15</UnitDamage>
 		</Row>
 		<Row> 
 			<ID>11</ID> 
@@ -108424,9 +108439,11 @@
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
 			<MinBarbarians>0</MinBarbarians>
-			<FoodMin>10</FoodMin>
-			<FoodMax>10</FoodMax>
-			<IncreasePerPop>2</IncreasePerPop>
+			<FoodMin>0</FoodMin>
+			<FoodMax>0</FoodMax>
+			<IncreasePerPop>0</IncreasePerPop>
+			<FoodEraScale>true</FoodEraScale>
+			<FreePromotion>PROMOTION_GLUTTON</FreePromotion>
 		</Row>
 		<Row> 
 			<ID>21</ID> 
@@ -108440,7 +108457,6 @@
 			<MapRange>0</MapRange> 
 			<MapProb>0</MapProb> 
 			<Experience>0</Experience> 
-			<Healing>0</Healing> 
 			<DamagePrereq>0</DamagePrereq> 
 			<Population>0</Population> 
 			<Culture>0</Culture> 
@@ -108454,8 +108470,10 @@
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
 			<MinBarbarians>0</MinBarbarians>
-			<FaithMin>30</FaithMin>
-			<FaithMax>34</FaithMax>
+			<Healing>100</Healing>
+			<FaithMin>0</FaithMin>
+			<FaithMax>0</FaithMax>
+			<FaithEraTurn>true</FaithEraTurn>
 			<ReligionFaith>true</ReligionFaith>
 		</Row>
 		<Row> 
@@ -108526,7 +108544,7 @@
 			<MapOffset>0</MapOffset> 
 			<MapRange>0</MapRange> 
 			<MapProb>0</MapProb> 
-			<Experience>15</Experience> 
+			<Experience>0</Experience> 
 			<Healing>0</Healing> 
 			<DamagePrereq>0</DamagePrereq> 
 			<Population>0</Population> 
@@ -108541,8 +108559,8 @@
 			<Bad>false</Bad> 
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
 			<MinBarbarians>0</MinBarbarians>
-			<FreePromotion>PROMOTION_EXTRA_MOVES_RUIN</FreePromotion>
-			<ExcludeUnitClass>UNITCLASS_SCOUT</ExcludeUnitClass>
+			<FreePromotion>PROMOTION_MOBILITY</FreePromotion>
+			<BeforeEra>1</BeforeEra>
 		</Row>
 		<Row> 
 			<ID>25</ID> 
@@ -112128,6 +112146,43 @@
 			<GoodyType>GOODY_EXPERIENCE_MOVE</GoodyType> 
 		</Row>
 		
+		<!-- LEKMOD: pantheon faith ruin re-enabled (only without a pantheon; GOODY_RANDOM_FAITH needs one) -->
+		<Row>
+			<HandicapType>HANDICAP_SETTLER</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_CHIEFTAIN</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_WARLORD</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_PRINCE</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_KING</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_EMPEROR</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_IMMORTAL</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_DEITY</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_AI_DEFAULT</HandicapType>
+			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
 	</HandicapInfo_Goodies> 
 
 	<Table name="HandicapInfos">

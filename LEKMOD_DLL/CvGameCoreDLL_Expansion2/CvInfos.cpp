@@ -4080,6 +4080,15 @@ CvGoodyInfo::CvGoodyInfo() : CvBaseInfo()
 	, m_iExcludeUnitClass(NO_UNITCLASS)
 	, m_iCityStateInfluence(0)
 	, m_bReligionFaith(false)
+	, m_iBeforeEra(0)
+	, m_iUnitDamage(0)
+	, m_iGoldEraFactor(0)
+	, m_bEraBarbarianSpawn(false)
+	, m_bScienceEraRuin(false)
+	, m_bCultureEraTurn(false)
+	, m_bFaithEraTurn(false)
+	, m_bFoodEraScale(false)
+	, m_bFaithZeroOnly(false)
 #endif
 {
 }
@@ -4263,6 +4272,42 @@ bool CvGoodyInfo::isReligionFaith() const
 {
 	return m_bReligionFaith;
 }
+int CvGoodyInfo::getBeforeEra() const
+{
+	return m_iBeforeEra;
+}
+int CvGoodyInfo::getUnitDamage() const
+{
+	return m_iUnitDamage;
+}
+int CvGoodyInfo::getGoldEraFactor() const
+{
+	return m_iGoldEraFactor;
+}
+bool CvGoodyInfo::isEraBarbarianSpawn() const
+{
+	return m_bEraBarbarianSpawn;
+}
+bool CvGoodyInfo::isScienceEraRuin() const
+{
+	return m_bScienceEraRuin;
+}
+bool CvGoodyInfo::isCultureEraTurn() const
+{
+	return m_bCultureEraTurn;
+}
+bool CvGoodyInfo::isFaithEraTurn() const
+{
+	return m_bFaithEraTurn;
+}
+bool CvGoodyInfo::isFoodEraScale() const
+{
+	return m_bFoodEraScale;
+}
+bool CvGoodyInfo::isFaithZeroOnly() const
+{
+	return m_bFaithZeroOnly;
+}
 #endif
 
 const char* CvGoodyInfo::getSound() const
@@ -4338,6 +4383,15 @@ bool CvGoodyInfo::CacheResults(Database::Results& results, CvDatabaseUtility& kU
 	m_iExcludeUnitClass = GC.getInfoTypeForString(results.GetText("ExcludeUnitClass"), true);
 	m_iCityStateInfluence = results.GetInt("CityStateInfluence");
 	m_bReligionFaith = results.GetBool("ReligionFaith");
+	m_iBeforeEra = results.GetInt("BeforeEra");
+	m_iUnitDamage = results.GetInt("UnitDamage");
+	m_iGoldEraFactor = results.GetInt("GoldEraFactor");
+	m_bEraBarbarianSpawn = results.GetBool("EraBarbarianSpawn");
+	m_bScienceEraRuin = results.GetBool("ScienceEraRuin");
+	m_bCultureEraTurn = results.GetBool("CultureEraTurn");
+	m_bFaithEraTurn = results.GetBool("FaithEraTurn");
+	m_bFoodEraScale = results.GetBool("FoodEraScale");
+	m_bFaithZeroOnly = results.GetBool("FaithZeroOnly");
 #endif
 
 	//TEMP TEMP TEMP TEMP

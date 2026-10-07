@@ -33,6 +33,9 @@ function OnPopup( popupInfo )
 	elseif (pGoodyInfo.FaithMin > 0 and pGoodyInfo.FaithMax > 0) then
 		local iFaith = popupInfo.Data2;
 		Controls.DescriptionLabel:SetText(Locale.ConvertTextKey(pGoodyInfo.Description, iFaith));
+	-- Era-scaled ruins (food, faith, culture, science, gold): the DLL passes the computed amount in Data2
+	elseif (pGoodyInfo.CityStateInfluence == 0 and type(popupInfo.Data2) == "number" and popupInfo.Data2 > 0) then
+		Controls.DescriptionLabel:SetText(Locale.ConvertTextKey(pGoodyInfo.Description, popupInfo.Data2));
 	elseif (pGoodyInfo.CityStateInfluence > 0) then
 		local sCityStateName = popupInfo.Data2;
 		local iInfluence = popupInfo.Data3;
