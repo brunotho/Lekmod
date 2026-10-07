@@ -262,6 +262,10 @@ public:
 
 	void DoTestStartGlobalQuest();
 	void DoTestStartPersonalQuest(PlayerTypes ePlayer);
+	bool DoStartRandomPersonalQuest(PlayerTypes ePlayer);
+#ifdef LEKMOD_PERSONAL_QUEST_RECYCLE
+	void DoRecyclePersonalQuestsForPlayer(PlayerTypes ePlayer);
+#endif
 	void AddQuestForPlayer(PlayerTypes ePlayer, MinorCivQuestTypes eType, int iStartTurn);
 	void AddQuestCopyForPlayer(PlayerTypes ePlayer, CvMinorCivQuest* pQuest);
 	void DoTestQuestsOnFirstContact(PlayerTypes eMajor);

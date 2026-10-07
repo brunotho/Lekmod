@@ -93002,6 +93002,10 @@
 			<Name>FUTURE_TECH_BONUS_PERCENT</Name>
 			<Value>20</Value>
 		</Row>
+		<Row>
+			<Name>MINOR_CIV_PERSONAL_QUEST_RECYCLE_TURNS</Name>
+			<Value>15</Value>
+		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 
 			<Value>20</Value> 
@@ -95944,19 +95948,19 @@
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_GLOBAL_QUEST_FIRST_POSSIBLE_TURN</Name> 
-			<Value>30</Value> 
+			<Value>35</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_GLOBAL_QUEST_FIRST_POSSIBLE_TURN_RAND</Name> 
-			<Value>20</Value> 
+			<Value>5</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_GLOBAL_QUEST_MIN_TURNS_BETWEEN</Name> 
-			<Value>30</Value> 
+			<Value>40</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_GLOBAL_QUEST_RAND_TURNS_BETWEEN</Name> 
-			<Value>25</Value> 
+			<Value>5</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_GLOBAL_QUEST_RAND_TURNS_BETWEEN_HOSTILE_MULTIPLIER</Name> 
@@ -95964,19 +95968,19 @@
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_PERSONAL_QUEST_FIRST_POSSIBLE_TURN</Name> 
-			<Value>25</Value> 
+			<Value>30</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_PERSONAL_QUEST_FIRST_POSSIBLE_TURN_RAND</Name> 
-			<Value>20</Value> 
+			<Value>5</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_PERSONAL_QUEST_MIN_TURNS_BETWEEN</Name> 
-			<Value>17</Value> 
+			<Value>27</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_PERSONAL_QUEST_RAND_TURNS_BETWEEN</Name> 
-			<Value>25</Value> 
+			<Value>5</Value> 
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_PERSONAL_QUEST_RAND_TURNS_BETWEEN_HOSTILE_MULTIPLIER</Name> 

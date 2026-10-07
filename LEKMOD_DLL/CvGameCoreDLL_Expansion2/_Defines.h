@@ -899,6 +899,8 @@
 #define LEKMOD_MARITIME_FOOD_CITY_YIELD
 // City-state food/culture/faith per era come from Eras.CityState* columns (totals per friend/ally status)
 #define LEKMOD_CITY_STATE_ERA_BONUSES
+// Personal city-state quests open for MINOR_CIV_PERSONAL_QUEST_RECYCLE_TURNS turns are replaced by a new quest
+#define LEKMOD_PERSONAL_QUEST_RECYCLE
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

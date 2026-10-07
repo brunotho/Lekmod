@@ -3353,6 +3353,9 @@ void CvMinorCivAI::DoTurnQuests()
 			{
 				if(!IsAtWarWithPlayersTeam(ePlayer))
 				{
+#ifdef LEKMOD_PERSONAL_QUEST_RECYCLE
+					DoRecyclePersonalQuestsForPlayer(ePlayer);
+#endif
 					DoTestStartPersonalQuest(ePlayer);
 				}
 			}
@@ -3472,6 +3475,16 @@ void CvMinorCivAI::DoTestStartPersonalQuest(PlayerTypes ePlayer)
 		return;
 	}
 
+	if(!DoStartRandomPersonalQuest(ePlayer))
+		return;
+
+	// Check if we need to seed the countdown timer to allow for another quest
+	DoTestSeedQuestCountdownForPlayer(ePlayer);
+}
+
+/// Pick a random valid personal quest (weighted by personality) and give it to ePlayer. Returns false if none is valid.
+bool CvMinorCivAI::DoStartRandomPersonalQuest(PlayerTypes ePlayer)
+{
 	FStaticVector<MinorCivQuestTypes, NUM_MINOR_CIV_QUEST_TYPES, true, c_eCiv5GameplayDLL, 0> veValidQuests;
 
 	int iCount, iCountLoop;
@@ -3496,17 +3509,58 @@ void CvMinorCivAI::DoTestStartPersonalQuest(PlayerTypes ePlayer)
 	// No valid Quests
 	if(veValidQuests.size() == 0)
 	{
-		return;
+		return false;
 	}
 
 	int iRandIndex = GC.getGame().getJonRandNum(veValidQuests.size(), "Picking random quest for Minor to give to a player.");
 	eQuest = veValidQuests[iRandIndex];
 
 	AddQuestForPlayer(ePlayer, eQuest, GC.getGame().getGameTurn());
-
-	// Check if we need to seed the countdown timer to allow for another quest
-	DoTestSeedQuestCountdownForPlayer(ePlayer);
+	return true;
 }
+
+#ifdef LEKMOD_PERSONAL_QUEST_RECYCLE
+/// Personal quests that stay open for MINOR_CIV_PERSONAL_QUEST_RECYCLE_TURNS are withdrawn and immediately replaced by a new one
+void CvMinorCivAI::DoRecyclePersonalQuestsForPlayer(PlayerTypes ePlayer)
+{
+	if(ePlayer < 0 || ePlayer >= MAX_MAJOR_CIVS) return;
+
+	const int iRecycleTurns = std::max(1, GC.getMINOR_CIV_PERSONAL_QUEST_RECYCLE_TURNS());
+	const int iCurrentTurn = GC.getGame().getGameTurn();
+	int iRecycled = 0;
+
+	QuestListForPlayer::iterator itr;
+	for(itr = m_QuestsGiven[ePlayer].begin(); itr != m_QuestsGiven[ePlayer].end(); itr++)
+	{
+		if(!IsPersonalQuest(itr->GetType()) || itr->IsHandled() || itr->IsComplete())
+			continue;
+
+		if(iCurrentTurn - itr->GetStartTurn() >= iRecycleTurns)
+		{
+			itr->SetHandled(true);
+			iRecycled++;
+		}
+	}
+
+	if(iRecycled == 0)
+		return;
+
+	// Remove the withdrawn quests without seeding the countdown: the replacement takes the slot
+	for(itr = m_QuestsGiven[ePlayer].begin(); itr != m_QuestsGiven[ePlayer].end(); itr++)
+	{
+		if(itr->IsHandled())
+		{
+			m_QuestsGiven[ePlayer].erase(itr);
+			itr--;
+		}
+	}
+
+	for(int iI = 0; iI < iRecycled; iI++)
+	{
+		DoStartRandomPersonalQuest(ePlayer);
+	}
+}
+#endif
 
 /// Begin a quest, initializing it with data
 void CvMinorCivAI::AddQuestForPlayer(PlayerTypes ePlayer, MinorCivQuestTypes eType, int iStartTurn)

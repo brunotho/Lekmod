@@ -365,6 +365,15 @@ City-state quests give 5 less Influence, with a few exceptions.
 - Dev: Defines MINOR_QUEST_FRIENDSHIP_* (INVEST stays 0)
 
 
+CITY-STATE QUEST TIMING (MINOR_CIV_*_QUEST_*)
+----------------------------------------------
+Tags: game mechanics
+City-states give out quests at a steadier pace, and personal quests nobody finishes are replaced after 15 turns.
+- Changed: the random part of the waiting time between quests is much smaller (about 0-3 turns instead of 0-16 at quick speed); the average pace stays the same
+- Added: a personal quest still open after 15 turns is withdrawn and replaced by a new one
+- Dev: defines GLOBAL/PERSONAL_QUEST_RAND_TURNS_BETWEEN 25 -> 5 with MIN_TURNS_BETWEEN +10 (40 / 27); FIRST_POSSIBLE_TURN_RAND 20 -> 5 with FIRST_POSSIBLE_TURN +5 (35 / 30). New define MINOR_CIV_PERSONAL_QUEST_RECYCLE_TURNS (15, flat); LEKMOD_PERSONAL_QUEST_RECYCLE (CvMinorCivAI::DoRecyclePersonalQuestsForPlayer); quest picking moved into DoStartRandomPersonalQuest
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
