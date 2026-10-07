@@ -80362,41 +80362,41 @@
 		<Row>
 			<ID>377</ID>
 			<Type>COLOR_CS_TRAIT_MARITIME</Type>
-			<Red>0.2</Red>
-			<Green>0.88</Green>
-			<Blue>0.38</Blue>
+			<Red>0.99</Red>
+			<Green>0.58</Green>
+			<Blue>0.16</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 		<Row>
 			<ID>378</ID>
 			<Type>COLOR_CS_TRAIT_CULTURED</Type>
-			<Red>0.62</Red>
-			<Green>0.32</Green>
-			<Blue>0.95</Blue>
+			<Red>0.6</Red>
+			<Green>0.0</Green>
+			<Blue>1.0</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 		<Row>
 			<ID>379</ID>
 			<Type>COLOR_CS_TRAIT_RELIGIOUS</Type>
-			<Red>0.78</Red>
-			<Green>0.8</Green>
-			<Blue>0.82</Blue>
+			<Red>0.9</Red>
+			<Green>0.9</Green>
+			<Blue>0.9</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 		<Row>
 			<ID>380</ID>
 			<Type>COLOR_CS_TRAIT_MERCANTILE</Type>
-			<Red>1</Red>
-			<Green>0.88</Green>
-			<Blue>0.18</Blue>
+			<Red>1.0</Red>
+			<Green>0.94</Green>
+			<Blue>0.08</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 		<Row>
 			<ID>381</ID>
 			<Type>COLOR_CS_TRAIT_MILITARISTIC</Type>
-			<Red>1</Red>
-			<Green>0.52</Green>
-			<Blue>0.44</Blue>
+			<Red>1.0</Red>
+			<Green>0.3</Green>
+			<Blue>0.3</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 	</Colors> 

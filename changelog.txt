@@ -351,8 +351,8 @@ Food from Maritime city-states is added to the city itself instead of the city t
 CITY-STATE BORDER COLORS (PLAYERCOLOR_CS_*)
 --------------------------------------------
 Tags: ui
-City-state borders show their type at a glance: one color per type, striped with black.
-- Changed: Maritime green, Cultured purple, Religious light gray, Mercantile yellow, Militaristic salmon
+City-state borders show their type at a glance: one color per type, matching the yield it gives, striped with black.
+- Changed: the colors match what the city-state gives: Maritime food orange, Cultured culture purple, Mercantile gold yellow, Religious faith white, Militaristic red
 - Dev: new Colors COLOR_CS_TRAIT_* (IDs 377-381) and PlayerColors PLAYERCOLOR_CS_* (184-188; primary COLOR_PLAYER_MINOR_ICON, secondary the type color); every MinorCivilizations row's DefaultPlayerColor set from its MinorCivTrait
 
 
