@@ -74,7 +74,15 @@ Repo layout (GitHub): `LEKMOD/` (the mod), `LEKMOD_DLL/` (C++ source), `Lekmap/`
 
 This file lives at the **repo root** (`civ-tools\lek\CLAUDE.md`), so it doesn't ship to players. Start Claude sessions in `civ-tools\lek`. A session started in the game folder won't see this file.
 
-**Generated UI:** `ui_check.bat` writes `LEKMOD/Lua/UI/` and `LEKMOD/*.bak`, and both are git-ignored. Always run it **through the junction** (`DLC\WIP_LEKMOD\ui_check.bat`): it looks for EUI in the folder above itself.
+**Generated UI:** `ui_check.bat` writes `LEKMOD/Lua/UI/` and `LEKMOD/*.bak`. Always run it **through the junction** (`DLC\WIP_LEKMOD\ui_check.bat`): it looks for EUI in the folder above itself.
+- Most of `Lua/UI/` is git-ignored, but upstream **tracks about a dozen files there** (`FrontEnd.lua`, `StagingRoom.lua`, `MainMenu.lua`…).
+- After every `ui_check.bat` run, `FrontEnd.lua` (`LEKMOD_UI_CHECK_DONE = true`) and `StagingRoom.lua` (comments) show as modified. That is generated output: **never commit it**. Commit UI changes in the templates under `Lua/tmp/`.
+
+**Git notes:**
+- Git has `core.autocrlf=true`, while the Override files are LF. Compare with `diff --strip-trailing-cr`. `sed -i` in Git Bash strips CRs from CRLF files; use Python byte I/O, or check line endings afterwards.
+- To split one file's changes into several commits, use `civ-tools\stage_hunks.py <file> <regex> [--invert] [--range A-B]`. It uses 3-line context; zero-context hunks (`-U0` + `--unidiff-zero`) misplaced inserted lines once. After staging, check with `git diff -U0` that what remains is exactly what you expect.
+- After merging `upstream/main`, check for **silently doubled members and columns**. Upstream's v35.4 `PillageChange` duplicated ours without a conflict.
+- Upstream compacted `CIV5Units.xml` in v35 (~35k default-value lines removed), so line diffs against older versions look huge even when little changed.
 
 ## 3. How the game loads the mod (verified)
 The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
@@ -140,18 +148,19 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
 
 **Build** (PowerShell):
 ```
-Set-Location C:\Users\bbruno\civ-tools\lekbuild
+Set-Location C:\Users\bbruno\civ-tools\lek
 & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "LEKMOD_DLL\CvGameCoreDLL_Expansion2\CvGameCoreDLL_Expansion2.vcproj" Release *> C:\Users\bbruno\civ-tools\build_release.log
 ```
 - Takes a few minutes. Run it in the background. "0 error(s)" with ~780 warnings is normal.
 - Output: `LEKMOD_DLL\CvGameCoreDLL_Expansion2\BuildOutput\VS2008_ReleaseWin32\CvGameCore_Expansion2.dll`.
 - VS2008 has a **~260-character path limit**, so the checkout must stay at a short path. The scratchpad path is too long.
-- Fork HEAD does not compile as-is. Ashwin's June commit enabled `#define REPLAY_MESSAGE_CHAT 7` in `_Defines.h`, which clashes with the enum entry in `CvEnums.h`. It's commented out again in `lekbuild`.
 
 **Install:**
 1. Civ V must be **closed**; the DLL is locked while the game runs. Ask the user, and never kill the game.
-2. Back up the current DLL to `civ-tools\dll_backup\`, then copy the new one into `WIP_LEKMOD\` and compare md5 checksums.
-3. Start a **new game** for every test. Old saves break when the DLL adds saved fields.
+2. Back up the current DLL to `civ-tools\dll_backup\`.
+3. Copy the build output to `LEKMOD\CvGameCore_Expansion2.dll`. Through the junction, that file *is* the game's DLL. Compare md5 checksums.
+4. Commit the DLL (convention: a separate `Rebuild CvGameCore_Expansion2.dll` commit).
+5. Start a **new game** for every test. Old saves break when the DLL adds saved fields.
 
 **Windows Smart App Control** blocks unsigned, unknown DLLs. A blocked load shows up as a crash before the main menu, and `Logs\GameCore.log` says *"LoadLibrary failed with error 4551: An Application Control policy has blocked this file."* The user turned it **off** on this PC (2026-10-05). Players with it on hit the same issue with any fresh unsigned Lekmod DLL. The upstream norm is documentation; the real fix is code signing.
 
@@ -200,174 +209,65 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 **Debugging lesson:** twice a confident conclusion was wrong. "Zealot will work" was wrong; "the ruins aren't changed at all" was half wrong, because the C++ computed the effects. When the user's observation conflicts with your model, find a direct measurement (database, log, diagnostic) before arguing.
 
 ## 9. Status (update as things change)
-**Port to v35.4 (2026-10-07)**, in `civ-tools\lek`, branch `dev`: 6 commits on upstream `201df6c5`. **Not pushed, not installed yet.**
-1. ruins overhaul
-2. kill-yield fix (still an upstream bug; a candidate to offer EAP)
-3. Demographics
-4. promotion batch
-5. changelog
-6. DLL (0 errors)
+### Current state (2026-10-07)
+- `dev` = v35.4 (`201df6c5`) + 7 commits: ruins overhaul, kill-yield fix, Demographics, promotion batch, changelog, DLL, CLAUDE.md. **Not pushed.**
+- **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build (md5 checked 2026-10-07). The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
+- **Nothing has been playtested on the port yet.** Pre-port test results (History below) came from the old fork.
+- Our promotion IDs: 344 Zealot, 345 Envelopment, 346 Glutton, 347–360 the April batch (Amphibious I–III, Bunker Busting, Repair Crew, Supply Ship, Sambuca, Carpet Bombing, Discipline, Discipline (Air), Fear Aura, Marauder, Mountaineering, Swift Transport), 361 Iaijutsu, 362 Hatamoto, 363 One Good Eye, 364 Stargazing.
 
-How the port was done:
+**How the port was done:**
 - Branch `port-src` = `old/repair-batch-1` with Ashwin's 7 World Congress commits reverted, and the dead `Art/` XML/modinfo edits and the DLL binary dropped.
-- That branch was squash-merged onto v35.4 and committed by theme with `stage_hunks.py` (which now has `--range A-B`).
+- That branch was squash-merged onto v35.4 and committed by theme with `stage_hunks.py`.
 - Ashwin's 2 June commits needed nothing: their C++ was inside the deleted ruins draft, and the rest was `Art/` wiring.
+- Resolutions against v35.4:
+  - **`PillageChange`**: v35.4 added the same promotion field with the same meaning (% bonus to pillage gold, used by Buganda). Our duplicate was removed, and Marauder uses theirs.
+  - **Promotion IDs** renumbered +4 (upstream took 340–343).
+  - **Heal while embarked**: allowed by `IsHealWhileEmbarked()` OR Buganda's `IsEmbarkedMissionAllowed(MISSION_HEAL)`, in both `CvPlayer::DoUnitReset` and `CvUnit::canHeal`.
+  - **Embarked defense** (40% of max(melee, ranged) strength) re-applied inside upstream's moved `GetEmbarkedUnitDefense`.
+  - **Sortie**: v35.4 computes all combat damage in `CvGame::getCombatDamage(CvCombatInfo&)`. The sweep reduction now lives there.
+  - Upstream removed Anti-Naval 1–3. The Mobility prerequisite that references them is harmless (INNER JOIN skip).
+  - Fixed while porting: the Pictish Warrior tooltip used the invalid `[ICON_FAITH]`.
+- The kill-yield era fix is still an upstream bug: a candidate to offer EAP.
 
-Resolutions worth knowing:
-- **`PillageChange`**: v35.4 added the same promotion field with the same meaning (% bonus to pillage gold, used by Buganda). Our duplicate was removed, and Marauder uses theirs. Git merged the duplicate *silently*, so after an upstream merge, check for doubled members and columns.
-- **Promotion IDs** renumbered +4 to 344–364.
-- **Heal while embarked**: allowed by `IsHealWhileEmbarked()` OR Buganda's `IsEmbarkedMissionAllowed(MISSION_HEAL)`. This is in both `CvPlayer::DoUnitReset` and `CvUnit::canHeal`.
-- **Embarked defense** (40% of max(melee, ranged) strength) re-applied inside upstream's moved `GetEmbarkedUnitDefense`.
-- **Sortie**: v35.4 computes all combat damage in `CvGame::getCombatDamage(CvCombatInfo&)`. The sweep reduction now lives there.
-- Fixed while porting: the Pictish Warrior tooltip used the invalid `[ICON_FAITH]`.
-- `sed -i` in Git Bash strips CRs from CRLF files. Use Python byte I/O, or check line endings afterwards.
+**To playtest on the port** (new game):
+- Code the port touched: heal while embarked, embarked defense, Sortie.
+- Never confirmed in game: era-flag fix (Zealot faith after a level-up), Amphibious embark no longer ending the turn, movement preview after disembark (reportedly showed uncapped moves; get an exact description if still wrong), Carpet Bombing through the "declare war?" popup, Iaijutsu, Hatamoto.
+- Ruins not yet tested: food+Glutton, tech→science, map 75%, gold+barbarian, pantheon faith, Mobility after the ancient era.
 
-**Everything below describes the old fork's state (pre-port). The game folder still runs that state until the port is installed.**
+**Open design questions for the user:**
+- **Not obtainable in game** (nothing grants them; checked 2026-10-07): Discipline, Discipline (Air), Fear Aura, Marauder, Swift Transport, Iaijutsu, Hatamoto, One Good Eye, Stargazing. User decision (2026-10-05): they stay ungranted until a later policy batch. For the last four, ask which units get them.
+- Mobility ruin (`GOODY_EXPERIENCE_MOVE`) has `ExcludeUnitClass = UNITCLASS_SCOUT`, which includes the Shoshone Pathfinder, so scouts rarely or never get it. Keep or change?
+- Deferred to final interface tuning: a 2-row promotion display in the unit panel. The row is a fixed 260×26 box (~10 icons) in `Expansion2\UI\InGame\WorldView\UnitPanel.xml` and needs an XML override.
+- World Congress: Ashwin's changes were not ported (§1). The user plans a full rework.
+- Not yet integrated: the user's own `dev-bruno` and `civ_changes` branches (below). Per §1, their content gets re-implemented from the Notion specs.
 
-**In the game folder (untracked; previous versions backed up in the session scratchpad):**
-- `CIV5Units.xml` / `CIV5Units_Mongol.xml`, new promotion rows:
-  - PROMOTION_ZEALOT (ID 340, valid in all eras for kill yields)
-  - PROMOTION_ENVELOPMENT (341)
-  - PROMOTION_GLUTTON (342)
-  - 14 April promotions (343–356): Amphibious I–III, Bunker Busting, Repair Crew, Supply Ship, Sambuca, Carpet Bombing, Discipline, Discipline (Air), Fear Aura, Marauder, Mountaineering, Swift Transport. Discipline uses new keys `TXT_KEY_PROMOTION_LEKMOD_DISCIPLINE(_HELP)`.
-- Ruin values migrated into the `GoodyHuts` rows. The Mobility "ancient only" limit is on `GOODY_EXPERIENCE_MOVE` (`BeforeEra=1`).
-- `Lua\UI\GoodyHutPopup.lua`: a generic branch shows the DLL-passed amount (`Data2`).
-- Zealot icons reshaped (originals in scratchpad `backup/icons`).
-- `CvGameCore_Expansion2.dll` = the build from `lekbuild` (ruins-repair).
+### Behaviour and decisions to remember
+- **Heal Instantly = 25 HP**, set by the `INSTA_HEAL_RATE` define in `CIV5Units.xml` (the DLL reads it; no rebuild needed).
+- **Naming:** the bomber line `PROMOTION_AIR_SIEGE_1..3` displays as "Air Siege I–III" (renamed, text only). The melee/gun `PROMOTION_SIEGE` displays as "Siege". Bombardment exists for both bombers and naval units. Air Siege I is the bombers' Bunker Busting prerequisite (user-approved).
+- **Carpet Bombing** (bombers, after Bombardment II): splash hits enemy units on tiles *adjacent* to the target, with `-X` floating text. No friendly fire, and no splash on the target city's garrison (user decision). Air units' range-attack missions (e.g. from the "declare war?" popup) are routed through `CvUnitCombat::AttackAir` in `CvUnitMission.cpp`; before that they skipped all air logic, including interception.
+- **Iaijutsu**: column `ExtraAttackVsFullHP`. In `ResolveMeleeCombat`, if the defender was at full HP before the attack, one attack is refunded (`CvUnit::RefundAttack`), once per turn; the flag resets in `CvPlayer::DoUnitReset`. Depends on `NQ_UNIT_TURN_ENDS_ON_FINAL_ATTACK` (on).
+- **Hatamoto**: column `MovesNearGeneralChange`. +N moves in `DoUnitReset` when a friendly Great General is on the same or an adjacent tile (`CvUnit::IsGreatGeneralWithinOne`).
+- Iaijutsu and Hatamoto are lost on upgrade, and their new `CvUnit` members are serialized (old saves are incompatible). One Good Eye and Stargazing are `VisibilityChange` 1, like Scouting I.
+- **Amphibious**: the flat embark/disembark cost leaves `MaxMovesAfterDomainChange` MP (in both cost functions), and `CvUnit::move` skips `finishMoves()` after embarking when `IsEmbarkFlatCost()`.
+- **Ruin pool** (`HandicapInfo_Goodies` in source): CULTURE, GOLD, MAP, TECH, UPGRADE_UNIT, SETTLER, WORKER, FOOD, RANDOM_FAITH, TILE_GROW, EXPERIENCE_MOVE, and PANTHEON_FAITH (re-added 2026-10-06; its rows sit at the end of the section, below upstream's commented-out rows).
+  - PANTHEON_FAITH: only without a pantheon and with 0 Faith. RANDOM_FAITH (`ReligionFaith`) requires a pantheon. PROPHET_FAITH stays out of the pool, so edits to it are dead.
+  - The Mobility "ancient only" limit is `BeforeEra=1` on `GOODY_EXPERIENCE_MOVE`.
+  - `GoodyHutPopup.lua` (template `Lua\tmp\ui\AncientRuins\GoodyHutPopup.lua.ignore`) has a generic branch that shows the DLL-passed amount (`Data2`).
+- **Shoshone choose popup:** taller rows (78 px) were tried and reverted because players had to scroll. Choose entries (`ChooseDescription`) are one-liners; result popups (`Description`) keep the narrative texts.
+- **Icons:** Glutton = `ABILITY_ATLAS` 57, the base "May Not Melee Attack" icon (user decision; the original art is lost). Feared Elephant uses the user's icon (`LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS`). Envelopment and Bunker Busting have the user's new art. The reshape procedure is `civ-tools\reshape_icons.py <src_dir> <out_dir> name…`.
 
-**COMMITTED (2026-10-05)** in `civ-tools\lekbuild`, local branch **`repair-batch-1`**: 9 commits on top of fork HEAD `a582fdf9`. **Not pushed.**
-1. compile fix
-2. ruins repair
-3. kill-yield era fix
-4. Amphibious
-5. Carpet Bombing
-6. Iaijutsu/Hatamoto
-7. data & text (Override files)
-8. icons
-9. rebuilt DLL
-
-The checkout's sparse set is `LEKMOD/`, `LEKMOD_DLL/` and `changelog.txt`. Its `LEKMOD/` was verified identical to the game folder, apart from the generated `Lua/UI` and this file.
-
-Committing lessons:
-- **Never commit the game folder's `Lua/UI/`.** The repo tracks only a few files there; the rest is `ui_check.bat` output. Commit the templates in `Lua/tmp/`.
-- To split one file's changes into several commits, use `civ-tools\stage_hunks.py <file> <regex> [--invert]`. It uses 3-line context; zero-context hunks (`-U0` + `--unidiff-zero`) misplaced inserted lines once. Verify after staging with `git diff -U0` that what remains is exactly what you expect.
-- Git here has `core.autocrlf=true`, while the game folder's text files are LF. Compare with `diff --strip-trailing-cr`.
-
-Follow-up commits (2026-10-06):
-10. changelog format (tags, release block)
-11. gold ruin floating text fix
-12. faith ruin rebalance:
-    - `GOODY_PANTHEON_FAITH` re-added to the pool (upstream had it commented out in `HandicapInfo_Goodies`).
-    - `GOODY_RANDOM_FAITH` now has `ReligionFaith`, so it requires a pantheon.
-    - The prophet ruin stays disabled.
-13. rebuilt DLL
-
-**Fork branches NOT in main (found 2026-10-06), all unreviewed:**
-- `dev-bruno` (user, 144 commits, 2026-04-07 → 07-17; based on the 04-07 merge `1cd27eaa`, so it lacks Ashwin's June commits and our repairs). Contents:
-  - 67 commits touching C++, with **no DLL ever rebuilt**.
+### Other fork branches (found 2026-10-06, unreviewed)
+- `dev-bruno` (user, 144 commits, 2026-04-07 → 07-17; based on the 04-07 merge `1cd27eaa`):
+  - 67 commits touching C++, with **no DLL ever rebuilt**
   - promotions, including new ones like Duck, still only in Art XML
   - the ruins draft still present
   - naval rework (Ship of the Line, Dreadnought, Quinquereme…), wonders, beliefs, city-state quests, policies
   - the user's Notion specs: open borders 10 turns (`40209953`), prophets killed on capture (`7fe60c6c`), trade routes 15 turns (`2cdc2fff`)
   - its own `changelog.txt` and `ai_ground_truth_workflow.md`
-- `dev` / `stratresourcechanges` (**kubugaming**, the third contributor, June): policy work (Tradition, Liberty, Honor, Eminence, Order "Re-education" / "Monuments of the People"), an improvement-tourism table, "Fixing the yield from kills bug" (compare with our kill-yield fix), and one commit marked "[BUGGED]" (strategic resource costs).
+- `dev` / `stratresourcechanges` (**kubugaming**, June): policy work, an improvement-tourism table, a kill-yield fix, one commit marked "[BUGGED]". Excluded by user decision (§1).
 - `civ_changes` (user, Feb): 7 civs (Huns, Egypt, Babylon, Gauls, Israel, China, Jerusalem).
-- The user's planned rebase onto upstream must decide which of these come along. Each needs the same treatment as main: check where the data lives, compile, test.
 
-**Upstream sync assessment (2026-10-06)**, a trial merge via `git merge-tree` in lekbuild (remote `upstream` added). Nothing was changed.
-- Divergence: upstream 100 commits (v34.12 → v35.4, 2026-10-01); ours 55 (39 fork + 16 repair).
-- Upstream's `CIV5Units.xml` was compacted: ~35k default-value lines (`>false<`, `>0<`) were removed, with roughly the same row counts. So line diffs look huge but the content barely changed.
-- Upstream also reworked combat and UI (`GenerateRangedCombatInfo` removed, air sweep rewritten), added new civs (Buganda, Mali), a trade refactor and World Congress changes.
-- 20 files are changed by both sides. 15 merge automatically and 5 conflict:
-  - **The DLL binary:** rebuild.
-  - **`CIV5Units.xml`:** 6 blocks, all end-of-list appends (columns, atlases, promotion rows). Keep both sides.
-  - **`CvPlayer.cpp` + `CvUnit.cpp` heal-while-embarked:** combine our `IsHealWhileEmbarked()` with upstream's Buganda `IsEmbarkedMissionAllowed` trait.
-  - **`CvUnit.cpp` `GetEmbarkedUnitDefense`:** upstream moved it (still era-based). Drop our old copy and re-apply the 40% formula in theirs.
-  - **`CvUnitCombat.cpp`:** the Sortie air-sweep change has to be re-applied inside upstream's rewritten `GenerateAirSweepCombatInfo(CvCombatInfo*)`.
-- **Hidden issues that don't show up as conflicts:**
-  - Upstream added promotions with **IDs 340–343** (Buganda ×2, Mali, No-fortify-vs-ranged). Ours (340–360) must be renumbered to 344+.
-  - Upstream removed Anti-Naval 1–3. The Mobility prerequisite that references them is harmless (INNER JOIN skip).
-  - World Congress vote code changed on both sides and merged textually. Review it during the WC rework.
-- Our compile fix is moot upstream (the define is already commented out there). Upstream **still has the kill-yield era bug**, so offering our fix is a candidate.
-- Estimate: about one evening for the merge, ID renumbering, rebuild and a retest checklist. Prefer a **merge** over a rebase, because rebasing 55 commits would replay the conflicts repeatedly.
-
-**History of the uncommitted work before that (now all in the commits above):**
-- `_Defines.h`: REPLAY_MESSAGE_CHAT define commented out.
-- `CvPlayer.cpp`:
-  - removed the hardcoded ruin draft (kept its HealWhileEmbarked hunk)
-  - NO_TECH guard on the science ruin
-  - `iEraRuinValue` feeds the popup
-  - killed units with era −1 treated as ancient
-- `CvUnit.cpp`: kill-yield era flags are now an OR over held promotions (previously any promotion change overwrote them).
-- `CvUnitMovement.cpp`: Amphibious flat embark/disembark cost now leaves `MaxMovesAfterDomainChange` MP (was 0). Fixed in both cost functions.
-
-**Playtest round 2 (2026-10-05):**
-- Works: Bunker Busting (siege), Sortie change, Amphibious river bonus, Repair Crew, Mountaineering.
-- Fixed afterwards:
-  - Bunker Busting for bombers (prerequisite → `PROMOTION_AIR_SIEGE_1`; the exact tier was chosen by Claude, so confirm with the user)
-  - Amphibious movement
-  - tooltips for Coastal Raider I–III, Boarding Party I–III, Heal Instantly, Sambuca and Amphibious I–III
-- Carpet Bombing "didn't show up", but its data wiring is correct (bombers, after Bombardment II). Still to confirm whether the test bomber had Bombardment II.
-- Naming trap: the bomber line `PROMOTION_AIR_SIEGE_1..3` *displays* as "Siege I–III", while the melee/gun `PROMOTION_SIEGE` displays as "Siege". Bombardment exists for both bombers and naval units.
-- Design changes from the user: Heal Instantly = **25 HP** (the `INSTA_HEAL_RATE` define in `CIV5Units.xml`; the DLL reads it, no rebuild needed). Tooltips must not contain spec notes ("Eligible: …", "Requires …"); removed from Supply Ship, Sambuca and Discipline.
-- The `GoodyHutPopup.lua` fix is synced into `Lua\tmp\ui\AncientRuins\GoodyHutPopup.lua.ignore`.
-- Line breaks applied to all fork-touched promotion tooltips and the ruin texts written by Claude.
-
-**Round 3 (2026-10-05):**
-- User decisions:
-  - Bomber line renamed to "Air Siege I–III" (text only).
-  - Air Siege I is fine as the Bunker Busting prerequisite.
-  - Unobtainable promotions stay as they are; they get reworked with a later policy batch.
-  - World Congress fixes are deferred to a full rework.
-- Amphibious:
-  - Disembark cap verified working.
-  - Embark was still ending the turn: `CvUnit::move` calls `finishMoves()` after every embark. Fixed: skipped when `IsEmbarkFlatCost()`. Needs a retest.
-  - The **movement preview** after disembark reportedly shows the uncapped moves. The UI pathfinder (`UIPathAdd` → `PathAdd` → `MovementCost(..., iStartMoves)`) looks correct in code. Retest with the new DLL; if still wrong, get an exact description from the user.
-- Carpet Bombing:
-  - The splash did exist for city targets, but it was invisible (no floating text) and also hit the attacker's own units.
-  - Fixed: no friendly fire, and `-X` popup text added. Note: the splash hits units on tiles *adjacent* to the target, not the city's own garrison.
-- Ruin pool reality (loaded `HandicapInfo_Goodies`): CULTURE, GOLD, MAP, TECH, UPGRADE_UNIT, SETTLER, WORKER, FOOD, RANDOM_FAITH, TILE_GROW, EXPERIENCE_MOVE.
-  - **PANTHEON_FAITH and PROPHET_FAITH are not in the pool**, so edits to them are dead.
-  - Shoshone choose-menu texts (`ChooseDescription`) were updated for tech, gold, upgrade, map, faith and food. The tech result text was rewritten as "dangerous ruins" flavour.
-- Skeleton promotions (Hatamoto, Iaijutsu, One Good Eye, Stargazing): the user wants them filled in. **No spec exists anywhere** (changelog, commits); the effects must come from the user.
-
-**Round 4 (2026-10-05):**
-- User-provided specs, now implemented:
-  - **Iaijutsu** (ID 357): new column `ExtraAttackVsFullHP`. In `ResolveMeleeCombat`, if the defender was at full HP before the attack, the attacker gets one attack refunded (`CvUnit::RefundAttack`), once per turn. The used flag resets in `CvPlayer::DoUnitReset`. Depends on `NQ_UNIT_TURN_ENDS_ON_FINAL_ATTACK`, which is on.
-  - **Hatamoto** (358): new column `MovesNearGeneralChange`. +N moves in `DoUnitReset` when a friendly Great General is on the same or an adjacent tile (`CvUnit::IsGreatGeneralWithinOne`).
-  - Both promotions are lost on upgrade.
-  - **One Good Eye** (359) and **Stargazing** (360): `VisibilityChange` 1, the same as Scouting I.
-  - All four are `CannotBeChosen` with **no grant yet**. Ask the user which units get them.
-  - New `CvUnit` members are serialized, so old saves are incompatible.
-- Carpet Bombing + "declare war?" popup:
-  - The popup sends `MISSION_RANGE_ATTACK` → `AttackRanged` → `ResolveRangedUnitVsCombat`, which has no air logic (no Carpet Bombing, and no interception either).
-  - Fix in `CvUnitMission.cpp`: air units' range-attack missions now go through `CvUnitCombat::AttackAir`.
-  - Per the user, garrison units in a targeted city should **not** take splash damage (current behaviour).
-- Glutton icon = `ABILITY_ATLAS` 57, the base "May Not Melee Attack" icon (user decision; the original art is lost).
-- Shoshone choose popup:
-  - Taller rows (78 px) were tried and then **reverted**, because players had to scroll.
-  - Rule now: **choose-menu entries (`ChooseDescription`) are one-liners**, matter-of-fact, with at most a small flavour blip when it fits. No `[NEWLINE]` there.
-  - Result popups (`Description`) keep the narrative texts.
-- Mobility ruin (`GOODY_EXPERIENCE_MOVE`) has `ExcludeUnitClass = UNITCLASS_SCOUT`, which includes the Shoshone Pathfinder. That's why it is rarely or never offered when scouts pop ruins. Whether to keep this is open with the user.
-- Icons:
-  - The user's new Envelopment and Bunker Busting art (from Downloads) is reshaped and installed.
-  - Feared Elephant now uses the user's icon (`LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS`; it was `ABILITY_ATLAS` 59).
-  - The reshape procedure is saved as `civ-tools\reshape_icons.py <src_dir> <out_dir> name…`.
-- Deferred by the user to final tuning ("interface tuning at the very end"): a 2-row promotion display in the unit panel. The row is a fixed 260×26 box (~10 icons) inside `Expansion2\UI\InGame\WorldView\UnitPanel.xml`; it needs an XML override.
-
-**Verified in game:**
-- Envelopment works.
-- Ruins: faith, culture, upgrade and border expansion work.
-- Zealot icon and faith work; faith-after-another-promotion was still broken before the era-flag fix.
-
-**Open / not yet verified:**
-- Era-flag fix (Zealot after a level-up) and the 14 migrated promotions need a playtest.
-- Ruins not yet tested: food+Glutton, tech→science, map 75%, gold+barbarian, pantheon (faith = 0 only), Mobility after the ancient era.
-- **Not obtainable in game** (nothing grants them; their commits say "policy/UU-granted", but that was never wired): Discipline, Discipline (Air), Fear Aura, Marauder, Swift Transport. Wiring them is a design decision for the user.
-- Empty skeletons (no effects, not migrated): Hatamoto, Iaijutsu, One Good Eye, Stargazing.
-- World Congress:
-  - The `NumMinorExtraLeagueVotes` column (XML) vs `NumMinorBonusVotes` (C++) name mismatch.
-  - The vote-source tooltip doesn't list the new sources.
-  - `TXT_KEY_LEAGUE_SPECIAL_SESSION_INFO` has no text.
-- Remaining icons need reshaping; three promotions need new art.
-- (Superseded: repo strategy, commits and this file's location are settled; see §1, §2 and "Port to v35.4" above.)
+### History (old fork, 2026-10-05/06; details in `lekbuild` branch `repair-batch-1`)
+- 16 repair commits on Ashwin's fork HEAD `a582fdf9`: compile fix (`REPLAY_MESSAGE_CHAT` define clash), ruins repair (hardcoded draft removed, values moved into `GoodyHuts` columns), kill-yield era fix, Amphibious, Carpet Bombing, Iaijutsu/Hatamoto, data and text migrated out of `Art\` XML, icons, gold ruin floating text, faith ruin rebalance, Demographics fixes, DLL rebuilds. All of it was ported (above).
+- **Verified in game on the old fork:** Envelopment; ruins (faith, culture, upgrade, border expansion); Zealot icon and faith; Bunker Busting (siege); Sortie; Amphibious river bonus and disembark cap; Repair Crew; Mountaineering.
+- The upstream sync assessment (a trial `git merge-tree`) predicted the port's conflicts correctly. Its lessons are in §2 "Git notes" and the port resolutions above.
