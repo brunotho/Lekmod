@@ -64657,7 +64657,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE"> 
 			<Text>
-				A Declaration of Friendship is needed to trade this item (unless this is a peace deal). Consider trading Gold Per Turn instead.
+				Gold cannot be traded. Trade Gold Per Turn instead.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_DIPLO_NEED_WRITING_TT"> 

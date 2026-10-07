@@ -369,6 +369,10 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 		if (!(GET_PLAYER(ePlayer).isHuman() && GET_PLAYER(eToPlayer).isHuman()) && GC.getGame().isOption("GAMEOPTION_AI_GIMP_NO_DEALS"))
 			return false;
 #endif
+#ifdef LEKMOD_NO_GOLD_TRADE
+		// Lump-sum gold can't be traded at all (also not with a DoF or in peace deals); Gold per Turn still can
+		return false;
+#endif
 		// DoF has not been made with this player
 		if (!this->IsPeaceTreatyTrade(eToPlayer) && !this->IsPeaceTreatyTrade(ePlayer))
 		{

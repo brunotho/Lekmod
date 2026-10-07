@@ -885,6 +885,8 @@
 #define LEKMOD_CLAUSEWITZ_MELEE_ONLY
 // Puppet cities work their tiles with production focus (was gold)
 #define LEKMOD_PUPPET_PRODUCTION_FOCUS
+// Lump-sum gold can't be traded in deals (declarations of friendship no longer unlock it); gold per turn can
+#define LEKMOD_NO_GOLD_TRADE
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

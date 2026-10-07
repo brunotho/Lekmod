@@ -273,6 +273,16 @@ Puppet cities focus on Production instead of Gold when working their tiles.
 - Dev: LEKMOD_PUPPET_PRODUCTION_FOCUS in CvCity::SetPuppet and CvCityCitizens::DoTurn
 
 
+GOLD TRADING (TRADE_ITEM_GOLD)
+-------------------------------
+Tags: game mechanics, ui
+Lump sums of Gold can no longer be traded. Gold per Turn still can.
+- Removed: trading lump sums of Gold (a Declaration of Friendship no longer unlocks it, and it can't be part of a peace deal either)
+- Changed: the trade screen tooltip on Gold says to trade Gold per Turn instead
+- Note: declarations of friendship stay in the game
+- Dev: LEKMOD_NO_GOLD_TRADE in CvDeal::IsPossibleToTradeItem; text TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE (only used for the gold item)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
