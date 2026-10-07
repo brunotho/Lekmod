@@ -29,7 +29,7 @@ This file records what has been **verified** about how this mod works, and how t
    - The user's earlier `ai_ground_truth_workflow.md` exists on branch **`origin/dev-bruno`** (repo root, Apr 19–21). It is not on main.
    - It has useful rules: the Override files are the authority, belief DLL wiring steps, a yield audit order, quick = 67% of standard, natural wonder notes.
    - It also contains a load-order claim that is probably wrong (see §3).
-   - Merge its still-valid content into this file when `dev-bruno` is integrated.
+   - `dev-bruno` will not be merged (§1), so **read the file from that branch and merge its still-valid content here** (still to do).
    - Keep it current.
    - When you come across something that should be documented here, or that contradicts this file, propose the amendment.
 5. **Spec vocabulary:**
@@ -40,6 +40,25 @@ This file records what has been **verified** about how this mod works, and how t
    - Items **not yet implemented**: the user edits the spec freely. The spec as it reads at implementation time counts. Record what was implemented in the changelog and commit.
    - Items **already implemented**: the user doesn't edit the spec in place, but adds a "CHANGE (date): …" note under the item (or tells Claude). Look for these notes.
    - Don't edit the user's spec pages unless asked. Claude's own pages (audit, tracker) are sub-pages of the checklist.
+   - **Ticks (✓, [x], DONE) on the spec pages mean "done on an old branch". They do not mean "in the game".** Status lives only in the tracker.
+7. **The tracker is the single source of item status** (set up 2026-10-07):
+   - Notion database **"Tracker (v35.4 port)"**, a sub-page of the checklist. Data source: `collection://311b2761-ecf0-448c-9f6b-81d808f4361c` (query it with the Notion tools).
+   - One row per spec item. Columns: Item, ID (LEK-n), Section, **Status**, **Phase**, Where (Mod / Lekmap / Website), Old code, Commits, Notes, Spec (link to the section page).
+   - **Status:** `Needs spec` (open questions; the user refines it) → `Ready` → `Implemented` (on `dev`, not yet playtested) → `Playtested` (the user confirmed it in game on the port). Also `Blocked` (waiting on another item; the reason is in Notes) and `Dropped`.
+   - **Phase** = implementation order, by dependency:
+     1. Promotions, Game Mechanics, Ruins, City States, Bugfixes, Interface
+     2. Units, Resources, Tech Tree
+     3. Religion, Buildings, National Wonders
+     4. Tourism (great work rework) and everything blocked on it
+     5. Policies, Diplomat/Spy, World Congress
+     6. Civs
+     9. Final interface tuning.
+     Map rows (Lekmap) and Website have no phase.
+   - **Old code** lists commits on old branches (`dev-bruno`, `civ_changes`) for implementation ideas only. Never merge them. kubugaming and Ashwin code is excluded (§1).
+   - **Workflow per item:** read the spec page (and any "CHANGE" notes or comment threads), implement, add the changelog entry, commit, then set the row to `Implemented` with the commit hash. When the user reports a playtest, set `Playtested`. Record deviations from the spec and spec conflicts in Notes, and ask the user about them.
+   - **Discarding old work for cleanliness is allowed** (user, 2026-10-07): if an implemented item is messy, redo it from the spec.
+   - The scratchpad on the checklist page holds unrefined ideas. They are tracked under Section "Scratchpad", mostly as `Needs spec`. Help the user turn them into specs when asked.
+   - The old audit page ("Implementation status audit (2026-10-06)") is superseded by the tracker.
 
 ---
 
@@ -211,12 +230,12 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 
 ## 9. Status (update as things change)
 ### Current state (2026-10-07)
-- `dev` = v35.4 (`201df6c5`) + 7 commits: ruins overhaul, kill-yield fix, Demographics, promotion batch, changelog, DLL, CLAUDE.md. **Not pushed.**
-- **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build (md5 checked 2026-10-07). The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
-- **Playtest on the port (2026-10-07, user):**
-  - Zealot faith after gaining another promotion works (era-flag fix). It was also confirmed on the old fork.
-  - **Amphibious was broken by the port.** Embark and disembark left 0 MP. Cause: v35.4's new `LEKMOD_WATER_WALK_IMPROVEMENT_RULES` block in `CvUnitMovement::ConsumesAllMoves` returns "all moves" for every land↔water step before our promotion check runs. Fixed, needs a retest. **Lesson: after an upstream merge, look for new early returns in front of our hooks, not just conflicts.**
+- `dev` = v35.4 (`201df6c5`) + our commits (ruins overhaul, kill-yield fix, Demographics, promotion batch, changelog, DLL, CLAUDE.md, Amphibious fix). **Not pushed.**
+- **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
+- **Item status, playtest results and open design questions live in the tracker (§0b.7), not here.** Query it at session start to see what's next.
+- Port playtest lesson (2026-10-07): Amphibious merged cleanly but was dead, because v35.4's new `LEKMOD_WATER_WALK_IMPROVEMENT_RULES` block in `CvUnitMovement::ConsumesAllMoves` returned early (§8 pattern 9). Fixed in `f1706839`, playtested.
 - Our promotion IDs: 344 Zealot, 345 Envelopment, 346 Glutton, 347–360 the April batch (Amphibious I–III, Bunker Busting, Repair Crew, Supply Ship, Sambuca, Carpet Bombing, Discipline, Discipline (Air), Fear Aura, Marauder, Mountaineering, Swift Transport), 361 Iaijutsu, 362 Hatamoto, 363 One Good Eye, 364 Stargazing.
+- Promotions defined but not yet granted by anything: Discipline, Discipline (Air), Fear Aura, Marauder, Swift Transport, Iaijutsu, Hatamoto, One Good Eye, Stargazing. Their grants are part of other specs (Honor/Iron Fist, GDR/Berserker/Gauls, Privateer/Tunisia, naval units, Japan, Expansionism, Chile); the tracker rows name them.
 
 **How the port was done:**
 - Branch `port-src` = `old/repair-batch-1` with Ashwin's 7 World Congress commits reverted, and the dead `Art/` XML/modinfo edits and the DLL binary dropped.
@@ -232,23 +251,10 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
   - Fixed while porting: the Pictish Warrior tooltip used the invalid `[ICON_FAITH]`.
 - The kill-yield era fix is still an upstream bug: a candidate to offer EAP.
 
-**To playtest on the port** (new game):
-- Code the port touched: heal while embarked, embarked defense, Sortie.
-- Amphibious I–III after the fix: embark, disembark, and walk-water tiles (pontoons).
-- Never confirmed in game: Amphibious embark no longer ending the turn, movement preview after disembark (reportedly showed uncapped moves; get an exact description if still wrong), Carpet Bombing through the "declare war?" popup, Iaijutsu, Hatamoto.
-- Ruins not yet tested: food+Glutton, tech→science, map 75%, gold+barbarian, pantheon faith, Mobility after the ancient era.
-
-**Open design questions for the user:**
-- **Not obtainable in game** (nothing grants them; checked 2026-10-07): Discipline, Discipline (Air), Fear Aura, Marauder, Swift Transport, Iaijutsu, Hatamoto, One Good Eye, Stargazing. User decision (2026-10-05): they stay ungranted until a later policy batch. For the last four, ask which units get them.
-- Mobility ruin (`GOODY_EXPERIENCE_MOVE`) has `ExcludeUnitClass = UNITCLASS_SCOUT`, which includes the Shoshone Pathfinder, so scouts rarely or never get it. Keep or change?
-- Deferred to final interface tuning: a 2-row promotion display in the unit panel. The row is a fixed 260×26 box (~10 icons) in `Expansion2\UI\InGame\WorldView\UnitPanel.xml` and needs an XML override.
-- World Congress: Ashwin's changes were not ported (§1). The user plans a full rework.
-- Not yet integrated: the user's own `dev-bruno` and `civ_changes` branches (below). Per §1, their content gets re-implemented from the Notion specs.
-
 ### Behaviour and decisions to remember
 - **Heal Instantly = 25 HP**, set by the `INSTA_HEAL_RATE` define in `CIV5Units.xml` (the DLL reads it; no rebuild needed).
 - **Naming:** the bomber line `PROMOTION_AIR_SIEGE_1..3` displays as "Air Siege I–III" (renamed, text only). The melee/gun `PROMOTION_SIEGE` displays as "Siege". Bombardment exists for both bombers and naval units. Air Siege I is the bombers' Bunker Busting prerequisite (user-approved).
-- **Carpet Bombing** (bombers, after Bombardment II): splash hits enemy units on tiles *adjacent* to the target, with `-X` floating text. No friendly fire, and no splash on the target city's garrison (user decision). Air units' range-attack missions (e.g. from the "declare war?" popup) are routed through `CvUnitCombat::AttackAir` in `CvUnitMission.cpp`; before that they skipped all air logic, including interception.
+- **Carpet Bombing** (bombers, after Bombardment II): splash hits enemy units on tiles *adjacent* to the target, with `-X` floating text. No friendly fire (**this deviates from the spec**, which includes friendly units and CS war declarations; it's flagged in the tracker for the user), and no splash on the target city's garrison (user decision). Air units' range-attack missions (e.g. from the "declare war?" popup) are routed through `CvUnitCombat::AttackAir` in `CvUnitMission.cpp`; before that they skipped all air logic, including interception.
 - **Iaijutsu**: column `ExtraAttackVsFullHP`. In `ResolveMeleeCombat`, if the defender was at full HP before the attack, one attack is refunded (`CvUnit::RefundAttack`), once per turn; the flag resets in `CvPlayer::DoUnitReset`. Depends on `NQ_UNIT_TURN_ENDS_ON_FINAL_ATTACK` (on).
 - **Hatamoto**: column `MovesNearGeneralChange`. +N moves in `DoUnitReset` when a friendly Great General is on the same or an adjacent tile (`CvUnit::IsGreatGeneralWithinOne`).
 - Iaijutsu and Hatamoto are lost on upgrade, and their new `CvUnit` members are serialized (old saves are incompatible). One Good Eye and Stargazing are `VisibilityChange` 1, like Scouting I.
