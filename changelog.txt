@@ -292,6 +292,14 @@ Gold per Turn in a deal is paid for 10 turns.
 - Dev: new define GOLD_PER_TURN_DEAL_DURATION (10, not speed-scaled); LEKMOD_GPT_DEAL_FIXED_DURATION in CvDeal::AddGoldPerTurnTrade and ChangeGoldPerTurnTrade; TradeLogic templates (ui and eui)
 
 
+SPOILS OF WAR (CAPTURED CITY-STATE CITIES)
+-------------------------------------------
+Tags: game mechanics, combat
+Spoils of war (science from conquering a city) also count when you capture a former city-state city from another player.
+- Changed: capturing a city that was originally a city-state's, from another civilization (not from the city-state itself), now gives spoils of war, as long as it wasn't a puppet
+- Dev: LEKMOD_SPOILS_OF_WAR_FROM_CAPTURED_CITY_STATES in CvPlayer::acquireCity (NQ_SPOILS_OF_WAR condition)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

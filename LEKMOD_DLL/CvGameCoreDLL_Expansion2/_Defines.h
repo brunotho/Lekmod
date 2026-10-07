@@ -889,6 +889,8 @@
 #define LEKMOD_NO_GOLD_TRADE
 // Gold per turn trades last GOLD_PER_TURN_DEAL_DURATION turns (not scaled by game speed)
 #define LEKMOD_GPT_DEAL_FIXED_DURATION
+// Spoils of war also trigger for former city-state cities captured from a major civ (non-puppet)
+#define LEKMOD_SPOILS_OF_WAR_FROM_CAPTURED_CITY_STATES
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

@@ -2570,7 +2570,13 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift, bool bP
 	//{
 		// make sure we don't get techs from puppeted cities or cities we've already owned or city-states
 		
+#ifdef LEKMOD_SPOILS_OF_WAR_FROM_CAPTURED_CITY_STATES
+		// A former city-state city also counts when we take it from a major civ (not from the city-state itself)
+		const bool bSpoilsSource = !GET_PLAYER(pOldCity->getOriginalOwner()).isMinorCiv() || !GET_PLAYER(pOldCity->getOwner()).isMinorCiv();
+		if (!pOldCity->isEverOwned(GetID()) && bSpoilsSource && !pOldCity->IsPuppet())
+#else
 		if (!pOldCity->isEverOwned(GetID()) && !GET_PLAYER(pOldCity->getOriginalOwner()).isMinorCiv() && !pOldCity->IsPuppet())
+#endif
 		{
 			DoTechFromCityConquer(pOldCity);
 		}
