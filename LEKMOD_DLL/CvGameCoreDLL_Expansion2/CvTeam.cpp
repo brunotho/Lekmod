@@ -6690,6 +6690,41 @@ void CvTeam::testCircumnavigated()
 			}
 		}
 
+#ifdef LEKMOD_CIRCUMNAVIGATION_GOLD
+		// First team to circumnavigate gets gold; every major civ gets a notification
+		int iGold = GC.getCIRCUMNAVIGATE_GOLD();
+		for(int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+			if(!kPlayer.isAlive())
+				continue;
+
+			Localization::String strText;
+			if(kPlayer.getTeam() == eTeamID)
+			{
+				kPlayer.GetTreasury()->ChangeGold(iGold);
+				strText = Localization::Lookup("TXT_KEY_LEKMOD_YOU_CIRC_GLOBE_GOLD");
+				strText << iGold;
+			}
+			else if(isHasMet(kPlayer.getTeam()))
+			{
+				strText = Localization::Lookup("TXT_KEY_MISC_SOMEONE_CIRC_GLOBE");
+				strText << getName().GetCString();
+			}
+			else
+			{
+				strText = Localization::Lookup("TXT_KEY_MISC_UNKNOWN_CIRC_GLOBE");
+			}
+
+			CvNotifications* pNotifications = kPlayer.GetNotifications();
+			if(pNotifications)
+			{
+				Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_CIRC_GLOBE_SUMMARY");
+				pNotifications->Add(NOTIFICATION_GENERIC, strText.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
+			}
+		}
+#endif
+
 		strBuffer = GetLocalizedText("TXT_KEY_MISC_SOMEONE_CIRC_GLOBE", getName().GetCString());
 		GC.getGame().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getLeaderID(), strBuffer, -1, -1);
 	}

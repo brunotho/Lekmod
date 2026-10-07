@@ -92901,8 +92901,12 @@
 			<Value>100</Value> 
 		</Row>
 		<Row> 
-			<Name>CIRCUMNAVIGATE_FREE_MOVES</Name> 
-			<Value>0</Value> 
+			<Name>CIRCUMNAVIGATE_FREE_MOVES</Name>
+			<Value>0</Value>
+		</Row>
+		<Row>
+			<Name>CIRCUMNAVIGATE_GOLD</Name>
+			<Value>200</Value>
 		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 

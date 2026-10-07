@@ -101409,6 +101409,12 @@ The ship has weather'd every rack; the prize we sought is won."
 				Your maps have proven that the world is round! Your ships receive a {1_Change} Movement bonus.
 			</Text>
 		</Replace>
+		<Row Tag="TXT_KEY_LEKMOD_YOU_CIRC_GLOBE_GOLD">
+			<Text>Your maps have proven that the world is round![NEWLINE][NEWLINE]You receive {1_Num} [ICON_GOLD] Gold.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CIRC_GLOBE_SUMMARY">
+			<Text>The World Is Round</Text>
+		</Row>
 		<Replace Tag="TXT_KEY_MISC_YOU_CITY_RANSOMED_BY_BARBARIANS"> 
 			<Text>
 				Your City of {@1_CityName} was raided by Barbarians, and {2_Num} Gold was stolen from the national treasury!

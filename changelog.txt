@@ -139,6 +139,15 @@ We Love the King Day lasts 10 turns, and a luxury request that isn't filled is r
 - Dev: CITY_RESOURCE_WLTKD_TURNS 20 -> 15 (x67% quick speed = 10); LEKMOD_WLTKD_DEMAND_EXPIRES_AFTER_ONE_LENGTH drops the x2 on the demand expiry. Civilopedia concept text updated.
 
 
+CIRCUMNAVIGATION (CIRCUMNAVIGATE_GOLD)
+--------------------------------------
+Tags: game mechanics, naval
+The first civilization to circumnavigate the globe receives 200 Gold, and every player is notified.
+- Added: 200 Gold for the first civilization to circumnavigate the globe
+- Added: a notification for all players when it happens
+- Dev: new define CIRCUMNAVIGATE_GOLD (not scaled by game speed), LEKMOD_CIRCUMNAVIGATION_GOLD in CvTeam::testCircumnavigated. Only on wrapping maps with less than 2/3 land (existing rule).
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
