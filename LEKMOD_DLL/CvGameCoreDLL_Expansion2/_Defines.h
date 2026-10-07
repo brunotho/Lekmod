@@ -893,6 +893,8 @@
 #define LEKMOD_SPOILS_OF_WAR_FROM_CAPTURED_CITY_STATES
 // Each Future Tech gives FUTURE_TECH_BONUS_PERCENT to combat strength and to food, production, gold, culture, tourism
 #define LEKMOD_FUTURE_TECH_BONUS
+// Lobby option GAMEOPTION_DISABLE_STRATEGIC_TRADING forbids trading strategic resources
+#define LEKMOD_DISABLE_STRATEGIC_TRADING_OPTION
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

@@ -101418,6 +101418,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_YOU_CIRC_GLOBE_GOLD">
 			<Text>Your maps have proven that the world is round![NEWLINE][NEWLINE]You receive {1_Num} [ICON_GOLD] Gold.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_GAME_OPTION_DISABLE_STRATEGIC_TRADING">
+			<Text>Disable Strategic Resource Trading</Text>
+		</Row>
+		<Row Tag="TXT_KEY_GAME_OPTION_DISABLE_STRATEGIC_TRADING_HELP">
+			<Text>If enabled, players cannot trade strategic resources with each other.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_FUTURE_TECH">
 			<Text>[NEWLINE][ICON_BULLET]Future Tech: {1_Num}%</Text>
 		</Row>

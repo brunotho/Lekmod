@@ -310,6 +310,14 @@ Every Future Tech you research gives +20% combat strength and +20% food, product
 - Dev: new define FUTURE_TECH_BONUS_PERCENT (20); LEKMOD_FUTURE_TECH_BONUS in CvUnit::GetGenericMaxStrengthModifier(kInfo) and CvCity::getBaseYieldRateModifier; CvPlayer::GetFutureTechBonusModifier counts the team's repeat-tech count
 
 
+DISABLE STRATEGIC RESOURCE TRADING (GAMEOPTION_DISABLE_STRATEGIC_TRADING)
+--------------------------------------------------------------------------
+Tags: game mechanics, ui
+New lobby setting: when enabled, strategic resources can't be traded between players. It is on by default.
+- Added: lobby setting "Disable Strategic Resource Trading" (on by default)
+- Dev: GameOptions ID 67; LEKMOD_DISABLE_STRATEGIC_TRADING_OPTION in CvDeal::IsPossibleToTradeItem. Upstream's "Disable Unrevealed Strategic Resource Trading" is unchanged.
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

@@ -107393,10 +107393,20 @@
 			<Help>TXT_KEY_GAME_OPTION_NO_DESTRUCTIVE_RECAPTURE_HELP</Help>
 			<NoDestructiveRecaptureTurns>1</NoDestructiveRecaptureTurns>
 			<NoDestructiveRecaptureObsoleteEra>ERA_MODERN</NoDestructiveRecaptureObsoleteEra>
-			<Default>false</Default> 
-			<Visible>true</Visible> 
+			<Default>false</Default>
+			<Visible>true</Visible>
 			<SupportsSinglePlayer>true</SupportsSinglePlayer>
-			<SupportsMultiplayer>true</SupportsMultiplayer> 
+			<SupportsMultiplayer>true</SupportsMultiplayer>
+		</Row>
+		<Row>
+			<ID>67</ID>
+			<Type>GAMEOPTION_DISABLE_STRATEGIC_TRADING</Type>
+			<Description>TXT_KEY_GAME_OPTION_DISABLE_STRATEGIC_TRADING</Description>
+			<Help>TXT_KEY_GAME_OPTION_DISABLE_STRATEGIC_TRADING_HELP</Help>
+			<Default>true</Default>
+			<Visible>true</Visible>
+			<SupportsSinglePlayer>true</SupportsSinglePlayer>
+			<SupportsMultiplayer>true</SupportsMultiplayer>
 		</Row> 
 	</GameOptions> 
 
