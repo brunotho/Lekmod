@@ -190,6 +190,14 @@ Cities are a bit stronger everywhere, and the hill bonus is smaller.
 - Dev: defines 800 -> 900 and 500 -> 300 (units of 1/100)
 
 
+BARBARIAN ENCAMPMENTS (BarbCampGold)
+-------------------------------------
+Tags: game mechanics
+Clearing a barbarian encampment gives 40 Gold.
+- Changed: gold from clearing an encampment 16 -> 40 (the same on every difficulty)
+- Dev: HandicapInfos BarbCampGold 60 on all difficulties (x67% quick speed = 40)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
