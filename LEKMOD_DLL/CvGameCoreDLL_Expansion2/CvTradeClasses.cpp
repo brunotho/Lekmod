@@ -413,8 +413,14 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 	}
 
 	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsCompleted = 0;
+#ifdef LEKMOD_TRADE_ROUTE_FIXED_DURATION
+	// Every route runs for TRADE_ROUTE_DURATION turns, whatever its length; the unit keeps cycling until then
+	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsToComplete = MAX_INT;
+	m_aTradeConnections[iNewTradeRouteIndex].m_iTurnRouteComplete = GC.getTRADE_ROUTE_DURATION() + GC.getGame().getGameTurn();
+#else
 	m_aTradeConnections[iNewTradeRouteIndex].m_iCircuitsToComplete = iCircuitsToComplete;
 	m_aTradeConnections[iNewTradeRouteIndex].m_iTurnRouteComplete = (iTurnsPerCircuit * iCircuitsToComplete) + GC.getGame().getGameTurn();
+#endif
 
 	GET_PLAYER(eOriginPlayer).GetTrade()->UpdateTradeConnectionValues();
 	if (eDestPlayer != eOriginPlayer)
@@ -2308,7 +2314,11 @@ void CvPlayerTrade::MoveUnits (void)
 			pTrade->MoveUnit(ui);
 
 			// check to see if the trade route is still active but the circuit is completed
+#ifdef LEKMOD_TRADE_ROUTE_FIXED_DURATION
+			if (!pTrade->IsTradeRouteIndexEmpty(ui) && GC.getGame().getGameTurn() >= pTradeConnection->m_iTurnRouteComplete)
+#else
 			if (!pTrade->IsTradeRouteIndexEmpty(ui) && pTradeConnection->m_iCircuitsCompleted >= pTradeConnection->m_iCircuitsToComplete)
+#endif
 			{
 				m_aRecentlyExpiredConnections.push_back(*pTradeConnection);
 

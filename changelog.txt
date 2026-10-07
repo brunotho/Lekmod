@@ -240,6 +240,14 @@ Open borders agreements last 10 turns.
 - Dev: new define OPEN_BORDERS_DURATION (10, not speed-scaled), LEKMOD_OPEN_BORDERS_FIXED_DURATION in CvDeal::AddOpenBorders (same approach as the defensive pact's fixed 10 turns). TradeLogic templates (ui and eui) read GameDefines.OPEN_BORDERS_DURATION.
 
 
+TRADE ROUTE DURATION (TRADE_ROUTE_DURATION)
+--------------------------------------------
+Tags: game mechanics
+Every trade route lasts exactly 15 turns, however long or short it is.
+- Changed: trade routes last 15 turns (was up to about 20 turns, more on very long routes)
+- Dev: new define TRADE_ROUTE_DURATION (15, not speed-scaled); LEKMOD_TRADE_ROUTE_FIXED_DURATION sets m_iTurnRouteComplete = start + 15 and expires by turn in CvPlayerTrade::MoveUnits (circuits unlimited)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
