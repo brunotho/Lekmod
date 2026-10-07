@@ -138385,6 +138385,7 @@
 			<DestroyedWhenPillaged>true</DestroyedWhenPillaged>
 			<BuildableOnResources>true</BuildableOnResources>
 			<OutsideBorders>true</OutsideBorders>
+			<NoTwoAdjacent>true</NoTwoAdjacent>
 			<DefenseModifier>50</DefenseModifier>
 			<PortraitIndex>24</PortraitIndex>
 			<IconAtlas>TERRAIN_ATLAS</IconAtlas>

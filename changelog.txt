@@ -256,6 +256,14 @@ The attack bonus from Clausewitz's Legacy now also applies to ranged units and a
 - Dev: LEKMOD_CLAUSEWITZ_RANGED drops the !bRangedAttack exclusion in CvUnit::GetMaxAttackStrength(kInfo)
 
 
+FORTS (IMPROVEMENT_FORT)
+------------------------
+Tags: game mechanics
+Forts can't be built next to each other.
+- Changed: a Fort cannot be built on a tile next to another Fort (or next to one under construction)
+- Dev: IMPROVEMENT_FORT NoTwoAdjacent=true (existing column)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
