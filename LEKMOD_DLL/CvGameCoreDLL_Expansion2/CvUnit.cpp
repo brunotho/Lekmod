@@ -22949,9 +22949,33 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 			ChangeYieldFromKills((YieldTypes)iI, (thisPromotion.GetYieldFromKills(iI) * iChange));
 			ChangeKillYieldCap((YieldTypes)iI, (thisPromotion.GetKillYieldCap(iI) * iChange));
 		}
-		for (iI = 0; iI < GC.getNumEraInfos(); iI++)
+		// An era stays valid as long as ANY promotion the unit holds lists it.
+		// (Previously every promotion change overwrote all era flags, so gaining an
+		// unrelated promotion silently disabled kill yields from e.g. Zealot.)
+		for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
 		{
-			SetKillYieldEraValid((EraTypes)iI, ((thisPromotion.IsKillYieldEraValid(iI)) ? iChange : 0));
+			if (!thisPromotion.IsKillYieldEraValid(iEra))
+				continue;
+
+			if (iChange > 0)
+			{
+				SetKillYieldEraValid((EraTypes)iEra, true);
+			}
+			else
+			{
+				// This promotion is already removed from m_Promotions, so only remaining ones count
+				bool bStillValid = false;
+				for (int iPromo = 0; iPromo < GC.getNumPromotionInfos(); iPromo++)
+				{
+					CvPromotionEntry* pkOther = GC.getPromotionInfo((PromotionTypes)iPromo);
+					if (pkOther && isHasPromotion((PromotionTypes)iPromo) && pkOther->IsKillYieldEraValid(iEra))
+					{
+						bStillValid = true;
+						break;
+					}
+				}
+				SetKillYieldEraValid((EraTypes)iEra, bStillValid);
+			}
 		}
 #endif
 		for(iI = 0; iI < GC.getNumTerrainInfos(); iI++)

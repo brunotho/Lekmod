@@ -13776,6 +13776,9 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, CvUnit* pAttackingUnit, C
 			if (pAttackingUnit != NULL)
 			{
 			    EraTypes eKilledUnitEra = (EraTypes)pkKilledUnitInfo->GetEra();
+				// Units without a prereq tech (Warrior, Scout, most barbarians) report era -1; treat them as ancient
+				if (eKilledUnitEra < 0)
+					eKilledUnitEra = (EraTypes)0;
 				bool bValid = pAttackingUnit->IsKillYieldEraValid(eKilledUnitEra);
 				if(bValid)
 				{
