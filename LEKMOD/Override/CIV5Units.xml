@@ -31612,7 +31612,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31639,7 +31640,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31666,7 +31668,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>false</Remove> 
 		</Row>
@@ -31693,7 +31696,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31720,7 +31724,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31747,7 +31752,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31774,7 +31780,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>false</Remove> 
 		</Row>
@@ -31801,7 +31808,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31828,7 +31836,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>		
@@ -31860,7 +31869,8 @@
 			<BuildType>BUILD_LANDMARK</BuildType> 
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31884,7 +31894,8 @@
 			<BuildType>BUILD_ACADEMY</BuildType> 
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31908,7 +31919,8 @@
 			<BuildType>BUILD_CONCERT</BuildType> 
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31932,7 +31944,8 @@
 			<BuildType>BUILD_CUSTOMS_HOUSE</BuildType> 
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31956,7 +31969,8 @@
 			<BuildType>BUILD_MANUFACTORY</BuildType> 
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -31980,7 +31994,8 @@
 			<BuildType>BUILD_CITADEL</BuildType> 
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -32007,7 +32022,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -32034,7 +32050,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -32094,7 +32111,8 @@
 			<BuildType>BUILD_HOLY_SITE</BuildType> 
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -32121,7 +32139,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -32148,7 +32167,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType> 
 			<PrereqTech>TECH_MASONRY</PrereqTech> 
 			<Time>550</Time> 
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost> 
 			<Remove>true</Remove> 
 		</Row>
@@ -32229,7 +32249,8 @@
 			<FeatureType>FEATURE_MARSH</FeatureType>
 			<PrereqTech>TECH_MASONRY</PrereqTech>
 			<Time>550</Time>
-			<Production>20</Production> 
+			<Production>0</Production> 
+			<Food>20</Food>
 			<Cost>0</Cost>
 			<Remove>true</Remove>
 		</Row>

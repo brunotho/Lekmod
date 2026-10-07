@@ -101421,6 +101421,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_CIRC_GLOBE_SUMMARY">
 			<Text>The World Is Round</Text>
 		</Row>
+		<Row Tag="TXT_KEY_MISC_CLEARING_FEATURE_FOOD">
+			<Text>Clearing {TXT_KEY_GRAMMAR_A_AN &lt;&lt; {@1_FeatName}} has created {2_Num} [ICON_FOOD] for {@3_CityName}.</Text>
+		</Row>
 		<Replace Tag="TXT_KEY_MISC_YOU_CITY_RANSOMED_BY_BARBARIANS"> 
 			<Text>
 				Your City of {@1_CityName} was raided by Barbarians, and {2_Num} Gold was stolen from the national treasury!
