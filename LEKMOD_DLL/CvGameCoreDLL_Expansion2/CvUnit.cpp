@@ -8427,6 +8427,7 @@ bool CvUnit::pillage()
 		else
 		{
 			int iHealAmount = min(getDamage(), GC.getPILLAGE_HEAL_AMOUNT() + getPillageHealChange());
+			iHealAmount = max(0, iHealAmount); // a negative PillageHealChange (GDR) means no healing, never damage
 			changeDamage(-iHealAmount);
 		}
 	}

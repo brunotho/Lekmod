@@ -59,7 +59,7 @@ This file records what has been **verified** about how this mod works, and how t
      6. Civs
      9. Final interface tuning.
      Map rows (Lekmap) and Website have no phase.
-   - **Old code** lists commits on old branches (`dev-bruno`, `civ_changes`) for implementation ideas only. Never merge them. kubugaming and Ashwin code is excluded (§1).
+   - **Old code** lists commits on old branches (`dev-bruno`, `civ-changes-bruno`) for implementation ideas only. Never merge them. **These branches are only in `civ-tools\lekbuild`** (its remote `origin` = ashwintrisal/Lekmod), not in `lek`: read them with `git -C ../lekbuild show <hash>`. kubugaming and Ashwin code is excluded (§1).
    - **Workflow per item:** read the spec page (and any "CHANGE" notes or comment threads), implement, add the changelog entry, commit, then set the row to `Implemented` with the commit hash. When the user reports a playtest, set `Playtested`. Record deviations from the spec and spec conflicts in Notes, and ask the user about them.
    - **Discarding old work for cleanliness is allowed** (user, 2026-10-07): if an implemented item is messy, redo it from the spec.
    - The scratchpad on the checklist page holds unrefined ideas. They are tracked under Section "Scratchpad", mostly as `Needs spec`. Help the user turn them into specs when asked.
@@ -138,7 +138,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
 - (optional) Lua UI displays it, and the Lua logic matches the data
 
 ## 4. Data conventions and gotchas
-- **Promotion IDs are explicit** (`<ID>`). Every row in the `UnitPromotions` section has one. New rows get the next unused ID: currently up to **364**. v35.4 uses IDs up to 343; ours are 344–364. Upstream's IDs already have gaps (e.g. 271–273), which is fine. Check uniqueness *within the section*, since other tables reuse the same numbers.
+- **Promotion IDs are explicit** (`<ID>`). Every row in the `UnitPromotions` section has one. New rows get the next unused ID: currently up to **365**. v35.4 uses IDs up to 343; ours are 344–365. Upstream's IDs already have gaps (e.g. 271–273), which is fine. Check uniqueness *within the section*, since other tables reuse the same numbers.
 - **Line endings: both Override files are LF.** When scripting edits, read and write **bytes** (`open(f,'rb')`). Text mode silently converts line endings.
 - **Valid text icons:** `[ICON_PEACE]` = Faith (`[ICON_FAITH]` does **not** exist). `[ICON_EXPERIENCE]` and `[ICON_HEALING]` do **not** exist.
   - The authority is the loaded `IconFontMapping` table in `Civ5DebugDatabase.db` (884 icons).
@@ -280,7 +280,8 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
   - the user's Notion specs: open borders 10 turns (`40209953`), prophets killed on capture (`7fe60c6c`), trade routes 15 turns (`2cdc2fff`)
   - its own `changelog.txt` and `ai_ground_truth_workflow.md`
 - `dev` / `stratresourcechanges` (**kubugaming**, June): policy work, an improvement-tourism table, a kill-yield fix, one commit marked "[BUGGED]". Excluded by user decision (§1).
-- `civ_changes` (user, Feb): 7 civs (Huns, Egypt, Babylon, Gauls, Israel, China, Jerusalem).
+- `civ-changes-bruno` (user, Feb): 8 civs (Huns, Egypt, Babylon, Gauls, Israel, China, Jerusalem, Aksum).
+- `interface-bruno` (user): found 2026-10-07, not reviewed yet.
 
 ### History (old fork, 2026-10-05/06; details in `lekbuild` branch `repair-batch-1`)
 - 16 repair commits on Ashwin's fork HEAD `a582fdf9`: compile fix (`REPLAY_MESSAGE_CHAT` define clash), ruins repair (hardcoded draft removed, values moved into `GoodyHuts` columns), kill-yield era fix, Amphibious, Carpet Bombing, Iaijutsu/Hatamoto, data and text migrated out of `Art\` XML, icons, gold ruin floating text, faith ruin rebalance, Demographics fixes, DLL rebuilds. All of it was ported (above).

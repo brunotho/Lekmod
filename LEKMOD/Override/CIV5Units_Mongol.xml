@@ -1379,6 +1379,12 @@
 		<Row Tag="TXT_KEY_PROMOTION_STARGAZING_HELP">
 			<Text>+1 Visibility Range.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_NO_PILLAGE_HEAL">
+			<Text>No Healing from Pillage</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_NO_PILLAGE_HEAL_HELP">
+			<Text>This unit does not heal when it pillages.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_GLUTTON">
 			<Text>Glutton</Text>
 		</Row>

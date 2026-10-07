@@ -148,6 +148,15 @@ The first civilization to circumnavigate the globe receives 200 Gold, and every 
 - Dev: new define CIRCUMNAVIGATE_GOLD (not scaled by game speed), LEKMOD_CIRCUMNAVIGATION_GOLD in CvTeam::testCircumnavigated. Only on wrapping maps with less than 2/3 land (existing rule).
 
 
+GIANT DEATH ROBOT PILLAGING (UNIT_MECH)
+----------------------------------------
+Tags: units, game mechanics
+The Giant Death Robot can pillage, but it doesn't heal from pillaging.
+- Added: the Giant Death Robot can pillage
+- Added: new promotion "No Healing from Pillage" (Giant Death Robot)
+- Dev: PROMOTION_NO_PILLAGE_HEAL (ID 365) uses upstream's PillageHealChange (-100); CvUnit::pillage clamps the heal at 0 so a negative change never damages
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

@@ -251708,6 +251708,19 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_STARGAZING</PediaEntry>
 		</Row>
+		<Row>
+			<ID>365</ID>
+			<Type>PROMOTION_NO_PILLAGE_HEAL</Type>
+			<Description>TXT_KEY_PROMOTION_NO_PILLAGE_HEAL</Description>
+			<Help>TXT_KEY_PROMOTION_NO_PILLAGE_HEAL_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<PillageHealChange>-100</PillageHealChange>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_NO_PILLAGE_HEAL</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -261846,8 +261859,12 @@
 			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_MECH</UnitType> 
-			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType> 
+			<UnitType>UNIT_MECH</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MECH</UnitType>
+			<PromotionType>PROMOTION_NO_PILLAGE_HEAL</PromotionType>
 		</Row>
 		<Row> 
 			<UnitType>UNIT_WORKBOAT</UnitType> 
@@ -267491,6 +267508,7 @@
 			<DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
+			<Pillage>true</Pillage>
 			<Mechanized>true</Mechanized>
 			<PrereqTech>TECH_NUCLEAR_FUSION</PrereqTech>
 			<AdvancedStartCost>80</AdvancedStartCost>
