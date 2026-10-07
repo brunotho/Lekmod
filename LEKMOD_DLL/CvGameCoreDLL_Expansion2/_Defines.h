@@ -871,6 +871,8 @@
 #define LEKMOD_GREAT_GENERAL_SPAWN_CAPITAL
 // Stacked tile purchase discounts (player + city) are capped at PLOT_BUY_MAX_DISCOUNT percent
 #define LEKMOD_PLOT_BUY_DISCOUNT_CAP
+// Captured city resistance lasts at least 1 turn, however much it is reduced
+#define LEKMOD_RESISTANCE_TURNS_MIN_ONE
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

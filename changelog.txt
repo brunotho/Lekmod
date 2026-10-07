@@ -173,6 +173,14 @@ Discounts on buying tiles still stack, but a tile never costs less than 25% of i
 - Dev: new define PLOT_BUY_MAX_DISCOUNT (75). Player and city modifiers are combined multiplicatively in CvCity::GetBuyPlotCost and floored at 100 - cap; new CvPlayer::GetBuyPlotCostWithoutMod.
 
 
+CAPTURED CITY RESISTANCE (RESISTANCE TURNS)
+--------------------------------------------
+Tags: game mechanics, combat
+A captured city always resists for at least 1 turn, no matter how much its resistance is reduced.
+- Changed: resistance reductions (e.g. from tourism influence) can no longer bring resistance below 1 turn
+- Dev: LEKMOD_RESISTANCE_TURNS_MIN_ONE in CvPlayer::acquireCity; future "resistance half as long" effects must be applied before the clamp
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
