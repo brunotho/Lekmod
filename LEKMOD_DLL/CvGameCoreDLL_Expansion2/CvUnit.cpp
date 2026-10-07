@@ -14472,8 +14472,13 @@ int CvUnit::GetMaxAttackStrength(const CvCombatInfo& kInfo, CvCombatModifierList
 		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_ATTACKMOD_KAMIKAZE", iTempModifier);
 	}
 
+#ifdef LEKMOD_CLAUSEWITZ_RANGED
+	// Temporary attack bonus (Policies, etc., e.g. Clausewitz's Legacy): melee, ranged and air attacks
+	if (GET_PLAYER(getOwner()).GetAttackBonusTurns() > 0)
+#else
 	// Temporary attack bonus (Policies, etc.) not for ranged attacks!
 	if (GET_PLAYER(getOwner()).GetAttackBonusTurns() > 0 && !bRangedAttack)
+#endif
 	{
 		iTempModifier = /*20*/ GC.getPOLICY_ATTACK_BONUS_MOD();
 		iModifier += iTempModifier;

@@ -881,6 +881,8 @@
 #define LEKMOD_OPEN_BORDERS_FIXED_DURATION
 // Trade routes last TRADE_ROUTE_DURATION turns (not scaled by game speed), regardless of distance
 #define LEKMOD_TRADE_ROUTE_FIXED_DURATION
+// Clausewitz's Legacy (temporary policy attack bonus) also applies to ranged and air attacks
+#define LEKMOD_CLAUSEWITZ_RANGED
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

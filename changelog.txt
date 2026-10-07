@@ -248,6 +248,14 @@ Every trade route lasts exactly 15 turns, however long or short it is.
 - Dev: new define TRADE_ROUTE_DURATION (15, not speed-scaled); LEKMOD_TRADE_ROUTE_FIXED_DURATION sets m_iTurnRouteComplete = start + 15 and expires by turn in CvPlayerTrade::MoveUnits (circuits unlimited)
 
 
+CLAUSEWITZ'S LEGACY (POLICY_NEW_ORDER)
+--------------------------------------
+Tags: policies, combat, air
+The attack bonus from Clausewitz's Legacy now also applies to ranged units and aircraft.
+- Changed: +25% attack bonus for ranged and air attacks too (was melee only)
+- Dev: LEKMOD_CLAUSEWITZ_RANGED drops the !bRangedAttack exclusion in CvUnit::GetMaxAttackStrength(kInfo)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
