@@ -61,6 +61,11 @@ This file records what has been **verified** about how this mod works, and how t
      Map rows (Lekmap) and Website have no phase.
    - **Old code** lists commits on old branches (`dev-bruno`, `civ-changes-bruno`) for implementation ideas only. Never merge them. **These branches are only in `civ-tools\lekbuild`** (its remote `origin` = ashwintrisal/Lekmod), not in `lek`: read them with `git -C ../lekbuild show <hash>`. kubugaming and Ashwin code is excluded (§1).
    - **Workflow per item:** read the spec page (and any "CHANGE" notes or comment threads), implement, add the changelog entry, commit, then set the row to `Implemented` with the commit hash. When the user reports a playtest, set `Playtested`. Record deviations from the spec and spec conflicts in Notes, and ask the user about them.
+   - **Testing policy** (agreed 2026-10-07):
+     - Simple value or formula changes: Claude verifies them in the loaded DB (`Civ5DebugDatabase.db`, written when a game starts) and the logs. The user does not test them by hand.
+     - Behaviour changes (new mechanics, UI, situations that must be set up): the user tests them by hand; give concrete expected values.
+     - Everything is covered later by full multiplayer games, which also catch ripple effects.
+     - Status stays `Implemented` until the user playtests. Note DB-verified items in the row's Notes ("DB-verified <date>").
    - **Discarding old work for cleanliness is allowed** (user, 2026-10-07): if an implemented item is messy, redo it from the spec.
    - The scratchpad on the checklist page holds unrefined ideas. They are tracked under Section "Scratchpad", mostly as `Needs spec`. Help the user turn them into specs when asked.
    - The old audit page ("Implementation status audit (2026-10-06)") is superseded by the tracker.
