@@ -1464,7 +1464,11 @@ void CvDeal::AddOpenBorders(PlayerTypes eFrom, int iDuration)
 	{
 		CvTradedItem item;
 		item.m_eItemType = TRADE_ITEM_OPEN_BORDERS;
+#ifdef LEKMOD_OPEN_BORDERS_FIXED_DURATION
+		item.m_iDuration = GC.getOPEN_BORDERS_DURATION(); // like the defensive pact: fixed turns, not the speed's deal length
+#else
 		item.m_iDuration = iDuration;
+#endif
 		//item.m_iFinalTurn = iDuration + GC.getGame().getGameTurn();
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
 		item.m_iTurnsRemaining = -1;

@@ -1283,7 +1283,7 @@ function ResetDisplay()
     local bOpenBordersAllowed = g_Deal:IsPossibleToTradeItem(g_iUs, g_iThem, TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iDealDuration);
     
     -- Are we not allowed to give Open Borders? (don't have tech)
-    strTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", g_iDealDuration );
+    strTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", GameDefines.OPEN_BORDERS_DURATION or g_iDealDuration );
     if (not bOpenBordersAllowed) then
 		if (not g_pUsTeam:IsOpenBordersTradingAllowed() and not g_pThemTeam:IsOpenBordersTradingAllowed()) then
 			strTooltip = strTooltip .. " [COLOR_WARNING_TEXT]" .. Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_NO_TECH" ) .. "[ENDCOLOR]";

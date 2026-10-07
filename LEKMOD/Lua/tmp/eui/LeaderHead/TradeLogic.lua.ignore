@@ -91,7 +91,7 @@ local DiploUIStateTypes = DiploUIStateTypes
 
 local g_usPocketPeaceButtons, g_usPocketWarButtons, g_themPocketPeaceButtons, g_themPocketWarButtons, g_usTablePeaceButtons, g_usTableWarButtons, g_themTablePeaceButtons, g_themTableWarButtons
 
-local g_borderTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", g_iDealDuration )
+local g_borderTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", GameDefines.OPEN_BORDERS_DURATION or g_iDealDuration )
 local g_embassyTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_ALLOW_EMBASSY_TT", g_iDealDuration)
 local g_defensivePactToolTip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_DEF_PACT_TT", g_iDealDuration )
 

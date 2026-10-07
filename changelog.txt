@@ -231,6 +231,15 @@ When you demand tribute, only military units within 5 tiles of the city-state co
 - Dev: new define MINOR_CIV_TRIBUTE_RANGE (5), LEKMOD_TRIBUTE_RANGE_FIXED in CvMinorCivAI::CalculateBullyMetric
 
 
+OPEN BORDERS (OPEN_BORDERS_DURATION)
+-------------------------------------
+Tags: game mechanics, ui
+Open borders agreements last 10 turns.
+- Changed: open borders last 10 turns (was 25)
+- Changed: the trade screen tooltip shows the 10 turns
+- Dev: new define OPEN_BORDERS_DURATION (10, not speed-scaled), LEKMOD_OPEN_BORDERS_FIXED_DURATION in CvDeal::AddOpenBorders (same approach as the defensive pact's fixed 10 turns). TradeLogic templates (ui and eui) read GameDefines.OPEN_BORDERS_DURATION.
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

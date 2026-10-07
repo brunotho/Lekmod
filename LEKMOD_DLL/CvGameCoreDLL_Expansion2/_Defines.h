@@ -877,6 +877,8 @@
 #define LEKMOD_NO_NAVAL_ZOC_VS_LAND
 // City-state tribute range (local military power comparison) is MINOR_CIV_TRIBUTE_RANGE on every map size
 #define LEKMOD_TRIBUTE_RANGE_FIXED
+// Open borders last OPEN_BORDERS_DURATION turns (not scaled by game speed), like the defensive pact
+#define LEKMOD_OPEN_BORDERS_FIXED_DURATION
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed
