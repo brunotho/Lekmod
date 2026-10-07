@@ -265,6 +265,14 @@ Forts can't be built next to each other.
 - Dev: IMPROVEMENT_FORT NoTwoAdjacent=true (existing column)
 
 
+PUPPET CITIES (CITY FOCUS)
+---------------------------
+Tags: game mechanics
+Puppet cities focus on Production instead of Gold when working their tiles.
+- Changed: puppet city focus Gold -> Production (a puppet that would starve still switches to the balanced focus, as before)
+- Dev: LEKMOD_PUPPET_PRODUCTION_FOCUS in CvCity::SetPuppet and CvCityCitizens::DoTurn
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

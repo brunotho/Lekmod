@@ -883,6 +883,8 @@
 #define LEKMOD_TRADE_ROUTE_FIXED_DURATION
 // Clausewitz's Legacy (temporary policy attack bonus) applies to melee attacks only (also not to air sweeps)
 #define LEKMOD_CLAUSEWITZ_MELEE_ONLY
+// Puppet cities work their tiles with production focus (was gold)
+#define LEKMOD_PUPPET_PRODUCTION_FOCUS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

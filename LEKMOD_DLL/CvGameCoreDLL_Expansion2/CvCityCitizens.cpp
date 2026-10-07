@@ -286,7 +286,11 @@ void CvCityCitizens::DoTurn()
 
 	if(m_pCity->IsPuppet())
 	{
+#ifdef LEKMOD_PUPPET_PRODUCTION_FOCUS
+		SetFocusType(CITY_AI_FOCUS_TYPE_PRODUCTION);
+#else
 		SetFocusType(CITY_AI_FOCUS_TYPE_GOLD);
+#endif
 		SetNoAutoAssignSpecialists(false);
 		SetForcedAvoidGrowth(false);
 #ifndef AUI_CITIZENS_PUPPET_STILL_WANTS_GROWTH

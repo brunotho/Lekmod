@@ -11423,7 +11423,11 @@ void CvCity::SetPuppet(bool bValue)
 		{
 			if (bValue)
 			{
+#ifdef LEKMOD_PUPPET_PRODUCTION_FOCUS
+				GetCityCitizens()->SetFocusType(CITY_AI_FOCUS_TYPE_PRODUCTION);
+#else
 				GetCityCitizens()->SetFocusType(CITY_AI_FOCUS_TYPE_GOLD);
+#endif
 				GetCityCitizens()->SetNoAutoAssignSpecialists(false);
 				GetCityCitizens()->SetForcedAvoidGrowth(false);
 			}
