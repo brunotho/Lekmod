@@ -104715,10 +104715,10 @@
 		<Row> 
 			<ID>0</ID> 
 			<Type>ERA_ANCIENT</Type> 
-			<CityStateFriendCapitalFoodTimes100>50</CityStateFriendCapitalFoodTimes100>
-			<CityStateFriendCityFoodTimes100>20</CityStateFriendCityFoodTimes100>
-			<CityStateAllyCapitalFoodTimes100>100</CityStateAllyCapitalFoodTimes100>
-			<CityStateAllyCityFoodTimes100>30</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCapitalFoodTimes100>110</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>30</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>220</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>60</CityStateAllyCityFoodTimes100>
 			<CityStateFriendCulture>2</CityStateFriendCulture>
 			<CityStateAllyCulture>4</CityStateAllyCulture>
 			<CityStateFriendFaith>2</CityStateFriendFaith>
@@ -104771,10 +104771,10 @@
 		<Row> 
 			<ID>1</ID> 
 			<Type>ERA_CLASSICAL</Type> 
-			<CityStateFriendCapitalFoodTimes100>100</CityStateFriendCapitalFoodTimes100>
-			<CityStateFriendCityFoodTimes100>30</CityStateFriendCityFoodTimes100>
-			<CityStateAllyCapitalFoodTimes100>200</CityStateAllyCapitalFoodTimes100>
-			<CityStateAllyCityFoodTimes100>70</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCapitalFoodTimes100>130</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>40</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>260</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>80</CityStateAllyCityFoodTimes100>
 			<CityStateFriendCulture>4</CityStateFriendCulture>
 			<CityStateAllyCulture>8</CityStateAllyCulture>
 			<CityStateFriendFaith>4</CityStateFriendFaith>
@@ -104883,10 +104883,10 @@
 		<Row> 
 			<ID>3</ID> 
 			<Type>ERA_RENAISSANCE</Type> 
-			<CityStateFriendCapitalFoodTimes100>200</CityStateFriendCapitalFoodTimes100>
-			<CityStateFriendCityFoodTimes100>70</CityStateFriendCityFoodTimes100>
-			<CityStateAllyCapitalFoodTimes100>400</CityStateAllyCapitalFoodTimes100>
-			<CityStateAllyCityFoodTimes100>130</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCapitalFoodTimes100>170</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>60</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>340</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>120</CityStateAllyCityFoodTimes100>
 			<CityStateFriendCulture>8</CityStateFriendCulture>
 			<CityStateAllyCulture>16</CityStateAllyCulture>
 			<CityStateFriendFaith>8</CityStateFriendFaith>
@@ -104939,10 +104939,10 @@
 		<Row> 
 			<ID>4</ID> 
 			<Type>ERA_INDUSTRIAL</Type> 
-			<CityStateFriendCapitalFoodTimes100>250</CityStateFriendCapitalFoodTimes100>
-			<CityStateFriendCityFoodTimes100>80</CityStateFriendCityFoodTimes100>
-			<CityStateAllyCapitalFoodTimes100>500</CityStateAllyCapitalFoodTimes100>
-			<CityStateAllyCityFoodTimes100>170</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCapitalFoodTimes100>190</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>70</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>380</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>140</CityStateAllyCityFoodTimes100>
 			<CityStateFriendCulture>10</CityStateFriendCulture>
 			<CityStateAllyCulture>20</CityStateAllyCulture>
 			<CityStateFriendFaith>10</CityStateFriendFaith>
@@ -104995,10 +104995,10 @@
 		<Row> 
 			<ID>5</ID> 
 			<Type>ERA_MODERN</Type> 
-			<CityStateFriendCapitalFoodTimes100>300</CityStateFriendCapitalFoodTimes100>
-			<CityStateFriendCityFoodTimes100>100</CityStateFriendCityFoodTimes100>
-			<CityStateAllyCapitalFoodTimes100>600</CityStateAllyCapitalFoodTimes100>
-			<CityStateAllyCityFoodTimes100>200</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCapitalFoodTimes100>210</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>80</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>420</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>160</CityStateAllyCityFoodTimes100>
 			<CityStateFriendCulture>12</CityStateFriendCulture>
 			<CityStateAllyCulture>24</CityStateAllyCulture>
 			<CityStateFriendFaith>12</CityStateFriendFaith>
@@ -105051,10 +105051,10 @@
 		<Row> 
 			<ID>6</ID> 
 			<Type>ERA_POSTMODERN</Type> 
-			<CityStateFriendCapitalFoodTimes100>350</CityStateFriendCapitalFoodTimes100>
-			<CityStateFriendCityFoodTimes100>120</CityStateFriendCityFoodTimes100>
-			<CityStateAllyCapitalFoodTimes100>700</CityStateAllyCapitalFoodTimes100>
-			<CityStateAllyCityFoodTimes100>230</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCapitalFoodTimes100>230</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>90</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>460</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>180</CityStateAllyCityFoodTimes100>
 			<CityStateFriendCulture>14</CityStateFriendCulture>
 			<CityStateAllyCulture>28</CityStateAllyCulture>
 			<CityStateFriendFaith>14</CityStateFriendFaith>
@@ -105107,10 +105107,10 @@
 		<Row> 
 			<ID>7</ID> 
 			<Type>ERA_FUTURE</Type> 
-			<CityStateFriendCapitalFoodTimes100>400</CityStateFriendCapitalFoodTimes100>
-			<CityStateFriendCityFoodTimes100>130</CityStateFriendCityFoodTimes100>
-			<CityStateAllyCapitalFoodTimes100>800</CityStateAllyCapitalFoodTimes100>
-			<CityStateAllyCityFoodTimes100>270</CityStateAllyCityFoodTimes100>
+			<CityStateFriendCapitalFoodTimes100>250</CityStateFriendCapitalFoodTimes100>
+			<CityStateFriendCityFoodTimes100>100</CityStateFriendCityFoodTimes100>
+			<CityStateAllyCapitalFoodTimes100>500</CityStateAllyCapitalFoodTimes100>
+			<CityStateAllyCityFoodTimes100>200</CityStateAllyCityFoodTimes100>
 			<CityStateFriendCulture>16</CityStateFriendCulture>
 			<CityStateAllyCulture>32</CityStateAllyCulture>
 			<CityStateFriendFaith>16</CityStateFriendFaith>
