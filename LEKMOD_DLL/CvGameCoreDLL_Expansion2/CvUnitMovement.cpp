@@ -521,7 +521,12 @@ bool CvUnitMovement::IsSlowedByZOC(const CvUnit* pUnit, const CvPlot* pFromPlot,
 						if(loop_unit_domain_type != unit_domain_type)
 						{
 							// this is valid
+#ifdef LEKMOD_NO_NAVAL_ZOC_VS_LAND
+							// Ships only exert ZoC on land units that move on open water (embarked); never on land or walk-water
+							if(loop_unit_domain_type == DOMAIN_SEA && unit_domain_type && pToPlot->isWater() && !pToPlot->IsAllowsWalkWater())
+#else
 							if(loop_unit_domain_type == DOMAIN_SEA && unit_domain_type)
+#endif
 							{
 								// continue on
 							}

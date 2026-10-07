@@ -214,6 +214,15 @@ Great Prophets are destroyed when an enemy captures them, like other Great Peopl
 - Dev: removed Capture=UNITCLASS_PROPHET from UNIT_PROPHET, UNIT_FAKEPROPHET, UNIT_MABA, UNIT_DALAILAMA. Missionaries can still be captured.
 
 
+NAVAL ZONE OF CONTROL (ZOC)
+----------------------------
+Tags: game mechanics, naval, movement
+Ships no longer slow down land units moving on land.
+- Changed: enemy ships exert no zone of control on land units moving on land (including pontoons and shallows)
+- Note: embarked units moving on open water are still slowed by enemy ships
+- Dev: LEKMOD_NO_NAVAL_ZOC_VS_LAND in CvUnitMovement::IsSlowedByZOC (destination plot decides)
+
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval
