@@ -86,6 +86,9 @@ public:
 
 	void Update(void);
 	void UpdateRoutePlots(void);
+#ifdef LEKMOD_MINOR_CIV_RING_ROADS
+	void UpdateMinorCivFirstRingRoutePlots(void);
+#endif
 
 	bool EvaluateBuilder(CvUnit* pUnit, BuilderDirective* paDirectives, UINT uaDirectives, bool bKeepOnlyBest = false, bool bOnlyEvaluateWorkersPlot = false);
 

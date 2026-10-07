@@ -178,9 +178,49 @@ void CvBuilderTaskingAI::Write(FDataStream& kStream)
 }
 
 /// Update
+#ifdef LEKMOD_MINOR_CIV_RING_ROADS
+/// City-states road the land tiles around their cities, at the lowest priority of all worker jobs:
+/// the plots are flagged with route value 1, unless the normal road planning already flagged them this turn
+void CvBuilderTaskingAI::UpdateMinorCivFirstRingRoutePlots(void)
+{
+	if(!m_pPlayer->isMinorCiv())
+		return;
+
+	RouteTypes eBestRoute = m_pPlayer->getBestRoute();
+	if(eBestRoute == NO_ROUTE)
+		return;
+
+	const int iGameTurn = GC.getGame().getGameTurn();
+	int iLoop;
+	for(CvCity* pCity = m_pPlayer->firstCity(&iLoop); pCity != NULL; pCity = m_pPlayer->nextCity(&iLoop))
+	{
+		for(int iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
+		{
+			CvPlot* pAdjacentPlot = plotDirection(pCity->getX(), pCity->getY(), ((DirectionTypes)iI));
+			if(pAdjacentPlot == NULL || pAdjacentPlot->isWater() || pAdjacentPlot->getOwner() != m_pPlayer->GetID())
+				continue;
+
+			if(pAdjacentPlot->getRouteType() == eBestRoute && !pAdjacentPlot->IsRoutePillaged())
+				continue;
+
+			if(pAdjacentPlot->GetBuilderAIScratchPadTurn() == iGameTurn && pAdjacentPlot->GetBuilderAIScratchPadPlayer() == m_pPlayer->GetID())
+				continue;
+
+			pAdjacentPlot->SetBuilderAIScratchPadTurn(iGameTurn);
+			pAdjacentPlot->SetBuilderAIScratchPadPlayer(m_pPlayer->GetID());
+			pAdjacentPlot->SetBuilderAIScratchPadValue(1);
+			pAdjacentPlot->SetBuilderAIScratchPadRoute(eBestRoute);
+		}
+	}
+}
+#endif
+
 void CvBuilderTaskingAI::Update(void)
 {
 	UpdateRoutePlots();
+#ifdef LEKMOD_MINOR_CIV_RING_ROADS
+	UpdateMinorCivFirstRingRoutePlots();
+#endif
 	m_iNumCities = m_pPlayer->getNumCities();
 
 	int iLoop;

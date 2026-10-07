@@ -901,6 +901,8 @@
 #define LEKMOD_CITY_STATE_ERA_BONUSES
 // Personal city-state quests open for MINOR_CIV_PERSONAL_QUEST_RECYCLE_TURNS turns are replaced by a new quest
 #define LEKMOD_PERSONAL_QUEST_RECYCLE
+// City-state workers road the land tiles around their cities (lowest priority)
+#define LEKMOD_MINOR_CIV_RING_ROADS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed
