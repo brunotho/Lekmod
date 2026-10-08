@@ -3866,6 +3866,50 @@ void CvPlayer::getCivilizationCityName(CvString& szBuffer, CivilizationTypes eCi
 	else
 	{
 		CvCivilizationInfo& kCivInfo = *pkCivilizationInfo;
+#ifdef LEKMOD_RANDOMIZE_CITY_NAMES
+		// The capital keeps its name; all later names come in a shuffled order that is fixed for this player in this game.
+		// America, Russia, Aksum and the Timurids also keep their 2nd city name.
+		// Deterministic shuffle instead of the synced RNG: this function must give the same result wherever it is called.
+		const int iNumNames = kCivInfo.getNumCityNames();
+		int iFixedNames = 1;
+		if(eCivilization == (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_AMERICA", true) ||
+		   eCivilization == (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_RUSSIA", true) ||
+		   eCivilization == (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_AKSUM", true) ||
+		   eCivilization == (CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_TIMURIDS", true))
+		{
+			iFixedNames = 2;
+		}
+		if(iFixedNames > iNumNames)
+			iFixedNames = iNumNames;
+
+		std::vector<int> aiOrder;
+		aiOrder.reserve(iNumNames);
+		for(int iI = 0; iI < iNumNames; iI++)
+			aiOrder.push_back(iI);
+
+		CvPlot* pStartPlot = getStartingPlot();
+		unsigned int uiSeed = (unsigned int)(GetID() + 1) * 2654435761u + (unsigned int)(pStartPlot ? pStartPlot->GetPlotIndex() : 0) * 40503u;
+		for(int iI = iNumNames - 1; iI > iFixedNames; iI--)
+		{
+			uiSeed = uiSeed * 1103515245u + 12345u;
+			const int iSwap = iFixedNames + (int)((uiSeed >> 8) % (unsigned int)(iI - iFixedNames + 1));
+			const int iTemp = aiOrder[iI];
+			aiOrder[iI] = aiOrder[iSwap];
+			aiOrder[iSwap] = iTemp;
+		}
+
+		for(int iI = 0; iI < iNumNames; iI++)
+		{
+			const CvString strCityName = kCivInfo.getCityNames(aiOrder[iI]);
+			CvString strName = GetLocalizedText(strCityName.c_str());
+
+			if(isCityNameValid(strName, true))
+			{
+				szBuffer = strCityName;
+				break;
+			}
+		}
+#else
 		for(int iI = 0; iI < kCivInfo.getNumCityNames(); iI++)
 		{
 			iLoopName = ((iI + iRandOffset) % kCivInfo.getNumCityNames());
@@ -3879,6 +3923,7 @@ void CvPlayer::getCivilizationCityName(CvString& szBuffer, CivilizationTypes eCi
 				break;
 			}
 		}
+#endif
 	}
 }
 
@@ -13033,6 +13078,7 @@ void CvPlayer::setJONSCultureTimes100(int iNewValue)
 {
 	if (getJONSCultureTimes100() != iNewValue)
 	{
+		const bool bLekmodGained = (iNewValue > getJONSCultureTimes100());
 		// Add to the total we've ever had
 		if (iNewValue > getJONSCultureTimes100())
 		{
@@ -13045,6 +13091,11 @@ void CvPlayer::setJONSCultureTimes100(int iNewValue)
 		{
 			GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
 		}
+#ifdef LEKMOD_MIDTURN_PICK_NOTIFICATIONS
+		// Any culture gain during the turn can make a policy affordable: notify right away
+		if (bLekmodGained && isAlive() && isHuman() && getNumCities() > 0)
+			TestMidTurnPolicyNotification();
+#endif
 	}
 }
 
@@ -14830,6 +14881,9 @@ void CvPlayer::SetFaith(int iNewValue)
 
 	if(GetFaith() != iNewValue)
 	{
+#ifdef LEKMOD_MIDTURN_PICK_NOTIFICATIONS
+		const bool bLekmodGained = (iNewValue > m_iFaith);
+#endif
 		// Add to the total we've ever had
 		if(iNewValue > m_iFaith)
 		{
@@ -14842,6 +14896,23 @@ void CvPlayer::SetFaith(int iNewValue)
 		{
 			GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
 		}
+
+#ifdef LEKMOD_MIDTURN_PICK_NOTIFICATIONS
+		// Any faith gain during the turn can make a pantheon affordable: notify right away (same rules as CvGameReligions::DoPlayerTurn)
+		if(bLekmodGained && isAlive() && isHuman() && !isMinorCiv() && getNumCities() > 0 && GetCurrentEra() < GC.getInfoTypeForString("ERA_INDUSTRIAL"))
+		{
+			if(GC.getGame().GetGameReligions()->CanCreatePantheon(GetID(), true) == CvGameReligions::FOUNDING_OK)
+			{
+				CvNotifications* pNotifications = GetNotifications();
+				if(pNotifications)
+				{
+					CvString strBuffer = GetLocalizedText("TXT_KEY_NOTIFICATION_ENOUGH_FAITH_FOR_PANTHEON");
+					CvString strSummary = GetLocalizedText("TXT_KEY_NOTIFICATION_SUMMARY_ENOUGH_FAITH_FOR_PANTHEON");
+					pNotifications->Add(NOTIFICATION_FOUND_PANTHEON, strBuffer, strSummary, -1, -1, -1);
+				}
+			}
+		}
+#endif
 	}
 }
 

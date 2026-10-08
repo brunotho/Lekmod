@@ -426,6 +426,23 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+MID-TURN POLICY AND PANTHEON NOTIFICATIONS
+------------------------------------------
+Tags: ui, policies, religion
+You are told right away when you can pick a policy or a pantheon, not only at the start of the next turn.
+- Added: any gain of Culture during the turn (ruins, kills, gifts...) that makes a policy affordable shows the "choose a policy" notification at once
+- Added: the same for Faith and pantheons
+- Dev: LEKMOD_MIDTURN_PICK_NOTIFICATIONS: hooks in CvPlayer::setJONSCultureTimes100 (upstream's TestMidTurnPolicyNotification) and CvPlayer::SetFaith (same rules as CvGameReligions::DoPlayerTurn). Both notification types are de-duplicated by CvNotifications
+
+
+CITY NAMES
+----------
+Tags: civs, ui
+City names after the capital come in a random order.
+- Changed: your capital keeps its name; every later city takes the next name from a shuffled list that differs each game
+- Changed: America, Russia, Aksum and the Timurids also keep their second city name
+- Dev: LEKMOD_RANDOMIZE_CITY_NAMES in CvPlayer::getCivilizationCityName; deterministic shuffle seeded by player ID and starting plot (no synced RNG, so it is safe wherever the function is called)
+
 PROMOTION TOOLTIPS (UPGRADES)
 -----------------------------
 Tags: ui, promotions

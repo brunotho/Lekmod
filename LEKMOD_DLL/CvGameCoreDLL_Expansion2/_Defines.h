@@ -909,6 +909,10 @@
 #define LEKMOD_CS_WAR_DECLARATION_PENALTIES
 // Open borders can also be traded until war (duration OPEN_BORDERS_INDEFINITE_DURATION) besides the fixed 10 turns
 #define LEKMOD_OPEN_BORDERS_INDEFINITE
+// Policy and pantheon notifications appear as soon as culture/faith gains make them affordable during the turn
+#define LEKMOD_MIDTURN_PICK_NOTIFICATIONS
+// City names after the capital (2nd city too for America, Russia, Aksum, Timurids) come in a shuffled order per player and game
+#define LEKMOD_RANDOMIZE_CITY_NAMES
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed
