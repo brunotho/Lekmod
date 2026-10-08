@@ -432,7 +432,8 @@ BORDER GROWTH OVER WATER
 Tags: game mechanics
 Cities claim plain water tiles as readily as plain flat land when their borders grow.
 - Changed: Coast and Ocean count like Grassland and Plains for border growth (they counted as one or two extra tiles of distance before, so cities claimed them very late)
-- Dev: Terrains.InfluenceCost Coast 2 -> 1, Ocean 3 -> 1 (used by the influence pathfinder in CvCity::GetBuyablePlotList)
+- Changed: buying a water tile with gold costs the same as buying flat land at the same distance (it was more expensive)
+- Dev: Terrains.InfluenceCost Coast 2 -> 1, Ocean 3 -> 1 (influence pathfinder, used by CvCity::GetBuyablePlotList and CvCity::GetBuyPlotCost)
 
 TILE TOOLTIP: UNIMPROVED RESOURCES
 ----------------------------------
