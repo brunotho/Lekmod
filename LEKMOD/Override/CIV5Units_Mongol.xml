@@ -23454,9 +23454,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_ALLIES_HEADING4_BODY"> 
-			<Text>
-				If you're allied with a city-state, you'll get a stronger version of the benefits of friendship. In addition, the city-state will give you all of their luxury and strategic resources. Only one civilization can be allied with a city-state at a time - if multiple are eligible, whichever has the highest IPs gets the position.[NEWLINE][NEWLINE]Additionally, if you're allied with a City-State you can pay them to improve a resource, which makes the resource available to you. To do this, click on "Give a Gift" within the City-State screen, then click on "200 [ICON_GOLD] Gold - Improve a Resource". Select the resource tile you would like to have improved, and the improvement is placed immediately.
-			</Text>
+			<Text>From 60 [ICON_INFLUENCE] Influence on, you become the City-State's Ally, if no other player has more [ICON_INFLUENCE] Influence with it.[NEWLINE]Each City-State has only one Ally.[NEWLINE][NEWLINE]As its Ally:[NEWLINE]You get the full bonus of its type.[NEWLINE]You receive all its luxury and strategic resources.[NEWLINE]You get its Delegates in the World Congress.[NEWLINE]It joins your wars (except Pacifistic City-States).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_ALLIES_HEADING4_TITLE"> 
 			<Text>
@@ -23689,9 +23687,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_COMMUNICATEWITH_HEADING2_BODY"> 
-			<Text>
-				In order to communicate with a city-state, you must find it first. When one of your units encounters a city-state, the city-state will tell you what type it is, and it will often give you a gift of gold as well. (This is another good reason to explore the world!)[NEWLINE][NEWLINE]Once you have met, the city-state may periodically make contact with you to ask you to undertake "missions". If you want to get in touch with the city-state, you can click on the city itself, or you can go through the Diplomacy Panel.
-			</Text>
+			<Text>You must meet a City-State before you can deal with it.[NEWLINE][NEWLINE]When you meet it, it gives you a gift of [ICON_GOLD] Gold:[NEWLINE]30 [ICON_GOLD] Gold if you are the first civilization to meet it.[NEWLINE]15 [ICON_GOLD] Gold otherwise.[NEWLINE]Some personalities give more or less.[NEWLINE]There is no gift if you have declared war on City-States 2 or more times.[NEWLINE][NEWLINE]Click on the city, or use the Diplomacy panel, to open the City-State screen.[NEWLINE]There you can give gifts, demand tribute, pledge to protect, declare war or make peace.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_COMMUNICATEWITH_HEADING2_TITLE"> 
 			<Text>
@@ -23714,9 +23710,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_CULTURED_HEADING3_BODY"> 
-			<Text>
-				A cultured city-state can help you improve your culture.
-			</Text>
+			<Text>A Cultured City-State gives [ICON_CULTURE] Culture per turn to its Friends and its Ally.[NEWLINE]The amount depends on your current era.[NEWLINE][NEWLINE]As Allies:[NEWLINE]Ancient: 4 (Friends: 2)[NEWLINE]Classical: 8 (Friends: 4)[NEWLINE]Medieval: 12 (Friends: 6)[NEWLINE]Renaissance: 16 (Friends: 8)[NEWLINE]Industrial: 20 (Friends: 10)[NEWLINE]Modern: 24 (Friends: 12)[NEWLINE]Atomic: 28 (Friends: 14)[NEWLINE]Information: 32 (Friends: 16)</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_CULTURED_HEADING3_TITLE"> 
 			<Text>
@@ -23729,9 +23723,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_DIPLOVICTORY_HEADING2_BODY"> 
-			<Text>
-				You win a Diplomatic Victory by winning an election for the position of World Leader once the World Congress becomes the United Nations. If going this route, remember that City-States will provide Delegates for whoever they are allied with. See the section on Victory for more details.
-			</Text>
+			<Text>You win a Diplomatic Victory by being elected World Leader in the United Nations.[NEWLINE][NEWLINE]Allied City-States give you their Delegates:[NEWLINE]1 per allied City-State once City-States join the World Congress.[NEWLINE]2 per allied City-State in the United Nations.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_DIPLOVICTORY_HEADING2_TITLE"> 
 			<Text>
@@ -23759,14 +23751,10 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_DONOTHING_HEADING3_BODY"> 
-			<Text>
-				If you don't do anything, your IPs will tend to revert to zero over time: if your IPs are positive, they'll reduce by a small amount each turn. If they're negative, they'll increase by a small amount each turn. (The exact amount can vary based on the City-State's personality.) So if you want to maintain positive relations with a city-state, you'll have to periodically complete a mission or give them a gift.[NEWLINE][NEWLINE]Note that you lose a handful of IPs per turn for each of your units "trespassing" in a city-state's territory. If you are friends with the city-state, you can move through its territory with no consequences.
-			</Text>
+			<Text>If you do nothing, your [ICON_INFLUENCE] Influence moves towards its resting point (normally 0).[NEWLINE]Above it, you lose 1.25 [ICON_INFLUENCE] Influence per turn.[NEWLINE]Below it, you gain 1.25 [ICON_INFLUENCE] Influence per turn.[NEWLINE]Personalities, religion, policies, the Pledge to Protect and the Alienated penalty change these rates.[NEWLINE][NEWLINE]Trespassing: each of your military units inside the City-State's borders costs 6 [ICON_INFLUENCE] Influence per turn.[NEWLINE]Friends and Allies may enter freely.[NEWLINE]There is no penalty while Barbarians threaten the City-State, and for 5 turns after you kill one of them (which also gives +12 [ICON_INFLUENCE] Influence).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_DONOTHING_HEADING3_TITLE"> 
-			<Text>
-				Doing Nothing
-			</Text>
+			<Text>Decay and Trespassing</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_DUBAI"> 
 			<Text>
@@ -23819,9 +23807,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_FRIENDS_HEADING4_BODY"> 
-			<Text>
-				If you're "friends" with a city-state, the city-state will periodically give you gifts - a cultured city-state will give you culture; a maritime city-state will give you food; a militaristic city-state will give you military units; a mercantile city-state will give you happiness; and a religious city-state will give you faith.
-			</Text>
+			<Text>From 30 [ICON_INFLUENCE] Influence on, you are Friends.[NEWLINE][NEWLINE]You get the Friend bonus of its type (half of the Ally bonus for Cultured, Maritime and Religious City-States).[NEWLINE]Your units may enter its territory freely.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_FRIENDS_HEADING4_TITLE"> 
 			<Text>
@@ -23854,14 +23840,10 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_GIVEGOLD_HEADING3_BODY"> 
-			<Text>
-				One of the most cost-effective ways to increase your IP total is to give a city-state gold. To give a city-state gold, click on the city-state itself and then pick the appropriate menu item.
-			</Text>
+			<Text>You can give a City-State 250, 500 or 1000 [ICON_GOLD] Gold for [ICON_INFLUENCE] Influence.[NEWLINE]Larger gifts give slightly more [ICON_INFLUENCE] Influence per [ICON_GOLD] Gold.[NEWLINE][NEWLINE]At the start of the game:[NEWLINE]250 [ICON_GOLD] Gold: 30 [ICON_INFLUENCE] Influence.[NEWLINE]500 [ICON_GOLD] Gold: 65 [ICON_INFLUENCE] Influence.[NEWLINE]1000 [ICON_GOLD] Gold: 135 [ICON_INFLUENCE] Influence.[NEWLINE][NEWLINE]Gold gifts lose value as the game goes on: by the end of the game they give only a third as much.[NEWLINE]Policies, beliefs and personalities change the amount (Wealthy: -25%, Impoverished: +25%).[NEWLINE]The gift buttons show the exact amount.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_GIVEGOLD_HEADING3_TITLE"> 
-			<Text>
-				Gold: The Gift That Keeps on Giving!
-			</Text>
+			<Text>Gifts of Gold</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_GIVEUNITS_ADV_QUEST"> 
 			<Text>
@@ -23869,14 +23851,10 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_GIVEUNITS_HEADING3_BODY"> 
-			<Text>
-				You can also give a city-state units. One way to do this is to move the unit into the city-state's territory and then click on the "Give Unit" button in the unit's Action menu. (You can also give them units anywhere on the screen through the city-state Diplomacy screen.) It should be noted that gold usually is the better gift, unless the city-state is specifically requesting units.
-			</Text>
+			<Text>Military units: +5 [ICON_INFLUENCE] Influence per unit.[NEWLINE]+5 more if the City-State is at war with one of your enemies.[NEWLINE]Some policies add more.[NEWLINE]Give a unit inside the City-State's territory with the "Gift Unit" action, or from anywhere through the City-State screen (it arrives after a few turns).[NEWLINE][NEWLINE]Tile improvements: for 200 [ICON_GOLD] Gold the City-State improves one of its luxury or strategic resource tiles at once.[NEWLINE]This does not give [ICON_INFLUENCE] Influence, but the resource then counts for its Ally.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_GIVEUNITS_HEADING3_TITLE"> 
-			<Text>
-				Give Them Units
-			</Text>
+			<Text>Gifts of Units and Tile Improvements</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_HANOI"> 
 			<Text>
@@ -23919,9 +23897,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_HEADING1_BODY"> 
-			<Text>
-				City-States are the smaller political entities in Civilization V. They cannot win a game - they're not competing against you - but they can greatly assist or impede your progress towards victory. You can befriend City-States and gain a number of important benefits; you can ignore them and concentrate on bigger and more important foes; or you can conquer them and take their stuff. It's up to you.
-			</Text>
+			<Text>City-States are small one-city nations.[NEWLINE]They cannot win the game, but they can give you Food, [ICON_CULTURE] Culture, [ICON_PEACE] Faith, [ICON_HAPPINESS_1] Happiness, military units, resources and World Congress Delegates.[NEWLINE][NEWLINE]Your relationship with each City-State is measured in [ICON_INFLUENCE] Influence.[NEWLINE]At 30 [ICON_INFLUENCE] Influence you are Friends, at 60 you can become their Ally.[NEWLINE][NEWLINE]Every City-State has a type (Cultured, Maritime, Mercantile, Militaristic, Religious) that decides its bonuses, and a personality that changes how it treats you.[NEWLINE][NEWLINE]The pages below explain each part.[NEWLINE]Lekmod rules that differ from the base game are collected under "City-State Rules: Overview" at the end of this section.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_HEADING1_TITLE"> 
 			<Text>
@@ -23964,9 +23940,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_INFLUENCELEVELS_HEADING3_BODY"> 
-			<Text>
-				There are four influence levels with city-states: war, neutral, friends, and allies.
-			</Text>
+			<Text>War: you are at war with the City-State. Your [ICON_INFLUENCE] Influence is -60.[NEWLINE]Angry or Afraid: below 0 [ICON_INFLUENCE] Influence. An Afraid City-State may give in to tribute demands.[NEWLINE]Neutral: 0 to 29 [ICON_INFLUENCE] Influence.[NEWLINE]Friends: 30 [ICON_INFLUENCE] Influence or more.[NEWLINE]Allies: 60 [ICON_INFLUENCE] Influence or more, and more than any other player.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_INFLUENCELEVELS_HEADING3_TITLE"> 
 			<Text>
@@ -23979,9 +23953,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_INFLUENCE_HEADING2_BODY"> 
-			<Text>
-				Your relations with each city-state are measured by "Influence Points" (IPs). They usually start at zero and your actions can increase or decrease them (yes, they can go quite negative!). Your current IP level is noted on the city-state's banner.
-			</Text>
+			<Text>Your relationship with a City-State is measured in [ICON_INFLUENCE] Influence.[NEWLINE]It starts at 0 and can go far below 0.[NEWLINE][NEWLINE]0 to 29: Neutral.[NEWLINE]30 to 59: Friends.[NEWLINE]60 or more: Allies, if no other player has more.[NEWLINE]At war: -60.[NEWLINE][NEWLINE]Every turn, your [ICON_INFLUENCE] Influence moves towards its resting point (normally 0).[NEWLINE]See "Influence and Its Resting Point" for everything that changes the resting point and the speed.[NEWLINE][NEWLINE]The City-State banner and its tooltip show your current [ICON_INFLUENCE] Influence and how it changes each turn.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_INFLUENCE_HEADING2_TITLE"> 
 			<Text>
@@ -24174,9 +24146,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_LIBERATING_HEADING2_BODY"> 
-			<Text>
-				If another civ has captured a city-state and you capture it from them, you have the option to "liberate" that city-state. If you do so, you'll immediately get a huge bunch of IPs from that city-state. In addition, that city-state will always vote for you during "World Leader" elections.
-			</Text>
+			<Text>If another civilization has conquered a City-State and you capture the city from it, you can liberate the City-State.[NEWLINE][NEWLINE]Your [ICON_INFLUENCE] Influence with the liberated City-State becomes 105 more than the highest [ICON_INFLUENCE] Influence any other player has with it (or 105 more than your own, if that is higher).[NEWLINE]This usually makes you its Ally at once.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_LIBERATING_HEADING2_TITLE"> 
 			<Text>
@@ -24259,9 +24229,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_MARITIME_HEADING3_BODY"> 
-			<Text>
-				A maritime city-state can provide food to your civilization.
-			</Text>
+			<Text>A Maritime City-State gives Food to its Friends and its Ally.[NEWLINE]Your capital gets the most; every other city gets a smaller amount.[NEWLINE]The amount depends on your current era.[NEWLINE][NEWLINE]Food in your capital / in each other city, as Allies:[NEWLINE]Ancient: 2.2 / 0.6 (Friends: 1.1 / 0.3)[NEWLINE]Classical: 2.6 / 0.8 (Friends: 1.3 / 0.4)[NEWLINE]Medieval: 3 / 1 (Friends: 1.5 / 0.5)[NEWLINE]Renaissance: 3.4 / 1.2 (Friends: 1.7 / 0.6)[NEWLINE]Industrial: 3.8 / 1.4 (Friends: 1.9 / 0.7)[NEWLINE]Modern: 4.2 / 1.6 (Friends: 2.1 / 0.8)[NEWLINE]Atomic: 4.6 / 1.8 (Friends: 2.3 / 0.9)[NEWLINE]Information: 5 / 2 (Friends: 2.5 / 1)[NEWLINE][NEWLINE]Decimals count: the Food is added to the city like any other yield, so percentage bonuses apply to it.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_MARITIME_HEADING3_TITLE"> 
 			<Text>
@@ -24329,9 +24297,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_MILITARISTIC_HEADING3_BODY"> 
-			<Text>
-				A militaristic city-state can provide units to your army.
-			</Text>
+			<Text>A Militaristic City-State gives a free military unit to its Friends and its Ally.[NEWLINE][NEWLINE]As Friends: a unit every 13 turns, plus a few random turns.[NEWLINE]As Allies: a unit every 9 turns, plus a few random turns.[NEWLINE][NEWLINE]Some policies and civilization abilities shorten the time.[NEWLINE]You can stop the gifts on the City-State screen.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_MILITARISTIC_HEADING3_TITLE"> 
 			<Text>
@@ -24344,14 +24310,10 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_MISSIONS_HEADING2_BODY"> 
-			<Text>
-				Periodically, a city-state may announce a "mission" - perhaps it's being plagued by barbarians, for example, or its people seek knowledge of Natural Wonders, or perhaps they're being attacked by another civilization and they seek allies.[NEWLINE][NEWLINE]If you complete the mission before another civ does so, you'll earn Influence Points with the city-state.
-			</Text>
+			<Text>City-States give out quests: personal quests for one player, and global quests that every player can compete for.[NEWLINE]Completing a quest gives [ICON_INFLUENCE] Influence.[NEWLINE][NEWLINE]A City-State gives you at most 2 personal quests at a time.[NEWLINE]A personal quest you have not completed after 15 turns is replaced by a new one.[NEWLINE][NEWLINE]The rewards of each quest are listed on "Quests and Rewards".</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_MISSIONS_HEADING2_TITLE"> 
-			<Text>
-				City-State Missions
-			</Text>
+			<Text>City-State Quests</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_MOGADISHU"> 
 			<Text>
@@ -24419,9 +24381,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_NEUTRAL_HEADING4_BODY"> 
-			<Text>
-				The city-state doesn't especially like or hate you. You can give them gold or do missions to improve your IP level, or you can degrade your IP by trespassing and suchlike.
-			</Text>
+			<Text>From 0 to 29 [ICON_INFLUENCE] Influence, the City-State is Neutral.[NEWLINE]It gives no bonuses, and your military units are trespassing inside its borders.[NEWLINE]You can pledge to protect it from 0 [ICON_INFLUENCE] Influence on.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_NEUTRAL_HEADING4_TITLE"> 
 			<Text>
@@ -24779,9 +24739,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_TYPES_HEADING2_BODY"> 
-			<Text>
-				There are five different "flavors" of city-states. Each can provide you with different benefits if you befriend or ally with them.
-			</Text>
+			<Text>There are five types of City-States.[NEWLINE]Friends get the bonus of the type; Allies get a stronger version (or the same, plus the Ally benefits).[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Cultured[ENDCOLOR]: [ICON_CULTURE] Culture per turn, growing with your era.[NEWLINE][COLOR_POSITIVE_TEXT]Maritime[ENDCOLOR]: Food in your capital and in all other cities, growing with your era.[NEWLINE][COLOR_POSITIVE_TEXT]Mercantile[ENDCOLOR]: [ICON_HAPPINESS_1] Happiness, and a special luxury resource for their Ally.[NEWLINE][COLOR_POSITIVE_TEXT]Militaristic[ENDCOLOR]: a free military unit every few turns.[NEWLINE][COLOR_POSITIVE_TEXT]Religious[ENDCOLOR]: [ICON_PEACE] Faith per turn, growing with your era.[NEWLINE][NEWLINE]The exact numbers are on the page of each type and on "City-State Bonuses by Era".</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_TYPES_HEADING2_TITLE"> 
 			<Text>
@@ -24874,14 +24832,10 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_WAROFTHE_HEADING2_BODY"> 
-			<Text>
-				You can declare war on a City-State at any time. You can do so through the Diplomatic Panel or by ordering one of your units to attack a City-State's unit or city. You can offer peace to a City-State through the Diplomatic Panel or by clicking on the city.[NEWLINE][NEWLINE]It's important to remember that if you attack too many City-States, many will grow wary of you, causing your minimum influence level to permanently drop from 0 to -20.
-			</Text>
+			<Text>You can declare war on a City-State from its screen, from the Diplomacy panel, or by attacking one of its units.[NEWLINE]You make peace from its screen.[NEWLINE][NEWLINE]Every declaration of war on a City-State makes the other City-States trust you less: you become an Antagonist, Provocateur, Aggressor or Warmonger.[NEWLINE]See "Declaring War on City-States" for the penalties.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_WAROFTHE_HEADING2_TITLE"> 
-			<Text>
-				War of the City-States
-			</Text>
+			<Text>Declaring War on a City-State</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_WARSAW"> 
 			<Text>
@@ -24899,9 +24853,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_WAR_HEADING4_BODY"> 
-			<Text>
-				While at war with a City-State, your influence will remain negative and they certainly won't give you any stuff.
-			</Text>
+			<Text>While you are at war with a City-State, your [ICON_INFLUENCE] Influence with it is -60 and it gives you nothing.[NEWLINE][NEWLINE]Peace:[NEWLINE]After you declare war on a City-State, you cannot make peace for 8 turns.[NEWLINE]It will not make peace while your [ICON_INFLUENCE] Influence is below -50, while it is allied with a player you are at war with, or if it is your Nemesis.[NEWLINE][NEWLINE]Declaring war also changes your standing with all City-States: see "Declaring War on City-States".</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_WAR_HEADING4_TITLE"> 
 			<Text>
@@ -59971,9 +59923,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_BULLYING_SUMMARY"> 
-			<Text>
-				You may choose to intimidate a city-state with the goal of asking for tribute. Tribute can be in the form of a worker, or a lump-sum of gold. One way to intimidate a city-state is through the size of your military in comparison to other powers, or by having military units close-by.[NEWLINE][NEWLINE]If you would like to ask for tribute from a city-state, open the city-state diplomacy panel, and click the "Ask for Tribute" option. If the following options are red, then the city-state is not afraid of you, and will not give in to your demand. If you are successful, you will gain the tribute, but lose influence with the city-state.
-			</Text>
+			<Text>You can demand tribute from a City-State that is afraid of you: a lump sum of [ICON_GOLD] Gold, or a Worker.[NEWLINE][NEWLINE][ICON_GOLD] Gold tribute: 60 [ICON_GOLD] Gold at the start of the game, rising to 500 by the end.[NEWLINE]It costs 15 [ICON_INFLUENCE] Influence.[NEWLINE][NEWLINE]Worker tribute: the City-State is more reluctant to give one.[NEWLINE]It costs 50 [ICON_INFLUENCE] Influence.[NEWLINE][NEWLINE]Whether it gives in depends on:[NEWLINE]Your military rank among all players.[NEWLINE]Your military units within 5 tiles of it, compared with its own units and city.[NEWLINE]Your [ICON_INFLUENCE] Influence: you cannot demand tribute below -30.[NEWLINE]Recent tribute: impossible within 10 turns of your last demand, harder within 20 turns.[NEWLINE]Policies, civilization abilities and its personality.[NEWLINE]The tribute buttons list every factor.[NEWLINE][NEWLINE]Every tribute demand is announced to all players who know the City-State.[NEWLINE]Demanding tribute from a City-State you protect breaks your pledge (see "Pledge to Protect").</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_BULLYING_TOPIC"> 
 			<Text>
@@ -59991,9 +59941,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_MERCANTILE_SUMMARY"> 
-			<Text>
-				A mercantile city-state can provide a unique luxury item to your civilization, and help to improve your happiness.
-			</Text>
+			<Text>A Mercantile City-State gives [ICON_HAPPINESS_1] Happiness to its Friends and its Ally.[NEWLINE][NEWLINE]Ancient and Classical Era: 2 [ICON_HAPPINESS_1] Happiness.[NEWLINE]Medieval to Renaissance Era: 3.[NEWLINE]Industrial Era and later: 4.[NEWLINE][NEWLINE]Mercantile City-States also own a special luxury resource that only they have.[NEWLINE]Like all of a City-State's luxury and strategic resources, it goes to their Ally.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_MERCANTILE_TOPIC"> 
 			<Text>
@@ -60011,9 +59959,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_RELIGIOUS_SUMMARY"> 
-			<Text>
-				A religious city-state can provide faith to your civilization.
-			</Text>
+			<Text>A Religious City-State gives [ICON_PEACE] Faith per turn to its Friends and its Ally.[NEWLINE]The amount depends on your current era.[NEWLINE][NEWLINE]As Allies:[NEWLINE]Ancient: 4 (Friends: 2)[NEWLINE]Classical: 8 (Friends: 4)[NEWLINE]Medieval: 12 (Friends: 6)[NEWLINE]Renaissance: 16 (Friends: 8)[NEWLINE]Industrial: 20 (Friends: 10)[NEWLINE]Modern: 24 (Friends: 12)[NEWLINE]Atomic: 28 (Friends: 14)[NEWLINE]Information: 32 (Friends: 16)</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_RELIGIOUS_TOPIC"> 
 			<Text>
@@ -60031,9 +59977,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_SPREAD_RELIGION_SUMMARY"> 
-			<Text>
-				If a Religion that you founded becomes the majority Religion in a City-State, the rate at which your Influence degrades is reduced by 25%. Likewise, if your Influence is negative, the rate at which it recovers is increased by 50%.[NEWLINE][NEWLINE]Additionally, City-States will occassionally ask for a specific Religion to spread to them. If you succeed in accomplishing this, you will receive a significant Influence reward.
-			</Text>
+			<Text>If a religion you founded is the majority religion in a City-State:[NEWLINE]Your [ICON_INFLUENCE] Influence with it decays 25% slower.[NEWLINE]It recovers 50% faster while below the resting point.[NEWLINE][NEWLINE]Theocratic City-States double this, and they make [ICON_INFLUENCE] Influence decay faster for players with a different religion.[NEWLINE]The first player to spread a religion to a Theocratic City-State gets +20 [ICON_INFLUENCE] Influence.[NEWLINE][NEWLINE]City-States also give quests to spread your religion to them (35 [ICON_INFLUENCE] Influence).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_SPREAD_RELIGION_TOPIC"> 
 			<Text>
@@ -63116,9 +63060,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_DIPLOMACY_NEGOTIATING_HEADING2_BODY"> 
-			<Text>
-				City-States are much less complicated than civilizations. You have fewer options when negotiating with them. Generally, you can offer them gold or goods, or declare war or offer peace. Sometimes they will ask favors of you. See the section on City-States for more details.
-			</Text>
+			<Text>You deal with City-States through their own screen, not through trade.[NEWLINE]You can give gifts, demand tribute, pledge to protect, declare war and make peace.[NEWLINE]See the City-States section for details.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_DIPLOMACY_NEGOTIATING_HEADING2_TITLE"> 
 			<Text>
@@ -68461,9 +68403,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_FOOD_MARITIME_HEADING3_BODY"> 
-			<Text>
-				If you befriend a maritime city-state, it will provide food to all of your cities, with your capital getting the largest portion of the food.
-			</Text>
+			<Text>Maritime City-States give Food to their Friends and Ally: most in your capital, a smaller amount in every other city.[NEWLINE]The amount grows with your era.[NEWLINE][NEWLINE]Food in your capital / in each other city, as Allies:[NEWLINE]Ancient: 2.2 / 0.6 (Friends: 1.1 / 0.3)[NEWLINE]Classical: 2.6 / 0.8 (Friends: 1.3 / 0.4)[NEWLINE]Medieval: 3 / 1 (Friends: 1.5 / 0.5)[NEWLINE]Renaissance: 3.4 / 1.2 (Friends: 1.7 / 0.6)[NEWLINE]Industrial: 3.8 / 1.4 (Friends: 1.9 / 0.7)[NEWLINE]Modern: 4.2 / 1.6 (Friends: 2.1 / 0.8)[NEWLINE]Atomic: 4.6 / 1.8 (Friends: 2.3 / 0.9)[NEWLINE]Information: 5 / 2 (Friends: 2.5 / 1)</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_FOOD_MARITIME_HEADING3_TITLE"> 
 			<Text>
@@ -71992,9 +71932,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOLD_BUYFRIENDSHIP_HEADING3_BODY"> 
-			<Text>
-				If you want to improve your relationship with a city-state, one way to do so is to give it some gold. Increasing amounts of gold may be given for larger boosts to friendship.
-			</Text>
+			<Text>Giving a City-State 250, 500 or 1000 [ICON_GOLD] Gold raises your [ICON_INFLUENCE] Influence with it.[NEWLINE]At the start of the game: 30, 65 or 135 [ICON_INFLUENCE] Influence.[NEWLINE]Gold gifts lose value as the game goes on, down to a third by the end.[NEWLINE]See "Gifts of Gold" in the City-States section.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOLD_BUYFRIENDSHIP_HEADING3_TITLE"> 
 			<Text>
@@ -72022,9 +71960,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOLD_CITYSTATES_HEADING3_BODY"> 
-			<Text>
-				A city-state may give you gold when you first meet. It may provide more later if you befriend it. (See the section on City-States for details.)
-			</Text>
+			<Text>City-States give you [ICON_GOLD] Gold when you meet them (30 for the first civilization, 15 for later ones).[NEWLINE]You can also demand [ICON_GOLD] Gold as tribute from City-States that are afraid of you.[NEWLINE]See the City-States section for details.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOLD_CITYSTATES_HEADING3_TITLE"> 
 			<Text>
@@ -101494,7 +101430,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>City-State Rules: Overview</Text>
 		</Row>
 		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_OVERVIEW_SUMMARY">
-			<Text>Lekmod changes how City-States work.[NEWLINE]The pages below this one in the list explain each part.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Influence and Its Resting Point[ENDCOLOR][NEWLINE]Where your [ICON_INFLUENCE] Influence settles over time, and what moves it.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]City-State Bonuses by Era[ENDCOLOR][NEWLINE]Food, [ICON_CULTURE] Culture and [ICON_PEACE] Faith grow with your era.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Pledge to Protect[ENDCOLOR][NEWLINE]What a pledge gives you, and what it asks of you.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Quests and Rewards[ENDCOLOR][NEWLINE]How much [ICON_INFLUENCE] Influence each quest is worth.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Declaring War on City-States[ENDCOLOR][NEWLINE]Your standing (Antagonist, Provocateur, Aggressor, Warmonger) and the penalties Wary, Alienated and Nemesis.</Text>
+			<Text>Lekmod changes how City-States work.[NEWLINE]The pages below this one in the list explain each part.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Influence and Its Resting Point[ENDCOLOR][NEWLINE]Where your [ICON_INFLUENCE] Influence settles over time, and what moves it.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]City-State Personalities[ENDCOLOR][NEWLINE]How each personality changes the rules.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]City-State Bonuses by Era[ENDCOLOR][NEWLINE]Food, [ICON_CULTURE] Culture and [ICON_PEACE] Faith grow with your era.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Pledge to Protect[ENDCOLOR][NEWLINE]What a pledge gives you, and what it asks of you.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Quests and Rewards[ENDCOLOR][NEWLINE]How much [ICON_INFLUENCE] Influence each quest is worth.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Declaring War on City-States[ENDCOLOR][NEWLINE]Your standing (Antagonist, Provocateur, Aggressor, Warmonger) and the penalties Wary, Alienated and Nemesis.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_INFLUENCE_DESCRIPTION">
 			<Text>Influence and Its Resting Point</Text>
@@ -101567,6 +101503,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_NEMESIS_SUMMARY">
 			<Text>A City-State you have declared war on 3 times becomes your Nemesis.[NEWLINE][NEWLINE]It never makes peace with you.[NEWLINE]Its screen shows "Nemesis" instead of the Make Peace button.[NEWLINE][NEWLINE]The tooltip of the Declare War button warns you before your 3rd declaration.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_PERSONALITIES_DESCRIPTION">
+			<Text>City-State Personalities</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_PERSONALITIES_SUMMARY">
+			<Text>Every City-State has a personality, shown on its screen.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Neutral[ENDCOLOR]: no special rules.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Friendly[ENDCOLOR]: [ICON_INFLUENCE] Influence decays 25% slower and quests give 25% more [ICON_INFLUENCE] Influence.[NEWLINE]You lose both bonuses once you have declared war on any City-State.[NEWLINE]Never Militaristic.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Hostile[ENDCOLOR]: [ICON_INFLUENCE] Influence decays 1.5 times as fast.[NEWLINE]Asks more often for other City-States to be conquered, and gives out global quests less often.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Wealthy[ENDCOLOR]: gives 15 more [ICON_GOLD] Gold to the first civilization that meets it.[NEWLINE]Trade routes to it give 33% more [ICON_GOLD] Gold.[NEWLINE]Gold gifts give 25% less [ICON_INFLUENCE] Influence.[NEWLINE]Easier to demand tribute from.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Impoverished[ENDCOLOR]: gives 20 [ICON_GOLD] Gold to the first civilization that meets it and 10 to later ones.[NEWLINE]Gold gifts give 25% more [ICON_INFLUENCE] Influence.[NEWLINE]May ask for [ICON_GOLD] Gold even when nobody has demanded tribute from it.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Pirate Republic[ENDCOLOR]: coastal Militaristic City-States.[NEWLINE]They may give naval units to Allies with an ocean coast.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Theocratic[ENDCOLOR]: a shared religion counts double; a different religion makes [ICON_INFLUENCE] Influence decay faster.[NEWLINE]The first player to spread a religion to it gets +20 [ICON_INFLUENCE] Influence.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Pacifistic[ENDCOLOR]: never joins its Ally's wars.[NEWLINE]Refuses gifts from players at war with its Ally.[NEWLINE]Gives 20% more [ICON_GOLD] Gold as tribute.[NEWLINE]Never Militaristic.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>

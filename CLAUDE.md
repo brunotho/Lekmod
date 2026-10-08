@@ -170,6 +170,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
   - No spec or implementation notes ("Eligible: naval melee", "Requires Bombardment II", "policy-granted"); the UI shows those itself.
   - Distinctions that matter to players stay, e.g. Discipline "(non-air units)" vs Discipline (Air) "(air units)".
   - After changing any number, update its tooltip (failure pattern 7b).
+- **Civilopedia (user, 2026-10-08):** update pages aggressively to the current rules whenever work touches a topic. Be verbose with gameplay information (all relevant numbers, at quick speed), and remove history and flavor text. Goal: every page eventually shows all relevant gameplay info and nothing else. Pages are `Concepts` rows in `CIV5Units.xml` (explicit IDs; check uniqueness *within the section*, other tables reuse the numbers) with texts in `CIV5Units_Mongol.xml`. The pedia has no clickable links between concepts; order comes from `InsertAfter` chains.
 - Promotion icons: 4 sizes (256/64/45/32), DXT5 `.dds`, **transparent background**; the game draws the round frame. See §7.
 - C++ feature switches live in `LEKMOD_DLL/CvGameCoreDLL_Expansion2/_Defines.h` (e.g. `LEKMOD_NEW_ANCIENT_RUIN_REWARDS`, `FULL_YIELD_FROM_KILLS`, `LEKMOD_RELOCATE_PROMOTION_PREREQ_ORS`). Check which are on before reasoning about code paths.
 - Lekmod-specific tables worth knowing:

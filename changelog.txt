@@ -424,7 +424,10 @@ Tags: game mechanics, ui
 New Civilopedia pages explain the Lekmod city-state rules, at the end of the City-States section.
 - Added: an overview page, and pages on Influence and its resting point, bonuses by era (with the full Maritime, Cultured and Religious tables), Pledge to Protect, quest rewards, and declaring war on city-states
 - Added: one page each for the standings Antagonist, Provocateur, Aggressor and Warmonger, and for Wary, Alienated and Nemesis
-- Note: Concepts IDs 505-517 (CONCEPT_LEKMOD_CS_*), chained by InsertAfter after CONCEPT_CITY_STATE_SPREAD_RELIGION. The Civilopedia has no clickable links between game concepts (the related-articles box is unused in the base UI), so the pages sit directly below the overview instead
+- Added: a page on city-state personalities (Friendly, Hostile, Wealthy, Impoverished, Pirate Republic, Theocratic, Pacifistic)
+- Changed: all base-game city-state pages rewritten with the actual rules and numbers (quick speed), without flavor text: types, meeting gifts, Influence, gifts of Gold, units and tile improvements, decay and trespassing, influence levels, war and peace, quests, liberation, Delegates, tribute, religion. Also the city-state paragraphs in the Food, Gold and Diplomacy sections
+- Removed: the outdated base-game "Wary" page (replaced by the new one)
+- Note: Concepts IDs 505-518 (CONCEPT_LEKMOD_CS_*); base concept 322 (CONCEPT_CITY_STATE_INFLUENCE_LEVELS_PERMANENT_WAR) and its 3 related-concept rows deleted, chained by InsertAfter after CONCEPT_CITY_STATE_SPREAD_RELIGION. The Civilopedia has no clickable links between game concepts (the related-articles box is unused in the base UI), so the pages sit directly below the overview instead
 
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------

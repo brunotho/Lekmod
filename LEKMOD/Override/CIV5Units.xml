@@ -84083,16 +84083,6 @@
 			<CivilopediaHeaderType>HEADER_CITYSTATE</CivilopediaHeaderType> 
 		</Row>
 		<Row> 
-			<ID>322</ID> 
-			<Type>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_PERMANENT_WAR</Type> 
-			<Topic>TXT_KEY_TOPIC_CITYSTATE</Topic> 
-			<Description>TXT_KEY_CITYSTATE_PERMANENTWAR_HEADING4_TITLE</Description> 
-			<Summary>TXT_KEY_CITYSTATE_PERMANENTWAR_HEADING4_BODY</Summary> 
-			<AdvisorQuestion>TXT_KEY_CITYSTATE_PERMANENTWAR_ADV_QUEST</AdvisorQuestion> 
-			<Advisor>FOREIGN</Advisor> 
-			<CivilopediaHeaderType>HEADER_CITYSTATE</CivilopediaHeaderType> 
-		</Row>
-		<Row> 
 			<ID>323</ID> 
 			<Type>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_WAR</Type> 
 			<Topic>TXT_KEY_TOPIC_CITYSTATE</Topic> 
@@ -85975,7 +85965,7 @@
 			<AdvisorQuestion>TXT_KEY_CONCEPT_LEKMOD_CS_ADVISOR_QUESTION</AdvisorQuestion>
 			<Advisor>FOREIGN</Advisor>
 			<CivilopediaHeaderType>HEADER_CITYSTATE</CivilopediaHeaderType>
-			<InsertAfter>CONCEPT_LEKMOD_CS_INFLUENCE</InsertAfter>
+			<InsertAfter>CONCEPT_LEKMOD_CS_PERSONALITIES</InsertAfter>
 		</Row>
 		<Row>
 			<ID>508</ID>
@@ -86086,6 +86076,17 @@
 			<Advisor>FOREIGN</Advisor>
 			<CivilopediaHeaderType>HEADER_CITYSTATE</CivilopediaHeaderType>
 			<InsertAfter>CONCEPT_LEKMOD_CS_ALIENATED</InsertAfter>
+		</Row>
+		<Row>
+			<ID>518</ID>
+			<Type>CONCEPT_LEKMOD_CS_PERSONALITIES</Type>
+			<Topic>TXT_KEY_TOPIC_CITYSTATE</Topic>
+			<Description>TXT_KEY_CONCEPT_LEKMOD_CS_PERSONALITIES_DESCRIPTION</Description>
+			<Summary>TXT_KEY_CONCEPT_LEKMOD_CS_PERSONALITIES_SUMMARY</Summary>
+			<AdvisorQuestion>TXT_KEY_CONCEPT_LEKMOD_CS_ADVISOR_QUESTION</AdvisorQuestion>
+			<Advisor>FOREIGN</Advisor>
+			<CivilopediaHeaderType>HEADER_CITYSTATE</CivilopediaHeaderType>
+			<InsertAfter>CONCEPT_LEKMOD_CS_INFLUENCE</InsertAfter>
 		</Row>
 	</Concepts> 
 
@@ -89866,10 +89867,6 @@
 		</Row>
 		<Row> 
 			<ConceptType>CONCEPT_CITY_STATE_INFLUENCE_LEVELS</ConceptType> 
-			<RelatedConcept>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_PERMANENT_WAR</RelatedConcept> 
-		</Row>
-		<Row> 
-			<ConceptType>CONCEPT_CITY_STATE_INFLUENCE_LEVELS</ConceptType> 
 			<RelatedConcept>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_WAR</RelatedConcept> 
 		</Row>
 		<Row> 
@@ -89887,10 +89884,6 @@
 		<Row> 
 			<ConceptType>CONCEPT_CITY_STATE_INFLUENCE_LEVELS</ConceptType> 
 			<RelatedConcept>CONCEPT_CITY_STATE_WAR</RelatedConcept> 
-		</Row>
-		<Row> 
-			<ConceptType>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_PERMANENT_WAR</ConceptType> 
-			<RelatedConcept>CONCEPT_CITY_STATE_INFLUENCE_LEVELS</RelatedConcept> 
 		</Row>
 		<Row> 
 			<ConceptType>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_WAR</ConceptType> 
@@ -89931,10 +89924,6 @@
 		<Row> 
 			<ConceptType>CONCEPT_CITY_STATE_WAR</ConceptType> 
 			<RelatedConcept>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_WAR</RelatedConcept> 
-		</Row>
-		<Row> 
-			<ConceptType>CONCEPT_CITY_STATE_WAR</ConceptType> 
-			<RelatedConcept>CONCEPT_CITY_STATE_INFLUENCE_LEVELS_PERMANENT_WAR</RelatedConcept> 
 		</Row>
 		<Row> 
 			<ConceptType>CONCEPT_CITY_STATE_LIBERATING</ConceptType> 
