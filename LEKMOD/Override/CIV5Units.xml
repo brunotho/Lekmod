@@ -203501,10 +203501,6 @@
 		</Row>
 		<Row> 
 			<TechType>TECH_MOBILE_TACTICS</TechType> 
-			<PrereqTech>TECH_ECOLOGY</PrereqTech> 
-		</Row>
-		<Row> 
-			<TechType>TECH_MOBILE_TACTICS</TechType> 
 			<PrereqTech>TECH_NUCLEAR_FISSION</PrereqTech> 
 		</Row>
 		<Row> 
@@ -203555,9 +203551,9 @@
 			<TechType>TECH_NUCLEAR_FUSION</TechType> 
 			<PrereqTech>TECH_ADVANCED_BALLISTICS</PrereqTech> 
 		</Row>
-		<Row> 
-			<TechType>TECH_NUCLEAR_FUSION</TechType> 
-			<PrereqTech>TECH_SATELLITES</PrereqTech> 
+		<Row>
+			<TechType>TECH_NUCLEAR_FUSION</TechType>
+			<PrereqTech>TECH_MOBILE_TACTICS</PrereqTech>
 		</Row>
 		<Row> 
 			<TechType>TECH_NUCLEAR_FUSION</TechType> 

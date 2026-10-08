@@ -494,12 +494,14 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
-TECH TREE: TREBUCHET AND WEALTH
--------------------------------
+TECH TREE CHANGES
+-----------------
 Tags: game mechanics, units
-Two unlocks move in the tech tree.
+Some unlocks and prerequisites move in the tech tree.
 - Changed: Trebuchet (and the Korean Hwacha) unlocked at Guilds instead of Physics
 - Changed: the Wealth process (production into gold) unlocked at Banking instead of Guilds
+- Changed: Mobile Tactics no longer needs Ecology (only Nuclear Fission)
+- Changed: Nuclear Fusion needs Mobile Tactics instead of Satellites, so Satellites (Spaceship Cockpit, Hubble) is an optional end of the tree
 
 BUILDING PURCHASE COSTS
 -----------------------
