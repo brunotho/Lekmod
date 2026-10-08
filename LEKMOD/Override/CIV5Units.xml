@@ -137628,7 +137628,7 @@
 			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType> 
 			<TechType>TECH_SCIENTIFIC_THEORY</TechType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>4</Yield> 
 		</Row>
 		<Row> 
 			<ImprovementType>IMPROVEMENT_CUSTOMS_HOUSE</ImprovementType> 

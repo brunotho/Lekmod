@@ -127721,7 +127721,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_SPECIALISTSANDGP_ACADEMY_HEADING4_BODY"> 
 			<Text>
-				You can expend a Great Scientist to create an Academy. While worked, the Academy will give your city a big science boost.
+				A Great Scientist can build an Academy on a tile in your territory. A worked Academy yields 8 [ICON_RESEARCH] Science.[NEWLINE]+4 [ICON_RESEARCH] Science with Scientific Theory, +2 with Atomic Theory.[NEWLINE]+4 [ICON_RESEARCH] Science each from the Free Thought and New Deal policies.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPECIALISTSANDGP_ACADEMY_HEADING4_TITLE"> 

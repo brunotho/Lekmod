@@ -501,6 +501,7 @@ Some unlocks and prerequisites move in the tech tree.
 - Changed: Trebuchet (and the Korean Hwacha) unlocked at Guilds instead of Physics
 - Changed: the Wealth process (production into gold) unlocked at Banking instead of Guilds
 - Changed: Mobile Tactics no longer needs Ecology (only Nuclear Fission)
+- Changed: Academies get +4 Science at Scientific Theory (was +2)
 - Changed: Nuclear Fusion needs Mobile Tactics instead of Satellites, so Satellites (Spaceship Cockpit, Hubble) is an optional end of the tree
 
 BUILDING PURCHASE COSTS
