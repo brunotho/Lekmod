@@ -427,6 +427,12 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+CITY SCREEN: GREAT PEOPLE POINTS
+--------------------------------
+Tags: ui
+Great person points in the city screen show decimals.
+- Changed: progress and points per turn show up to two decimals (e.g. 45.6/100, +3.75) instead of being rounded down
+
 START BIAS IN CIVILIZATION ABILITY TEXTS
 ----------------------------------------
 Tags: ui, civs

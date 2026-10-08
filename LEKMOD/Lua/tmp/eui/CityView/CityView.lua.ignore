@@ -202,6 +202,13 @@ local g_advisors = {
 [AdvisorTypes.ADVISOR_FOREIGN] = "ForeignRecommendation",
 }
 
+-- LEKMOD: great person points with up to two decimals (trailing zeros dropped)
+function LekmodFormatGPPoints( fValue )
+	local s = string.format( "%.2f", fValue )
+	s = s:gsub( "0+$", "" ):gsub( "%.$", "" )
+	return s
+end
+
 local function SetupCallbacks( controls, toolTips, tootTipType, callBacks )
 	local control
 	-- Setup Tootips
@@ -1818,12 +1825,12 @@ local function UpdateCityViewNow()
 						local labelText = L(unitClass.Description)
 						local icon = GreatPeopleIcon(gpuClass)
 						local tips = table( "[COLOR_YIELD_FOOD]" .. Locale.ToUpper( labelText ) .. "[ENDCOLOR]"
-									.. " " .. gpProgress .. icon .." / " .. gpThreshold .. icon )
+									.. " " .. LekmodFormatGPPoints( gpProgress ) .. icon .." / " .. gpThreshold .. icon )
 	--					tips:insert( L( "TXT_KEY_PROGRESS_TOWARDS", "[COLOR_YIELD_FOOD]" .. Locale.ToUpper( labelText ) .. "[ENDCOLOR]" )
 						if gpChange > 0 then
 							local gpTurns = math_ceil( (gpThreshold - gpProgress) / gpChange )
 							tips:insert( "[COLOR_YIELD_FOOD]" .. Locale.ToUpper( L( "TXT_KEY_STR_TURNS", gpTurns ) ) .. "[ENDCOLOR]  "
-										 .. gpChange .. icon .. " " .. L"TXT_KEY_GOLD_PERTURN_HEADING4_TITLE" )
+										 .. LekmodFormatGPPoints( gpChange ) .. icon .. " " .. L"TXT_KEY_GOLD_PERTURN_HEADING4_TITLE" )
 							labelText = labelText .. ": " .. Locale.ToLower( L( "TXT_KEY_STR_TURNS", gpTurns ) )
 						end
 						instance.GreatPersonLabel:SetText( icon .. labelText )

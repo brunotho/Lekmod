@@ -38,6 +38,13 @@ local InterfaceModeMessageHandler =
 	--[InterfaceModeTypes.INTERFACEMODE_CITY_PLOT_SELECTION] = {},
 	[InterfaceModeTypes.INTERFACEMODE_PURCHASE_PLOT] = {}
 }
+-- LEKMOD: great person points with up to two decimals (trailing zeros dropped)
+function LekmodFormatGPPoints( fValue )
+	local s = string.format( "%.2f", fValue );
+	s = s:gsub( "0+$", "" ):gsub( "%.$", "" );
+	return s;
+end
+
 -------------------------------------------------
 -- Clear out the UI so that when a player changes
 -- the next update doesn't show the previous player's
@@ -1093,7 +1100,7 @@ function OnCityViewUpdate()
 		local numGPs = 0;		
 		for pSpecialistInfo in GameInfo.Specialists() do
 			local iSpecialistIndex = pSpecialistInfo.ID;			
-			local iProgress = pCity:GetSpecialistGreatPersonProgress(iSpecialistIndex);
+			local iProgress = pCity:GetSpecialistGreatPersonProgressTimes100(iSpecialistIndex) / 100;
 			if (iProgress > 0) then		
 				numGPs = numGPs + 1;		
 			
@@ -1113,7 +1120,7 @@ function OnCityViewUpdate()
 					controlTable.GPImage:RegisterCallback( Mouse.eRClick, GetPedia );
 					
 					local strToolTipText = Locale.ConvertTextKey("TXT_KEY_PROGRESS_TOWARDS",labelText);
-					strToolTipText = strToolTipText .. ": " .. tostring(iProgress) .. "/" .. tostring(threshold);					
+					strToolTipText = strToolTipText .. ": " .. LekmodFormatGPPoints(iProgress) .. "/" .. tostring(threshold);					
 					local iCount = pCity:GetSpecialistCount( pSpecialistInfo.ID );
 					local iGPPChange = pSpecialistInfo.GreatPeopleRateChange * iCount * 100;
 					for building in GameInfo.Buildings{SpecialistType = pSpecialistInfo.Type} do
@@ -1188,7 +1195,7 @@ function OnCityViewUpdate()
 						
 						local iMod = iPlayerMod + iPolicyMod + iWorldCongressMod + iCityMod + iGoldenAgeMod;
 						iGPPChange = (iGPPChange * (100 + iMod)) / 100;
-						strToolTipText = strToolTipText .. " (+" .. math.floor(iGPPChange/100) .. "[ICON_GREAT_PEOPLE])";	
+						strToolTipText = strToolTipText .. " (+" .. LekmodFormatGPPoints(iGPPChange/100) .. "[ICON_GREAT_PEOPLE])";	
 						if (iPlayerMod > 0) then
 							strToolTipText = strToolTipText .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_PLAYER_GP_MOD", iPlayerMod);
 						end
