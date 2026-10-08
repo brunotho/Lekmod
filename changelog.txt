@@ -228,7 +228,7 @@ CITY-STATE TRIBUTE RANGE (MINOR_CIV_TRIBUTE_RANGE)
 Tags: game mechanics
 When you demand tribute, only military units within 5 tiles of the city-state count, on every map size.
 - Changed: the tribute range is 5 tiles on all map sizes (it grew with the map width before)
-- Added: while a city-state's screen is open, the map outlines its tribute range in red
+- Added: hovering a city-state's city outlines its tribute range in red
 - Dev: new define MINOR_CIV_TRIBUTE_RANGE (5), LEKMOD_TRIBUTE_RANGE_FIXED in CvMinorCivAI::CalculateBullyMetric
 
 
@@ -482,7 +482,7 @@ START BIAS IN CIVILIZATION ABILITY TEXTS
 ----------------------------------------
 Tags: ui, civs
 The start bias of each civilization is shown with its ability.
-- Added: "Start bias: Coast, Hills" and "Avoids starting in: Tundra" lines on the leader's Civilopedia page, in the single-player civilization selection and in the multiplayer lobby, read from the same data the map script uses
+- Added: "Start bias: Coast, Hills" and "Avoids starting in: Tundra" lines on the leader's Civilopedia page, in the tooltip of the single-player civilization selection and in the multiplayer lobby, read from the same data the map script uses
 - Changed: in the multiplayer lobby, the civilization list tooltip shows the civilization's ability (it showed only the civilization's name)
 
 MID-TURN POLICY AND PANTHEON NOTIFICATIONS

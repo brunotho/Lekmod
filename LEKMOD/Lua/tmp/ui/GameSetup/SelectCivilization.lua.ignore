@@ -133,7 +133,10 @@ function AddCivilizationEntry(traitsQuery, populateUniqueBonuses, civ, leaderTyp
 	local shortDescription = "";
 	
 	for row in traitsQuery(leaderType) do
-		controlTable.BonusDescription:SetText( Locale.ConvertTextKey( row.Description ) .. LekmodStartBiasText( civ.Type ) );
+		controlTable.BonusDescription:LocalizeAndSetText(row.Description);
+		-- LEKMOD: the row has no room for more lines, so the start bias goes into the tooltip
+		local strBias = LekmodStartBiasText( civ.Type ):gsub( "^%[NEWLINE%]%[NEWLINE%]", "" );
+		controlTable.Button:SetToolTipString( strBias ~= "" and strBias or nil );
 		shortDescription = row.ShortDescription;
 	end
 	

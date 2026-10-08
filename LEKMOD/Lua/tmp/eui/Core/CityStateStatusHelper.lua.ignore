@@ -888,3 +888,24 @@ end
 function LekmodClearTributeRange()
 	Events.ClearHexHighlightStyle( LEKMOD_TRIBUTE_RANGE_STYLE );
 end
+
+-- LEKMOD: show the tribute range while the mouse is over a city-state's city (registered by the city banner managers)
+local g_LekmodTributeRangeMinor = -1;
+function LekmodTributeRangeOnMouseOverHex( hexX, hexY )
+	local iMinor = -1;
+	if UI.GetInterfaceMode() == InterfaceModeTypes.INTERFACEMODE_SELECTION then
+		local gridX, gridY = ToGridFromHex( hexX, hexY );
+		local pPlot = Map.GetPlot( gridX, gridY );
+		local pCity = pPlot and pPlot:GetPlotCity();
+		if pCity ~= nil and pPlot:IsRevealed( Game.GetActiveTeam(), false ) and Players[ pCity:GetOwner() ]:IsMinorCiv() then
+			iMinor = pCity:GetOwner();
+		end
+	end
+	if iMinor == g_LekmodTributeRangeMinor then return; end
+	g_LekmodTributeRangeMinor = iMinor;
+	if iMinor >= 0 then
+		LekmodShowTributeRange( iMinor );
+	else
+		LekmodClearTributeRange();
+	end
+end

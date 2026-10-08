@@ -98,10 +98,8 @@ function ShowHideHandler( bIsHide, bInitState )
 			Controls.BackgroundImage:SetTexture(lastBackgroundImage);
         	UI.incTurnTimerSemaphore();
         	Events.SerialEventGameMessagePopupShown(m_PopupInfo);
-        	LekmodShowTributeRange(g_iMinorCivID);
         else
             UI.decTurnTimerSemaphore();
-            LekmodClearTributeRange();
             
             if(m_PopupInfo ~= nil) then
 				Events.SerialEventGameMessagePopupProcessed.CallImmediate(m_PopupInfo.Type, 0);

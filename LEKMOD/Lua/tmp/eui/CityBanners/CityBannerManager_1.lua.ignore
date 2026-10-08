@@ -1569,3 +1569,6 @@ end
 
 print("Finished loading EUI city banners", os.clock())
 end)
+
+-- LEKMOD: tribute range outline when hovering a city-state's city
+Events.SerialEventMouseOverHex.Add( LekmodTributeRangeOnMouseOverHex );
