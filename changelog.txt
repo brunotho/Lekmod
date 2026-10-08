@@ -498,7 +498,7 @@ TECH TREE ICONS
 ---------------
 Tags: ui
 Clearer icons for some tech effects.
-- Changed: "allows embarking" and "faster embarked movement" on the same tech (Sailing) show as one icon
+- Changed: Sailing shows only "allows embarking" (the 2 embarked movement is simply the starting value)
 - Changed: embarking effects show the Embark icon, and extra trade routes and longer trade route range show the trade route icon, instead of the generic star
 
 MAIN MENU BACKGROUND

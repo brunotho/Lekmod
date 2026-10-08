@@ -308,7 +308,7 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 		end
 	end	
 
-	-- LEKMOD: a tech that allows embarking and adds embarked movement shows one icon for both
+	-- LEKMOD: on the tech that allows embarking, the extra embarked movement is just the starting value (no own icon)
 	if tech.EmbarkedMoveChange > 0 and not tech.AllowsEmbarking then
 		local buttonName = "B"..tostring(buttonNum);
 		local thisButton = thisTechButtonInstance[buttonName];
@@ -328,11 +328,7 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 			IconHookup( 14, textureSize, "UNIT_ACTION_ATLAS", thisButton ); -- LEKMOD: the Embark action icon
 			thisButton:SetHide( false );
 			setCircularHover( buttonNum, true );
-			local strEmbark = Locale.ConvertTextKey( "TXT_KEY_ALLOWS_EMBARKING" );
-			if tech.EmbarkedMoveChange > 0 then
-				strEmbark = strEmbark .. "[NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_FASTER_EMBARKED_MOVEMENT" );
-			end
-			thisButton:SetToolTipString( strEmbark );
+			thisButton:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_ALLOWS_EMBARKING" ) );
 			buttonNum = buttonNum + 1;
 		end
 	end
