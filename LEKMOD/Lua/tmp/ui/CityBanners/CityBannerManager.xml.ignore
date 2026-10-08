@@ -175,11 +175,11 @@
 				<!-- LEKMOD: pledges to protect this city-state (blue = yours, red = other players') -->
 				<Container ID="PledgeMineBox" Anchor="C,C" Size="22,22" Hidden="1">
 					<Image Anchor="C,C" Size="30,30" Texture="assets\UI\Art\Notification\NotificationGenericGlow.dds" StretchMode="Fill" Color="90,180,255,255"/>
-					<Label ID="PledgeMineIcon" Anchor="C,C" Offset="0,0" String="[ICON_STRENGTH]" Font="TwCenMT18" FontStyle="Shadow"/>
+					<Label ID="PledgeMineIcon" Anchor="C,C" Offset="2,-2" String="[ICON_STRENGTH]" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Container>
 				<Container ID="PledgeOthersBox" Anchor="C,C" Size="22,22" Hidden="1">
 					<Image Anchor="C,C" Size="30,30" Texture="assets\UI\Art\Notification\NotificationGenericGlow.dds" StretchMode="Fill" Color="255,70,60,255"/>
-					<Label ID="PledgeOthersIcon" Anchor="C,C" Offset="0,0" String="[ICON_STRENGTH]" Font="TwCenMT18" FontStyle="Shadow"/>
+					<Label ID="PledgeOthersIcon" Anchor="C,C" Offset="2,-2" String="[ICON_STRENGTH]" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Container>
 			</Stack>
 		</WorldAnchor>

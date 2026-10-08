@@ -19,6 +19,7 @@ DEL /q "%patchfolder%\Lua\UI\"
 REM --------------------------------------------------------------------------------------------------
 copy /y "%patchfolder%\Lua\tmp\ui\AncientRuins\GoodyHutPopup.lua.ignore" "%patchfolder%\Lua\UI\GoodyHutPopup.lua" > nul
 copy /y "%patchfolder%\Lua\tmp\ui\AncientRuins\ChooseGoodyHutReward.lua.ignore" "%patchfolder%\Lua\UI\ChooseGoodyHutReward.lua" > nul
+copy /y "%patchfolder%\Lua\tmp\ui\AncientRuins\ChooseGoodyHutReward.xml.ignore" "%patchfolder%\Lua\UI\ChooseGoodyHutReward.xml" > nul
 copy /y "%patchfolder%\Lua\tmp\ui\Civilopedia\CivilopediaScreen.lua.ignore" "%patchfolder%\Lua\UI\CivilopediaScreen.lua" > nul
 REM --------------------------------------------------------------------------------------------------
 set text="CityBannerProductionBox = function( city )"

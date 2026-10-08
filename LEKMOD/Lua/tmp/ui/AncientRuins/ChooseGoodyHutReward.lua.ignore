@@ -63,7 +63,8 @@ function DisplayPopup(playerID, classType, numberOfFreeItems)
 
 	Controls.ItemStack:CalculateSize();
 	Controls.ItemStack:ReprocessAnchoring();
-	Controls.ItemScrollPanel:CalculateInternalSize();
+	-- Title and text on top (82), the offers, the OK button below (77)
+	Controls.MainGrid:SetSizeY(82 + Controls.ItemStack:GetSizeY() + 77);
 
 	if(count > 0) then
 		g_NumberOfFreeItems = 1;
