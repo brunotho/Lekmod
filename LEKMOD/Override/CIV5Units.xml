@@ -135903,7 +135903,7 @@
 			<ImprovementType>IMPROVEMENT_CAMP</ImprovementType> 
 			<ResourceType>RESOURCE_IVORY</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
+			<Yield>4</Yield> 
 		</Row>
 		<Row> 
 			<ImprovementType>IMPROVEMENT_CAMP</ImprovementType> 
@@ -136041,18 +136041,6 @@
 			<Yield>1</Yield> 
 		</Row>
 		<Row> 
-			<ImprovementType>IMPROVEMENT_CAMP</ImprovementType> 
-			<ResourceType>RESOURCE_TRUFFLES</ResourceType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
-		<Row> 
-			<ImprovementType>IMPROVEMENT_CAMP</ImprovementType> 
-			<ResourceType>RESOURCE_IVORY</ResourceType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
-		<Row> 
 			<ImprovementType>IMPROVEMENT_FISHING_BOATS</ImprovementType> 
 			<ResourceType>RESOURCE_PEARLS</ResourceType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
@@ -136096,12 +136084,6 @@
 		</Row>
 		<Row> 
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
-			<ResourceType>RESOURCE_COTTON</ResourceType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
-		<Row> 
-			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
 			<ResourceType>RESOURCE_WINE</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
 			<Yield>1</Yield> 
@@ -136129,7 +136111,7 @@
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
 			<ResourceType>RESOURCE_COFFEE</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
 		</Row> 
 		<Row> 
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
@@ -136142,24 +136124,6 @@
 			<ResourceType>RESOURCE_TEA</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
 			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<ImprovementType>IMPROVEMENT_MINE</ImprovementType> 
-			<ResourceType>RESOURCE_LAPIS</ResourceType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
-		<Row> 
-			<ImprovementType>IMPROVEMENT_MINE</ImprovementType> 
-			<ResourceType>RESOURCE_AMBER</ResourceType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
-		<Row> 
-			<ImprovementType>IMPROVEMENT_MINE</ImprovementType> 
-			<ResourceType>RESOURCE_JADE</ResourceType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
 		</Row>
 		<!--
 		<Row> 
@@ -136176,12 +136140,6 @@
 			<Yield>2</Yield> 
 		</Row>
 		
-		<Row> 
-			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
-			<ResourceType>RESOURCE_OLIVE</ResourceType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
 		
 		<Row> 
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
@@ -136292,6 +136250,12 @@
 			<Yield>2</Yield> 
 		</Row>
 		
+			<Row>
+			<ImprovementType>IMPROVEMENT_CAMP</ImprovementType>
+			<ResourceType>RESOURCE_TRUFFLES</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>3</Yield>
+		</Row>
 	</Improvement_ResourceType_Yields> 
 
 	<Table name="Improvement_ResourceTypes">
@@ -193473,12 +193437,7 @@
 		<Row> 
 			<ResourceType>RESOURCE_SUGAR</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
-		<Row> 
-			<ResourceType>RESOURCE_SUGAR</ResourceType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>1</Yield> 
+			<Yield>2</Yield> 
 		</Row>
 		<Row> 
 			<ResourceType>RESOURCE_COTTON</ResourceType> 
@@ -193488,7 +193447,7 @@
 		<Row> 
 			<ResourceType>RESOURCE_WINE</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
 		</Row>
 		<Row> 
 			<ResourceType>RESOURCE_INCENSE</ResourceType> 
@@ -193562,11 +193521,6 @@
 		</Row>
 		<Row> 
 			<ResourceType>RESOURCE_TEA</ResourceType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
-		</Row>
-		<Row> 
-			<ResourceType>RESOURCE_TEA</ResourceType> 
 			<YieldType>YIELD_PRODUCTION</YieldType> 
 			<Yield>1</Yield> 
 		</Row>
@@ -193628,7 +193582,7 @@
 		<Row> 
 			<ResourceType>RESOURCE_COCONUT</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
 		</Row>
 		<!-- Indonesian Unique Luxuries -->
 		<Row> 

@@ -494,6 +494,17 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+LUXURY YIELDS
+-------------
+Tags: game mechanics
+Several luxury resources yield differently.
+- Changed: Sugar: unimproved 1 Food 1 Gold -> 2 Gold
+- Changed: Tea: unimproved 1 Gold 1 Production -> 1 Production; Wine and Coconut: unimproved 2 Gold -> 1 Gold
+- Changed: Truffles: camp gives +3 Gold instead of +1 Food
+- Changed: Ivory: camp gives +4 Gold instead of +1 Gold +1 Food
+- Changed: Coffee: plantation +2 Gold -> +1 Gold; Cotton and Olives: plantation no longer gives +1 Gold; Lapis, Amber and Jade: mine no longer gives +1 Gold
+- Note: Camps still get +1 Gold at Economics
+
 TECH TREE ICONS
 ---------------
 Tags: ui
