@@ -503,6 +503,8 @@ Some unlocks and prerequisites move in the tech tree.
 - Changed: Mobile Tactics no longer needs Ecology (only Nuclear Fission)
 - Changed: Academies get +4 Science at Scientific Theory (was +2)
 - Removed: Fishing Boats no longer get +1 Gold at Compass
+- Changed: embarked units have 2 movement from Sailing on (the +1 moved from Optics to Sailing)
+- Fixed: the Optics tooltip claimed it allows embarking (Sailing does)
 - Changed: Nuclear Fusion needs Mobile Tactics instead of Satellites, so Satellites (Spaceship Cockpit, Hubble) is an optional end of the tree
 
 BUILDING PURCHASE COSTS

@@ -135280,7 +135280,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_OPTICS_HELP"> 
 			<Text>
-				Allows land units to [COLOR_POSITIVE_TEXT]Embark[ENDCOLOR] onto water tiles and travel the ocean. Also allows you to build the [COLOR_POSITIVE_TEXT]Lighthouse[ENDCOLOR] in coastal cities, improving [ICON_FOOD] Food output from water tiles, speeding their growth.
+				Allows you to build the [COLOR_POSITIVE_TEXT]Lighthouse[ENDCOLOR] in coastal cities, improving [ICON_FOOD] Food output from water tiles, speeding their growth.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_OPTICS_QUOTE"> 
@@ -135730,7 +135730,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_SAILING_HELP"> 
 			<Text>
-				Allows you to build the [COLOR_POSITIVE_TEXT]Cargo Ship[ENDCOLOR], used to establish lucrative sea-based Trade Routes. Also allows you to build military and economic ships, useful for exploration and harvesting resources in the water like [ICON_RES_FISH] [COLOR_POSITIVE_TEXT]Fish[ENDCOLOR] and [ICON_RES_PEARLS] [COLOR_POSITIVE_TEXT]Pearls[ENDCOLOR].
+				Allows land units to [COLOR_POSITIVE_TEXT]Embark[ENDCOLOR] onto coastal water, with 2 movement while embarked.[NEWLINE][NEWLINE]Allows you to build the [COLOR_POSITIVE_TEXT]Cargo Ship[ENDCOLOR], used to establish sea-based Trade Routes. Also allows you to build military and economic ships, useful for exploration and harvesting resources in the water like [ICON_RES_FISH] [COLOR_POSITIVE_TEXT]Fish[ENDCOLOR] and [ICON_RES_PEARLS] [COLOR_POSITIVE_TEXT]Pearls[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_SAILING_QUOTE"> 

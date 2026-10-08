@@ -197263,7 +197263,7 @@
 			<UnitBaseHealModifier>0</UnitBaseHealModifier> 
 			<WorkerSpeedModifier>0</WorkerSpeedModifier> 
 			<FirstFreeTechs>0</FirstFreeTechs> 
-			<EmbarkedMoveChange>0</EmbarkedMoveChange> 
+			<EmbarkedMoveChange>1</EmbarkedMoveChange> 
 			<InternationalTradeRoutesChange>1</InternationalTradeRoutesChange> 
 			<InfluenceSpreadModifier>0</InfluenceSpreadModifier> 
 			<ExtraVotesPerDiplomat>0</ExtraVotesPerDiplomat> 
@@ -197655,7 +197655,7 @@
 			<UnitBaseHealModifier>0</UnitBaseHealModifier> 
 			<WorkerSpeedModifier>0</WorkerSpeedModifier> 
 			<FirstFreeTechs>0</FirstFreeTechs> 
-			<EmbarkedMoveChange>1</EmbarkedMoveChange> 
+			<EmbarkedMoveChange>0</EmbarkedMoveChange> 
 			<InternationalTradeRoutesChange>0</InternationalTradeRoutesChange> 
 			<InfluenceSpreadModifier>0</InfluenceSpreadModifier> 
 			<ExtraVotesPerDiplomat>0</ExtraVotesPerDiplomat> 
