@@ -136123,7 +136123,7 @@
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
 			<ResourceType>RESOURCE_TEA</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
 		</Row>
 		<!--
 		<Row> 
@@ -193599,6 +193599,11 @@
 			<ResourceType>RESOURCE_CLOVES</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
 			<Yield>2</Yield> 
+		</Row>
+		<Row>
+			<ResourceType>RESOURCE_TEA</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
 		</Row>
 	</Resource_YieldChanges> 
 
