@@ -2525,6 +2525,26 @@ bool CvGameDeals::FinalizeDeal(PlayerTypes eFromPlayer, PlayerTypes eToPlayer, b
 			}
 		}
 
+#ifdef LEKMOD_MULTIPLE_DEAL_PROPOSALS
+		// Several proposals can be open at once: tell both players when an accepted one can no longer be completed
+		if(bAccepted && !bValid)
+		{
+			for(int iSide = 0; iSide < 2; iSide++)
+			{
+				const PlayerTypes eNotify = (iSide == 0) ? eFromPlayer : eToPlayer;
+				const PlayerTypes eOther = (iSide == 0) ? eToPlayer : eFromPlayer;
+				CvPlayer& kNotify = GET_PLAYER(eNotify);
+				if(kNotify.isHuman() && kNotify.GetNotifications())
+				{
+					Localization::String strMessage = Localization::Lookup("TXT_KEY_LEKMOD_NTFN_DEAL_FAILED");
+					strMessage << GET_PLAYER(eOther).getName();
+					Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_NTFN_DEAL_FAILED_SUMMARY");
+					kNotify.GetNotifications()->Add(NOTIFICATION_GENERIC, strMessage.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
+				}
+			}
+		}
+#endif
+
 
 		// **** START HACK ****
 		// EFB: temporary delete method; recopy vector without this element

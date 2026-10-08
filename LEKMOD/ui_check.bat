@@ -136,6 +136,9 @@ IF NOT EXIST "%euifolder%\NotificationPanel\DiploCorner.xml" (
   copy /y "%patchfolder%\Lua\tmp\eui\NotificationPanel\DiploCorner.xml.ignore" "%patchfolder%\Lua\UI\DiploCorner.xml" > nul
 )
 REM --------------------------------------------------------------------------------------------------
+IF NOT EXIST "%euifolder%\NotificationPanel\DiploList.lua" (
+  copy /y "%patchfolder%\Lua\tmp\ui\NotificationPanel\DiploList.lua.ignore" "%patchfolder%\Lua\UI\DiploList.lua" > nul
+)
 IF NOT EXIST "%euifolder%\NotificationPanel\NotificationPanel.lua" (
   copy /y "%patchfolder%\Lua\tmp\ui\NotificationPanel\NotificationPanel.lua.ignore" "%patchfolder%\Lua\UI\NotificationPanel.lua" > nul
   copy /y "%patchfolder%\Lua\tmp\ui\NotificationPanel\NotificationPanel.xml.ignore" "%patchfolder%\Lua\UI\NotificationPanel.xml" > nul

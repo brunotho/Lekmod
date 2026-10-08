@@ -373,8 +373,8 @@ function OnOpenPlayerDealScreen( iOtherPlayer )
     local iProposalTo = UI.HasMadeProposal( iUs );
    
 	  -- this logic should match OnOpenPlayerDealScreen in TradeLogic.lua, DiploCorner.lua, and DiploList.lua  
-    if( (pUsTeam:IsAtWar( iOtherTeam ) and (g_bAlwaysWar or g_bNoChangeWar) ) or																					 -- Always at War
-	    (iProposalTo ~= -1 and iProposalTo ~= iOtherPlayer and not UI.ProposedDealExists(iOtherPlayer, iUs)) ) then -- Only allow one proposal from us at a time.
+    -- LEKMOD: several proposals from us may be open at once
+    if( pUsTeam:IsAtWar( iOtherTeam ) and (g_bAlwaysWar or g_bNoChangeWar) ) then																					 -- Always at War
 	    -- do nothing
 	    return;
     else

@@ -101578,6 +101578,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS_HELP">
 			<Text>On: the players get six high-contrast color schemes (those of England, Russia, Greece, Jerusalem, Arabia and Babylon) in random order, instead of their civilization's own colors.[NEWLINE]Off (Original): every civilization uses its own colors.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_DEAL_FAILED">
+			<Text>The deal with {1_PlayerName} could not be completed: something in it is no longer available (for example, a resource already traded to someone else, or Gold per turn that can no longer be paid).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_DEAL_FAILED_SUMMARY">
+			<Text>Deal could not be completed</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

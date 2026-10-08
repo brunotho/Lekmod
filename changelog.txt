@@ -427,6 +427,14 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+SEVERAL TRADE OFFERS AT ONCE
+----------------------------
+Tags: ui, game mechanics
+You can have open trade offers to several players at the same time.
+- Changed: an open offer to one player no longer blocks offering deals to others
+- Added: if an accepted deal can no longer be completed (e.g. the luxury was already traded to someone else, or the Gold per turn can no longer be paid), it fails and both players get a notification
+- Dev: LEKMOD_MULTIPLE_DEAL_PROPOSALS: UI checks removed in TradeLogic (ui), DiploCorner (ui, eui) and an override of DiploList (standard UI); the DLL already keeps one proposal per player pair and re-validates items in CvGameDeals::FinalizeDeal, which now notifies. Untested whether the game executable itself accepts a second open proposal
+
 LOBBY: CIV COLORS (HIGH CONTRAST)
 ---------------------------------
 Tags: ui

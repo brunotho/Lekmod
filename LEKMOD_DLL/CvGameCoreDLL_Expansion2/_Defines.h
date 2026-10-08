@@ -919,6 +919,8 @@
 #define LEKMOD_UNIT_ATTACKED_FLAG_ICON
 // Lobby option GAMEOPTION_HIGH_CONTRAST_CIV_COLORS: six high-contrast color schemes assigned to the players at random
 #define LEKMOD_HIGH_CONTRAST_CIV_COLORS
+// Several deal proposals from one player can be open at once (UI); accepted deals that became invalid notify both players
+#define LEKMOD_MULTIPLE_DEAL_PROPOSALS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

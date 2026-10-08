@@ -132,6 +132,10 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
    - **Edit the template** and sync it into `Lua\UI\`, otherwise the next `ui_check.bat` run silently reverts the change.
    - The user runs the standard UI (no EUI folder).
    - Base-game UI layouts that Lekmod doesn't override come from `Assets\DLC\Expansion2\UI\InGame\...`. Overriding one means adding the XML to the templates, to `ui_check.bat`, and to `Lua\UI\`.
+   - Base-game scripts Lekmod overrides since 2026-10-08: `CivilopediaScreen.lua` (both UIs) and `DiploList.lua` (standard UI; `ui_check.bat` copies it unless EUI has its own). Copy the Expansion2 file into `Lua\tmp\ui\...` and add a `ui_check.bat` rule.
+   - **Any network message from Lua (`Network.Send*`) un-ends a finished multiplayer turn.** Screens must not send hidden messages (e.g. statistics) once the turn is ended: check `Network.HasSentNetTurnComplete()`.
+   - Lobby options are `GameOptions` rows in `CIV5Units.xml` (explicit IDs; Lekmod's: 67 strategic trading, 68 high-contrast colors). The lobby lists them automatically; the DLL reads them with `isOption("GAMEOPTION_X")`.
+   - Python one-liners in Bash heredocs choke on Windows paths with `\U`, `\N`: write the script to the scratchpad with raw strings, or use the Edit tool.
 4. **`Art\`**: graphics. `.dds` textures are found **by file name anywhere** under it.
    - **XML and `.modinfo` files under `Art\` are NOT loaded as game data.** They're leftovers from the source mods Lekmod was assembled from.
    - Verified twice. The promotions in `Art\Promotions\LekmodPromotions.xml` and the ruin values in `Art\No Quitters Mod (v 11)\gameplay\GoodyHutChanges.xml` were absent from the loaded database.

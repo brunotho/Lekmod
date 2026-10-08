@@ -280,8 +280,8 @@ function OnOpenPlayerDealScreen( iOtherPlayer )
 	
 
 	  -- this logic should match OnOpenPlayerDealScreen in TradeLogic.lua, DiploCorner.lua, and DiploList.lua  
-    if( (g_pUsTeam:IsAtWar( g_iThemTeam ) and (g_bAlwaysWar or g_bNoChangeWar) ) or																			-- Always at War
-	    (iProposalTo ~= -1 and iProposalTo ~= iOtherPlayer and not UI.ProposedDealExists(iOtherPlayer, g_iUs)) ) then -- Only allow one proposal from us at a time.
+    -- LEKMOD: several proposals from us may be open at once (a deal whose items are gone fails when accepted)
+    if( g_pUsTeam:IsAtWar( g_iThemTeam ) and (g_bAlwaysWar or g_bNoChangeWar) ) then																			-- Always at War
 	    -- do nothing
 	    return;
     end
@@ -670,7 +670,7 @@ function DoUpdateButtons()
 			resizeTradeLayout()
 			-- expandable MP Trade Panel size END
             
-        elseif( UI.HasMadeProposal( g_iUs ) == g_iThem ) then
+        elseif( UI.ProposedDealExists( g_iUs, g_iThem ) ) then
             Controls.ProposeButton:SetText( Locale.ConvertTextKey( "TXT_KEY_DIPLO_WITHDRAW" ));
             Controls.ProposeButton:SetVoid1( WITHDRAW_TYPE );
             Controls.CancelButton:SetHide( true );
