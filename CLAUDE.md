@@ -264,7 +264,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 
 ## 9. Status (update as things change)
 ### Current state (2026-10-08, end of session)
-- `dev` = v35.4 (`201df6c5`) + ~110 of our commits. **Not pushed** (the user hasn't asked). The installed DLL is the latest build (`be82ff1d`).
+- `dev` = v35.4 (`201df6c5`) + our commits (127 ahead of `upstream/main` on 2026-10-08). **Not pushed** (the user hasn't asked). The installed DLL is the latest build (`be82ff1d`).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
 - **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start to see what's next.
 - **Done so far:** Phase 1 complete except Cyrillic (waiting for the Tournament Mod authors' permission; their `Fonts` folder would work, ~85 MB, last in the queue) and the 6/7/8-player lobby (postponed by the user). Phase 2: all Tech Tree items done and playtested; Resources: luxury yields done (`7a4fecbc`, not playtested yet).
