@@ -450,6 +450,7 @@ function TabSelect(tab)
 		v.SelectHighlight:SetHide(bHide);
 	end
 	g_CurrentTab = tab;
+	g_CurrentGreatWorkSlot = nil; -- LEKMOD: a new tab or a reopened screen starts without a selection
 	g_Tabs[tab].RefreshContent();	
 end
 Controls.TabButtonYourCulture:RegisterCallback( Mouse.eLClick, function() TabSelect("YourCulture"); end);
@@ -559,7 +560,7 @@ g_ColumnSizes = {
 
 function RefreshYourCulture()
 	g_YourCulture = nil;
-	g_CurrentGreatWorkSlot = nil;
+	-- LEKMOD: keep the selected great work; the screen refreshes whenever any player's great works change (SortAndDisplayYourCulture restores it)
 	
 	local pPlayer = Players[Game.GetActivePlayer()];
 	
@@ -1022,7 +1023,7 @@ function SortAndDisplayYourCulture()
 					if(	previousGreatWorkSelection ~= nil and
 						previousGreatWorkSelection.CityID == selectionPoint.CityID and
 						previousGreatWorkSelection.BuildingClassID == selectionPoint.BuildingClassID and
-						previousGreatWorkSelection.GreatWorkSlotIndex == selectionPoint.GreatWorkSlotIndex) then
+						previousGreatWorkSelection.GreatWorkSlotIndex == selectionPoint.GreatWorkSlotIndex and previousGreatWorkSelection.GreatWorkIndex == selectionPoint.GreatWorkIndex) then
 						g_CurrentGreatWorkSlot = selectionPoint;	
 					end
 					
@@ -1182,7 +1183,7 @@ function SortAndDisplayYourCulture()
 		if(	previousGreatWorkSelection ~= nil and
 			previousGreatWorkSelection.CityID == selectionPoint.CityID and
 			previousGreatWorkSelection.BuildingClassID == selectionPoint.BuildingClassID and
-			previousGreatWorkSelection.GreatWorkSlotIndex == selectionPoint.GreatWorkSlotIndex) then
+			previousGreatWorkSelection.GreatWorkSlotIndex == selectionPoint.GreatWorkSlotIndex and previousGreatWorkSelection.GreatWorkIndex == selectionPoint.GreatWorkIndex) then
 			g_CurrentGreatWorkSlot = selectionPoint;	
 		end
 		

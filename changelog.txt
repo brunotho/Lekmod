@@ -494,6 +494,12 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+GREAT WORKS SCREEN SELECTION
+----------------------------
+Tags: ui, bugfix
+Moving great works no longer gets interrupted by other players.
+- Fixed: a great work selected for moving stayed selected only until any player changed a great work; the screen then refreshed and dropped the selection. It now stays selected (unless that great work itself is gone)
+
 CHAT EMOJI PICKER
 -----------------
 Tags: ui
