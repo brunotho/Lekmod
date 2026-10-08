@@ -494,6 +494,13 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+TECH TREE: TREBUCHET AND WEALTH
+-------------------------------
+Tags: game mechanics, units
+Two unlocks move in the tech tree.
+- Changed: Trebuchet (and the Korean Hwacha) unlocked at Guilds instead of Physics
+- Changed: the Wealth process (production into gold) unlocked at Banking instead of Guilds
+
 BUILDING PURCHASE COSTS
 -----------------------
 Tags: game mechanics

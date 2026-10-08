@@ -190612,7 +190612,7 @@
 			<Description>TXT_KEY_PROCESS_WEALTH</Description> 
 			<Help>TXT_KEY_PROCESS_WEALTH_HELP</Help> 
 			<Strategy>TXT_KEY_PROCESS_WEALTH_STRATEGY</Strategy> 
-			<TechPrereq>TECH_GUILDS</TechPrereq> 
+			<TechPrereq>TECH_BANKING</TechPrereq> 
 			<PortraitIndex>8</PortraitIndex> 
 			<IconAtlas>CITIZEN_ATLAS</IconAtlas> 
 		</Row>
@@ -269650,7 +269650,7 @@
 			<MilitaryProduction>true</MilitaryProduction>
 			<Pillage>true</Pillage>
 			<Mechanized>true</Mechanized>
-			<PrereqTech>TECH_PHYSICS</PrereqTech>
+			<PrereqTech>TECH_GUILDS</PrereqTech>
 			<ObsoleteTech>TECH_CHEMISTRY</ObsoleteTech>
 			<GoodyHutUpgradeUnitClass>UNITCLASS_CANNON</GoodyHutUpgradeUnitClass>
 			<AdvancedStartCost>25</AdvancedStartCost>
@@ -270936,7 +270936,7 @@
 			<MilitaryProduction>true</MilitaryProduction>
 			<Pillage>true</Pillage>
 			<Mechanized>true</Mechanized>
-			<PrereqTech>TECH_PHYSICS</PrereqTech>
+			<PrereqTech>TECH_GUILDS</PrereqTech>
 			<ObsoleteTech>TECH_CHEMISTRY</ObsoleteTech>
 			<GoodyHutUpgradeUnitClass>UNITCLASS_CANNON</GoodyHutUpgradeUnitClass>
 			<AdvancedStartCost>25</AdvancedStartCost>
