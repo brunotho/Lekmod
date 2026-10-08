@@ -512,7 +512,7 @@ CITY-STATE PLEDGE ICONS
 -----------------------
 Tags: ui
 City-state banners show who has pledged to protect them.
-- Added: a shield with a blue glow on a city-state's banner when you have pledged to protect it, and one with a red glow when other players have; hovering it lists them
+- Added: a shield glowing in your civilization's color on a city-state's banner when you have pledged to protect it, and one with a red glow when other players have; hovering it lists them
 - Note: standard UI only for now (EUI has its own city banners)
 
 MILITARY CASTE (POLICY_MILITARY_CASTE)
@@ -732,7 +732,7 @@ Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshon
 - Changed: if you don't choose before the turn ends, one of the offers is picked at random
 - Changed: Food: 7 + 2.2 x era x capital population food in the capital; the unit gets Glutton (-10% combat strength, lost on upgrade)
 - Changed: Upgrade: from turn 6; the unit loses 20 HP
-- Changed: Tech: no more free tech; 20-30 x era science instead (max 90); the unit loses that much HP (keeps at least 1) and gains half of it as experience
+- Changed: Tech: no more free tech; 20-30 x era science instead (max 90); the unit loses twice that much HP (keeps at least 1) and gains half of it as experience
 - Changed: Map: reveals a patchy area of radius 6 and gives 6 experience; until turn 10
 - Changed: Culture: turn x era culture, from turn 6
 - Changed: Faith: 9 faith from turn 6 while you have no pantheon and 0 faith; turn x 2 x era faith plus a full heal once you have a pantheon (and no religion)

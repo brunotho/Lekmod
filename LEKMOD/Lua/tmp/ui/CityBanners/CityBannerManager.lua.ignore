@@ -594,6 +594,11 @@ function LekmodUpdatePledgeIcons( controls, pMinor, iActivePlayer )
 		end
 	end
 	controls.PledgeMineBox:SetHide(not bMine);
+	if (bMine) then
+		-- the glow takes your civilization's banner color
+		local _, bannerColor = Players[iActivePlayer]:GetPlayerColors();
+		controls.PledgeMineGlow:SetColor({ x = bannerColor.x, y = bannerColor.y, z = bannerColor.z, w = 1 });
+	end
 	controls.PledgeMineIcon:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_MINE"));
 	controls.PledgeOthersBox:SetHide(#others == 0);
 	controls.PledgeOthersIcon:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_OTHERS") .. "[NEWLINE]" .. table.concat(others, "[NEWLINE]"));
