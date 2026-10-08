@@ -80362,17 +80362,17 @@
 		<Row>
 			<ID>377</ID>
 			<Type>COLOR_CS_TRAIT_MARITIME</Type>
-			<Red>0.99</Red>
-			<Green>0.58</Green>
-			<Blue>0.16</Blue>
+			<Red>0.651</Red>
+			<Green>0.902</Green>
+			<Blue>0.294</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 		<Row>
 			<ID>378</ID>
 			<Type>COLOR_CS_TRAIT_CULTURED</Type>
-			<Red>0.6</Red>
+			<Red>0.906</Red>
 			<Green>0.0</Green>
-			<Blue>1.0</Blue>
+			<Blue>0.906</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 		<Row>
@@ -80394,9 +80394,9 @@
 		<Row>
 			<ID>381</ID>
 			<Type>COLOR_CS_TRAIT_MILITARISTIC</Type>
-			<Red>1.0</Red>
-			<Green>0.3</Green>
-			<Blue>0.3</Blue>
+			<Red>0.98</Red>
+			<Green>0.502</Green>
+			<Blue>0.447</Blue>
 			<Alpha>1</Alpha>
 		</Row>
 	</Colors> 
