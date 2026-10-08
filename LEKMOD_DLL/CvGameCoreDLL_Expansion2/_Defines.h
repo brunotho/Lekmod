@@ -905,6 +905,8 @@
 #define LEKMOD_MINOR_CIV_RING_ROADS
 // Pledge to protect rework: tribute breaks the tributing major's pledge, recovery bonus, global tribute notification, influence ticks for pledgers
 #define LEKMOD_PLEDGE_REWORK
+// City-state war declaration penalties: wary (lower resting influence), alienated (faster decay), nemesis (no peace), escalating with the number of declarations
+#define LEKMOD_CS_WAR_DECLARATION_PENALTIES
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

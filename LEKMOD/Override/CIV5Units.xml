@@ -93022,6 +93022,18 @@
 			<Name>MINOR_PLEDGE_IDLE_INFLUENCE_LOSS</Name>
 			<Value>3</Value>
 		</Row>
+		<Row>
+			<Name>MINOR_WARY_ANCHOR_PER_LEVEL</Name>
+			<Value>10</Value>
+		</Row>
+		<Row>
+			<Name>MINOR_ALIENATED_DECAY_PER_LEVEL</Name>
+			<Value>50</Value>
+		</Row>
+		<Row>
+			<Name>MINOR_NEMESIS_WAR_DECLARATIONS</Name>
+			<Value>3</Value>
+		</Row>
 		<Row> 
 			<Name>BASE_CAPTURE_GOLD</Name> 
 			<Value>20</Value> 

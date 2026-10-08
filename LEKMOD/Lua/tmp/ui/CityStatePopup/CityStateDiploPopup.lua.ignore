@@ -498,7 +498,7 @@ function OnDisplay()
 		if strWarTT ~= nil then
 			Controls.WarButton:SetToolTipString(strWarTT);
 		else
-			Controls.WarButton:SetToolTipString(nil);
+			Controls.WarButton:SetToolTipString(GetCityStateWarPreviewToolTip(iActivePlayer, iPlayer));
 		end
 		
 	-- War
@@ -525,7 +525,14 @@ function OnDisplay()
 		end
 		
 		-- Locked war timer: only while peace is not ally-blocked (timer hides if CS joins an enemy ally; returns when that clears if turns remain)
-		if (iPeaceTurnsRemaining > 0 and not pPlayer:IsPeaceBlocked(iActiveTeam)) then
+		if (IsCityStateNemesis(iActivePlayer, iPlayer)) then		-- LEKMOD_CS_WAR_DECLARATION_PENALTIES
+			strText = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_DIPLO_HELLO_WARMONGER");
+			Controls.PeaceButton:SetHide(false);
+			Controls.PeaceButton:SetDisabled(true);
+			Controls.PeaceAnim:SetHide(true);
+			Controls.PeaceLabel:SetText("[COLOR_NEGATIVE_TEXT]" .. Locale.Lookup("TXT_KEY_LEKMOD_CS_NEMESIS") .. "[ENDCOLOR]");
+			Controls.PeaceButton:SetToolTipString(GetCityStateNemesisToolTip(iActivePlayer, iPlayer));
+		elseif (iPeaceTurnsRemaining > 0 and not pPlayer:IsPeaceBlocked(iActiveTeam)) then
 			strText = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_DIPLO_HELLO_WARMONGER");
 			Controls.PeaceButton:SetHide(false);
 			Controls.PeaceButton:SetDisabled(true);

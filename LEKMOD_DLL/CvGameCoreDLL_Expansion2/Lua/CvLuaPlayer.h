@@ -620,6 +620,13 @@ protected:
 	static int lGetCurrentSpawnEstimate(lua_State* L);
 	static int lGetCurrentScienceFriendshipBonusTimes100(lua_State* L);
 	static int lIsPeaceBlocked(lua_State* L);
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	static int lGetMinorCivWaryLevel(lua_State* L);
+	static int lGetMinorCivAlienatedLevel(lua_State* L);
+	static int lGetMinorCivWarDeclarations(lua_State* L);
+	static int lIsMinorCivNemesis(lua_State* L);
+	static int lGetCityStateWarDeclarations(lua_State* L);
+#endif
 #ifdef LEKMOD_MINOR_CIV_PERSONALITIES
 	static int lIsMajorBlockedByAlliedWar(lua_State* L);
 #endif

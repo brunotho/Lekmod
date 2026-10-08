@@ -101430,6 +101430,63 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_PLEDGED">
 			<Text>{1_CivName:textkey} has demanded tribute from {2_MinorName:textkey}, a City-State under protection.[NEWLINE][NEWLINE]Players protecting {2_MinorName:textkey} lose [ICON_INFLUENCE] Influence with it each turn for the next 10 turns, unless they are at war with {1_CivName:textkey}.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_LEVEL_1">
+			<Text>Antagonist</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_LEVEL_2">
+			<Text>Provocateur</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_LEVEL_3">
+			<Text>Aggressor</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_LEVEL_4">
+			<Text>Warmonger</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_EFFECTS_1">
+			<Text>City-States you have declared war on:[NEWLINE]Wary: -10 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 50% faster.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_EFFECTS_2">
+			<Text>City-States you have declared war on:[NEWLINE]Wary: -30 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 100% faster.[NEWLINE][NEWLINE]The two other City-States closest to your capital:[NEWLINE]Wary: -20 resting [ICON_INFLUENCE] Influence.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_EFFECTS_3">
+			<Text>City-States you have declared war on:[NEWLINE]Wary: -30 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 100% faster.[NEWLINE][NEWLINE]All other City-States:[NEWLINE]Wary: -20 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 50% faster.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_AGGRESSION_EFFECTS_4">
+			<Text>All City-States:[NEWLINE]Wary: -30 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 100% faster.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_AGGRESSION_SUMMARY">
+			<Text>City-State standing: {1_Level:textkey}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_AGGRESSION">
+			<Text>Your standing with City-States is now [COLOR_NEGATIVE_TEXT]{1_Level:textkey}[ENDCOLOR].[NEWLINE]Declarations of war on City-States: {2_Num}.[NEWLINE][NEWLINE]{3_Effects:textkey}[NEWLINE][NEWLINE]City-States allied with you are not affected.[NEWLINE]These penalties are permanent.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_NEMESIS">
+			<Text>{1_MinorName:textkey} is now your [COLOR_NEGATIVE_TEXT]Nemesis[ENDCOLOR].[NEWLINE]You have declared war on it 3 times, and it will never make peace with you.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_NEMESIS">
+			<Text>Nemesis</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_NEMESIS_TT">
+			<Text>{1_CityStateName:textkey} is your [COLOR_NEGATIVE_TEXT]Nemesis[ENDCOLOR].[NEWLINE]You have declared war on it {2_Num} times, so it will never make peace with you.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_PENALTIES_HEADER">
+			<Text>[COLOR_NEGATIVE_TEXT]Penalties from your declarations of war:[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_WARY_TT">
+			<Text>Wary: -{1_Num} resting [ICON_INFLUENCE] Influence.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_ALIENATED_TT">
+			<Text>Alienated: [ICON_INFLUENCE] Influence decays {1_Num}% faster.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_STANDING_TT">
+			<Text>Your standing with City-States: [COLOR_NEGATIVE_TEXT]{1_Level:textkey}[ENDCOLOR].[NEWLINE]Declarations of war on City-States: {2_Num}.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_WAR_PREVIEW_TT">
+			<Text>Declaring war makes your standing with City-States [COLOR_NEGATIVE_TEXT]{1_Level:textkey}[ENDCOLOR].[NEWLINE][NEWLINE]{2_Effects:textkey}[NEWLINE][NEWLINE]City-States allied with you are not affected.[NEWLINE]These penalties are permanent.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_WAR_PREVIEW_NEMESIS_TT">
+			<Text>[COLOR_NEGATIVE_TEXT]This is your 3rd declaration of war on {1_CityStateName:textkey}: it becomes your Nemesis and will never make peace with you.[ENDCOLOR]</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

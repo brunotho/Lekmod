@@ -637,6 +637,13 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetCurrentSpawnEstimate);
 	Method(GetCurrentScienceFriendshipBonusTimes100);
 	Method(IsPeaceBlocked);
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	Method(GetMinorCivWaryLevel);
+	Method(GetMinorCivAlienatedLevel);
+	Method(GetMinorCivWarDeclarations);
+	Method(IsMinorCivNemesis);
+	Method(GetCityStateWarDeclarations);
+#endif
 #ifdef LEKMOD_MINOR_CIV_PERSONALITIES
 	Method(IsMajorBlockedByAlliedWar);
 #endif
@@ -6754,6 +6761,48 @@ int CvLuaPlayer::lIsPeaceBlocked(lua_State* L)
 	lua_pushboolean(L, bResult);
 	return 1;
 }
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lGetMinorCivWaryLevel(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const PlayerTypes eMajor = (PlayerTypes) lua_tointeger(L, 2);
+	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetWaryLevel(eMajor));
+	return 1;
+}
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lGetMinorCivAlienatedLevel(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const PlayerTypes eMajor = (PlayerTypes) lua_tointeger(L, 2);
+	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetAlienatedLevel(eMajor));
+	return 1;
+}
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lGetMinorCivWarDeclarations(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const PlayerTypes eMajor = (PlayerTypes) lua_tointeger(L, 2);
+	lua_pushinteger(L, pkPlayer->GetMinorCivAI()->GetWarDeclarationsByMajor(eMajor));
+	return 1;
+}
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lIsMinorCivNemesis(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const PlayerTypes eMajor = (PlayerTypes) lua_tointeger(L, 2);
+	lua_pushboolean(L, pkPlayer->GetMinorCivAI()->IsNemesisOf(eMajor));
+	return 1;
+}
+//------------------------------------------------------------------------------
+// Declarations of war on city-states by this major's team (aggression level = min(this, 4))
+int CvLuaPlayer::lGetCityStateWarDeclarations(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	lua_pushinteger(L, GET_TEAM(pkPlayer->getTeam()).GetNumMinorCivsAttacked());
+	return 1;
+}
+#endif
 #ifdef LEKMOD_MINOR_CIV_PERSONALITIES
 //------------------------------------------------------------------------------
 int CvLuaPlayer::lIsMajorBlockedByAlliedWar(lua_State* L)

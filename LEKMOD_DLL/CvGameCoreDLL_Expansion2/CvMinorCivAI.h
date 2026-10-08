@@ -574,6 +574,14 @@ public:
 
 	bool IsWaryOfTeam(TeamTypes eTeam) const;
 	void SetWaryOfTeam(TeamTypes eTeam, bool bValue);
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	int GetWaryLevel(PlayerTypes eMajor) const;
+	int GetAlienatedLevel(PlayerTypes eMajor) const;
+	int GetWarDeclarationsByMajor(PlayerTypes eMajor) const;
+	bool IsNemesisOf(PlayerTypes eMajor) const;
+	bool IsNemesisOfTeam(TeamTypes eTeam) const;
+	void RaiseWarDeclarationPenalties(PlayerTypes eMajor, int iWaryLevel, int iAlienatedLevel);
+#endif
 
 	// ******************************
 	// ***** Misc Helper Functions *****
@@ -677,6 +685,11 @@ private:
 #endif
 #ifdef LEKMOD_PLEDGE_REWORK
 	int m_aiTurnTributedWhilePledged[MAX_MAJOR_CIVS]; // last turn this major tributed us while another major had pledged to protect us; -1 = never
+#endif
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	int m_aiWaryLevel[MAX_MAJOR_CIVS]; // 0-3, each level lowers the resting influence
+	int m_aiAlienatedLevel[MAX_MAJOR_CIVS]; // 0-2, each level speeds up influence decay
+	int m_aiWarDeclarationsByMajor[MAX_MAJOR_CIVS]; // how often this major declared war on us
 #endif
 };
 

@@ -256,6 +256,9 @@ function GetCityStateStatusText( majorPlayerID, minorPlayerID )
 		elseif minorPlayer:IsMinorPermanentWar(majorTeamID) then	-- Permanent War
 			strStatusText = "[COLOR_NEGATIVE_TEXT]" .. L("TXT_KEY_PERMANENT_WAR")
 
+		elseif IsCityStateNemesis(majorPlayerID, minorPlayerID) then	-- Nemesis: never makes peace (LEKMOD_CS_WAR_DECLARATION_PENALTIES)
+			strStatusText = "[COLOR_NEGATIVE_TEXT]" .. L("TXT_KEY_LEKMOD_CS_NEMESIS")
+
 		elseif minorPlayer:IsPeaceBlocked(majorTeamID) then		-- Peace blocked by being at war with ally
 			strStatusText = "[COLOR_NEGATIVE_TEXT]" .. L("TXT_KEY_PEACE_BLOCKED")
 
@@ -396,6 +399,14 @@ function GetCityStateStatusToolTip( majorPlayerID, minorPlayerID, isFullInfo )
 			local influenceAnchor = minorPlayer:GetMinorCivFriendshipAnchorWithMajor(majorPlayerID)
 			if influenceAccumulated ~= influenceAnchor then
 				table_insert( tips, L( "TXT_KEY_CSTATE_INFLUENCE_RATE", minorPlayer:GetFriendshipChangePerTurnTimes100(majorPlayerID) / 100, influenceAnchor ) )
+			end
+			-- War declaration penalties (LEKMOD_CS_WAR_DECLARATION_PENALTIES)
+			if IsCityStateNemesis(majorPlayerID, minorPlayerID) then
+				table_insert( tips, GetCityStateNemesisToolTip(majorPlayerID, minorPlayerID) )
+			end
+			local strWarPenaltyTT = GetCityStateWarPenaltyToolTip(majorPlayerID, minorPlayerID)
+			if strWarPenaltyTT then
+				table_insert( tips, strWarPenaltyTT )
 			end
 			-- Bullying
 			if minorPlayer:CanMajorBullyGold(majorPlayerID) then
@@ -794,3 +805,62 @@ function GetCityStateStatusAlly( majorPlayerID, minorPlayerID, isFullInfo )
 	end
 	return toolTip
 end
+
+-- LEKMOD_CS_WAR_DECLARATION_PENALTIES begin
+-- Nemesis: the major declared war on this city-state too often; it never makes peace
+function IsCityStateNemesis(iMajor, iMinor)
+	local pMinor = Players[iMinor];
+	return pMinor ~= nil and pMinor.IsMinorCivNemesis ~= nil and pMinor:IsMinorCivNemesis(iMajor);
+end
+
+function GetCityStateNemesisToolTip(iMajor, iMinor)
+	local pMinor = Players[iMinor];
+	return Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_NEMESIS_TT", pMinor:GetCivilizationShortDescriptionKey(), pMinor:GetMinorCivWarDeclarations(iMajor));
+end
+
+-- Wary/alienated penalties of this city-state and the major's standing with city-states; nil when there are none
+function GetCityStateWarPenaltyToolTip(iMajor, iMinor)
+	local pMajor = Players[iMajor];
+	local pMinor = Players[iMinor];
+	if (pMajor == nil or pMinor == nil or pMinor.GetMinorCivWaryLevel == nil) then
+		return nil;
+	end
+	local lines = {};
+	local iWary = pMinor:GetMinorCivWaryLevel(iMajor);
+	local iAlienated = pMinor:GetMinorCivAlienatedLevel(iMajor);
+	if (iWary > 0 or iAlienated > 0) then
+		local strPenalties = Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_PENALTIES_HEADER");
+		if (iWary > 0) then
+			strPenalties = strPenalties .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_WARY_TT", iWary * GameDefines["MINOR_WARY_ANCHOR_PER_LEVEL"]);
+		end
+		if (iAlienated > 0) then
+			strPenalties = strPenalties .. "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_ALIENATED_TT", iAlienated * GameDefines["MINOR_ALIENATED_DECAY_PER_LEVEL"]);
+		end
+		table.insert(lines, strPenalties);
+	end
+	local iDeclarations = pMajor:GetCityStateWarDeclarations();
+	if (iDeclarations > 0) then
+		local iLevel = math.min(iDeclarations, 4);
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_STANDING_TT", "TXT_KEY_LEKMOD_CS_AGGRESSION_LEVEL_" .. iLevel, iDeclarations));
+	end
+	if (#lines == 0) then
+		return nil;
+	end
+	return table.concat(lines, "[NEWLINE][NEWLINE]");
+end
+
+-- What declaring war on this city-state would do (war button tooltip)
+function GetCityStateWarPreviewToolTip(iMajor, iMinor)
+	local pMajor = Players[iMajor];
+	local pMinor = Players[iMinor];
+	if (pMajor == nil or pMinor == nil or pMajor.GetCityStateWarDeclarations == nil) then
+		return nil;
+	end
+	local iLevel = math.min(pMajor:GetCityStateWarDeclarations() + 1, 4);
+	local strTT = Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_WAR_PREVIEW_TT", "TXT_KEY_LEKMOD_CS_AGGRESSION_LEVEL_" .. iLevel, "TXT_KEY_LEKMOD_CS_AGGRESSION_EFFECTS_" .. iLevel);
+	if (pMinor:GetMinorCivWarDeclarations(iMajor) + 1 == GameDefines["MINOR_NEMESIS_WAR_DECLARATIONS"]) then
+		strTT = strTT .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_WAR_PREVIEW_NEMESIS_TT", pMinor:GetCivilizationShortDescriptionKey());
+	end
+	return strTT;
+end
+-- LEKMOD_CS_WAR_DECLARATION_PENALTIES end

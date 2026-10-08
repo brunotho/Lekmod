@@ -394,6 +394,24 @@ Protecting a city-state is worth more and comes with obligations. Demanding trib
 - Dev: LEKMOD_PLEDGE_REWORK: CvMinorCivAI::DoPledgeTributeConsequences (gold and worker tribute), DoPledgerInfluenceTicks (in DoFriendship), recovery bonus in GetFriendshipChangePerTurnTimes100; new saved member m_aiTurnTributedWhilePledged. Defines MINOR_FRIENDSHIP_ANCHOR_MOD_PROTECTED 10, MINOR_PLEDGE_RECOVERY_BONUS_PERCENT 50, MINOR_PLEDGE_TRIBUTE_PENALTY_TURNS 10, MINOR_PLEDGE_IDLE_INFLUENCE_LOSS 3, MINOR_PLEDGE_FIGHTING_OFFENDER_INFLUENCE 1
 
 
+WAR ON CITY-STATES (STANDING AND PENALTIES)
+-------------------------------------------
+Tags: game mechanics, ui
+Declaring war on city-states now escalates through four standings, with lasting penalties on Influence.
+- Changed: each declaration of war on a city-state counts (also repeat declarations on the same one). Your standing: 1 Antagonist, 2 Provocateur, 3 Aggressor, 4+ Warmonger
+- Added: Wary city-states have a lower resting Influence with you: -10, -20 or -30
+- Added: Alienated city-states lose Influence with you faster: +50% or +100% decay
+- Added: Antagonist: the city-state you declared war on becomes Wary (-10) and Alienated (+50%)
+- Added: Provocateur: every city-state you declared war on becomes Wary (-30) and Alienated (+100%); the two other city-states closest to your capital that you have met become Wary (-20)
+- Added: Aggressor: as Provocateur, and all other city-states become Wary (-20) and Alienated (+50%)
+- Added: Warmonger: all city-states become Wary (-30) and Alienated (+100%)
+- Added: city-states allied with you when you declare war are not affected; penalties never decrease
+- Added: Nemesis: a city-state you declare war on 3 times never makes peace with you
+- Removed: the old Aggressor/Warmonger rules (double Influence decay after 2 declarations, random city-states becoming wary)
+- Added: the city-state screen shows Nemesis instead of the peace button, the status tooltip lists Wary/Alienated and your standing, and the war button tooltip shows what declaring war would do. A notification tells you your new standing
+- Dev: LEKMOD_CS_WAR_DECLARATION_PENALTIES: CvMinorCivAI::DoTeamDeclaredWarOnMe (levels from CvTeam::GetNumMinorCivsAttacked), anchor in GetFriendshipAnchorWithMajor, decay multiplier in GetFriendshipChangePerTurnTimes100, nemesis in IsPeaceBlocked. New saved members m_aiWaryLevel, m_aiAlienatedLevel, m_aiWarDeclarationsByMajor. Defines MINOR_WARY_ANCHOR_PER_LEVEL 10, MINOR_ALIENATED_DECAY_PER_LEVEL 50, MINOR_NEMESIS_WAR_DECLARATIONS 3. Lua: GetMinorCivWaryLevel, GetMinorCivAlienatedLevel, GetMinorCivWarDeclarations, IsMinorCivNemesis (on the city-state), GetCityStateWarDeclarations (on the major)
+- Note: city-state personalities with BlocksWarDeclarationPenalty (none at the moment) still skip all of this
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

@@ -1720,6 +1720,11 @@ void CvMinorCivAI::Reset()
 #ifdef LEKMOD_PLEDGE_REWORK
 		m_aiTurnTributedWhilePledged[iI] = -1;
 #endif
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+		m_aiWaryLevel[iI] = 0;
+		m_aiAlienatedLevel[iI] = 0;
+		m_aiWarDeclarationsByMajor[iI] = 0;
+#endif
 	}
 
 	for(iI = 0; iI < REALLY_MAX_TEAMS; iI++)
@@ -1860,6 +1865,11 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 #ifdef LEKMOD_PLEDGE_REWORK
 	kStream >> m_aiTurnTributedWhilePledged;
 #endif
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	kStream >> m_aiWaryLevel;
+	kStream >> m_aiAlienatedLevel;
+	kStream >> m_aiWarDeclarationsByMajor;
+#endif
 }
 
 /// Serialization write
@@ -1938,6 +1948,11 @@ void CvMinorCivAI::Write(FDataStream& kStream) const
 #endif
 #ifdef LEKMOD_PLEDGE_REWORK
 	kStream << m_aiTurnTributedWhilePledged;
+#endif
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	kStream << m_aiWaryLevel;
+	kStream << m_aiAlienatedLevel;
+	kStream << m_aiWarDeclarationsByMajor;
 #endif
 }
 
@@ -6129,17 +6144,21 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 #ifdef LEKMOD_MINOR_CIV_PERSONALITIES
 		if(pkPersonalityInfo && pkPersonalityInfo->GetFriendshipDropPerTurn() != 0)
 			iChangeThisTurn += pkPersonalityInfo->GetFriendshipDropPerTurn();
+#ifndef LEKMOD_CS_WAR_DECLARATION_PENALTIES
 		else if(GET_TEAM(kPlayer.getTeam()).IsMinorCivAggressor())
 			iChangeThisTurn += /*-200*/ GC.getMINOR_FRIENDSHIP_DROP_PER_TURN_AGGRESSOR();
+#endif
 		else
 			iChangeThisTurn += /*-100*/ GC.getMINOR_FRIENDSHIP_DROP_PER_TURN();
 #else
 		// Hostile Minors have Friendship decay quicker
 		if(GetPersonality() == MINOR_CIV_PERSONALITY_HOSTILE)
 			iChangeThisTurn += /*-150*/ GC.getMINOR_FRIENDSHIP_DROP_PER_TURN_HOSTILE();
+#ifndef LEKMOD_CS_WAR_DECLARATION_PENALTIES
 		// Aggressor!
 		else if(GET_TEAM(kPlayer.getTeam()).IsMinorCivAggressor())
 			iChangeThisTurn += /*-200*/ GC.getMINOR_FRIENDSHIP_DROP_PER_TURN_AGGRESSOR();
+#endif
 		// Normal decay
 		else
 			iChangeThisTurn += /*-100*/ GC.getMINOR_FRIENDSHIP_DROP_PER_TURN();
@@ -6162,6 +6181,11 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 			iDecayMod *= pkPersonalityInfo->GetFriendshipDecayModifierPercent();
 			iDecayMod /= 100;
 		}
+#endif
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+		// Alienated: faster decay after war declarations
+		iDecayMod *= 100 + GetAlienatedLevel(ePlayer) * /*50*/ GC.getMINOR_ALIENATED_DECAY_PER_LEVEL();
+		iDecayMod /= 100;
 #endif
 
 		iChangeThisTurn *= iDecayMod;
@@ -6372,11 +6396,16 @@ int CvMinorCivAI::GetFriendshipAnchorWithMajor(PlayerTypes eMajor)
 		iAnchor += GC.getMINOR_FRIENDSHIP_ANCHOR_MOD_PROTECTED();
 	}
 
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	// Wary: lower resting point after war declarations
+	iAnchor -= GetWaryLevel(eMajor) * /*10*/ GC.getMINOR_WARY_ANCHOR_PER_LEVEL();
+#else
 	// Wary Of?
 	if (IsWaryOfTeam(pMajor->getTeam()))
 	{
 		iAnchor += GC.getMINOR_FRIENDSHIP_ANCHOR_MOD_WARY_OF();
 	}
+#endif
 
 	// Social Policies
 	iAnchor += pMajor->GetMinorFriendshipAnchorMod();
@@ -10828,6 +10857,12 @@ bool CvMinorCivAI::IsPeaceBlocked(TeamTypes eTeam) const
 	if(IsPermanentWar(eTeam))
 		return true;
 
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	// Nemesis never makes peace
+	if(IsNemesisOfTeam(eTeam))
+		return true;
+#endif
+
 #ifdef LEKMOD_MINOR_CIV_PERSONALITIES
 	// Pacifistic city-states do not treat ally wars as peace-blocked; they remain neutral
 	if(IsNeverAlliedWarSupport())
@@ -10894,6 +10929,131 @@ void CvMinorCivAI::DoTeamDeclaredWarOnMe(TeamTypes eEnemyTeam)
 	}
 #endif
 
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+	const PlayerTypes eMe = GetPlayer()->GetID();
+
+	// Aggression level of the attacking team: 1 Antagonist, 2 Provocateur, 3 Aggressor, 4+ Warmonger.
+	// GetNumMinorCivsAttacked already counts this declaration (repeat declarations on one city-state count too).
+	int iAggressionLevel = pEnemyTeam->GetNumMinorCivsAttacked();
+	if(iAggressionLevel > 4)
+		iAggressionLevel = 4;
+
+	// Penalties with every city-state this major has declared war on
+	const int iLocalWary = (iAggressionLevel >= 2) ? 3 : 1;
+	const int iLocalAlienated = (iAggressionLevel >= 2) ? 2 : 1;
+	// Penalties with all other city-states
+	int iGlobalWary = 0;
+	int iGlobalAlienated = 0;
+	if(iAggressionLevel >= 4)
+	{
+		iGlobalWary = 3;
+		iGlobalAlienated = 2;
+	}
+	else if(iAggressionLevel == 3)
+	{
+		iGlobalWary = 2;
+		iGlobalAlienated = 1;
+	}
+
+	for(int iEnemyMajorLoop = 0; iEnemyMajorLoop < MAX_MAJOR_CIVS; iEnemyMajorLoop++)
+	{
+		PlayerTypes eAttacker = (PlayerTypes) iEnemyMajorLoop;
+		if(!GET_PLAYER(eAttacker).isAlive())
+			continue;
+		if(GET_PLAYER(eAttacker).getTeam() != eEnemyTeam)
+			continue;
+
+		m_aiWarDeclarationsByMajor[eAttacker]++;
+		const bool bNewNemesis = (m_aiWarDeclarationsByMajor[eAttacker] == /*3*/ GC.getMINOR_NEMESIS_WAR_DECLARATIONS());
+
+		// Provocateur: the two city-states closest to the attacker's capital that it has met and not declared war on
+		PlayerTypes eProvoked1 = NO_PLAYER;
+		PlayerTypes eProvoked2 = NO_PLAYER;
+		CvCity* pAttackerCapital = GET_PLAYER(eAttacker).getCapitalCity();
+		if(iAggressionLevel == 2 && pAttackerCapital != NULL)
+		{
+			int iBestDist1 = MAX_INT;
+			int iBestDist2 = MAX_INT;
+			for(int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+			{
+				PlayerTypes eMinor = (PlayerTypes) iMinorLoop;
+				CvPlayer& kMinor = GET_PLAYER(eMinor);
+				if(!kMinor.isAlive() || !kMinor.isMinorCiv())
+					continue;
+				if(kMinor.GetMinorCivAI()->GetWarDeclarationsByMajor(eAttacker) > 0)
+					continue;
+				if(!GET_TEAM(eEnemyTeam).isHasMet(kMinor.getTeam()))
+					continue;
+				CvCity* pMinorCapital = kMinor.getCapitalCity();
+				if(pMinorCapital == NULL)
+					continue;
+
+				const int iDist = plotDistance(pAttackerCapital->getX(), pAttackerCapital->getY(), pMinorCapital->getX(), pMinorCapital->getY());
+				if(iDist < iBestDist1)
+				{
+					iBestDist2 = iBestDist1;
+					eProvoked2 = eProvoked1;
+					iBestDist1 = iDist;
+					eProvoked1 = eMinor;
+				}
+				else if(iDist < iBestDist2)
+				{
+					iBestDist2 = iDist;
+					eProvoked2 = eMinor;
+				}
+			}
+		}
+
+		for(int iMinorLoop = MAX_MAJOR_CIVS; iMinorLoop < MAX_CIV_PLAYERS; iMinorLoop++)
+		{
+			PlayerTypes eMinor = (PlayerTypes) iMinorLoop;
+			CvPlayer& kMinor = GET_PLAYER(eMinor);
+			if(!kMinor.isAlive() || !kMinor.isMinorCiv())
+				continue;
+			CvMinorCivAI* pMinorAI = kMinor.GetMinorCivAI();
+
+			// Allies are not affected any further
+			if(eMinor != eMe && pMinorAI->IsAllies(eAttacker))
+				continue;
+
+			int iWary = iGlobalWary;
+			int iAlienated = iGlobalAlienated;
+			if(pMinorAI->GetWarDeclarationsByMajor(eAttacker) > 0)
+			{
+				if(iLocalWary > iWary)
+					iWary = iLocalWary;
+				if(iLocalAlienated > iAlienated)
+					iAlienated = iLocalAlienated;
+			}
+			else if(eMinor == eProvoked1 || eMinor == eProvoked2)
+			{
+				if(2 > iWary)
+					iWary = 2;
+			}
+			pMinorAI->RaiseWarDeclarationPenalties(eAttacker, iWary, iAlienated);
+		}
+
+		// Tell the attacker where it stands now
+		CvString strLevelKey;
+		strLevelKey.Format("TXT_KEY_LEKMOD_CS_AGGRESSION_LEVEL_%d", iAggressionLevel);
+		CvString strEffectsKey;
+		strEffectsKey.Format("TXT_KEY_LEKMOD_CS_AGGRESSION_EFFECTS_%d", iAggressionLevel);
+
+		Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_NTFN_CS_AGGRESSION_SUMMARY");
+		strSummary << strLevelKey.c_str();
+		Localization::String strMessage = Localization::Lookup("TXT_KEY_LEKMOD_NTFN_CS_AGGRESSION");
+		strMessage << strLevelKey.c_str() << pEnemyTeam->GetNumMinorCivsAttacked() << strEffectsKey.c_str();
+		CvString strMessageText = strMessage.toUTF8();
+		if(bNewNemesis)
+		{
+			Localization::String strNemesis = Localization::Lookup("TXT_KEY_LEKMOD_NTFN_CS_NEMESIS");
+			strNemesis << GetPlayer()->getCivilizationShortDescriptionKey();
+			strMessageText += "[NEWLINE][NEWLINE]";
+			strMessageText += strNemesis.toUTF8();
+		}
+		AddNotification(strMessageText, strSummary.toUTF8(), eAttacker);
+	}
+#else
 	//antonjs: todo: xml, rename xml to indicate it is for WaryOf, not Permanent War
 	// Minor Civ Warmonger
 	if(pEnemyTeam->IsMinorCivWarmonger())
@@ -11049,6 +11209,7 @@ void CvMinorCivAI::DoTeamDeclaredWarOnMe(TeamTypes eEnemyTeam)
 			AddNotification(strMessage, strSummary, eEnemyMajorLoop);
 		}
 	}
+#endif
 
 	GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
 }
@@ -11096,6 +11257,56 @@ void CvMinorCivAI::SetWaryOfTeam(TeamTypes eTeam, bool bValue)
 
 	m_abWaryOfTeam[eTeam] = bValue;
 }
+
+#ifdef LEKMOD_CS_WAR_DECLARATION_PENALTIES
+/// Wary level of this city-state towards eMajor (0-3); each level lowers the resting influence
+int CvMinorCivAI::GetWaryLevel(PlayerTypes eMajor) const
+{
+	if(eMajor < 0 || eMajor >= MAX_MAJOR_CIVS) return 0;
+	return m_aiWaryLevel[eMajor];
+}
+
+/// Alienated level of this city-state towards eMajor (0-2); each level speeds up influence decay
+int CvMinorCivAI::GetAlienatedLevel(PlayerTypes eMajor) const
+{
+	if(eMajor < 0 || eMajor >= MAX_MAJOR_CIVS) return 0;
+	return m_aiAlienatedLevel[eMajor];
+}
+
+/// How many times eMajor has declared war on this city-state
+int CvMinorCivAI::GetWarDeclarationsByMajor(PlayerTypes eMajor) const
+{
+	if(eMajor < 0 || eMajor >= MAX_MAJOR_CIVS) return 0;
+	return m_aiWarDeclarationsByMajor[eMajor];
+}
+
+/// Nemesis: eMajor declared war on this city-state often enough that it never makes peace
+bool CvMinorCivAI::IsNemesisOf(PlayerTypes eMajor) const
+{
+	return GetWarDeclarationsByMajor(eMajor) >= /*3*/ GC.getMINOR_NEMESIS_WAR_DECLARATIONS();
+}
+
+bool CvMinorCivAI::IsNemesisOfTeam(TeamTypes eTeam) const
+{
+	for(int iMajorLoop = 0; iMajorLoop < MAX_MAJOR_CIVS; iMajorLoop++)
+	{
+		PlayerTypes eMajor = (PlayerTypes) iMajorLoop;
+		if(GET_PLAYER(eMajor).getTeam() == eTeam && IsNemesisOf(eMajor))
+			return true;
+	}
+	return false;
+}
+
+/// Penalties only ever go up
+void CvMinorCivAI::RaiseWarDeclarationPenalties(PlayerTypes eMajor, int iWaryLevel, int iAlienatedLevel)
+{
+	if(eMajor < 0 || eMajor >= MAX_MAJOR_CIVS) return;
+	if(iWaryLevel > m_aiWaryLevel[eMajor])
+		m_aiWaryLevel[eMajor] = iWaryLevel;
+	if(iAlienatedLevel > m_aiAlienatedLevel[eMajor])
+		m_aiAlienatedLevel[eMajor] = iAlienatedLevel;
+}
+#endif
 
 
 // ******************************
