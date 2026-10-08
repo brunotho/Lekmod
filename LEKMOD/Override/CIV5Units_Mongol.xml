@@ -135560,7 +135560,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_RAILROAD_HELP"> 
 			<Text>
-				Allows Workers to build [COLOR_POSITIVE_TEXT]Railroads[ENDCOLOR] on map tiles. Connecting cities with them will increase [ICON_PRODUCTION] Production, and units traveling along them will move more quickly.
+				Allows Workers to build [COLOR_POSITIVE_TEXT]Railroads[ENDCOLOR] on map tiles. Connecting cities with them will increase [ICON_PRODUCTION] Production, and units traveling along them will move more quickly.[NEWLINE][NEWLINE]Roads take only 1 turn to build, and Pontoon Bridges build faster.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_RAILROAD_QUOTE"> 
