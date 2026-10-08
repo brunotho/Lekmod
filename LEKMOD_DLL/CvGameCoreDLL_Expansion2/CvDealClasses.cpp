@@ -1478,6 +1478,11 @@ void CvDeal::AddOpenBorders(PlayerTypes eFrom, int iDuration)
 		item.m_eItemType = TRADE_ITEM_OPEN_BORDERS;
 #ifdef LEKMOD_OPEN_BORDERS_FIXED_DURATION
 		item.m_iDuration = GC.getOPEN_BORDERS_DURATION(); // like the defensive pact: fixed turns, not the speed's deal length
+#ifdef LEKMOD_OPEN_BORDERS_INDEFINITE
+		// Until war: deals between players are cancelled when they go to war
+		if(iDuration >= GC.getOPEN_BORDERS_INDEFINITE_DURATION())
+			item.m_iDuration = GC.getOPEN_BORDERS_INDEFINITE_DURATION();
+#endif
 #else
 		item.m_iDuration = iDuration;
 #endif

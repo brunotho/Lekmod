@@ -101516,6 +101516,21 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_PEDIA_CSTATE_COMMON">
 			<Text>Its personality is chosen at random each game and shown on its screen (see City-State Personalities in Game Concepts).[NEWLINE][NEWLINE]Its Ally also receives all its luxury and strategic resources and its World Congress Delegates.[NEWLINE][NEWLINE]All City-State rules are in Game Concepts, section City-States.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_TIMED">
+			<Text>OPEN BORDERS ({1_Num} TURNS)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE">
+			<Text>OPEN BORDERS (UNTIL WAR)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_TIMED_TT">
+			<Text>Open Borders for {1_Num} turns.[NEWLINE]Click to make it last until war instead.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE_TT">
+			<Text>Open Borders until the two of you go to war.[NEWLINE]Click to remove it from the deal.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_HINT">
+			<Text>After adding it, click it on the table to make it last until war instead of {1_Num} turns.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

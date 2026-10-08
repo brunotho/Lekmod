@@ -1285,7 +1285,7 @@ function ResetDisplay()
     local bOpenBordersAllowed = g_Deal:IsPossibleToTradeItem(g_iUs, g_iThem, TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iDealDuration);
     
     -- Are we not allowed to give Open Borders? (don't have tech)
-    strTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", GameDefines.OPEN_BORDERS_DURATION or g_iDealDuration );
+    strTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", GameDefines.OPEN_BORDERS_DURATION or g_iDealDuration ) .. LekmodOpenBordersPocketHint();
     if (not bOpenBordersAllowed) then
 		if (not g_pUsTeam:IsOpenBordersTradingAllowed() and not g_pThemTeam:IsOpenBordersTradingAllowed()) then
 			strTooltip = strTooltip .. " [COLOR_WARNING_TEXT]" .. Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_NO_TECH" ) .. "[ENDCOLOR]";
@@ -2144,9 +2144,11 @@ function DisplayDeal()
             if( bFromUs ) then
                 Controls.UsPocketOpenBorders:SetHide( true );
                 Controls.UsTableOpenBorders:SetHide( false );
+                LekmodLabelOpenBorders( Controls.UsTableOpenBorders, duration );
             else
                 Controls.ThemPocketOpenBorders:SetHide( true );
                 Controls.ThemTableOpenBorders:SetHide( false );
+                LekmodLabelOpenBorders( Controls.ThemTableOpenBorders, duration );
             end
         
         elseif( TradeableItems.TRADE_ITEM_DEFENSIVE_PACT == itemType ) then
@@ -2587,6 +2589,47 @@ function TableDoFHandler( isUs )
 end
 
 -----------------------------------------------------------------------------------------------------------------------
+-- LEKMOD_OPEN_BORDERS_INDEFINITE: open borders for 10 turns or until war (click the table item to switch)
+-----------------------------------------------------------------------------------------------------------------------
+function LekmodIsOpenBordersIndefinite( duration )
+	return GameDefines.OPEN_BORDERS_INDEFINITE_DURATION ~= nil and duration ~= nil and duration >= GameDefines.OPEN_BORDERS_INDEFINITE_DURATION;
+end
+
+function LekmodLabelOpenBorders( tableControl, duration )
+	if tableControl == nil or GameDefines.OPEN_BORDERS_INDEFINITE_DURATION == nil then return; end
+	if LekmodIsOpenBordersIndefinite( duration ) then
+		tableControl:SetText( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE" ) );
+		tableControl:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE_TT" ) );
+	else
+		tableControl:SetText( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_TIMED", duration ) );
+		tableControl:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_TIMED_TT", duration ) );
+	end
+end
+
+-- Timed open borders on the table become indefinite; indefinite ones are removed
+function LekmodCycleOpenBorders( playerID )
+	local duration = nil;
+	g_Deal:ResetIterator();
+	repeat
+		local item = { g_Deal:GetNextItem() };
+		if item[1] == nil then break; end
+		local fromPlayerID = item[8] or item[6];
+		if item[1] == TradeableItems.TRADE_ITEM_OPEN_BORDERS and fromPlayerID == playerID then
+			duration = item[2];
+		end
+	until false;
+	g_Deal:RemoveByType( TradeableItems.TRADE_ITEM_OPEN_BORDERS, playerID );
+	if duration ~= nil and GameDefines.OPEN_BORDERS_INDEFINITE_DURATION ~= nil and not LekmodIsOpenBordersIndefinite( duration ) then
+		g_Deal:AddOpenBorders( playerID, GameDefines.OPEN_BORDERS_INDEFINITE_DURATION );
+	end
+end
+
+function LekmodOpenBordersPocketHint()
+	if GameDefines.OPEN_BORDERS_INDEFINITE_DURATION == nil then return ""; end
+	return "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_HINT", GameDefines.OPEN_BORDERS_DURATION or 10 );
+end
+
+-----------------------------------------------------------------------------------------------------------------------
 -- Open Borders Handlers
 -----------------------------------------------------------------------------------------------------------------------
 function PocketOpenBordersHandler( isUs )
@@ -2607,11 +2650,9 @@ Controls.ThemPocketOpenBorders:SetVoid1( 0 );
 function TableOpenBordersHandler( isUs )
 
     if( isUs == 1 ) then
-        print( "remove: us " .. g_iUs );
-        g_Deal:RemoveByType( TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iUs );
+        LekmodCycleOpenBorders( g_iUs );
     else
-        print( "remove: them " .. g_iThem );
-        g_Deal:RemoveByType( TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iThem );
+        LekmodCycleOpenBorders( g_iThem );
     end
        
        

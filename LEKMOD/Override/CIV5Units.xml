@@ -93123,6 +93123,10 @@
 			<Value>10</Value>
 		</Row>
 		<Row>
+			<Name>OPEN_BORDERS_INDEFINITE_DURATION</Name>
+			<Value>1000</Value>
+		</Row>
+		<Row>
 			<Name>TRADE_ROUTE_DURATION</Name>
 			<Value>15</Value>
 		</Row>
