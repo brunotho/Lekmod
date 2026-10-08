@@ -1231,6 +1231,9 @@ void CvGame::uninit()
 // Initializes data members that are serialized.
 void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 {
+#ifdef LEKMOD_WONDER_TIE_RULES
+	LekmodResetWonderTieData();
+#endif
 #ifdef AUI_WARNING_FIXES
 	uint iI;
 #else
@@ -8163,7 +8166,15 @@ bool CvGame::isBuildingClassMaxedOut(BuildingClassTypes eIndex, int iExtra)
 		return false;
 	}
 
+#ifndef LEKMOD_WONDER_TIE_RULES
 	CvAssertMsg(getBuildingClassCreatedCount(eIndex) <= pkBuildingClassInfo->getMaxGlobalInstances(), "Index is expected to be within maximum bounds (invalid Index)");
+#else
+	// "Both": a wonder first finished during this turn's production can still be finished by other cities in the same production pass
+	if(isOption("GAMEOPTION_LEKMOD_WONDER_TIE_BOTH") && LekmodIsWonderTieWindow() && eIndex < (int)s_aiLekmodWonderMaxedTurn.size() && s_aiLekmodWonderMaxedTurn[eIndex] == getGameTurn())
+	{
+		return false;
+	}
+#endif
 
 	return ((getBuildingClassCreatedCount(eIndex) + iExtra) >= pkBuildingClassInfo->getMaxGlobalInstances());
 }
@@ -8175,7 +8186,87 @@ void CvGame::incrementBuildingClassCreatedCount(BuildingClassTypes eIndex)
 	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	CvAssertMsg(eIndex < GC.getNumBuildingClassInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
 	m_paiBuildingClassCreatedCount[eIndex]++;
+#ifdef LEKMOD_WONDER_TIE_RULES
+	// Remember the turn a world wonder was first finished
+	CvBuildingClassInfo* pkClassInfo = GC.getBuildingClassInfo(eIndex);
+	if(pkClassInfo && isWorldWonderClass(*pkClassInfo) && m_paiBuildingClassCreatedCount[eIndex] == pkClassInfo->getMaxGlobalInstances())
+	{
+		if((int)s_aiLekmodWonderMaxedTurn.size() < GC.getNumBuildingClassInfos())
+			s_aiLekmodWonderMaxedTurn.resize(GC.getNumBuildingClassInfos(), -1);
+		s_aiLekmodWonderMaxedTurn[eIndex] = getGameTurn();
+	}
+#endif
 }
+
+#ifdef LEKMOD_WONDER_TIE_RULES
+// Not saved: only meaningful inside one turn's production pass (saves and loads happen between passes)
+std::vector<int> CvGame::s_aiLekmodWonderMaxedTurn;
+std::vector<int> CvGame::s_aiLekmodWonderTieTurn;
+std::vector<int> CvGame::s_aiLekmodCityProductionTurn;
+bool CvGame::s_bLekmodWonderTieWindow = false;
+
+void CvGame::LekmodSetWonderTieWindow(bool bOpen)
+{
+	s_bLekmodWonderTieWindow = bOpen;
+}
+
+bool CvGame::LekmodIsWonderTieWindow()
+{
+	return s_bLekmodWonderTieWindow;
+}
+
+void CvGame::LekmodResetWonderTieData()
+{
+	s_aiLekmodWonderMaxedTurn.clear();
+	s_aiLekmodWonderTieTurn.clear();
+	s_bLekmodWonderTieWindow = false;
+}
+
+void CvGame::LekmodMarkWonderTie(BuildingClassTypes eClass)
+{
+	if((int)s_aiLekmodWonderTieTurn.size() < GC.getNumBuildingClassInfos())
+		s_aiLekmodWonderTieTurn.resize(GC.getNumBuildingClassInfos(), -1);
+	s_aiLekmodWonderTieTurn[eClass] = getGameTurn();
+}
+
+/// "Neither": is another player's city finishing this world wonder in the same production pass?
+/// Cities processed earlier this pass already marked a tie; cities processed later are checked by look-ahead.
+bool CvGame::LekmodIsWonderTiedThisTurn(BuildingTypes eBuilding, const CvCity* pCity)
+{
+	CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
+	if(pkBuildingInfo == NULL || pCity == NULL)
+		return false;
+	const BuildingClassTypes eClass = (BuildingClassTypes)pkBuildingInfo->GetBuildingClassType();
+
+	if(eClass < (int)s_aiLekmodWonderTieTurn.size() && s_aiLekmodWonderTieTurn[eClass] == getGameTurn())
+		return true;
+
+	for(int iPlayerLoop = 0; iPlayerLoop < MAX_MAJOR_CIVS; iPlayerLoop++)
+	{
+		CvPlayer& kOther = GET_PLAYER((PlayerTypes)iPlayerLoop);
+		if(!kOther.isAlive() || kOther.GetID() == pCity->getOwner())
+			continue;
+
+		int iLoop;
+		for(CvCity* pLoopCity = kOther.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kOther.nextCity(&iLoop))
+		{
+			if(!pLoopCity->isProductionBuilding())
+				continue;
+			const BuildingTypes eOtherBuilding = pLoopCity->getProductionBuilding();
+			CvBuildingEntry* pkOtherInfo = GC.getBuildingInfo(eOtherBuilding);
+			if(pkOtherInfo == NULL || pkOtherInfo->GetBuildingClassType() != eClass)
+				continue;
+			// Already processed this pass: it did not finish (otherwise it would have marked the tie)
+			if(pLoopCity->LekmodGetLastProductionTurn() == getGameTurn())
+				continue;
+			// Look ahead: will it finish when its turn is processed?
+			if(pLoopCity->getProductionTimes100() + pLoopCity->getCurrentProductionDifferenceTimes100(false, true) >= pLoopCity->getProductionNeeded() * 100)
+				return true;
+		}
+	}
+	return false;
+}
+#endif
 
 
 //	--------------------------------------------------------------------------------

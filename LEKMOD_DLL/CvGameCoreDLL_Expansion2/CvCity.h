@@ -236,6 +236,13 @@ public:
 
 	int getProduction() const;
 	int getProductionTimes100() const;
+#ifdef LEKMOD_WONDER_TIE_RULES
+	int LekmodGetLastProductionTurn() const
+	{
+		return m_iLekmodLastProductionTurn;
+	}
+	int m_iLekmodLastProductionTurn; // not saved: game turn of this city's last production pass
+#endif
 	int getProductionNeeded() const;
 	int getProductionNeeded(UnitTypes eUnit) const;
 	int getProductionNeeded(BuildingTypes eBuilding) const;

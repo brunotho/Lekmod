@@ -861,6 +861,13 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 		if(!pToTeam->isAtWar(eFromTeam))
 			return false;
 
+#ifdef LEKMOD_WAR_START
+		// Start at war: no peace between major civs before the set turn
+		if(GC.getGame().isOption("GAMEOPTION_LEKMOD_WAR_START") && GC.getGame().getGameTurn() < LEKMOD_WAR_START_PEACE_TURN
+			&& !pFromTeam->isMinorCiv() && !pToTeam->isMinorCiv())
+			return false;
+#endif
+
 		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
 		if (pkScriptSystem)
 		{

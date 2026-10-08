@@ -435,11 +435,38 @@ You can have open trade offers to several players at the same time.
 - Added: if an accepted deal can no longer be completed (e.g. the luxury was already traded to someone else, or the Gold per turn can no longer be paid), it fails and both players get a notification
 - Dev: LEKMOD_MULTIPLE_DEAL_PROPOSALS: UI checks removed in TradeLogic (ui), DiploCorner (ui, eui) and an override of DiploList (standard UI); the DLL already keeps one proposal per player pair and re-validates items in CvGameDeals::FinalizeDeal, which now notifies. Untested whether the game executable itself accepts a second open proposal
 
+LOBBY: MODES (TOURNAMENT / CASUAL)
+----------------------------------
+Tags: ui, game mechanics
+The multiplayer lobby has a Mode setting that fills in the agreed settings at once.
+- Added: Mode dropdown at the top of the game options: Tournament (default for a new game) or Casual. All other settings can still be changed afterwards
+- Added: both modes set quick speed, simultaneous turns, pitboss, a relative turn timer of 75, quick movement and combat, no combat randomness, no scientist and policy saving, fast hand, turn start combat limits, no auto missions, no strategic trading, all players can found religions, alternate golden ages, all victory types, and all "AI cannot..." options
+- Added: Tournament: no private chat, start at war (peace from turn 20), same-turn wonders go to nobody
+- Added: Casual: private chat allowed, no start at war, same-turn wonders go to everyone who finished them
+- Note: map options (resources, legendary start) and map size are not set by the modes yet (map size waits for the 6/7/8-player lobby work)
+
+
+START AT WAR
+------------
+Tags: game mechanics
+A lobby option puts all players at war with each other from the start.
+- Added: game option "Start at War": major civilizations are at war as soon as they meet, and cannot make peace before turn 20 (city-states are not affected)
+- Dev: LEKMOD_WAR_START (CvTeam::makeHasMet, CvDeal::IsPossibleToTradeItem peace treaty); LEKMOD_WAR_START_PEACE_TURN 20; GameOptions ID 71
+
+
+SAME-TURN WONDERS
+-----------------
+Tags: game mechanics, ui
+A lobby setting decides what happens when several players finish the same World Wonder in the same turn.
+- Added: lobby setting "Same-Turn Wonders": Random (one of them gets it, the others get Gold, as before), Neither (nobody gets it, everyone gets Gold for their production) or Both (everyone who finished it gets it)
+- Added: a player never owns the same World Wonder twice: capturing a city with a wonder you already have destroys the captured copy
+- Dev: LEKMOD_WONDER_TIE_RULES: CvGame::isBuildingClassMaxedOut exception while cities process production (Both); look-ahead over other players' cities and a per-turn tie marker in CvCity::doProduction (Neither); duplicate check in CvPlayer::acquireCity. GameOptions IDs 69/70 (hidden, set by the lobby dropdown), 72 mode (hidden)
+
 LOBBY: CIV COLORS (HIGH CONTRAST)
 ---------------------------------
 Tags: ui
 A new lobby option gives the players six easy-to-tell-apart color schemes.
-- Added: game option "Civ Colors: High Contrast" (off by default = Original colors). When on, the players get the color schemes of England, Russia, Greece, Jerusalem, Arabia and Babylon in random order instead of their own civilization's colors. With more than six players, the others keep their own colors
+- Added: lobby setting "Civ Colors" (Original by default, or High Contrast). With High Contrast, the players get the color schemes of England, Russia, Greece, Jerusalem, Arabia and Babylon in random order instead of their own civilization's colors. With more than six players, the others keep their own colors
 - Dev: LEKMOD_HIGH_CONTRAST_CIV_COLORS in CvGame::InitPlayers; GameOptions ID 68 GAMEOPTION_HIGH_CONTRAST_CIV_COLORS. Deterministic shuffle seeded by CvPreGame::syncRandomSeed() (same on every client)
 
 UNIT FLAGS: ATTACKED THIS TURN

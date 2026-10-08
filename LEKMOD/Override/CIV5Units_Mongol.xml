@@ -101584,6 +101584,69 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_DEAL_FAILED_SUMMARY">
 			<Text>Deal could not be completed</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_WONDER_TIE_NEITHER">
+			<Text>{1_City:textkey}: another civilization also finished {2_Wonder:textkey} this turn, so nobody gets it. Its production was converted into {3_Gold} [ICON_GOLD] Gold.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_GAME_OPTION_LEKMOD_WAR_START">
+			<Text>Start at War</Text>
+		</Row>
+		<Row Tag="TXT_KEY_GAME_OPTION_LEKMOD_WAR_START_HELP">
+			<Text>Players are at war with each other as soon as they meet.[NEWLINE]Peace is possible from turn 20 on.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_MODE">
+			<Text>Mode</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_MODE_TOURNAMENT">
+			<Text>Tournament</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_MODE_TOURNAMENT_HELP">
+			<Text>Competitive settings: no private chat, start at war (peace from turn 20), wonders finished in the same turn go to nobody.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_MODE_CASUAL">
+			<Text>Casual</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_MODE_CASUAL_HELP">
+			<Text>Relaxed settings: private chat allowed, peace from the start, wonders finished in the same turn go to everyone who finished them.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE">
+			<Text>Same-Turn Wonders</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_HELP">
+			<Text>What happens when several players finish the same World Wonder in the same turn.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_RANDOM">
+			<Text>Random</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_RANDOM_HELP">
+			<Text>One of them gets the wonder at random; the others get Gold for their production.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_NEITHER">
+			<Text>Neither</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_NEITHER_HELP">
+			<Text>Nobody gets the wonder; everyone gets Gold for their production.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_BOTH">
+			<Text>Both</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_BOTH_HELP">
+			<Text>Everyone who finished it gets the wonder.[NEWLINE]A player never owns the same wonder twice: if one of them later captures the other's city, the captured copy is destroyed.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_CIV_COLORS">
+			<Text>Civ Colors</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL">
+			<Text>Original</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL_HELP">
+			<Text>Every civilization uses its own colors.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST">
+			<Text>High Contrast</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST_HELP">
+			<Text>The players get six high-contrast color schemes (those of England, Russia, Greece, Jerusalem, Arabia and Babylon) in random order.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

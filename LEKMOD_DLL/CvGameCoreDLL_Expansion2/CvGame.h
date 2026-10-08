@@ -443,6 +443,18 @@ public:
 
 	int getBuildingClassCreatedCount(BuildingClassTypes eIndex);
 	bool isBuildingClassMaxedOut(BuildingClassTypes eIndex, int iExtra = 0);
+#ifdef LEKMOD_WONDER_TIE_RULES
+	// Same-turn world wonders: the window is open while cities process their turn production
+	static void LekmodSetWonderTieWindow(bool bOpen);
+	static bool LekmodIsWonderTieWindow();
+	bool LekmodIsWonderTiedThisTurn(BuildingTypes eBuilding, const CvCity* pCity);
+	void LekmodMarkWonderTie(BuildingClassTypes eClass);
+	static void LekmodResetWonderTieData();
+	static std::vector<int> s_aiLekmodWonderMaxedTurn;
+	static std::vector<int> s_aiLekmodWonderTieTurn;
+	static std::vector<int> s_aiLekmodCityProductionTurn;
+	static bool s_bLekmodWonderTieWindow;
+#endif
 	void incrementBuildingClassCreatedCount(BuildingClassTypes eIndex);
 
 	int getProjectCreatedCount(ProjectTypes eIndex);

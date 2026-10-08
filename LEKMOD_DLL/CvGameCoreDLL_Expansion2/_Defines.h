@@ -921,6 +921,11 @@
 #define LEKMOD_HIGH_CONTRAST_CIV_COLORS
 // Several deal proposals from one player can be open at once (UI); accepted deals that became invalid notify both players
 #define LEKMOD_MULTIPLE_DEAL_PROPOSALS
+// Lobby setting for world wonders finished by several players in the same turn: Random (default), Neither (all get gold), Both (all get it)
+#define LEKMOD_WONDER_TIE_RULES
+// Lobby option GAMEOPTION_LEKMOD_WAR_START: major civs are at war when they meet; no peace before turn LEKMOD_WAR_START_PEACE_TURN
+#define LEKMOD_WAR_START
+#define LEKMOD_WAR_START_PEACE_TURN 20
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

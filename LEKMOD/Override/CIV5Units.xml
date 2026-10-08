@@ -107703,7 +107703,44 @@
 			<Description>TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS</Description>
 			<Help>TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS_HELP</Help>
 			<Default>false</Default>
+			<Visible>false</Visible>
+			<SupportsSinglePlayer>true</SupportsSinglePlayer>
+			<SupportsMultiplayer>true</SupportsMultiplayer>
+		</Row>
+		<Row>
+			<ID>69</ID>
+			<Type>GAMEOPTION_LEKMOD_WONDER_TIE_NEITHER</Type>
+			<Description>TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_NEITHER</Description>
+			<Default>false</Default>
+			<Visible>false</Visible>
+			<SupportsSinglePlayer>true</SupportsSinglePlayer>
+			<SupportsMultiplayer>true</SupportsMultiplayer>
+		</Row>
+		<Row>
+			<ID>70</ID>
+			<Type>GAMEOPTION_LEKMOD_WONDER_TIE_BOTH</Type>
+			<Description>TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_BOTH</Description>
+			<Default>false</Default>
+			<Visible>false</Visible>
+			<SupportsSinglePlayer>true</SupportsSinglePlayer>
+			<SupportsMultiplayer>true</SupportsMultiplayer>
+		</Row>
+		<Row>
+			<ID>71</ID>
+			<Type>GAMEOPTION_LEKMOD_WAR_START</Type>
+			<Description>TXT_KEY_GAME_OPTION_LEKMOD_WAR_START</Description>
+			<Help>TXT_KEY_GAME_OPTION_LEKMOD_WAR_START_HELP</Help>
+			<Default>false</Default>
 			<Visible>true</Visible>
+			<SupportsSinglePlayer>true</SupportsSinglePlayer>
+			<SupportsMultiplayer>true</SupportsMultiplayer>
+		</Row>
+		<Row>
+			<ID>72</ID>
+			<Type>GAMEOPTION_LEKMOD_MODE_CASUAL</Type>
+			<Description>TXT_KEY_LEKMOD_LOBBY_MODE_CASUAL</Description>
+			<Default>false</Default>
+			<Visible>false</Visible>
 			<SupportsSinglePlayer>true</SupportsSinglePlayer>
 			<SupportsMultiplayer>true</SupportsMultiplayer>
 		</Row>

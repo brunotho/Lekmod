@@ -3761,6 +3761,15 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bSuppressMessages)
 				}
 			}
 		}
+#ifdef LEKMOD_WAR_START
+		// Start at war: major civs go to war when they meet (peace possible from turn LEKMOD_WAR_START_PEACE_TURN)
+		if(GC.getGame().isOption("GAMEOPTION_LEKMOD_WAR_START") && GetID() != eIndex && !isAtWar(eIndex)
+			&& !isMinorCiv() && !isBarbarian() && !isObserver()
+			&& !GET_TEAM(eIndex).isMinorCiv() && !GET_TEAM(eIndex).isBarbarian() && !GET_TEAM(eIndex).isObserver())
+		{
+			declareWar(eIndex);
+		}
+#endif
 
 		int iMyPlayersLoop;
 		PlayerTypes eMyPlayer;

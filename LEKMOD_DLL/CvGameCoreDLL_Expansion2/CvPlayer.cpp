@@ -3231,7 +3231,14 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift, bool bP
 					CvBuildingEntry* pkBuildingInfo = GC.getBuildingInfo(eBuilding);
 					if(pkBuildingInfo)
 					{
-						if(!pkLoopBuildingInfo->IsNeverCapture())
+						// A player never owns the same world wonder twice (possible after a "Both" same-turn finish): the captured copy is destroyed
+						const bool bLekmodDuplicateWonder =
+#ifdef LEKMOD_WONDER_TIE_RULES
+							::isWorldWonderClass(kLoopBuildingClassInfo) && getBuildingClassCount((BuildingClassTypes)pkLoopBuildingInfo->GetBuildingClassType()) > 0;
+#else
+							false;
+#endif
+						if(!pkLoopBuildingInfo->IsNeverCapture() && !bLekmodDuplicateWonder)
 						{
 							if(!isProductionMaxedBuildingClass(((BuildingClassTypes)(pkBuildingInfo->GetBuildingClassType())), true))
 							{

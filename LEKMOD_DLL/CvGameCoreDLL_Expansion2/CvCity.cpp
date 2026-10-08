@@ -1133,6 +1133,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 {
 	VALIDATE_OBJECT
 	m_syncArchive.reset();
+#ifdef LEKMOD_WONDER_TIE_RULES
+	m_iLekmodLastProductionTurn = -1;
+#endif
 
 #ifdef AUI_WARNING_FIXES
 	uint iI;
@@ -2237,6 +2240,9 @@ void CvCity::doTurn()
 			}
 		}
 #endif
+#ifdef LEKMOD_WONDER_TIE_RULES
+		CvGame::LekmodSetWonderTieWindow(true);
+#endif
 		bool bAllowNoProduction = !doCheckProduction();
 
 		doGrowth();
@@ -2244,6 +2250,10 @@ void CvCity::doTurn()
 		DoUpdateIndustrialRouteToCapital();
 
 		doProduction(bAllowNoProduction);
+#ifdef LEKMOD_WONDER_TIE_RULES
+		CvGame::LekmodSetWonderTieWindow(false);
+		m_iLekmodLastProductionTurn = GC.getGame().getGameTurn();
+#endif
 
 		doDecay();
 
@@ -18360,6 +18370,34 @@ void CvCity::doProduction(bool bAllowNoProduction)
 		setOverflowProduction(0);
 		setFeatureProduction(0);
 
+#ifdef LEKMOD_WONDER_TIE_RULES
+		// "Neither": a world wonder that another player also finishes this turn goes to nobody; everyone gets the gold instead
+		if(getProduction() >= getProductionNeeded() && !isProductionProcess() && isProductionBuilding() && GC.getGame().isOption("GAMEOPTION_LEKMOD_WONDER_TIE_NEITHER"))
+		{
+			const BuildingTypes eTieBuilding = getProductionBuilding();
+			CvBuildingEntry* pkTieInfo = GC.getBuildingInfo(eTieBuilding);
+			if(pkTieInfo && isWorldWonderClass(pkTieInfo->GetBuildingClassInfo()) && GC.getGame().LekmodIsWonderTiedThisTurn(eTieBuilding, this))
+			{
+				GC.getGame().LekmodMarkWonderTie((BuildingClassTypes)pkTieInfo->GetBuildingClassType());
+				const int iProductionGold = (m_pCityBuildings->GetBuildingProduction(eTieBuilding) * GC.getMAXED_BUILDING_GOLD_PERCENT()) / 100;
+				if(iProductionGold > 0)
+				{
+					GET_PLAYER(getOwner()).GetTreasury()->ChangeGold(iProductionGold);
+					if(getOwner() == GC.getGame().getActivePlayer())
+					{
+						Localization::String localizedText = Localization::Lookup("TXT_KEY_LEKMOD_WONDER_TIE_NEITHER");
+						localizedText << getNameKey() << pkTieInfo->GetTextKey() << iProductionGold;
+						DLLUI->AddCityMessage(0, GetIDInfo(), getOwner(), false, GC.getEVENT_MESSAGE_TIME(), localizedText.toUTF8());
+					}
+				}
+				m_pCityBuildings->SetBuildingProduction(eTieBuilding, 0);
+				auto_ptr<ICvCity1> pDllCity(new CvDllCity(this));
+				DLLUI->AddDeferredWonderCommand(WONDER_REMOVED, pDllCity.get(), eTieBuilding, 0);
+				popOrder(0, false, true);
+				return;
+			}
+		}
+#endif
 		if(getProduction() >= getProductionNeeded() && !isProductionProcess())
 		{
 #ifdef AUI_CITY_FIX_DO_PRODUCTION_CONSIDER_FOOD_HAMMERS_FROM_NEW_BUILDING
