@@ -494,6 +494,13 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+CHAT EMOJI PICKER
+-----------------
+Tags: ui
+The in-game chat's emoji picker only lists the favourites.
+- Changed: the picker shows the happiness faces, the G12 emotes, saba_ping, HMM, KEKW, KEKWait and Food instead of every icon in the game
+- Note: any other icon still works when typed into the chat (e.g. [ICON_POG])
+
 AIR COMBAT FEEDBACK
 -------------------
 Tags: ui, air
