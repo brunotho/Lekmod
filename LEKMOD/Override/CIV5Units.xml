@@ -201589,7 +201589,7 @@
 		</Update>
 		<Update>
 			<Where Type="TECH_ASTRONOMY"/>
-			<Set Cost="796"/>
+			<Set Cost="677"/>
 		</Update>
 		<Update>
 			<Where Type="TECH_ACOUSTICS"/>
@@ -201609,7 +201609,7 @@
 		</Update>
 		<Update>
 			<Where Type="TECH_NAVIGATION"/>
-			<Set Cost="1173"/>
+			<Set Cost="997"/>
 		</Update>
 		<Update>
 			<Where Type="TECH_ARCHITECTURE"/>
