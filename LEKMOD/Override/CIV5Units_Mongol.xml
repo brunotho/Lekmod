@@ -101572,6 +101572,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT">
 			<Text>With a {1_Improvement:textkey} ({2_Turns} turns for one Worker):</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE">
+			<Text>A city founded here connects the resource, but gets only the base yields.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE_BONUS">
+			<Text>A city founded here gets only the base yields.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS">
 			<Text>Civ Colors: High Contrast</Text>
 		</Row>

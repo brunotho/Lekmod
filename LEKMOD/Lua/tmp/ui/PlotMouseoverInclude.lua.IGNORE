@@ -269,7 +269,10 @@ function LekmodResourceImprovementString(plot, pResource)
 					strYields = strYields .. " " .. iYield .. pYield.IconString;
 				end
 			end
-			return "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns) .. strYields;
+			-- A city founded here gets only the base yields (and connects a luxury or strategic resource)
+			local strSettle = (pResource.ResourceUsage ~= nil and pResource.ResourceUsage > 0) and "TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE" or "TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE_BONUS";
+			return "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns) .. strYields
+				.. "[NEWLINE]" .. Locale.ConvertTextKey(strSettle);
 		end
 	end
 	return "";

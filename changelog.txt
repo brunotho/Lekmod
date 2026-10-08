@@ -491,6 +491,7 @@ TILE TOOLTIP: UNIMPROVED RESOURCES
 Tags: ui
 Hovering an unimproved resource shows what improving it would give.
 - Added: the improvement that connects the resource, how many turns one Worker needs to build it, and the tile's yields with it (e.g. "With a Mine (5 turns for one Worker): 1 Food 3 Production")
+- Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
 AIR COMBAT FEEDBACK
