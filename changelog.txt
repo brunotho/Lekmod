@@ -413,6 +413,12 @@ Declaring war on city-states now escalates through four standings, with lasting 
 - Dev: LEKMOD_CS_WAR_DECLARATION_PENALTIES: CvMinorCivAI::DoTeamDeclaredWarOnMe (levels from CvTeam::GetNumMinorCivsAttacked), anchor in GetFriendshipAnchorWithMajor, decay multiplier in GetFriendshipChangePerTurnTimes100, nemesis in IsPeaceBlocked. New saved members m_aiWaryLevel, m_aiAlienatedLevel, m_aiWarDeclarationsByMajor. Defines MINOR_WARY_ANCHOR_PER_LEVEL 10, MINOR_ALIENATED_DECAY_PER_LEVEL 50, MINOR_NEMESIS_WAR_DECLARATIONS 3. Lua: GetMinorCivWaryLevel, GetMinorCivAlienatedLevel, GetMinorCivWarDeclarations, IsMinorCivNemesis (on the city-state), GetCityStateWarDeclarations (on the major)
 - Note: city-state personalities with BlocksWarDeclarationPenalty (none at the moment) still skip all of this
 
+HELLENIC LEAGUE (TRAIT_CITY_STATE_FRIENDSHIP)
+---------------------------------------------
+Tags: civs, ui, bugfix
+Greece's ability text now mentions that city-state territory counts as friendly territory.
+- Fixed: the ability text left out that city-state territory always counts as friendly territory for Greek units (healing, combat bonuses) and that they never trespass there. The effect itself was already active
+
 BASILICA (BUILDING_BASIL)
 -------------------------
 Tags: civs, ui, bugfix

@@ -137712,9 +137712,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CITY_STATE_FRIENDSHIP"> 
-			<Text>
-				City-State [ICON_INFLUENCE] Influence degrades at half and recovers at twice the normal rate.
-			</Text>
+			<Text>City-State [ICON_INFLUENCE] Influence degrades at half and recovers at twice the normal rate.[NEWLINE][NEWLINE]City-State territory always counts as friendly territory for your units (healing and combat bonuses), and your units never trespass in it.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_CITY_STATE_FRIENDSHIP_SHORT"> 
 			<Text>
