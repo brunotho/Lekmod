@@ -117032,7 +117032,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_CASTE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Military Caste[ENDCOLOR][NEWLINE][COLOR_POSITIVE_TEXT]Garrisoned[ENDCOLOR] units cost no maintenance and provide the city with +2 [ICON_CULTURE] Culture and +1 [ICON_HAPPINESS_1] Happiness. [ICON_BUILDING_COURTHOUSE] Courthouses provide +2 [ICON_HAPPINESS_1] Happiness.
+				[COLOR_POSITIVE_TEXT]Military Caste[ENDCOLOR][NEWLINE][COLOR_POSITIVE_TEXT]Garrisoned[ENDCOLOR] units cost no maintenance.[NEWLINE][NEWLINE]Garrisoned cities get +2 [ICON_CULTURE] Culture and +1 [ICON_HAPPINESS_1] Happiness.[NEWLINE]From turn 70 on, every city gets this, with or without a garrison.[NEWLINE][NEWLINE][ICON_BUILDING_COURTHOUSE] Courthouses provide +2 [ICON_HAPPINESS_1] Happiness.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION"> 

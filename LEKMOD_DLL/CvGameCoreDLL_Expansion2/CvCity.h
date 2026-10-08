@@ -727,6 +727,9 @@ public:
 	// END Base Yield
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 	int GetBaseYieldRateFromGarrison(YieldTypes eIndex) const;
+#if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
+	bool IsPolicyGarrisonAttached() const;
+#endif
 
 	int GetGarrisonYieldBonus(YieldTypes eYield) const;
 	void ChangeGarrisonYieldBonus(YieldTypes eYield, int iAmount);

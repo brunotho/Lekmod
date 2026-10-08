@@ -494,6 +494,14 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+MILITARY CASTE (POLICY_MILITARY_CASTE)
+--------------------------------------
+Tags: policies
+From turn 70 on, Military Caste's city bonus no longer needs a garrison.
+- Changed: from turn 70, every city gets +2 Culture and +1 Happiness from Military Caste, garrisoned or not (before turn 70 it still needs a garrisoned unit)
+- Note: garrison bonuses from buildings still need a garrisoned unit. Piety's and Tradition's garrison effects get the same rule with their policy reworks
+- DLL: LEKMOD_POLICY_GARRISON_ATTACH_TURN 70 (CvCity::GetBaseYieldRateFromGarrison: policy part only when ungarrisoned; local happiness)
+
 WORKER TURNS REMAINING
 ----------------------
 Tags: ui, bugfix

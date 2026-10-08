@@ -1208,6 +1208,8 @@ TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_TRAIT_VOTES
 #define LEKMOD_FIX_BUILDING_RESOURCE_YIELD_CHANGE
 // Consolidate Garrison Yield effects
 #define LEKMOD_GARRISON_YIELD_EFFECTS
+// From this turn on, policy garrison effects (culture, production, happiness) work in every city, garrisoned or not. Building garrison effects still need a unit.
+#define LEKMOD_POLICY_GARRISON_ATTACH_TURN 70
 // Great Work Yield stuff
 #define LEKMOD_GREAT_WORK_YIELD_EFFECTS
 // Convert invaild Promotions for a Unit combat to valid ones.

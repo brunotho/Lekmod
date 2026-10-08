@@ -11613,7 +11613,11 @@ int CvCity::GetLocalHappiness() const
 	int iHappinessPerGarrison = kPlayer.GetHappinessPerGarrisonedUnit();
 	if(iHappinessPerGarrison > 0)
 	{
+#if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
+		if(GetGarrisonedUnit() != NULL || IsPolicyGarrisonAttached())
+#else
 		if(GetGarrisonedUnit() != NULL)
+#endif
 			iLocalHappiness++;
 	}
 	
@@ -13218,8 +13222,35 @@ int CvCity::GetBaseYieldRateFromGarrison(YieldTypes eIndex) const
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
 
+#if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
+	if (GetGarrisonedUnit() == NULL && IsPolicyGarrisonAttached())
+	{
+		// No garrison: only the policies' part of the garrison bonus
+		const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+		int iValue = 0;
+		for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+		{
+			CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+			if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+				continue;
+			if (eIndex == YIELD_CULTURE)
+				iValue += pkPolicy->GetCulturePerGarrisonedUnit();
+			else if (eIndex == YIELD_PRODUCTION)
+				iValue += pkPolicy->GetProductionFromGarrison();
+		}
+		return iValue;
+	}
+#endif
 	return (GetGarrisonedUnit() != NULL) ? GetGarrisonYieldBonus(eIndex) : 0;
 }
+#if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
+//	--------------------------------------------------------------------------------
+/// From the attach turn on, policy garrison effects count for every city
+bool CvCity::IsPolicyGarrisonAttached() const
+{
+	return GC.getGame().getGameTurn() >= LEKMOD_POLICY_GARRISON_ATTACH_TURN;
+}
+#endif
 //	--------------------------------------------------------------------------------
 int CvCity::GetGarrisonYieldBonus(YieldTypes eYield) const
 {
