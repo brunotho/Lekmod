@@ -18521,9 +18521,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BASIL_HELP"> 
-			<Text>
-				Unique Building for Italy. Replaces the museum. In addition to the typical perks, the Basilica comes available at a different technology, provides +20% [ICON_GREAT_PEOPLE] Great Person Generation and provides +2 [ICON_GREAT_ARTIST] Great Artist points and Citizen Slots.
-			</Text>
+			<Text>+15% [ICON_CULTURE] Culture in this City.[NEWLINE]+20% [ICON_GREAT_PEOPLE] Great Person generation in this City.[NEWLINE][NEWLINE]Unique Building for Italy, replaces the Museum:[NEWLINE]Unlocked by Industrialization instead of Archaeology.[NEWLINE]Cheaper, and does not need an Amphitheater.[NEWLINE]+15% [ICON_CULTURE] Culture instead of +10%.[NEWLINE]Adds +20% [ICON_GREAT_PEOPLE] Great Person generation, 2 Great Artist specialist slots and +2 Great Artist points.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BAZAAR_DESC"> 
 			<Text>
@@ -20315,9 +20313,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSEUM_STRATEGY"> 
-			<Text>
-				The Museum is a mid-game building which increases the city's [ICON_CULTURE] Culture output. The city must possess an Opera House (or a Ceilidh Hall) in order to construct the Museum. Contains 2 slots for Great Works of Art.
-			</Text>
+			<Text>+2 [ICON_CULTURE] Culture and +10% [ICON_CULTURE] Culture in this City.[NEWLINE]2 slots for Great Works of Art or Artifacts.[NEWLINE][NEWLINE]The city must have an Amphitheater.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSICIANS_GUILD"> 
 			<Text>

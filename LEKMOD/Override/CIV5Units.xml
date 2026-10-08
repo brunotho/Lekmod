@@ -44181,7 +44181,7 @@
 			<Description>TXT_KEY_BUILDING_BASIL</Description>
 			<Help>TXT_KEY_BUILDING_BASIL_HELP</Help>
 			<Civilopedia>TXT_KEY_CIV5_BUILDINGS_MUSEUM_TEXT</Civilopedia> 
-			<Strategy>TXT_KEY_BUILDING_MUSEUM_STRATEGY</Strategy> 
+			<Strategy>TXT_KEY_BUILDING_BASIL_HELP</Strategy> 
 			<ThemingBonusHelp>TXT_KEY_MUSEUM_THEMING_BONUS_HELP</ThemingBonusHelp> 
 			<GoldMaintenance>1</GoldMaintenance> 
 			<Cost>250</Cost>

@@ -413,6 +413,13 @@ Declaring war on city-states now escalates through four standings, with lasting 
 - Dev: LEKMOD_CS_WAR_DECLARATION_PENALTIES: CvMinorCivAI::DoTeamDeclaredWarOnMe (levels from CvTeam::GetNumMinorCivsAttacked), anchor in GetFriendshipAnchorWithMajor, decay multiplier in GetFriendshipChangePerTurnTimes100, nemesis in IsPeaceBlocked. New saved members m_aiWaryLevel, m_aiAlienatedLevel, m_aiWarDeclarationsByMajor. Defines MINOR_WARY_ANCHOR_PER_LEVEL 10, MINOR_ALIENATED_DECAY_PER_LEVEL 50, MINOR_NEMESIS_WAR_DECLARATIONS 3. Lua: GetMinorCivWaryLevel, GetMinorCivAlienatedLevel, GetMinorCivWarDeclarations, IsMinorCivNemesis (on the city-state), GetCityStateWarDeclarations (on the major)
 - Note: city-state personalities with BlocksWarDeclarationPenalty (none at the moment) still skip all of this
 
+BASILICA (BUILDING_BASIL)
+-------------------------
+Tags: civs, ui, bugfix
+Italy's Basilica tooltip now lists everything that differs from the Museum.
+- Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
+- Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
+
 CITY BANNER TOOLTIP (WARMONGER PREVIEW)
 ---------------------------------------
 Tags: ui
