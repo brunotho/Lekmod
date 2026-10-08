@@ -430,7 +430,8 @@ START BIAS IN CIVILIZATION ABILITY TEXTS
 ----------------------------------------
 Tags: ui, civs
 The start bias of each civilization is shown with its ability.
-- Added: "Start bias: Coast, Hills" and "Avoids starting in: Tundra" lines on the leader's Civilopedia page and in the single-player civilization selection, read from the same data the map script uses
+- Added: "Start bias: Coast, Hills" and "Avoids starting in: Tundra" lines on the leader's Civilopedia page, in the single-player civilization selection and in the multiplayer lobby, read from the same data the map script uses
+- Changed: in the multiplayer lobby, the civilization list tooltip shows the civilization's ability (it showed only the civilization's name)
 
 MID-TURN POLICY AND PANTHEON NOTIFICATIONS
 ------------------------------------------

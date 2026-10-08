@@ -1965,6 +1965,33 @@ function Draft_FlushPendingCivPulldowns()
 	end
 end
 
+-- LEKMOD: start biases of a civilization (the data the map script uses), as text for UA tooltips
+function LekmodStartBiasText( civType )
+	if civType == nil then return ""; end
+	local prefer = {};
+	local avoid = {};
+	for row in GameInfo.Civilization_Start_Along_Ocean{ CivilizationType = civType } do
+		if row.StartAlongOcean then table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS_COAST" ) ); end
+	end
+	for row in GameInfo.Civilization_Start_Along_River{ CivilizationType = civType } do
+		if row.StartAlongRiver then table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS_RIVER" ) ); end
+	end
+	for row in GameInfo.Civilization_Start_Region_Priority{ CivilizationType = civType } do
+		table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_" .. row.RegionType ) );
+	end
+	for row in GameInfo.Civilization_Start_Region_Avoid{ CivilizationType = civType } do
+		table.insert( avoid, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_" .. row.RegionType ) );
+	end
+	local text = "";
+	if #prefer > 0 then
+		text = text .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS", table.concat( prefer, ", " ) );
+	end
+	if #avoid > 0 then
+		text = text .. ( #prefer > 0 and "[NEWLINE]" or "[NEWLINE][NEWLINE]" ) .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_AVOID", table.concat( avoid, ", " ) );
+	end
+	return text;
+end
+
 function PopulateCivPulldown( pullDown, playerID )
 	if pullDown == nil then
 		return;
@@ -2052,6 +2079,8 @@ function PopulateCivPulldown( pullDown, playerID )
 							Civilizations.ID as CivID, 
 							Civilizations.Description as CivDescription, 
 							Civilizations.ShortDescription as CivShortDescription,
+							Civilizations.Type as CivType,
+							Leaders.Type as LeaderType,
 							Leaders.Description as LeaderDescription
 							FROM Civilizations, Leaders, Civilization_Leaders
 							WHERE
@@ -2063,7 +2092,15 @@ function PopulateCivPulldown( pullDown, playerID )
 		if allowSet == nil or allowSet[row.CivID] then
 			local title = Locale.Lookup("TXT_KEY_RANDOM_LEADER_CIV", Locale.Lookup(row.LeaderDescription), Locale.Lookup(row.CivShortDescription)); 
 
-			table.insert(civEntries, {ID = row.CivID, Title = title, Description = Locale.Lookup(row.CivDescription), ShortDescription = Locale.Lookup(row.CivShortDescription)});
+			-- LEKMOD: tooltip shows the civilization's ability and start bias
+			local tooltip = Locale.Lookup(row.CivDescription);
+			local leaderTrait = GameInfo.Leader_Traits{ LeaderType = row.LeaderType }();
+			local trait = leaderTrait and GameInfo.Traits[leaderTrait.TraitType];
+			if trait then
+				tooltip = "[COLOR_POSITIVE_TEXT]" .. Locale.Lookup(trait.ShortDescription) .. "[ENDCOLOR][NEWLINE]" .. Locale.Lookup(trait.Description);
+			end
+			tooltip = tooltip .. LekmodStartBiasText(row.CivType);
+			table.insert(civEntries, {ID = row.CivID, Title = title, Description = tooltip, ShortDescription = Locale.Lookup(row.CivShortDescription)});
 		end
 	end
 	
