@@ -133,7 +133,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
    - **Edit the template** and sync it into `Lua\UI\`, otherwise the next `ui_check.bat` run silently reverts the change.
    - The user runs the standard UI (no EUI folder).
    - Base-game UI layouts that Lekmod doesn't override come from `Assets\DLC\Expansion2\UI\InGame\...`. Overriding one means adding the XML to the templates, to `ui_check.bat`, and to `Lua\UI\`.
-   - Base-game scripts Lekmod overrides since 2026-10-08: `CivilopediaScreen.lua` (both UIs) and `DiploList.lua` (standard UI; `ui_check.bat` copies it unless EUI has its own). Copy the Expansion2 file into `Lua\tmp\ui\...` and add a `ui_check.bat` rule.
+   - Base-game scripts Lekmod overrides since 2026-10-08: `CivilopediaScreen.lua` (both UIs), `DiploList.lua` (standard UI; `ui_check.bat` copies it unless EUI has its own) and `ChooseGoodyHutReward.lua` (both UIs; the ruin choice). Copy the Expansion2 file into `Lua\tmp\ui\...` and add a `ui_check.bat` rule.
    - **Any network message from Lua (`Network.Send*`) un-ends a finished multiplayer turn.** Screens must not send hidden messages (e.g. statistics) once the turn is ended: check `Network.HasSentNetTurnComplete()`.
    - Lobby options are `GameOptions` rows in `CIV5Units.xml` (explicit IDs; Lekmod's: 67 strategic trading, 68 high-contrast colors). The lobby lists them automatically; the DLL reads them with `isOption("GAMEOPTION_X")`.
    - Python one-liners in Bash heredocs choke on Windows paths with `\U`, `\N`: write the script to the scratchpad with raw strings, or use the Edit tool.
@@ -277,6 +277,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 - The kill-yield era fix is still an upstream bug: a candidate to offer EAP.
 
 ### Behaviour and decisions to remember
+- **Policy garrison effects from turn 70** (`LEKMOD_POLICY_GARRISON_ATTACH_TURN`): policy garrison yields and garrison happiness (Military Caste) work in every city from turn 70; building garrison yields still need a unit. Piety's and Tradition's garrison effects should use the same mechanism.
 - **Heal Instantly = 25 HP**, set by the `INSTA_HEAL_RATE` define in `CIV5Units.xml` (the DLL reads it; no rebuild needed).
 - **Naming:** the bomber line `PROMOTION_AIR_SIEGE_1..3` displays as "Air Siege I–III" (renamed, text only). The melee/gun `PROMOTION_SIEGE` displays as "Siege". Bombardment exists for both bombers and naval units. Air Siege I is the bombers' Bunker Busting prerequisite (user-approved).
 - **Carpet Bombing** (bombers, after Bombardment II): splash hits enemy units on tiles *adjacent* to the target, with `-X` floating text. No friendly fire (**this deviates from the spec**, which includes friendly units and CS war declarations; the user keeps it this way for now and will revisit after real-game playtests, 2026-10-07), and no splash on the target city's garrison (user decision). Air units' range-attack missions (e.g. from the "declare war?" popup) are routed through `CvUnitCombat::AttackAir` in `CvUnitMission.cpp`; before that they skipped all air logic, including interception.
@@ -288,6 +289,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
   - PANTHEON_FAITH: only without a pantheon and with 0 Faith. RANDOM_FAITH (`ReligionFaith`) requires a pantheon. PROPHET_FAITH stays out of the pool, so edits to it are dead.
   - The Mobility "ancient only" limit is `BeforeEra=1` on `GOODY_EXPERIENCE_MOVE`.
   - `GoodyHutPopup.lua` (template `Lua\tmp\ui\AncientRuins\GoodyHutPopup.lua.ignore`) has a generic branch that shows the DLL-passed amount (`Data2`).
+  - **Ruin choice** (`LEKMOD_RUIN_CHOICE`, 2026-10-08): `CvPlayer::doGoody` rolls 2 offers (3 with Native Tongue = `PROMOTION_GOODY_HUT_PICKER`) with the synced RNG on every machine and stores them per plot (`m_aiLekmodPendingRuins`, saved). One roll 0-999 per offer drives all its numbers; `CvPlayer::LekmodGoodyRand` replays it inside `receiveGoody`, so the popup text and the result always match. Any new rolled ruin value must use `LekmodGoodyRand` and get a branch in `LekmodGetRuinOfferText`. The choice arrives through `Network.SendGoodyChoice` → `LekmodChooseRuinOffer`; AIs pick at random; leftovers resolve in `doTurn`. The result popup only shows in single player (base-game rule).
 - **Shoshone choose popup:** taller rows (78 px) were tried and reverted because players had to scroll. Choose entries (`ChooseDescription`) are one-liners; result popups (`Description`) keep the narrative texts.
 - **Icons:** Glutton = `ABILITY_ATLAS` 57, the base "May Not Melee Attack" icon (user decision; the original art is lost). Feared Elephant uses the user's icon (`LEKMOD_FEARED_ELEPHANT_PROMOTION_ATLAS`). Envelopment and Bunker Busting have the user's new art. The reshape procedure is `civ-tools\reshape_icons.py <src_dir> <out_dir> name…`.
 
