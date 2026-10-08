@@ -134260,7 +134260,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_COMPASS_HELP"> 
 			<Text>
-				Allows you to build the [COLOR_POSITIVE_TEXT]Galleass[ENDCOLOR], the first ranged naval unit. Also allows you to build the [COLOR_POSITIVE_TEXT]Harbor[ENDCOLOR], which creates city connections from cities to the capital over the water, producing [ICON_GOLD] Gold. Additionally, the [ICON_GOLD] Gold yield from Fishing Boats is increased.
+				Allows you to build the [COLOR_POSITIVE_TEXT]Galleass[ENDCOLOR], the first ranged naval unit. Also allows you to build the [COLOR_POSITIVE_TEXT]Harbor[ENDCOLOR], which creates city connections from cities to the capital over the water, producing [ICON_GOLD] Gold.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_COMPASS_QUOTE"> 
