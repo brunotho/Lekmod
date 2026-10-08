@@ -44,7 +44,7 @@ function ShowHideHandler( bIsHide, bIsInit )
 
     if not bIsHide then
         Controls.AtlasLogo:SetTexture( "CivilzationVAtlas.dds" );
-        Controls.AtlasLogo:SetTexture( "oracle_background.dds" );
+        Controls.AtlasLogo:SetTexture( "lekmod_menu_background.dds" );
     	UIManager:SetUICursor( 0 );
 		if not IsUiCheckConfigured() then
 			-- Manual install without ui_check.bat: block the menus.

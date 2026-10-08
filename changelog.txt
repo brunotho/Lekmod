@@ -494,6 +494,12 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+MAIN MENU BACKGROUND
+--------------------
+Tags: ui, art
+A new main menu background picture.
+- Changed: the main menu shows a new painting (the Great Wall and a palace city at sunset)
+
 BARBARIAN KILL BONUSES
 ----------------------
 Tags: game mechanics, combat
