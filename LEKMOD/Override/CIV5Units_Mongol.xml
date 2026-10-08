@@ -101578,6 +101578,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE_BONUS">
 			<Text>A city founded here gets only the base yields.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_MINE">
+			<Text>You have pledged to protect this city-state.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_OTHERS">
+			<Text>Pledged to protect this city-state:</Text>
+		</Row>
 		<Row Tag="TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS">
 			<Text>Civ Colors: High Contrast</Text>
 		</Row>

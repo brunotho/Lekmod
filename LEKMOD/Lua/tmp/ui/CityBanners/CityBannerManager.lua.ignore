@@ -512,6 +512,7 @@ function RefreshCityBanner(cityBanner, iActiveTeam, iActivePlayer)
 			if( player:IsMinorCiv() ) then
 
 				SetUpMinorMeter(iActivePlayer, cityBanner.playerID, controls, textColor );
+				LekmodUpdatePledgeIcons(controls, player, iActivePlayer);
 				
 				-- minor trait icon
 				controls.StatusIcon:SetTexture( GameInfo.MinorCivTraits[ GameInfo.MinorCivilizations[ player:GetMinorCivType() ].MinorCivTrait ].TraitIcon );
@@ -519,6 +520,10 @@ function RefreshCityBanner(cityBanner, iActiveTeam, iActivePlayer)
 
 			else
 				IconHookup( civInfo.PortraitIndex, 32, civInfo.AlphaIconAtlas, controls.StatusIcon );
+				if (controls.PledgeMineBox ~= nil) then -- LEKMOD: banners are reused; no pledges on major civ cities
+					controls.PledgeMineBox:SetHide( true );
+					controls.PledgeOthersBox:SetHide( true );
+				end
 				controls.StatusIcon:SetOffsetX( 0 );
 				controls.StatusIconBG:SetHide( true );
             	controls.StatusMeterFrame:SetHide( true );
@@ -565,6 +570,53 @@ function RefreshCityBanner(cityBanner, iActiveTeam, iActivePlayer)
 	controls.IconsStack:ReprocessAnchoring();
 end
 
+
+----------------------------------------------------------------
+-- LEKMOD: shields for pledges to protect a city-state (your own one blue, other players' red)
+----------------------------------------------------------------
+function LekmodUpdatePledgeIcons( controls, pMinor, iActivePlayer )
+	if (controls.PledgeMineBox == nil) then
+		return;
+	end
+	local bMine = false;
+	local others = {};
+	local pActiveTeam = Teams[Players[iActivePlayer]:GetTeam()];
+	for iMajor = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+		local pMajor = Players[iMajor];
+		if (pMajor ~= nil and pMajor:IsAlive() and pMinor:IsProtectedByMajor(iMajor)) then
+			if (iMajor == iActivePlayer) then
+				bMine = true;
+			elseif (pActiveTeam:IsHasMet(pMajor:GetTeam())) then
+				table.insert(others, pMajor:GetCivilizationShortDescription());
+			else
+				table.insert(others, Locale.ConvertTextKey("TXT_KEY_UNMET_PLAYER"));
+			end
+		end
+	end
+	controls.PledgeMineBox:SetHide(not bMine);
+	controls.PledgeMineIcon:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_MINE"));
+	controls.PledgeOthersBox:SetHide(#others == 0);
+	controls.PledgeOthersIcon:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_OTHERS") .. "[NEWLINE]" .. table.concat(others, "[NEWLINE]"));
+end
+
+-- Other players' pledges don't refresh the banners on their own
+function LekmodRefreshMinorBanners()
+	local iActivePlayer = Game.GetActivePlayer();
+	for iPlayer, playerBanners in pairs(Instances) do
+		local pPlayer = Players[iPlayer];
+		if (pPlayer ~= nil and pPlayer:IsMinorCiv()) then
+			for _, cityBanner in pairs(playerBanners) do
+				local controls = cityBanner.SubControls;
+				if (controls ~= nil) then
+					LekmodUpdatePledgeIcons(controls, pPlayer, iActivePlayer);
+					controls.IconsStack:CalculateSize();
+					controls.IconsStack:ReprocessAnchoring();
+				end
+			end
+		end
+	end
+end
+Events.SerialEventGameDataDirty.Add(LekmodRefreshMinorBanners);
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------
