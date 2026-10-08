@@ -101566,6 +101566,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_START_REGION_HYBRID">
 			<Text>Mixed terrain</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_AIR_SWEEP_NO_RESISTANCE">
+			<Text>[COLOR_NEGATIVE_TEXT]No resistance[ENDCOLOR]</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

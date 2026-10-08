@@ -913,6 +913,8 @@
 #define LEKMOD_MIDTURN_PICK_NOTIFICATIONS
 // City names after the capital (2nd city too for America, Russia, Aksum, Timurids) come in a shuffled order per player and game
 #define LEKMOD_RANDOMIZE_CITY_NAMES
+// Floating damage numbers for air strikes and sweeps without combat animation, and 'No resistance' for empty sweeps
+#define LEKMOD_AIR_COMBAT_FEEDBACK
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

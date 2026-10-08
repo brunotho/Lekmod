@@ -2208,6 +2208,15 @@ void CvUnitCombat::ResolveCombat(const CvCombatInfo& kInfo, uint uiParentEventID
 		auto_ptr<ICvUnit1> pDllUnit(new CvDllUnit(pDefenderSupport));
 		gDLL->GameplayUnitVisibility(pDllUnit.get(), !pDefenderSupport->isInvisible(eActiveTeam, false));
 	}
+#ifdef LEKMOD_AIR_COMBAT_FEEDBACK
+	// Remember where the air unit started: it may die during resolution
+	const int iAirFeedbackX = pAttacker ? pAttacker->getX() : -1;
+	const int iAirFeedbackY = pAttacker ? pAttacker->getY() : -1;
+	// ... and where the damage lands (the defending unit, e.g. a sweep's interceptor, can be off the target tile)
+	CvPlot* pAirFeedbackTargetPlot = pDefender ? pDefender->plot() : kInfo.getPlot();
+	const int iAirTargetX = pAirFeedbackTargetPlot ? pAirFeedbackTargetPlot->getX() : -1;
+	const int iAirTargetY = pAirFeedbackTargetPlot ? pAirFeedbackTargetPlot->getY() : -1;
+#endif
 	// Nuclear Mission
 	if(kInfo.getAttackIsNuclear())
 	{
@@ -2270,6 +2279,33 @@ void CvUnitCombat::ResolveCombat(const CvCombatInfo& kInfo, uint uiParentEventID
 			}
 		}
 	}
+
+#ifdef LEKMOD_AIR_COMBAT_FEEDBACK
+	// Without the combat animation (quick combat) nothing shows what an air strike or sweep did: float the damage numbers
+	if((kInfo.getAttackIsBombingMission() || kInfo.getAttackIsAirSweep()) && !kInfo.getVisualizeCombat())
+	{
+		const float fDelay = GC.getPOST_COMBAT_TEXT_DELAY();
+		CvPlot* pTargetPlot = GC.getMap().plot(iAirTargetX, iAirTargetY);
+		CvString strText;
+
+		// Damage dealt by the air unit (to the defending unit or city)
+		const int iDealt = kInfo.getDamageInflicted(BATTLE_UNIT_ATTACKER);
+		if(pTargetPlot && iDealt > 0 && pTargetPlot->isVisible(eActiveTeam))
+		{
+			strText.Format("[COLOR_NEGATIVE_TEXT]-%d[ENDCOLOR]", iDealt);
+			GC.GetEngineUserInterface()->AddPopupText(pTargetPlot->getX(), pTargetPlot->getY(), strText, fDelay);
+		}
+
+		// Damage taken by the air unit (from the defender and from interception)
+		const int iTaken = kInfo.getDamageInflicted(BATTLE_UNIT_DEFENDER) + kInfo.getDamageInflicted(BATTLE_UNIT_INTERCEPTOR);
+		CvPlot* pAirPlot = GC.getMap().plot(iAirFeedbackX, iAirFeedbackY);
+		if(pAirPlot && iTaken > 0 && pAirPlot->isVisible(eActiveTeam))
+		{
+			strText.Format("[COLOR_NEGATIVE_TEXT]-%d[ENDCOLOR]", iTaken);
+			GC.GetEngineUserInterface()->AddPopupText(pAirPlot->getX(), pAirPlot->getY(), strText, fDelay);
+		}
+	}
+#endif
 
 	// Clear popup blocking after combat resolves
 	if(eAttackingPlayer == GC.getGame().getActivePlayer())
@@ -2805,6 +2841,10 @@ CvUnitCombat::ATTACK_RESULT CvUnitCombat::AttackAirSweep(CvUnit& kAttacker, CvPl
 			Localization::String localizedText = Localization::Lookup("TXT_KEY_AIR_PATROL_FOUND_NOTHING");
 			localizedText << kAttacker.getUnitInfo().GetTextKey();
 			GC.GetEngineUserInterface()->AddMessage(0, kAttacker.getOwner(), false, GC.getEVENT_MESSAGE_TIME(), localizedText.toUTF8());
+#ifdef LEKMOD_AIR_COMBAT_FEEDBACK
+			// Show it on the map too
+			GC.GetEngineUserInterface()->AddPopupText(targetPlot.getX(), targetPlot.getY(), GetLocalizedText("TXT_KEY_LEKMOD_AIR_SWEEP_NO_RESISTANCE"), 0.0f);
+#endif
 		}
 
 		// Spend a move for this attack

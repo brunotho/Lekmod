@@ -427,6 +427,14 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+AIR COMBAT FEEDBACK
+-------------------
+Tags: ui, air
+Air strikes and air sweeps show what happened on the map.
+- Added: with quick combat (no combat animation), the damage dealt and taken floats over both sides as red numbers after a bombing run or a sweep fight
+- Added: a sweep that finds no interceptor shows a red "No resistance" over the target tile
+- Dev: LEKMOD_AIR_COMBAT_FEEDBACK in CvUnitCombat::ResolveCombat (bombing and sweep, only when !getVisualizeCombat) and CvUnitCombat::AttackAirSweep (no interceptors)
+
 CITY SCREEN: GREAT PEOPLE POINTS
 --------------------------------
 Tags: ui
