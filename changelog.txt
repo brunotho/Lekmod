@@ -427,6 +427,13 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+LOBBY: CIV COLORS (HIGH CONTRAST)
+---------------------------------
+Tags: ui
+A new lobby option gives the players six easy-to-tell-apart color schemes.
+- Added: game option "Civ Colors: High Contrast" (off by default = Original colors). When on, the players get the color schemes of England, Russia, Greece, Jerusalem, Arabia and Babylon in random order instead of their own civilization's colors. With more than six players, the others keep their own colors
+- Dev: LEKMOD_HIGH_CONTRAST_CIV_COLORS in CvGame::InitPlayers; GameOptions ID 68 GAMEOPTION_HIGH_CONTRAST_CIV_COLORS. Deterministic shuffle seeded by CvPreGame::syncRandomSeed() (same on every client)
+
 UNIT FLAGS: ATTACKED THIS TURN
 ------------------------------
 Tags: ui, combat

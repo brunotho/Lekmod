@@ -917,6 +917,8 @@
 #define LEKMOD_AIR_COMBAT_FEEDBACK
 // Lua: Unit:GetNumAttacksMadeThisTurn (unit flags mark own units that attacked and can still move)
 #define LEKMOD_UNIT_ATTACKED_FLAG_ICON
+// Lobby option GAMEOPTION_HIGH_CONTRAST_CIV_COLORS: six high-contrast color schemes assigned to the players at random
+#define LEKMOD_HIGH_CONTRAST_CIV_COLORS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

@@ -653,6 +653,45 @@ void CvGame::InitPlayers()
 		}
 	}
 
+#ifdef LEKMOD_HIGH_CONTRAST_CIV_COLORS
+	// Lobby option "Civ Colors: High Contrast": the players get six high-contrast color schemes in random order
+	// (deterministic shuffle from the shared sync seed, so every client assigns the same colors)
+	if(isOption("GAMEOPTION_HIGH_CONTRAST_CIV_COLORS"))
+	{
+		const char* aszPalette[] = { "PLAYERCOLOR_ENGLAND", "PLAYERCOLOR_RUSSIA", "PLAYERCOLOR_GREECE", "PLAYERCOLOR_JER", "PLAYERCOLOR_ARABIA", "PLAYERCOLOR_BABYLON" };
+		const int iPaletteSize = sizeof(aszPalette) / sizeof(aszPalette[0]);
+		int aiPalette[6];
+		int iNumColors = 0;
+		for(int iC = 0; iC < iPaletteSize; iC++)
+		{
+			const int iColor = GC.getInfoTypeForString(aszPalette[iC], true);
+			if(iColor != -1)
+				aiPalette[iNumColors++] = iColor;
+		}
+
+		unsigned int uiSeed = CvPreGame::syncRandomSeed() * 2654435761u + 97u;
+		for(int iC = iNumColors - 1; iC > 0; iC--)
+		{
+			uiSeed = uiSeed * 1103515245u + 12345u;
+			const int iSwap = (int)((uiSeed >> 8) % (unsigned int)(iC + 1));
+			const int iTemp = aiPalette[iC];
+			aiPalette[iC] = aiPalette[iSwap];
+			aiPalette[iSwap] = iTemp;
+		}
+
+		int iNextColor = 0;
+		for(iI = 0; iI < MAX_MAJOR_CIVS && iNextColor < iNumColors; iI++)
+		{
+			const SlotStatus eStatus = CvPreGame::slotStatus((PlayerTypes)iI);
+			if(eStatus == SS_TAKEN || eStatus == SS_COMPUTER)
+			{
+				aePlayerColors[iI] = (PlayerColorTypes)aiPalette[iNextColor++];
+			}
+		}
+		// More than six players: the others keep their own colors (duplicates are resolved below)
+	}
+#endif
+
 	CivilizationTypes eBarbCiv = (CivilizationTypes)GC.getBARBARIAN_CIVILIZATION();
 	CivilizationTypes eMinorCiv = (CivilizationTypes)GC.getMINOR_CIVILIZATION();
 

@@ -107697,6 +107697,16 @@
 			<SupportsSinglePlayer>true</SupportsSinglePlayer>
 			<SupportsMultiplayer>true</SupportsMultiplayer>
 		</Row> 
+		<Row>
+			<ID>68</ID>
+			<Type>GAMEOPTION_HIGH_CONTRAST_CIV_COLORS</Type>
+			<Description>TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS</Description>
+			<Help>TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS_HELP</Help>
+			<Default>false</Default>
+			<Visible>true</Visible>
+			<SupportsSinglePlayer>true</SupportsSinglePlayer>
+			<SupportsMultiplayer>true</SupportsMultiplayer>
+		</Row>
 	</GameOptions> 
 
 	<Table name="GameSpeed_Turns">
