@@ -47178,6 +47178,189 @@
 			<IconAtlas>EXPANSION2_WONDER_ATLAS</IconAtlas> 
 		</Row>
 	</Buildings> 
+	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_AIRPORT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BARAY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BASIL"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BOMB_SHELTER"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BROADCAST_TOWER"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_COOPERATIVE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_FACTORY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HOSPITAL"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HYDRO_PLANT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_LABORATORY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_MEDICAL_LAB"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_MILITARY_ACADEMY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_MUSEUM"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_NUCLEAR_PLANT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_PRUSSIAN_FACTORY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_PUBLIC_SCHOOL"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_SOLAR_PLANT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_SPACESHIP_FACTORY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_STADIUM"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_SWISS_SKI_RESORT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_UC_HALKEVLERI"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_YUGO_SPOMENIK"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BELGIUM_ZOO"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BOERS_OPERA_HOUSE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_CEILIDH_HALL"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_DANCE_HALL"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_IRISH_PUB"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_NATIONALCHURCH"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_OPERA_HOUSE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_THEATRE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ARMENIA_OBSERVATORY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_AYYUBIDS_UNIVERSITY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BANK"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_CANTON"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HANSE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_OBSERVATORY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_SATRAPS_COURT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_STOCK_EXCHANGE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_UNIVERSITY"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_WAT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ASHOKA"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_MONUMENT"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_STELE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_COURTHOUSE"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_OUTREMER"/>
+			<Set HurryCostModifier="25"/>
+		</Update>
+	</Buildings>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -201326,6 +201509,285 @@
 		</Row>
 		-->
 	</Technologies> 
+	<!-- LEKMOD: power creep counterbalance. Tech cost +1% Classical, +1.5% Medieval, +2% Renaissance, +3.5% Industrial, +5% Modern, +8% Atomic, +11% Information -->
+	<Technologies>
+		<Update>
+			<Where Type="TECH_OPTICS"/>
+			<Set Cost="69"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_HORSEBACK_RIDING"/>
+			<Set Cost="106"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_MATHEMATICS"/>
+			<Set Cost="106"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_CONSTRUCTION"/>
+			<Set Cost="106"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_PHILOSOPHY"/>
+			<Set Cost="177"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_DRAMA"/>
+			<Set Cost="177"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_CURRENCY"/>
+			<Set Cost="177"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ENGINEERING"/>
+			<Set Cost="177"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_IRON_WORKING"/>
+			<Set Cost="177"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_THEOLOGY"/>
+			<Set Cost="279"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_CIVIL_SERVICE"/>
+			<Set Cost="279"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_GUILDS"/>
+			<Set Cost="279"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_METAL_CASTING"/>
+			<Set Cost="279"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_COMPASS"/>
+			<Set Cost="381"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_EDUCATION"/>
+			<Set Cost="492"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_CHIVALRY"/>
+			<Set Cost="492"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_MACHINERY"/>
+			<Set Cost="492"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_PHYSICS"/>
+			<Set Cost="492"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_STEEL"/>
+			<Set Cost="492"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ASTRONOMY"/>
+			<Set Cost="796"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ACOUSTICS"/>
+			<Set Cost="796"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_BANKING"/>
+			<Set Cost="796"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_PRINTING_PRESS"/>
+			<Set Cost="796"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_GUNPOWDER"/>
+			<Set Cost="796"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_NAVIGATION"/>
+			<Set Cost="1173"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ARCHITECTURE"/>
+			<Set Cost="1173"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ECONOMICS"/>
+			<Set Cost="1173"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_METALLURGY"/>
+			<Set Cost="1173"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_CHEMISTRY"/>
+			<Set Cost="1173"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ARCHAEOLOGY"/>
+			<Set Cost="1656"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_SCIENTIFIC_THEORY"/>
+			<Set Cost="1656"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_INDUSTRIALIZATION"/>
+			<Set Cost="1656"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_RIFLING"/>
+			<Set Cost="1656"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_MILITARY_SCIENCE"/>
+			<Set Cost="1656"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_FERTILIZER"/>
+			<Set Cost="1656"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_BIOLOGY"/>
+			<Set Cost="2432"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ELECTRICITY"/>
+			<Set Cost="2432"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_STEAM_POWER"/>
+			<Set Cost="2432"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_DYNAMITE"/>
+			<Set Cost="2432"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_REFRIGERATION"/>
+			<Set Cost="3255"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_RADIO"/>
+			<Set Cost="3255"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_REPLACEABLE_PARTS"/>
+			<Set Cost="3255"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_FLIGHT"/>
+			<Set Cost="3255"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_RAILROAD"/>
+			<Set Cost="3255"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_PLASTIC"/>
+			<Set Cost="4305"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ELECTRONICS"/>
+			<Set Cost="4305"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_BALLISTICS"/>
+			<Set Cost="4305"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_COMBUSTION"/>
+			<Set Cost="4305"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_PENICILIN"/>
+			<Set Cost="5508"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ATOMIC_THEORY"/>
+			<Set Cost="5508"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_RADAR"/>
+			<Set Cost="5508"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_COMBINED_ARMS"/>
+			<Set Cost="5508"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ECOLOGY"/>
+			<Set Cost="6912"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_NUCLEAR_FISSION"/>
+			<Set Cost="6912"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ROCKETRY"/>
+			<Set Cost="6912"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_COMPUTERS"/>
+			<Set Cost="6912"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_TELECOM"/>
+			<Set Cost="8974"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_MOBILE_TACTICS"/>
+			<Set Cost="8974"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ADVANCED_BALLISTICS"/>
+			<Set Cost="8974"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_SATELLITES"/>
+			<Set Cost="8974"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_ROBOTICS"/>
+			<Set Cost="8974"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_LASERS"/>
+			<Set Cost="8974"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_INTERNET"/>
+			<Set Cost="10256"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_GLOBALIZATION"/>
+			<Set Cost="10256"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_PARTICLE_PHYSICS"/>
+			<Set Cost="10256"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_NUCLEAR_FUSION"/>
+			<Set Cost="10256"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_NANOTECHNOLOGY"/>
+			<Set Cost="10256"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_STEALTH"/>
+			<Set Cost="10256"/>
+		</Update>
+		<Update>
+			<Where Type="TECH_FUTURE_TECH"/>
+			<Set Cost="11655"/>
+		</Update>
+	</Technologies>
 
 	<Table name="Technology_DomainExtraMoves">
 		<Column name="TechType" type="text"  />

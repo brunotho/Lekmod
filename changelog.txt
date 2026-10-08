@@ -494,6 +494,20 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+BUILDING PURCHASE COSTS
+-----------------------
+Tags: game mechanics
+Buying any building with Gold costs the same extra 25% (like the Granary).
+- Changed: every building you can buy now costs +25% Gold over the base price. Before: 0% for most late buildings (Factory, Hospital, Stadium, Public School, Museum, Laboratory...), +10% Opera House and Theatre types, +15% University, Bank, Observatory, Stock Exchange, +40% Monument, +50% Courthouse
+- Note: Stone Works and Aqueduct stay at 0%; most other buildings were already at +25%
+
+TECHNOLOGY COSTS (POWER CREEP)
+------------------------------
+Tags: game mechanics
+Later technologies cost a bit more, to slow down late-game power creep.
+- Changed: technology cost +1% Classical, +1.5% Medieval, +2% Renaissance, +3.5% Industrial, +5% Modern, +8% Atomic, +11% Information era (Ancient unchanged)
+- Dev: per-tech Cost updates after the Technologies table in CIV5Units.xml; later per-tech changes (e.g. Astronomy/Navigation) must edit those values
+
 CITY-STATE PLEDGE ICONS
 -----------------------
 Tags: ui
