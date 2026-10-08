@@ -542,10 +542,40 @@ end
 
 -------------------------------------------------
 -------------------------------------------------
+-- LEKMOD: human players default to Immortal (the Lekmod standard; city-state yields scale with difficulty)
+function LekmodDefaultHumanHandicap()
+	local immortal = GameInfo.HandicapInfos["HANDICAP_IMMORTAL"];
+	return immortal and immortal.ID or 6;
+end
+
+-- Host only, new games only: preselect Immortal once for every human player who takes a slot
+-- (the host's own slot included). Players can still change it afterwards.
+local g_LekmodHandicapPreselected = {};
+function LekmodPreselectHandicaps()
+	if( not Matchmaking.IsHost() or PreGame.GetLoadFileName() ~= "" ) then
+		return;
+	end
+	local bChanged = false;
+	for playerID = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+		if( PreGame.GetSlotStatus( playerID ) == SlotStatus.SS_TAKEN ) then
+			if( not g_LekmodHandicapPreselected[playerID] ) then
+				g_LekmodHandicapPreselected[playerID] = true;
+				PreGame.SetHandicap( playerID, LekmodDefaultHumanHandicap() );
+				bChanged = true;
+			end
+		else
+			g_LekmodHandicapPreselected[playerID] = nil;
+		end
+	end
+	if( bChanged ) then
+		Network.BroadcastPlayerInfo();
+	end
+end
+
 function SetSlotToHuman(playerID)
 	-- Sets the given playerID slot to be human. Assumes that slot hasn't already been done so.
 	PreGame.SetSlotStatus( playerID, SlotStatus.SS_TAKEN );
-	PreGame.SetHandicap( playerID, 3 );
+	PreGame.SetHandicap( playerID, LekmodDefaultHumanHandicap() );
 	if (PreGame.GetNickName(playerID) == "") then
 		PreGame.SetNickName( playerID, Locale.ConvertTextKey( "TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME", playerID + 1 ) );
 	end
@@ -1297,7 +1327,8 @@ function HandleExitRequest()
 	if Draft_ResetState ~= nil then
 		Draft_ResetState(true);
 	end
-	
+	g_LekmodHandicapPreselected = {}; -- the next lobby preselects Immortal again
+
 	Matchmaking.LeaveMultiplayerGame();
 	if ( not PreGame.IsHotSeatGame() ) then
 		-- Refresh the lobby as we enter it
@@ -1388,6 +1419,7 @@ Events.MultiplayerGameHostMigration.Add( OnHostMigration );
 ----------------------------------------------------------------
 function UpdateDisplay()
 	if( ContextPtr:IsHidden() == false ) then
+		LekmodPreselectHandicaps();
 		UpdateOptions();
 		RefreshPlayerList();
 		DoCheckTeams();

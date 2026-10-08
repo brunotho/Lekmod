@@ -426,6 +426,13 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+LOBBY: DEFAULT DIFFICULTY
+-------------------------
+Tags: ui
+Human players start at Immortal difficulty in the multiplayer lobby.
+- Changed: the host, every player who joins, and every slot the host opens for a human start at Immortal (was Prince). Players can still change it. Saved games keep their settings
+- Note: city-state yields scale with difficulty, so Immortal is the Lekmod standard
+
 CITY BANNER TOOLTIP (WARMONGER PREVIEW)
 ---------------------------------------
 Tags: ui
