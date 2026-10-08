@@ -1385,6 +1385,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 #endif
 
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)
+#if defined(LEKMOD_RUIN_CHOICE)
+	m_aiLekmodPendingRuins.clear();
+	m_iLekmodLastRuinGoody = -1;
+	m_iLekmodGoodyForcedRoll = -1;
+	m_iLekmodGoodyPay = -1;
+	m_iLekmodGoodyGain = -1;
+#endif
 	m_aiYieldSettleUnitCityOrder.clear();
 #endif
 
@@ -5141,6 +5148,10 @@ void CvPlayer::doTurn()
 
 	CvAssertMsg(isAlive(), "isAlive is expected to be true");
 
+#if defined(LEKMOD_RUIN_CHOICE)
+	LekmodResolvePendingRuins();
+#endif
+
 	doUpdateCacheOnTurn();
 
 	AI_doTurnPre();
@@ -7077,6 +7088,24 @@ bool CvPlayer::canReceiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit) 
 		return false;
 	}
 
+#if defined(LEKMOD_RUIN_CHOICE)
+	// Trade: at least one price the player can pay (smallest amounts) for a reward they can get
+	if(kGoodyInfo.isLekmodTrade())
+	{
+		std::vector<int> aiPairs;
+		LekmodGetRuinTradePairs(pPlot, pUnit, 0, aiPairs);
+		if(aiPairs.empty())
+		{
+			return false;
+		}
+	}
+	// Free ancient tech: one must be left to research
+	if(kGoodyInfo.isLekmodAncientTech() && LekmodGetRuinAncientTech(0) == NO_TECH)
+	{
+		return false;
+	}
+#endif
+
 #ifdef LEKMOD_NEW_ANCIENT_RUIN_REWARDS
 	// New data entered trough XML. Handles the turn limits for goody huts, rather than the old hardcoded values.
 
@@ -7699,6 +7728,9 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	kGoodyInfo.CacheResult(kResult);
 
 	CvGoodyHuts::DoPlayerReceivedGoody(GetID(), eGoody);
+#if defined(LEKMOD_RUIN_CHOICE)
+	m_iLekmodLastRuinGoody = eGoody;
+#endif
 
 #ifdef AUI_PLAYER_RECEIVE_GOODY_PLOT_MESSAGE_FOR_YIELD
 	int iNumYieldBonuses = 0;
@@ -8030,7 +8062,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	// Gold era factor: base gold already applied above; add rand(1..10) * factor * era
 	if(kGoodyInfo.getGoldEraFactor() > 0)
 	{
-		int iEraGold = (1 + GC.getGame().getJonRandNum(10, "Goody Gold Era Rand")) * kGoodyInfo.getGoldEraFactor() * iEra;
+		int iEraGold = (1 + LekmodGoodyRand(10, "Goody Gold Era Rand")) * kGoodyInfo.getGoldEraFactor() * iEra;
 		GetTreasury()->ChangeGold(iEraGold);
 		// Restate total gold in notification (base was set by the Gold block above)
 		int iTotalGold = kGoodyInfo.getGold() + iEraGold;
@@ -8078,7 +8110,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	// Science era ruin: X = rand(20..30) * era, capped at 90; unit loses X HP (min 1); unit gains X/2 XP
 	if(kGoodyInfo.isScienceEraRuin() && pUnit != NULL)
 	{
-		int iX = (20 + GC.getGame().getJonRandNum(11, "Goody Science Era Rand")) * iEra;
+		int iX = (20 + LekmodGoodyRand(11, "Goody Science Era Rand")) * iEra;
 		iX = std::min(iX, 90);
 		iEraRuinValue = iX;
 		// Science yield
@@ -8106,6 +8138,71 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		int iDmg = std::min(kGoodyInfo.getUnitDamage(), pUnit->GetMaxHitPoints() - pUnit->getDamage() - 1);
 		if(iDmg > 0) pUnit->changeDamage(iDmg);
 	}
+
+#if defined(LEKMOD_RUIN_CHOICE)
+	// Trade: pay one yield for another reward (amounts from the offer's roll)
+	if(kGoodyInfo.isLekmodTrade() && m_iLekmodGoodyPay >= 0 && m_iLekmodGoodyGain >= 0)
+	{
+		const int iRoll = std::max(0, m_iLekmodGoodyForcedRoll);
+		const int iPayAmount = LekmodGetRuinTradeAmount(m_iLekmodGoodyPay, false, iRoll);
+		const int iGainAmount = LekmodGetRuinTradeAmount(m_iLekmodGoodyGain, true, iRoll);
+		strBuffer = LekmodGetRuinTradeText(m_iLekmodGoodyPay, m_iLekmodGoodyGain, iRoll);
+
+		switch(m_iLekmodGoodyPay)
+		{
+		case 0:
+			if(getCapitalCity() != NULL)
+				getCapitalCity()->changeFood(-std::min(iPayAmount, getCapitalCity()->getFood()));
+			break;
+		case 1:
+			GetTreasury()->ChangeGold(-std::min(iPayAmount, GetTreasury()->GetGold()));
+			break;
+		case 2:
+			changeJONSCulture(-std::min(iPayAmount, getJONSCulture()));
+			break;
+		}
+
+		switch(m_iLekmodGoodyGain)
+		{
+		case 0:
+			GetTreasury()->ChangeGold(iGainAmount);
+			break;
+		case 1:
+		{
+			TechTypes eCurrentTech = GetPlayerTechs()->GetCurrentResearch();
+			if(eCurrentTech != NO_TECH)
+				GET_TEAM(getTeam()).GetTeamTechs()->ChangeResearchProgress(eCurrentTech, iGainAmount, GetID());
+			else
+				changeOverflowResearch(iGainAmount);
+			break;
+		}
+		case 2:
+			changeJONSCulture(iGainAmount);
+			break;
+		case 3:
+			LekmodRevealNearestCityStates(pPlot, 3);
+			break;
+		case 4:
+		{
+			PromotionTypes eMobility = (PromotionTypes)GC.getInfoTypeForString("PROMOTION_MOBILITY", true);
+			if(pUnit != NULL && eMobility != NO_PROMOTION)
+				pUnit->setHasPromotion(eMobility, true);
+			break;
+		}
+		}
+	}
+
+	// A free ancient era technology (picked by the offer's roll)
+	if(kGoodyInfo.isLekmodAncientTech())
+	{
+		TechTypes eTech = LekmodGetRuinAncientTech(std::max(0, m_iLekmodGoodyForcedRoll));
+		if(eTech != NO_TECH)
+		{
+			strBuffer = GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_TECH", GC.getTechInfo(eTech)->GetTextKey());
+			GET_TEAM(getTeam()).setHasTech(eTech, true, GetID(), true, true);
+		}
+	}
+#endif
 
 #endif
 
@@ -8741,6 +8838,10 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		bool bDontShowRewardPopup = GC.GetEngineUserInterface()->IsOptionNoRewardPopups();
 
 		// Don't show in MP, or if the player has turned it off
+#if defined(LEKMOD_RUIN_CHOICE)
+		if(kGoodyInfo.isLekmodTrade() || kGoodyInfo.isLekmodAncientTech())
+			bDontShowRewardPopup = true;
+#endif
 		if(!GC.getGame().isNetworkMultiPlayer() && !bDontShowRewardPopup)	// KWG: Candidate for !GC.getGame().isOption(GAMEOPTION_SIMULTANEOUS_TURNS)
 		{
 			int iSpecialValue = 0;
@@ -8875,6 +8976,446 @@ CvCity* CvPlayer::findBestCityForGoody(CvPlot* pPlot) const
 }
 #endif
 //	--------------------------------------------------------------------------------
+#if defined(LEKMOD_RUIN_CHOICE)
+//	--------------------------------------------------------------------------------
+// LEKMOD: ruins offer a choice of 2 rewards (3 with the goody hut picker promotion).
+// Offers are rolled with the synced random number generator on every machine, stored per ruin plot,
+// and resolved by the owner's network choice (or at random for AIs and at the end of the turn).
+// Pending record layout in m_aiLekmodPendingRuins: plot index, unit ID, number of offers, then per offer: goody, roll, pay, gain.
+//	--------------------------------------------------------------------------------
+static GoodyTypes LekmodLookupGoody(const char* szType)
+{
+	Database::Results kResults;
+	if (DB.Execute(kResults, "SELECT ID FROM GoodyHuts WHERE Type = ?"))
+	{
+		kResults.Bind(1, szType);
+		if (kResults.Step())
+		{
+			return (GoodyTypes)kResults.GetInt(0);
+		}
+	}
+	return NO_GOODY;
+}
+
+static bool LekmodLoadGoodyInfo(GoodyTypes eGoody, CvGoodyInfo& kGoodyInfo)
+{
+	Database::SingleResult kResult;
+	if (!DB.SelectAt(kResult, "GoodyHuts", eGoody))
+	{
+		return false;
+	}
+	kGoodyInfo.CacheResult(kResult);
+	return true;
+}
+
+// Rolls are 0..999; one roll sets every rolled number of an offer, so pay and gain move together
+int CvPlayer::LekmodGoodyRand(int iRange, const char* szLog)
+{
+	if (m_iLekmodGoodyForcedRoll >= 0)
+	{
+		return (m_iLekmodGoodyForcedRoll * iRange) / 1000;
+	}
+	return GC.getGame().getJonRandNum(iRange, szLog);
+}
+
+static int LekmodRoundTo5(int iValue)
+{
+	return ((iValue + 2) / 5) * 5;
+}
+
+// Pay kinds: 0 Food (capital), 1 Gold, 2 Culture. Gain kinds: 0 Gold, 1 Science, 2 Culture, 3 reveal city-states, 4 Mobility.
+int CvPlayer::LekmodGetRuinTradeAmount(int iKind, bool bGain, int iRoll) const
+{
+	const int iEra = (int)GetCurrentEra() + 1;
+	if (!bGain)
+	{
+		switch (iKind)
+		{
+		case 0: return (5 + iRoll * 4 / 1000) * iEra;
+		case 1: return LekmodRoundTo5((40 + iRoll * 31 / 1000) * iEra);
+		case 2: return (5 + iRoll * 4 / 1000) * iEra;
+		}
+	}
+	else
+	{
+		switch (iKind)
+		{
+		case 0: return LekmodRoundTo5((70 + iRoll * 31 / 1000) * iEra);
+		case 1: return (25 + iRoll * 11 / 1000) * iEra;
+		// Always more than the free Culture ruin (turn x era), so the trade is never strictly worse
+		case 2: return GC.getGame().getElapsedGameTurns() * iEra + (8 + iRoll * 5 / 1000) * iEra;
+		}
+	}
+	return 0;
+}
+
+bool CvPlayer::LekmodCanPayRuinTrade(int iPay, int iAmount) const
+{
+	switch (iPay)
+	{
+	case 0:
+		return getCapitalCity() != NULL && getCapitalCity()->getFood() >= iAmount;
+	case 1:
+		return GetTreasury()->GetGold() >= iAmount;
+	case 2:
+		return getJONSCulture() >= iAmount;
+	}
+	return false;
+}
+
+// City-states whose capital this team hasn't seen yet, nearest first
+void CvPlayer::LekmodGetUnseenCityStates(CvPlot* pPlot, std::vector<PlayerTypes>& aeCityStates) const
+{
+	std::vector< std::pair<int, int> > aDistances;
+	for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
+	{
+		CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);
+		if (!kMinor.isAlive() || !kMinor.isMinorCiv() || kMinor.getCapitalCity() == NULL)
+			continue;
+		CvPlot* pCapitalPlot = kMinor.getCapitalCity()->plot();
+		if (pCapitalPlot->isRevealed(getTeam()))
+			continue;
+		aDistances.push_back(std::make_pair(plotDistance(pPlot->getX(), pPlot->getY(), pCapitalPlot->getX(), pCapitalPlot->getY()), iMinor));
+	}
+	std::sort(aDistances.begin(), aDistances.end());
+	for (uint i = 0; i < aDistances.size(); i++)
+	{
+		aeCityStates.push_back((PlayerTypes)aDistances[i].second);
+	}
+}
+
+bool CvPlayer::LekmodCanGainRuinTrade(int iGain, CvPlot* pPlot, CvUnit* pUnit) const
+{
+	switch (iGain)
+	{
+	case 0:
+	case 1:
+	case 2:
+		return true;
+	case 3:
+	{
+		std::vector<PlayerTypes> aeCityStates;
+		LekmodGetUnseenCityStates(pPlot, aeCityStates);
+		return !aeCityStates.empty();
+	}
+	case 4:
+	{
+		PromotionTypes eMobility = (PromotionTypes)GC.getInfoTypeForString("PROMOTION_MOBILITY", true);
+		return pUnit != NULL && pUnit->IsCombatUnit() && eMobility != NO_PROMOTION && !pUnit->isHasPromotion(eMobility);
+	}
+	}
+	return false;
+}
+
+// Valid (pay, gain) pairs for a roll; gold for gold and culture for culture don't count
+void CvPlayer::LekmodGetRuinTradePairs(CvPlot* pPlot, CvUnit* pUnit, int iRoll, std::vector<int>& aiPairs) const
+{
+	for (int iPay = 0; iPay < 3; iPay++)
+	{
+		if (!LekmodCanPayRuinTrade(iPay, LekmodGetRuinTradeAmount(iPay, false, iRoll)))
+			continue;
+		for (int iGain = 0; iGain < 5; iGain++)
+		{
+			if ((iPay == 1 && iGain == 0) || (iPay == 2 && iGain == 2))
+				continue;
+			if (LekmodCanGainRuinTrade(iGain, pPlot, pUnit))
+				aiPairs.push_back(iPay * 10 + iGain);
+		}
+	}
+}
+
+// Ancient era techs the player can research now; the roll picks one
+TechTypes CvPlayer::LekmodGetRuinAncientTech(int iRoll) const
+{
+	EraTypes eAncient = (EraTypes)GC.getInfoTypeForString("ERA_ANCIENT", true);
+	std::vector<TechTypes> aeTechs;
+	for (int iTech = 0; iTech < GC.getNumTechInfos(); iTech++)
+	{
+		CvTechEntry* pkTech = GC.getTechInfo((TechTypes)iTech);
+		if (pkTech != NULL && pkTech->GetEra() == eAncient && GetPlayerTechs()->CanResearch((TechTypes)iTech))
+		{
+			aeTechs.push_back((TechTypes)iTech);
+		}
+	}
+	if (aeTechs.empty())
+	{
+		return NO_TECH;
+	}
+	return aeTechs[(iRoll * (int)aeTechs.size()) / 1000];
+}
+
+void CvPlayer::LekmodRevealNearestCityStates(CvPlot* pPlot, int iNum)
+{
+	std::vector<PlayerTypes> aeCityStates;
+	LekmodGetUnseenCityStates(pPlot, aeCityStates);
+	const int iRange = 2;
+	for (int i = 0; i < iNum && i < (int)aeCityStates.size(); i++)
+	{
+		CvPlot* pCapitalPlot = GET_PLAYER(aeCityStates[i]).getCapitalCity()->plot();
+		for (int iDX = -iRange; iDX <= iRange; iDX++)
+		{
+			for (int iDY = -iRange; iDY <= iRange; iDY++)
+			{
+				CvPlot* pLoopPlot = plotXYWithRangeCheck(pCapitalPlot->getX(), pCapitalPlot->getY(), iDX, iDY, iRange);
+				if (pLoopPlot == NULL)
+					continue;
+				// Some noise, like the map ruin; the capital itself is always revealed
+				if (pLoopPlot == pCapitalPlot || GC.getGame().getJonRandNum(100, "Lekmod ruin city-state reveal") < 75)
+				{
+					pLoopPlot->setRevealed(getTeam(), true);
+				}
+			}
+		}
+	}
+	if (GetID() == GC.getGame().getActivePlayer())
+	{
+		GC.getMap().updateDeferredFog();
+	}
+}
+
+CvString CvPlayer::LekmodGetRuinTradeText(int iPay, int iGain, int iRoll) const
+{
+	const char* aszPay[] = { "TXT_KEY_LEKMOD_RUIN_PAY_FOOD", "TXT_KEY_LEKMOD_RUIN_PAY_GOLD", "TXT_KEY_LEKMOD_RUIN_PAY_CULTURE" };
+	const char* aszGain[] = { "TXT_KEY_LEKMOD_RUIN_GAIN_GOLD", "TXT_KEY_LEKMOD_RUIN_GAIN_SCIENCE", "TXT_KEY_LEKMOD_RUIN_GAIN_CULTURE", "TXT_KEY_LEKMOD_RUIN_GAIN_CITY_STATES", "TXT_KEY_LEKMOD_RUIN_GAIN_MOBILITY" };
+	CvString strPay = GetLocalizedText(aszPay[iPay], LekmodGetRuinTradeAmount(iPay, false, iRoll));
+	CvString strGain = GetLocalizedText(aszGain[iGain], LekmodGetRuinTradeAmount(iGain, true, iRoll));
+	return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_TRADE", strPay.c_str(), strGain.c_str());
+}
+
+// One-line text of an offer, with the exact numbers the player will get
+CvString CvPlayer::LekmodGetRuinOfferText(GoodyTypes eGoody, int iRoll, int iPay, int iGain, CvUnit* pUnit) const
+{
+	CvGoodyInfo kGoodyInfo;
+	if (!LekmodLoadGoodyInfo(eGoody, kGoodyInfo))
+	{
+		return "";
+	}
+	const int iEra = (int)GetCurrentEra() + 1;
+	const int iTurn = GC.getGame().getElapsedGameTurns();
+
+	if (kGoodyInfo.isLekmodTrade())
+	{
+		return LekmodGetRuinTradeText(iPay, iGain, iRoll);
+	}
+	if (kGoodyInfo.isLekmodAncientTech())
+	{
+		TechTypes eTech = LekmodGetRuinAncientTech(iRoll);
+		if (eTech != NO_TECH)
+			return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_TECH", GC.getTechInfo(eTech)->GetTextKey());
+	}
+	if (kGoodyInfo.isFoodEraScale() && getCapitalCity() != NULL)
+	{
+		int iFood = 7 + (int)(2.0 * iEra * 1.1 * getCapitalCity()->getPopulation());
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_FOOD", iFood);
+	}
+	if (kGoodyInfo.isCultureEraTurn())
+	{
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_CULTURE", iTurn * iEra);
+	}
+	if (kGoodyInfo.isFaithEraTurn())
+	{
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_FAITH_HEAL", iTurn * 2 * iEra);
+	}
+	if (kGoodyInfo.getGoldEraFactor() > 0)
+	{
+		int iGold = kGoodyInfo.getGold() + (1 + iRoll * 10 / 1000) * kGoodyInfo.getGoldEraFactor() * iEra;
+		if (kGoodyInfo.isEraBarbarianSpawn() && iGold >= 80)
+			return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_GOLD_BARBARIAN", iGold);
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_GOLD", iGold);
+	}
+	if (kGoodyInfo.isScienceEraRuin())
+	{
+		int iX = std::min((20 + iRoll * 11 / 1000) * iEra, 90);
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_SCIENCE", iX, iX / 2, iX);
+	}
+	if (kGoodyInfo.isUpgradeUnit() && pUnit != NULL)
+	{
+		UnitClassTypes eUpgradeUnitClass = (UnitClassTypes)pUnit->getUnitInfo().GetGoodyHutUpgradeUnitClass();
+		UnitTypes eUpgradeUnit = (eUpgradeUnitClass != NO_UNITCLASS) ? (UnitTypes)getCivilizationInfo().getCivilizationUnits(eUpgradeUnitClass) : NO_UNIT;
+		if (eUpgradeUnit != NO_UNIT)
+			return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_UPGRADE", GC.getUnitInfo(eUpgradeUnit)->GetTextKey(), kGoodyInfo.getUnitDamage());
+	}
+	if (kGoodyInfo.isPantheonFaith() && kGoodyInfo.getFaith() > 0)
+	{
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_FAITH", kGoodyInfo.getFaith() * GC.getGame().getGameSpeedInfo().getFaithPercent() / 100);
+	}
+	if (kGoodyInfo.getTileGrowths() > 0)
+	{
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_TILES", kGoodyInfo.getTileGrowths());
+	}
+	if (kGoodyInfo.getFreePromotion() != NO_PROMOTION)
+	{
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_PROMOTION", GC.getPromotionInfo((PromotionTypes)kGoodyInfo.getFreePromotion())->GetTextKey());
+	}
+	return GetLocalizedText(kGoodyInfo.GetChooseDescriptionKey());
+}
+
+int CvPlayer::LekmodFindPendingRuin(int iPlotIndex) const
+{
+	uint i = 0;
+	while (i + 2 < m_aiLekmodPendingRuins.size())
+	{
+		if (m_aiLekmodPendingRuins[i] == iPlotIndex)
+			return (int)i;
+		i += 3 + 4 * m_aiLekmodPendingRuins[i + 2];
+	}
+	return -1;
+}
+
+int CvPlayer::LekmodGetNumPendingRuinOffers(int iPlotIndex) const
+{
+	int iRecord = LekmodFindPendingRuin(iPlotIndex);
+	return (iRecord < 0) ? 0 : m_aiLekmodPendingRuins[iRecord + 2];
+}
+
+GoodyTypes CvPlayer::LekmodGetPendingRuinOffer(int iPlotIndex, int iOffer, CvString& strText) const
+{
+	int iRecord = LekmodFindPendingRuin(iPlotIndex);
+	if (iRecord < 0 || iOffer < 0 || iOffer >= m_aiLekmodPendingRuins[iRecord + 2])
+		return NO_GOODY;
+	const int iBase = iRecord + 3 + 4 * iOffer;
+	CvUnit* pUnit = const_cast<CvUnit*>(getUnit(m_aiLekmodPendingRuins[iRecord + 1]));
+	strText =LekmodGetRuinOfferText((GoodyTypes)m_aiLekmodPendingRuins[iBase], m_aiLekmodPendingRuins[iBase + 1], m_aiLekmodPendingRuins[iBase + 2], m_aiLekmodPendingRuins[iBase + 3], pUnit);
+	return (GoodyTypes)m_aiLekmodPendingRuins[iBase];
+}
+
+// Apply one offer; falls back to the other offers if it is no longer possible (e.g. the unit died)
+void CvPlayer::LekmodApplyRuinRecord(int iRecord, int iChosen)
+{
+	std::vector<int> aiRecord(m_aiLekmodPendingRuins.begin() + iRecord, m_aiLekmodPendingRuins.begin() + iRecord + 3 + 4 * m_aiLekmodPendingRuins[iRecord + 2]);
+	m_aiLekmodPendingRuins.erase(m_aiLekmodPendingRuins.begin() + iRecord, m_aiLekmodPendingRuins.begin() + iRecord + aiRecord.size());
+
+	CvPlot* pPlot = GC.getMap().plotByIndex(aiRecord[0]);
+	CvUnit* pUnit = getUnit(aiRecord[1]);
+	const int iNumOffers = aiRecord[2];
+	if (pPlot == NULL)
+		return;
+
+	for (int iTry = 0; iTry < iNumOffers; iTry++)
+	{
+		const int iBase = 3 + 4 * ((iChosen + iTry) % iNumOffers);
+		GoodyTypes eGoody = (GoodyTypes)aiRecord[iBase];
+		if (!canReceiveGoody(pPlot, eGoody, pUnit))
+			continue;
+		m_iLekmodGoodyForcedRoll = aiRecord[iBase + 1];
+		m_iLekmodGoodyPay = aiRecord[iBase + 2];
+		m_iLekmodGoodyGain = aiRecord[iBase + 3];
+		receiveGoody(pPlot, eGoody, pUnit);
+		m_iLekmodGoodyForcedRoll = -1;
+		m_iLekmodGoodyPay = -1;
+		m_iLekmodGoodyGain = -1;
+		return;
+	}
+}
+
+void CvPlayer::LekmodCreateRuinOffers(CvPlot* pPlot, CvUnit* pUnit, const std::vector<GoodyTypes>& avValidGoodies)
+{
+	static GoodyTypes eTradeGoody = LekmodLookupGoody("GOODY_LEKMOD_TRADE");
+
+	// The reward chosen at the previous ruin isn't offered again
+	std::vector<GoodyTypes> aePool;
+	for (uint i = 0; i < avValidGoodies.size(); i++)
+	{
+		if (avValidGoodies[i] != (GoodyTypes)m_iLekmodLastRuinGoody)
+			aePool.push_back(avValidGoodies[i]);
+	}
+	if (aePool.empty())
+		aePool = avValidGoodies;
+
+	const bool bPicker = (pUnit != NULL && pUnit->isHasPromotion((PromotionTypes)GC.getPROMOTION_GOODY_HUT_PICKER()));
+	const int iWanted = bPicker ? 3 : 2;
+
+	std::vector<int> aiRecord;
+	aiRecord.push_back(pPlot->GetPlotIndex());
+	aiRecord.push_back(pUnit != NULL ? pUnit->GetID() : -1);
+	aiRecord.push_back(0);
+
+	while ((int)aiRecord[2] < iWanted && !aePool.empty())
+	{
+		GoodyTypes eGoody = aePool[GC.getGame().getJonRandNum(aePool.size(), "Lekmod ruin offer")];
+		// Draw without replacement: one offer per reward type
+		std::vector<GoodyTypes> aeRest;
+		for (uint i = 0; i < aePool.size(); i++)
+		{
+			if (aePool[i] != eGoody)
+				aeRest.push_back(aePool[i]);
+		}
+		aePool = aeRest;
+
+		int iRoll = GC.getGame().getJonRandNum(1000, "Lekmod ruin roll");
+		int iPay = -1;
+		int iGain = -1;
+		if (eGoody == eTradeGoody)
+		{
+			std::vector<int> aiPairs;
+			LekmodGetRuinTradePairs(pPlot, pUnit, iRoll, aiPairs);
+			if (aiPairs.empty())
+			{
+				iRoll = 0;
+				LekmodGetRuinTradePairs(pPlot, pUnit, iRoll, aiPairs);
+			}
+			if (aiPairs.empty())
+				continue;
+			int iPair = aiPairs[GC.getGame().getJonRandNum(aiPairs.size(), "Lekmod ruin trade")];
+			iPay = iPair / 10;
+			iGain = iPair % 10;
+		}
+		aiRecord.push_back(eGoody);
+		aiRecord.push_back(iRoll);
+		aiRecord.push_back(iPay);
+		aiRecord.push_back(iGain);
+		aiRecord[2]++;
+	}
+	if (aiRecord[2] == 0)
+		return;
+
+	// A ruin popped on the same tile again replaces the old offers
+	int iOld = LekmodFindPendingRuin(pPlot->GetPlotIndex());
+	if (iOld >= 0)
+		LekmodApplyRuinRecord(iOld, 0);
+
+	const int iRecord = (int)m_aiLekmodPendingRuins.size();
+	m_aiLekmodPendingRuins.insert(m_aiLekmodPendingRuins.end(), aiRecord.begin(), aiRecord.end());
+
+	if (!isHuman())
+	{
+		LekmodApplyRuinRecord(iRecord, GC.getGame().getJonRandNum(aiRecord[2], "Lekmod AI ruin choice"));
+	}
+	else if (GetID() == GC.getGame().getActivePlayer())
+	{
+		CvPopupInfo kPopupInfo(BUTTONPOPUP_CHOOSE_GOODY_HUT_REWARD, GetID(), pUnit != NULL ? pUnit->GetID() : -1, pPlot->GetPlotIndex());
+		GC.GetEngineUserInterface()->AddPopup(kPopupInfo);
+		// We are adding a popup that the player must make a choice in, make sure they are not in the end-turn phase.
+		CancelActivePlayerEndTurn();
+	}
+}
+
+// The owner's choice (network message); ignored unless it matches a pending offer
+void CvPlayer::LekmodChooseRuinOffer(int iPlotIndex, GoodyTypes eGoody)
+{
+	int iRecord = LekmodFindPendingRuin(iPlotIndex);
+	if (iRecord < 0)
+		return;
+	for (int iOffer = 0; iOffer < m_aiLekmodPendingRuins[iRecord + 2]; iOffer++)
+	{
+		if (m_aiLekmodPendingRuins[iRecord + 3 + 4 * iOffer] == eGoody)
+		{
+			LekmodApplyRuinRecord(iRecord, iOffer);
+			return;
+		}
+	}
+}
+
+// Offers nobody chose (turn timer, reload) are resolved at random when the turn ends
+void CvPlayer::LekmodResolvePendingRuins()
+{
+	while (!m_aiLekmodPendingRuins.empty())
+	{
+		LekmodApplyRuinRecord(0, GC.getGame().getJonRandNum(m_aiLekmodPendingRuins[2], "Lekmod unanswered ruin"));
+	}
+}
+#endif
+
 void CvPlayer::doGoody(CvPlot* pPlot, CvUnit* pUnit)
 {
 	CvHandicapInfo& playerHandicapInfo = getHandicapInfo();
@@ -8928,7 +9469,15 @@ void CvPlayer::doGoody(CvPlot* pPlot, CvUnit* pUnit)
 			}
 
 			// Any valid Goodies?
+#if defined(LEKMOD_RUIN_CHOICE)
 			if(avValidGoodies.size() > 0)
+			{
+				LekmodCreateRuinOffers(pPlot, pUnit, avValidGoodies);
+			}
+			if(false)
+#else
+			if(avValidGoodies.size() > 0)
+#endif
 			{
 #ifdef AUI_PLAYER_FIX_GOODY_HUT_PICKER
 				if (pUnit && GC.getGame().getActivePlayer() == GetID() && pUnit->isHasPromotion((PromotionTypes)GC.getPROMOTION_GOODY_HUT_PICKER()))
@@ -29412,6 +29961,10 @@ void CvPlayer::Read(FDataStream& kStream)
 
 		kStream >> m_ppiImprovementYieldChange;
 		kStream >> m_ppiResourceYieldChange;
+#if defined(LEKMOD_RUIN_CHOICE)
+	kStream >> m_aiLekmodPendingRuins;
+	kStream >> m_iLekmodLastRuinGoody;
+#endif
 
 }
 
@@ -29981,6 +30534,10 @@ void CvPlayer::Write(FDataStream& kStream) const
 
 	kStream << m_ppiImprovementYieldChange;
 	kStream << m_ppiResourceYieldChange;
+#if defined(LEKMOD_RUIN_CHOICE)
+	kStream << m_aiLekmodPendingRuins;
+	kStream << m_iLekmodLastRuinGoody;
+#endif
 }
 
 //	--------------------------------------------------------------------------------

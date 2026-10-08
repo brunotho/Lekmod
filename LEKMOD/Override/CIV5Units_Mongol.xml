@@ -16396,9 +16396,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_ANCIENTRUINS_HEADING2_BODY"> 
-			<Text>
-				Ancient Ruins are the remnants of even earlier civilizations which rose and fell long before you came on the scene. Ruins provide a random benefit to the civilization of the unit that first enters their tile. The ruin is destroyed when it is entered.[NEWLINE][NEWLINE]Ruins are cool. Find as many as you can before other civs get to them!
-			</Text>
+			<Text>The first unit to enter an Ancient Ruin claims it, and the ruin disappears. A ruin is also claimed when your borders grow over it.[NEWLINE][NEWLINE]You choose your reward: the ruin offers 2 different random rewards, with their exact amounts.[NEWLINE]A unit with Native Tongue (Shoshone Pathfinder) gets 3 offers.[NEWLINE]The reward you chose at your previous ruin is not offered again, and rewards you can't use at the moment are left out.[NEWLINE]If you don't choose before the turn ends, one of the offers is picked at random.[NEWLINE][NEWLINE]Most amounts are multiplied by the era (Ancient = 1, Classical = 2, Medieval = 3, ...).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_ANCIENTRUINS_HEADING2_TITLE"> 
 			<Text>
@@ -16441,9 +16439,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_CULTURE_HEADING4_BODY"> 
-			<Text>
-				The ruin provides culture to your civilization.
-			</Text>
+			<Text>Turn x era [ICON_CULTURE] Culture, from turn 6.[NEWLINE]A ruin trade can give (turn + 8 to 12) x era Culture: always more than this reward.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_CULTURE_HEADING4_TITLE"> 
 			<Text>
@@ -16486,9 +16482,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_FREETECH_HEADING4_BODY"> 
-			<Text>
-				The ruin provides your civilization with a free technology.
-			</Text>
+			<Text>Offers a random Ancient Era technology that you could research right now. You get it immediately.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_FREETECH_HEADING4_TITLE"> 
 			<Text>
@@ -16511,9 +16505,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_MAP_HEADING4_BODY"> 
-			<Text>
-				The ruin provides a map of the surrounding area (lifting the fog of war from a number of tiles).
-			</Text>
+			<Text>Reveals a patchy area of radius 6 around the ruin and nearby barbarian camps, and gives the unit 6 experience. Only until turn 10.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_MAP_HEADING4_TITLE"> 
 			<Text>
@@ -16571,9 +16563,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_RUINBENEFITS_HEADING3_BODY"> 
-			<Text>
-				Ancient ruins can provide a number of different benefits.
-			</Text>
+			<Text>[ICON_CULTURE] Culture: turn x era Culture (from turn 6).[NEWLINE][ICON_GOLD] Gold: 45 + 5 x (1 to 10) x era Gold. 80 Gold or more also brings a barbarian next to the ruin.[NEWLINE][ICON_RESEARCH] Science: 20-30 x era Science (at most 90). The unit loses that much health (keeps at least 1 HP) and gains half of it as experience.[NEWLINE][ICON_FOOD] Food: 7 + 2.2 x era x capital population Food in your capital. The unit gets Glutton (-10% combat strength until it upgrades).[NEWLINE][ICON_PEACE] Faith: 9 Faith while you have no pantheon and no Faith (from turn 6). With a pantheon (and no religion): turn x 2 x era Faith, and the unit is fully healed.[NEWLINE]Upgrade: the unit upgrades (once per unit, from turn 6) and loses 20 HP.[NEWLINE]Map: reveals a patchy area around the ruin (radius 6) and gives 6 experience. Until turn 10.[NEWLINE]Borders: your nearest city gains 2 tiles.[NEWLINE]Mobility: the unit gets the Mobility promotion (Ancient Era only, combat units).[NEWLINE]Free technology: a random Ancient Era technology you can research.[NEWLINE]Trade: pay Food, Gold or Culture for another reward (see Trade).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_RUINBENEFITS_HEADING3_TITLE"> 
 			<Text>
@@ -16586,14 +16576,10 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_SURVIVORS_HEADING4_BODY"> 
-			<Text>
-				The ruin contains survivors from the earlier civilization. They move to one of your cities, increasing its population by one.
-			</Text>
+			<Text>Pay one thing for another.[NEWLINE][NEWLINE]Price: 5-8 [ICON_FOOD] Food from your capital, 40-70 [ICON_GOLD] Gold, or 5-8 [ICON_CULTURE] Culture.[NEWLINE]Reward: 70-100 [ICON_GOLD] Gold, 25-35 [ICON_RESEARCH] Science, (turn + 8 to 12) [ICON_CULTURE] Culture, the location of the 3 nearest city-states you haven't seen yet, or Mobility for the unit.[NEWLINE][NEWLINE]All amounts are multiplied by the era. A bigger price comes with a bigger reward.[NEWLINE]Only offered when you can pay. Gold for Gold and Culture for Culture never come up.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_SURVIVORS_HEADING4_TITLE"> 
-			<Text>
-				Survivors
-			</Text>
+			<Text>Trade</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_THEEND_ADV_QUEST"> 
 			<Text>
@@ -16616,9 +16602,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_TREASURE_HEADING4_BODY"> 
-			<Text>
-				The ruin provides gold to your civilization!
-			</Text>
+			<Text>45 + 5 x (1 to 10) x era [ICON_GOLD] Gold. 80 Gold or more also brings a barbarian (of your era) next to the ruin.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_TREASURE_HEADING4_TITLE"> 
 			<Text>
@@ -16646,9 +16630,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_WEAPONS_HEADING4_BODY"> 
-			<Text>
-				The unit which enters the tile is upgraded to a more advanced unit (a warrior might become a swordsman, for example).
-			</Text>
+			<Text>The unit upgrades to a stronger unit (e.g. Warrior to Spearman, Scout to Archer) and loses 20 HP.[NEWLINE]Each unit can only be upgraded by a ruin once. From turn 6.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_WEAPONS_HEADING4_TITLE"> 
 			<Text>
@@ -16661,9 +16643,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_WORKERS_HEADING4_BODY"> 
-			<Text>
-				On easier difficulty levels, you can also receive free Settlers and Workers from ruins.
-			</Text>
+			<Text>Ruins don't give Settlers, Workers or population, except on the Settler difficulty (Settlers and Workers).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BARBARIAN_WORKERS_HEADING4_TITLE"> 
 			<Text>
@@ -71883,9 +71863,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOLD_ANCIENTRUINS_HEADING3_BODY"> 
-			<Text>
-				An ancient ruin may provide gold when it is explored.
-			</Text>
+			<Text>Ruins can offer 45 + 5 x (1 to 10) x era [ICON_GOLD] Gold. 80 Gold or more also brings a barbarian next to the ruin.[NEWLINE]A ruin trade can also give 70-100 x era Gold, or cost 40-70 x era Gold.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GOLD_ANCIENTRUINS_HEADING3_TITLE"> 
 			<Text>
@@ -101584,6 +101562,84 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_OTHERS">
 			<Text>Pledged to protect this city-state:</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GOODY_TRADE">
+			<Text>You trade with the survivors of the ruins.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CHOOSE_GOODY_TRADE">
+			<Text>Trade with the survivors.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GOODY_ANCIENT_TECH">
+			<Text>You learn a technology from the ruins.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CHOOSE_GOODY_ANCIENT_TECH">
+			<Text>Learn an ancient technology.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_TRADE">
+			<Text>Trade {1_Pay} for {2_Gain}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_PAY_FOOD">
+			<Text>{1_Num} [ICON_FOOD] Food</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_PAY_GOLD">
+			<Text>{1_Num} [ICON_GOLD] Gold</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_PAY_CULTURE">
+			<Text>{1_Num} [ICON_CULTURE] Culture</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_GAIN_GOLD">
+			<Text>{1_Num} [ICON_GOLD] Gold</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_GAIN_SCIENCE">
+			<Text>{1_Num} [ICON_RESEARCH] Science</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_GAIN_CULTURE">
+			<Text>{1_Num} [ICON_CULTURE] Culture</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_GAIN_CITY_STATES">
+			<Text>the location of the 3 nearest city-states</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_GAIN_MOBILITY">
+			<Text>Mobility for this unit</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_TECH">
+			<Text>Free technology: {1_Tech}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_FOOD">
+			<Text>+{1_Num} [ICON_FOOD] Food in your capital; the unit gets Glutton</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_CULTURE">
+			<Text>+{1_Num} [ICON_CULTURE] Culture</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_FAITH_HEAL">
+			<Text>+{1_Num} [ICON_PEACE] Faith; the unit is fully healed</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_FAITH">
+			<Text>+{1_Num} [ICON_PEACE] Faith</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_GOLD">
+			<Text>+{1_Num} [ICON_GOLD] Gold</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_GOLD_BARBARIAN">
+			<Text>+{1_Num} [ICON_GOLD] Gold; a barbarian appears</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_SCIENCE">
+			<Text>+{1_Num} [ICON_RESEARCH] Science and +{2_Num} XP; the unit takes {3_Num} damage</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_UPGRADE">
+			<Text>Upgrade to {1_Unit}; the unit takes {2_Num} damage</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_TILES">
+			<Text>+{1_Num} tiles for your nearest city</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_PROMOTION">
+			<Text>The unit gets {1_Promotion}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_CHOOSE_TITLE">
+			<Text>Ancient Ruins</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RUIN_CHOOSE_DESCRIPTION">
+			<Text>Choose your reward:</Text>
+		</Row>
 		<Row Tag="TXT_KEY_GAME_OPTION_HIGH_CONTRAST_CIV_COLORS">
 			<Text>Civ Colors: High Contrast</Text>
 		</Row>
@@ -121622,7 +121678,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_GOODY_HUT_PICKER_HELP"> 
 			<Text>
-				May choose benefit when discovering Ancient Ruins.
+				Ancient Ruins offer 3 rewards to choose from instead of 2.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_GREAT_ADMIRAL"> 
@@ -133660,9 +133716,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_ANCIENTRUINS_HEADING4_BODY"> 
-			<Text>
-				Some ancient ruins will give you new technology. This is not guaranteed, but it's another good reason to search them out and claim them before anybody else does.
-			</Text>
+			<Text>Ruins can offer a free Ancient Era technology, or 20-30 x era [ICON_RESEARCH] Science at the cost of the unit's health.[NEWLINE]A ruin trade can also give 25-35 x era [ICON_RESEARCH] Science.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_ANCIENTRUINS_HEADING4_TITLE"> 
 			<Text>

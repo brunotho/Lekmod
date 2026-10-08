@@ -1266,6 +1266,11 @@ public:
 	bool isFaithEraTurn() const;
 	bool isFoodEraScale() const;
 	bool isFaithZeroOnly() const;
+#if defined(LEKMOD_RUIN_CHOICE)
+	bool isLekmodTrade() const;
+	bool isLekmodAncientTech() const;
+	const char* GetChooseDescriptionKey() const;
+#endif
 #endif
 
 	const char* getSound() const;
@@ -1327,6 +1332,11 @@ protected:
 	bool m_bFaithEraTurn;
 	bool m_bFoodEraScale;
 	bool m_bFaithZeroOnly;
+#if defined(LEKMOD_RUIN_CHOICE)
+	bool m_bLekmodTrade;
+	bool m_bLekmodAncientTech;
+	CvString m_strChooseDescriptionKey;
+#endif
 #endif
 
 	CvString m_strSound;

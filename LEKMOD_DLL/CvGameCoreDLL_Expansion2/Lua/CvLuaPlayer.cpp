@@ -97,6 +97,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(ReceiveGoody);
 	Method(DoGoody);
 	Method(CanGetGoody);
+#if defined(LEKMOD_RUIN_CHOICE)
+	Method(GetLekmodRuinOffers);
+#endif
 
 	Method(CanFound);
 	Method(Found);
@@ -1558,6 +1561,30 @@ int CvLuaPlayer::lDoGoody(lua_State* L)
 }
 //------------------------------------------------------------------------------
 // This function checks the handicap as well as CanReceiveGoody to test validity
+#if defined(LEKMOD_RUIN_CHOICE)
+//------------------------------------------------------------------------------
+// table GetLekmodRuinOffers(int iPlotIndex): the rewards offered by a popped ruin, as { Goody, Text }
+int CvLuaPlayer::lGetLekmodRuinOffers(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const int iPlotIndex = lua_tointeger(L, 2);
+	lua_createtable(L, 0, 0);
+	const int iNumOffers = pkPlayer->LekmodGetNumPendingRuinOffers(iPlotIndex);
+	for(int iOffer = 0; iOffer < iNumOffers; iOffer++)
+	{
+		CvString strText;
+		GoodyTypes eGoody = pkPlayer->LekmodGetPendingRuinOffer(iPlotIndex, iOffer, strText);
+		lua_createtable(L, 0, 0);
+		lua_pushinteger(L, eGoody);
+		lua_setfield(L, -2, "Goody");
+		lua_pushstring(L, strText.c_str());
+		lua_setfield(L, -2, "Text");
+		lua_rawseti(L, -2, iOffer + 1);
+	}
+	return 1;
+}
+#endif
+//------------------------------------------------------------------------------
 int CvLuaPlayer::lCanGetGoody(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);

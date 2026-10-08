@@ -1,5 +1,5 @@
 /*	-------------------------------------------------------------------------------------------------------
-	© 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.  
+	ï¿½ 1991-2012 Take-Two Interactive Software and its subsidiaries.  Developed by Firaxis Games.  
 	Sid Meier's Civilization V, Civ, Civilization, 2K Games, Firaxis Games, Take-Two Interactive Software 
 	and their respective logos are all trademarks of Take-Two interactive Software, Inc.  
 	All other marks and trademarks are the property of their respective owners.  
@@ -1262,8 +1262,16 @@ void CvDllNetMessageHandler::ResponseGoodyChoice(PlayerTypes ePlayer, int iPlotX
 {
 	CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
 	CvPlot* pPlot = GC.getMap().plot(iPlotX, iPlotY);
+#if defined(LEKMOD_RUIN_CHOICE)
+	// Only one of the offers rolled for this ruin can be chosen
+	if(pPlot != NULL)
+	{
+		kPlayer.LekmodChooseRuinOffer(pPlot->GetPlotIndex(), eGoody);
+	}
+#else
 	CvUnit* pUnit = kPlayer.getUnit(iUnitID);
 	kPlayer.receiveGoody(pPlot, eGoody, pUnit);
+#endif
 }
 
 //------------------------------------------------------------------------------

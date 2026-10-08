@@ -1,0 +1,127 @@
+-------------------------------------------------
+-- Choose Goody Hut Reward Popup
+-- LEKMOD: every ruin offers a choice. The DLL rolls the offers (2, or 3 with the
+-- goody hut picker promotion) with their exact amounts; this screen lists them.
+-------------------------------------------------
+include("IconSupport");
+include("InfoTooltipInclude");
+
+g_NumberOfFreeItems = 0;
+local m_PopupInfo = nil;
+local pPlayer = nil;
+local pUnit = nil;
+local pPlot = nil;
+PopulateItems = {};
+CommitItems = {};
+SelectedItems = {};
+
+PopulateItems["GoodyHutBonuses"] = function(stackControl, playerID)
+
+	local count = 0;
+	Controls.TitleLabel:LocalizeAndSetText("TXT_KEY_LEKMOD_RUIN_CHOOSE_TITLE");
+	Controls.DescriptionLabel:LocalizeAndSetText("TXT_KEY_LEKMOD_RUIN_CHOOSE_DESCRIPTION");
+	SelectedItems = {};
+	stackControl:DestroyAllChildren();
+
+	for _, offer in ipairs(pPlayer:GetLekmodRuinOffers(pPlot:GetPlotIndex())) do
+		local iGoodyType = offer.Goody;
+		local controlTable = {};
+		ContextPtr:BuildInstanceForControl( "ItemInstance", controlTable, stackControl );
+		controlTable.Name:SetText(offer.Text);
+
+		local selectionAnim = controlTable.SelectionAnim;
+
+		controlTable.Button:RegisterCallback(Mouse.eLClick, function()
+			for i,v in ipairs(SelectedItems) do
+				v[2].SelectionAnim:SetHide(true);
+			end
+			SelectedItems = {};
+			selectionAnim:SetHide(false);
+			table.insert(SelectedItems, {iGoodyType, controlTable});
+			Controls.ConfirmButton:SetDisabled(false);
+		end);
+
+		count = count + 1;
+	end
+
+	return count;
+end
+
+CommitItems["GoodyHutBonuses"] = function(selection, playerID)
+	local activePlayer = Players[playerID];
+	if(activePlayer ~= nil) then
+		for i,v in ipairs(selection) do
+			local iUnitID = (pUnit ~= nil) and pUnit:GetID() or -1;
+			Network.SendGoodyChoice(playerID, pPlot:GetX(), pPlot:GetY(), v[1], iUnitID);
+		end
+	end
+end
+
+function DisplayPopup(playerID, classType, numberOfFreeItems)
+
+	local count = PopulateItems[classType](Controls.ItemStack, playerID);
+
+	Controls.ItemStack:CalculateSize();
+	Controls.ItemStack:ReprocessAnchoring();
+	Controls.ItemScrollPanel:CalculateInternalSize();
+
+	if(count > 0) then
+		g_NumberOfFreeItems = 1;
+		Controls.ConfirmButton:SetDisabled(true);
+		ContextPtr:SetHide(false);
+	else
+		ContextPtr:SetHide(true);
+	end
+
+	Controls.ConfirmButton:RegisterCallback(Mouse.eLClick, function()
+		CommitItems[classType](SelectedItems, playerID);
+		ContextPtr:SetHide(true);
+	end);
+end
+
+
+function OnPopup( popupInfo )
+	if( popupInfo.Type == ButtonPopupTypes.BUTTONPOPUP_CHOOSE_GOODY_HUT_REWARD and ContextPtr:IsHidden() == true ) then
+		m_PopupInfo = popupInfo;
+		pPlayer = Players[popupInfo.Data1];
+		pUnit = (popupInfo.Data2 ~= nil and popupInfo.Data2 >= 0) and pPlayer:GetUnitByID(popupInfo.Data2) or nil;
+		-- Data3 = the ruin's plot index (a ruin can also be popped by borders, without a unit)
+		if (popupInfo.Data3 ~= nil and popupInfo.Data3 >= 0) then
+			pPlot = Map.GetPlotByIndex(popupInfo.Data3);
+		elseif (pUnit ~= nil) then
+			pPlot = pUnit:GetPlot();
+		end
+		if (pPlot == nil) then
+			return;
+		end
+
+		DisplayPopup(m_PopupInfo.Data1, "GoodyHutBonuses", 1);
+	end
+end
+Events.SerialEventGameMessagePopup.Add( OnPopup );
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+function ShowHideHandler( bIsHide, bInitState )
+
+	if( not bInitState ) then
+		if( not bIsHide ) then
+			UI.incTurnTimerSemaphore();
+			Events.SerialEventGameMessagePopupShown(m_PopupInfo);
+		else
+			UI.decTurnTimerSemaphore();
+			Events.SerialEventGameMessagePopupProcessed.CallImmediate(ButtonPopupTypes.BUTTONPOPUP_CHOOSE_GOODY_HUT_REWARD, 0);
+		end
+	end
+end
+ContextPtr:SetShowHideHandler( ShowHideHandler );
+
+----------------------------------------------------------------
+-- 'Active' (local human) player has changed
+----------------------------------------------------------------
+function OnActivePlayerChanged( iActivePlayer, iPrevActivePlayer )
+	if (not ContextPtr:IsHidden()) then
+		ContextPtr:SetHide(true);
+	end
+end
+Events.GameplaySetActivePlayer.Add(OnActivePlayerChanged);

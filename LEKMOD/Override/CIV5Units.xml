@@ -108244,6 +108244,8 @@
 		<Column name="CultureEraTurn" type="boolean" default="0"/>
 		<Column name="FaithEraTurn" type="boolean" default="0"/>
 		<Column name="FoodEraScale" type="boolean" default="0"/>
+		<Column name="LekmodTrade" type="boolean" default="0"/>
+		<Column name="LekmodAncientTech" type="boolean" default="0"/>
 		<Column name="FaithZeroOnly" type="boolean" default="0"/>		
 	</Table> 
 	<GoodyHuts>
@@ -108558,7 +108560,7 @@
 			<BarbarianUnitProb>0</BarbarianUnitProb> 
 			<MinBarbarians>0</MinBarbarians>
 			<AfterTurn>6</AfterTurn>
-			<UnitDamage>15</UnitDamage>
+			<UnitDamage>20</UnitDamage>
 		</Row>
 		<Row> 
 			<ID>11</ID> 
@@ -108995,6 +108997,21 @@
 			<CityStateInfluence>35</CityStateInfluence>
 			<IsOncePerGame>true</IsOncePerGame>
 			<AfterTurn>10</AfterTurn>
+		</Row>
+		<!-- LEKMOD: ruin choice rewards. Trade: pay Food/Gold/Culture for Gold/Science/Culture/city-state locations/Mobility (amounts in the DLL) -->
+		<Row>
+			<ID>26</ID>
+			<Type>GOODY_LEKMOD_TRADE</Type>
+			<Description>TXT_KEY_LEKMOD_GOODY_TRADE</Description>
+			<ChooseDescription>TXT_KEY_LEKMOD_CHOOSE_GOODY_TRADE</ChooseDescription>
+			<LekmodTrade>true</LekmodTrade>
+		</Row>
+		<Row>
+			<ID>27</ID>
+			<Type>GOODY_LEKMOD_ANCIENT_TECH</Type>
+			<Description>TXT_KEY_LEKMOD_GOODY_ANCIENT_TECH</Description>
+			<ChooseDescription>TXT_KEY_LEKMOD_CHOOSE_GOODY_ANCIENT_TECH</ChooseDescription>
+			<LekmodAncientTech>true</LekmodAncientTech>
 		</Row>
 	</GoodyHuts> 
 
@@ -112586,6 +112603,115 @@
 		<Row>
 			<HandicapType>HANDICAP_AI_DEFAULT</HandicapType>
 			<GoodyType>GOODY_PANTHEON_FAITH</GoodyType>
+		</Row>
+		<!-- LEKMOD: ruin choice rewards (the trade is listed twice: it is drawn twice as often) -->
+		<Row>
+			<HandicapType>HANDICAP_SETTLER</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_SETTLER</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_SETTLER</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_CHIEFTAIN</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_CHIEFTAIN</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_CHIEFTAIN</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_WARLORD</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_WARLORD</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_WARLORD</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_PRINCE</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_PRINCE</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_PRINCE</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_KING</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_KING</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_KING</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_EMPEROR</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_EMPEROR</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_EMPEROR</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_IMMORTAL</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_IMMORTAL</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_IMMORTAL</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_DEITY</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_DEITY</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_DEITY</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_AI_DEFAULT</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_AI_DEFAULT</HandicapType>
+			<GoodyType>GOODY_LEKMOD_TRADE</GoodyType>
+		</Row>
+		<Row>
+			<HandicapType>HANDICAP_AI_DEFAULT</HandicapType>
+			<GoodyType>GOODY_LEKMOD_ANCIENT_TECH</GoodyType>
 		</Row>
 	</HandicapInfo_Goodies> 
 

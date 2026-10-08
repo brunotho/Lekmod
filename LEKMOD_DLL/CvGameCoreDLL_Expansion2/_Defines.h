@@ -1210,6 +1210,8 @@ TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_TRAIT_VOTES
 #define LEKMOD_GARRISON_YIELD_EFFECTS
 // From this turn on, policy garrison effects (culture, production, happiness) work in every city, garrisoned or not. Building garrison effects still need a unit.
 #define LEKMOD_POLICY_GARRISON_ATTACH_TURN 70
+// Ruins offer a choice of 2 rewards (3 with the goody hut picker promotion), with trade-off rewards and a free ancient tech
+#define LEKMOD_RUIN_CHOICE
 // Great Work Yield stuff
 #define LEKMOD_GREAT_WORK_YIELD_EFFECTS
 // Convert invaild Promotions for a Unit combat to valid ones.

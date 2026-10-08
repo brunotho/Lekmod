@@ -711,18 +711,24 @@ Double movement and +15% combat strength in forest and jungle.
 ANCIENT RUINS OVERHAUL (GOODY_*)
 ---------------------------------
 Tags: ruins, religion, game mechanics
-Ruin rewards scale with the era (ancient = 1, classical = 2, ...) and the turn.
+Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshone ability), with the exact amounts shown. Rewards scale with the era (ancient = 1, classical = 2, ...) and the turn.
+- Added: popping a ruin offers 2 different random rewards to choose from (3 with Native Tongue); the reward you chose at your previous ruin is not offered again, and rewards you can't use right now are left out
+- Added: new reward "Trade": pay 5-8 Food from your capital, 40-70 Gold or 5-8 Culture for 70-100 Gold, 25-35 Science, (turn + 8-12) Culture, the location of the 3 nearest city-states you haven't seen, or Mobility for the unit; a bigger price comes with a bigger reward; only offered when you can pay. Gold for Gold and Culture for Culture never come up. All amounts x era
+- Added: new reward "Free technology": a random ancient era technology you can research
+- Changed: if you don't choose before the turn ends, one of the offers is picked at random
 - Changed: Food: 7 + 2.2 x era x capital population food in the capital; the unit gets Glutton (-10% combat strength, lost on upgrade)
-- Changed: Upgrade: from turn 6; the unit loses 15 HP
+- Changed: Upgrade: from turn 6; the unit loses 20 HP
 - Changed: Tech: no more free tech; 20-30 x era science instead (max 90); the unit loses that much HP (keeps at least 1) and gains half of it as experience
 - Changed: Map: reveals a patchy area of radius 6 and gives 6 experience; until turn 10
 - Changed: Culture: turn x era culture, from turn 6
-- Changed: Faith: 14 faith from turn 6 while you have no pantheon and 0 faith; turn x 2 x era faith plus a full heal once you have a pantheon (and no religion)
+- Changed: Faith: 9 faith from turn 6 while you have no pantheon and 0 faith; turn x 2 x era faith plus a full heal once you have a pantheon (and no religion)
 - Changed: Gold: 45 + 5 x (1-10) x era gold; 80 or more also spawns an era-appropriate barbarian next to the ruin
 - Changed: Mobility: ancient era only; scouts (including the Shoshone Pathfinder) can now get it
 - Removed: the Prophet faith ruin
-- Changed: shorter Shoshone ruin choices and new result texts
+- Changed: short choice texts with the exact numbers (e.g. "Trade 40 Gold for 30 Science"), and new result texts
+- Changed: Civilopedia ruin pages rewritten with the current rewards and numbers
 - Dev: new GoodyHuts columns (BeforeEra, UnitDamage, GoldEraFactor, EraBarbarianSpawn, ScienceEraRuin, CultureEraTurn, FaithEraTurn, FoodEraScale, FaithZeroOnly); ruin data moved out of the unloaded Art/No Quitters Mod XML. The popup shows the DLL-computed amount (Data2).
+- Dev: LEKMOD_RUIN_CHOICE: offers rolled with the synced RNG in CvPlayer::doGoody (one roll 0-999 per offer sets all its numbers), stored per plot in CvPlayer (saved), chosen via Network.SendGoodyChoice, AIs pick at random, leftovers resolved in CvPlayer::doTurn. New GoodyHuts columns LekmodTrade / LekmodAncientTech, rows GOODY_LEKMOD_TRADE (pool weight 2) and GOODY_LEKMOD_ANCIENT_TECH (weight 1). Lua: Player:GetLekmodRuinOffers(plotIndex); ChooseGoodyHutReward.lua override
 
 
 GLUTTON (PROMOTION_GLUTTON)

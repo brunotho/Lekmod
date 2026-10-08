@@ -244,6 +244,25 @@ public:
 	bool canReceiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit) const;
 	void receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit);
 	void doGoody(CvPlot* pPlot, CvUnit* pUnit);
+#if defined(LEKMOD_RUIN_CHOICE)
+	int LekmodGoodyRand(int iRange, const char* szLog);
+	int LekmodGetRuinTradeAmount(int iKind, bool bGain, int iRoll) const;
+	bool LekmodCanPayRuinTrade(int iPay, int iAmount) const;
+	bool LekmodCanGainRuinTrade(int iGain, CvPlot* pPlot, CvUnit* pUnit) const;
+	void LekmodGetUnseenCityStates(CvPlot* pPlot, std::vector<PlayerTypes>& aeCityStates) const;
+	void LekmodGetRuinTradePairs(CvPlot* pPlot, CvUnit* pUnit, int iRoll, std::vector<int>& aiPairs) const;
+	TechTypes LekmodGetRuinAncientTech(int iRoll) const;
+	void LekmodRevealNearestCityStates(CvPlot* pPlot, int iNum);
+	CvString LekmodGetRuinTradeText(int iPay, int iGain, int iRoll) const;
+	CvString LekmodGetRuinOfferText(GoodyTypes eGoody, int iRoll, int iPay, int iGain, CvUnit* pUnit) const;
+	int LekmodFindPendingRuin(int iPlotIndex) const;
+	int LekmodGetNumPendingRuinOffers(int iPlotIndex) const;
+	GoodyTypes LekmodGetPendingRuinOffer(int iPlotIndex, int iOffer, CvString& strText) const;
+	void LekmodApplyRuinRecord(int iRecord, int iChosen);
+	void LekmodCreateRuinOffers(CvPlot* pPlot, CvUnit* pUnit, const std::vector<GoodyTypes>& avValidGoodies);
+	void LekmodChooseRuinOffer(int iPlotIndex, GoodyTypes eGoody);
+	void LekmodResolvePendingRuins();
+#endif
 
 #ifdef LEKMOD_NEW_ANCIENT_RUIN_REWARDS
 	CvCity* findBestCityForGoody(CvPlot* pPlot) const;
@@ -2349,6 +2368,13 @@ protected:
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiIncomingUnitCountdowns;
 	FAutoVariable<std::vector<int>, CvPlayer> m_aiMinorFriendshipAnchors; // DEPRECATED
 	std::vector<int> m_aiSiphonLuxuryCount;
+#if defined(LEKMOD_RUIN_CHOICE)
+	std::vector<int> m_aiLekmodPendingRuins; // per ruin: plot index, unit ID, number of offers, then (goody, roll, pay, gain) per offer
+	int m_iLekmodLastRuinGoody;
+	int m_iLekmodGoodyForcedRoll; // only set while an offer is applied
+	int m_iLekmodGoodyPay;
+	int m_iLekmodGoodyGain;
+#endif
 	std::vector<int> m_aiGreatWorkYieldChange;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)
 	std::vector<int> m_aiYieldSettleUnitCityOrder;

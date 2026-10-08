@@ -4085,6 +4085,10 @@ CvGoodyInfo::CvGoodyInfo() : CvBaseInfo()
 	, m_iGoldEraFactor(0)
 	, m_bEraBarbarianSpawn(false)
 	, m_bScienceEraRuin(false)
+#if defined(LEKMOD_RUIN_CHOICE)
+	, m_bLekmodTrade(false)
+	, m_bLekmodAncientTech(false)
+#endif
 	, m_bCultureEraTurn(false)
 	, m_bFaithEraTurn(false)
 	, m_bFoodEraScale(false)
@@ -4308,6 +4312,20 @@ bool CvGoodyInfo::isFaithZeroOnly() const
 {
 	return m_bFaithZeroOnly;
 }
+#if defined(LEKMOD_RUIN_CHOICE)
+bool CvGoodyInfo::isLekmodTrade() const
+{
+	return m_bLekmodTrade;
+}
+bool CvGoodyInfo::isLekmodAncientTech() const
+{
+	return m_bLekmodAncientTech;
+}
+const char* CvGoodyInfo::GetChooseDescriptionKey() const
+{
+	return m_strChooseDescriptionKey.c_str();
+}
+#endif
 #endif
 
 const char* CvGoodyInfo::getSound() const
@@ -4392,6 +4410,12 @@ bool CvGoodyInfo::CacheResults(Database::Results& results, CvDatabaseUtility& kU
 	m_bFaithEraTurn = results.GetBool("FaithEraTurn");
 	m_bFoodEraScale = results.GetBool("FoodEraScale");
 	m_bFaithZeroOnly = results.GetBool("FaithZeroOnly");
+#if defined(LEKMOD_RUIN_CHOICE)
+	m_bLekmodTrade = results.GetBool("LekmodTrade");
+	m_bLekmodAncientTech = results.GetBool("LekmodAncientTech");
+	const char* szChooseDescription = results.GetText("ChooseDescription");
+	m_strChooseDescriptionKey = (szChooseDescription != NULL) ? szChooseDescription : "";
+#endif
 #endif
 
 	//TEMP TEMP TEMP TEMP
