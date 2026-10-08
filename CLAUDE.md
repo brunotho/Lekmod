@@ -44,7 +44,9 @@ This file records what has been **verified** about how this mod works, and how t
 6. **Specs live in Notion** ("LEK — v3 — implementation checklist" and its section pages; agreed 2026-10-07):
    - Items **not yet implemented**: the user edits the spec freely. The spec as it reads at implementation time counts. Record what was implemented in the changelog and commit.
    - Items **already implemented**: the user doesn't edit the spec in place, but adds a "CHANGE (date): …" note under the item (or tells Claude). Look for these notes.
-   - Don't edit the user's spec pages unless asked. Claude's own pages (audit, tracker) are sub-pages of the checklist.
+   - Don't edit the user's spec pages unless asked. Claude's own pages (tracker, "Specs to refine", "Multiplayer test sessions") are sub-pages of the checklist.
+   - **Ticks (✓, [x], DONE) on the spec pages mean "done on an old branch". They do not mean "in the game".** Status lives only in the tracker.
+   - Sub-page "POST EVERYTHING adjustments" (the user's): tweaks meant for after all specs are done. Don't implement from it unless asked.
 7. **Underspecified specs** (agreed 2026-10-08):
    - Tracker items with Status = Needs spec are listed on the Notion page **"Specs to refine"** (a sub-page of the checklist). The user writes answers there and says in chat when they are done.
    - Keep that page in sync with the tracker. Don't implement those items before the user is done.
@@ -52,8 +54,7 @@ This file records what has been **verified** about how this mod works, and how t
    - **Comments on spec pages are ignored.** Only the page text counts.
    - Map/Lekmap items are done by the user in a separate folder, so they are Dropped from the tracker.
 8. **Multiplayer test sessions** (agreed 2026-10-08): tests that need a second human player (or a special setup) go on the Notion page **"Multiplayer test sessions"** (sub-page of the checklist), with concrete steps and expected results. Add to it whenever such an item is implemented, and remove items the user reports as passed.
-   - **Ticks (✓, [x], DONE) on the spec pages mean "done on an old branch". They do not mean "in the game".** Status lives only in the tracker.
-7. **The tracker is the single source of item status** (set up 2026-10-07):
+9. **The tracker is the single source of item status** (set up 2026-10-07):
    - Notion database **"Tracker (v35.4 port)"**, a sub-page of the checklist. Data source: `collection://311b2761-ecf0-448c-9f6b-81d808f4361c` (query it with the Notion tools).
    - One row per spec item. Columns: Item, ID (LEK-n), Section, **Status**, **Phase**, Where (Mod / Lekmap / Website), Old code, Commits, Notes, Spec (link to the section page).
    - **Status:** `Needs spec` (open questions; the user refines it) → `Ready` → `Implemented` (on `dev`, not yet playtested) → `Playtested` (the user confirmed it in game on the port). Also `Blocked` (waiting on another item; the reason is in Notes) and `Dropped`.
@@ -76,6 +77,9 @@ This file records what has been **verified** about how this mod works, and how t
    - **Discarding old work for cleanliness is allowed** (user, 2026-10-07): if an implemented item is messy, redo it from the spec.
    - The scratchpad on the checklist page holds unrefined ideas. They are tracked under Section "Scratchpad", mostly as `Needs spec`. Help the user turn them into specs when asked.
    - The old audit page ("Implementation status audit (2026-10-06)") is superseded by the tracker.
+   - When the user says something "tested / works" in chat, set those rows to `Playtested` right away.
+10. **Session start routine:** read §9 here, then query the tracker (`Status = 'Ready'`, ordered by Phase) and the "Specs to refine" page for new answers. Check `git status` (generated `Lua/UI` files and `FrontEnd.lua`/`StagingRoom.lua` are always dirty; that's normal) and `git log --oneline -15`.
+11. **Working style the user likes:** take large chunks of work without asking; batch several items, then report with concrete in-game checks. Keep chat answers short; findings go into Notion/changelog. Ask with the question tool when two readings of a spec are equally plausible (give the numbers for each option).
 
 ---
 
@@ -135,8 +139,8 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
    - Base-game UI layouts that Lekmod doesn't override come from `Assets\DLC\Expansion2\UI\InGame\...`. Overriding one means adding the XML to the templates, to `ui_check.bat`, and to `Lua\UI\`.
    - Base-game scripts Lekmod overrides since 2026-10-08: `CivilopediaScreen.lua` (both UIs), `DiploList.lua` (standard UI; `ui_check.bat` copies it unless EUI has its own) and `ChooseGoodyHutReward.lua` (both UIs; the ruin choice). Copy the Expansion2 file into `Lua\tmp\ui\...` and add a `ui_check.bat` rule.
    - **Any network message from Lua (`Network.Send*`) un-ends a finished multiplayer turn.** Screens must not send hidden messages (e.g. statistics) once the turn is ended: check `Network.HasSentNetTurnComplete()`.
-   - Lobby options are `GameOptions` rows in `CIV5Units.xml` (explicit IDs; Lekmod's: 67 strategic trading, 68 high-contrast colors). The lobby lists them automatically; the DLL reads them with `isOption("GAMEOPTION_X")`.
-   - Python one-liners in Bash heredocs choke on Windows paths with `\U`, `\N`: write the script to the scratchpad with raw strings, or use the Edit tool.
+   - Lobby options are `GameOptions` rows in `CIV5Units.xml` (explicit IDs; Lekmod's: 67 strategic trading, 68 high-contrast colors, 69/70 wonder tie Neither/Both, 71 start at war, 72 mode Casual, 73 preset-applied flag; 68–73 are hidden). The DLL reads them with `isOption("GAMEOPTION_X")`. **An unset option reads as its DB default (0), never -1.**
+   - **Lobby (2026-10-08):** `MPGameOptions.lua` (template `Lua/tmp/ui/Lobby/`) is shared by the host setup screen (`MPGameSetupScreen.xml`) and the staging room, but the staging room has its **own options panel in `StagingRoom.xml`**: layout changes must go into both XMLs. The Mode dropdown (Tournament default / Casual) applies the whole preset (`LekmodApplyModePreset`); only map type, Mode, Civ Colors and the map script's options are visible; mode decisions show as bullet lines (`g_LekmodModeInfoLines`); everything else is hidden by `LekmodApplyLobbyVisibility` via `Lekmod*` control IDs.
 4. **`Art\`**: graphics. `.dds` textures are found **by file name anywhere** under it.
    - **XML and `.modinfo` files under `Art\` are NOT loaded as game data.** They're leftovers from the source mods Lekmod was assembled from.
    - Verified twice. The promotions in `Art\Promotions\LekmodPromotions.xml` and the ruin values in `Art\No Quitters Mod (v 11)\gameplay\GoodyHutChanges.xml` were absent from the loaded database.
@@ -156,9 +160,14 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
 
 ## 4. Data conventions and gotchas
 - **Promotion IDs are explicit** (`<ID>`). Every row in the `UnitPromotions` section has one. New rows get the next unused ID: currently up to **365**. v35.4 uses IDs up to 343; ours are 344–365. Upstream's IDs already have gaps (e.g. 271–273), which is fine. Check uniqueness *within the section*, since other tables reuse the same numbers.
-- **Line endings differ per file; check before scripting.** The repo stores LF, and `core.autocrlf=true` checks most files out as **CRLF** in `lek` (Override XML, most C++). Some are LF in the working copy (`_Defines.h`, `changelog.txt`, `CLAUDE.md`). The game reads either. (The old note "both Override files are LF" was about the old game folder.)
+- **Line endings differ per file; check before scripting.** The repo stores LF; in the `lek` working copy most C++ and Lua templates are CRLF, while **both Override XML files**, `_Defines.h`, `changelog.txt` and `CLAUDE.md` are LF (verified 2026-10-08 with byte counts; an earlier note here said the Override files were CRLF, which was wrong). The game reads either.
   - Prefer the Edit tool, which keeps a file's endings.
   - When scripting, read and write **bytes** and match the file's ending. Count with Python (`b.count(b'\r\n')`); `grep -c $'\r'` in Git Bash gave wrong answers.
+- **Tooling pitfalls (cost time repeatedly):**
+  - **Bash heredocs mangle backslashes** (`\\` collapses, `\U`/`\N`/`\s` break Python strings). Write Python scripts with the Write tool into the scratchpad (raw strings), or use the Edit tool. Never put Windows paths or regexes with backslashes into a heredoc.
+  - **The Write tool strips trailing whitespace**, and many Override lines end with a space (`<Row> `, `</Table> `). Use short anchors without line ends, or match by regex.
+  - **XML tables contain commented-out `<Row>` blocks.** Row-editing scripts must skip `<!-- ... -->` regions (2026-10-08: a script edited commented rows; caught in the diff).
+  - Bulk value changes to existing rows can be done with `<Update><Where Type="X"/><Set Col="v"/></Update>` blocks after a table's section (used for building purchase costs and tech costs). Later per-row changes must then edit those Update values, not the original rows.
 - **Valid text icons:** `[ICON_PEACE]` = Faith (`[ICON_FAITH]` does **not** exist). `[ICON_EXPERIENCE]` and `[ICON_HEALING]` do **not** exist.
   - The authority is the loaded `IconFontMapping` table in `Civ5DebugDatabase.db` (884 icons).
   - Don't judge by whether a tag appears in any text: `[ICON_STAR]` is valid but appears in no text.
@@ -254,10 +263,14 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 **Debugging lesson:** twice a confident conclusion was wrong. "Zealot will work" was wrong; "the ruins aren't changed at all" was half wrong, because the C++ computed the effects. When the user's observation conflicts with your model, find a direct measurement (database, log, diagnostic) before arguing.
 
 ## 9. Status (update as things change)
-### Current state (2026-10-07)
-- `dev` = v35.4 (`201df6c5`) + our commits (ruins overhaul, kill-yield fix, Demographics, promotion batch, changelog, DLL, CLAUDE.md, Amphibious fix). **Not pushed.**
+### Current state (2026-10-08, end of session)
+- `dev` = v35.4 (`201df6c5`) + ~110 of our commits. **Not pushed** (the user hasn't asked). The installed DLL is the latest build (`be82ff1d`).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
-- **Item status, playtest results and open design questions live in the tracker (§0b.7), not here.** Query it at session start to see what's next.
+- **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start to see what's next.
+- **Done so far:** Phase 1 complete except Cyrillic (waiting for the Tournament Mod authors' permission; their `Fonts` folder would work, ~85 MB, last in the queue) and the 6/7/8-player lobby (postponed by the user). Phase 2: all Tech Tree items done and playtested; Resources: luxury yields done (`7a4fecbc`, not playtested yet).
+- **Next up (Phase 2, Resources):** water yields + coastal resources, rare luxuries (Perfume/Spices/Gems, incl. longer build times), strategic node sizes (check whether they come from the mod data or Lekmap), settle-on effects (Salt/Rubber/Marble/Stone/Cattle; the resource hover must then show them, see the hover row's Notes), natural wonders (13, with hover tooltip). Spec page: "Resources / Tile Yields". Then Phase 2 Units (long list in the tracker), then Phase 3.
+- **Open on "Specs to refine":** CS quests, Diplomat/Spy, Congress mechanics (unanswered); plane healing and ideologies (parked by the user).
+- **Mid-turn chat requests happen often.** The user adds requests while you work; fold them into the current batch and mention them in the report.
 - Port playtest lesson (2026-10-07): Amphibious merged cleanly but was dead, because v35.4's new `LEKMOD_WATER_WALK_IMPROVEMENT_RULES` block in `CvUnitMovement::ConsumesAllMoves` returned early (§8 pattern 9). Fixed in `f1706839`, playtested.
 - Our promotion IDs: 344 Zealot, 345 Envelopment, 346 Glutton, 347–360 the April batch (Amphibious I–III, Bunker Busting, Repair Crew, Supply Ship, Sambuca, Carpet Bombing, Discipline, Discipline (Air), Fear Aura, Marauder, Mountaineering, Swift Transport), 361 Iaijutsu, 362 Hatamoto, 363 One Good Eye, 364 Stargazing.
 - Promotions defined but not yet granted by anything: Discipline, Discipline (Air), Fear Aura, Marauder, Swift Transport, Iaijutsu, Hatamoto, One Good Eye, Stargazing. Their grants are part of other specs (Honor/Iron Fist, GDR/Berserker/Gauls, Privateer/Tunisia, naval units, Japan, Expansionism, Chile); the tracker rows name them.
@@ -276,6 +289,16 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
   - Fixed while porting: the Pictish Warrior tooltip used the invalid `[ICON_FAITH]`.
 - The kill-yield era fix is still an upstream bug: a candidate to offer EAP.
 
+### Our DLL switches (`_Defines.h`; grep the name to find every hook)
+- `LEKMOD_CS_WAR_DECLARATION_PENALTIES`: city-state war standing (Wary/Alienated/Antagonist) and pledge penalties.
+- `LEKMOD_OPEN_BORDERS_INDEFINITE`: second open-borders deal item that lasts until war.
+- `LEKMOD_MULTIPLE_DEAL_PROPOSALS`: several open deal offers at once; a deal that became impossible fails with a notification.
+- `LEKMOD_MIDTURN_PICK_NOTIFICATIONS`: policy/belief pick notifications during the turn.
+- `LEKMOD_RANDOMIZE_CITY_NAMES`, `LEKMOD_HIGH_CONTRAST_CIV_COLORS` (lobby Civ Colors), `LEKMOD_WAR_START` (+ `LEKMOD_WAR_START_PEACE_TURN 20`), `LEKMOD_WONDER_TIE_RULES` (same-turn wonders Neither/Both).
+- `LEKMOD_AIR_COMBAT_FEEDBACK` (floating damage, "No resistance"), `LEKMOD_UNIT_ATTACKED_FLAG_ICON`.
+- `LEKMOD_POLICY_GARRISON_ATTACH_TURN 70`, `LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 70`, `LEKMOD_RUIN_CHOICE`.
+- Older ones from the port: ruins overhaul (`LEKMOD_NEW_ANCIENT_RUIN_REWARDS`), kill-yield era fix, Amphibious, Carpet Bombing, Iaijutsu/Hatamoto (see below).
+
 ### Behaviour and decisions to remember
 - **Policy garrison effects from turn 70** (`LEKMOD_POLICY_GARRISON_ATTACH_TURN`): policy garrison yields and garrison happiness (Military Caste) work in every city from turn 70; building garrison yields still need a unit. Piety's and Tradition's garrison effects should use the same mechanism.
 - **Turn 70 is the user's "stop the annoying early-game chores" point** (2026-10-08): garrison effects attach to cities, and barbarian kills stop giving yields (`LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN`). Use the same turn for similar rules.
@@ -286,7 +309,8 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 - **Hatamoto**: column `MovesNearGeneralChange`. +N moves in `DoUnitReset` when a friendly Great General is on the same or an adjacent tile (`CvUnit::IsGreatGeneralWithinOne`).
 - Iaijutsu and Hatamoto are lost on upgrade, and their new `CvUnit` members are serialized (old saves are incompatible). One Good Eye and Stargazing are `VisibilityChange` 1, like Scouting I.
 - **Amphibious**: I = flat embark cost, II = flat disembark cost, and I and III each add +1 to `MaxMovesAfterDomainChange` (it sums: with I–III, at most 2 MP are left after a domain change). The flat cost is 1 MP, capped so that at most that many MP remain (in both cost functions). `ConsumesAllMoves` lets flat-cost transitions through, and `CvUnit::move` skips `finishMoves()` for them. Walk-water tiles (pontoons, shallows) count as land on both sides of the check.
-- **Ruin pool** (`HandicapInfo_Goodies` in source): CULTURE, GOLD, MAP, TECH, UPGRADE_UNIT, SETTLER, WORKER, FOOD, RANDOM_FAITH, TILE_GROW, EXPERIENCE_MOVE, and PANTHEON_FAITH (re-added 2026-10-06; its rows sit at the end of the section, below upstream's commented-out rows).
+- **Ruin pool** (`HandicapInfo_Goodies`): CULTURE, GOLD, MAP, TECH (= the science ruin), UPGRADE_UNIT, FOOD, RANDOM_FAITH, TILE_GROW, EXPERIENCE_MOVE, PANTHEON_FAITH, and since 2026-10-08 GOODY_LEKMOD_TRADE (listed twice = double weight) and GOODY_LEKMOD_ANCIENT_TECH. SETTLER and WORKER are only in the Settler-difficulty pool.
+  - Science ruin (2026-10-08): 20–30 × era science (max 90), half of it as Gold (rounded to 5), the unit takes 3× the science as damage (keeps 1 HP), no XP. Upgrade ruin: 20 damage.
   - PANTHEON_FAITH: only without a pantheon and with 0 Faith. RANDOM_FAITH (`ReligionFaith`) requires a pantheon. PROPHET_FAITH stays out of the pool, so edits to it are dead.
   - The Mobility "ancient only" limit is `BeforeEra=1` on `GOODY_EXPERIENCE_MOVE`.
   - `GoodyHutPopup.lua` (template `Lua\tmp\ui\AncientRuins\GoodyHutPopup.lua.ignore`) has a generic branch that shows the DLL-passed amount (`Data2`).
