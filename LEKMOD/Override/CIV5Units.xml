@@ -203240,7 +203240,7 @@
 			<SeeThrough>0</SeeThrough> 
 			<BuildModifier>0</BuildModifier> 
 			<Defense>0</Defense> 
-			<InfluenceCost>2</InfluenceCost> 
+			<InfluenceCost>1</InfluenceCost> 
 			<Button>Art/Interface\Buttons\WorldBuilder\Terrain_Coast.dds</Button> 
 			<WorldSoundscapeAudioScript>ASSS_AMBIENCE_COAST</WorldSoundscapeAudioScript> 
 			<GraphicalOnly>false</GraphicalOnly> 
@@ -203264,7 +203264,7 @@
 			<SeeThrough>0</SeeThrough> 
 			<BuildModifier>0</BuildModifier> 
 			<Defense>0</Defense> 
-			<InfluenceCost>3</InfluenceCost> 
+			<InfluenceCost>1</InfluenceCost> 
 			<Button>Art/Interface\Buttons\WorldBuilder\Terrain_Ocean.dds</Button> 
 			<WorldSoundscapeAudioScript>ASSS_AMBIENCE_DEEP_OCEAN</WorldSoundscapeAudioScript> 
 			<GraphicalOnly>false</GraphicalOnly> 

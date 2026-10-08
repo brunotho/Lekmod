@@ -427,6 +427,13 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+BORDER GROWTH OVER WATER
+------------------------
+Tags: game mechanics
+Cities claim plain water tiles as readily as plain flat land when their borders grow.
+- Changed: Coast and Ocean count like Grassland and Plains for border growth (they counted as one or two extra tiles of distance before, so cities claimed them very late)
+- Dev: Terrains.InfluenceCost Coast 2 -> 1, Ocean 3 -> 1 (used by the influence pathfinder in CvCity::GetBuyablePlotList)
+
 TILE TOOLTIP: UNIMPROVED RESOURCES
 ----------------------------------
 Tags: ui
