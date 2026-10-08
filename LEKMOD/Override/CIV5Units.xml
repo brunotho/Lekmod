@@ -32309,6 +32309,11 @@
 			<TechType>TECH_RAILROAD</TechType>
 			<TimeChange>-200</TimeChange>
 		</Row>
+		<Row>
+			<BuildType>BUILD_ROAD</BuildType>
+			<TechType>TECH_RAILROAD</TechType>
+			<TimeChange>-300</TimeChange>
+		</Row>
 	</Build_TechTimeChanges> 
 
 	<Table name="BuildingClass_VictoryThresholds">

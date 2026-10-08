@@ -505,6 +505,7 @@ Some unlocks and prerequisites move in the tech tree.
 - Removed: Fishing Boats no longer get +1 Gold at Compass
 - Changed: embarked units have 2 movement from Sailing on (the +1 moved from Optics to Sailing)
 - Fixed: the Optics tooltip claimed it allows embarking (Sailing does)
+- Changed: building a road takes 1 turn once you know Railroad (was 3 turns)
 - Changed: Nuclear Fusion needs Mobile Tactics instead of Satellites, so Satellites (Spaceship Cockpit, Hubble) is an optional end of the tree
 
 BUILDING PURCHASE COSTS
