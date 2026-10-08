@@ -895,6 +895,15 @@ local g_directionTypes = {
 	DirectionTypes.DIRECTION_NORTHWEST
 }
 
+-- LEKMOD: whether a promotion survives upgrading the unit
+function LekmodPromotionUpgradeText( promotion )
+	if promotion == nil then return "" end
+	if promotion.LostWithUpgrade then
+		return "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_PROMOTION_LOST_ON_UPGRADE" )
+	end
+	return "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_PROMOTION_KEPT_ON_UPGRADE" )
+end
+
 local g_actionIconIndexAndAtlas = {
 	[ActionSubTypes.ACTIONSUBTYPE_PROMOTION] = function(action)
 		local thisPromotion = GameInfo.UnitPromotions[action.CommandData]
@@ -1235,7 +1244,7 @@ local UpdateUnitPromotions = EUI.UpdateUnitPromotions or function(unit)
 			IconHookup( unitPromotion.PortraitIndex, 32, unitPromotion.IconAtlas, controlTable.UnitPromotionImage )
 
 			-- Tooltip
-			controlTable.EarnedPromotion:SetToolTipString( L(unitPromotion.Description) .. "[NEWLINE][NEWLINE]" .. L(unitPromotion.Help) )
+			controlTable.EarnedPromotion:SetToolTipString( L(unitPromotion.Description) .. "[NEWLINE][NEWLINE]" .. L(unitPromotion.Help) .. LekmodPromotionUpgradeText(unitPromotion) )
 		end
 	end
 	g_EarnedPromotionIM:Commit()
@@ -1735,6 +1744,9 @@ function ActionToolTipHandler( control )
 	elseif action.Help and action.Help ~= "" then
 
 		toolTip:insertLocalized( action.Help )
+		if action.SubType == ActionSubTypes.ACTIONSUBTYPE_PROMOTION then
+			toolTip:insert( ( LekmodPromotionUpgradeText( GameInfo.UnitPromotions[action.CommandData] ):gsub( "^%[NEWLINE%]", "" ) ) ) -- the list join adds one line break
+		end
 	end
 
 	-- Delete has special help text

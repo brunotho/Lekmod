@@ -90,6 +90,15 @@ end
 Controls.SecondaryButton:RegisterCallback( Mouse.eLClick, OnSecondaryButton );
 
 
+-- LEKMOD: whether a promotion survives upgrading the unit
+function LekmodPromotionUpgradeText( promotion )
+	if promotion == nil then return "" end
+	if promotion.LostWithUpgrade then
+		return "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_PROMOTION_LOST_ON_UPGRADE" )
+	end
+	return "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_PROMOTION_KEPT_ON_UPGRADE" )
+end
+
 local GetActionIconIndexAndAtlas = {
 	[ActionSubTypes.ACTIONSUBTYPE_PROMOTION] = function(action)
 		local thisPromotion = GameInfo.UnitPromotions[action.CommandData];
@@ -594,7 +603,7 @@ function UpdateUnitPromotions(unit)
 
             -- Tooltip
             local strToolTip = Locale.ConvertTextKey(unitPromotion.Description);
-            strToolTip = strToolTip .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey(unitPromotion.Help)
+            strToolTip = strToolTip .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey(unitPromotion.Help) .. LekmodPromotionUpgradeText(unitPromotion);
             controlTable.UnitPromotionImage:SetToolTipString(strToolTip);
             
         end
@@ -1439,6 +1448,9 @@ function TipHandler( control )
 		end
 		
 		strActionHelp = "[NEWLINE]" .. Locale.ConvertTextKey( action.Help );
+		if( action.SubType == ActionSubTypes.ACTIONSUBTYPE_PROMOTION ) then
+			strActionHelp = strActionHelp .. LekmodPromotionUpgradeText( GameInfo.UnitPromotions[action.CommandData] );
+		end
         strToolTip = strToolTip .. strActionHelp;
 	end
     

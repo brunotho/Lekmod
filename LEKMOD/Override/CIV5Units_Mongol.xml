@@ -101521,6 +101521,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE_TT">
 			<Text>Allows the other player's military or civilian Units to pass through one's territory until the two of you go to war.[NEWLINE][NEWLINE]Note: Units belonging to different players may never stack.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PROMOTION_LOST_ON_UPGRADE">
+			<Text>[COLOR_NEGATIVE_TEXT]Lost when the unit is upgraded.[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PROMOTION_KEPT_ON_UPGRADE">
+			<Text>Kept when the unit is upgraded.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

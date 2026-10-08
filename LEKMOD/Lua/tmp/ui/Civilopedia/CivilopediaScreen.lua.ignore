@@ -2971,7 +2971,9 @@ CivilopediaCategory[CategoryPromotions].SelectArticle = function( promotionID, s
 
 		-- update the game info
 		if thisPromotion.Help then
-			UpdateTextBlock( Locale.ConvertTextKey( thisPromotion.Help ), Controls.GameInfoLabel, Controls.GameInfoInnerFrame, Controls.GameInfoFrame );
+			-- LEKMOD: say whether the promotion survives upgrading the unit
+			local strUpgrade = Locale.ConvertTextKey( thisPromotion.LostWithUpgrade and "TXT_KEY_LEKMOD_PROMOTION_LOST_ON_UPGRADE" or "TXT_KEY_LEKMOD_PROMOTION_KEPT_ON_UPGRADE" );
+			UpdateTextBlock( Locale.ConvertTextKey( thisPromotion.Help ) .. "[NEWLINE][NEWLINE]" .. strUpgrade, Controls.GameInfoLabel, Controls.GameInfoInnerFrame, Controls.GameInfoFrame );
 		end
 				
 	end	
