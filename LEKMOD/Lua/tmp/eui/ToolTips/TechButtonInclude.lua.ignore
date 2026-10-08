@@ -578,12 +578,18 @@ function AddSmallButtonsToTechButton( thisTechButtonInstance, tech, maxSmallButt
 		end
 	end
 
-	if (tonumber(tech.EmbarkedMoveChange) or 0) > 0 then
+	-- LEKMOD: a tech that allows embarking and adds embarked movement shows one icon for both
+	local bEmbarkMoves = (tonumber(tech.EmbarkedMoveChange) or 0) > 0
+	if bEmbarkMoves and not tech.AllowsEmbarking then
 		addSmallActionButton( GameInfo.Missions.MISSION_EMBARK, "[ICON_MOVES]", "TXT_KEY_FASTER_EMBARKED_MOVEMENT" )
 	end
 
 	if tech.AllowsEmbarking then
-		addSmallActionButton( GameInfo.Missions.MISSION_EMBARK, "", "TXT_KEY_ALLOWS_EMBARKING" )
+		if bEmbarkMoves then
+			addSmallActionButton( GameInfo.Missions.MISSION_EMBARK, "[ICON_MOVES]", Locale.ConvertTextKey( "TXT_KEY_ALLOWS_EMBARKING" ) .. "[NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_FASTER_EMBARKED_MOVEMENT" ) )
+		else
+			addSmallActionButton( GameInfo.Missions.MISSION_EMBARK, "", "TXT_KEY_ALLOWS_EMBARKING" )
+		end
 	end
 
 	if civ5_mode then
