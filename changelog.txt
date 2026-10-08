@@ -413,6 +413,14 @@ Declaring war on city-states now escalates through four standings, with lasting 
 - Dev: LEKMOD_CS_WAR_DECLARATION_PENALTIES: CvMinorCivAI::DoTeamDeclaredWarOnMe (levels from CvTeam::GetNumMinorCivsAttacked), anchor in GetFriendshipAnchorWithMajor, decay multiplier in GetFriendshipChangePerTurnTimes100, nemesis in IsPeaceBlocked. New saved members m_aiWaryLevel, m_aiAlienatedLevel, m_aiWarDeclarationsByMajor. Defines MINOR_WARY_ANCHOR_PER_LEVEL 10, MINOR_ALIENATED_DECAY_PER_LEVEL 50, MINOR_NEMESIS_WAR_DECLARATIONS 3. Lua: GetMinorCivWaryLevel, GetMinorCivAlienatedLevel, GetMinorCivWarDeclarations, IsMinorCivNemesis (on the city-state), GetCityStateWarDeclarations (on the major)
 - Note: city-state personalities with BlocksWarDeclarationPenalty (none at the moment) still skip all of this
 
+CITY-STATE CIVILOPEDIA PAGES
+----------------------------
+Tags: game mechanics, ui
+New Civilopedia pages explain the Lekmod city-state rules, at the end of the City-States section.
+- Added: an overview page, and pages on Influence and its resting point, bonuses by era (with the full Maritime, Cultured and Religious tables), Pledge to Protect, quest rewards, and declaring war on city-states
+- Added: one page each for the standings Antagonist, Provocateur, Aggressor and Warmonger, and for Wary, Alienated and Nemesis
+- Note: Concepts IDs 505-517 (CONCEPT_LEKMOD_CS_*), chained by InsertAfter after CONCEPT_CITY_STATE_SPREAD_RELIGION. The Civilopedia has no clickable links between game concepts (the related-articles box is unused in the base UI), so the pages sit directly below the overview instead
+
 EMBARKED UNIT DEFENSE (FORMULA CHANGE)
 ---------------------------------------
 Tags: game mechanics, combat, naval

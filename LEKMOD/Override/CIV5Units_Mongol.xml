@@ -101487,6 +101487,87 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_CS_WAR_PREVIEW_NEMESIS_TT">
 			<Text>[COLOR_NEGATIVE_TEXT]This is your 3rd declaration of war on {1_CityStateName:textkey}: it becomes your Nemesis and will never make peace with you.[ENDCOLOR]</Text>
 		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_ADVISOR_QUESTION">
+			<Text>How do City-States work in Lekmod?</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_OVERVIEW_DESCRIPTION">
+			<Text>City-State Rules: Overview</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_OVERVIEW_SUMMARY">
+			<Text>Lekmod changes how City-States work.[NEWLINE]The pages below this one in the list explain each part.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Influence and Its Resting Point[ENDCOLOR][NEWLINE]Where your [ICON_INFLUENCE] Influence settles over time, and what moves it.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]City-State Bonuses by Era[ENDCOLOR][NEWLINE]Food, [ICON_CULTURE] Culture and [ICON_PEACE] Faith grow with your era.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Pledge to Protect[ENDCOLOR][NEWLINE]What a pledge gives you, and what it asks of you.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Quests and Rewards[ENDCOLOR][NEWLINE]How much [ICON_INFLUENCE] Influence each quest is worth.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Declaring War on City-States[ENDCOLOR][NEWLINE]Your standing (Antagonist, Provocateur, Aggressor, Warmonger) and the penalties Wary, Alienated and Nemesis.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_INFLUENCE_DESCRIPTION">
+			<Text>Influence and Its Resting Point</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_INFLUENCE_SUMMARY">
+			<Text>Every turn, your [ICON_INFLUENCE] Influence with a City-State moves towards its resting point.[NEWLINE]Above the resting point it decays; below it, it recovers.[NEWLINE][NEWLINE]Thresholds:[NEWLINE]Friends at 30 [ICON_INFLUENCE] Influence.[NEWLINE]Allies at 60 [ICON_INFLUENCE] Influence, if no other player has more.[NEWLINE]Declaring war drops your [ICON_INFLUENCE] Influence to -60.[NEWLINE][NEWLINE]The resting point starts at 0.[NEWLINE]Pledge to Protect: +10.[NEWLINE]Wary: -10 per level, down to -30.[NEWLINE]Some social policies raise it.[NEWLINE][NEWLINE]Decay above the resting point:[NEWLINE]Alienated: 50% faster per level, up to 100% faster.[NEWLINE]City-State personalities, a shared religion, policies and civilization abilities can make it slower or faster.[NEWLINE][NEWLINE]Recovery below the resting point:[NEWLINE]Pledge to Protect: 50% faster.[NEWLINE]A shared religion, policies and civilization abilities can make it faster.[NEWLINE][NEWLINE]You gain [ICON_INFLUENCE] Influence from gifts (Gold, units, tile improvements), quests, Great Merchant trade missions, and some policies, beliefs and civilization abilities.[NEWLINE]Demanding tribute and declaring war cost [ICON_INFLUENCE] Influence.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_YIELDS_DESCRIPTION">
+			<Text>City-State Bonuses by Era</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_YIELDS_SUMMARY">
+			<Text>The bonuses of Maritime, Cultured and Religious City-States grow with your era.[NEWLINE]Friends get half of what Allies get.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Maritime[ENDCOLOR]: Food in your capital / in each other city, as Allies:[NEWLINE]Ancient: 2.2 / 0.6 (Friends: 1.1 / 0.3)[NEWLINE]Classical: 2.6 / 0.8 (Friends: 1.3 / 0.4)[NEWLINE]Medieval: 3 / 1 (Friends: 1.5 / 0.5)[NEWLINE]Renaissance: 3.4 / 1.2 (Friends: 1.7 / 0.6)[NEWLINE]Industrial: 3.8 / 1.4 (Friends: 1.9 / 0.7)[NEWLINE]Modern: 4.2 / 1.6 (Friends: 2.1 / 0.8)[NEWLINE]Atomic: 4.6 / 1.8 (Friends: 2.3 / 0.9)[NEWLINE]Information: 5 / 2 (Friends: 2.5 / 1)[NEWLINE]Decimals count: the Food is added to the city like any other yield, so percentage bonuses apply to it.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Cultured[ENDCOLOR]: [ICON_CULTURE] Culture per turn, as Allies:[NEWLINE]Ancient: 4 (Friends: 2)[NEWLINE]Classical: 8 (Friends: 4)[NEWLINE]Medieval: 12 (Friends: 6)[NEWLINE]Renaissance: 16 (Friends: 8)[NEWLINE]Industrial: 20 (Friends: 10)[NEWLINE]Modern: 24 (Friends: 12)[NEWLINE]Atomic: 28 (Friends: 14)[NEWLINE]Information: 32 (Friends: 16)[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Religious[ENDCOLOR]: [ICON_PEACE] Faith per turn, as Allies:[NEWLINE]Ancient: 4 (Friends: 2)[NEWLINE]Classical: 8 (Friends: 4)[NEWLINE]Medieval: 12 (Friends: 6)[NEWLINE]Renaissance: 16 (Friends: 8)[NEWLINE]Industrial: 20 (Friends: 10)[NEWLINE]Modern: 24 (Friends: 12)[NEWLINE]Atomic: 28 (Friends: 14)[NEWLINE]Information: 32 (Friends: 16)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_PLEDGE_DESCRIPTION">
+			<Text>Pledge to Protect</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_PLEDGE_SUMMARY">
+			<Text>Pledging to protect a City-State tells everyone that you will defend it from attacks and tribute demands.[NEWLINE][NEWLINE]While you protect it:[NEWLINE]Your resting [ICON_INFLUENCE] Influence with it is 10 higher.[NEWLINE]Your [ICON_INFLUENCE] Influence recovers 50% faster while below the resting point.[NEWLINE][NEWLINE]Your obligations:[NEWLINE]For 10 turns after another player demands tribute from it, you lose 3 [ICON_INFLUENCE] Influence per turn with it.[NEWLINE]The same happens every turn another player is at war with it.[NEWLINE]If you are at war with that player yourself, you gain 1 [ICON_INFLUENCE] Influence per turn instead.[NEWLINE][NEWLINE][COLOR_WARNING_TEXT]Demanding tribute from a City-State you protect breaks your pledge.[ENDCOLOR][NEWLINE]You cannot pledge to it again for 20 turns.[NEWLINE][NEWLINE]Every tribute demand is announced to all players who know the City-State.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_QUESTS_DESCRIPTION">
+			<Text>Quests and Rewards</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_QUESTS_SUMMARY">
+			<Text>[ICON_INFLUENCE] Influence for completing a quest:[NEWLINE]Kill a rival City-State: 75[NEWLINE]Bully a City-State: 45[NEWLINE]Build a road to it: 40[NEWLINE]Destroy a Barbarian camp: 35[NEWLINE]Build a Wonder: 35[NEWLINE]Denounce a player: 35[NEWLINE]Spread your religion: 35[NEWLINE]Send a Trade Route: 35[NEWLINE]Win a Culture, Faith or Technology contest: 35[NEWLINE]Connect a resource: 30[NEWLINE]Find a player: 30[NEWLINE]Find a Natural Wonder: 30[NEWLINE]Earn a Great Person: 30[NEWLINE]Give Gold: 15[NEWLINE]Pledge to Protect: 15[NEWLINE][NEWLINE]City-State personalities can change these rewards (Friendly City-States give 25% more).[NEWLINE][NEWLINE]A City-State gives you at most 2 personal quests at a time.[NEWLINE]A personal quest you have not completed after 15 turns is replaced by a new one.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_WAR_DESCRIPTION">
+			<Text>Declaring War on City-States</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_WAR_SUMMARY">
+			<Text>Every declaration of war on a City-State counts, including repeat declarations on the same one.[NEWLINE]The total sets your standing with all City-States:[NEWLINE][NEWLINE]1 declaration: Antagonist[NEWLINE]2 declarations: Provocateur[NEWLINE]3 declarations: Aggressor[NEWLINE]4 or more: Warmonger[NEWLINE][NEWLINE]Each standing makes City-States Wary of you (lower resting [ICON_INFLUENCE] Influence) and Alienated (faster [ICON_INFLUENCE] Influence decay).[NEWLINE]The pages of each standing list the details.[NEWLINE][NEWLINE]City-States allied with you when you declare war are not affected.[NEWLINE]These penalties are permanent.[NEWLINE][NEWLINE]A City-State you declare war on 3 times becomes your Nemesis and never makes peace with you.[NEWLINE][NEWLINE]The tooltip of the Declare War button shows what declaring war would do.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_ANTAGONIST_DESCRIPTION">
+			<Text>Antagonist (1 Declaration)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_ANTAGONIST_SUMMARY">
+			<Text>You have declared war on a City-State once.[NEWLINE][NEWLINE]The City-State you declared war on:[NEWLINE]Wary: -10 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 50% faster.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_PROVOCATEUR_DESCRIPTION">
+			<Text>Provocateur (2 Declarations)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_PROVOCATEUR_SUMMARY">
+			<Text>You have declared war on City-States twice.[NEWLINE][NEWLINE]Every City-State you have declared war on:[NEWLINE]Wary: -30 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 100% faster.[NEWLINE][NEWLINE]The two other City-States closest to your capital that you have met:[NEWLINE]Wary: -20 resting [ICON_INFLUENCE] Influence.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_AGGRESSOR_DESCRIPTION">
+			<Text>Aggressor (3 Declarations)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_AGGRESSOR_SUMMARY">
+			<Text>You have declared war on City-States three times.[NEWLINE][NEWLINE]Every City-State you have declared war on:[NEWLINE]Wary: -30 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 100% faster.[NEWLINE][NEWLINE]All other City-States:[NEWLINE]Wary: -20 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 50% faster.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_WARMONGER_DESCRIPTION">
+			<Text>Warmonger (4+ Declarations)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_WARMONGER_SUMMARY">
+			<Text>You have declared war on City-States four times or more.[NEWLINE][NEWLINE]All City-States:[NEWLINE]Wary: -30 resting [ICON_INFLUENCE] Influence.[NEWLINE]Alienated: [ICON_INFLUENCE] Influence decays 100% faster.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_WARY_DESCRIPTION">
+			<Text>Wary</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_WARY_SUMMARY">
+			<Text>A Wary City-State lowers the resting point of your [ICON_INFLUENCE] Influence.[NEWLINE][NEWLINE]Level 1: -10.[NEWLINE]Level 2: -20.[NEWLINE]Level 3: -30.[NEWLINE][NEWLINE]City-States become Wary when you declare war on City-States (see Antagonist, Provocateur, Aggressor and Warmonger).[NEWLINE]Wary never goes down.[NEWLINE]The City-State tooltip shows the current level.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_ALIENATED_DESCRIPTION">
+			<Text>Alienated</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_ALIENATED_SUMMARY">
+			<Text>Your [ICON_INFLUENCE] Influence with an Alienated City-State decays faster while above its resting point.[NEWLINE][NEWLINE]Level 1: 50% faster.[NEWLINE]Level 2: 100% faster.[NEWLINE][NEWLINE]City-States become Alienated when you declare war on City-States (see Antagonist, Provocateur, Aggressor and Warmonger).[NEWLINE]Alienated never goes down.[NEWLINE]The City-State tooltip shows the current level.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_NEMESIS_DESCRIPTION">
+			<Text>Nemesis</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CONCEPT_LEKMOD_CS_NEMESIS_SUMMARY">
+			<Text>A City-State you have declared war on 3 times becomes your Nemesis.[NEWLINE][NEWLINE]It never makes peace with you.[NEWLINE]Its screen shows "Nemesis" instead of the Make Peace button.[NEWLINE][NEWLINE]The tooltip of the Declare War button warns you before your 3rd declaration.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>
