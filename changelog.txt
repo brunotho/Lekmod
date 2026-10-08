@@ -440,7 +440,7 @@ LOBBY: MODES (TOURNAMENT / CASUAL)
 Tags: ui, game mechanics
 The multiplayer lobby has a Mode setting that fills in the agreed settings at once.
 - Added: Mode dropdown at the top of the game options: Tournament (default for a new game) or Casual
-- Changed: the lobby shows only Mode, the map type and map options, and Civ Colors. Start at War, Disable Private Chat and Same-Turn Wonders are shown but follow the mode. Everything else is set by the mode and hidden
+- Changed: the lobby settings are only the map type, Mode, Civ Colors and the map's own options. Below Mode, short lines show what it decides (private chat, start at war, same-turn wonders). Everything else (map size, speed, era, turn timer, AI and additional options...) is set by the mode and hidden
 - Added: both modes set quick speed, ancient era, no turn limit, simultaneous turns, pitboss, a relative turn timer of 70, quick movement and combat, no combat randomness, no scientist, policy and tech saving, fast hand, turn start combat limits, no auto missions, no strategic trading, all players can found religions, alternate golden ages, scaled spoils of war, no destructive recapture, no AI tech discount, all victory types, and all AI options except "No AI Start Advantage" and "No AI Penalty for Expansion"; all additional options (ruins, barbarians, razing...) stay at their normal setting
 - Added: Tournament: no private chat, start at war (peace from turn 20), same-turn wonders go to nobody
 - Added: Casual: private chat allowed, no start at war, same-turn wonders go to everyone who finished them
@@ -460,7 +460,7 @@ SAME-TURN WONDERS
 -----------------
 Tags: game mechanics, ui
 A lobby setting decides what happens when several players finish the same World Wonder in the same turn.
-- Added: lobby setting "Same-Turn Wonders": Random (one of them gets it, the others get Gold, as before), Neither (nobody gets it, everyone gets Gold for their production) or Both (everyone who finished it gets it)
+- Added: the lobby Mode decides what happens: Tournament = nobody gets it, everyone gets Gold for their production; Casual = everyone who finished it gets it
 - Added: a player never owns the same World Wonder twice: capturing a city with a wonder you already have destroys the captured copy
 - Dev: LEKMOD_WONDER_TIE_RULES: CvGame::isBuildingClassMaxedOut exception while cities process production (Both); look-ahead over other players' cities and a per-turn tie marker in CvCity::doProduction (Neither); duplicate check in CvPlayer::acquireCity. GameOptions IDs 69/70 (hidden, set by the lobby dropdown), 72 mode (hidden)
 

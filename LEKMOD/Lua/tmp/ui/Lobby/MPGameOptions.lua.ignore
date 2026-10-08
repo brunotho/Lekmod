@@ -10,8 +10,6 @@ g_GameOptionsManager = InstanceManager:new("GameOptionInstance", "GameOptionRoot
 g_DropDownOptionsManager = InstanceManager:new("DropDownOptionInstance", "DropDownOptionRoot", Controls.DropDownOptionsStack);
 g_VictoryCondtionsManager = InstanceManager:new("GameOptionInstance", "GameOptionRoot", Controls.VictoryConditionsStack);
 g_DLCAllowedManager = InstanceManager:new("GameOptionInstance", "GameOptionRoot", Controls.DLCAllowedStack);
--- LEKMOD: dropdown settings inside the advanced options list
-g_LekmodAdvancedDropDownManager = InstanceManager:new("DropDownOptionInstance", "DropDownOptionRoot", Controls.GameOptionsStack);
 ----------------------------------------------------------------
 -- LEKMOD: lobby dropdown settings and modes
 -- Each dropdown value is a set of (hidden) on/off game options.
@@ -25,36 +23,29 @@ g_LekmodModeDropDown = {
 	OnSelect = function( value ) LekmodApplyModePreset( value.Options.GAMEOPTION_LEKMOD_MODE_CASUAL ); end,
 };
 
-g_LekmodAdvancedDropDowns = {
-	{
-		Name = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE",
-		Help = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_HELP",
-		ReadOnly = true, -- set by the mode
-		Values = {
-			{ Name = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_RANDOM", Help = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_RANDOM_HELP", Options = { GAMEOPTION_LEKMOD_WONDER_TIE_NEITHER = false, GAMEOPTION_LEKMOD_WONDER_TIE_BOTH = false } },
-			{ Name = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_NEITHER", Help = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_NEITHER_HELP", Options = { GAMEOPTION_LEKMOD_WONDER_TIE_NEITHER = true, GAMEOPTION_LEKMOD_WONDER_TIE_BOTH = false } },
-			{ Name = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_BOTH", Help = "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_BOTH_HELP", Options = { GAMEOPTION_LEKMOD_WONDER_TIE_NEITHER = false, GAMEOPTION_LEKMOD_WONDER_TIE_BOTH = true } },
-		},
-	},
-	{
-		Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS",
-		Values = {
-			{ Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL", Help = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL_HELP", Options = { GAMEOPTION_HIGH_CONTRAST_CIV_COLORS = false } },
-			{ Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST", Help = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST_HELP", Options = { GAMEOPTION_HIGH_CONTRAST_CIV_COLORS = true } },
-		},
+g_LekmodCivColorsDropDown = {
+	Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS",
+	Values = {
+		{ Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL", Help = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL_HELP", Options = { GAMEOPTION_HIGH_CONTRAST_CIV_COLORS = false } },
+		{ Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST", Help = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST_HELP", Options = { GAMEOPTION_HIGH_CONTRAST_CIV_COLORS = true } },
 	},
 };
 
-g_LekmodLobbyShownOptions = {
-	GAMEOPTION_LEKMOD_WAR_START = "display",
-	GAMEOPTION_DISABLE_CHAT = "display",
+-- What the mode decides, shown as plain text below it: { option, text when on, text when off, tooltip }
+g_LekmodModeInfoLines = {
+	{ "GAMEOPTION_DISABLE_CHAT", "TXT_KEY_LEKMOD_LOBBY_INFO_NO_CHAT", "TXT_KEY_LEKMOD_LOBBY_INFO_CHAT", "TXT_KEY_GAME_OPTION_DISABLE_CHAT_HELP" },
+	{ "GAMEOPTION_LEKMOD_WAR_START", "TXT_KEY_LEKMOD_LOBBY_INFO_WAR_START", "TXT_KEY_LEKMOD_LOBBY_INFO_PEACE_START", "TXT_KEY_GAME_OPTION_LEKMOD_WAR_START_HELP" },
+	{ "GAMEOPTION_LEKMOD_WONDER_TIE_BOTH", "TXT_KEY_LEKMOD_LOBBY_INFO_WONDER_BOTH", "TXT_KEY_LEKMOD_LOBBY_INFO_WONDER_NEITHER", "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_HELP" },
 };
+
+-- Checkbox game options the lobby still lists (the modes decide all others)
+g_LekmodLobbyShownOptions = {};
 
 -- Hide every setting the modes decide (user decision 2026-10-08)
 function LekmodApplyLobbyVisibility()
 	local hidden = {
-		"LekmodCityStateBox", "LekmodGameSpeedRoot", "LekmodEraRoot", "TurnModeRoot",
-		"LekmodVictoryHeader", "VictoryConditionsStack", "LekmodMaxTurnsBox", "LekmodTurnTimerBox",
+		"LekmodCityStateBox", "LekmodMapSizeRoot", "LekmodGameSpeedRoot", "LekmodEraRoot", "TurnModeRoot",
+		"LekmodVictoryHeader", "VictoryConditionsStack", "LekmodAdvancedHeader", "LekmodMaxTurnsBox", "LekmodTurnTimerBox",
 		"LekmodAIOptionsBox", "LekmodAdditionalOptionsBox", "LekmodDLCHeader", "DLCAllowedStack",
 		"AIAlwaysAcceptWhitePeaceBox", "AICannotAccumulateCultureBox", "AICannotBuildSettlersBox", "AICannotBuildWorldWondersBox",
 		"AICannotCoupCityStatesBox", "AICannotFoundReligionBox", "AICannotSpreadReligionCSBox", "AICannotSpreadReligionHumansBox",
@@ -106,7 +97,8 @@ function LekmodBuildDropDown( manager, dropDown, bCanEdit )
 	local instance = manager:GetInstance();
 	instance.OptionName:SetText( Locale.ConvertTextKey( dropDown.Name ) );
 	instance.OptionName:SetToolTipString( dropDown.Help and Locale.ConvertTextKey( dropDown.Help ) or nil );
-	instance.OptionDropDown:SetDisabled( not bCanEdit or dropDown.ReadOnly == true );
+	instance.OptionDropDown:SetHide( false );
+	instance.OptionDropDown:SetDisabled( not bCanEdit );
 
 	local button = instance.OptionDropDown:GetButton();
 	instance.OptionDropDown:ClearEntries();
@@ -129,6 +121,14 @@ function LekmodBuildDropDown( manager, dropDown, bCanEdit )
 	button:SetText( Locale.ConvertTextKey( current.Name ) );
 	button:SetToolTipString( current.Help and Locale.ConvertTextKey( current.Help ) or nil );
 	instance.OptionDropDown:CalculateInternals();
+end
+
+-- A plain text line (a dropdown row without its dropdown)
+function LekmodBuildInfoLine( manager, text, help )
+	local instance = manager:GetInstance();
+	instance.OptionName:SetText( "  [ICON_BULLET] " .. Locale.ConvertTextKey( text ) );
+	instance.OptionName:SetToolTipString( help and Locale.ConvertTextKey( help ) or nil );
+	instance.OptionDropDown:SetHide( true );
 end
 
 -- Settings both modes share, then what differs (from the spec "MODE: tournament/casual")
@@ -1932,6 +1932,11 @@ function RefreshDropDownOptions()
 
 	-- LEKMOD: the mode comes first, above the map options
 	LekmodBuildDropDown(g_DropDownOptionsManager, g_LekmodModeDropDown, CanEditGameOptions());
+	for _, line in ipairs(g_LekmodModeInfoLines) do
+		local bOn = PreGame.GetGameOption(line[1]) == 1;
+		LekmodBuildInfoLine(g_DropDownOptionsManager, bOn and line[2] or line[3], line[4]);
+	end
+	LekmodBuildDropDown(g_DropDownOptionsManager, g_LekmodCivColorsDropDown, CanEditGameOptions());
 	
 	local currentMapScript = PreGame.GetMapScript();
 	
@@ -1983,6 +1988,7 @@ function RefreshDropDownOptions()
 		gameOption.OptionName:SetToolTipString(option.ToolTip);
 		
 		
+		gameOption.OptionDropDown:SetHide(false); -- LEKMOD: rows are reused from text lines
 		gameOption.OptionDropDown:SetDisabled(option.Disabled or not bCanEdit);
 		local dropDownButton = gameOption.OptionDropDown:GetButton();
 		
@@ -2044,7 +2050,6 @@ function RefreshGameOptions()
 	g_GameOptionsManager:ResetInstances();
 	g_VictoryCondtionsManager:ResetInstances();
 	g_DLCAllowedManager:ResetInstances();
-	g_LekmodAdvancedDropDownManager:ResetInstances();
 
 	local bCanEdit = CanEditGameOptions();
 	---------------------------------
@@ -2170,7 +2175,7 @@ function RefreshGameOptions()
 		-- Don't allow dedicated servers to edit the pitboss option.
 		local bCanEditThisOption = not (option.Type == "GAMEOPTION_PITBOSS") or not Network.IsDedicatedServer();
 		
-		gameOption.GameOptionRoot:SetDisabled(option.Disabled or not bCanEdit or not bCanEditThisOption or g_LekmodLobbyShownOptions[option.Type] == "display");
+		gameOption.GameOptionRoot:SetDisabled(option.Disabled or not bCanEdit or not bCanEditThisOption);
 		gameOption.GameOptionRoot:SetCheck(option.Checked);
 		sizeY = sizeY + gameOption.GameOptionRoot:GetSizeY();
 		if(option.GameOption == true) then
@@ -2195,10 +2200,6 @@ function RefreshGameOptions()
 		end	
 	end	
 	
-	-- LEKMOD: dropdown settings after the checkboxes
-	for _, dropDown in ipairs(g_LekmodAdvancedDropDowns) do
-		LekmodBuildDropDown(g_LekmodAdvancedDropDownManager, dropDown, bCanEdit);
-	end
 
 	local maxTurns = PreGame.GetMaxTurns();
 	if(maxTurns <= 0) then

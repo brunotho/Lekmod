@@ -101647,6 +101647,24 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST_HELP">
 			<Text>The players get six high-contrast color schemes (those of England, Russia, Greece, Jerusalem, Arabia and Babylon) in random order.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_INFO_NO_CHAT">
+			<Text>No private chat</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_INFO_CHAT">
+			<Text>Private chat allowed</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_INFO_WAR_START">
+			<Text>At war on meeting; peace possible from turn 20</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_INFO_PEACE_START">
+			<Text>At peace from the start</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_INFO_WONDER_NEITHER">
+			<Text>Same-turn wonders: nobody gets them</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LOBBY_INFO_WONDER_BOTH">
+			<Text>Same-turn wonders: everyone gets them</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

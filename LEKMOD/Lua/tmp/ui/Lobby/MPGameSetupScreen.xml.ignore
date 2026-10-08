@@ -51,7 +51,7 @@
                 <PullDown Style="GenericPullDown" ScrollThreshold="400" Offset="150,0" Size="300,27" SpaceForScroll="0" ID="MapTypePullDown"/>
               </Container>
 
-              <Container Anchor="L,T" Size="450,32" Offset="20,0">
+              <Container Anchor="L,T" Size="450,32" Offset="20,0" ID="LekmodMapSizeRoot">
                 <Label Anchor="L,C" ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow" String="TXT_KEY_AD_SETUP_MAP_SIZE" />
                 <PullDown Style="GenericPullDown" ScrollThreshold="400" Offset="150,0" Size="300,27" SpaceForScroll="0" ID="MapSizePullDown"/>
               </Container>
@@ -82,7 +82,7 @@
                 </Box>
             <Stack Anchor="L,T" Offset="20,0" Padding="-7" StackGrowth="Bottom" ID="VictoryConditionsStack" />
 
-                <Box Anchor="C,T" Size="500,30" Offset="0,0" Color="White.0" >
+                <Box Anchor="C,T" Size="500,30" Offset="0,0" Color="White.0" ID="LekmodAdvancedHeader">
                     <Image  Anchor="C,T"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
                     <Label  Anchor="C,B"  Offset="0,5" String="TXT_KEY_ADVANCED_OPTIONS" Font="TwCenMT20" />
                     <Image  Anchor="C,B"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />

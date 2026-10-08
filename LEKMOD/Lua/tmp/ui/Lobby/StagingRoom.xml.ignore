@@ -385,7 +385,7 @@
       <Stack ID="GameOptionsFullStack" Anchor="L,T" Offset="0,0" Padding="0" StackGrowth="Bottom" >
 
         <!-- City State Options -->
-        <Box Anchor="L,T" Size="480,36" Offset="0,0" Color="255.255.255.0" >
+        <Box Anchor="L,T" Size="480,36" Offset="0,0" Color="255.255.255.0" ID="LekmodCityStateBox">
           <Stack ID="CityStateStack" Anchor="L,T" Size="463,32" StackGrowth="Right">
             <Box Anchor="L,C" Size="160,32" Offset="10,5" Color="255.255.255.0" >
               <Label Anchor="L,T" Offset="10,0" Font="TwCenMT20" String="" ID="MinorCivsLabel" />
@@ -402,17 +402,17 @@
             <PullDown Style="GenericPullDown" ScrollThreshold="400" Offset="150,0" Size="300,27" SpaceForScroll="0" ID="MapTypePullDown"/>
           </Container>
 
-          <Container Anchor="L,T" Size="450,32" Offset="20,0">
+          <Container Anchor="L,T" Size="450,32" Offset="20,0" ID="LekmodMapSizeRoot">
             <Label Anchor="L,C" ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow" String="TXT_KEY_AD_SETUP_MAP_SIZE" />
             <PullDown Style="GenericPullDown" ScrollThreshold="400" Offset="150,0" Size="300,27" SpaceForScroll="0" ID="MapSizePullDown"/>
           </Container>
 
-          <Container Anchor="L,T" Size="450,32" Offset="20,0">
+          <Container Anchor="L,T" Size="450,32" Offset="20,0" ID="LekmodGameSpeedRoot">
             <Label Anchor="L,C" ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow" String="TXT_KEY_AD_SETUP_GAME_SPEED" />
             <PullDown Style="GenericPullDown" ScrollThreshold="400" Offset="150,0" Size="300,27" SpaceForScroll="0" ID="GameSpeedPullDown"/>
           </Container>
 
-          <Container Anchor="L,T" Size="450,32" Offset="20,0">
+          <Container Anchor="L,T" Size="450,32" Offset="20,0" ID="LekmodEraRoot">
             <Label Anchor="L,C" ColorSet="Beige_Black" Font="TwCenMT20" FontStyle="Shadow" String="TXT_KEY_AD_SETUP_GAME_ERA" />
             <PullDown Style="GenericPullDown" ScrollThreshold="400" Offset="150,0" Size="300,27" SpaceForScroll="0" ID="EraPull"/>
           </Container>
@@ -425,14 +425,14 @@
 
         <!-- Victory Conditions -->
         <!-- Victory Conditions -->
-        <Box Anchor="C,T" Size="500,30" Offset="0,0" Color="White.0" >
+        <Box Anchor="C,T" Size="500,30" Offset="0,0" Color="White.0" ID="LekmodVictoryHeader">
           <Image  Anchor="C,T"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
           <Label  Anchor="C,B"  Offset="0,5" String="TXT_KEY_VICTORYS_FORMAT" Font="TwCenMT20" />
           <Image  Anchor="C,B"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
         </Box>
         <Stack Anchor="L,T" Offset="20,0" Padding="-7" StackGrowth="Bottom" ID="VictoryConditionsStack" />
 
-        <Box Anchor="C,T" Size="500,30" Offset="0,0" Color="White.0" >
+        <Box Anchor="C,T" Size="500,30" Offset="0,0" Color="White.0" ID="LekmodAdvancedHeader">
           <Image  Anchor="C,T"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
           <Label  Anchor="C,B"  Offset="0,5" String="TXT_KEY_ADVANCED_OPTIONS" Font="TwCenMT20" />
           <Image  Anchor="C,B"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
@@ -440,7 +440,7 @@
 
 
         <!-- Max Turn Check & Edit Box -->
-        <Box Anchor="L,T" Size="480,24" Offset="20,0" Color="255,255,255,0" >
+        <Box Anchor="L,T" Size="480,24" Offset="20,0" Color="255,255,255,0" ID="LekmodMaxTurnsBox">
           <Stack ID="MaxTurnStack" Anchor="L,T" Size="463,32" Offset="10,0" StackGrowth="Right" Padding="8">
             <Box Anchor="L,C"  Size="32,32" Color="255,255,200,0">
               <CheckBox ButtonTexture="assets/UI/Art/Controls/CheckBox2TheBox.dds" Font="TwCenMT20" Anchor="L,C" TextAnchorSide="Right" TextOffset="40,0" String="TXT_KEY_AD_SETUP_MAX_TURNS" ToolTip="TXT_KEY_AD_SETUP_MAX_TURNS_TT" IsChecked="0" ID="MaxTurnsCheck" ConsumeMouse="1" />
@@ -455,7 +455,7 @@
         </Box>
 
         <!-- Turn Timer Check & Edit Box -->
-        <Box Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" >
+        <Box Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="LekmodTurnTimerBox">
 
           <Stack ID="TurnTimerStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right" Padding="8" >
             <Box Anchor="L,C"  Size="32,32" Color="255,255,200,0" >
@@ -475,7 +475,7 @@
         <Stack Anchor="L,T" Offset="20,0" Padding="-7" StackGrowth="Bottom" ID="GameOptionsStack" />
 
             <!-- AI Options Check -->
-            <Box Anchor="L,T" Size="480,25" Offset="30,-7" Color="255,255,255,0" >
+            <Box Anchor="L,T" Size="480,25" Offset="30,-7" Color="255,255,255,0" ID="LekmodAIOptionsBox">
 
               <Stack ID="AIOptionsStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
                 <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
@@ -652,7 +652,7 @@
 
 
             <!-- Additional Options Check -->
-            <Box Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" >
+            <Box Anchor="L,T" Size="480,25" Offset="30,0" Color="255,255,255,0" ID="LekmodAdditionalOptionsBox">
 
               <Stack ID="AdditionalOptionsStack" Anchor="L,T" Size="463,32" Offset="0,0" StackGrowth="Right">
                 <Box Anchor="L,C"  Size="200,32" Color="255,255,200,0" >
@@ -794,7 +794,7 @@
             </Box>
 
         <!-- DLC -->
-        <Box Anchor="C,T" Size="500,30" Offset="0,7" Color="White.0" >
+        <Box Anchor="C,T" Size="500,30" Offset="0,7" Color="White.0" ID="LekmodDLCHeader">
           <Image  Anchor="C,T"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
           <Label  Anchor="C,B"  Offset="0,5" String="TXT_KEY_DLC_ALLOWED" Font="TwCenMT20" />
           <Image  Anchor="C,B"  Offset="0,0" Texture="bar500x2.dds" Size="500.1" />
