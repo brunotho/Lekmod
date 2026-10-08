@@ -101527,6 +101527,45 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_PROMOTION_KEPT_ON_UPGRADE">
 			<Text>Kept when the unit is upgraded.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_BIAS">
+			<Text>[COLOR_POSITIVE_TEXT]Start bias:[ENDCOLOR] {1_List}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_AVOID">
+			<Text>[COLOR_NEGATIVE_TEXT]Avoids starting in:[ENDCOLOR] {1_List}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_BIAS_COAST">
+			<Text>Coast</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_BIAS_RIVER">
+			<Text>River</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_DESERT">
+			<Text>Desert</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_FOREST">
+			<Text>Forest</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_HILLS">
+			<Text>Hills</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_JUNGLE">
+			<Text>Jungle</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_PLAINS">
+			<Text>Plains</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_TUNDRA">
+			<Text>Tundra</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_WETLANDS">
+			<Text>Marsh</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_GRASS">
+			<Text>Grassland</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_START_REGION_HYBRID">
+			<Text>Mixed terrain</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_NTFN_CS_TRIBUTED_SUMMARY">
 			<Text>{1_CivName:textkey} demanded tribute from {2_MinorName:textkey}</Text>
 		</Row>

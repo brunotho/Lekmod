@@ -2109,6 +2109,33 @@ CivilopediaCategory[CategoryHomePage].SelectArticle = function( pageID, shouldAd
 	
 end
 
+-- LEKMOD: start biases of a civilization (the data the map script uses), as text for UA tooltips
+function LekmodStartBiasText( civType )
+	if civType == nil then return ""; end
+	local prefer = {};
+	local avoid = {};
+	for row in GameInfo.Civilization_Start_Along_Ocean{ CivilizationType = civType } do
+		if row.StartAlongOcean then table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS_COAST" ) ); end
+	end
+	for row in GameInfo.Civilization_Start_Along_River{ CivilizationType = civType } do
+		if row.StartAlongRiver then table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS_RIVER" ) ); end
+	end
+	for row in GameInfo.Civilization_Start_Region_Priority{ CivilizationType = civType } do
+		table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_" .. row.RegionType ) );
+	end
+	for row in GameInfo.Civilization_Start_Region_Avoid{ CivilizationType = civType } do
+		table.insert( avoid, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_" .. row.RegionType ) );
+	end
+	local text = "";
+	if #prefer > 0 then
+		text = text .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS", table.concat( prefer, ", " ) );
+	end
+	if #avoid > 0 then
+		text = text .. ( #prefer > 0 and "[NEWLINE]" or "[NEWLINE][NEWLINE]" ) .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_AVOID", table.concat( avoid, ", " ) );
+	end
+	return text;
+end
+
 CivilopediaCategory[CategoryGameConcepts].SelectArticle = function( conceptID, shouldAddToList )
 	print("CivilopediaCategory[CategoryGameConcepts].SelectArticle");
 	if selectedCategory ~= CategoryGameConcepts then
@@ -4095,7 +4122,7 @@ CivilopediaCategory[CategoryCivilizations].SelectArticle = function( rawCivID, s
 				local leaderTrait = GameInfo.Leader_Traits(condition)();
 				if leaderTrait then
 					local trait = leaderTrait.TraitType;
-					local traitString = Locale.ConvertTextKey( GameInfo.Traits[trait].ShortDescription ).."[NEWLINE][NEWLINE]"..Locale.ConvertTextKey( GameInfo.Traits[trait].Description );
+					local traitString = Locale.ConvertTextKey( GameInfo.Traits[trait].ShortDescription ).."[NEWLINE][NEWLINE]"..Locale.ConvertTextKey( GameInfo.Traits[trait].Description ) .. LekmodStartBiasText( thisCiv.Type );
 					UpdateTextBlock( traitString, Controls.GameInfoLabel, Controls.GameInfoInnerFrame, Controls.GameInfoFrame );
 				end
 										
