@@ -494,6 +494,12 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+WORKER TURNS REMAINING
+----------------------
+Tags: ui, bugfix
+The worker's "turns remaining" number is correct.
+- Fixed: once a worker had worked on its tile this turn, the panel showed one turn too many (e.g. "2" for a build that finishes next turn). It now shows how many more turns of work are needed, matching the number on the build buttons
+
 GREAT WORKS SCREEN SELECTION
 ----------------------------
 Tags: ui, bugfix
