@@ -512,7 +512,7 @@ CITY-STATE PLEDGE ICONS
 -----------------------
 Tags: ui
 City-state banners show who has pledged to protect them.
-- Added: a shield glowing in your civilization's color on a city-state's banner when you have pledged to protect it, and one with a red glow when other players have; hovering it lists them
+- Added: a shield with a light blue glow on a city-state's banner when you have pledged to protect it, and one with a red glow when other players have; hovering it lists them
 - Note: standard UI only for now (EUI has its own city banners)
 
 MILITARY CASTE (POLICY_MILITARY_CASTE)

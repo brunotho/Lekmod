@@ -172,13 +172,13 @@
 				<Label ID="OccupiedIcon" Anchor="C,C" Offset="0,0" String="[ICON_OCCUPIED]" Font="TwCenMT18" FontStyle="Shadow" Hidden="1"/>
 				<Label ID="SpyIcon" Anchor="C,C" Offset="0,0" String="[ICON_SPY]" Font="TwCenMT18" FontStyle="Shadow" Hidden="0"/>
         <Label ID="DiplomatIcon" Anchor="C,C" Offset="0,0" String="[ICON_DIPLOMAT]" Font="TwCenMT18" FontStyle="Shadow" Hidden="0"/>
-				<!-- LEKMOD: pledges to protect this city-state (your civ's color = yours, red = other players') -->
+				<!-- LEKMOD: pledges to protect this city-state (light blue like Greece = yours, red like England = other players') -->
 				<Container ID="PledgeMineBox" Anchor="C,C" Offset="0,3" Size="23,23" Hidden="1">
-					<Image Anchor="C,C" Size="31,31" Texture="assets\UI\Art\Notification\NotificationGenericGlow.dds" StretchMode="Fill" Color="90,180,255,255" ID="PledgeMineGlow"/>
+					<Image Anchor="C,C" Size="31,31" Texture="assets\UI\Art\Notification\NotificationGenericGlow.dds" StretchMode="Fill" Color="65,141,254,255"/>
 					<Label ID="PledgeMineIcon" Anchor="C,C" Offset="0,-2" String="[ICON_STRENGTH]" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Container>
 				<Container ID="PledgeOthersBox" Anchor="C,C" Offset="0,3" Size="23,23" Hidden="1">
-					<Image Anchor="C,C" Size="31,31" Texture="assets\UI\Art\Notification\NotificationGenericGlow.dds" StretchMode="Fill" Color="255,70,60,255"/>
+					<Image Anchor="C,C" Size="31,31" Texture="assets\UI\Art\Notification\NotificationGenericGlow.dds" StretchMode="Fill" Color="160,20,10,255"/>
 					<Label ID="PledgeOthersIcon" Anchor="C,C" Offset="0,-2" String="[ICON_STRENGTH]" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Container>
 			</Stack>
