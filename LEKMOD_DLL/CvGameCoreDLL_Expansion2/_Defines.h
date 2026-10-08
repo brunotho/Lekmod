@@ -1212,6 +1212,8 @@ TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_TRAIT_VOTES
 #define LEKMOD_POLICY_GARRISON_ATTACH_TURN 70
 // Ruins offer a choice of 2 rewards (3 with the goody hut picker promotion), with trade-off rewards and a free ancient tech
 #define LEKMOD_RUIN_CHOICE
+// From this turn on, killing barbarians gives no kill yields (ends "barbarian farming"; same turn as the garrison rule)
+#define LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 70
 // Great Work Yield stuff
 #define LEKMOD_GREAT_WORK_YIELD_EFFECTS
 // Convert invaild Promotions for a Unit combat to valid ones.

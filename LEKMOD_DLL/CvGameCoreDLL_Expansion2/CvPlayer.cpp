@@ -14153,6 +14153,10 @@ void CvPlayer::ChangeAllCityFreeBuilding(BuildingClassTypes eBuildingClass, bool
 /// Handle earning yields from a combat win
 void CvPlayer::DoYieldsFromKill(UnitTypes eAttackingUnitType, UnitTypes eKilledUnitType, int iX, int iY, bool bWasBarbarian, int iExistingDelay)
 {
+#if defined(LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN)
+	if (bWasBarbarian && LekmodNoBarbarianKillYields())
+		return;
+#endif
 	int iNumBonuses = iExistingDelay; // Passed by reference below, incremented to stagger floating text in UI
 	DoUnresearchedTechBonusFromKill(eKilledUnitType, iX, iY, iNumBonuses);
 	for(int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
@@ -14295,8 +14299,21 @@ void CvPlayer::DoYieldBonusFromKill(YieldTypes eYield, UnitTypes eAttackingUnitT
 }
 #else
 // Calls DoYieldBonusFromKill, and loops through the Yield types.
+#if defined(LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN)
+//	--------------------------------------------------------------------------------
+/// Barbarian kills stop giving yields from the end turn on
+bool CvPlayer::LekmodNoBarbarianKillYields() const
+{
+	return GC.getGame().getGameTurn() >= LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN;
+}
+#endif
+
 void CvPlayer::DoYieldsFromKill(CvUnit* pAttackingUnit, CvUnit* pKilledUnit, int iX, int iY, bool bWasBarbarian, int iExistingDelay)
 {
+#if defined(LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN)
+	if (bWasBarbarian && LekmodNoBarbarianKillYields())
+		return;
+#endif
 	int iNumBonuses = iExistingDelay; // Passed by reference below, incremented to stagger floating text in UI
 	CvAssertMsg(pKilledUnit != NULL, "Killed Unit is NULL, Please Report.");
 	if (pKilledUnit != NULL)

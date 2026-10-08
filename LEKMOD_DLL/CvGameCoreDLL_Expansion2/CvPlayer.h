@@ -244,6 +244,9 @@ public:
 	bool canReceiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit) const;
 	void receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit);
 	void doGoody(CvPlot* pPlot, CvUnit* pUnit);
+#if defined(LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN)
+	bool LekmodNoBarbarianKillYields() const;
+#endif
 #if defined(LEKMOD_RUIN_CHOICE)
 	int LekmodGoodyRand(int iRange, const char* szLog);
 	int LekmodGetRuinTradeAmount(int iKind, bool bGain, int iRoll) const;

@@ -494,6 +494,13 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Note: standard UI only (EUI uses its own tile tooltip)
 
+BARBARIAN KILL BONUSES
+----------------------
+Tags: game mechanics, combat
+From turn 70 on, farming barbarians stops paying off.
+- Changed: from turn 70, killing barbarians gives no bonus yields any more (Honor culture, gold and science from kills, Iron Fist, Zealot, the Aztec ability and every other kill bonus). Kills of other civilizations' and city-states' units are unaffected
+- DLL: LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 70 (CvPlayer::DoYieldsFromKill returns early)
+
 TECH TREE CHANGES
 -----------------
 Tags: game mechanics, units
