@@ -439,11 +439,13 @@ LOBBY: MODES (TOURNAMENT / CASUAL)
 ----------------------------------
 Tags: ui, game mechanics
 The multiplayer lobby has a Mode setting that fills in the agreed settings at once.
-- Added: Mode dropdown at the top of the game options: Tournament (default for a new game) or Casual. All other settings can still be changed afterwards
-- Added: both modes set quick speed, simultaneous turns, pitboss, a relative turn timer of 75, quick movement and combat, no combat randomness, no scientist and policy saving, fast hand, turn start combat limits, no auto missions, no strategic trading, all players can found religions, alternate golden ages, all victory types, and all "AI cannot..." options
+- Added: Mode dropdown at the top of the game options: Tournament (default for a new game) or Casual
+- Changed: the lobby shows only Mode, the map type and map options, and Civ Colors. Start at War, Disable Private Chat and Same-Turn Wonders are shown but follow the mode. Everything else is set by the mode and hidden
+- Added: both modes set quick speed, ancient era, no turn limit, simultaneous turns, pitboss, a relative turn timer of 70, quick movement and combat, no combat randomness, no scientist, policy and tech saving, fast hand, turn start combat limits, no auto missions, no strategic trading, all players can found religions, alternate golden ages, scaled spoils of war, no destructive recapture, no AI tech discount, all victory types, and all AI options except "No AI Start Advantage" and "No AI Penalty for Expansion"; all additional options (ruins, barbarians, razing...) stay at their normal setting
 - Added: Tournament: no private chat, start at war (peace from turn 20), same-turn wonders go to nobody
 - Added: Casual: private chat allowed, no start at war, same-turn wonders go to everyone who finished them
-- Note: map options (resources, legendary start) and map size are not set by the modes yet (map size waits for the 6/7/8-player lobby work)
+- Note: map options (resources, legendary start) are enforced by the map script; map size waits for the 6/7/8-player lobby work
+- Dev: a new lobby applies the Tournament preset once (hidden flag GAMEOPTION_LEKMOD_PRESET_APPLIED, ID 73; an unset option reads as its database default 0, so the mode option itself can't tell)
 
 
 START AT WAR
