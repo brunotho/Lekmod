@@ -915,6 +915,8 @@
 #define LEKMOD_RANDOMIZE_CITY_NAMES
 // Floating damage numbers for air strikes and sweeps without combat animation, and 'No resistance' for empty sweeps
 #define LEKMOD_AIR_COMBAT_FEEDBACK
+// Lua: Unit:GetNumAttacksMadeThisTurn (unit flags mark own units that attacked and can still move)
+#define LEKMOD_UNIT_ATTACKED_FLAG_ICON
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

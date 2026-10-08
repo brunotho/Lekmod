@@ -1121,6 +1121,12 @@ public:
 	void changeDropRange(int iChange);
 
 	bool isOutOfAttacks() const;
+#ifdef LEKMOD_UNIT_ATTACKED_FLAG_ICON
+	int GetNumAttacksMadeThisTurn() const
+	{
+		return m_iAttacksMade;
+	}
+#endif
 	void setMadeAttack(bool bNewValue);
 #if defined(v35_TRAITIFY)
 	bool madeAttackLastTurn() const { return m_bAttackedLastTurn; }

@@ -427,6 +427,13 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+UNIT FLAGS: ATTACKED THIS TURN
+------------------------------
+Tags: ui, combat
+Your units that attacked this turn and can still move are marked on the map.
+- Added: crossed swords on the unit flag of your own units that have attacked this turn and still have movement left (other players' units are not marked)
+- Dev: LEKMOD_UNIT_ATTACKED_FLAG_ICON: Lua Unit:GetNumAttacksMadeThisTurn; UnitFlagManager (ui and eui) uses the existing IsOutOfAttacks label, refreshed on SerialEventUnitInfoDirty and ActivePlayerTurnStart
+
 BORDER GROWTH OVER WATER
 ------------------------
 Tags: game mechanics

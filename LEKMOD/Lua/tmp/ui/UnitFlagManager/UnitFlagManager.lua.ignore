@@ -211,12 +211,7 @@ local g_UnitFlagClass =
             o.m_Instance.HealthBarButton:SetDisabled( false );
             o.m_Instance.HealthBarButton:SetConsumeMouseOver( true );
             
-            if pUnit:CanMove() then
-                -- o.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
-                o.m_Instance.IsOutOfAttacks:SetHide(true)
-            else
-                o.m_Instance.IsOutOfAttacks:SetHide(true)
-            end
+            LekmodUpdateAttackedIcon( o );
             -- o.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31))or not (pUnit:GetDamage() > 0))
             o.m_Instance.IsHealing:SetHide(true)
             -- o.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
@@ -1481,12 +1476,7 @@ function OnDimEvent( playerID, unitID, bDim )
         	then
                 local pUnit = Players[ playerID ]:GetUnitByID( unitID )
                 if pUnit then
-                    if pUnit:CanMove() then
-                        -- flag.m_Instance.IsOutOfAttacks:SetHide(not pUnit:IsOutOfAttacks())
-                        flag.m_Instance.IsOutOfAttacks:SetHide(true)
-                    else
-                        flag.m_Instance.IsOutOfAttacks:SetHide(true)
-                    end
+                    LekmodUpdateAttackedIcon( flag );
                     -- flag.m_Instance.IsHealing:SetHide((pUnit:GetMoves() < pUnit:MaxMoves() and not pUnit:IsHasPromotion(31)) or not (pUnit:GetDamage() > 0))
                     flag.m_Instance.IsHealing:SetHide(true)
                     -- flag.m_Instance.IsNoCapture:SetHide(not (pUnit:GetDropRange() > 0) or pUnit:IsOutOfAttacks() or not pUnit:IsNoCapture())
@@ -1786,3 +1776,31 @@ function OnActivePlayerChanged( iActivePlayer, iPrevActivePlayer )
 	end
 end
 Events.GameplaySetActivePlayer.Add(OnActivePlayerChanged);
+
+-------------------------------------------------
+-- LEKMOD: crossed swords on your own units that attacked this turn and can still move
+-------------------------------------------------
+function LekmodUpdateAttackedIcon( flag )
+    if( flag == nil or flag.m_Instance == nil or flag.m_Instance.IsOutOfAttacks == nil ) then
+        return;
+    end
+    local bShow = false;
+    if( flag.m_PlayerID == Game.GetActivePlayer() ) then
+        local pUnit = Players[ flag.m_PlayerID ]:GetUnitByID( flag.m_UnitID );
+        if( pUnit ~= nil and pUnit.GetNumAttacksMadeThisTurn ~= nil ) then
+            bShow = pUnit:GetNumAttacksMadeThisTurn() > 0 and pUnit:MovesLeft() > 0;
+        end
+    end
+    flag.m_Instance.IsOutOfAttacks:SetHide( not bShow );
+end
+
+function LekmodUpdateAllAttackedIcons()
+    local playerTable = g_MasterList[ Game.GetActivePlayer() ];
+    if( playerTable ~= nil ) then
+        for _, flag in pairs( playerTable ) do
+            LekmodUpdateAttackedIcon( flag );
+        end
+    end
+end
+Events.SerialEventUnitInfoDirty.Add( LekmodUpdateAllAttackedIcons );
+Events.ActivePlayerTurnStart.Add( LekmodUpdateAllAttackedIcons );

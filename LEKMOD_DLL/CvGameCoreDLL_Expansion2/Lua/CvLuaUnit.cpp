@@ -411,6 +411,9 @@ void CvLuaUnit::PushMethods(lua_State* L, int t)
 
 
 	Method(IsOutOfAttacks);
+#ifdef LEKMOD_UNIT_ATTACKED_FLAG_ICON
+	Method(GetNumAttacksMadeThisTurn);
+#endif
 	Method(SetMadeAttack);
 	Method(isOutOfInterceptions);
 	Method(SetMadeInterception);
@@ -4096,6 +4099,15 @@ int CvLuaUnit::lIsOutOfAttacks(lua_State* L)
 	lua_pushboolean(L, bResult);
 	return 1;
 }
+#ifdef LEKMOD_UNIT_ATTACKED_FLAG_ICON
+//------------------------------------------------------------------------------
+int CvLuaUnit::lGetNumAttacksMadeThisTurn(lua_State* L)
+{
+	CvUnit* pkUnit = GetInstance(L);
+	lua_pushinteger(L, pkUnit->GetNumAttacksMadeThisTurn());
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //void setMadeAttack(bool bNewValue);
 int CvLuaUnit::lSetMadeAttack(lua_State* L)

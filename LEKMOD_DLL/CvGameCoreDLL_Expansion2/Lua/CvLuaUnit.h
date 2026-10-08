@@ -418,6 +418,9 @@ protected:
 	static int lGetKamikazePercent(lua_State* L);
 
 	static int lIsOutOfAttacks(lua_State* L);
+#ifdef LEKMOD_UNIT_ATTACKED_FLAG_ICON
+	static int lGetNumAttacksMadeThisTurn(lua_State* L);
+#endif
 	static int lSetMadeAttack(lua_State* L);
 	static int lisOutOfInterceptions(lua_State* L);
 	static int lSetMadeInterception(lua_State* L);

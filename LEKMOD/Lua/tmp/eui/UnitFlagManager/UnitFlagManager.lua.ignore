@@ -69,6 +69,22 @@ local g_UnitFlags = {}
 for i = -1, #Players do
 	g_UnitFlags[i]={}
 end
+-- LEKMOD: crossed swords on your own units that attacked this turn and can still move
+function LekmodUpdateAttackedIcon( flag, playerID, unit )
+	if not flag or not flag.IsOutOfAttacks then return end
+	local bShow = playerID == Game.GetActivePlayer() and unit and unit.GetNumAttacksMadeThisTurn
+		and unit:GetNumAttacksMadeThisTurn() > 0 and unit:MovesLeft() > 0
+	flag.IsOutOfAttacks:SetHide( not bShow )
+end
+function LekmodUpdateAllAttackedIcons()
+	local playerID = Game.GetActivePlayer()
+	local player = Players[ playerID ]
+	for unitID, flag in pairs( g_UnitFlags[ playerID ] or {} ) do
+		LekmodUpdateAttackedIcon( flag, playerID, player and player:GetUnitByID( unitID ) )
+	end
+end
+Events.SerialEventUnitInfoDirty.Add( function() LekmodUpdateAllAttackedIcons() end )
+Events.ActivePlayerTurnStart.Add( function() LekmodUpdateAllAttackedIcons() end )
 local g_spareNewUnitFlags = {}
 local g_spareAirbaseFlags = {}
 local g_usedPromotions = {}
@@ -724,12 +740,7 @@ local function CreateNewFlag( playerID, unitID, isSelected, isHiddenByFog, isInv
 		---------------------------------------------------------
 		-- update all other info
 		flag.Anchor:SetHide( isHiddenByFog or isInvisibleToActiveTeam or (flag.m_IsAirCraft and Players[playerID]:GetTeam() ~= Game.GetActiveTeam()) )
-		if unit:CanMove() then
-			flag.IsOutOfAttacks:SetHide(true)
-			-- flag.IsOutOfAttacks:SetHide(g_activeTeamID ~= teamID or not unit:IsOutOfAttacks())
-		else
-			flag.IsOutOfAttacks:SetHide(true)
-		end
+		LekmodUpdateAttackedIcon( flag, playerID, unit )
 		-- flag.IsHealing:SetHide(g_activeTeamID ~= teamID or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
 		flag.IsHealing:SetHide(true)
 		-- flag.IsNoCapture:SetHide(g_activeTeamID ~= teamID or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
@@ -1010,12 +1021,7 @@ function( playerID, unitID, isDimmed )
 		local player = Players[ playerID ]
 		local unit = player and player:GetUnitByID( unitID )
 		if unit then
-			if unit:CanMove() then
-				-- flag.IsOutOfAttacks:SetHide(not isActiveTeam or not unit:IsOutOfAttacks())
-				flag.IsOutOfAttacks:SetHide(true)
-			else
-				flag.IsOutOfAttacks:SetHide(true)
-			end
+			LekmodUpdateAttackedIcon( flag, playerID, unit )
 			-- flag.IsHealing:SetHide(not isActiveTeam or (unit:GetMoves() < unit:MaxMoves() and not unit:IsHasPromotion(31)) or not (unit:GetDamage() > 0))
 			flag.IsHealing:SetHide(true)
 			-- flag.IsNoCapture:SetHide(not isActiveTeam or not (unit:GetDropRange() > 0) or unit:IsOutOfAttacks() or not unit:IsNoCapture())
