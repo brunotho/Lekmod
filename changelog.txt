@@ -408,10 +408,15 @@ Declaring war on city-states now escalates through four standings, with lasting 
 - Added: city-states allied with you when you declare war are not affected; penalties never decrease
 - Added: Nemesis: a city-state you declare war on 3 times never makes peace with you
 - Removed: the old Aggressor/Warmonger rules (double Influence decay after 2 declarations, random city-states becoming wary)
-- Removed: the "Warmonger penalty if you capture this city" line on city-state city banners while at war
 - Added: the city-state screen shows Nemesis instead of the peace button, the status tooltip lists Wary/Alienated and your standing, and the war button tooltip shows what declaring war would do. A notification tells you your new standing
 - Dev: LEKMOD_CS_WAR_DECLARATION_PENALTIES: CvMinorCivAI::DoTeamDeclaredWarOnMe (levels from CvTeam::GetNumMinorCivsAttacked), anchor in GetFriendshipAnchorWithMajor, decay multiplier in GetFriendshipChangePerTurnTimes100, nemesis in IsPeaceBlocked. New saved members m_aiWaryLevel, m_aiAlienatedLevel, m_aiWarDeclarationsByMajor. Defines MINOR_WARY_ANCHOR_PER_LEVEL 10, MINOR_ALIENATED_DECAY_PER_LEVEL 50, MINOR_NEMESIS_WAR_DECLARATIONS 3. Lua: GetMinorCivWaryLevel, GetMinorCivAlienatedLevel, GetMinorCivWarDeclarations, IsMinorCivNemesis (on the city-state), GetCityStateWarDeclarations (on the major)
 - Note: city-state personalities with BlocksWarDeclarationPenalty (none at the moment) still skip all of this
+
+CITY BANNER TOOLTIP (WARMONGER PREVIEW)
+---------------------------------------
+Tags: ui
+The city banner tooltip of an enemy city no longer warns about a warmonger penalty.
+- Removed: the "You will receive a ... Warmonger penalty if you capture this city" line (the liberation line stays)
 
 CITY-STATE CIVILOPEDIA PAGES
 ----------------------------

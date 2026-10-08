@@ -273,11 +273,7 @@ local g_cityToolTips = {
 				end
 
 				if bnw_mode and g_activeTeam:IsAtWar(cityTeamID) then
-					-- No warmonger preview for city-states (they have their own war penalties)
-					if not cityOwner:IsMinorCiv() then
-						tipText = tipText .. "[NEWLINE]----------------[NEWLINE]"
-								.. cityOwner:GetWarmongerPreviewString(city:GetOwner())
-					end
+					-- No warmonger preview (removed in Lekmod)
 					if city:GetOriginalOwner() ~= city:GetOwner() then
 						tipText = tipText .. "[NEWLINE]----------------[NEWLINE]"
 								.. cityOwner:GetLiberationPreviewString(city:GetOriginalOwner())

@@ -211,11 +211,7 @@ function RefreshCityBanner(cityBanner, iActiveTeam, iActivePlayer)
 		end
 		
 		if (Teams[Game.GetActiveTeam()]:IsAtWar(player:GetTeam())) then
-			-- No warmonger preview for city-states (they have their own war penalties)
-			if (not player:IsMinorCiv()) then
-				strToolTip = strToolTip .. "[NEWLINE]----------------[NEWLINE]"
-				strToolTip = strToolTip .. player:GetWarmongerPreviewString(city:GetOwner());
-			end
+			-- No warmonger preview (removed in Lekmod)
 			if (city:GetOriginalOwner() ~= city:GetOwner()) then
 				strToolTip = strToolTip .. "[NEWLINE]----------------[NEWLINE]"
 				strToolTip = strToolTip .. player:GetLiberationPreviewString(city:GetOriginalOwner());
