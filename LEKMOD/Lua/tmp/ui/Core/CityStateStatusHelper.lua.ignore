@@ -840,3 +840,27 @@ function GetCityStateWarPreviewToolTip(iMajor, iMinor)
 	return strTT;
 end
 -- LEKMOD_CS_WAR_DECLARATION_PENALTIES end
+
+-- LEKMOD: tribute range outline (military units within this range count when demanding tribute)
+local LEKMOD_TRIBUTE_RANGE_STYLE = "FireRangeBorder";
+function LekmodShowTributeRange( iMinor )
+	Events.ClearHexHighlightStyle( LEKMOD_TRIBUTE_RANGE_STYLE );
+	local pMinor = Players[iMinor];
+	if pMinor == nil or not pMinor:IsMinorCiv() then return; end
+	local pCity = pMinor:GetCapitalCity();
+	if pCity == nil then return; end
+	local iRange = GameDefines["MINOR_CIV_TRIBUTE_RANGE"] or 5;
+	local iX, iY = pCity:GetX(), pCity:GetY();
+	for iDX = -iRange, iRange do
+		for iDY = -iRange, iRange do
+			local pPlot = Map.GetPlotXY( iX, iY, iDX, iDY );
+			if pPlot ~= nil and Map.PlotDistance( iX, iY, pPlot:GetX(), pPlot:GetY() ) <= iRange then
+				Events.SerialEventHexHighlight( ToHexFromGrid( Vector2( pPlot:GetX(), pPlot:GetY() ) ), true, Vector4( 0.7, 0, 0, 1 ), LEKMOD_TRIBUTE_RANGE_STYLE );
+			end
+		end
+	end
+end
+
+function LekmodClearTributeRange()
+	Events.ClearHexHighlightStyle( LEKMOD_TRIBUTE_RANGE_STYLE );
+end
