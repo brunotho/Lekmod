@@ -426,6 +426,13 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+DEMOGRAPHICS SCREEN (TURN END)
+------------------------------
+Tags: ui, bugfix
+Opening the Demographics screen no longer un-ends your turn in multiplayer.
+- Fixed: opening Demographics after ending your turn cancelled the turn end. The screen sent a hidden network message (a replay statistic counting how often it is opened), and any network message un-ends a finished turn
+- Dev: Demographics.lua (template Replays): LekmodCountDemographicsOpened skips Network.SendGiftUnit(-1, -8) once Network.HasSentNetTurnComplete(); the open count misses those openings
+
 LOBBY: DEFAULT DIFFICULTY
 -------------------------
 Tags: ui

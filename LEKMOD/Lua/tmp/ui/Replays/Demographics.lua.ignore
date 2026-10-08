@@ -529,6 +529,15 @@ end
 -------------------------------------------------
 -- On Popup
 -------------------------------------------------
+-- Replay stat: count how often this screen is opened. Sending it is a network message, which un-ends a
+-- finished multiplayer turn, so skip it once the turn is ended (LEKMOD)
+function LekmodCountDemographicsOpened()
+	if( PreGame.IsMultiplayerGame() and Network.HasSentNetTurnComplete() ) then
+		return;
+	end
+	Network.SendGiftUnit(-1, -8);
+end
+
 function OnPopup( popupInfo )
 	
 	-- End game is its own deal that shouldn't come up when we hit a hotkey or something
@@ -542,13 +551,11 @@ function OnPopup( popupInfo )
         	if( ContextPtr:IsHidden() == false ) then
         	    OnBack();
             else
-                -- NEW: add replay stats
-                Network.SendGiftUnit(-1, -8);
+                LekmodCountDemographicsOpened();
             	UIManager:QueuePopup( ContextPtr, PopupPriority.InGameUtmost );
         	end
     	else
-            -- NEW: add replay stats
-            Network.SendGiftUnit(-1, -8);
+            LekmodCountDemographicsOpened();
         	UIManager:QueuePopup( ContextPtr, PopupPriority.Demographics );
     	end
 	end
