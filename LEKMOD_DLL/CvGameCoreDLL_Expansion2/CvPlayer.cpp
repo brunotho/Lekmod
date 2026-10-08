@@ -8107,7 +8107,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		}
 	}
 
-	// Science era ruin: X = rand(20..30) * era, capped at 90; unit loses 2X HP (keeps at least 1); unit gains X/2 XP
+	// Science era ruin: X = rand(20..30) * era, capped at 90; unit loses 3X HP (keeps at least 1); X/2 gold (rounded to 5)
 	if(kGoodyInfo.isScienceEraRuin() && pUnit != NULL)
 	{
 		int iX = (20 + LekmodGoodyRand(11, "Goody Science Era Rand")) * iEra;
@@ -8120,12 +8120,10 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		else
 			changeOverflowResearch(iX);
 		// HP damage (leave at least 1 HP)
-		int iDamage = std::min(2 * iX, pUnit->GetMaxHitPoints() - pUnit->getDamage() - 1);
+		int iDamage = std::min(3 * iX, pUnit->GetMaxHitPoints() - pUnit->getDamage() - 1);
 		if(iDamage > 0) pUnit->changeDamage(iDamage);
-		// XP gain
-		int iXP = iX / 2;
-		pUnit->changeExperience(iXP);
-		pUnit->testPromotionReady();
+		// A little gold: half the science, rounded to 5
+		GetTreasury()->ChangeGold(((iX / 2) + 2) / 5 * 5);
 		if(GetID() == GC.getGame().getActivePlayer())
 		{
 			strBuffer = GetLocalizedText(kGoodyInfo.GetDescriptionKey(), iX);
@@ -9226,7 +9224,7 @@ CvString CvPlayer::LekmodGetRuinOfferText(GoodyTypes eGoody, int iRoll, int iPay
 	if (kGoodyInfo.isScienceEraRuin())
 	{
 		int iX = std::min((20 + iRoll * 11 / 1000) * iEra, 90);
-		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_SCIENCE", iX, iX / 2, 2 * iX);
+		return GetLocalizedText("TXT_KEY_LEKMOD_RUIN_OFFER_SCIENCE", iX, ((iX / 2) + 2) / 5 * 5, 3 * iX);
 	}
 	if (kGoodyInfo.isUpgradeUnit() && pUnit != NULL)
 	{

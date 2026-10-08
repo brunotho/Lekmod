@@ -732,7 +732,7 @@ Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshon
 - Changed: if you don't choose before the turn ends, one of the offers is picked at random
 - Changed: Food: 7 + 2.2 x era x capital population food in the capital; the unit gets Glutton (-10% combat strength, lost on upgrade)
 - Changed: Upgrade: from turn 6; the unit loses 20 HP
-- Changed: Tech: no more free tech; 20-30 x era science instead (max 90); the unit loses twice that much HP (keeps at least 1) and gains half of it as experience
+- Changed: Tech: no more free tech; 20-30 x era science instead (max 90); plus half as much gold (rounded to 5); the unit loses three times that much HP (keeps at least 1)
 - Changed: Map: reveals a patchy area of radius 6 and gives 6 experience; until turn 10
 - Changed: Culture: turn x era culture, from turn 6
 - Changed: Faith: 9 faith from turn 6 while you have no pantheon and 0 faith; turn x 2 x era faith plus a full heal once you have a pantheon (and no religion)
