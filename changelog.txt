@@ -427,6 +427,13 @@ Italy's Basilica tooltip now lists everything that differs from the Museum.
 - Fixed: the tooltip didn't mention +15% Culture (instead of +10%), that no Amphitheater is needed, that it is cheaper, or that it unlocks with Industrialization
 - Changed: the Museum's Civilopedia strategy text no longer claims an Opera House is required (it needs an Amphitheater); the Basilica has its own strategy text
 
+TILE TOOLTIP: UNIMPROVED RESOURCES
+----------------------------------
+Tags: ui
+Hovering an unimproved resource shows what improving it would give.
+- Added: the improvement that connects the resource, how many turns one Worker needs to build it, and the tile's yields with it (e.g. "With a Mine (5 turns for one Worker): 1 Food 3 Production")
+- Note: standard UI only (EUI uses its own tile tooltip)
+
 AIR COMBAT FEEDBACK
 -------------------
 Tags: ui, air

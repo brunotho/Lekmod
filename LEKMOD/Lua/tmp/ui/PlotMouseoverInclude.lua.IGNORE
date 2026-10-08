@@ -236,10 +236,43 @@ function GetResourceString(plot, bLongForm)
 				end
 			end
 		end
+
+		-- LEKMOD: for an unimproved resource, show which improvement connects it, how long a Worker needs and the yields it would give
+		if (bLongForm and not plot:IsCity() and plot:GetRevealedImprovementType(iActiveTeam, false) < 0) then
+			improvementStr = improvementStr .. LekmodResourceImprovementString(plot, pResource);
+		end
 	end
 	
 	return improvementStr;
 	
+end
+
+function LekmodResourceImprovementString(plot, pResource)
+	local iActivePlayer = Game.GetActivePlayer();
+	local pPlayer = Players[iActivePlayer];
+	if (pPlayer == nil) then
+		return "";
+	end
+	for row in GameInfo.Improvement_ResourceTypes{ ResourceType = pResource.Type } do
+		local pImprovement = GameInfo.Improvements[row.ImprovementType];
+		local pBuild = pImprovement and GameInfo.Builds{ ImprovementType = pImprovement.Type }();
+		if (pBuild ~= nil and plot:CanHaveImprovement(pImprovement.ID, Game.GetActiveTeam())) then
+			-- Turns for one Worker (base work rate and the player's worker speed modifier)
+			local pWorker = GameInfo.Units["UNIT_WORKER"];
+			local iWorkRate = (pWorker and pWorker.WorkRate or 100) * math.max(0, 100 + pPlayer:GetWorkerSpeedModifier()) / 100;
+			local iTurns = (iWorkRate > 0) and math.ceil(plot:GetBuildTime(pBuild.ID, iActivePlayer) / iWorkRate) or 0;
+			-- Yields of the tile with the improvement
+			local strYields = "";
+			for pYield in GameInfo.Yields() do
+				local iYield = plot:GetYieldWithBuild(pBuild.ID, pYield.ID, false, iActivePlayer);
+				if (iYield > 0) then
+					strYields = strYields .. " " .. iYield .. pYield.IconString;
+				end
+			end
+			return "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns) .. strYields;
+		end
+	end
+	return "";
 end
 
 
