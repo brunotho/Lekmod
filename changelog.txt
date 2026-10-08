@@ -236,10 +236,9 @@ OPEN BORDERS (OPEN_BORDERS_DURATION)
 Tags: game mechanics, ui
 Open borders agreements last 10 turns, or until war.
 - Changed: open borders last 10 turns (was 25)
-- Added: open borders can also be traded until war: click Open Borders on the trade table to switch it from 10 turns to "until war" (click again to remove it). It ends only when the two players go to war
-- Changed: the trade screen shows the duration on the table item and explains both options in the tooltip
+- Added: a second trade item, "Open Borders (until war)", next to "Open Borders (10 turns)". It ends only when the two players go to war. Only one of the two can be in a deal
 - Dev: new define OPEN_BORDERS_DURATION (10, not speed-scaled), LEKMOD_OPEN_BORDERS_FIXED_DURATION in CvDeal::AddOpenBorders (same approach as the defensive pact's fixed 10 turns). TradeLogic templates (ui and eui) read GameDefines.OPEN_BORDERS_DURATION.
-- Dev: LEKMOD_OPEN_BORDERS_INDEFINITE: define OPEN_BORDERS_INDEFINITE_DURATION (1000 turns); CvDeal::AddOpenBorders keeps that duration when requested, everything else stays 10. TradeLogic (ui and eui): LekmodCycleOpenBorders / LekmodLabelOpenBorders; no XML changes, so it works in the standard UI, EUI and the AI trade screen
+- Dev: LEKMOD_OPEN_BORDERS_INDEFINITE: define OPEN_BORDERS_INDEFINITE_DURATION (1000 turns); CvDeal::AddOpenBorders keeps that duration when requested, everything else stays 10. New buttons *OpenBordersIndef in SimpleDiploTrade.xml (human trades, used by both UIs); TradeLogic (ui and eui) mirrors the 10-turn button's state onto them (LekmodSyncOpenBordersIndef). The AI trade screen (base DiploTrade.xml) has no such buttons and keeps only the 10-turn item
 
 
 TRADE ROUTE DURATION (TRADE_ROUTE_DURATION)

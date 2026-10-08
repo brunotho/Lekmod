@@ -51,6 +51,7 @@ This file records what has been **verified** about how this mod works, and how t
    - If other work depends on one of them, ask in chat **before** starting; the user answers right away.
    - **Comments on spec pages are ignored.** Only the page text counts.
    - Map/Lekmap items are done by the user in a separate folder, so they are Dropped from the tracker.
+8. **Multiplayer test sessions** (agreed 2026-10-08): tests that need a second human player (or a special setup) go on the Notion page **"Multiplayer test sessions"** (sub-page of the checklist), with concrete steps and expected results. Add to it whenever such an item is implemented, and remove items the user reports as passed.
    - **Ticks (✓, [x], DONE) on the spec pages mean "done on an old branch". They do not mean "in the game".** Status lives only in the tracker.
 7. **The tracker is the single source of item status** (set up 2026-10-07):
    - Notion database **"Tracker (v35.4 port)"**, a sub-page of the checklist. Data source: `collection://311b2761-ecf0-448c-9f6b-81d808f4361c` (query it with the Notion tools).

@@ -91,11 +91,7 @@ local DiploUIStateTypes = DiploUIStateTypes
 
 local g_usPocketPeaceButtons, g_usPocketWarButtons, g_themPocketPeaceButtons, g_themPocketWarButtons, g_usTablePeaceButtons, g_usTableWarButtons, g_themTablePeaceButtons, g_themTableWarButtons
 
-local g_borderTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", GameDefines.OPEN_BORDERS_DURATION or g_iDealDuration )
-if GameDefines.OPEN_BORDERS_INDEFINITE_DURATION then -- LEKMOD_OPEN_BORDERS_INDEFINITE
-	g_borderTooltip = g_borderTooltip .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_HINT", GameDefines.OPEN_BORDERS_DURATION or 10 )
-end
-local g_embassyTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_ALLOW_EMBASSY_TT", g_iDealDuration)
+local g_borderTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_OPEN_BORDERS_TT", GameDefines.OPEN_BORDERS_DURATION or g_iDealDuration )local g_embassyTooltip = Locale.ConvertTextKey("TXT_KEY_DIPLO_ALLOW_EMBASSY_TT", g_iDealDuration)
 local g_defensivePactToolTip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_DEF_PACT_TT", g_iDealDuration )
 
 local g_SubStacks = {
@@ -889,6 +885,7 @@ function ResetDisplay( diploMessage )
 	end
 	SetEnabledAndToolTip( Controls.UsPocketOpenBorders, g_Deal:IsPossibleToTradeItem( g_iUs, g_iThem, TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iDealDuration), toolTip )
 	Controls.UsPocketOpenBorders:SetHide( isSameTeam or g_pUsTeam:IsAllowsOpenBordersToTeam(g_iThemTeam) )
+	LekmodUpdateOpenBordersIndefPocket( Controls.UsPocketOpenBordersIndef, g_Deal:IsPossibleToTradeItem( g_iUs, g_iThem, TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iDealDuration), toolTip:sub( #g_borderTooltip + 1 ) )
 
 	-- Are they not allowed to give OB?
 	toolTip = g_borderTooltip
@@ -900,6 +897,7 @@ function ResetDisplay( diploMessage )
 	end
 	SetEnabledAndToolTip( Controls.ThemPocketOpenBorders, g_Deal:IsPossibleToTradeItem( g_iThem, g_iUs, TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iDealDuration), toolTip )
 	Controls.ThemPocketOpenBorders:SetHide( isSameTeam or g_pThemTeam:IsAllowsOpenBordersToTeam(g_iUsTeam) )
+	LekmodUpdateOpenBordersIndefPocket( Controls.ThemPocketOpenBordersIndef, g_Deal:IsPossibleToTradeItem( g_iThem, g_iUs, TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iDealDuration), toolTip:sub( #g_borderTooltip + 1 ) )
 
 	----------------------------------------------------------------------------------
 	-- pocket Defensive Pact
@@ -1147,9 +1145,6 @@ function DisplayDeal(...)
 			end
 			if tableControl then
 				tableControl:SetHide( false )
-				if itemType == TradeableItems.TRADE_ITEM_OPEN_BORDERS then
-					LekmodLabelOpenBorders( tableControl, duration )
-				end
 			end
 
 		elseif TradeableItems.TRADE_ITEM_GOLD == itemType then
@@ -1252,6 +1247,7 @@ function DisplayDeal(...)
 		SubStackToggle( Controls[k], false ) -- false = no state change
 	end
 
+	LekmodSyncOpenBordersIndef()
 	ResizeStacks()
 end
 local DisplayDeal = DisplayDeal
@@ -1930,39 +1926,93 @@ if Controls.UsTableDoF and Controls.ThemTableDoF and Controls.UsPocketDoF and Co
 end
 
 -----------------------------------------------------------------------------------------------------------------------
--- LEKMOD_OPEN_BORDERS_INDEFINITE: open borders for 10 turns or until war (click the table item to switch)
+-- LEKMOD_OPEN_BORDERS_INDEFINITE: separate trade items "Open Borders (10 turns)" and "Open Borders (until war)".
+-- Both are TRADE_ITEM_OPEN_BORDERS; the until-war one has the duration OPEN_BORDERS_INDEFINITE_DURATION.
+-- Its buttons exist in SimpleDiploTrade.xml (trades between humans); screens without them show the 10-turn item only.
 -----------------------------------------------------------------------------------------------------------------------
 function LekmodIsOpenBordersIndefinite( duration )
-	return GameDefines.OPEN_BORDERS_INDEFINITE_DURATION ~= nil and duration ~= nil and duration >= GameDefines.OPEN_BORDERS_INDEFINITE_DURATION
+	return GameDefines.OPEN_BORDERS_INDEFINITE_DURATION ~= nil and duration ~= nil and duration >= GameDefines.OPEN_BORDERS_INDEFINITE_DURATION;
 end
 
-function LekmodLabelOpenBorders( tableControl, duration )
-	if tableControl == nil or GameDefines.OPEN_BORDERS_INDEFINITE_DURATION == nil then return end
-	if LekmodIsOpenBordersIndefinite( duration ) then
-		tableControl:SetText( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE" ) )
-		tableControl:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE_TT" ) )
-	else
-		tableControl:SetText( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_TIMED", duration ) )
-		tableControl:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_TIMED_TT", duration ) )
-	end
-end
-
--- Timed open borders on the table become indefinite; indefinite ones are removed
-function LekmodCycleOpenBorders( playerID )
-	local duration = nil
-	g_Deal:ResetIterator()
+-- Duration of the open borders item that playerID gives in the current deal, or nil
+function LekmodGetOpenBordersDuration( playerID )
+	local duration = nil;
+	g_Deal:ResetIterator();
 	repeat
-		local item = { g_Deal:GetNextItem() }
-		if item[1] == nil then break end
-		local fromPlayerID = item[8] or item[6]
+		local item = { g_Deal:GetNextItem() };
+		if item[1] == nil then break; end
+		local fromPlayerID = item[8] or item[6];
 		if item[1] == TradeableItems.TRADE_ITEM_OPEN_BORDERS and fromPlayerID == playerID then
-			duration = item[2]
+			duration = item[2];
 		end
-	until false
-	g_Deal:RemoveByType( TradeableItems.TRADE_ITEM_OPEN_BORDERS, playerID )
-	if duration ~= nil and GameDefines.OPEN_BORDERS_INDEFINITE_DURATION ~= nil and not LekmodIsOpenBordersIndefinite( duration ) then
-		g_Deal:AddOpenBorders( playerID, GameDefines.OPEN_BORDERS_INDEFINITE_DURATION )
+	until false;
+	return duration;
+end
+
+function LekmodUpdateOpenBordersIndefPocket( control, bAllowed, strSuffix )
+	if control == nil then return; end
+	control:SetDisabled( not bAllowed );
+	control:GetTextControl():SetColorByName( bAllowed and "Beige_Black" or "Gray_Black" );
+	control:SetToolTipString( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_INDEFINITE_TT" ) .. ( strSuffix or "" ) );
+end
+
+-- End of DisplayDeal: put the until-war buttons in the right place
+function LekmodSyncOpenBordersIndef()
+	if Controls.UsPocketOpenBordersIndef == nil then return; end
+	local sides = { { "Us", g_iUs }, { "Them", g_iThem } };
+	for _, side in ipairs( sides ) do
+		local pocket = Controls[ side[1] .. "PocketOpenBorders" ];
+		local pocketIndef = Controls[ side[1] .. "PocketOpenBordersIndef" ];
+		local tableTimed = Controls[ side[1] .. "TableOpenBorders" ];
+		local tableIndef = Controls[ side[1] .. "TableOpenBordersIndef" ];
+		local duration = LekmodGetOpenBordersDuration( side[2] );
+		if duration == nil then
+			pocketIndef:SetHide( pocket:IsHidden() );
+			tableIndef:SetHide( true );
+		else
+			local bIndef = LekmodIsOpenBordersIndefinite( duration );
+			pocketIndef:SetHide( true );
+			tableTimed:SetHide( bIndef );
+			tableIndef:SetHide( not bIndef );
+		end
 	end
+end
+
+function PocketOpenBordersIndefHandler( isUs )
+	if( isUs == 1 ) then
+		g_Deal:AddOpenBorders( g_iUs, GameDefines.OPEN_BORDERS_INDEFINITE_DURATION );
+	else
+		g_Deal:AddOpenBorders( g_iThem, GameDefines.OPEN_BORDERS_INDEFINITE_DURATION );
+	end
+	DoUIDealChangedByHuman();
+end
+
+function TableOpenBordersIndefHandler( isUs )
+	if( isUs == 1 ) then
+		g_Deal:RemoveByType( TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iUs );
+	else
+		g_Deal:RemoveByType( TradeableItems.TRADE_ITEM_OPEN_BORDERS, g_iThem );
+	end
+	DoUIDealChangedByHuman( true );
+end
+
+if Controls.UsPocketOpenBordersIndef ~= nil and GameDefines.OPEN_BORDERS_INDEFINITE_DURATION ~= nil then
+	Controls.UsPocketOpenBordersIndef:RegisterCallback( Mouse.eLClick, PocketOpenBordersIndefHandler );
+	Controls.ThemPocketOpenBordersIndef:RegisterCallback( Mouse.eLClick, PocketOpenBordersIndefHandler );
+	Controls.UsPocketOpenBordersIndef:SetVoid1( 1 );
+	Controls.ThemPocketOpenBordersIndef:SetVoid1( 0 );
+	Controls.UsTableOpenBordersIndef:RegisterCallback( Mouse.eLClick, TableOpenBordersIndefHandler );
+	Controls.ThemTableOpenBordersIndef:RegisterCallback( Mouse.eLClick, TableOpenBordersIndefHandler );
+	Controls.UsTableOpenBordersIndef:SetVoid1( 1 );
+	Controls.ThemTableOpenBordersIndef:SetVoid1( 0 );
+	Controls.UsTableOpenBordersIndef:SetHide( true );
+	Controls.ThemTableOpenBordersIndef:SetHide( true );
+	-- The 10-turn buttons say so, next to the until-war ones
+	local strTimed = Locale.ConvertTextKey( "TXT_KEY_LEKMOD_DIPLO_OPEN_BORDERS_TIMED", GameDefines.OPEN_BORDERS_DURATION or 10 );
+	Controls.UsPocketOpenBorders:SetText( strTimed );
+	Controls.ThemPocketOpenBorders:SetText( strTimed );
+	Controls.UsTableOpenBorders:SetText( strTimed );
+	Controls.ThemTableOpenBorders:SetText( strTimed );
 end
 
 -----------------------------------------------------------------------------------------------------------------------
@@ -1979,7 +2029,7 @@ do
 
 	local function RemoveOpenBorders( playerID )
 
-		LekmodCycleOpenBorders( playerID )
+		g_Deal:RemoveByType( TradeableItems.TRADE_ITEM_OPEN_BORDERS, playerID )
 		DoUIDealChangedByHuman( true )
 	end
 	Controls.UsTableOpenBorders:RegisterCallback( Mouse.eLClick, function() RemoveOpenBorders( g_iUs ) end )
