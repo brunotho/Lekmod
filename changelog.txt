@@ -947,7 +947,7 @@ Several units get new strength, movement or cost.
 - Changed: Battleship: 40 Strength (was 55), 85 Ranged Strength (was 65), 5 movement (was 6), cost 281 -> 422
 - Changed: Missile Cruiser: 115 Ranged Strength (was 100), cost 341 -> 478
 - Changed: Modern Armor: 110 Strength (was 100), cost 361 -> 397
-- Changed: Stealth Bomber: 100 Ranged Strength (was 85), cost 361 -> 452; no longer reveals the area around its base (Air Recon); 80% chance to evade interception (was 90%)
+- Changed: Stealth Bomber: 100 Ranged Strength (was 85), cost 361 -> 452; no longer reveals the area around its base (Air Recon); 80% chance to evade interception (was 100%: never intercepted)
 - Changed: Nuclear Missile: cost 1005 -> 1105
 - Changed: Infantry (and the unique Infantry with 70 Strength): 72 Strength (was 70)
 - Changed: Paratrooper: 70 Strength (was 65)
