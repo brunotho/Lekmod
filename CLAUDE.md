@@ -164,6 +164,8 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
   - When scripting, read and write **bytes** and match the file's ending. Count with Python (`b.count(b'\r\n')`); `grep -c $'\r'` in Git Bash gave wrong answers.
 - **Tooling pitfalls (cost time repeatedly):**
   - **Bash heredocs mangle backslashes** (`\\` collapses, `\U`/`\N`/`\s` break Python strings). Write Python scripts with the Write tool into the scratchpad (raw strings), or use the Edit tool. Never put Windows paths or regexes with backslashes into a heredoc.
+  - **The Edit tool rewrites non-UTF-8 bytes** (e.g. the Firaxis header's copyright byte in some `.h` files becomes U+FFFD). After editing C++ headers, check `git diff` for a changed line 2 and restore it from `git show HEAD:<file>`.
+  - **`sed -i` strips CRs** from CRLF files (the C++ sources). Use the Edit tool or Python byte I/O.
   - **The Write tool strips trailing whitespace**, and many Override lines end with a space (`<Row> `, `</Table> `). Use short anchors without line ends, or match by regex.
   - **XML tables contain commented-out `<Row>` blocks.** Row-editing scripts must skip `<!-- ... -->` regions (2026-10-08: a script edited commented rows; caught in the diff).
   - Bulk value changes to existing rows can be done with `<Update><Where Type="X"/><Set Col="v"/></Update>` blocks after a table's section (used for building purchase costs and tech costs). Later per-row changes must then edit those Update values, not the original rows.
@@ -194,9 +196,9 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
 - **Yield audit (what does tile X yield?):** a tile's yield is the **sum of all matching rows across tables**; never cite one table alone. Check in the loaded DB: `Terrain_Yields` → `Feature_YieldChanges` (+ `Feature_RiverYieldChanges`/`HillsYieldChanges`/`MountainYieldChanges`) → `Resource_YieldChanges` → `Improvement_Yields` / `Improvement_ResourceType_Yields` → `Improvement_TechYieldChanges` → `Belief_*YieldChanges` → `Building_SeaResourceYieldChanges`, `Trait_ImprovementYieldChanges` etc. Then grep `_Defines.h` for DLL hooks that add yields in C++. Internal keys often differ from display names (`BELIEF_TEARS_OF_NOOBS` = "Tears of the Gods"); check the text file.
 - **Natural wonders** (from the old ground-truth doc, re-verified in the DB 2026-10-09):
   - Tile yields are not speed-scaled (no yields are); `Feature_YieldChanges` values are used as they are.
-  - The hover tooltip comes from the `Help` column of the `Features` row. Only Fountain of Youth, El Dorado and Kilimanjaro have one; add `<Help>TXT_KEY_..._HELP</Help>` plus the text.
+  - `Features.Help` shows on the pedia page and, since 2026-10-09, in the tile hover (`GetNatureString` in `PlotMouseoverInclude`; the base game never showed it in the hover, contrary to the old ground-truth doc).
   - Krakatoa is `FEATURE_VOLCANO`.
-  - There is no `Feature_BuildingClassYieldChanges` table: yields that depend on a city's buildings need C++ (e.g. in `CvPlot` yield calculation).
+  - Lekmod tables since 2026-10-09 (`LEKMOD_NATURAL_WONDER_EFFECTS`): `Feature_BuildingClassYieldChanges`, `Feature_HolyCityYieldChanges` (working city), `Feature_AdjacentPlotYieldChanges` (neighbour plots, optional ImprovementType/AdjacentFeatureType), `Feature_AdjacentCityYieldModifiers`, `Features.FirstFinderGoldPerEra`.
 
 ## 5. Building and installing the DLL
 **Toolchain:** Visual C++ 2008 Express SP1 (`C:\Program Files (x86)\Microsoft Visual Studio 9.0\`).
@@ -302,6 +304,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 - `LEKMOD_RANDOMIZE_CITY_NAMES`, `LEKMOD_HIGH_CONTRAST_CIV_COLORS` (lobby Civ Colors), `LEKMOD_WAR_START` (+ `LEKMOD_WAR_START_PEACE_TURN 20`), `LEKMOD_WONDER_TIE_RULES` (same-turn wonders Neither/Both).
 - `LEKMOD_AIR_COMBAT_FEEDBACK` (floating damage, "No resistance"), `LEKMOD_UNIT_ATTACKED_FLAG_ICON`.
 - `LEKMOD_POLICY_GARRISON_ATTACH_TURN 70`, `LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 70`, `LEKMOD_RUIN_CHOICE`.
+- `LEKMOD_RESOURCE_CITY_EFFECTS` (Resources columns `ImprovementBuildTimeChange`, `FoundCity*`, `CityCenter*`: Gems/Perfume build time, Salt/Stone/Cattle/Rubber/Marble settle-on), `LEKMOD_NATURAL_WONDER_EFFECTS` (feature tables, see §4).
 - Older ones from the port: ruins overhaul (`LEKMOD_NEW_ANCIENT_RUIN_REWARDS`), kill-yield era fix, Amphibious, Carpet Bombing, Iaijutsu/Hatamoto (see below).
 
 ### Behaviour and decisions to remember
