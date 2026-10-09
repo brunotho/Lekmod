@@ -930,6 +930,10 @@
 // FoundCity* (one-time effects for a city founded on the resource, with FoundCityTech known) and
 // CityCenter* (production bonuses while a city stands on the resource)
 #define LEKMOD_RESOURCE_CITY_EFFECTS
+// Natural wonder effects: Feature_BuildingClassYieldChanges / Feature_HolyCityYieldChanges (extra yield when the working city has
+// the building / is a holy city), Feature_AdjacentPlotYieldChanges (yield for adjacent plots, optionally only with an improvement
+// or feature), Feature_AdjacentCityYieldModifiers (yield % for cities next to the feature), Features.FirstFinderGoldPerEra
+#define LEKMOD_NATURAL_WONDER_EFFECTS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

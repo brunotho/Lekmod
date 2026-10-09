@@ -43410,7 +43410,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_EL_DORADO_HELP"> 
 			<Text>
-				Grants 500 [ICON_GOLD] Gold to the first player to discover it.
+				The first player to discover it gets 100 [ICON_GOLD] Gold per era (100 in the Ancient Era, 200 in the Classical Era, and so on).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_EL_DORADO_TEXT"> 
@@ -43495,7 +43495,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_FOUNTAIN_YOUTH_HELP"> 
 			<Text>
-				All units that are next to it heal at double rate for the rest of the game.
+				Cities next to it get +10% [ICON_FOOD] Food.[NEWLINE]It is a source of fresh water.[NEWLINE][NEWLINE]All units that are next to it heal at double rate for the rest of the game.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_FOUNTAIN_YOUTH_TEXT"> 
@@ -43570,7 +43570,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_KILIMANJARO_HELP"> 
 			<Text>
-				All units that are next to it move at double speed through Hills and receive a combat bonus on Hills for the rest of the game.
+				Pastures next to it yield +1 [ICON_FOOD] Food.[NEWLINE]It is a source of fresh water.[NEWLINE][NEWLINE]All units that are next to it get Altitude Training (10% less movement cost in Hills) for the rest of the game.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_KILIMANJARO_TEXT"> 
@@ -101585,6 +101585,27 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_CITY_CENTER_RESOURCE">
 			<Text>[NEWLINE][ICON_BULLET]City built on {2_ResourceName}: {1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_ADJACENT_FEATURE">
+			<Text>[NEWLINE][ICON_BULLET]Next to {2_FeatureName}: {1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_FEATURE_POTOSI_HELP">
+			<Text>Tiles next to it yield +1 [ICON_GOLD] Gold.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_FEATURE_CRATER_HELP">
+			<Text>+4 [ICON_RESEARCH] Science when worked by a city with a Library.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_FEATURE_FUJI_HELP">
+			<Text>+7 [ICON_CULTURE] Culture when worked by a city with the National Epic.[NEWLINE]Forests next to it yield +1 [ICON_CULTURE] Culture.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_FEATURE_SINAI_HELP">
+			<Text>+5 [ICON_PRODUCTION] Production when worked by a Holy City.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_FEATURE_SRI_PADA_HELP">
+			<Text>+3 [ICON_CULTURE] Culture when worked by a city with a Shrine.[NEWLINE]+3 [ICON_FOOD] Food when worked by a city with a Temple.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_FEATURE_KAILASH_HELP">
+			<Text>Holy Sites next to it yield +2 [ICON_CULTURE] Culture.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_MINE">
 			<Text>You have pledged to protect this city-state.</Text>

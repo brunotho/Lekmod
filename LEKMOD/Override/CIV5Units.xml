@@ -105827,41 +105827,6 @@
 			<Yield>-3</Yield> 
 		</Row>
 		<Row> 
-			<FeatureType>FEATURE_CRATER</FeatureType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>3</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_CRATER</FeatureType> 
-			<YieldType>YIELD_SCIENCE</YieldType> 
-			<Yield>5</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_FUJI</FeatureType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>0</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_FUJI</FeatureType> 
-			<YieldType>YIELD_CULTURE</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_FUJI</FeatureType> 
-			<YieldType>YIELD_FAITH</YieldType> 
-			<Yield>4</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_MESA</FeatureType> 
-			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>3</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_MESA</FeatureType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>3</Yield> 
-		</Row>
-		<Row> 
 			<FeatureType>FEATURE_REEF</FeatureType> 
 			<YieldType>YIELD_FOOD</YieldType> 
 			<Yield>2</Yield> 
@@ -105880,11 +105845,6 @@
 			<FeatureType>FEATURE_REEF</FeatureType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
 			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_VOLCANO</FeatureType> 
-			<YieldType>YIELD_SCIENCE</YieldType> 
-			<Yield>8</Yield> 
 		</Row>
 		<Row> 
 			<FeatureType>FEATURE_GIBRALTAR</FeatureType> 
@@ -105902,36 +105862,6 @@
 			<Yield>4</Yield> 
 		</Row>
 		<Row> 
-			<FeatureType>FEATURE_POTOSI</FeatureType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>10</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_EL_DORADO</FeatureType> 
-			<YieldType>YIELD_CULTURE</YieldType> 
-			<Yield>5</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_SRI_PADA</FeatureType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_SRI_PADA</FeatureType> 
-			<YieldType>YIELD_FAITH</YieldType> 
-			<Yield>4</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_MT_SINAI</FeatureType> 
-			<YieldType>YIELD_FAITH</YieldType> 
-			<Yield>8</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_MT_KAILASH</FeatureType> 
-			<YieldType>YIELD_FAITH</YieldType> 
-			<Yield>6</Yield> 
-		</Row>
-		<Row> 
 			<FeatureType>FEATURE_ULURU</FeatureType> 
 			<YieldType>YIELD_FOOD</YieldType> 
 			<Yield>2</Yield> 
@@ -105942,16 +105872,6 @@
 			<Yield>6</Yield> 
 		</Row>
 		<Row> 
-			<FeatureType>FEATURE_LAKE_VICTORIA</FeatureType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>6</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_LAKE_VICTORIA</FeatureType> 
-			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
 			<FeatureType>FEATURE_KILIMANJARO</FeatureType> 
 			<YieldType>YIELD_FOOD</YieldType> 
 			<Yield>3</Yield> 
@@ -105960,31 +105880,6 @@
 			<FeatureType>FEATURE_KILIMANJARO</FeatureType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
 			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_SOLOMONS_MINES</FeatureType> 
-			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>6</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_CRATER</FeatureType> 
-			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_MESA</FeatureType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>3</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_VOLCANO</FeatureType> 
-			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<FeatureType>FEATURE_POTOSI</FeatureType> 
-			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>1</Yield> 
 		</Row>
 		<Row> 
 			<FeatureType>FEATURE_WATER_DUMMY_HILL</FeatureType> 
@@ -106005,6 +105900,112 @@
 			<FeatureType>FEATURE_WATER_DUMMY_SHEEP</FeatureType> 
 			<YieldType>YIELD_FOOD</YieldType> 
 			<Yield>-1</Yield> 
+		</Row>
+		<!-- LEKMOD natural wonders (2026-10-09) -->
+		<Row>
+			<FeatureType>FEATURE_SOLOMONS_MINES</FeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_LAKE_VICTORIA</FeatureType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>6</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_MESA</FeatureType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_MESA</FeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_MESA</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_MESA</FeatureType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_POTOSI</FeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_POTOSI</FeatureType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_CRATER</FeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_CRATER</FeatureType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_EL_DORADO</FeatureType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>4</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_EL_DORADO</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>4</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_FUJI</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_FUJI</FeatureType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_MT_SINAI</FeatureType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_SRI_PADA</FeatureType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_MT_KAILASH</FeatureType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>6</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_VOLCANO</FeatureType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_FOUNTAIN_YOUTH</FeatureType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_FOUNTAIN_YOUTH</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_FOUNTAIN_YOUTH</FeatureType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
 		</Row>
 	</Feature_YieldChanges> 
 
@@ -106050,6 +106051,7 @@
 		<Column name="AdvancedStartRemoveCost" type="integer"  default="0"/>
 		<Column name="PortraitIndex" type="integer"  default="-1"/>
 		<Column name="IconAtlas" type="text"  default="NULL"/>
+		<Column name="FirstFinderGoldPerEra" type="integer" default="0"/>
 	</Table> 
 	<Features>
 		<Delete />
@@ -107017,6 +107019,145 @@
 			<IconAtlas>NEW_TERRAIN_ATLAS_DLC</IconAtlas>
 		</Row>
 	</Features> 
+	<!-- LEKMOD_NATURAL_WONDER_EFFECTS -->
+	<Features>
+		<Update>
+			<Where Type="FEATURE_FUJI"/>
+			<Set InBorderHappiness="0"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_SRI_PADA"/>
+			<Set InBorderHappiness="0"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_MT_KAILASH"/>
+			<Set InBorderHappiness="0"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_FOUNTAIN_YOUTH"/>
+			<Set InBorderHappiness="0"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_KILIMANJARO"/>
+			<Set AddsFreshWater="true"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_EL_DORADO"/>
+			<Set FirstFinderGold="0" FirstFinderGoldPerEra="100"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_POTOSI"/>
+			<Set Help="TXT_KEY_LEKMOD_FEATURE_POTOSI_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_CRATER"/>
+			<Set Help="TXT_KEY_LEKMOD_FEATURE_CRATER_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_FUJI"/>
+			<Set Help="TXT_KEY_LEKMOD_FEATURE_FUJI_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_MT_SINAI"/>
+			<Set Help="TXT_KEY_LEKMOD_FEATURE_SINAI_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_SRI_PADA"/>
+			<Set Help="TXT_KEY_LEKMOD_FEATURE_SRI_PADA_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="FEATURE_MT_KAILASH"/>
+			<Set Help="TXT_KEY_LEKMOD_FEATURE_KAILASH_HELP"/>
+		</Update>
+	</Features>
+	<Table name="Feature_BuildingClassYieldChanges">
+		<Column name="FeatureType" type="text" reference="Features(Type)"/>
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+	</Table>
+	<Feature_BuildingClassYieldChanges>
+		<Row>
+			<FeatureType>FEATURE_CRATER</FeatureType>
+			<BuildingClassType>BUILDINGCLASS_LIBRARY</BuildingClassType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>4</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_FUJI</FeatureType>
+			<BuildingClassType>BUILDINGCLASS_NATIONAL_EPIC</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>7</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_SRI_PADA</FeatureType>
+			<BuildingClassType>BUILDINGCLASS_SHRINE</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_SRI_PADA</FeatureType>
+			<BuildingClassType>BUILDINGCLASS_TEMPLE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Feature_BuildingClassYieldChanges>
+	<Table name="Feature_HolyCityYieldChanges">
+		<Column name="FeatureType" type="text" reference="Features(Type)"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+	</Table>
+	<Feature_HolyCityYieldChanges>
+		<Row>
+			<FeatureType>FEATURE_MT_SINAI</FeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>5</Yield>
+		</Row>
+	</Feature_HolyCityYieldChanges>
+	<Table name="Feature_AdjacentPlotYieldChanges">
+		<Column name="FeatureType" type="text" reference="Features(Type)"/>
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" default="NULL"/>
+		<Column name="AdjacentFeatureType" type="text" reference="Features(Type)" default="NULL"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+	</Table>
+	<Feature_AdjacentPlotYieldChanges>
+		<Row>
+			<FeatureType>FEATURE_POTOSI</FeatureType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_FUJI</FeatureType>
+			<AdjacentFeatureType>FEATURE_FOREST</AdjacentFeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_MT_KAILASH</FeatureType>
+			<ImprovementType>IMPROVEMENT_HOLY_SITE</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<FeatureType>FEATURE_KILIMANJARO</FeatureType>
+			<ImprovementType>IMPROVEMENT_PASTURE</ImprovementType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Feature_AdjacentPlotYieldChanges>
+	<Table name="Feature_AdjacentCityYieldModifiers">
+		<Column name="FeatureType" type="text" reference="Features(Type)"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+	</Table>
+	<Feature_AdjacentCityYieldModifiers>
+		<Row>
+			<FeatureType>FEATURE_FOUNTAIN_YOUTH</FeatureType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>10</Yield>
+		</Row>
+	</Feature_AdjacentCityYieldModifiers>
 
 	<Table name="Flavors">
 		<Column name="ID" type="integer"  primarykey="true" autoincrement="true" />

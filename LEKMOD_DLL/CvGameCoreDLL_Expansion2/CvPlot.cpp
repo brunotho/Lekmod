@@ -8436,6 +8436,25 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 
 				iYieldChange += GET_PLAYER((PlayerTypes)m_eOwner).GetPlayerTraits()->GetYieldChangeNaturalWonder(eYield);
 
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+				// Extra yield when the working city has a building / is a holy city
+				if (pWorkingCity != NULL)
+				{
+					const std::vector<CvFeatureInfo::LekmodYieldRule>& aRules = pFeatureInfo->getBuildingClassYieldRules();
+					for (uint iRule = 0; iRule < aRules.size(); iRule++)
+					{
+						if (aRules[iRule].iYield == eYield && pWorkingCity->GetCityBuildings()->HasBuildingClass((BuildingClassTypes)aRules[iRule].iBuildingClass))
+						{
+							iYieldChange += aRules[iRule].iValue;
+						}
+					}
+					if (pFeatureInfo->getHolyCityYieldChange(eYield) != 0 && pWorkingCity->GetCityReligions()->IsHolyCityAnyReligion())
+					{
+						iYieldChange += pFeatureInfo->getHolyCityYieldChange(eYield);
+					}
+				}
+#endif
+
 				iMod += GET_PLAYER((PlayerTypes)m_eOwner).GetPlayerTraits()->GetNaturalWonderYieldModifier();
 				if(iMod > 0)
 				{
@@ -8992,6 +9011,46 @@ int CvPlot::calculateImprovementAdjacentYieldChange(YieldTypes eYield, Improveme
 }
 #endif
 
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+//	--------------------------------------------------------------------------------
+/// Yield this plot gets from adjacent features (natural wonders) through Feature_AdjacentPlotYieldChanges,
+/// given the improvement and feature the plot has (or would have)
+int CvPlot::GetLekmodAdjacentFeatureYield(YieldTypes eYield, ImprovementTypes eImprovement, FeatureTypes eFeature) const
+{
+	if (eImprovement != NO_IMPROVEMENT && eImprovement == getImprovementType() && IsImprovementPillaged())
+	{
+		eImprovement = NO_IMPROVEMENT;
+	}
+	int iYield = 0;
+	for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+	{
+		CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+		if (pAdjacentPlot == NULL || pAdjacentPlot->getFeatureType() == NO_FEATURE)
+		{
+			continue;
+		}
+		CvFeatureInfo* pkFeature = GC.getFeatureInfo(pAdjacentPlot->getFeatureType());
+		if (pkFeature == NULL || !pkFeature->hasAdjacentPlotYieldRules())
+		{
+			continue;
+		}
+		const std::vector<CvFeatureInfo::LekmodYieldRule>& aRules = pkFeature->getAdjacentPlotYieldRules();
+		for (uint iRule = 0; iRule < aRules.size(); iRule++)
+		{
+			const CvFeatureInfo::LekmodYieldRule& kRule = aRules[iRule];
+			if (kRule.iYield != eYield)
+				continue;
+			if (kRule.iImprovement != -1 && kRule.iImprovement != eImprovement)
+				continue;
+			if (kRule.iFeature != -1 && kRule.iFeature != eFeature)
+				continue;
+			iYield += kRule.iValue;
+		}
+	}
+	return iYield;
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 {
@@ -9359,6 +9418,9 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 	}
 
 	iYield += GC.getGame().getPlotExtraYield(m_iX, m_iY, eYield);
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	iYield += GetLekmodAdjacentFeatureYield(eYield, getImprovementType(), getFeatureType());
+#endif
 
 	if(ePlayer != NO_PLAYER)
 	{
@@ -10147,6 +10209,13 @@ bool CvPlot::setRevealed(TeamTypes eTeam, bool bNewValue, bool bTerrainOnly, Tea
 								}
 							}
 						}
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+						// First finder gold per era of the finding team (Ancient = 1x), not scaled by difficulty
+						if (bFirstFinder)
+						{
+							iFinderGold += GC.getFeatureInfo(getFeatureType())->getFirstFinderGoldPerEra() * ((int)kTeam.GetCurrentEra() + 1);
+						}
+#endif
 						
 
 						if(iFinderGold > 0)
@@ -12511,6 +12580,10 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 	}
 
 	iYield += GC.getGame().getPlotExtraYield(m_iX, m_iY, eYield);
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	// the plot as it would be after the build
+	iYield += GetLekmodAdjacentFeatureYield(eYield, (eImprovement != NO_IMPROVEMENT) ? eImprovement : getImprovementType(), bIgnoreFeature ? NO_FEATURE : getFeatureType());
+#endif
 
 	if(ePlayer != NO_PLAYER)
 	{

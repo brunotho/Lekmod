@@ -1687,6 +1687,22 @@ public:
 	int getMountainYieldChange(int i) const;
 #endif
 	int get3DAudioScriptFootstepIndex(int i) const;
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	struct LekmodYieldRule
+	{
+		int iBuildingClass;
+		int iImprovement;
+		int iFeature;
+		int iYield;
+		int iValue;
+	};
+	int getFirstFinderGoldPerEra() const;
+	int getHolyCityYieldChange(int i) const;
+	int getAdjacentCityYieldModifier(int i) const;
+	const std::vector<LekmodYieldRule>& getBuildingClassYieldRules() const;
+	const std::vector<LekmodYieldRule>& getAdjacentPlotYieldRules() const;
+	bool hasAdjacentPlotYieldRules() const;
+#endif
 
 	bool isTerrain(int i) const;
 
@@ -1751,6 +1767,13 @@ protected:
 #endif
 	int* m_pi3DAudioScriptFootstepIndex;
 	bool* m_pbTerrain;
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	int m_iFirstFinderGoldPerEra;
+	int* m_piHolyCityYieldChange;
+	int* m_piAdjacentCityYieldModifier;
+	std::vector<LekmodYieldRule> m_aBuildingClassYieldRules;
+	std::vector<LekmodYieldRule> m_aAdjacentPlotYieldRules;
+#endif
 
 private:
 	CvString m_strArtDefineTag;

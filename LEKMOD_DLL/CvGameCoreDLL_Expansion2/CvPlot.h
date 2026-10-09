@@ -609,6 +609,9 @@ public:
 	void updateYield();
 
 	int getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUpgrade, PlayerTypes ePlayer) const;
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	int GetLekmodAdjacentFeatureYield(YieldTypes eYield, ImprovementTypes eImprovement, FeatureTypes eFeature) const;
+#endif
 
 	int countNumAirUnits(TeamTypes eTeam) const;
 

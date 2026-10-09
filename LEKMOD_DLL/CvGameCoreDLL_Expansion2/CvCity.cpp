@@ -12549,6 +12549,24 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_HAPPINESS", iTempMod);
 
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	// City next to a natural wonder (e.g. Fountain of Youth)
+	for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+	{
+		CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+		if (pAdjacentPlot != NULL && pAdjacentPlot->getFeatureType() != NO_FEATURE)
+		{
+			CvFeatureInfo* pkFeature = GC.getFeatureInfo(pAdjacentPlot->getFeatureType());
+			iTempMod = pkFeature ? pkFeature->getAdjacentCityYieldModifier(eIndex) : 0;
+			if (iTempMod != 0)
+			{
+				iModifier += iTempMod;
+				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_ADJACENT_FEATURE", iTempMod, pkFeature->GetDescriptionKey());
+			}
+		}
+	}
+#endif
+
 	// Area Yield Rate Modifier
 	if(area() != NULL)
 	{

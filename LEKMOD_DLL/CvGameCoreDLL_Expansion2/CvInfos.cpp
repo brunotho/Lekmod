@@ -5506,6 +5506,11 @@ CvFeatureInfo::CvFeatureInfo() :
 #endif
 	m_pi3DAudioScriptFootstepIndex(NULL),
 	m_pbTerrain(NULL),
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	m_iFirstFinderGoldPerEra(0),
+	m_piHolyCityYieldChange(NULL),
+	m_piAdjacentCityYieldModifier(NULL),
+#endif
 	m_bClearable(false)
 {
 }
@@ -5520,6 +5525,10 @@ CvFeatureInfo::~CvFeatureInfo()
 #endif
 	SAFE_DELETE_ARRAY(m_pi3DAudioScriptFootstepIndex);
 	SAFE_DELETE_ARRAY(m_pbTerrain);
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	SAFE_DELETE_ARRAY(m_piHolyCityYieldChange);
+	SAFE_DELETE_ARRAY(m_piAdjacentCityYieldModifier);
+#endif
 }
 //------------------------------------------------------------------------------
 int CvFeatureInfo::getStartingLocationWeight() const
@@ -5740,6 +5749,42 @@ int CvFeatureInfo::get3DAudioScriptFootstepIndex(int i) const
 	CvAssertMsg(i > -1, "Index out of bounds");
 	return m_pi3DAudioScriptFootstepIndex ? m_pi3DAudioScriptFootstepIndex[i] : -1;
 }
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+//------------------------------------------------------------------------------
+int CvFeatureInfo::getFirstFinderGoldPerEra() const
+{
+	return m_iFirstFinderGoldPerEra;
+}
+//------------------------------------------------------------------------------
+int CvFeatureInfo::getHolyCityYieldChange(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piHolyCityYieldChange ? m_piHolyCityYieldChange[i] : 0;
+}
+//------------------------------------------------------------------------------
+int CvFeatureInfo::getAdjacentCityYieldModifier(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piAdjacentCityYieldModifier ? m_piAdjacentCityYieldModifier[i] : 0;
+}
+//------------------------------------------------------------------------------
+const std::vector<CvFeatureInfo::LekmodYieldRule>& CvFeatureInfo::getBuildingClassYieldRules() const
+{
+	return m_aBuildingClassYieldRules;
+}
+//------------------------------------------------------------------------------
+const std::vector<CvFeatureInfo::LekmodYieldRule>& CvFeatureInfo::getAdjacentPlotYieldRules() const
+{
+	return m_aAdjacentPlotYieldRules;
+}
+//------------------------------------------------------------------------------
+bool CvFeatureInfo::hasAdjacentPlotYieldRules() const
+{
+	return !m_aAdjacentPlotYieldRules.empty();
+}
+#endif
 //------------------------------------------------------------------------------
 bool CvFeatureInfo::isTerrain(int i) const
 {
@@ -5858,6 +5903,54 @@ bool CvFeatureInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #endif
 
 	kUtility.PopulateArrayByExistence(m_pbTerrain, "Terrains", "Feature_TerrainBooleans", "TerrainType", "FeatureType", szFeatureType);
+
+#ifdef LEKMOD_NATURAL_WONDER_EFFECTS
+	m_iFirstFinderGoldPerEra = kResults.GetInt("FirstFinderGoldPerEra");
+	kUtility.SetYields(m_piHolyCityYieldChange, "Feature_HolyCityYieldChanges", "FeatureType", szFeatureType);
+	kUtility.SetYields(m_piAdjacentCityYieldModifier, "Feature_AdjacentCityYieldModifiers", "FeatureType", szFeatureType);
+	{
+		m_aBuildingClassYieldRules.clear();
+		std::string strKey("Feature_BuildingClassYieldChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Yields.ID, Feature_BuildingClassYieldChanges.Yield from Feature_BuildingClassYieldChanges inner join BuildingClasses on BuildingClasses.Type = Feature_BuildingClassYieldChanges.BuildingClassType inner join Yields on Yields.Type = Feature_BuildingClassYieldChanges.YieldType where Feature_BuildingClassYieldChanges.FeatureType = ?");
+		}
+		pResults->Bind(1, szFeatureType, -1, false);
+		while(pResults->Step())
+		{
+			LekmodYieldRule kRule;
+			kRule.iBuildingClass = pResults->GetInt(0);
+			kRule.iImprovement = -1;
+			kRule.iFeature = -1;
+			kRule.iYield = pResults->GetInt(1);
+			kRule.iValue = pResults->GetInt(2);
+			m_aBuildingClassYieldRules.push_back(kRule);
+		}
+		pResults->Reset();
+	}
+	{
+		m_aAdjacentPlotYieldRules.clear();
+		std::string strKey("Feature_AdjacentPlotYieldChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "select ifnull(Improvements.ID, -1), ifnull(AdjFeatures.ID, -1), Yields.ID, Feature_AdjacentPlotYieldChanges.Yield from Feature_AdjacentPlotYieldChanges left join Improvements on Improvements.Type = Feature_AdjacentPlotYieldChanges.ImprovementType left join Features as AdjFeatures on AdjFeatures.Type = Feature_AdjacentPlotYieldChanges.AdjacentFeatureType inner join Yields on Yields.Type = Feature_AdjacentPlotYieldChanges.YieldType where Feature_AdjacentPlotYieldChanges.FeatureType = ?");
+		}
+		pResults->Bind(1, szFeatureType, -1, false);
+		while(pResults->Step())
+		{
+			LekmodYieldRule kRule;
+			kRule.iBuildingClass = -1;
+			kRule.iImprovement = pResults->GetInt(0);
+			kRule.iFeature = pResults->GetInt(1);
+			kRule.iYield = pResults->GetInt(2);
+			kRule.iValue = pResults->GetInt(3);
+			m_aAdjacentPlotYieldRules.push_back(kRule);
+		}
+		pResults->Reset();
+	}
+#endif
 
 	// Determine of this feature is clearable - set each time the game is started
 	m_bClearable = false;

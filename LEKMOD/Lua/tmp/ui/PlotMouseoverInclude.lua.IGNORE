@@ -117,7 +117,7 @@ function GetNatureString(plot)
 			
 			local convertedKey = GetFeatureText(plot:GetFeatureType());
 			natureStr = natureStr .. convertedKey;
-			
+
 		-- No Feature
 		else
 			
@@ -178,7 +178,15 @@ function GetNatureString(plot)
 		
 		natureStr = natureStr .. Memoize_LocaleLookup( "TXT_KEY_PLOTROLL_RIVER" );
 	end
-	
+
+	-- LEKMOD: natural wonders show their special effects (Features.Help)
+	if (plot:GetFeatureType() > -1) then
+		local pFeatureInfo = GameInfo.Features[plot:GetFeatureType()];
+		if (pFeatureInfo ~= nil and pFeatureInfo.NaturalWonder and pFeatureInfo.Help ~= nil) then
+			natureStr = natureStr .. "[NEWLINE]" .. Locale.ConvertTextKey(pFeatureInfo.Help);
+		end
+	end
+
 	return natureStr;
 	
 end
