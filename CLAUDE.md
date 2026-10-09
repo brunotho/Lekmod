@@ -275,7 +275,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 
 ## 9. Status (update as things change)
 ### Current state (2026-10-09, end of session)
-- `dev` = v35.4 (`201df6c5`) + our commits ( ahead of `upstream/main` on 2026-10-09). **Not pushed** (the user hasn't asked). The installed DLL is the latest build (`05452f0e`).
+- `dev` = v35.4 (`201df6c5`) + our commits (148 ahead of v35.4 on 2026-10-09). **Not pushed** (the user hasn't asked). The installed DLL is the latest build (`05452f0e`).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
 - **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start to see what's next.
 - **Done so far:** Phase 1 complete except Cyrillic (waiting for the Tournament Mod authors' permission; their `Fonts` folder would work, ~85 MB, last in the queue) and the 6/7/8-player lobby (postponed by the user). Phase 2: Tech Tree done and playtested; **Resources all done** (2026-10-09: water yields playtested; rare luxuries, settle-on effects, natural wonders, strategic node amounts implemented; Spices, Cattle and Stone walls confirmed by the user). **Units partly done** (2026-10-09): strategic requirements, stat/cost changes, submarines, Spearman/Pikeman, Worker->Archaeologist, Festival, naval rework (Quinquereme, Caravel, Privateer, Frigate, Ship of the Line, Dreadnought, Blind Spot/Minimum Range/Docked, Swift Transport).
