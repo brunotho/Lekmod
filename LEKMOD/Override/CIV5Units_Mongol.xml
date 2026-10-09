@@ -43495,7 +43495,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_FOUNTAIN_YOUTH_HELP"> 
 			<Text>
-				Cities next to it get +10% [ICON_FOOD] Food.[NEWLINE]It is a source of fresh water.[NEWLINE][NEWLINE]All units that are next to it heal at double rate for the rest of the game.
+				2 [ICON_FOOD] Food, 2 [ICON_CULTURE] Culture, 2 [ICON_PEACE] Faith[NEWLINE][NEWLINE]Cities next to it: +10% [ICON_FOOD] Food[NEWLINE]Source of fresh water[NEWLINE][NEWLINE]Units next to it heal at double rate[NEWLINE]for the rest of the game
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_FOUNTAIN_YOUTH_TEXT"> 
@@ -43570,7 +43570,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_KILIMANJARO_HELP"> 
 			<Text>
-				Pastures next to it yield +1 [ICON_FOOD] Food.[NEWLINE]It is a source of fresh water.[NEWLINE][NEWLINE]All units that are next to it get Altitude Training (10% less movement cost in Hills) for the rest of the game.
+				3 [ICON_FOOD] Food, 2 [ICON_CULTURE] Culture[NEWLINE][NEWLINE]Pastures next to it: +1 [ICON_FOOD] Food[NEWLINE]Source of fresh water[NEWLINE][NEWLINE]Units next to it get Altitude Training[NEWLINE](10% less movement cost in Hills)[NEWLINE]for the rest of the game
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_KILIMANJARO_TEXT"> 
@@ -101590,22 +101590,22 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>[NEWLINE][ICON_BULLET]Next to {2_FeatureName}: {1_Num}%</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_FEATURE_POTOSI_HELP">
-			<Text>Tiles next to it yield +1 [ICON_GOLD] Gold.</Text>
+			<Text>1 [ICON_PRODUCTION] Production, 5 [ICON_GOLD] Gold[NEWLINE][NEWLINE]Tiles next to it: +1 [ICON_GOLD] Gold</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_FEATURE_CRATER_HELP">
-			<Text>+4 [ICON_RESEARCH] Science when worked by a city with a Library.</Text>
+			<Text>2 [ICON_PRODUCTION] Production, 3 [ICON_RESEARCH] Science[NEWLINE][NEWLINE]+4 [ICON_RESEARCH] Science if the city has[NEWLINE]a Library</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_FEATURE_FUJI_HELP">
-			<Text>+7 [ICON_CULTURE] Culture when worked by a city with the National Epic.[NEWLINE]Forests next to it yield +1 [ICON_CULTURE] Culture.</Text>
+			<Text>3 [ICON_CULTURE] Culture, 1 [ICON_PEACE] Faith[NEWLINE][NEWLINE]+7 [ICON_CULTURE] Culture if the city has[NEWLINE]the National Epic[NEWLINE][NEWLINE]Forests next to it: +1 [ICON_CULTURE] Culture</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_FEATURE_SINAI_HELP">
-			<Text>+5 [ICON_PRODUCTION] Production when worked by a Holy City.</Text>
+			<Text>5 [ICON_PEACE] Faith[NEWLINE][NEWLINE]+5 [ICON_PRODUCTION] Production if the city[NEWLINE]is a Holy City</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_FEATURE_SRI_PADA_HELP">
-			<Text>+3 [ICON_CULTURE] Culture when worked by a city with a Shrine.[NEWLINE]+3 [ICON_FOOD] Food when worked by a city with a Temple.</Text>
+			<Text>3 [ICON_PEACE] Faith[NEWLINE][NEWLINE]+3 [ICON_CULTURE] Culture if the city has[NEWLINE]a Shrine[NEWLINE]+3 [ICON_FOOD] Food if the city has a Temple</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_FEATURE_KAILASH_HELP">
-			<Text>Holy Sites next to it yield +2 [ICON_CULTURE] Culture.</Text>
+			<Text>6 [ICON_PEACE] Faith[NEWLINE][NEWLINE]Holy Sites next to it: +2 [ICON_CULTURE] Culture</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_MINE">
 			<Text>You have pledged to protect this city-state.</Text>

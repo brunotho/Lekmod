@@ -999,6 +999,13 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 					if (eBuilding != NO_BUILDING && m_pCityBuildings->GetNumRealBuilding(eBuilding) == 0)
 					{
 						m_pCityBuildings->SetNumFreeBuilding(eBuilding, 1);
+						// free buildings don't notify the renderer (real ones do in SetNumRealBuildingTimed): show the walls now
+						CvBuildingEntry* pkFreeBuilding = GC.getBuildingInfo(eBuilding);
+						if (pkFreeBuilding && pkFreeBuilding->IsCityWall() && GC.IsGraphicsInitialized())
+						{
+							auto_ptr<ICvPlot1> pDllPlot(new CvDllPlot(plot()));
+							gDLL->GameplayWallCreated(pDllPlot.get());
+						}
 					}
 				}
 			}

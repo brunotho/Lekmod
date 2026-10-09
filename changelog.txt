@@ -881,6 +881,7 @@ Founding a city on some resources gives a bonus.
 - Added: Rubber: a city standing on Rubber gets +40% Production towards Armored units
 - Changed: Marble: a city standing on Marble gets +20% Production towards Ancient and Classical era Wonders instead of Marble's usual +10%
 - Added: hovering a resource tile and the resource's Civilopedia page list these effects
+- Dev: the free Walls from Stone were not drawn on the map until a reload (free buildings skip the renderer call); fixed
 - Note: Salt, Stone and Cattle only count when the city is founded (not when captured); Rubber and Marble work as long as the city stands on the resource
 - DLL: Resources.FoundCityTech/FoundCityPopulation/FoundCityFood/FoundCityBuildingClass (CvCity::init, initial founding) and CityCenterUnitCombat/CityCenterUnitCombatProductionMod/CityCenterWonderProductionMod (CvCity production modifiers) (LEKMOD_RESOURCE_CITY_EFFECTS)
 
@@ -901,6 +902,14 @@ Most natural wonders were reworked, several of them reward building around them.
 - Changed: Krakatoa: 10 Science (was 2 Food 8 Science)
 - Changed: Fountain of Youth: 2 Food 2 Culture 2 Faith (was nothing), no Happiness; cities next to it get +10% Food
 - Changed: Mt. Kilimanjaro: is a source of fresh water; Pastures next to it yield +1 Food
-- Added: hovering a natural wonder shows its special effects
+- Added: hovering a natural wonder shows its yields and special effects
+- Dev: building-dependent wonder yields never applied at first (CvCityBuildings::HasBuildingClass reads a list upstream never fills); now checks the buildings of the class directly
 - Fixed: the Kilimanjaro tooltip described the old Altitude Training effect
 - DLL: tables Feature_BuildingClassYieldChanges, Feature_HolyCityYieldChanges, Feature_AdjacentPlotYieldChanges, Feature_AdjacentCityYieldModifiers and column Features.FirstFinderGoldPerEra (LEKMOD_NATURAL_WONDER_EFFECTS)
+
+STRATEGIC RESOURCE NODE SIZES
+-----------------------------
+Tags: game mechanics
+Strategic resource deposits are bigger.
+- Changed: major / minor deposits: Horses 6 / 2 (was 4 / 2), Iron 9 / 3 (was 6 / 2), Coal 18 / 4 (was 7 / 3), Oil 18 / 8 (was 7 / 4), Aluminum 24 / 12 (was 8 / 3), Uranium 6 / 2 (was 2 / 1)
+- Note: these are the mod's Resources.AmountMajor/AmountMinor, read by the map script; the Lekmap copy in this repo still uses its own hardcoded amounts (the user's map folder is the authority)

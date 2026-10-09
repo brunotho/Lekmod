@@ -8443,9 +8443,19 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 					const std::vector<CvFeatureInfo::LekmodYieldRule>& aRules = pFeatureInfo->getBuildingClassYieldRules();
 					for (uint iRule = 0; iRule < aRules.size(); iRule++)
 					{
-						if (aRules[iRule].iYield == eYield && pWorkingCity->GetCityBuildings()->HasBuildingClass((BuildingClassTypes)aRules[iRule].iBuildingClass))
+						if (aRules[iRule].iYield != eYield)
+							continue;
+						// any building of the class (unique replacements count); CvCityBuildings::HasBuildingClass
+						// relies on a list that is never filled, so check the buildings directly
+						for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
 						{
-							iYieldChange += aRules[iRule].iValue;
+							CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+							if (pkBuilding && pkBuilding->GetBuildingClassType() == aRules[iRule].iBuildingClass
+								&& pWorkingCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding) > 0)
+							{
+								iYieldChange += aRules[iRule].iValue;
+								break;
+							}
 						}
 					}
 					if (pFeatureInfo->getHolyCityYieldChange(eYield) != 0 && pWorkingCity->GetCityReligions()->IsHolyCityAnyReligion())

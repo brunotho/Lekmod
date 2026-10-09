@@ -106667,7 +106667,6 @@
 			<Type>FEATURE_EL_DORADO</Type> 
 			<Description>TXT_KEY_FEATURE_EL_DORADO</Description> 
 			<Civilopedia>TXT_KEY_CIV5_FEATURES_EL_DORADO_TEXT</Civilopedia> 
-			<Help>TXT_KEY_CIV5_FEATURES_EL_DORADO_HELP</Help> 
 			<ArtDefineTag>ART_DEF_FEATURE_EL_DORADO</ArtDefineTag> 
 			<StartingLocationWeight>0</StartingLocationWeight> 
 			<Movement>1</Movement> 
@@ -193851,8 +193850,8 @@
 			<IconString>[ICON_RES_IRON]</IconString> 
 			<PortraitIndex>0</PortraitIndex> 
 			<IconAtlas>RESOURCE_ATLAS</IconAtlas>
-			<AmountMajor>6</AmountMajor>
-			<AmountMinor>2</AmountMinor>
+			<AmountMajor>9</AmountMajor>
+			<AmountMinor>3</AmountMinor>
 		</Row>
 		<Row> 
 			<ID>1</ID> 
@@ -193897,7 +193896,7 @@
 			<IconString>[ICON_RES_HORSE]</IconString> 
 			<PortraitIndex>1</PortraitIndex> 
 			<IconAtlas>RESOURCE_ATLAS</IconAtlas>
-			<AmountMajor>4</AmountMajor>
+			<AmountMajor>6</AmountMajor>
 			<AmountMinor>2</AmountMinor>
 		</Row>
 		<Row> 
@@ -193944,8 +193943,8 @@
 			<IconString>[ICON_RES_COAL]</IconString> 
 			<PortraitIndex>2</PortraitIndex> 
 			<IconAtlas>RESOURCE_ATLAS</IconAtlas>
-			<AmountMajor>7</AmountMajor>
-			<AmountMinor>3</AmountMinor>
+			<AmountMajor>18</AmountMajor>
+			<AmountMinor>4</AmountMinor>
 		</Row>
 		<Row> 
 			<ID>3</ID> 
@@ -193991,8 +193990,8 @@
 			<IconString>[ICON_RES_OIL]</IconString> 
 			<PortraitIndex>3</PortraitIndex> 
 			<IconAtlas>RESOURCE_ATLAS</IconAtlas>
-			<AmountMajor>7</AmountMajor>
-			<AmountMinor>4</AmountMinor>
+			<AmountMajor>18</AmountMajor>
+			<AmountMinor>8</AmountMinor>
 			
 		</Row>
 		<Row> 
@@ -194039,8 +194038,8 @@
 			<IconString>[ICON_RES_ALUMINUM]</IconString> 
 			<PortraitIndex>4</PortraitIndex> 
 			<IconAtlas>RESOURCE_ATLAS</IconAtlas>
-			<AmountMajor>8</AmountMajor>
-			<AmountMinor>3</AmountMinor>
+			<AmountMajor>24</AmountMajor>
+			<AmountMinor>12</AmountMinor>
 		</Row>
 		<Row> 
 			<ID>5</ID> 
@@ -194086,8 +194085,8 @@
 			<IconString>[ICON_RES_URANIUM]</IconString> 
 			<PortraitIndex>5</PortraitIndex> 
 			<IconAtlas>RESOURCE_ATLAS</IconAtlas>
-			<AmountMajor>2</AmountMajor>
-			<AmountMinor>1</AmountMinor>
+			<AmountMajor>6</AmountMajor>
+			<AmountMinor>2</AmountMinor>
 			
 		</Row>
 		<Row> 
