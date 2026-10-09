@@ -31,11 +31,8 @@ This file records what has been **verified** about how this mod works, and how t
    - Many things are defined in the base game and then overwritten by Lekmod. Always check the final, loaded value (§6).
    - Spec numbers are **quick-speed** numbers, while the code and data usually hold **standard-speed** values that the game scales by game speed. Convert, and check how each formula scales.
 4. **This file is the ground truth doc.**
-   - The user's earlier `ai_ground_truth_workflow.md` exists on branch **`origin/dev-bruno`** (repo root, Apr 19–21). It is not on main.
-   - It has useful rules: the Override files are the authority, belief DLL wiring steps, a yield audit order, quick = 67% of standard, natural wonder notes.
-   - It also contains a load-order claim that is probably wrong (see §3).
-   - `dev-bruno` will not be merged (§1), so **read the file from that branch and merge its still-valid content here** (still to do).
-   - Keep it current.
+   - The user's earlier `ai_ground_truth_workflow.md` (only on the old branch `dev-bruno`, never in this repo) was merged in on 2026-10-09: its yield audit order and natural wonder notes are in §4. Its NQM load-order claim is in §3 (probably wrong); its belief wiring steps are covered by the general checklist in §3. Nothing else in it is needed.
+   - Keep this file current.
    - When you come across something that should be documented here, or that contradicts this file, propose the amendment.
 5. **Spec vocabulary:**
    - **"(from scratch)" / "(new)"**: none of the item's old effects or yields persist. Remove everything old, then add the spec.
@@ -78,7 +75,7 @@ This file records what has been **verified** about how this mod works, and how t
    - The scratchpad on the checklist page holds unrefined ideas. They are tracked under Section "Scratchpad", mostly as `Needs spec`. Help the user turn them into specs when asked.
    - The old audit page ("Implementation status audit (2026-10-06)") is superseded by the tracker.
    - When the user says something "tested / works" in chat, set those rows to `Playtested` right away.
-10. **Session start routine:** read §9 here, then query the tracker (`Status = 'Ready'`, ordered by Phase) and the "Specs to refine" page for new answers. Check `git status` (generated `Lua/UI` files and `FrontEnd.lua`/`StagingRoom.lua` are always dirty; that's normal) and `git log --oneline -15`.
+10. **Session start routine:** read §9 here, then query the tracker (`Status = 'Ready'`, ordered by Phase) and the "Specs to refine" page for new answers. Check `git status` (only `Lua/UI/FrontEnd.lua` should be dirty, because of its `LEKMOD_UI_CHECK_DONE` flag; any other tracked `Lua/UI` file showing up means its committed copy is stale, see §2) and `git log --oneline -15`.
 11. **Working style the user likes:** take large chunks of work without asking; batch several items, then report with concrete in-game checks. Keep chat answers short; findings go into Notion/changelog. Ask with the question tool when two readings of a spec are equally plausible (give the numbers for each option).
 
 ---
@@ -117,7 +114,9 @@ This file lives at the **repo root** (`civ-tools\lek\CLAUDE.md`), so it doesn't 
 
 **Generated UI:** `ui_check.bat` writes `LEKMOD/Lua/UI/` and `LEKMOD/*.bak`. Always run it **through the junction** (`DLC\WIP_LEKMOD\ui_check.bat`): it looks for EUI in the folder above itself.
 - Most of `Lua/UI/` is git-ignored, but upstream **tracks about a dozen files there** (`FrontEnd.lua`, `StagingRoom.lua`, `MainMenu.lua`…).
-- After every `ui_check.bat` run, `FrontEnd.lua` (`LEKMOD_UI_CHECK_DONE = true`) and `StagingRoom.lua` (comments) show as modified. That is generated output: **never commit it**. Commit UI changes in the templates under `Lua/tmp/`.
+- Edit UI in the templates under `Lua/tmp/`. **The tracked `Lua/UI` copies ship to players too, so keep them equal to their templates:** after changing a template whose file is tracked in `Lua/UI`, commit the regenerated copy with it.
+  - Exception: `FrontEnd.lua` must be committed with `LEKMOD_UI_CHECK_DONE = false` (the template's value); `ui_check.bat` sets it to `true` locally, so it always shows as modified. Stage the template's content without touching the working copy: `git update-index --cacheinfo 100644,$(git hash-object -w --path=LEKMOD/Lua/UI/FrontEnd.lua LEKMOD/Lua/tmp/ui/FrontEnd/FrontEnd.lua.ignore),LEKMOD/Lua/UI/FrontEnd.lua`.
+  - Until 2026-10-09 this file said "never commit generated output", which left the committed `StagingRoom.lua/.xml`, `MPGameOptions.lua` and `FrontEnd.lua` without the lobby preset, the Immortal default and the menu background (fixed in `668bf45e`).
 
 **Git notes:**
 - Git has `core.autocrlf=true`, while the Override files are LF. Compare with `diff --strip-trailing-cr`. `sed -i` in Git Bash strips CRs from CRLF files; use Python byte I/O, or check line endings afterwards.
@@ -192,6 +191,12 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
   - `UnitPromotions_PromotionPrereqOrs`: a missing referenced promotion is silently skipped through an INNER JOIN.
   - `UnitPromotions_YieldFromKills` and `UnitPromotions_KillYieldValidEras`: promotion yields from kills. A promotion yields nothing unless the killed unit's era is listed.
   - `UnitPromotions_UnitCombats`, `Unit_FreePromotions`, `Policy_FreePromotions`: how promotions become obtainable.
+- **Yield audit (what does tile X yield?):** a tile's yield is the **sum of all matching rows across tables**; never cite one table alone. Check in the loaded DB: `Terrain_Yields` → `Feature_YieldChanges` (+ `Feature_RiverYieldChanges`/`HillsYieldChanges`/`MountainYieldChanges`) → `Resource_YieldChanges` → `Improvement_Yields` / `Improvement_ResourceType_Yields` → `Improvement_TechYieldChanges` → `Belief_*YieldChanges` → `Building_SeaResourceYieldChanges`, `Trait_ImprovementYieldChanges` etc. Then grep `_Defines.h` for DLL hooks that add yields in C++. Internal keys often differ from display names (`BELIEF_TEARS_OF_NOOBS` = "Tears of the Gods"); check the text file.
+- **Natural wonders** (from the old ground-truth doc, re-verified in the DB 2026-10-09):
+  - Tile yields are not speed-scaled (no yields are); `Feature_YieldChanges` values are used as they are.
+  - The hover tooltip comes from the `Help` column of the `Features` row. Only Fountain of Youth, El Dorado and Kilimanjaro have one; add `<Help>TXT_KEY_..._HELP</Help>` plus the text.
+  - Krakatoa is `FEATURE_VOLCANO`.
+  - There is no `Feature_BuildingClassYieldChanges` table: yields that depend on a city's buildings need C++ (e.g. in `CvPlot` yield calculation).
 
 ## 5. Building and installing the DLL
 **Toolchain:** Visual C++ 2008 Express SP1 (`C:\Program Files (x86)\Microsoft Visual Studio 9.0\`).
