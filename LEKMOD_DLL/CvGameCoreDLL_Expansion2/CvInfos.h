@@ -1479,6 +1479,7 @@ public:
 	int getCityCenterUnitCombatProductionMod() const;
 	int getLocalProductionMod() const;
 	int getCityCenterProductionMod() const;
+	UnitCombatTypes getProductionModUnitCombat() const;
 #endif
 	int getMinAreaSize() const;
 	int getMinLatitude() const;
@@ -1573,6 +1574,7 @@ protected:
 	int m_iCityCenterUnitCombatProductionMod;
 	int m_iLocalProductionMod;
 	int m_iCityCenterProductionMod;
+	UnitCombatTypes m_eProductionModUnitCombat;
 #endif
 	int m_iMinAreaSize;
 	int m_iMinLatitude;

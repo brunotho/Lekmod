@@ -880,11 +880,11 @@ Founding a city on some resources gives a bonus.
 - Added: Cattle: a city founded on Cattle starts with +4 Food in storage, if you know Animal Husbandry
 - Added: Rubber: a city standing on Rubber gets +40% Production towards Armored units
 - Changed: Marble: a city standing on Marble gets +20% Production towards Ancient and Classical era Wonders instead of Marble's usual +10%
-- Changed: Obsidian: +10% Production in a city with improved Obsidian, +20% instead when the city stands on Obsidian (was -10% Melee unit cost)
-- Added: hovering a resource tile and the resource's Civilopedia page list these effects
+- Changed: Obsidian: +10% Production towards Melee units in a city with improved Obsidian, +20% instead when the city stands on Obsidian (was -10% Melee unit cost)
+- Added: hovering a resource tile and the resource's Civilopedia page list these effects (also on improved tiles)
 - Dev: the free Walls from Stone were not drawn on the map until a reload (free buildings skip the renderer call); fixed
 - Note: Salt, Stone and Cattle only count when the city is founded (not when captured); Rubber and Marble work as long as the city stands on the resource
-- DLL: Resources.LocalProductionMod / CityCenterProductionMod (CvCity::getGeneralProductionModifiers); interception damage reduction capped at 80% (LEKMOD_MAX_INTERCEPTION_DAMAGE_REDUCTION)
+- DLL: Resources.LocalProductionMod / CityCenterProductionMod / ProductionModUnitCombat (CvCity::GetLekmodResourceProductionMod); interception damage reduction capped at 80% (LEKMOD_MAX_INTERCEPTION_DAMAGE_REDUCTION)
 - DLL: Resources.FoundCityTech/FoundCityPopulation/FoundCityFood/FoundCityBuildingClass (CvCity::init, initial founding) and CityCenterUnitCombat/CityCenterUnitCombatProductionMod/CityCenterWonderProductionMod (CvCity production modifiers) (LEKMOD_RESOURCE_CITY_EFFECTS)
 
 NATURAL WONDERS

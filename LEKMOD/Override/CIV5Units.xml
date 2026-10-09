@@ -193805,6 +193805,7 @@
 		<Column name="CityCenterUnitCombatProductionMod" type="integer" default="0"/>
 		<Column name="LocalProductionMod" type="integer" default="0"/>
 		<Column name="CityCenterProductionMod" type="integer" default="0"/>
+		<Column name="ProductionModUnitCombat" type="text" reference="UnitCombatInfos(Type)" default="NULL"/>
 	</Table>
 	<Resources>
 		<Delete />
@@ -196185,7 +196186,7 @@
 		</Update>
 		<Update>
 			<Where Type="RESOURCE_OBSIDIAN"/>
-			<Set LocalProductionMod="10" CityCenterProductionMod="20"/>
+			<Set LocalProductionMod="10" CityCenterProductionMod="20" ProductionModUnitCombat="UNITCOMBAT_MELEE"/>
 		</Update>
 	</Resources>
 

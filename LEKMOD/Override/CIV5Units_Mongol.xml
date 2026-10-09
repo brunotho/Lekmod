@@ -101574,6 +101574,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_UNITCOMBAT">
 			<Text>+{1_Num}% [ICON_PRODUCTION] Production towards {2_UnitCombat:textkey}</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_PRODUCTION">
+			<Text>+{1_Num}% [ICON_PRODUCTION] Production</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_LOCAL_PRODUCTION">
+			<Text>Improved: +{1_Num}% [ICON_PRODUCTION] Production in its city</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_LOCAL_PRODUCTION_UNITCOMBAT">
+			<Text>Improved: +{1_Num}% [ICON_PRODUCTION] Production towards[NEWLINE]{2_UnitCombat:textkey} in its city</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WONDERS">
 			<Text>+{1_Num}% [ICON_PRODUCTION] Production towards Ancient and Classical era Wonders</Text>
 		</Row>

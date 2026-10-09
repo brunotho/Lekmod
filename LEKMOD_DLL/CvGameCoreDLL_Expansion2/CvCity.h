@@ -279,6 +279,9 @@ public:
 
 	int getProductionModifier(_In_opt_ CvString* toolTipSink = NULL) const;
 	int getGeneralProductionModifiers(_In_opt_ CvString* toolTipSink = NULL) const;
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	int GetLekmodResourceProductionMod(UnitCombatTypes eOnlyCombat, CvString* toolTipSink) const;
+#endif
 	int getProductionModifier(UnitTypes eUnit, _In_opt_ CvString* toolTipSink = NULL) const;
 	int getProductionModifier(BuildingTypes eBuilding, _In_opt_ CvString* toolTipSink = NULL) const;
 	int getProductionModifier(ProjectTypes eProject, _In_opt_ CvString* toolTipSink = NULL) const;

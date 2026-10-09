@@ -4739,6 +4739,13 @@ function LekmodResourcePediaInfo(thisResource)
 		local iTurns = math.floor(thisResource.ImprovementBuildTimeChange * iPercent / 10000 + 0.5);
 		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_PEDIA_RESOURCE_BUILD_TIME", iTurns));
 	end
+	if (thisResource.LocalProductionMod ~= nil and thisResource.LocalProductionMod ~= 0) then
+		if (thisResource.ProductionModUnitCombat ~= nil and GameInfo.UnitCombatInfos[thisResource.ProductionModUnitCombat] ~= nil) then
+			table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_LOCAL_PRODUCTION_UNITCOMBAT", thisResource.LocalProductionMod, GameInfo.UnitCombatInfos[thisResource.ProductionModUnitCombat].Description));
+		else
+			table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_LOCAL_PRODUCTION", thisResource.LocalProductionMod));
+		end
+	end
 	local strInfo = table.concat(lines, "[NEWLINE]");
 	local strSettle = LekmodResourcePediaSettleInfo(thisResource);
 	if (strSettle ~= "") then
@@ -4767,6 +4774,13 @@ function LekmodResourcePediaSettleInfo(pResource)
 	end
 	if (pResource.CityCenterWonderProductionMod ~= nil and pResource.CityCenterWonderProductionMod ~= 0) then
 		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WONDERS", pResource.CityCenterWonderProductionMod);
+	end
+	if (pResource.CityCenterProductionMod ~= nil and pResource.CityCenterProductionMod ~= 0) then
+		if (pResource.ProductionModUnitCombat ~= nil and GameInfo.UnitCombatInfos[pResource.ProductionModUnitCombat] ~= nil) then
+			str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_UNITCOMBAT", pResource.CityCenterProductionMod, GameInfo.UnitCombatInfos[pResource.ProductionModUnitCombat].Description);
+		else
+			str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_PRODUCTION", pResource.CityCenterProductionMod);
+		end
 	end
 	if (str ~= "") then
 		str = Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_EFFECTS") .. str;
