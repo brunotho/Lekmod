@@ -169,6 +169,8 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
   - **The Write tool strips trailing whitespace**, and many Override lines end with a space (`<Row> `, `</Table> `). Use short anchors without line ends, or match by regex.
   - **XML tables contain commented-out `<Row>` blocks.** Row-editing scripts must skip `<!-- ... -->` regions (2026-10-08: a script edited commented rows; caught in the diff).
   - Bulk value changes to existing rows can be done with `<Update><Where Type="X"/><Set Col="v"/></Update>` blocks after a table's section (used for building purchase costs and tech costs). Later per-row changes must then edit those Update values, not the original rows.
+- **Broken upstream helpers / engine quirks (2026-10-09):** `CvCityBuildings::HasBuildingClass` always returns false (its list `m_buildingsThatExistAtLeastOnce` is never filled); loop the class's buildings with `GetNumBuilding` instead. `SetNumFreeBuilding` doesn't notify the renderer (walls/wonders don't appear until reload); call `gDLL->GameplayWallCreated` etc. yourself.
+- **Strategic node sizes** live in the mod (`Resources.AmountMajor/AmountMinor`) and are read by the map script; the Lekmap copy in this repo still hardcodes them (the user's map folder is the authority). An earlier conclusion here that they were map-only was wrong.
 - **Valid text icons:** `[ICON_PEACE]` = Faith (`[ICON_FAITH]` does **not** exist). `[ICON_EXPERIENCE]` and `[ICON_HEALING]` do **not** exist.
   - The authority is the loaded `IconFontMapping` table in `Civ5DebugDatabase.db` (884 icons).
   - Don't judge by whether a tag appears in any text: `[ICON_STAR]` is valid but appears in no text.
