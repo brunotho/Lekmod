@@ -934,6 +934,10 @@
 // the building / is a holy city), Feature_AdjacentPlotYieldChanges (yield for adjacent plots, optionally only with an improvement
 // or feature), Feature_AdjacentCityYieldModifiers (yield % for cities next to the feature), Features.FirstFinderGoldPerEra
 #define LEKMOD_NATURAL_WONDER_EFFECTS
+// UnitPromotions_UnitCombatMods.Attack / .Defense: bonus vs a unit combat type only when attacking / only when defending
+#define LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+// Improvement_YieldPerOwnerEra: improvement yield x (owner's current era + 1), e.g. the Great Musician's Festival
+#define LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

@@ -142,6 +142,9 @@ public:
 	int GetYieldChange(int i) const;
 	int* GetYieldChangeArray();
 	int GetYieldChangePerEra(int i) const;
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+	int GetYieldPerOwnerEra(int i) const;
+#endif
 	int GetRiverSideYieldChange(int i) const;
 	int* GetRiverSideYieldChangeArray();
 	int GetCoastalLandYieldChange(int i) const;
@@ -273,6 +276,9 @@ protected:
 	int* m_piPrereqNatureYield;
 	int* m_piYieldChange;
 	int* m_piYieldPerEra;
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+	int* m_piYieldPerOwnerEra;
+#endif
 	int* m_piRiverSideYieldChange;
 	int* m_piCoastalLandYieldChange;
 	int* m_piHillsYieldChange;

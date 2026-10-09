@@ -955,3 +955,24 @@ Several units get new strength, movement or cost.
 - Changed: Rocket Artillery: 3 movement (was 2)
 - Changed: Submarine and Nuclear Submarine can no longer move after attacking
 - Changed: all other Modern-era units cost 3% more, all other Atomic-era units 5% more
+
+SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
+---------------------------------------------------
+Tags: units, combat, promotions
+Spears are a bit weaker against horses, but stronger when they charge horse archers.
+- Changed: Spearman, Pikeman and their unique replacements: +33% vs Mounted units (was +50%)
+- Changed: vs Mounted Ranged units: +66% when attacking, +33% when defending (was +50% both)
+- Note: Landsknecht, Tercio and the Siamese War Elephant keep the old +50% Bonus vs Mounted; the Sarissophoros keeps its +100%
+- DLL: UnitPromotions_UnitCombatMods.Attack/Defense are now read (they were defined but ignored) (LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS)
+
+WORKER (UNIT_WORKER)
+--------------------
+Tags: units
+- Added: Workers can be upgraded to Archaeologists
+
+GREAT MUSICIAN FESTIVAL (IMPROVEMENT_CONCERT)
+---------------------------------------------
+Tags: units
+The Festival grows with the eras.
+- Changed: the Festival yields 1 Culture and 1 Gold per era of its owner (Ancient Era 1, Classical Era 2, Renaissance Era 4...) instead of 4 Culture
+- DLL: Improvement_YieldPerOwnerEra; plot yields refresh when a team enters a new era (LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA)

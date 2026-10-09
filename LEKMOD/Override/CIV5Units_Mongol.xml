@@ -8069,7 +8069,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Festival</Text>
 		</Row>
 		<Row Tag="TXT_KEY_IMPROVEMENT_CONCERT_HELP">
-			<Text>Can be build by a musician. Gives extra [ICON_CULTURE] Culture</Text>
+			<Text>Created by a Great Musician.[NEWLINE]Yields +1 [ICON_CULTURE] Culture and +1 [ICON_GOLD] Gold per era (Ancient Era 1, Classical Era 2, and so on).</Text>
 		</Row>
 	<!-- Aksum new civ v25 -->
 		
@@ -101592,6 +101592,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_PROMOTION_STEALTH_EVASION_HELP">
 			<Text>80% chance to evade interception.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR">
+			<Text>Bonus vs Mounted</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR_HELP">
+			<Text>+33% [ICON_STRENGTH] Combat Strength vs Mounted units.[NEWLINE][NEWLINE]Vs Mounted Ranged units: +66% when attacking, +33% when defending.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_ADJACENT_FEATURE">
 			<Text>[NEWLINE][ICON_BULLET]Next to {2_FeatureName}: {1_Num}%</Text>
 		</Row>
@@ -141980,7 +141986,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PHALANXX_HELP"> 
 			<Text>
-				The Phalanx has a +50% combat bonus vs Mounted Units and a 50% bonus to flanking. It is also cheaper.
+				The Phalanx has the Spearman's bonus vs Mounted units (+33%; vs Mounted Ranged +66% attacking, +33% defending).[NEWLINE]It gets a 50% bonus to flanking and is cheaper.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PIKEMAN"> 

@@ -138605,6 +138605,24 @@
 			<Yield>1</Yield> 
 		</Row>
 	</Improvement_YieldPerEra> 
+	<!-- LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA: yield x (owner's current era + 1) -->
+	<Table name="Improvement_YieldPerOwnerEra">
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0"/>
+	</Table>
+	<Improvement_YieldPerOwnerEra>
+		<Row>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_YieldPerOwnerEra>
 
 	<Table name="Improvement_Yields">
 		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
@@ -138657,11 +138675,6 @@
 			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType> 
 			<YieldType>YIELD_SCIENCE</YieldType> 
 			<Yield>8</Yield> 
-		</Row>
-		<Row> 
-			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType> 
-			<YieldType>YIELD_CULTURE</YieldType> 
-			<Yield>4</Yield> 
 		</Row>
 		<Row> 
 			<ImprovementType>IMPROVEMENT_CUSTOMS_HOUSE</ImprovementType> 
@@ -252884,6 +252897,19 @@
 			<PediaType>PEDIA_AIR</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_STEALTH_EVASION</PediaEntry>
 		</Row>
+		<Row>
+			<ID>367</ID>
+			<Type>PROMOTION_ANTI_MOUNTED_SPEAR</Type>
+			<Description>TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR</Description>
+			<Help>TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -254721,6 +254747,19 @@
 			<PromotionType>PROMOTION_PFLICH</PromotionType> 
 			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType> 
 			<Modifier>50</Modifier> 
+		</Row>
+		<!-- LEKMOD Spearman/Pikeman (2026-10-09) -->
+		<Row>
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<Modifier>33</Modifier>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<Modifier>0</Modifier>
+			<Attack>66</Attack>
+			<Defense>33</Defense>
 		</Row>
 	</UnitPromotions_UnitCombatMods> 
 
@@ -259973,6 +260012,19 @@
 			<UnitType>UNIT_BUGANDA_EXPEDITIONARY_FORCE</UnitType> 
 			<UnitClassType>UNITCLASS_MARINE</UnitClassType> 
 		</Row>
+		<!-- LEKMOD: Workers upgrade to Archaeologists (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_WORKER</UnitType>
+			<UnitClassType>UNITCLASS_ARCHAEOLOGIST</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AUSTRALIA_WORKER</UnitType>
+			<UnitClassType>UNITCLASS_ARCHAEOLOGIST</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_FAST_WORKER</UnitType>
+			<UnitClassType>UNITCLASS_ARCHAEOLOGIST</UnitClassType>
+		</Row>
 	</Unit_ClassUpgrades> 
 
 	<Table name="Unit_Flavors">
@@ -262413,19 +262465,19 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_SPEARMAN</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_BARBARIAN_SPEARMAN</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_GREEK_HOPLITE</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PERSIAN_IMMORTAL</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PERSIAN_IMMORTAL</UnitType> 
@@ -262609,7 +262661,7 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PIKEMAN</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_GERMAN_LANDSKNECHT</UnitType> 
@@ -263614,7 +263666,7 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_ZULU_IMPI</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_ZULU_IMPI</UnitType> 
@@ -263874,7 +263926,7 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PHALANXX</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_HITTITE_CHARIOT</UnitType> 
@@ -264059,11 +264111,11 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PIKEMAN</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PESTININKAS</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_KHMER_WARELEPHANT</UnitType> 
@@ -264311,7 +264363,7 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType> 
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PIONEER</UnitType> 
@@ -264373,7 +264425,7 @@
 		<!-- Akkad units -->
 		<Row>
 			<UnitType>UNIT_AKKAD_SPEARMAN</UnitType>
-			<PromotionType>PROMOTION_ANTI_MOUNTED_I</PromotionType>
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType>
 		</Row>
 		<Row>
 			<UnitType>UNIT_AKKAD_SPEARMAN</UnitType>

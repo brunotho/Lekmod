@@ -7896,6 +7896,18 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 			DLLUI->setDirty(Soundtrack_DIRTY_BIT, true);
 		}
 
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+		// plot yields that depend on the era (Improvement_YieldPerOwnerEra) are cached per plot
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+		{
+			CvPlayer& kMember = GET_PLAYER((PlayerTypes)iPlayer);
+			if (kMember.isAlive() && kMember.getTeam() == GetID())
+			{
+				kMember.updateYield();
+			}
+		}
+#endif
+
 		ICvEngineScriptSystem1* pkScriptSystem = gDLL->GetScriptSystem();
 		if(pkScriptSystem)
 		{

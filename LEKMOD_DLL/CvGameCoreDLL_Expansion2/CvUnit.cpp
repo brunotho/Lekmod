@@ -13092,6 +13092,14 @@ int CvUnit::GetMaxAttackStrength(const CvPlot* pFromPlot, const CvPlot* pToPlot,
 
 	int iTempModifier;
 	int iModifier = GetGenericMaxStrengthModifier(pDefender, pToPlot, /*bIgnoreFlanking*/ false);
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	// Promotion modifiers vs a unit combat type that apply only when attacking / only when defending
+	if (pDefender != NULL && pDefender->getUnitCombatType() != NO_UNITCOMBAT)
+	{
+		iTempModifier = GetLekmodUnitCombatAttackDefenseMod(pDefender->getUnitCombatType(), true);
+		iModifier += iTempModifier;
+	}
+#endif
 
 	// Generic Attack bonus
 	iTempModifier = getAttackModifier();
@@ -13358,6 +13366,14 @@ int CvUnit::GetMaxDefenseStrength(const CvPlot* pInPlot, const CvUnit* pAttacker
 
 	int iTempModifier;
 	int iModifier = GetGenericMaxStrengthModifier(pAttacker, pInPlot, /*bIgnoreUnitAdjacency*/ bFromRangedAttack);
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	// Promotion modifiers vs a unit combat type that apply only when attacking / only when defending
+	if (pAttacker != NULL && pAttacker->getUnitCombatType() != NO_UNITCOMBAT)
+	{
+		iTempModifier = GetLekmodUnitCombatAttackDefenseMod(pAttacker->getUnitCombatType(), false);
+		iModifier += iTempModifier;
+	}
+#endif
 
 	// Generic Defense Bonus
 	iTempModifier = getDefenseModifier();
@@ -14465,6 +14481,18 @@ int CvUnit::GetMaxAttackStrength(const CvCombatInfo& kInfo, CvCombatModifierList
 #endif
 	int iModifier = GetGenericMaxStrengthModifier(kInfo, kModifierList);
 	int iTempModifier = 0;
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	// Promotion modifiers vs a unit combat type that apply only when attacking / only when defending
+	if (pDefender != NULL && pDefender->getUnitCombatType() != NO_UNITCOMBAT)
+	{
+		iTempModifier = GetLekmodUnitCombatAttackDefenseMod(pDefender->getUnitCombatType(), true);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_UNIT_COMBAT_TYPE", iTempModifier, GC.getUnitCombatClassInfo(pDefender->getUnitCombatType())->GetDescription());
+		}
+	}
+#endif
 
 	// Generic Attack bonus ranged gets both.
 	iTempModifier = getAttackModifier();
@@ -14842,6 +14870,18 @@ int CvUnit::GetMaxDefenseStrength(const CvCombatInfo& kInfo, CvCombatModifierLis
 	int iTempModifier;
 	int iCombat = iBaseCombat;
 	int iModifier = GetGenericMaxStrengthModifier(kInfo, kModifierList);
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	// Promotion modifiers vs a unit combat type that apply only when attacking / only when defending
+	if (pAttacker != NULL && pAttacker->getUnitCombatType() != NO_UNITCOMBAT)
+	{
+		iTempModifier = GetLekmodUnitCombatAttackDefenseMod(pAttacker->getUnitCombatType(), false);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_UNIT_COMBAT_TYPE", iTempModifier, GC.getUnitCombatClassInfo(pAttacker->getUnitCombatType())->GetDescription());
+		}
+	}
+#endif
 
 	// Generic Defense Bonus
 	iTempModifier = getDefenseModifier();
@@ -17097,6 +17137,29 @@ int CvUnit::unitClassDefenseModifier(UnitClassTypes eUnitClass) const
 	return m_Promotions.GetUnitClassDefenseMod(eUnitClass);
 }
 
+
+//	--------------------------------------------------------------------------------
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+//	--------------------------------------------------------------------------------
+/// Sum of the unit's promotions' UnitPromotions_UnitCombatMods.Attack (or .Defense) vs a unit combat type
+int CvUnit::GetLekmodUnitCombatAttackDefenseMod(UnitCombatTypes eUnitCombat, bool bAttack) const
+{
+	VALIDATE_OBJECT
+	int iModifier = 0;
+	for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
+	{
+		const PromotionTypes ePromotion = (PromotionTypes)iPromotion;
+		if (!isHasPromotion(ePromotion))
+			continue;
+		CvPromotionEntry* pkPromotion = GC.getPromotionInfo(ePromotion);
+		if (pkPromotion)
+		{
+			iModifier += bAttack ? pkPromotion->GetUnitCombatAttackModifierPercent(eUnitCombat) : pkPromotion->GetUnitCombatDefenseModifierPercent(eUnitCombat);
+		}
+	}
+	return iModifier;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvUnit::unitCombatModifier(UnitCombatTypes eUnitCombat) const

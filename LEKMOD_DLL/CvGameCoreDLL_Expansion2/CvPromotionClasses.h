@@ -238,6 +238,11 @@ public:
 	const char* GetSound() const;
 	void SetSound(const char* szVal);
 
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	int GetUnitCombatAttackModifierPercent(int i) const;
+	int GetUnitCombatDefenseModifierPercent(int i) const;
+#endif
+
 	// Arrays
 #ifdef AUI_WARNING_FIXES
 	int GetTerrainAttackPercent(uint i) const;
@@ -513,6 +518,10 @@ protected:
 	int* m_piFeatureAttackPercent;
 	int* m_piFeatureDefensePercent;
 	int* m_piUnitCombatModifierPercent;
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	int* m_piUnitCombatAttackModifierPercent;
+	int* m_piUnitCombatDefenseModifierPercent;
+#endif
 	int* m_piUnitClassModifierPercent;
 	int* m_piDomainModifierPercent;
 #if defined(LEKMOD_DOMAIN_PROMO_ATTACK_DEFENSE)

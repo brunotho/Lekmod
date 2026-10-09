@@ -218,6 +218,10 @@ CvPromotionEntry::CvPromotionEntry():
 	m_piFeatureAttackPercent(NULL),
 	m_piFeatureDefensePercent(NULL),
 	m_piUnitCombatModifierPercent(NULL),
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	m_piUnitCombatAttackModifierPercent(NULL),
+	m_piUnitCombatDefenseModifierPercent(NULL),
+#endif
 	m_piUnitClassModifierPercent(NULL),
 	m_piDomainModifierPercent(NULL),
 #if defined(LEKMOD_DOMAIN_PROMO_ATTACK_DEFENSE)
@@ -264,6 +268,10 @@ CvPromotionEntry::~CvPromotionEntry(void)
 	SAFE_DELETE_ARRAY(m_piFeatureAttackPercent);
 	SAFE_DELETE_ARRAY(m_piFeatureDefensePercent);
 	SAFE_DELETE_ARRAY(m_piUnitCombatModifierPercent);
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	SAFE_DELETE_ARRAY(m_piUnitCombatAttackModifierPercent);
+	SAFE_DELETE_ARRAY(m_piUnitCombatDefenseModifierPercent);
+#endif
 	SAFE_DELETE_ARRAY(m_piUnitClassModifierPercent);
 	SAFE_DELETE_ARRAY(m_piDomainModifierPercent);
 #if defined(LEKMOD_DOMAIN_PROMO_ATTACK_DEFENSE)
@@ -893,6 +901,38 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 
 		pResults->Reset();
 	}
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	//UnitPromotions_UnitCombatMods: Attack / Defense (only when attacking / defending)
+	{
+		kUtility.InitializeArray(m_piUnitCombatAttackModifierPercent, iNumUnitCombatClasses, 0);
+		kUtility.InitializeArray(m_piUnitCombatDefenseModifierPercent, iNumUnitCombatClasses, 0);
+
+		std::string sqlKey = "m_piUnitCombatAttackDefenseModifierPercent";
+		Database::Results* pResults = kUtility.GetResults(sqlKey);
+		if(pResults == NULL)
+		{
+			const char* szSQL = "select UnitCombatInfos.ID, ifnull(Attack, 0), ifnull(Defense, 0) from UnitPromotions_UnitCombatMods inner join UnitCombatInfos on UnitCombatInfos.Type = UnitCombatType where PromotionType = ?;";
+			pResults = kUtility.PrepareResults(sqlKey, szSQL);
+		}
+
+		CvAssert(pResults);
+		if(!pResults) return false;
+
+		pResults->Bind(1, szPromotionType);
+
+		while(pResults->Step())
+		{
+			const int iUnitCombatID = pResults->GetInt(0);
+			if (iUnitCombatID > -1 && iUnitCombatID < iNumUnitCombatClasses)
+			{
+				m_piUnitCombatAttackModifierPercent[iUnitCombatID] += pResults->GetInt(1);
+				m_piUnitCombatDefenseModifierPercent[iUnitCombatID] += pResults->GetInt(2);
+			}
+		}
+
+		pResults->Reset();
+	}
+#endif
 
 	//UnitPromotions_UnitCombats
 	{
@@ -2127,6 +2167,23 @@ int CvPromotionEntry::GetFeatureDefensePercent(int i) const
 
 	return -1;
 }
+
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+/// Bonus vs a unit combat type when attacking only
+int CvPromotionEntry::GetUnitCombatAttackModifierPercent(int i) const
+{
+	if (i > -1 && i < GC.getNumUnitCombatClassInfos() && m_piUnitCombatAttackModifierPercent)
+		return m_piUnitCombatAttackModifierPercent[i];
+	return 0;
+}
+/// Bonus vs a unit combat type when defending only
+int CvPromotionEntry::GetUnitCombatDefenseModifierPercent(int i) const
+{
+	if (i > -1 && i < GC.getNumUnitCombatClassInfos() && m_piUnitCombatDefenseModifierPercent)
+		return m_piUnitCombatDefenseModifierPercent[i];
+	return 0;
+}
+#endif
 
 /// Returns an array of bonuses when fighting against a certain unit
 #ifdef AUI_WARNING_FIXES

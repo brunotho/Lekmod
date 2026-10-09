@@ -707,6 +707,9 @@ public:
 	int unitClassAttackModifier(UnitClassTypes eUnitClass) const;
 	int unitClassDefenseModifier(UnitClassTypes eUnitClass) const;
 	int unitCombatModifier(UnitCombatTypes eUnitCombat) const;
+#ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
+	int GetLekmodUnitCombatAttackDefenseMod(UnitCombatTypes eUnitCombat, bool bAttack) const;
+#endif
 	int domainModifier(DomainTypes eDomain) const;
 #if defined(LEKMOD_DOMAIN_PROMO_ATTACK_DEFENSE)
 	int domainAttackModifier(DomainTypes eDomain) const;

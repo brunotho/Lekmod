@@ -8670,6 +8670,12 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 			iYield += (iNumEras * iYieldChangePerEra);
 		}
 	}
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+	if (ePlayer != NO_PLAYER && pImprovement->GetYieldPerOwnerEra(eYield) != 0)
+	{
+		iYield += pImprovement->GetYieldPerOwnerEra(eYield) * ((int)GET_PLAYER(ePlayer).GetCurrentEra() + 1);
+	}
+#endif
 
 	if(isRiverSide())
 	{

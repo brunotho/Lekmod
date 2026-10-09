@@ -131,6 +131,9 @@ CvImprovementEntry::CvImprovementEntry(void):
 	m_piPrereqNatureYield(NULL),
 	m_piYieldChange(NULL),
 	m_piYieldPerEra(NULL),
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+	m_piYieldPerOwnerEra(NULL),
+#endif
 	m_piRiverSideYieldChange(NULL),
 	m_piCoastalLandYieldChange(NULL),
 	m_piHillsYieldChange(NULL),
@@ -175,6 +178,9 @@ CvImprovementEntry::~CvImprovementEntry(void)
 	SAFE_DELETE_ARRAY(m_piPrereqNatureYield);
 	SAFE_DELETE_ARRAY(m_piYieldChange);
 	SAFE_DELETE_ARRAY(m_piYieldPerEra);
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+	SAFE_DELETE_ARRAY(m_piYieldPerOwnerEra);
+#endif
 	SAFE_DELETE_ARRAY(m_piRiverSideYieldChange);
 	SAFE_DELETE_ARRAY(m_piCoastalLandYieldChange);
 	SAFE_DELETE_ARRAY(m_piHillsYieldChange);
@@ -378,6 +384,9 @@ bool CvImprovementEntry::CacheResults(Database::Results& kResults, CvDatabaseUti
 
 	kUtility.SetYields(m_piYieldChange, "Improvement_Yields", "ImprovementType", szImprovementType);
 	kUtility.SetYields(m_piYieldPerEra, "Improvement_YieldPerEra", "ImprovementType", szImprovementType);
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+	kUtility.SetYields(m_piYieldPerOwnerEra, "Improvement_YieldPerOwnerEra", "ImprovementType", szImprovementType);
+#endif
 	kUtility.SetYields(m_piAdjacentCityYieldChange, "Improvement_AdjacentCityYields", "ImprovementType", szImprovementType);
 	kUtility.SetYields(m_piAdjacentMountainYieldChange, "Improvement_AdjacentMountainYieldChanges", "ImprovementType", szImprovementType);
 	kUtility.SetYields(m_piCoastalLandYieldChange, "Improvement_CoastalLandYields", "ImprovementType", szImprovementType);
@@ -1144,6 +1153,15 @@ int CvImprovementEntry::GetYieldChangePerEra(int i) const
 	CvAssertMsg(i > -1, "Index out of bounds");
 	return m_piYieldPerEra ? m_piYieldPerEra[i] : 0;
 }
+#ifdef LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+/// Yield per era of the owner (Ancient Era = 1x)
+int CvImprovementEntry::GetYieldPerOwnerEra(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piYieldPerOwnerEra ? m_piYieldPerOwnerEra[i] : 0;
+}
+#endif
 
 /// How much being next to a river improves the yield of this improvement
 int CvImprovementEntry::GetRiverSideYieldChange(int i) const
