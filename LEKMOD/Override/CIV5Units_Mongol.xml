@@ -43375,7 +43375,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_ATOLL_TEXT"> 
 			<Text>
-				An atoll is a formation of coral which creates an island. Atolls are typically ring-shaped, encompassing a central shallow lagoon, and the islands are typically low and small. Atolls are one of the most common island types in the Pacific, the other being islands of volcanic origin. Atolls are akin to oases, in that they are often the only points of land in hundreds of square miles of pelagic expanse. Marine life and birds make ready use of atolls, and though humans have inhabited some, atolls are often hostile for larger land animals. Their low profile means that storms regularly engulf them, and there is often little shade from the powerful sun. As a result of his experiences and observations on the Beagle Voyage, Charles Darwin was the first Westerner to correctly hypothesize how atolls were formed.
+				Atolls appear on Coast and Ocean tiles.[NEWLINE]An Atoll adds +1 [ICON_PRODUCTION] Production to the tile.[NEWLINE][NEWLINE]On Coast an Atoll tile yields 2 [ICON_FOOD] Food and 1 [ICON_PRODUCTION] Production.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_ATOLL_TITLE1"> 
@@ -43585,7 +43585,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_LAKE_TEXT"> 
 			<Text>
-				A lake is any body of water ten tiles or smaller in size that is completely surrounded by land tiles (any larger body of water is considered ocean). When worked, lakes provide 2 food and 1 gold to nearby cities. Lakes are sources of fresh water, allowing the construction of farms on adjacent hills and tundra. Farms next to fresh water receive an additional +1 food when the Civil Service technology is researched.
+				A lake is a body of water of ten tiles or fewer that is completely surrounded by land.[NEWLINE]Lake tiles yield 3 [ICON_FOOD] Food.[NEWLINE]Fish on a Lake add their usual yields on top.[NEWLINE][NEWLINE]Lakes are a source of fresh water: farms can be built on adjacent hills and tundra, and farms next to fresh water get +1 [ICON_FOOD] Food from Civil Service.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_FEATURES_LAKE_TITLE"> 
@@ -51176,7 +51176,7 @@ Nebuchadnezzar II died in Babylon in 562 BC. He is remembered as a successful mi
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_TERRAIN_COAST_TEXT"> 
 			<Text>
-				Coast hexes are the ocean hexes directly adjacent to land. They provide food and gold to a nearby city, but only if that civilization has the Sailing technology. Only naval units and "embarked" land units may enter coastal hexes.
+				Coast tiles are the water tiles next to land.[NEWLINE]They yield 2 [ICON_FOOD] Food (Ocean tiles yield 1 [ICON_FOOD] Food).[NEWLINE][NEWLINE]Only naval units and embarked land units may enter Coast tiles.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_TERRAIN_COAST_TITLE1"> 
@@ -136115,7 +136115,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TERRAIN_COAST_HEADING3_BODY"> 
 			<Text>
-				Coast hexes are the ocean hexes directly adjacent to land. They provide food and gold to a nearby city. If that civilization has the Sailing technology, then there are additional benefits. Only naval units and "embarked" land units may enter coastal hexes. Coast can be worked without Sailing.[NEWLINE][NEWLINE]City Yield: 1 food[NEWLINE]Movement Cost: 1[NEWLINE]Combat Modifier: none
+				Coast tiles are the water tiles next to land.[NEWLINE]They yield 2 [ICON_FOOD] Food (Ocean tiles yield 1 [ICON_FOOD] Food).[NEWLINE]Coast can be worked without Sailing.[NEWLINE][NEWLINE]Only naval units and embarked land units may enter Coast tiles.[NEWLINE]Movement Cost: 1[NEWLINE]Combat Modifier: none
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TERRAIN_COAST_HEADING3_TITLE"> 

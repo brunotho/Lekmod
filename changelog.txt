@@ -843,3 +843,17 @@ The Demographics screen shows plain, comparable numbers with yield icons.
 - Added: yield icons in the value column
 - Changed: Population shows the total citizens, GNP shows gold per turn, Land shows the number of owned tiles, Approval shows your excess happiness, Literacy shows the number of researched techs ("??" before Writing)
 - Dev: Lua/tmp/ui/Replays/Demographics.lua.ignore
+
+WATER YIELDS AND SEA RESOURCES
+------------------------------
+Tags: game mechanics, naval
+Coast tiles give more food, and sea resources lean towards production and their own specialty.
+- Changed: Coast tiles yield 2 Food (was 1). Ocean stays at 1 Food, Lakes stay at 3 Food
+- Changed: Atoll no longer adds +1 Food (still +1 Production)
+- Changed: Fish: unimproved +1 Production instead of +1 Food (Fishing Boats still +1 Food)
+- Changed: Whales: unimproved +1 Production +1 Gold (was +1 Food +1 Gold); Fishing Boats +1 Production (no longer +1 Gold)
+- Changed: Crab: Fishing Boats +1 Food (no longer +1 Gold); unimproved stays +1 Food +1 Gold
+- Changed: Coral: unimproved +1 Gold +1 Faith (was +2 Gold); Fishing Boats +2 Gold +1 Faith (was +1 Gold +1 Faith +1 Food)
+- Changed: Pearls: unimproved +2 Gold (was +1 Gold); Fishing Boats +2 Gold +1 Culture (was +1 Gold +1 Culture +1 Food)
+- Changed: Civilopedia pages for Coast, Lakes and Atolls show the current yields
+- Note: the spec gave Coral no unimproved Gold; it keeps 1 by the luxury minimum rule. Lakes: the lake bonus went 2 -> 1 Food so they stay at 3 (user rule)
