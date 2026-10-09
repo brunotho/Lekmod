@@ -101587,10 +101587,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>[NEWLINE][ICON_BULLET]City built on {2_ResourceName}: {1_Num}%</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_STEALTH_EVASION">
-			<Text>Evasion (80)</Text>
+			<Text>Stealth</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_STEALTH_EVASION_HELP">
-			<Text>80% chance to evade interception.</Text>
+			<Text>Takes 80% less damage when intercepted.[NEWLINE]Does not stack with Evasion.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR">
 			<Text>Bonus vs Mounted</Text>
@@ -101627,6 +101627,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_UNIT_DREADNOUGHT">
 			<Text>Dreadnought</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_LOCAL_RESOURCE">
+			<Text>[NEWLINE][ICON_BULLET]{2_ResourceName}: {1_Num}%</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_ADJACENT_FEATURE">
 			<Text>[NEWLINE][ICON_BULLET]Next to {2_FeatureName}: {1_Num}%</Text>
@@ -142341,7 +142344,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_STEALTH_BOMBER_STRATEGY"> 
 			<Text>
-				The Stealth Bomber is an upgraded bomber with longer range and a greater Ranged Combat Strength.[NEWLINE]It has an 80% chance to evade interception by enemy anti-aircraft and fighters.[NEWLINE][NEWLINE]Stealth Bombers cannot be transported aboard Carriers.
+				The Stealth Bomber is an upgraded bomber with longer range and a greater Ranged Combat Strength.[NEWLINE]It takes 80% less damage when intercepted by enemy anti-aircraft and fighters.[NEWLINE][NEWLINE]Stealth Bombers cannot be transported aboard Carriers.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_SUBMARINE"> 

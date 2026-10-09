@@ -6719,6 +6719,30 @@ int CvCity::getGeneralProductionModifiers(CvString* toolTipSink) const
 {
 	int iMultiplier = 0;
 
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	// Resources with a production bonus: LocalProductionMod when connected in this city,
+	// CityCenterProductionMod instead when the city stands on the resource (e.g. Obsidian)
+	for (int iResource = 0; iResource < GC.getNumResourceInfos(); iResource++)
+	{
+		const ResourceTypes eResource = (ResourceTypes)iResource;
+		CvResourceInfo* pkResource = GC.getResourceInfo(eResource);
+		if (pkResource == NULL || (pkResource->getLocalProductionMod() == 0 && pkResource->getCityCenterProductionMod() == 0))
+			continue;
+		int iTempMod = 0;
+		if (pkResource->getCityCenterProductionMod() != 0 && plot()->getResourceType() == eResource)
+		{
+			iTempMod = pkResource->getCityCenterProductionMod();
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_CITY_CENTER_RESOURCE", iTempMod, pkResource->GetTextKey());
+		}
+		else if (pkResource->getLocalProductionMod() != 0 && IsHasResourceLocal(eResource, /*bTestVisible*/ false))
+		{
+			iTempMod = pkResource->getLocalProductionMod();
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_LOCAL_RESOURCE", iTempMod, pkResource->GetTextKey());
+		}
+		iMultiplier += iTempMod;
+	}
+#endif
+
 	// Railroad to capital?
 	if(IsIndustrialRouteToCapital())
 	{

@@ -16924,7 +16924,11 @@ void CvUnit::ChangeInterceptionCombatModifier(int iValue)
 int CvUnit::GetInterceptionDefenseDamageModifier() const
 {
 	VALIDATE_OBJECT
+#ifdef LEKMOD_MAX_INTERCEPTION_DAMAGE_REDUCTION
+	return std::max((int)-LEKMOD_MAX_INTERCEPTION_DAMAGE_REDUCTION, (int)m_iInterceptionDefenseDamageModifier);
+#else
 	return m_iInterceptionDefenseDamageModifier;
+#endif
 }
 
 //	--------------------------------------------------------------------------------

@@ -930,6 +930,9 @@
 // FoundCity* (one-time effects for a city founded on the resource, with FoundCityTech known) and
 // CityCenter* (production bonuses while a city stands on the resource)
 #define LEKMOD_RESOURCE_CITY_EFFECTS
+// Interception damage reduction (UnitPromotions.InterceptionDefenseDamageModifier) is capped at this many percent,
+// so Stealth Bombers (-80) don't stack with the Evasion promotion (-50)
+#define LEKMOD_MAX_INTERCEPTION_DAMAGE_REDUCTION 80
 // Natural wonder effects: Feature_BuildingClassYieldChanges / Feature_HolyCityYieldChanges (extra yield when the working city has
 // the building / is a holy city), Feature_AdjacentPlotYieldChanges (yield for adjacent plots, optionally only with an improvement
 // or feature), Feature_AdjacentCityYieldModifiers (yield % for cities next to the feature), Features.FirstFinderGoldPerEra

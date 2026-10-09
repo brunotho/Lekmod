@@ -3467,12 +3467,6 @@
 		<RequiredEra>ERA_INDUSTRIAL</RequiredEra>
 		<CostModifier>-10</CostModifier>
 	</Row>
-	<!-- Obsidian -->
-	<Row>
-		<ResourceType>RESOURCE_OBSIDIAN</ResourceType>
-		<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
-		<CostModifier>-10</CostModifier>
-	</Row>
 	</Resource_UnitCombatProductionCostModifiersLocal>
 
 	<Table name="Resource_BuildingProductionCostModifiersLocal">
@@ -193809,6 +193803,8 @@
 		<Column name="CityCenterWonderProductionMod" type="integer" default="0"/>
 		<Column name="CityCenterUnitCombat" type="text" reference="UnitCombatInfos(Type)" default="NULL"/>
 		<Column name="CityCenterUnitCombatProductionMod" type="integer" default="0"/>
+		<Column name="LocalProductionMod" type="integer" default="0"/>
+		<Column name="CityCenterProductionMod" type="integer" default="0"/>
 	</Table>
 	<Resources>
 		<Delete />
@@ -196186,6 +196182,10 @@
 		<Update>
 			<Where Type="RESOURCE_MARBLE"/>
 			<Set CityCenterWonderProductionMod="20"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_OBSIDIAN"/>
+			<Set LocalProductionMod="10" CityCenterProductionMod="20"/>
 		</Update>
 	</Resources>
 
@@ -252919,7 +252919,7 @@
 			<PortraitIndex>59</PortraitIndex>
 			<IconAtlas>ABILITY_ATLAS</IconAtlas>
 			<CannotBeChosen>true</CannotBeChosen>
-			<EvasionChange>80</EvasionChange>
+			<InterceptionDefenseDamageModifier>-80</InterceptionDefenseDamageModifier>
 			<PediaType>PEDIA_AIR</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_STEALTH_EVASION</PediaEntry>
 		</Row>

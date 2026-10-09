@@ -4713,6 +4713,8 @@ CvResourceInfo::CvResourceInfo() :
 	m_iCityCenterWonderProductionMod(0),
 	m_eCityCenterUnitCombat(NO_UNITCOMBAT),
 	m_iCityCenterUnitCombatProductionMod(0),
+	m_iLocalProductionMod(0),
+	m_iCityCenterProductionMod(0),
 #endif
 	m_iMinAreaSize(0),
 	m_iMinLatitude(0),
@@ -4884,6 +4886,16 @@ UnitCombatTypes CvResourceInfo::getCityCenterUnitCombat() const
 int CvResourceInfo::getCityCenterUnitCombatProductionMod() const
 {
 	return m_iCityCenterUnitCombatProductionMod;
+}
+//------------------------------------------------------------------------------
+int CvResourceInfo::getLocalProductionMod() const
+{
+	return m_iLocalProductionMod;
+}
+//------------------------------------------------------------------------------
+int CvResourceInfo::getCityCenterProductionMod() const
+{
+	return m_iCityCenterProductionMod;
 }
 #endif
 //------------------------------------------------------------------------------
@@ -5259,6 +5271,8 @@ bool CvResourceInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility
 	m_iCityCenterWonderProductionMod = kResults.GetInt("CityCenterWonderProductionMod");
 	m_eCityCenterUnitCombat = (UnitCombatTypes)GC.getInfoTypeForString(kResults.GetText("CityCenterUnitCombat"), true);
 	m_iCityCenterUnitCombatProductionMod = kResults.GetInt("CityCenterUnitCombatProductionMod");
+	m_iLocalProductionMod = kResults.GetInt("LocalProductionMod");
+	m_iCityCenterProductionMod = kResults.GetInt("CityCenterProductionMod");
 #endif
 
 	m_iMinAreaSize = kResults.GetInt("MinAreaSize");
