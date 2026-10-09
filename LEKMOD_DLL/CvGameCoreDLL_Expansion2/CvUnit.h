@@ -710,6 +710,11 @@ public:
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 	int GetLekmodUnitCombatAttackDefenseMod(UnitCombatTypes eUnitCombat, bool bAttack) const;
 #endif
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+	int GetLekmodAdjacentRangedAttackMod() const;
+	bool IsLekmodNoAdjacentRangedAttack() const;
+	bool IsLekmodNoAttackFromCity() const;
+#endif
 	int domainModifier(DomainTypes eDomain) const;
 #if defined(LEKMOD_DOMAIN_PROMO_ATTACK_DEFENSE)
 	int domainAttackModifier(DomainTypes eDomain) const;

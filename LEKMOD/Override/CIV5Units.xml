@@ -74178,11 +74178,6 @@
 			<UnitType>UNIT_ENGLISH_LONGBOWMAN</UnitType> 
 		</Row>
 		<Row> 
-			<CivilizationType>CIVILIZATION_ENGLAND</CivilizationType> 
-			<UnitClassType>UNITCLASS_FRIGATE</UnitClassType> 
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType> 
-		</Row>
-		<Row> 
 			<CivilizationType>CIVILIZATION_FRANCE</CivilizationType> 
 			<UnitClassType>UNITCLASS_MUSKETMAN</UnitClassType> 
 			<UnitType>UNIT_FRENCH_MUSKETEER</UnitType> 
@@ -210063,6 +210058,27 @@
 			<InstanceCostModifier>0</InstanceCostModifier> 
 			<DefaultUnit>UNIT_EXPEDITIONARY_FORCE</DefaultUnit> 
 		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<ID>113</ID>
+			<Type>UNITCLASS_SHIP_OF_THE_LINE</Type>
+			<Description>TXT_KEY_UNIT_ENGLISH_SHIPOFTHELINE</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<InstanceCostModifier>0</InstanceCostModifier>
+			<DefaultUnit>UNIT_ENGLISH_SHIPOFTHELINE</DefaultUnit>
+		</Row>
+		<Row>
+			<ID>114</ID>
+			<Type>UNITCLASS_DREADNOUGHT</Type>
+			<Description>TXT_KEY_UNIT_DREADNOUGHT</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<InstanceCostModifier>0</InstanceCostModifier>
+			<DefaultUnit>UNIT_DREADNOUGHT</DefaultUnit>
+		</Row>
 	</UnitClasses> 
 
 	<Table name="UnitCombatInfos">
@@ -211050,6 +211066,12 @@
 			<SelectionSound>AS2D_SELECT_INFANTRY</SelectionSound> 
 			<FirstSelectionSound>AS2D_BIRTH_INFANTRY</FirstSelectionSound> 
 		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<SelectionSound>AS2D_SELECT_IRONCLAD</SelectionSound>
+			<FirstSelectionSound>AS2D_BIRTH_IRONCLAD</FirstSelectionSound>
+		</Row>
 	</UnitGameplay2DScripts> 
 
 	<Table name="UnitPromotions">
@@ -211215,6 +211237,10 @@
 		<Column name="CanCrossMountains" type="boolean" default="0"/>
 		<Column name="CarpetBombing" type="boolean" default="0"/>
 		<Column name="AdjacentTileHealOutsideFriendly" type="integer" default="0"/>
+		<!-- LEKMOD_NAVAL_PENALTY_PROMOTIONS -->
+		<Column name="AdjacentRangedAttackMod" type="integer" default="0"/>
+		<Column name="NoAdjacentRangedAttack" type="boolean" default="false"/>
+		<Column name="NoAttackFromCity" type="boolean" default="false"/>
 	</Table>
 	<UnitPromotions>
 		<Delete />
@@ -252910,6 +252936,59 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR</PediaEntry>
 		</Row>
+		<Row>
+			<ID>368</ID>
+			<Type>PROMOTION_BLIND_SPOT</Type>
+			<Description>TXT_KEY_PROMOTION_BLIND_SPOT</Description>
+			<Help>TXT_KEY_PROMOTION_BLIND_SPOT_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<AdjacentRangedAttackMod>-20</AdjacentRangedAttackMod>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_BLIND_SPOT</PediaEntry>
+		</Row>
+		<Row>
+			<ID>369</ID>
+			<Type>PROMOTION_MINIMUM_RANGE</Type>
+			<Description>TXT_KEY_PROMOTION_MINIMUM_RANGE</Description>
+			<Help>TXT_KEY_PROMOTION_MINIMUM_RANGE_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<NoAdjacentRangedAttack>true</NoAdjacentRangedAttack>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_MINIMUM_RANGE</PediaEntry>
+		</Row>
+		<Row>
+			<ID>370</ID>
+			<Type>PROMOTION_DOCKED</Type>
+			<Description>TXT_KEY_PROMOTION_DOCKED</Description>
+			<Help>TXT_KEY_PROMOTION_DOCKED_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<NoAttackFromCity>true</NoAttackFromCity>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_DOCKED</PediaEntry>
+		</Row>
+		<Row>
+			<ID>371</ID>
+			<Type>PROMOTION_BROADSIDE</Type>
+			<Description>TXT_KEY_PROMOTION_BROADSIDE</Description>
+			<Help>TXT_KEY_PROMOTION_BROADSIDE_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<CityAttack>33</CityAttack>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_BROADSIDE</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -258756,6 +258835,19 @@
 			<UnitType>UNIT_BUGANDA_EXPEDITIONARY_FORCE</UnitType> 
 			<UnitAIType>UNITAI_EXPLORE</UnitAIType> 
 		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<UnitAIType>UNITAI_ASSAULT_SEA</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<UnitAIType>UNITAI_RESERVE_SEA</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<UnitAIType>UNITAI_ESCORT_SEA</UnitAIType>
+		</Row>
 	</Unit_AITypes> 
 
 	<Table name="Unit_BuildingClassRequireds">
@@ -259316,34 +259408,14 @@
 	</Table> 
 	<Unit_ClassUpgrades>
 		<Delete />
-		<Row> 
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType> 
-			<UnitClassType>UNITCLASS_BATTLESHIP</UnitClassType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_FRIGATE</UnitType> 
-			<UnitClassType>UNITCLASS_BATTLESHIP</UnitClassType> 
-		</Row>
 
 		<Row> 
 			<UnitType>UNIT_BATTLESHIP</UnitType> 
 			<UnitClassType>UNITCLASS_MISSILE_CRUISER</UnitClassType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_CARAVEL</UnitType> 
-			<UnitClassType>UNITCLASS_IRONCLAD</UnitClassType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_DHOW</UnitType> 
-			<UnitClassType>UNITCLASS_IRONCLAD</UnitClassType>
-		</Row>
-		<Row> 
 			<UnitType>UNIT_SUBMARINE</UnitType> 
 			<UnitClassType>UNITCLASS_NUCLEAR_SUBMARINE</UnitClassType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_TRIREME</UnitType> 
-			<UnitClassType>UNITCLASS_CARAVEL</UnitClassType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_GALLEY</UnitType> 
@@ -259631,10 +259703,6 @@
 			<UnitClassType>UNITCLASS_GREAT_WAR_INFANTRY</UnitClassType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_KOREAN_TURTLE_SHIP</UnitType> 
-			<UnitClassType>UNITCLASS_IRONCLAD</UnitClassType> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_KOREAN_HWACHA</UnitType> 
 			<UnitClassType>UNITCLASS_CANNON</UnitClassType> 
 		</Row>
@@ -259759,10 +259827,6 @@
 			<UnitClassType>UNITCLASS_MECHANIZED_INFANTRY</UnitClassType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_PORTUGUESE_NAU</UnitType> 
-			<UnitClassType>UNITCLASS_IRONCLAD</UnitClassType> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_BERBER_CAVALRY</UnitType> 
 			<UnitClassType>UNITCLASS_WWI_TANK</UnitClassType> 
 		</Row>
@@ -259829,10 +259893,6 @@
 		<Row> 
 			<UnitType>UNIT_HITTITE_CHARIOT</UnitType> 
 			<UnitClassType>UNITCLASS_KNIGHT</UnitClassType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_DANISH_LONGSHIP</UnitType> 
-			<UnitClassType>UNITCLASS_CARAVEL</UnitClassType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PESTININKAS</UnitType> 
@@ -259910,10 +259970,6 @@
 			<UnitType>UNIT_CAROL</UnitType> 
 			<UnitClassType>UNITCLASS_RIFLEMAN</UnitClassType> 
 		</Row>
-		<Row> 
-			<UnitType>UNIT_QUINQ</UnitType> 
-			<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType> 
-		</Row>
 		<Row>
 			<UnitType>UNIT_AKKAD_SPEARMAN</UnitType>
 			<UnitClassType>UNITCLASS_PIKEMAN</UnitClassType>
@@ -259937,10 +259993,6 @@
 		<Row>
 			<UnitType>UNIT_NOBLE_SWORDSMAN</UnitType>
 			<UnitClassType>UNITCLASS_RIFLEMAN</UnitClassType>
-		</Row>
-		<Row>
-			<UnitType>UNIT_SQUARE_SAIL_SHIP</UnitType>
-			<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
 		</Row>
 		<Row>
 			<UnitType>UNIT_NUBIAN_BOW</UnitType>
@@ -260024,6 +260076,51 @@
 		<Row>
 			<UnitType>UNIT_FAST_WORKER</UnitType>
 			<UnitClassType>UNITCLASS_ARCHAEOLOGIST</UnitClassType>
+		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_CARAVEL</UnitType>
+			<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DANISH_LONGSHIP</UnitType>
+			<UnitClassType>UNITCLASS_QUINQ</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DHOW</UnitType>
+			<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<UnitClassType>UNITCLASS_BATTLESHIP</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<UnitClassType>UNITCLASS_DREADNOUGHT</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_FRIGATE</UnitType>
+			<UnitClassType>UNITCLASS_DREADNOUGHT</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KOREAN_TURTLE_SHIP</UnitType>
+			<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PORTUGUESE_NAU</UnitType>
+			<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QUINQ</UnitType>
+			<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SQUARE_SAIL_SHIP</UnitType>
+			<UnitClassType>UNITCLASS_QUINQ</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_TRIREME</UnitType>
+			<UnitClassType>UNITCLASS_QUINQ</UnitClassType>
 		</Row>
 	</Unit_ClassUpgrades> 
 
@@ -262402,6 +262499,17 @@
 			<FlavorType>FLAVOR_DEFENSE</FlavorType> 
 			<Flavor>15</Flavor> 
 		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<FlavorType>FLAVOR_NAVAL</FlavorType>
+			<Flavor>12</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<FlavorType>FLAVOR_NAVAL_RECON</FlavorType>
+			<Flavor>3</Flavor>
+		</Row>
 	</Unit_Flavors> 
 
 	<Table name="Unit_FreePromotions">
@@ -263091,10 +263199,6 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_CARAVEL</UnitType> 
-			<PromotionType>PROMOTION_EXTRA_SIGHT_I</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_CARAVEL</UnitType> 
 			<PromotionType>PROMOTION_WITHDRAW_BEFORE_MELEE</PromotionType> 
 		</Row>
 		<Row> 
@@ -263116,10 +263220,6 @@
 		<Row> 
 			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType> 
 			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType> 
-			<PromotionType>PROMOTION_EXTRA_SIGHT_I</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_IRONCLAD</UnitType> 
@@ -263623,24 +263723,12 @@
 			<PromotionType>PROMOTION_COASTAL_RAIDER_1</PromotionType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_PRIVATEER</UnitType> 
-			<PromotionType>PROMOTION_PARTIAL_HEAL_IF_DESTROY_ENEMY</PromotionType> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_QASIMI_RAIDER</UnitType> 
 			<PromotionType>PROMOTION_COASTAL_RAIDER_1</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_QASIMI_RAIDER</UnitType> 
 			<PromotionType>PROMOTION_COASTAL_RAIDER_DOUBLE</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_QASIMI_RAIDER</UnitType> 
-			<PromotionType>PROMOTION_PARTIAL_HEAL_IF_DESTROY_ENEMY</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_DUTCH_SEA_BEGGAR</UnitType> 
-			<PromotionType>PROMOTION_PARTIAL_HEAL_IF_DESTROY_ENEMY</PromotionType> 
 		</Row>
 		<!--
 		<Row> 
@@ -264682,10 +264770,6 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_TUNISIA_PRIVATEER</UnitType> 
-			<PromotionType>PROMOTION_PARTIAL_HEAL_IF_DESTROY_ENEMY</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_TUNISIA_PRIVATEER</UnitType> 
 			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType> 
 		</Row>
 		<Row> 
@@ -264721,6 +264805,235 @@
 		<Row>
 			<UnitType>UNIT_STEALTH_BOMBER</UnitType>
 			<PromotionType>PROMOTION_STEALTH_EVASION</PromotionType>
+		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_QUINQ</UnitType>
+			<PromotionType>PROMOTION_OCEAN_IMPASSABLE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QUINQ</UnitType>
+			<PromotionType>PROMOTION_BOARDING_PARTY_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QUINQ</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARAVEL</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KOREAN_TURTLE_SHIP</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PORTUGUESE_NAU</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DHOW</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DUTCH_SEA_BEGGAR</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PRIVATEER</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QASIMI_RAIDER</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_TUNISIA_PRIVATEER</UnitType>
+			<PromotionType>PROMOTION_SMALL_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DUTCH_SEA_BEGGAR</UnitType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PRIVATEER</UnitType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QASIMI_RAIDER</UnitType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_TUNISIA_PRIVATEER</UnitType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<PromotionType>PROMOTION_BROADSIDE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<PromotionType>PROMOTION_STEAM_POWERED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_GALLEY</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_GALLEASS</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VENETIAN_GALLEASS</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_OMANI_BAGHLAH</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_FRIGATE</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_GALLEY</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_GALLEASS</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VENETIAN_GALLEASS</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_OMANI_BAGHLAH</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_FRIGATE</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MISSILE_CRUISER</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BATTLESHIP</UnitType>
+			<PromotionType>PROMOTION_DOCKED</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MISSILE_CRUISER</UnitType>
+			<PromotionType>PROMOTION_MINIMUM_RANGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BATTLESHIP</UnitType>
+			<PromotionType>PROMOTION_MINIMUM_RANGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QUINQ</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARAVEL</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KOREAN_TURTLE_SHIP</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PORTUGUESE_NAU</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DHOW</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DUTCH_SEA_BEGGAR</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PRIVATEER</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QASIMI_RAIDER</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_TUNISIA_PRIVATEER</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_FRIGATE</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MISSILE_CRUISER</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BATTLESHIP</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DESTROYER</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_IRONCLAD</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_JFD_DEFENDER</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_HEAVY_CRUISER</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
 		</Row>
 	</Unit_FreePromotions> 
 
@@ -264958,11 +265271,6 @@
 		</Row>
 		<Row>
 			<UnitType>UNIT_DANISH_BERSERKER</UnitType>
-			<ResourceType>RESOURCE_IRON</ResourceType>
-			<Cost>2</Cost>
-		</Row>
-		<Row>
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
 			<ResourceType>RESOURCE_IRON</ResourceType>
 			<Cost>2</Cost>
 		</Row>
@@ -265290,6 +265598,22 @@
 			<UnitType>UNIT_YUGO_M84</UnitType>
 			<ResourceType>RESOURCE_OIL</ResourceType>
 			<Cost>3</Cost>
+		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DREADNOUGHT</UnitType>
+			<ResourceType>RESOURCE_COAL</ResourceType>
+			<Cost>1</Cost>
 		</Row>
 	</Unit_ResourceQuantityRequirements> 
 
@@ -275476,6 +275800,79 @@
 			<IconAtlas>LEKMOD_BUGANDA_ATLAS</IconAtlas>
 			<UnitFlagAtlas>LEKMOD_BUGANDA_EXP_FORCE_FLAG</UnitFlagAtlas>
 		</Row>
+		<!-- LEKMOD naval rework (2026-10-09) -->
+		<Row>
+			<ID>267</ID>
+			<Type>UNIT_DREADNOUGHT</Type>
+			<Description>TXT_KEY_UNIT_DREADNOUGHT</Description>
+			<Civilopedia>TXT_KEY_CIV5_DREADNOUGHT_TEXT</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_DREADNOUGHT_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_HELP_DREADNOUGHT</Help>
+			<Combat>33</Combat>
+			<RangedCombat>43</RangedCombat>
+			<Cost>275</Cost>
+			<Moves>2</Moves>
+			<Range>2</Range>
+			<BaseSightRange>2</BaseSightRange>
+			<Class>UNITCLASS_DREADNOUGHT</Class>
+			<CombatClass>UNITCOMBAT_NAVALRANGED</CombatClass>
+			<Domain>DOMAIN_SEA</Domain>
+			<DefaultUnitAI>UNITAI_ASSAULT_SEA</DefaultUnitAI>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<Pillage>true</Pillage>
+			<Mechanized>true</Mechanized>
+			<PrereqTech>TECH_STEAM_POWER</PrereqTech>
+			<ObsoleteTech>TECH_ELECTRONICS</ObsoleteTech>
+			<AdvancedStartCost>50</AdvancedStartCost>
+			<MinAreaSize>6</MinAreaSize>
+			<NukeDamageLevel>-1</NukeDamageLevel>
+			<CombatLimit>100</CombatLimit>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>3</XPValueDefense>
+			<UnitArtInfo>ART_DEF_UNIT_U_DREADNOUGHT</UnitArtInfo>
+			<ShowInPedia>true</ShowInPedia>
+			<MoveRate>BOAT</MoveRate>
+			<UnitFlagIconOffset>1</UnitFlagIconOffset>
+			<PortraitIndex>3</PortraitIndex>
+			<IconAtlas>CIVIL_WAR_UNIT_ATLAS</IconAtlas>
+			<UnitFlagAtlas>CIVIL_WAR_UNIT_FLAG_ATLAS</UnitFlagAtlas>
+		</Row>
+	</Units>
+	<!-- LEKMOD naval rework (2026-10-09) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_CARAVEL"/>
+			<Set BaseSightRange="4" Combat="16" Cost="102" Moves="6"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_DUTCH_SEA_BEGGAR"/>
+			<Set Combat="24" Cost="128"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_ENGLISH_SHIPOFTHELINE"/>
+			<Set Class="UNITCLASS_SHIP_OF_THE_LINE" Combat="25" Cost="250" Help="TXT_KEY_UNIT_HELP_SHIPOFTHELINE" Moves="5" ObsoleteTech="TECH_STEAM_POWER" PrereqTech="TECH_NAVIGATION" RangedCombat="33"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_FRIGATE"/>
+			<Set ObsoleteTech="TECH_STEAM_POWER"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_PRIVATEER"/>
+			<Set Combat="24" Cost="128"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_QASIMI_RAIDER"/>
+			<Set Combat="24" Cost="102"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_QUINQ"/>
+			<Set Combat="13" Cost="80" Moves="5" ObsoleteTech="TECH_NAVIGATION" Pillage="true" PrereqTech="TECH_COMPASS"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_TUNISIA_PRIVATEER"/>
+			<Set Combat="26" Cost="153"/>
+		</Update>
 	</Units>
 	<!-- LEKMOD unit stat and cost changes (2026-10-09); modern-era units +3% cost, atomic-era (ERA_POSTMODERN) units +5% -->
 	<Units>

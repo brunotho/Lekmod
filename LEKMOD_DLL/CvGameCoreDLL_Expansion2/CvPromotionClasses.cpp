@@ -218,6 +218,11 @@ CvPromotionEntry::CvPromotionEntry():
 	m_piFeatureAttackPercent(NULL),
 	m_piFeatureDefensePercent(NULL),
 	m_piUnitCombatModifierPercent(NULL),
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+	m_iAdjacentRangedAttackMod(0),
+	m_bNoAdjacentRangedAttack(false),
+	m_bNoAttackFromCity(false),
+#endif
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 	m_piUnitCombatAttackModifierPercent(NULL),
 	m_piUnitCombatDefenseModifierPercent(NULL),
@@ -872,6 +877,12 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 		pResults->Reset();
 #endif
 	}
+
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+	m_iAdjacentRangedAttackMod = kResults.GetInt("AdjacentRangedAttackMod");
+	m_bNoAdjacentRangedAttack = kResults.GetBool("NoAdjacentRangedAttack");
+	m_bNoAttackFromCity = kResults.GetBool("NoAttackFromCity");
+#endif
 
 	//UnitPromotions_UnitCombatMods
 	{
@@ -2168,6 +2179,23 @@ int CvPromotionEntry::GetFeatureDefensePercent(int i) const
 	return -1;
 }
 
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+/// Combat modifier for ranged attacks on an adjacent target (Blind Spot)
+int CvPromotionEntry::GetAdjacentRangedAttackMod() const
+{
+	return m_iAdjacentRangedAttackMod;
+}
+/// May not ranged attack adjacent targets (Minimum Range)
+bool CvPromotionEntry::IsNoAdjacentRangedAttack() const
+{
+	return m_bNoAdjacentRangedAttack;
+}
+/// May not attack while in a city (Docked)
+bool CvPromotionEntry::IsNoAttackFromCity() const
+{
+	return m_bNoAttackFromCity;
+}
+#endif
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 /// Bonus vs a unit combat type when attacking only
 int CvPromotionEntry::GetUnitCombatAttackModifierPercent(int i) const

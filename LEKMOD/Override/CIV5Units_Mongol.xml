@@ -2887,7 +2887,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_DREADNOUGHT"> 
 			<Text>
-				Early-modern era Ranged Naval unit. Has a promotion allowing it to shoot over obstacles.
+				Industrial Era ranged naval unit that replaces the Frigate and the Ship of the Line.[NEWLINE]Moves twice as fast along the Coast.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_EXPLORER_STRATEGY"> 
@@ -2907,7 +2907,7 @@
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_DREADNOUGHT_STRATEGY"> 
 			<Text>
-				Early-modern era ranged naval unit. Has a promotion allowing it to shoot over obstacles.
+				The Dreadnought is the first steam-powered ranged warship.[NEWLINE]It hits much harder than the Frigate, but it is slow on the open ocean and moves twice as fast along the Coast.[NEWLINE][NEWLINE]Like other early warships it is weak against adjacent targets and cannot attack from inside a city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_EXPLORER_TEXT"> 
@@ -55697,7 +55697,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_CIVILOPEDIA_UNITS_RENAISSANCE_SHIPOFTHELINE_HEADING"> 
 			<Text>
-				Ship of the Line (England)
+				Ship of the Line
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIVILOPEDIA_UNITS_RENAISSANCE_SHIPOFTHELINE_TEXT"> 
@@ -101598,6 +101598,36 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_PROMOTION_ANTI_MOUNTED_SPEAR_HELP">
 			<Text>+33% [ICON_STRENGTH] Combat Strength vs Mounted units.[NEWLINE][NEWLINE]Vs Mounted Ranged units: +66% when attacking, +33% when defending.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_BLIND_SPOT">
+			<Text>Blind Spot</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_BLIND_SPOT_HELP">
+			<Text>-20% [ICON_RANGE_STRENGTH] Ranged Combat Strength when attacking an adjacent target.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_MINIMUM_RANGE">
+			<Text>Minimum Range</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_MINIMUM_RANGE_HELP">
+			<Text>Cannot attack adjacent targets.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_DOCKED">
+			<Text>Docked</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_DOCKED_HELP">
+			<Text>Cannot attack while inside a city.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_BROADSIDE">
+			<Text>Broadside</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_BROADSIDE_HELP">
+			<Text>+33% [ICON_STRENGTH] Combat Strength when attacking cities.[NEWLINE]Lost on upgrade.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_COMBATMOD_LEKMOD_ADJACENT_RANGED">
+			<Text>Attacking an adjacent target</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_DREADNOUGHT">
+			<Text>Dreadnought</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_ADJACENT_FEATURE">
 			<Text>[NEWLINE][ICON_BULLET]Next to {2_FeatureName}: {1_Num}%</Text>
 		</Row>
@@ -140066,7 +140096,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_CARTHAGINIAN_QUINQUEREME_STRATEGY"> 
 			<Text>
-				Recieved for free upon building the [ICON_WONDER_GREAT_LIGHTHOUSE] [COLOR_YELLOW]Great Lighthouse[ENDCOLOR], the Quinquereme is a powerful ealy exploration unit that can use it's abiliy to cross Deep Ocean to discover lands that would otherwise be inaccessible, or to deal a decisive blow in early naval wars.[NEWLINE]You only get one, so use it wisely!
+				The Quinquereme is the upgrade of the Trireme.[NEWLINE]It is fast, starts with Boarding Party I and carries embarked units along with it (Swift Transport), but it cannot enter Ocean and is weak against cities.[NEWLINE][NEWLINE]Building the [ICON_WONDER_GREAT_LIGHTHOUSE] Great Lighthouse also gives you one for free.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_CATAPULT"> 
@@ -140242,7 +140272,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_ENGLISH_SHIPOFTHELINE_STRATEGY"> 
 			<Text>
-				The Ship of the Line is the English unique unit, replacing the Frigate. The Ship of the Line has a slightly higher Ranged Combat strength than the Frigate, and it's slightly cheaper to produce. It can see one hex farther than the Frigate, allowing it to spot enemies in a significantly larger section of ocean.
+				The Ship of the Line is a heavy alternative to the Frigate.[NEWLINE]It has a higher Ranged Combat Strength and a bonus against cities, but it is slower, more expensive and needs 4 Iron.[NEWLINE][NEWLINE]It cannot be upgraded into; Ships of the Line upgrade to Dreadnoughts.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_EXPERIENCE_INFO"> 
@@ -140715,7 +140745,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CARTHAGINIAN_QUINQUEREME"> 
 			<Text>
-				May not be constructed, instead is only created upon building the [ICON_WONDER_GREAT_LIGHTHOUSE] [COLOR_YELLOW]Great Lighthouse[ENDCOLOR]. Strong exploation unit that may enter Deep Ocean tiles. May not pillage tile Improvements or plunder [ICON_INTERNATIONAL_TRADE] Trade Routes.
+				Medieval naval melee unit that cannot enter Ocean.[NEWLINE]Can pillage tile improvements and plunder [ICON_INTERNATIONAL_TRADE] Trade Routes.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_QUINQ"> 
@@ -141140,7 +141170,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_SHIPOFTHELINE"> 
 			<Text>
-				Unique units which replaces the Frigate. Only the English may build it. It has much better combat capabilities.
+				Renaissance ranged naval unit, stronger and slower than the Frigate.[NEWLINE]+33% when attacking cities (lost on upgrade).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_SHOSHONE_COMANCHE_RIDERS"> 

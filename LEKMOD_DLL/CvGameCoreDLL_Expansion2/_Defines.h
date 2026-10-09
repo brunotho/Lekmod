@@ -938,6 +938,9 @@
 #define LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 // Improvement_YieldPerOwnerEra: improvement yield x (owner's current era + 1), e.g. the Great Musician's Festival
 #define LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA
+// Naval penalty promotions: UnitPromotions.AdjacentRangedAttackMod (Blind Spot), NoAdjacentRangedAttack (Minimum Range),
+// NoAttackFromCity (Docked); looked up from the unit's promotions, no saved unit fields
+#define LEKMOD_NAVAL_PENALTY_PROMOTIONS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

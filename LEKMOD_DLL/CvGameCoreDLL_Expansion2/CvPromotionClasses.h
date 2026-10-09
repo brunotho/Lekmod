@@ -238,6 +238,11 @@ public:
 	const char* GetSound() const;
 	void SetSound(const char* szVal);
 
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+	int GetAdjacentRangedAttackMod() const;
+	bool IsNoAdjacentRangedAttack() const;
+	bool IsNoAttackFromCity() const;
+#endif
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 	int GetUnitCombatAttackModifierPercent(int i) const;
 	int GetUnitCombatDefenseModifierPercent(int i) const;
@@ -518,6 +523,11 @@ protected:
 	int* m_piFeatureAttackPercent;
 	int* m_piFeatureDefensePercent;
 	int* m_piUnitCombatModifierPercent;
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+	int m_iAdjacentRangedAttackMod;
+	bool m_bNoAdjacentRangedAttack;
+	bool m_bNoAttackFromCity;
+#endif
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 	int* m_piUnitCombatAttackModifierPercent;
 	int* m_piUnitCombatDefenseModifierPercent;

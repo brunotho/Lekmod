@@ -976,3 +976,23 @@ Tags: units
 The Festival grows with the eras.
 - Changed: the Festival yields 1 Culture and 1 Gold per era of its owner (Ancient Era 1, Classical Era 2, Renaissance Era 4...) instead of 4 Culture
 - DLL: Improvement_YieldPerOwnerEra; plot yields refresh when a team enters a new era (LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA)
+
+NAVAL REWORK
+------------
+Tags: units, naval
+New upgrade paths, a buildable Quinquereme, the Ship of the Line for everyone, the new Dreadnought and penalties for early warships.
+- Changed: Triremes (and unique replacements) upgrade to the Quinquereme
+- Changed: Quinquereme: buildable by all civs at Compass (cost 53, was only from the Great Lighthouse), 13 Strength, 5 movement, cannot enter Ocean, can pillage and plunder trade routes, starts with Boarding Party I; upgrades to Privateer; obsolete at Navigation
+- Changed: Caravel: 16 Strength (was 20), 6 movement (was 5), cost 80 -> 68, sight 4 (was 3; no longer kept on upgrade); Caravels (and unique replacements) upgrade to the Privateer
+- Changed: Privateer and its unique replacements: 3 less Strength, 15% cheaper (Privateer 27 -> 24, cost 100 -> 85), no longer heal when they destroy a unit, start with Marauder
+- Added: Quinquereme, Caravel, Privateer (and their unique replacements): -25% when attacking cities
+- Changed: Frigate: obsolete at Steam Power (was Electronics), upgrades to Dreadnought
+- Changed: Ship of the Line is no longer English: all civs can build it at Navigation alongside the Frigate. 25 Strength, 33 Ranged Strength, 5 movement, cost 167, 4 Iron, +33% vs cities (Broadside, lost on upgrade); obsolete at Steam Power, upgrades to Dreadnought
+- Added: Dreadnought (Steam Power): ranged ship, 33 Strength, 43 Ranged Strength, range 2, 2 movement (double movement on Coast), cost 184, 4 Iron and 1 Coal; upgrades to Battleship
+- Added: Blind Spot (-20% when attacking an adjacent target): Galley, Galleass, Frigate, Ship of the Line, Dreadnought
+- Added: Minimum Range (cannot attack adjacent targets): Battleship, Missile Cruiser
+- Added: Docked (cannot attack from inside a city): Galley, Galleass, Frigate, Ship of the Line, Dreadnought, Battleship, Missile Cruiser
+- Added: Swift Transport for Quinquereme, Caravel, Privateer, Frigate, Ship of the Line, Ironclad, Dreadnought, Destroyer, Battleship, Heavy Cruiser, Missile Cruiser
+- Removed: England no longer has the Ship of the Line as a unique unit (civ changes come later)
+- Note: unique replacements of the named classes get the same promotions; the Quinquereme's and Dreadnought's obsolete techs (Navigation, Electronics) were not in the spec
+- DLL: UnitPromotions.AdjacentRangedAttackMod / NoAdjacentRangedAttack / NoAttackFromCity (LEKMOD_NAVAL_PENALTY_PROMOTIONS); promotion IDs 368-371

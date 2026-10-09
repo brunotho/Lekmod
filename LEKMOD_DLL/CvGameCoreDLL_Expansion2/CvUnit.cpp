@@ -13876,6 +13876,16 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 	if (bAttacking)
 	{
 		iModifier += getAttackModifier();
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+		// Blind Spot: ranged attack on an adjacent target
+		{
+			const CvPlot* pBlindSpotTarget = (pOtherUnit != NULL) ? pOtherUnit->plot() : ((pCity != NULL) ? pCity->plot() : NULL);
+			if (pBlindSpotTarget != NULL && plotDistance(getX(), getY(), pBlindSpotTarget->getX(), pBlindSpotTarget->getY()) == 1)
+			{
+				iModifier += GetLekmodAdjacentRangedAttackMod();
+			}
+		}
+#endif
 #ifdef AUI_UNIT_FIX_BAD_BONUS_STACKS
 		// Hills
 		if (pMyPlot && pMyPlot->isHills())
@@ -14481,6 +14491,18 @@ int CvUnit::GetMaxAttackStrength(const CvCombatInfo& kInfo, CvCombatModifierList
 #endif
 	int iModifier = GetGenericMaxStrengthModifier(kInfo, kModifierList);
 	int iTempModifier = 0;
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+	// Blind Spot: ranged attack on an adjacent target
+	if (kInfo.getAttackIsRanged() && pFromPlot != NULL && pToPlot != NULL && plotDistance(pFromPlot->getX(), pFromPlot->getY(), pToPlot->getX(), pToPlot->getY()) == 1)
+	{
+		iTempModifier = GetLekmodAdjacentRangedAttackMod();
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_LEKMOD_ADJACENT_RANGED", iTempModifier);
+		}
+	}
+#endif
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 	// Promotion modifiers vs a unit combat type that apply only when attacking / only when defending
 	if (pDefender != NULL && pDefender->getUnitCombatType() != NO_UNITCOMBAT)
@@ -17139,6 +17161,66 @@ int CvUnit::unitClassDefenseModifier(UnitClassTypes eUnitClass) const
 
 
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+//	--------------------------------------------------------------------------------
+// Promotions with a naval penalty flag, collected once (game data is fixed after loading)
+static const std::vector<PromotionTypes>& LekmodNavalPenaltyPromotions()
+{
+	static std::vector<PromotionTypes> s_aPromotions;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		s_bInit = true;
+		for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
+		{
+			CvPromotionEntry* pkPromotion = GC.getPromotionInfo((PromotionTypes)iPromotion);
+			if (pkPromotion && (pkPromotion->GetAdjacentRangedAttackMod() != 0 || pkPromotion->IsNoAdjacentRangedAttack() || pkPromotion->IsNoAttackFromCity()))
+			{
+				s_aPromotions.push_back((PromotionTypes)iPromotion);
+			}
+		}
+	}
+	return s_aPromotions;
+}
+//	--------------------------------------------------------------------------------
+/// Blind Spot: combat modifier for ranged attacks on an adjacent target
+int CvUnit::GetLekmodAdjacentRangedAttackMod() const
+{
+	int iMod = 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodNavalPenaltyPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+	{
+		if (isHasPromotion(aPromotions[i]))
+			iMod += GC.getPromotionInfo(aPromotions[i])->GetAdjacentRangedAttackMod();
+	}
+	return iMod;
+}
+//	--------------------------------------------------------------------------------
+/// Minimum Range: may not ranged attack adjacent targets
+bool CvUnit::IsLekmodNoAdjacentRangedAttack() const
+{
+	const std::vector<PromotionTypes>& aPromotions = LekmodNavalPenaltyPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+	{
+		if (isHasPromotion(aPromotions[i]) && GC.getPromotionInfo(aPromotions[i])->IsNoAdjacentRangedAttack())
+			return true;
+	}
+	return false;
+}
+//	--------------------------------------------------------------------------------
+/// Docked: may not attack while in a city
+bool CvUnit::IsLekmodNoAttackFromCity() const
+{
+	const std::vector<PromotionTypes>& aPromotions = LekmodNavalPenaltyPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+	{
+		if (isHasPromotion(aPromotions[i]) && GC.getPromotionInfo(aPromotions[i])->IsNoAttackFromCity())
+			return true;
+	}
+	return false;
+}
+#endif
+
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 //	--------------------------------------------------------------------------------
 /// Sum of the unit's promotions' UnitPromotions_UnitCombatMods.Attack (or .Defense) vs a unit combat type
@@ -24101,6 +24183,18 @@ bool CvUnit::canEverRangeStrikeAt(int iX, int iY) const
 	{
 		return false;
 	}
+#ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+	// Minimum Range: no ranged attacks on adjacent targets
+	if (plotDistance(pSourcePlot->getX(), pSourcePlot->getY(), pTargetPlot->getX(), pTargetPlot->getY()) <= 1 && IsLekmodNoAdjacentRangedAttack())
+	{
+		return false;
+	}
+	// Docked: no attacks from inside a city
+	if (pSourcePlot->isCity() && IsLekmodNoAttackFromCity())
+	{
+		return false;
+	}
+#endif
 
 	// Ignores LoS or can see the plot directly?
 	if(!IsRangeAttackIgnoreLOS() && getDomainType() != DOMAIN_AIR)
