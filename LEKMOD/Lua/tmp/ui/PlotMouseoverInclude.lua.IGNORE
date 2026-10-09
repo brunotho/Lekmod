@@ -272,10 +272,38 @@ function LekmodResourceImprovementString(plot, pResource)
 			-- A city founded here gets only the base yields (and connects a luxury or strategic resource)
 			local strSettle = (pResource.ResourceUsage ~= nil and pResource.ResourceUsage > 0) and "TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE" or "TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE_BONUS";
 			return "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns) .. strYields
-				.. "[NEWLINE]" .. Locale.ConvertTextKey(strSettle);
+				.. "[NEWLINE]" .. Locale.ConvertTextKey(strSettle) .. LekmodResourceSettleEffectsString(pResource);
 		end
 	end
 	return "";
+end
+
+-- LEKMOD: special effects for a city founded on the resource (Resources.FoundCity* and CityCenter* columns)
+function LekmodResourceSettleEffectsString(pResource)
+	local str = "";
+	local strTech = "";
+	if (pResource.FoundCityTech ~= nil and GameInfo.Technologies[pResource.FoundCityTech] ~= nil) then
+		strTech = " " .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WITH_TECH", GameInfo.Technologies[pResource.FoundCityTech].Description);
+	end
+	if (pResource.FoundCityPopulation ~= nil and pResource.FoundCityPopulation ~= 0) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_POPULATION", pResource.FoundCityPopulation) .. strTech;
+	end
+	if (pResource.FoundCityFood ~= nil and pResource.FoundCityFood ~= 0) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_FOOD", pResource.FoundCityFood) .. strTech;
+	end
+	if (pResource.FoundCityBuildingClass ~= nil and GameInfo.BuildingClasses[pResource.FoundCityBuildingClass] ~= nil) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_BUILDING", GameInfo.BuildingClasses[pResource.FoundCityBuildingClass].Description) .. strTech;
+	end
+	if (pResource.CityCenterUnitCombat ~= nil and GameInfo.UnitCombatInfos[pResource.CityCenterUnitCombat] ~= nil) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_UNITCOMBAT", pResource.CityCenterUnitCombatProductionMod, GameInfo.UnitCombatInfos[pResource.CityCenterUnitCombat].Description);
+	end
+	if (pResource.CityCenterWonderProductionMod ~= nil and pResource.CityCenterWonderProductionMod ~= 0) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WONDERS", pResource.CityCenterWonderProductionMod);
+	end
+	if (str ~= "") then
+		str = "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_EFFECTS") .. str;
+	end
+	return str;
 end
 
 

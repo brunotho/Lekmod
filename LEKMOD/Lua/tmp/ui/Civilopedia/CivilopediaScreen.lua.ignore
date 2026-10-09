@@ -4682,14 +4682,13 @@ CivilopediaCategory[CategoryResources].SelectArticle = function( resourceID, sho
 			end
 			UpdateButtonFrame( buttonAdded, Controls.ImprovementsInnerFrame, Controls.ImprovementsFrame );	 	  
 			
-			-- game info
+			-- game info (LEKMOD: generated from the data: improved yields, build time, settle-on effects; no history text)
+			local strGameInfo = LekmodResourcePediaInfo(thisResource);
 			if (thisResource.Help) then
-				UpdateTextBlock( Locale.ConvertTextKey( thisResource.Help ), Controls.GameInfoLabel, Controls.GameInfoInnerFrame, Controls.GameInfoFrame );
+				strGameInfo = Locale.ConvertTextKey( thisResource.Help ) .. "[NEWLINE][NEWLINE]" .. strGameInfo;
 			end
-
-			-- generic text
-			if (thisResource.Civilopedia) then
-				UpdateTextBlock( Locale.ConvertTextKey( thisResource.Civilopedia ), Controls.HistoryLabel, Controls.HistoryInnerFrame, Controls.HistoryFrame );
+			if (strGameInfo ~= "") then
+				UpdateTextBlock( strGameInfo, Controls.GameInfoLabel, Controls.GameInfoInnerFrame, Controls.GameInfoFrame );
 			end
 
 			
@@ -4703,6 +4702,77 @@ CivilopediaCategory[CategoryResources].SelectArticle = function( resourceID, sho
 
 end
 
+
+-- LEKMOD: gameplay text for a resource page, built from the data
+function LekmodResourcePediaInfo(thisResource)
+	local lines = {};
+	local condition = "ResourceType = '" .. thisResource.Type .. "'";
+	for row in GameInfo.Improvement_ResourceTypes( condition ) do
+		local thisImprovement = GameInfo.Improvements[row.ImprovementType];
+		-- only improvements every civ can build (no Moai, Brazilwood Camp...)
+		if (thisImprovement ~= nil and not thisImprovement.SpecificCivRequired and GameInfo.Builds{ ImprovementType = thisImprovement.Type }() ~= nil) then
+			-- yields the improvement adds on this resource (resource-specific rows plus the improvement's own yields)
+			local yields = {};
+			for yieldRow in GameInfo.Improvement_ResourceType_Yields{ ImprovementType = thisImprovement.Type, ResourceType = thisResource.Type } do
+				yields[yieldRow.YieldType] = (yields[yieldRow.YieldType] or 0) + yieldRow.Yield;
+			end
+			for yieldRow in GameInfo.Improvement_Yields{ ImprovementType = thisImprovement.Type } do
+				yields[yieldRow.YieldType] = (yields[yieldRow.YieldType] or 0) + yieldRow.Yield;
+			end
+			local strYields = "";
+			for pYield in GameInfo.Yields() do
+				local iYield = yields[pYield.Type];
+				if (iYield ~= nil and iYield ~= 0) then
+					strYields = strYields .. " " .. ((iYield > 0) and "+" or "") .. iYield .. pYield.IconString;
+				end
+			end
+			if (strYields == "") then
+				strYields = " " .. Locale.ConvertTextKey("TXT_KEY_PEDIA_NO_YIELD");
+			end
+			table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_PEDIA_RESOURCE_IMPROVED", thisImprovement.Description) .. strYields);
+		end
+	end
+	-- extra build time, in turns for one Worker at the current game speed
+	if (thisResource.ImprovementBuildTimeChange ~= nil and thisResource.ImprovementBuildTimeChange > 0) then
+		local pSpeed = GameInfo.GameSpeeds[PreGame.GetGameSpeed()];
+		local iPercent = pSpeed and pSpeed.BuildPercent or 100;
+		local iTurns = math.floor(thisResource.ImprovementBuildTimeChange * iPercent / 10000 + 0.5);
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_PEDIA_RESOURCE_BUILD_TIME", iTurns));
+	end
+	local strInfo = table.concat(lines, "[NEWLINE]");
+	local strSettle = LekmodResourcePediaSettleInfo(thisResource);
+	if (strSettle ~= "") then
+		strInfo = strInfo .. ((strInfo ~= "") and "[NEWLINE][NEWLINE]" or "") .. strSettle;
+	end
+	return strInfo;
+end
+
+function LekmodResourcePediaSettleInfo(pResource)
+	local str = "";
+	local strTech = "";
+	if (pResource.FoundCityTech ~= nil and GameInfo.Technologies[pResource.FoundCityTech] ~= nil) then
+		strTech = " " .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WITH_TECH", GameInfo.Technologies[pResource.FoundCityTech].Description);
+	end
+	if (pResource.FoundCityPopulation ~= nil and pResource.FoundCityPopulation ~= 0) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_POPULATION", pResource.FoundCityPopulation) .. strTech;
+	end
+	if (pResource.FoundCityFood ~= nil and pResource.FoundCityFood ~= 0) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_FOOD", pResource.FoundCityFood) .. strTech;
+	end
+	if (pResource.FoundCityBuildingClass ~= nil and GameInfo.BuildingClasses[pResource.FoundCityBuildingClass] ~= nil) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_BUILDING", GameInfo.BuildingClasses[pResource.FoundCityBuildingClass].Description) .. strTech;
+	end
+	if (pResource.CityCenterUnitCombat ~= nil and GameInfo.UnitCombatInfos[pResource.CityCenterUnitCombat] ~= nil) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_UNITCOMBAT", pResource.CityCenterUnitCombatProductionMod, GameInfo.UnitCombatInfos[pResource.CityCenterUnitCombat].Description);
+	end
+	if (pResource.CityCenterWonderProductionMod ~= nil and pResource.CityCenterWonderProductionMod ~= 0) then
+		str = str .. "[NEWLINE][ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WONDERS", pResource.CityCenterWonderProductionMod);
+	end
+	if (str ~= "") then
+		str = Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_SETTLE_EFFECTS") .. str;
+	end
+	return str;
+end
 
 CivilopediaCategory[CategoryImprovements].SelectArticle = function( improvementID, shouldAddToList )
 	print("CivilopediaCategory[CategoryImprovements].SelectArticle");

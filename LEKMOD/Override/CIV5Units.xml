@@ -135949,7 +135949,7 @@
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
 			<ResourceType>RESOURCE_SPICES</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>-4</Yield> 
 		</Row>
 		<Row> 
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
@@ -136033,7 +136033,7 @@
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
 			<ResourceType>RESOURCE_SPICES</ResourceType> 
 			<YieldType>YIELD_FOOD</YieldType> 
-			<Yield>1</Yield> 
+			<Yield>3</Yield> 
 		</Row>
 		<Row> 
 			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType> 
@@ -136138,6 +136138,12 @@
 			<YieldType>YIELD_CULTURE</YieldType> 
 			<Yield>2</Yield> 
 		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_PLANTATION</ImprovementType>
+			<ResourceType>RESOURCE_PERFUME</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
 		<Row> 
 			<ImprovementType>IMPROVEMENT_FISHING_BOATS</ImprovementType> 
 			<ResourceType>RESOURCE_CORAL</ResourceType> 
@@ -136174,7 +136180,7 @@
 			<ImprovementType>IMPROVEMENT_MINE</ImprovementType> 
 			<ResourceType>RESOURCE_GEMS</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>1</Yield> 
+			<Yield>4</Yield> 
 		</Row>
 		<!--
 		<Row> 
@@ -193373,7 +193379,12 @@
 		<Row> 
 			<ResourceType>RESOURCE_GEMS</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>3</Yield> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row>
+			<ResourceType>RESOURCE_GEMS</ResourceType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
 		</Row>
 		<Row> 
 			<ResourceType>RESOURCE_MARBLE</ResourceType> 
@@ -193398,7 +193409,7 @@
 		<Row> 
 			<ResourceType>RESOURCE_SPICES</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>5</Yield> 
 		</Row>
 		<Row> 
 			<ResourceType>RESOURCE_SILK</ResourceType> 
@@ -193523,7 +193534,12 @@
 		<Row> 
 			<ResourceType>RESOURCE_PERFUME</ResourceType> 
 			<YieldType>YIELD_GOLD</YieldType> 
-			<Yield>2</Yield> 
+			<Yield>1</Yield> 
+		</Row>
+		<Row>
+			<ResourceType>RESOURCE_PERFUME</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
 		</Row>
 		<Row> 
 			<ResourceType>RESOURCE_CORAL</ResourceType>
@@ -193636,7 +193652,16 @@
 		<Column name="AmountMajor" type="integer"  default="0"/>
 		<Column name="NoRegional" type="boolean"  default="false"/>
 		<Column name="Special" type="boolean"  default="false"/>
-	</Table> 
+		<!-- LEKMOD_RESOURCE_CITY_EFFECTS -->
+		<Column name="ImprovementBuildTimeChange" type="integer" default="0"/>
+		<Column name="FoundCityTech" type="text" reference="Technologies(Type)" default="NULL"/>
+		<Column name="FoundCityPopulation" type="integer" default="0"/>
+		<Column name="FoundCityFood" type="integer" default="0"/>
+		<Column name="FoundCityBuildingClass" type="text" reference="BuildingClasses(Type)" default="NULL"/>
+		<Column name="CityCenterWonderProductionMod" type="integer" default="0"/>
+		<Column name="CityCenterUnitCombat" type="text" reference="UnitCombatInfos(Type)" default="NULL"/>
+		<Column name="CityCenterUnitCombatProductionMod" type="integer" default="0"/>
+	</Table>
 	<Resources>
 		<Delete />
 
@@ -195981,9 +196006,40 @@
 			<OnlyMinorCivs>false</OnlyMinorCivs> 
 			<IconString>[ICON_RES_COCONUT]</IconString> 
 			<PortraitIndex>13</PortraitIndex> 
-			<IconAtlas>EVEN_MORE_RESOURCES_ATLAS_A</IconAtlas> 
+			<IconAtlas>EVEN_MORE_RESOURCES_ATLAS_A</IconAtlas>
 		</Row>
-	</Resources> 
+	</Resources>
+	<!-- LEKMOD_RESOURCE_CITY_EFFECTS: longer improvement time (standard-speed build units; 150 = 1 turn on quick) and settle-on effects -->
+	<Resources>
+		<Update>
+			<Where Type="RESOURCE_PERFUME"/>
+			<Set ImprovementBuildTimeChange="150"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_GEMS"/>
+			<Set ImprovementBuildTimeChange="300"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_SALT"/>
+			<Set FoundCityTech="TECH_POTTERY" FoundCityPopulation="1"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_STONE"/>
+			<Set FoundCityTech="TECH_MASONRY" FoundCityBuildingClass="BUILDINGCLASS_WALLS"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_COW"/>
+			<Set FoundCityTech="TECH_ANIMAL_HUSBANDRY" FoundCityFood="4"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_RUBBER"/>
+			<Set CityCenterUnitCombat="UNITCOMBAT_ARMOR" CityCenterUnitCombatProductionMod="40"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_MARBLE"/>
+			<Set CityCenterWonderProductionMod="20"/>
+		</Update>
+	</Resources>
 
 	<Table name="Route_ResourceQuantityRequirements">
 		<Column name="RouteType" type="text"  />

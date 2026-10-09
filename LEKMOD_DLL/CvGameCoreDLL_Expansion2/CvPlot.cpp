@@ -2755,6 +2755,22 @@ int CvPlot::getBuildTime(BuildTypes eBuild, PlayerTypes ePlayer) const
 			iTime += GET_TEAM(eTeam).getBuildTimeChange(eBuild);
 		}
 	}
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	// Some resources take longer to improve (only the improvement that connects them)
+	if (ePlayer != NO_PLAYER)
+	{
+		const ResourceTypes eResource = getResourceType(GET_PLAYER(ePlayer).getTeam());
+		const ImprovementTypes eBuildImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild)->getImprovement();
+		if (eResource != NO_RESOURCE && eBuildImprovement != NO_IMPROVEMENT)
+		{
+			CvImprovementEntry* pkImprovement = GC.getImprovementInfo(eBuildImprovement);
+			if (pkImprovement && pkImprovement->IsImprovementResourceMakesValid(eResource))
+			{
+				iTime += GC.getResourceInfo(eResource)->getImprovementBuildTimeChange();
+			}
+		}
+	}
+#endif
 
 	// Repair is either 3 turns or the original build time, whichever is shorter
 	if(GC.getBuildInfo(eBuild)->isRepair())

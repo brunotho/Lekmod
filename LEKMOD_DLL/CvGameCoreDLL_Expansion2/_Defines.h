@@ -926,6 +926,10 @@
 // Lobby option GAMEOPTION_LEKMOD_WAR_START: major civs are at war when they meet; no peace before turn LEKMOD_WAR_START_PEACE_TURN
 #define LEKMOD_WAR_START
 #define LEKMOD_WAR_START_PEACE_TURN 20
+// Resource columns: ImprovementBuildTimeChange (extra build time for the improvement that connects the resource),
+// FoundCity* (one-time effects for a city founded on the resource, with FoundCityTech known) and
+// CityCenter* (production bonuses while a city stands on the resource)
+#define LEKMOD_RESOURCE_CITY_EFFECTS
 // We Love The King Day initial seed now scales with game speed
 #define NQ_WLTKD_SEED_SCALES_WITH_GAME_SPEED
 // Trade Route duration now scales with game speed

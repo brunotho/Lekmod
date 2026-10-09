@@ -973,6 +973,39 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 		}
 	}
 
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	// One-time effects for founding the city on a resource (Salt, Stone, Cattle...)
+	if (bInitialFounding)
+	{
+		const ResourceTypes eResource = plot()->getResourceType();
+		CvResourceInfo* pkResource = (eResource != NO_RESOURCE) ? GC.getResourceInfo(eResource) : NULL;
+		if (pkResource)
+		{
+			const TechTypes eTech = pkResource->getFoundCityTech();
+			if (eTech == NO_TECH || GET_TEAM(getTeam()).GetTeamTechs()->HasTech(eTech))
+			{
+				if (pkResource->getFoundCityPopulation() != 0)
+				{
+					changePopulation(pkResource->getFoundCityPopulation());
+				}
+				if (pkResource->getFoundCityFood() != 0)
+				{
+					changeFood(pkResource->getFoundCityFood());
+				}
+				const BuildingClassTypes eBuildingClass = pkResource->getFoundCityBuildingClass();
+				if (eBuildingClass != NO_BUILDINGCLASS)
+				{
+					const BuildingTypes eBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(eBuildingClass);
+					if (eBuilding != NO_BUILDING && m_pCityBuildings->GetNumRealBuilding(eBuilding) == 0)
+					{
+						m_pCityBuildings->SetNumFreeBuilding(eBuilding, 1);
+					}
+				}
+			}
+		}
+	}
+#endif
+
 	// How long before this City picks a Resource to demand?
 	DoSeedResourceDemandedCountdown();
 
@@ -6772,6 +6805,20 @@ int CvCity::getProductionModifier(UnitTypes eUnit, CvString* toolTipSink) const
 		{
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_UNIT_COMBAT_TYPE", iTempMod);
 		}
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+		// City built on a resource (e.g. Rubber: armored units)
+		const ResourceTypes eCenterResource = plot()->getResourceType();
+		if (eCenterResource != NO_RESOURCE)
+		{
+			CvResourceInfo* pkCenterResource = GC.getResourceInfo(eCenterResource);
+			if (pkCenterResource && pkCenterResource->getCityCenterUnitCombat() == eUnitCombatType)
+			{
+				iTempMod = pkCenterResource->getCityCenterUnitCombatProductionMod();
+				iMultiplier += iTempMod;
+				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_CITY_CENTER_RESOURCE", iTempMod, pkCenterResource->GetTextKey());
+			}
+		}
+#endif
 	}
 
 	// Military production bonus (only for units with actual combat or ranged combat strength)
@@ -10827,6 +10874,31 @@ int CvCity::GetLocalResourceWonderProductionMod(BuildingTypes eBuilding, CvStrin
 			}
 		}
 
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+		// City built on a resource (e.g. Marble): extra bonus for wonders before the resource's obsolete era
+		const ResourceTypes eCenterResource = plot()->getResourceType();
+		CvResourceInfo* pkCenterResource = (eCenterResource != NO_RESOURCE) ? GC.getResourceInfo(eCenterResource) : NULL;
+		if (pkCenterResource && pkCenterResource->getCityCenterWonderProductionMod() != 0)
+		{
+			bool bValidEra = true;
+			const EraTypes eObsoleteEra = pkCenterResource->getWonderProductionModObsoleteEra();
+			const TechTypes eTech = (TechTypes)pkBuildingInfo->GetPrereqAndTech();
+			if (eObsoleteEra != NO_ERA && eTech != NO_TECH)
+			{
+				CvTechEntry* pTechEntry = GC.GetGameTechs()->GetEntry(eTech);
+				if (pTechEntry && pTechEntry->GetEra() >= eObsoleteEra)
+				{
+					bValidEra = false;
+				}
+			}
+			if (bValidEra)
+			{
+				const int iBonus = pkCenterResource->getCityCenterWonderProductionMod();
+				iMultiplier += iBonus;
+				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_CITY_CENTER_RESOURCE", iBonus, pkCenterResource->GetTextKey());
+			}
+		}
+#endif
 	}
 
 	return iMultiplier;

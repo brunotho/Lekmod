@@ -101556,6 +101556,36 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_SETTLE_BONUS">
 			<Text>A city founded here gets only the base yields.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_EFFECTS">
+			<Text>A city founded on it also gets:</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WITH_TECH">
+			<Text>(if you know {1_Tech:textkey})</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_POPULATION">
+			<Text>+{1_Num} [ICON_CITIZEN] Population</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_FOOD">
+			<Text>+{1_Num} [ICON_FOOD] Food in storage</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_BUILDING">
+			<Text>free {1_Building:textkey}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_UNITCOMBAT">
+			<Text>+{1_Num}% [ICON_PRODUCTION] Production towards {2_UnitCombat:textkey}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WONDERS">
+			<Text>+{1_Num}% [ICON_PRODUCTION] Production towards Ancient and Classical era Wonders</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PEDIA_RESOURCE_IMPROVED">
+			<Text>With a {1_Improvement:textkey}:</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PEDIA_RESOURCE_BUILD_TIME">
+			<Text>The improvement takes {1_Num} more {1_Num: plural 1?turn; other?turns;} to build than usual.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_CITY_CENTER_RESOURCE">
+			<Text>[NEWLINE][ICON_BULLET]City built on {2_ResourceName}: {1_Num}%</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CS_BANNER_PLEDGE_MINE">
 			<Text>You have pledged to protect this city-state.</Text>
 		</Row>

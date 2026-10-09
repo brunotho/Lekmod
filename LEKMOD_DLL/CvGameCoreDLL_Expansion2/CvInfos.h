@@ -1468,6 +1468,16 @@ public:
 	int getHappiness() const;
 	int getWonderProductionMod() const;
 	EraTypes getWonderProductionModObsoleteEra() const;
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	int getImprovementBuildTimeChange() const;
+	TechTypes getFoundCityTech() const;
+	int getFoundCityPopulation() const;
+	int getFoundCityFood() const;
+	BuildingClassTypes getFoundCityBuildingClass() const;
+	int getCityCenterWonderProductionMod() const;
+	UnitCombatTypes getCityCenterUnitCombat() const;
+	int getCityCenterUnitCombatProductionMod() const;
+#endif
 	int getMinAreaSize() const;
 	int getMinLatitude() const;
 	int getMaxLatitude() const;
@@ -1550,6 +1560,16 @@ protected:
 	int m_iAIObjective;
 	int m_iHappiness;
 	int m_iWonderProductionMod;
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	int m_iImprovementBuildTimeChange;
+	TechTypes m_eFoundCityTech;
+	int m_iFoundCityPopulation;
+	int m_iFoundCityFood;
+	BuildingClassTypes m_eFoundCityBuildingClass;
+	int m_iCityCenterWonderProductionMod;
+	UnitCombatTypes m_eCityCenterUnitCombat;
+	int m_iCityCenterUnitCombatProductionMod;
+#endif
 	int m_iMinAreaSize;
 	int m_iMinLatitude;
 	int m_iMaxLatitude;

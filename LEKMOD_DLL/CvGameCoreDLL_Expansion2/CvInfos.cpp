@@ -4704,6 +4704,16 @@ CvResourceInfo::CvResourceInfo() :
 	m_iHappiness(0),
 	m_iWonderProductionMod(0),
 	m_eWonderProductionModObsoleteEra(NO_ERA),
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	m_iImprovementBuildTimeChange(0),
+	m_eFoundCityTech(NO_TECH),
+	m_iFoundCityPopulation(0),
+	m_iFoundCityFood(0),
+	m_eFoundCityBuildingClass(NO_BUILDINGCLASS),
+	m_iCityCenterWonderProductionMod(0),
+	m_eCityCenterUnitCombat(NO_UNITCOMBAT),
+	m_iCityCenterUnitCombatProductionMod(0),
+#endif
 	m_iMinAreaSize(0),
 	m_iMinLatitude(0),
 	m_iMaxLatitude(0),
@@ -4834,6 +4844,48 @@ EraTypes CvResourceInfo::getWonderProductionModObsoleteEra() const
 {
 	return m_eWonderProductionModObsoleteEra;
 }
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+//------------------------------------------------------------------------------
+int CvResourceInfo::getImprovementBuildTimeChange() const
+{
+	return m_iImprovementBuildTimeChange;
+}
+//------------------------------------------------------------------------------
+TechTypes CvResourceInfo::getFoundCityTech() const
+{
+	return m_eFoundCityTech;
+}
+//------------------------------------------------------------------------------
+int CvResourceInfo::getFoundCityPopulation() const
+{
+	return m_iFoundCityPopulation;
+}
+//------------------------------------------------------------------------------
+int CvResourceInfo::getFoundCityFood() const
+{
+	return m_iFoundCityFood;
+}
+//------------------------------------------------------------------------------
+BuildingClassTypes CvResourceInfo::getFoundCityBuildingClass() const
+{
+	return m_eFoundCityBuildingClass;
+}
+//------------------------------------------------------------------------------
+int CvResourceInfo::getCityCenterWonderProductionMod() const
+{
+	return m_iCityCenterWonderProductionMod;
+}
+//------------------------------------------------------------------------------
+UnitCombatTypes CvResourceInfo::getCityCenterUnitCombat() const
+{
+	return m_eCityCenterUnitCombat;
+}
+//------------------------------------------------------------------------------
+int CvResourceInfo::getCityCenterUnitCombatProductionMod() const
+{
+	return m_iCityCenterUnitCombatProductionMod;
+}
+#endif
 //------------------------------------------------------------------------------
 int CvResourceInfo::getMinAreaSize() const
 {
@@ -5198,6 +5250,16 @@ bool CvResourceInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility
 
 	const char* szEraType = kResults.GetText("WonderProductionModObsoleteEra");
 	m_eWonderProductionModObsoleteEra = (EraTypes)GC.getInfoTypeForString(szEraType, true);
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+	m_iImprovementBuildTimeChange = kResults.GetInt("ImprovementBuildTimeChange");
+	m_eFoundCityTech = (TechTypes)GC.getInfoTypeForString(kResults.GetText("FoundCityTech"), true);
+	m_iFoundCityPopulation = kResults.GetInt("FoundCityPopulation");
+	m_iFoundCityFood = kResults.GetInt("FoundCityFood");
+	m_eFoundCityBuildingClass = (BuildingClassTypes)GC.getInfoTypeForString(kResults.GetText("FoundCityBuildingClass"), true);
+	m_iCityCenterWonderProductionMod = kResults.GetInt("CityCenterWonderProductionMod");
+	m_eCityCenterUnitCombat = (UnitCombatTypes)GC.getInfoTypeForString(kResults.GetText("CityCenterUnitCombat"), true);
+	m_iCityCenterUnitCombatProductionMod = kResults.GetInt("CityCenterUnitCombatProductionMod");
+#endif
 
 	m_iMinAreaSize = kResults.GetInt("MinAreaSize");
 	m_iMinLatitude = kResults.GetInt("MinLatitude");

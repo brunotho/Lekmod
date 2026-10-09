@@ -857,3 +857,29 @@ Coast tiles give more food, and sea resources lean towards production and their 
 - Changed: Pearls: unimproved +2 Gold (was +1 Gold); Fishing Boats +2 Gold +1 Culture (was +1 Gold +1 Culture +1 Food)
 - Changed: Civilopedia pages for Coast, Lakes and Atolls show the current yields
 - Note: the spec gave Coral no unimproved Gold; it keeps 1 by the luxury minimum rule. Lakes: the lake bonus went 2 -> 1 Food so they stay at 3 (user rule)
+
+RARE LUXURIES: PERFUME, SPICES, GEMS
+------------------------------------
+Tags: game mechanics
+Three luxuries become special: each pays off in its own way, and two of them take longer to improve.
+- Changed: Perfume: unimproved +1 Gold +1 Culture (was +2 Gold); Plantation +2 Gold +2 Culture (was +2 Culture), so 3 Gold 3 Culture improved
+- Changed: Perfume Plantations take 1 more turn to build
+- Changed: Spices: unimproved +5 Gold (was +2 Gold); a Plantation turns it into a food tile: +3 Food and 4 Gold less (was +1 Food +2 Gold), so 3 Food 1 Gold improved
+- Changed: Gems: unimproved +1 Gold +1 Science (was +3 Gold); Mine +4 Gold (was +1 Gold) plus the usual +1 Production, so 1 Production 5 Gold 1 Science improved
+- Changed: Gem Mines take 2 more turns to build
+- Changed: resource Civilopedia pages show what each improvement adds, extra build time and settle-on effects, instead of history text
+- Note: the spec gave Perfume no unimproved Gold; it keeps 1 by the luxury minimum rule
+- DLL: Resources.ImprovementBuildTimeChange (standard-speed build units, 150 = 1 turn on quick), added in CvPlot::getBuildTime for the improvement that connects the resource (LEKMOD_RESOURCE_CITY_EFFECTS)
+
+SETTLE-ON EFFECTS: SALT, STONE, CATTLE, RUBBER, MARBLE
+------------------------------------------------------
+Tags: game mechanics
+Founding a city on some resources gives a bonus.
+- Added: Salt: a city founded on Salt starts with +1 Population, if you know Pottery
+- Added: Stone: a city founded on Stone gets free Walls, if you know Masonry
+- Added: Cattle: a city founded on Cattle starts with +4 Food in storage, if you know Animal Husbandry
+- Added: Rubber: a city standing on Rubber gets +40% Production towards Armored units
+- Added: Marble: a city standing on Marble gets +20% Production towards Ancient and Classical era Wonders (on top of Marble's usual +10%)
+- Added: hovering a resource tile and the resource's Civilopedia page list these effects
+- Note: Salt, Stone and Cattle only count when the city is founded (not when captured); Rubber and Marble work as long as the city stands on the resource
+- DLL: Resources.FoundCityTech/FoundCityPopulation/FoundCityFood/FoundCityBuildingClass (CvCity::init, initial founding) and CityCenterUnitCombat/CityCenterUnitCombatProductionMod/CityCenterWonderProductionMod (CvCity production modifiers) (LEKMOD_RESOURCE_CITY_EFFECTS)
