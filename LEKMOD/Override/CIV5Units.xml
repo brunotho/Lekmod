@@ -252871,6 +252871,19 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_NO_PILLAGE_HEAL</PediaEntry>
 		</Row>
+		<Row>
+			<ID>366</ID>
+			<Type>PROMOTION_STEALTH_EVASION</Type>
+			<Description>TXT_KEY_PROMOTION_STEALTH_EVASION</Description>
+			<Help>TXT_KEY_PROMOTION_STEALTH_EVASION_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<EvasionChange>80</EvasionChange>
+			<PediaType>PEDIA_AIR</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_STEALTH_EVASION</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -262985,14 +262998,6 @@
 			<PromotionType>PROMOTION_ANTI_AIR_II</PromotionType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_STEALTH_BOMBER</UnitType> 
-			<PromotionType>PROMOTION_EVASION_II</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_STEALTH_BOMBER</UnitType> 
-			<PromotionType>PROMOTION_AIR_RECON</PromotionType> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_NUCLEAR_MISSILE</UnitType> 
 			<PromotionType>PROMOTION_EVASION_II</PromotionType> 
 		</Row>
@@ -263121,10 +263126,6 @@
 			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_SUBMARINE</UnitType> 
-			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_NUCLEAR_SUBMARINE</UnitType> 
 			<PromotionType>PROMOTION_SILENT_HUNTER</PromotionType> 
 		</Row>
@@ -263151,10 +263152,6 @@
 		<Row> 
 			<UnitType>UNIT_NUCLEAR_SUBMARINE</UnitType> 
 			<PromotionType>PROMOTION_EXTRA_SIGHT_I</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_NUCLEAR_SUBMARINE</UnitType> 
-			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_BATTLESHIP</UnitType> 
@@ -264669,6 +264666,10 @@
 			<UnitType>UNIT_BUGANDA_EXPEDITIONARY_FORCE</UnitType> 
 			<PromotionType>PROMOTION_BUGANDA_WATER_PILLAGE</PromotionType> 
 		</Row>
+		<Row>
+			<UnitType>UNIT_STEALTH_BOMBER</UnitType>
+			<PromotionType>PROMOTION_STEALTH_EVASION</PromotionType>
+		</Row>
 	</Unit_FreePromotions> 
 
 	<Table name="Unit_GreatPersons">
@@ -264718,151 +264719,6 @@
 		<Delete />
 		
 		<Row> 
-			<UnitType>UNIT_CHARIOT_ARCHER</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_SWORDSMAN</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_ROMAN_LEGION</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_HORSEMAN</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_KNIGHT</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_LONGSWORDSMAN</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_JAPANESE_SAMURAI</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_LANCER</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_MC_LITE_GRANADINE_CAVALRY</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_OTTOMAN_SIPAHI</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_CAVALRY</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_RUSSIAN_COSSACK</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_TANK</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_GERMAN_PANZER</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_FIGHTER</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_BOMBER</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_AMERICAN_B17</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_MODERN_ARMOR</UnitType> 
-			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_HELICOPTER_GUNSHIP</UnitType> 
-			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_CARDOEN</UnitType> 
-			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_STEALTH_BOMBER</UnitType> 
-			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_NUCLEAR_MISSILE</UnitType> 
-			<ResourceType>RESOURCE_URANIUM</ResourceType> 
-			<Cost>2</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_MECH</UnitType> 
-			<ResourceType>RESOURCE_URANIUM</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_FRIGATE</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_BATTLESHIP</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_SS_STASIS_CHAMBER</UnitType> 
 			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
 			<Cost>1</Cost> 
@@ -264883,101 +264739,6 @@
 			<Cost>1</Cost> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_MONGOLIAN_KESHIK</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_DANISH_BERSERKER</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_BYZANTINE_CATAPHRACT</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_AUSTRIAN_HUSSAR</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_TRIPLANE</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_WWI_BOMBER</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_WWI_TANK</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_POLISH_WINGED_HUSSAR</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_SHOSHONE_COMANCHE_RIDERS</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_BERBER_CAVALRY</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_KRIS_SWORDSMAN</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_AYYUBIDS_KNIGHT</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_KONNITSA</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_ARMENIA_HORSEMAN</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>2</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_MARATHI</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_PEDITE</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_HITTITE_CHARIOT</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_SEAXMANN</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_TACHANKA</UnitType> 
 			<ResourceType>RESOURCE_HORSE</ResourceType> 
 			<Cost>1</Cost> 
@@ -264988,28 +264749,8 @@
 			<Cost>1</Cost> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_QIANLONG</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_ULAN</UnitType> 
 			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_CRUSADER</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_HUN_HORSE_ARCHER</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row>
-			<UnitType>UNIT_ARGENTINA_KNIGHT</UnitType>
-			<ResourceType>RESOURCE_HORSE</ResourceType>
 			<Cost>1</Cost> 
 		</Row>
 		<Row>
@@ -265018,29 +264759,485 @@
 			<Cost>1</Cost>
 		</Row>
 		<Row> 
-			<UnitType>UNIT_GEORGIA_KHEVSUR</UnitType> 
-			<ResourceType>RESOURCE_IRON</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_PALMYRA_CLIBANARIUS</UnitType> 
-			<ResourceType>RESOURCE_HORSE</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_YUGO_M84</UnitType> 
-			<ResourceType>RESOURCE_OIL</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_MISSILE_CRUISER</UnitType> 
-			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_IRONCLAD</UnitType> 
 			<ResourceType>RESOURCE_COAL</ResourceType> 
 			<Cost>1</Cost> 
+		</Row>
+		<!-- LEKMOD strategic requirements (2026-10-09) -->
+		<Row>
+			<UnitType>UNIT_AMERICAN_B17</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARGENTINA_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARGENTINA_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARMENIA_HORSEMAN</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARTILLERY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ASSYRIAN_SIEGE_TOWER</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AUSTRIAN_HUSSAR</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AUSTRIAN_HUSSAR</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AYYUBIDS_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AYYUBIDS_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BATTLESHIP</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>6</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BATTLESHIP</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>6</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BERBER_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BERBER_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BOMBER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BYZANTINE_CATAPHRACT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CANNON</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARRIER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CATAPULT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CHARIOT_ARCHER</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CRUSADER</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DANISH_BERSERKER</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_FIGHTER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_FRIGATE</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_GEORGIA_KHEVSUR</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_GERMAN_PANZER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_HEAVY_CRUISER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_HELICOPTER_GUNSHIP</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_HITTITE_CHARIOT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_HORSEMAN</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_HUN_HORSE_ARCHER</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_JAPANESE_SAMURAI</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_JET_FIGHTER</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_JET_FIGHTER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KHMER_WARELEPHANT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KONNITSA</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KONNITSA</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KOREAN_HWACHA</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KRIS_SWORDSMAN</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LANCER</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LONGSWORDSMAN</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_LITE_GRANADINE_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MECH</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>6</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MECH</UnitType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MECHANIZED_INFANTRY</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MISSILE_CRUISER</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>6</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MISSILE_CRUISER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>6</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MOBILE_SAM</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MOBILE_SAM</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MODERN_ARMOR</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MONGOLIAN_KESHIK</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MONGOLIAN_KESHIK</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MUGHALS_CANNON</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NUCLEAR_MISSILE</UnitType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Cost>7</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NUCLEAR_SUBMARINE</UnitType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_OTTOMAN_SIPAHI</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PALMYRA_CLIBANARIUS</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PEDITE</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_POLISH_WINGED_HUSSAR</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QIANLONG</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_QIANLONG</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ROCKET_ARTILLERY</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ROCKET_ARTILLERY</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ROCKET_CORPS</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ROMAN_BALLISTA</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ROMAN_LEGION</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_RUSSIAN_COSSACK</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_RUSSIAN_COSSACK</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SEAXMANN</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SHOSHONE_COMANCHE_RIDERS</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SHOSHONE_COMANCHE_RIDERS</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_STEALTH_BOMBER</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>6</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_STEALTH_BOMBER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SUBMARINE</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SWORDSMAN</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_TANK</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_TREBUCHET</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_TRIPLANE</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_WWI_BOMBER</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_WWI_TANK</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_YUGO_M84</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>3</Cost>
 		</Row>
 	</Unit_ResourceQuantityRequirements> 
 
@@ -275227,6 +275424,193 @@
 			<IconAtlas>LEKMOD_BUGANDA_ATLAS</IconAtlas>
 			<UnitFlagAtlas>LEKMOD_BUGANDA_EXP_FORCE_FLAG</UnitFlagAtlas>
 		</Row>
+	</Units>
+	<!-- LEKMOD unit stat and cost changes (2026-10-09); modern-era units +3% cost, atomic-era (ERA_POSTMODERN) units +5% -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_AMERICAN_B17"/>
+			<Set Cost="441"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_ANTI_AIRCRAFT_GUN"/>
+			<Set Cost="433"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_ANTI_TANK_GUN"/>
+			<Set Cost="378"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_ANTI_TANK_RIFLE"/>
+			<Set Cost="309"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BATTLESHIP"/>
+			<Set Combat="40" Cost="630" Moves="5" RangedCombat="85"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BAZOOKA"/>
+			<Set Cost="473"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BELGIUM_GREAT_WAR_INFANTRY"/>
+			<Set Cost="340"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BOERS_GREAT_WAR_INFANTRY"/>
+			<Set Cost="309"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BOMBER"/>
+			<Set Cost="441"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BRAZILIAN_PRACINHA"/>
+			<Set Cost="433"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_CANNON"/>
+			<Set RangedCombat="21"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_CARDOEN"/>
+			<Set Cost="536"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_CARRIER"/>
+			<Set Cost="433"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_CZECHIA_FOREIGN_LEGION"/>
+			<Set Cost="185"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_DESTROYER"/>
+			<Set Cost="433"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_FIGHTER"/>
+			<Set Cost="441"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_FINNISH_FOREST_PATROL"/>
+			<Set Cost="361"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_FRENCH_FOREIGNLEGION"/>
+			<Set Cost="278"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_GALLEY"/>
+			<Set Combat="6" Cost="48" Moves="3" RangedCombat="8"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_GERMAN_PANZER"/>
+			<Set Cost="473"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_GREAT_WAR_INFANTRY"/>
+			<Set Cost="340"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_HELICOPTER_GUNSHIP"/>
+			<Set Cost="536"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_INFANTRY"/>
+			<Set Combat="72" Cost="433"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_JAPANESE_ZERO"/>
+			<Set Cost="441"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_LANCER"/>
+			<Set Combat="26"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_MACHINE_GUN"/>
+			<Set Cost="402"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_MARINE"/>
+			<Set Cost="473"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_MC_NEW_ZEALAND_MAORI_BATTALION"/>
+			<Set Combat="72" Cost="433"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_MISSILE_CRUISER"/>
+			<Set Cost="714" RangedCombat="115"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_MOBILE_SAM"/>
+			<Set Cost="536"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_MODERN_ARMOR"/>
+			<Set Combat="110" Cost="594"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_NUCLEAR_MISSILE"/>
+			<Set Cost="1650"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_PARATROOPER"/>
+			<Set Combat="70" Cost="473"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_ROCKET_ARTILLERY"/>
+			<Set Cost="536" Moves="3"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_SKINFANTRY"/>
+			<Set Cost="340"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_STEALTH_BOMBER"/>
+			<Set Cost="675" RangedCombat="100"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_SUBMARINE"/>
+			<Set Cost="371"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_TANK"/>
+			<Set Cost="473"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_TREBUCHET"/>
+			<Set Combat="11" Cost="114" RangedCombat="13"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_TRIPLANE"/>
+			<Set Cost="340"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_TURKISH_GWI"/>
+			<Set Cost="340"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_VIETNAM_INFANTRY"/>
+			<Set Combat="72" Cost="361"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_WWI_BOMBER"/>
+			<Set Cost="340"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_WWI_TANK"/>
+			<Set Cost="402"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_XCOM_SQUAD"/>
+			<Set Combat="120" Moves="3"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_YUGO_M84"/>
+			<Set Cost="473"/>
+		</Update>
 	</Units>
 	
 	<Table name="Victories">

@@ -913,3 +913,45 @@ Tags: game mechanics
 Strategic resource deposits are bigger.
 - Changed: major / minor deposits: Horses 6 / 2 (was 4 / 2), Iron 9 / 3 (was 6 / 2), Coal 18 / 4 (was 7 / 3), Oil 18 / 8 (was 7 / 4), Aluminum 24 / 12 (was 8 / 3), Uranium 6 / 2 (was 2 / 1)
 - Note: these are the mod's Resources.AmountMajor/AmountMinor, read by the map script; the Lekmap copy in this repo still uses its own hardcoded amounts (the user's map folder is the authority)
+
+STRATEGIC RESOURCE REQUIREMENTS
+-------------------------------
+Tags: units
+Most units that need strategic resources need more of them, and some need new ones.
+- Changed: Catapult, Trebuchet, Cannon, Artillery: 1 Iron (was none)
+- Changed: Swordsman, Longswordsman, Frigate: 2 Iron (was 1)
+- Changed: Chariot Archer, Horseman, Lancer: 2 Horses (was 1)
+- Changed: Knight, Cavalry: 2 Horses and 1 Iron (was 1 Horse)
+- Changed: Triplane 2 Oil (was 1); Aircraft Carrier, Submarine, Mechanized Infantry, Heavy Cruiser: 2 Oil (was none)
+- Changed: Great War Bomber, Landship, Tank, Bomber, Fighter: 3 Oil (was 1)
+- Changed: Battleship: 6 Iron and 6 Oil (was 1 Oil)
+- Changed: Mobile SAM, Rocket Artillery, Jet Fighter: 1 Aluminum and 1 Oil (was none)
+- Changed: Helicopter Gunship: 3 Aluminum (was 1)
+- Changed: Modern Armor: 3 Oil (was 1 Aluminum)
+- Changed: Missile Cruiser: 6 Aluminum and 6 Oil (was 1 Aluminum)
+- Changed: Stealth Bomber: 6 Aluminum and 3 Oil (was 1 Aluminum)
+- Changed: Nuclear Submarine: 1 Uranium (was none)
+- Changed: Giant Death Robot: 3 Uranium and 6 Aluminum (was 1 Uranium)
+- Changed: Nuclear Missile: 7 Uranium (was 2)
+- Changed: unique units follow their base unit, except those that needed nothing while their base unit did (e.g. Mohawk Warrior, Maccabee, War Chariot, Japanese Zero): they still need nothing
+- Note: the rule for unique units is our reading of the spec (it names the base units only)
+
+UNIT STAT AND COST CHANGES
+--------------------------
+Tags: units, combat
+Several units get new strength, movement or cost.
+- Changed: Trebuchet: 11 Strength, 13 Ranged Strength (was 12 / 14), cost 80 -> 76
+- Changed: Lancer: 26 Strength (was 25)
+- Changed: Cannon: 21 Ranged Strength (was 20)
+- Changed: Galley: 6 Strength, 8 Ranged Strength (was 8 / 10), cost 40 -> 32
+- Changed: Battleship: 40 Strength (was 55), 85 Ranged Strength (was 65), 5 movement (was 6), cost 281 -> 422
+- Changed: Missile Cruiser: 115 Ranged Strength (was 100), cost 341 -> 478
+- Changed: Modern Armor: 110 Strength (was 100), cost 361 -> 397
+- Changed: Stealth Bomber: 100 Ranged Strength (was 85), cost 361 -> 452; no longer reveals the area around its base (Air Recon); 80% chance to evade interception (was 90%)
+- Changed: Nuclear Missile: cost 1005 -> 1105
+- Changed: Infantry (and the unique Infantry with 70 Strength): 72 Strength (was 70)
+- Changed: Paratrooper: 70 Strength (was 65)
+- Changed: XCOM Squad: 120 Strength (was 110)
+- Changed: Rocket Artillery: 3 movement (was 2)
+- Changed: Submarine and Nuclear Submarine can no longer move after attacking
+- Changed: all other Modern-era units cost 3% more, all other Atomic-era units 5% more
