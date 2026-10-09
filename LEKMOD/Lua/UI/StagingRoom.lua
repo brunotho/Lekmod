@@ -542,10 +542,40 @@ end
 
 -------------------------------------------------
 -------------------------------------------------
+-- LEKMOD: human players default to Immortal (the Lekmod standard; city-state yields scale with difficulty)
+function LekmodDefaultHumanHandicap()
+	local immortal = GameInfo.HandicapInfos["HANDICAP_IMMORTAL"];
+	return immortal and immortal.ID or 6;
+end
+
+-- Host only, new games only: preselect Immortal once for every human player who takes a slot
+-- (the host's own slot included). Players can still change it afterwards.
+local g_LekmodHandicapPreselected = {};
+function LekmodPreselectHandicaps()
+	if( not Matchmaking.IsHost() or PreGame.GetLoadFileName() ~= "" ) then
+		return;
+	end
+	local bChanged = false;
+	for playerID = 0, GameDefines.MAX_MAJOR_CIVS - 1 do
+		if( PreGame.GetSlotStatus( playerID ) == SlotStatus.SS_TAKEN ) then
+			if( not g_LekmodHandicapPreselected[playerID] ) then
+				g_LekmodHandicapPreselected[playerID] = true;
+				PreGame.SetHandicap( playerID, LekmodDefaultHumanHandicap() );
+				bChanged = true;
+			end
+		else
+			g_LekmodHandicapPreselected[playerID] = nil;
+		end
+	end
+	if( bChanged ) then
+		Network.BroadcastPlayerInfo();
+	end
+end
+
 function SetSlotToHuman(playerID)
 	-- Sets the given playerID slot to be human. Assumes that slot hasn't already been done so.
 	PreGame.SetSlotStatus( playerID, SlotStatus.SS_TAKEN );
-	PreGame.SetHandicap( playerID, 3 );
+	PreGame.SetHandicap( playerID, LekmodDefaultHumanHandicap() );
 	if (PreGame.GetNickName(playerID) == "") then
 		PreGame.SetNickName( playerID, Locale.ConvertTextKey( "TXT_KEY_MULTIPLAYER_DEFAULT_PLAYER_NAME", playerID + 1 ) );
 	end
@@ -1297,7 +1327,8 @@ function HandleExitRequest()
 	if Draft_ResetState ~= nil then
 		Draft_ResetState(true);
 	end
-	
+	g_LekmodHandicapPreselected = {}; -- the next lobby preselects Immortal again
+
 	Matchmaking.LeaveMultiplayerGame();
 	if ( not PreGame.IsHotSeatGame() ) then
 		-- Refresh the lobby as we enter it
@@ -1388,6 +1419,7 @@ Events.MultiplayerGameHostMigration.Add( OnHostMigration );
 ----------------------------------------------------------------
 function UpdateDisplay()
 	if( ContextPtr:IsHidden() == false ) then
+		LekmodPreselectHandicaps();
 		UpdateOptions();
 		RefreshPlayerList();
 		DoCheckTeams();
@@ -1453,7 +1485,7 @@ end
 -------------------------------------------------
 function OnPreGameDirty()
     if( ContextPtr:IsHidden() == false ) then
-	    UpdateDisplay();
+	    UpdateDisplay(); -- includes Draft_OnUpdateDisplay -> ban-ready PreGame pull
 		UpdatePageTabView(true);
 		CheckGameAutoStart();  -- Check for autostart because this event could to due to a ready status changing.
 	end
@@ -1750,7 +1782,7 @@ function ShowHideHandler( bIsHide, bIsInit )
 		UIManager:SetUICursor( 0 );
 		RequestLobbyChatHistory();
 		SendUiCheckNotLaunchedIfNeeded();
-		-- Ban-ready sync tick runs inside Draft_SyncBanScroll / OnStagingUpdate.
+		-- Ban-ready is PreGame-synced (pulled in Draft_SyncBanScroll / PreGameDirty).
 		if( not PreGame.IsHotSeatGame() ) then
 			EnsureStagingUpdate();
 		end
@@ -1933,6 +1965,33 @@ function Draft_FlushPendingCivPulldowns()
 	end
 end
 
+-- LEKMOD: start biases of a civilization (the data the map script uses), as text for UA tooltips
+function LekmodStartBiasText( civType )
+	if civType == nil then return ""; end
+	local prefer = {};
+	local avoid = {};
+	for row in GameInfo.Civilization_Start_Along_Ocean{ CivilizationType = civType } do
+		if row.StartAlongOcean then table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS_COAST" ) ); end
+	end
+	for row in GameInfo.Civilization_Start_Along_River{ CivilizationType = civType } do
+		if row.StartAlongRiver then table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS_RIVER" ) ); end
+	end
+	for row in GameInfo.Civilization_Start_Region_Priority{ CivilizationType = civType } do
+		table.insert( prefer, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_" .. row.RegionType ) );
+	end
+	for row in GameInfo.Civilization_Start_Region_Avoid{ CivilizationType = civType } do
+		table.insert( avoid, Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_" .. row.RegionType ) );
+	end
+	local text = "";
+	if #prefer > 0 then
+		text = text .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_BIAS", table.concat( prefer, ", " ) );
+	end
+	if #avoid > 0 then
+		text = text .. ( #prefer > 0 and "[NEWLINE]" or "[NEWLINE][NEWLINE]" ) .. Locale.ConvertTextKey( "TXT_KEY_LEKMOD_START_AVOID", table.concat( avoid, ", " ) );
+	end
+	return text;
+end
+
 function PopulateCivPulldown( pullDown, playerID )
 	if pullDown == nil then
 		return;
@@ -2020,6 +2079,8 @@ function PopulateCivPulldown( pullDown, playerID )
 							Civilizations.ID as CivID, 
 							Civilizations.Description as CivDescription, 
 							Civilizations.ShortDescription as CivShortDescription,
+							Civilizations.Type as CivType,
+							Leaders.Type as LeaderType,
 							Leaders.Description as LeaderDescription
 							FROM Civilizations, Leaders, Civilization_Leaders
 							WHERE
@@ -2031,7 +2092,15 @@ function PopulateCivPulldown( pullDown, playerID )
 		if allowSet == nil or allowSet[row.CivID] then
 			local title = Locale.Lookup("TXT_KEY_RANDOM_LEADER_CIV", Locale.Lookup(row.LeaderDescription), Locale.Lookup(row.CivShortDescription)); 
 
-			table.insert(civEntries, {ID = row.CivID, Title = title, Description = Locale.Lookup(row.CivDescription), ShortDescription = Locale.Lookup(row.CivShortDescription)});
+			-- LEKMOD: tooltip shows the civilization's ability and start bias
+			local tooltip = Locale.Lookup(row.CivDescription);
+			local leaderTrait = GameInfo.Leader_Traits{ LeaderType = row.LeaderType }();
+			local trait = leaderTrait and GameInfo.Traits[leaderTrait.TraitType];
+			if trait then
+				tooltip = "[COLOR_POSITIVE_TEXT]" .. Locale.Lookup(trait.ShortDescription) .. "[ENDCOLOR][NEWLINE]" .. Locale.Lookup(trait.Description);
+			end
+			tooltip = tooltip .. LekmodStartBiasText(row.CivType);
+			table.insert(civEntries, {ID = row.CivID, Title = title, Description = tooltip, ShortDescription = Locale.Lookup(row.CivShortDescription)});
 		end
 	end
 	

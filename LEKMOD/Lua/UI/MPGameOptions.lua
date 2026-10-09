@@ -10,6 +10,248 @@ g_GameOptionsManager = InstanceManager:new("GameOptionInstance", "GameOptionRoot
 g_DropDownOptionsManager = InstanceManager:new("DropDownOptionInstance", "DropDownOptionRoot", Controls.DropDownOptionsStack);
 g_VictoryCondtionsManager = InstanceManager:new("GameOptionInstance", "GameOptionRoot", Controls.VictoryConditionsStack);
 g_DLCAllowedManager = InstanceManager:new("GameOptionInstance", "GameOptionRoot", Controls.DLCAllowedStack);
+----------------------------------------------------------------
+-- LEKMOD: lobby dropdown settings and modes
+-- Each dropdown value is a set of (hidden) on/off game options.
+----------------------------------------------------------------
+g_LekmodModeDropDown = {
+	Name = "TXT_KEY_LEKMOD_LOBBY_MODE",
+	Values = {
+		{ Name = "TXT_KEY_LEKMOD_LOBBY_MODE_TOURNAMENT", Help = "TXT_KEY_LEKMOD_LOBBY_MODE_TOURNAMENT_HELP", Options = { GAMEOPTION_LEKMOD_MODE_CASUAL = false } },
+		{ Name = "TXT_KEY_LEKMOD_LOBBY_MODE_CASUAL", Help = "TXT_KEY_LEKMOD_LOBBY_MODE_CASUAL_HELP", Options = { GAMEOPTION_LEKMOD_MODE_CASUAL = true } },
+	},
+	OnSelect = function( value ) LekmodApplyModePreset( value.Options.GAMEOPTION_LEKMOD_MODE_CASUAL ); end,
+};
+
+g_LekmodCivColorsDropDown = {
+	Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS",
+	Values = {
+		{ Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL", Help = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_ORIGINAL_HELP", Options = { GAMEOPTION_HIGH_CONTRAST_CIV_COLORS = false } },
+		{ Name = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST", Help = "TXT_KEY_LEKMOD_LOBBY_CIV_COLORS_HIGH_CONTRAST_HELP", Options = { GAMEOPTION_HIGH_CONTRAST_CIV_COLORS = true } },
+	},
+};
+
+-- What the mode decides, shown as plain text below it: { option, text when on, text when off, tooltip }
+g_LekmodModeInfoLines = {
+	{ "GAMEOPTION_DISABLE_CHAT", "TXT_KEY_LEKMOD_LOBBY_INFO_NO_CHAT", "TXT_KEY_LEKMOD_LOBBY_INFO_CHAT", "TXT_KEY_GAME_OPTION_DISABLE_CHAT_HELP" },
+	{ "GAMEOPTION_LEKMOD_WAR_START", "TXT_KEY_LEKMOD_LOBBY_INFO_WAR_START", "TXT_KEY_LEKMOD_LOBBY_INFO_PEACE_START", "TXT_KEY_GAME_OPTION_LEKMOD_WAR_START_HELP" },
+	{ "GAMEOPTION_LEKMOD_WONDER_TIE_BOTH", "TXT_KEY_LEKMOD_LOBBY_INFO_WONDER_BOTH", "TXT_KEY_LEKMOD_LOBBY_INFO_WONDER_NEITHER", "TXT_KEY_LEKMOD_LOBBY_WONDER_TIE_HELP" },
+};
+
+-- Checkbox game options the lobby still lists (the modes decide all others)
+g_LekmodLobbyShownOptions = {};
+
+-- Hide every setting the modes decide (user decision 2026-10-08)
+function LekmodApplyLobbyVisibility()
+	local hidden = {
+		"LekmodCityStateBox", "LekmodMapSizeRoot", "LekmodGameSpeedRoot", "LekmodEraRoot", "TurnModeRoot",
+		"LekmodVictoryHeader", "VictoryConditionsStack", "LekmodAdvancedHeader", "LekmodMaxTurnsBox", "LekmodTurnTimerBox",
+		"LekmodAIOptionsBox", "LekmodAdditionalOptionsBox", "LekmodDLCHeader", "DLCAllowedStack",
+		"AIAlwaysAcceptWhitePeaceBox", "AICannotAccumulateCultureBox", "AICannotBuildSettlersBox", "AICannotBuildWorldWondersBox",
+		"AICannotCoupCityStatesBox", "AICannotFoundReligionBox", "AICannotSpreadReligionCSBox", "AICannotSpreadReligionHumansBox",
+		"AICannotVoteInCongressBox", "AICannotBeLiberatedBox", "AICannotHaveWealsWithHumansBox", "DisableAIDemographicsBox",
+		"NoAIStartAdvantageBox", "NoPenaltyForExpansionBox", "NoXPFromAIBox",
+		"AllowPolicySavingBox", "AllowPromotionSavingBox", "AlternateScoreCalculationsBox", "CompleteKillsBox",
+		"DisableStartBiasBox", "NoAncientRuinsBox", "NoBarbariansBox", "NoCityRazingBox", "NoEspionageBox",
+		"OneCityChallengeBox", "RagingBarbariansBox", "RandomPersonalitiesBox",
+	};
+	for _, id in ipairs( hidden ) do
+		if Controls[id] ~= nil then
+			Controls[id]:SetHide( true );
+		end
+	end
+	Controls.GameOptionsFullStack:CalculateSize();
+	Controls.GameOptionsFullStack:ReprocessAnchoring();
+	Controls.OptionsScrollPanel:CalculateInternalSize();
+end
+
+local function LekmodIsOptionOn( optionType )
+	local v = PreGame.GetGameOption( optionType );
+	return v ~= nil and v > 0;
+end
+
+-- The value whose options match the current settings (the first one otherwise)
+local function LekmodGetCurrentValue( dropDown )
+	for _, value in ipairs( dropDown.Values ) do
+		local bMatch = true;
+		for optionType, bOn in pairs( value.Options ) do
+			if LekmodIsOptionOn( optionType ) ~= bOn then
+				bMatch = false;
+				break;
+			end
+		end
+		if bMatch then
+			return value;
+		end
+	end
+	return dropDown.Values[1];
+end
+
+local function LekmodSetValue( value )
+	for optionType, bOn in pairs( value.Options ) do
+		PreGame.SetGameOption( optionType, bOn );
+	end
+end
+
+function LekmodBuildDropDown( manager, dropDown, bCanEdit )
+	local instance = manager:GetInstance();
+	instance.OptionName:SetText( Locale.ConvertTextKey( dropDown.Name ) );
+	instance.OptionName:SetToolTipString( dropDown.Help and Locale.ConvertTextKey( dropDown.Help ) or nil );
+	instance.OptionDropDown:SetHide( false );
+	instance.OptionDropDown:SetDisabled( not bCanEdit );
+
+	local button = instance.OptionDropDown:GetButton();
+	instance.OptionDropDown:ClearEntries();
+	for _, value in ipairs( dropDown.Values ) do
+		local entry = {};
+		instance.OptionDropDown:BuildEntry( "InstanceOne", entry );
+		entry.Button:SetText( Locale.ConvertTextKey( value.Name ) );
+		entry.Button:SetToolTipString( value.Help and Locale.ConvertTextKey( value.Help ) or nil );
+		entry.Button:RegisterCallback( Mouse.eLClick, function()
+			LekmodSetValue( value );
+			if dropDown.OnSelect ~= nil then
+				dropDown.OnSelect( value );
+			else
+				UpdateGameOptionsDisplay();
+			end
+		end );
+	end
+
+	local current = LekmodGetCurrentValue( dropDown );
+	button:SetText( Locale.ConvertTextKey( current.Name ) );
+	button:SetToolTipString( current.Help and Locale.ConvertTextKey( current.Help ) or nil );
+	instance.OptionDropDown:CalculateInternals();
+end
+
+-- A plain text line (a dropdown row without its dropdown)
+function LekmodBuildInfoLine( manager, text, help )
+	local instance = manager:GetInstance();
+	instance.OptionName:SetText( "  [ICON_BULLET] " .. Locale.ConvertTextKey( text ) );
+	instance.OptionName:SetToolTipString( help and Locale.ConvertTextKey( help ) or nil );
+	instance.OptionDropDown:SetHide( true );
+end
+
+-- Settings both modes share, then what differs (from the spec "MODE: tournament/casual")
+function LekmodApplyModePreset( bCasual )
+	if not CanEditGameOptions() then
+		return;
+	end
+	PreGame.SetGameOption( "GAMEOPTION_LEKMOD_MODE_CASUAL", bCasual );
+	PreGame.SetGameOption( "GAMEOPTION_LEKMOD_PRESET_APPLIED", true );
+
+	-- Turns: simultaneous, pitboss, relative turn timer at 70
+	PreGame.SetGameOption( "GAMEOPTION_SIMULTANEOUS_TURNS", true );
+	PreGame.SetGameOption( "GAMEOPTION_DYNAMIC_TURNS", false );
+	PreGame.SetGameOption( "GAMEOPTION_PITBOSS", true );
+	PreGame.SetGameOption( "GAMEOPTION_END_TURN_TIMER_ENABLED", true );
+	PreGame.SetGameOption( "GAMEOPTION_RELATIVE_TURN_TIMER", true );
+	PreGame.SetPitbossTurnTime( 70 );
+	PreGame.SetGameOption( "GAMEOPTION_SIMULTANEOUS_PLAYER_TURN_ACTIVATION_ORDER_RANDOMIZED", true );
+
+	-- Quick movement and combat (both stores, see RefreshGameOptions)
+	PreGame.SetGameOption( "GAMEOPTION_QUICK_MOVEMENT", true );
+	PreGame.SetGameOption( "GAMEOPTION_QUICK_COMBAT", true );
+	if PreGame.SetQuickMovement ~= nil then PreGame.SetQuickMovement( true ); end
+	if PreGame.SetQuickCombat ~= nil then PreGame.SetQuickCombat( true ); end
+
+	-- Rules
+	local shared = {
+		"GAMEOPTION_DISABLE_STRATEGIC_TRADING",
+		"GAMEOPTION_NO_STRAT_TRADING_WITHOUT_TECH",
+		"GAMEOPTION_LEKMOD_NO_COMBAT_RANDOMNESS",
+		"GAMEOPTION_NO_SCIENTIST_SAVING",
+		"GAMEOPTION_FAST_HAND",
+		"GAMEOPTION_FIRSTMOVE",
+		"GAMEOPTION_REMOVE_AUTO_EXPLORE",
+		"GAMEOPTION_NO_MP_POLICY_SAVING",
+		"GAMEOPTION_DISABLE_DEFENSIVE_PACT_INFO_ERA",
+		"GAMEOPTION_ALLOW_EXTRA_RELIGIONS",
+		"GAMEOPTION_GOLDENAGE_ALT",
+		-- AI can't do anything
+		"GAMEOPTION_AI_OPTIONS",
+		"GAMEOPTION_AI_GIMP_ALWAYS_WHITE_PEACE",
+		"GAMEOPTION_AI_GIMP_NO_CULTURE",
+		"GAMEOPTION_AI_GIMP_NO_BUILDING_SETTLERS",
+		"GAMEOPTION_AI_GIMP_NO_WORLD_WONDER",
+		"GAMEOPTION_AI_GIMP_NO_COUP",
+		"GAMEOPTION_AI_GIMP_NO_RELIGION_FOUNDING",
+		"GAMEOPTION_AI_GIMP_NO_MINOR_RELIGION_SPREAD",
+		"GAMEOPTION_AI_GIMP_NO_RELIGION_SPREAD",
+		"GAMEOPTION_AI_NO_VOTE",
+		"GAMEOPTION_AI_GIMP_NO_LIBERATION",
+		"GAMEOPTION_AI_GIMP_NO_DEALS",
+		"GAMEOPTION_AI_GIMP_NO_DEMOGRAPHICS",
+		"GAMEOPTION_AI_XP_CAP",
+		"GAMEOPTION_SPOILS_OF_WAR",
+		"GAMEOPTION_NO_DESTRUCTIVE_RECAPTURE",
+		"GAMEOPTION_NO_AI_TECH_DISCOUNT",
+		"GAMEOPTION_NO_TECH_SAVING",
+	};
+	for _, optionType in ipairs( shared ) do
+		PreGame.SetGameOption( optionType, true );
+	end
+	local sharedOff = {
+		-- all AI options except these two
+		"GAMEOPTION_AI_HANDICAP_START",
+		"GAMEOPTION_DISABLE_RECKLESS_EXPANDER",
+		"GAMEOPTION_NO_TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER",
+		-- additional options all off
+		"GAMEOPTION_ADDITIONAL",
+		"GAMEOPTION_POLICY_SAVING",
+		"GAMEOPTION_PROMOTION_SAVING",
+		"GAMEOPTION_TWEAKED_SCORING",
+		"GAMEOPTION_COMPLETE_KILLS",
+		"GAMEOPTION_DISABLE_START_BIAS",
+		"GAMEOPTION_NO_GOODY_HUTS",
+		"GAMEOPTION_NO_BARBARIANS",
+		"GAMEOPTION_NO_CITY_RAZING",
+		"GAMEOPTION_NO_ESPIONAGE",
+		"GAMEOPTION_ONE_CITY_CHALLENGE",
+		"GAMEOPTION_RAGING_BARBARIANS",
+		"GAMEOPTION_RANDOM_PERSONALITIES",
+	};
+	for _, optionType in ipairs( sharedOff ) do
+		PreGame.SetGameOption( optionType, false );
+	end
+	PreGame.SetMaxTurns( 0 );
+	local ancient = GameInfo.Eras["ERA_ANCIENT"];
+	if ancient ~= nil and PreGame.SetEra ~= nil then
+		PreGame.SetEra( ancient.ID );
+	end
+
+	-- Quick speed, all victory types
+	local quick = GameInfo.GameSpeeds["GAMESPEED_QUICK"];
+	if quick ~= nil then
+		PreGame.SetGameSpeed( quick.ID );
+	end
+	for row in GameInfo.Victories() do
+		PreGame.SetVictory( row.ID, true );
+	end
+
+	-- What differs
+	PreGame.SetGameOption( "GAMEOPTION_DISABLE_CHAT", not bCasual );
+	PreGame.SetGameOption( "GAMEOPTION_LEKMOD_WAR_START", not bCasual );
+	PreGame.SetGameOption( "GAMEOPTION_LEKMOD_WONDER_TIE_NEITHER", not bCasual );
+	PreGame.SetGameOption( "GAMEOPTION_LEKMOD_WONDER_TIE_BOTH", bCasual );
+
+	if Controls.TurnTimerEdit ~= nil then
+		Controls.TurnTimerEdit:SetText( 70 );
+	end
+	UpdateGameOptionsDisplay();
+end
+
+-- Host, new game, mode never chosen: start in Tournament
+function LekmodEnsureModeInitialized()
+	if not CanEditGameOptions() or not Matchmaking.IsHost() or PreGame.GetLoadFileName() ~= "" then
+		return;
+	end
+	-- An unset option reads as its database default (0): a new lobby has no preset yet
+	local v = PreGame.GetGameOption( "GAMEOPTION_LEKMOD_PRESET_APPLIED" );
+	if v == nil or v <= 0 then
+		LekmodApplyModePreset( false );
+	end
+end
+
 
 
 -- Global Variables
@@ -273,6 +515,9 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 
 	-- In theory, PreGame should do this for me, but just to be sure.
 	ValidateCivSelections();
+
+	-- LEKMOD: a new lobby starts in Tournament mode
+	LekmodEnsureModeInitialized();
 	
 	local bCanEdit = CanEditGameOptions();
 	
@@ -587,6 +832,8 @@ function UpdateGameOptionsDisplay(bUpdateOnly)
 
 	-- Update the options panel
 	RefreshGameOptions();
+	-- LEKMOD: hide what the modes decide (runs before the map options are added; they stay visible)
+	LekmodApplyLobbyVisibility();
 	RefreshDropDownOptions();		
 	
 	if (not bUpdateOnly) then
@@ -1682,6 +1929,14 @@ Controls.TurnTimerCheck:RegisterCallback( Mouse.eLClick, OnTurnTimerChecked );
 ----------------------------------------------------------------
 function RefreshDropDownOptions()
 	g_DropDownOptionsManager:ResetInstances();
+
+	-- LEKMOD: the mode comes first, above the map options
+	LekmodBuildDropDown(g_DropDownOptionsManager, g_LekmodModeDropDown, CanEditGameOptions());
+	for _, line in ipairs(g_LekmodModeInfoLines) do
+		local bOn = PreGame.GetGameOption(line[1]) == 1;
+		LekmodBuildInfoLine(g_DropDownOptionsManager, bOn and line[2] or line[3], line[4]);
+	end
+	LekmodBuildDropDown(g_DropDownOptionsManager, g_LekmodCivColorsDropDown, CanEditGameOptions());
 	
 	local currentMapScript = PreGame.GetMapScript();
 	
@@ -1733,6 +1988,7 @@ function RefreshDropDownOptions()
 		gameOption.OptionName:SetToolTipString(option.ToolTip);
 		
 		
+		gameOption.OptionDropDown:SetHide(false); -- LEKMOD: rows are reused from text lines
 		gameOption.OptionDropDown:SetDisabled(option.Disabled or not bCanEdit);
 		local dropDownButton = gameOption.OptionDropDown:GetButton();
 		
@@ -1868,7 +2124,8 @@ function RefreshGameOptions()
 			-- Only show non-singleplayer options in network multiplayer 
 			-- The turn timer ends up being an exception to this because we manually add the UI for that option.
 			local DontDisplay = (PreGame.IsHotSeatGame() and not option.SupportsSinglePlayer) 
-											 or (not PreGame.IsHotSeatGame() and not option.SupportsMultiplayer);
+											 or (not PreGame.IsHotSeatGame() and not option.SupportsMultiplayer)
+											 or g_LekmodLobbyShownOptions[option.Type] == nil; -- LEKMOD: the modes decide the rest
 			if( not DontDisplay ) then
 				table.insert(options, option);
 			end
@@ -1943,6 +2200,7 @@ function RefreshGameOptions()
 		end	
 	end	
 	
+
 	local maxTurns = PreGame.GetMaxTurns();
 	if(maxTurns <= 0) then
 		Controls.MaxTurnsCheck:SetCheck(false);
@@ -2008,3 +2266,4 @@ function RefreshGameOptions()
 
 	Controls.OptionsScrollPanel:CalculateInternalSize();
 end
+
