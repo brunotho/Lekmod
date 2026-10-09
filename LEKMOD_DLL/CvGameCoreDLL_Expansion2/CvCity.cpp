@@ -10840,6 +10840,13 @@ int CvCity::GetLocalResourceWonderProductionMod(BuildingTypes eBuilding, CvStrin
 			if(pkResource)
 			{
 				int iBonus = pkResource->getWonderProductionMod();
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+				// A city standing on the resource gets its CityCenterWonderProductionMod instead (below)
+				if (pkResource->getCityCenterWonderProductionMod() != 0 && plot()->getResourceType() == eResource)
+				{
+					iBonus = 0;
+				}
+#endif
 				if(iBonus != 0)
 				{
 					if(IsHasResourceLocal(eResource, /*bTestVisible*/ false))

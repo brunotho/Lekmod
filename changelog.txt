@@ -879,7 +879,7 @@ Founding a city on some resources gives a bonus.
 - Added: Stone: a city founded on Stone gets free Walls, if you know Masonry
 - Added: Cattle: a city founded on Cattle starts with +4 Food in storage, if you know Animal Husbandry
 - Added: Rubber: a city standing on Rubber gets +40% Production towards Armored units
-- Added: Marble: a city standing on Marble gets +20% Production towards Ancient and Classical era Wonders (on top of Marble's usual +10%)
+- Changed: Marble: a city standing on Marble gets +20% Production towards Ancient and Classical era Wonders instead of Marble's usual +10%
 - Added: hovering a resource tile and the resource's Civilopedia page list these effects
 - Note: Salt, Stone and Cattle only count when the city is founded (not when captured); Rubber and Marble work as long as the city stands on the resource
 - DLL: Resources.FoundCityTech/FoundCityPopulation/FoundCityFood/FoundCityBuildingClass (CvCity::init, initial founding) and CityCenterUnitCombat/CityCenterUnitCombatProductionMod/CityCenterWonderProductionMod (CvCity production modifiers) (LEKMOD_RESOURCE_CITY_EFFECTS)
