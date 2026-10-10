@@ -49499,6 +49499,26 @@
 			<IconIndex>39</IconIndex>
 			<IconAtlas>UNIT_ACTION_ATLAS</IconAtlas>
 	</Row>
+		<!-- LEKMOD Skiff: pontoon bridge that consumes the unit (instant) -->
+		<Row>
+			<ID>72</ID>
+			<Type>BUILD_PONTOON_BRIDGE_SKIFF</Type>
+			<Description>TXT_KEY_BUILD_PONTOON_BRIDGE</Description>
+			<Help>TXT_KEY_BUILD_CONSUMED_HELP</Help>
+			<HotKey>KB_Z</HotKey>
+			<HotKeyPriority>1</HotKeyPriority>
+			<OrderPriority>98</OrderPriority>
+			<Time>0</Time>
+			<Kill>true</Kill>
+			<Water>true</Water>
+			<PrereqTech>TECH_CONSTRUCTION</PrereqTech>
+			<ImprovementType>IMPROVEMENT_PONTOON_BRIDGE</ImprovementType>
+			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent>
+			<IconIndex>0</IconIndex>
+			<IconAtlas>CIVIL_WAR_UNIT_ACTION_ICON_ATLAS</IconAtlas>
+			<ShowInPedia>false</ShowInPedia>
+			<ShowInTechTree>false</ShowInTechTree>
+		</Row>
 	</Builds>
 
 	<Table name="Calendars">
@@ -210088,6 +210108,16 @@
 			<InstanceCostModifier>0</InstanceCostModifier>
 			<DefaultUnit>UNIT_DREADNOUGHT</DefaultUnit>
 		</Row>
+		<Row>
+			<ID>115</ID>
+			<Type>UNITCLASS_SKIFF</Type>
+			<Description>TXT_KEY_UNIT_SKIFF</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<InstanceCostModifier>0</InstanceCostModifier>
+			<DefaultUnit>UNIT_SKIFF</DefaultUnit>
+		</Row>
 	</UnitClasses> 
 
 	<Table name="UnitCombatInfos">
@@ -258952,6 +258982,14 @@
 			<UnitType>UNIT_DREADNOUGHT</UnitType>
 			<UnitAIType>UNITAI_ESCORT_SEA</UnitAIType>
 		</Row>
+		<Row>
+			<UnitType>UNIT_SKIFF</UnitType>
+			<UnitAIType>UNITAI_EXPLORE_SEA</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SKIFF</UnitType>
+			<UnitAIType>UNITAI_WORKER_SEA</UnitAIType>
+		</Row>
 	</Unit_AITypes> 
 
 	<Table name="Unit_BuildingClassRequireds">
@@ -259503,6 +259541,14 @@
 		<Row> 
 			<UnitType>UNIT_AUSTRALIA_WORKER</UnitType> 
 			<BuildType>BUILD_BUGANDA_LAKE</BuildType> 
+		</Row>
+		<Row>
+			<UnitType>UNIT_SKIFF</UnitType>
+			<BuildType>BUILD_FISHING_BOATS</BuildType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SKIFF</UnitType>
+			<BuildType>BUILD_PONTOON_BRIDGE_SKIFF</BuildType>
 		</Row>
 	</Unit_Builds> 
 
@@ -265186,6 +265232,10 @@
 		<Row>
 			<UnitType>UNIT_ROCKET_ARTILLERY</UnitType>
 			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SKIFF</UnitType>
+			<PromotionType>PROMOTION_OCEAN_IMPASSABLE_UNTIL_ASTRONOMY</PromotionType>
 		</Row>
 	</Unit_FreePromotions> 
 
@@ -275989,6 +276039,42 @@
 			<PortraitIndex>3</PortraitIndex>
 			<IconAtlas>CIVIL_WAR_UNIT_ATLAS</IconAtlas>
 			<UnitFlagAtlas>CIVIL_WAR_UNIT_FLAG_ATLAS</UnitFlagAtlas>
+		</Row>
+		<!-- LEKMOD Skiff (2026-10-10): early recon boat, builds Fishing Boats / Pontoon Bridges by being consumed -->
+		<Row>
+			<ID>268</ID>
+			<Type>UNIT_SKIFF</Type>
+			<Description>TXT_KEY_UNIT_SKIFF</Description>
+			<Civilopedia>TXT_KEY_UNIT_SKIFF_STRATEGY</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SKIFF_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_HELP_SKIFF</Help>
+			<Combat>3</Combat>
+			<Cost>32</Cost>
+			<Moves>3</Moves>
+			<BaseSightRange>2</BaseSightRange>
+			<Class>UNITCLASS_SKIFF</Class>
+			<CombatClass>UNITCOMBAT_RECON</CombatClass>
+			<Domain>DOMAIN_SEA</Domain>
+			<DefaultUnitAI>UNITAI_EXPLORE_SEA</DefaultUnitAI>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<PrereqTech>TECH_AGRICULTURE</PrereqTech>
+			<ObsoleteTech>TECH_EDUCATION</ObsoleteTech>
+			<AdvancedStartCost>10</AdvancedStartCost>
+			<MinAreaSize>6</MinAreaSize>
+			<NukeDamageLevel>-1</NukeDamageLevel>
+			<WorkRate>100</WorkRate>
+			<CombatLimit>100</CombatLimit>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>3</XPValueDefense>
+			<UnitArtInfo>ART_DEF_UNIT_WORKBOAT</UnitArtInfo>
+			<UnitArtInfoEraVariation>true</UnitArtInfoEraVariation>
+			<ShowInPedia>true</ShowInPedia>
+			<MoveRate>WOODEN_BOAT</MoveRate>
+			<UnitFlagIconOffset>2</UnitFlagIconOffset>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>UNIT_ATLAS_1</IconAtlas>
+			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
 		</Row>
 	</Units>
 	<!-- LEKMOD naval rework (2026-10-09) -->

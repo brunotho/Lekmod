@@ -4527,6 +4527,12 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport) const
 		UnitClassTypes eScoutClass = (UnitClassTypes) GC.getInfoTypeForString("UNITCLASS_SCOUT", true);
 		if (eScoutClass != NO_UNITCLASS && eScoutClass == getUnitClassType())
 			return false;
+#ifdef LEKMOD_SKIFF
+		// No Skiffs (naval scouts; the class includes their unique replacements)
+		UnitClassTypes eSkiffClass = (UnitClassTypes) GC.getInfoTypeForString("UNITCLASS_SKIFF", true);
+		if (eSkiffClass != NO_UNITCLASS && eSkiffClass == getUnitClassType())
+			return false;
+#endif
 
 		// No non-combat units
 		if(!IsCombatUnit())
@@ -4678,6 +4684,12 @@ bool CvUnit::CanDistanceGift(PlayerTypes eToPlayer) const
 		UnitClassTypes eScoutClass = (UnitClassTypes) GC.getInfoTypeForString("UNITCLASS_SCOUT", true);
 		if (eScoutClass != NO_UNITCLASS && eScoutClass == getUnitClassType())
 			return false;
+#ifdef LEKMOD_SKIFF
+		// No Skiffs (naval scouts; the class includes their unique replacements)
+		UnitClassTypes eSkiffClass = (UnitClassTypes) GC.getInfoTypeForString("UNITCLASS_SKIFF", true);
+		if (eSkiffClass != NO_UNITCLASS && eSkiffClass == getUnitClassType())
+			return false;
+#endif
 
 		// No non-combat units
 		if(!IsCombatUnit() && !canAirAttack())
