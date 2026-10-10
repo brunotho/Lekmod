@@ -251,7 +251,7 @@ Read `art_sources/README.md` before touching any icon, portrait, flag or menu ba
 - Never edit `LEKMOD/Art/...` images by hand: change the source or the tool in `art_sources/`, then rebuild.
 - Promotion icons: `python art_sources/tools/build_promotion_icons.py [names]` builds all four sizes from the sources listed in `art_sources/promotions/manifest.csv` (key out background, fit to 72%, even the gold, shift 8 px right, 256 px BC3, 64/45/32 px uncompressed, 32 px on a blue tile). It always starts from the sources, so it can be rerun any number of times.
 - Tools: Python + Pillow reads `.dds`; `civ-tools\texconv.exe` writes them (`-f BC3_UNORM` / `B8G8R8A8_UNORM` / `BC1_UNORM`, `-m 0` full mips, `-m 1` one mip). Old one-off scripts in `civ-tools\` (`reshape_icons.py`, `promo_even_icons.py`, `promo32_icons.py`, `promo_small_sizes.py`, `promo_boldify_icons.py`) are superseded by the repo tool.
-- Backups of earlier states (outside the repo): `civ-toolsrt_backup\` (32 px originals, 256/64/45 before evening, Amphibious before the new art).
+- Backups of earlier states (outside the repo): `civ-tools\art_backup\` (32 px originals, 256/64/45 before evening, Amphibious before the new art).
 - **Icon provenance and open art:**
   - The April 2026 AI set (`d224c97d`) and Fear Aura/Zealot: sources in `art_sources/promotions/original_ai_2026-04/`. Envelopment and Bunker Busting first copied the Fear Aura image; the user's real art (2026-10-05) is in `user_art/`.
   - Glutton uses a generic icon (`ABILITY_ATLAS` 57, user decision); the remembered apple icon was never found.
