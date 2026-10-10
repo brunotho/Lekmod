@@ -1551,7 +1551,7 @@
 			<Text>The Thaler was a silver coin first minted in Jáchymov (then known as Joachimsthal) in the Kingdom of Bohemia in 1520. These coins gained immediate popularity throughout Europe due to their consistent weight and purity, setting a standard that influenced currency systems across the continent and beyond. Indeed, the word "dollar" evolved from "thaler." The Kutná Hora silver mines, among the most productive in medieval Europe, provided material for the Prague Groschen and later thalers, making Bohemia a center of European minting. Czech mints became renowned for their advanced metallurgical techniques and artistic coin designs, contributing significantly to the economic strength of the Bohemian kingdom and later the Habsburg monarchy.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_CZECHIA_MINT_HELP">			
-			<Text>Czech replacement for the [ICON_BUILDING_MINT] Mint. Costs 25% less [ICON_PRODUCTION] Production to construct. Provides +2 [ICON_GOLD] Gold from [ICON_RES_IRON] Iron in addition to standard mint resources. Includes 1 [ICON_GREAT_MERCHANT] Great Merchant [ICON_CITIZEN_GOLD] Specialist slot.</Text>
+			<Text>Czech replacement for the [ICON_BUILDING_MINT] Mint. Costs 25% less [ICON_PRODUCTION] Production to construct.[NEWLINE]Provides +2 [ICON_GOLD] Gold from [ICON_RES_IRON] Iron in addition to standard mint resources.[NEWLINE]Mountains worked by this City produce +2 [ICON_GOLD] Gold (not Natural Wonders).[NEWLINE]Includes 1 [ICON_GREAT_MERCHANT] Great Merchant [ICON_CITIZEN_GOLD] Specialist slot.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_CZECHIA_MINT_STRATEGY">			
 			<Text>The Thaler Mint is a versatile improvement on the standard Mint, available at the same technology but costing 25% less [ICON_PRODUCTION] Production. Beyond providing the usual bonuses for gold, silver, and copper resources, it also gains bonuses from [ICON_RES_IRON] Iron, making it valuable even in cities without traditional mint resources. The included Merchant specialist slot helps generate additional [ICON_GOLD] Gold and Great Merchant points.</Text>
@@ -1722,7 +1722,7 @@
 			<Text>The Mansabdari system was a unique administrative structure established by Emperor Akbar that formed the backbone of the Mughal Empire's civil and military administration. Under this system, imperial officers known as mansabdars were assigned ranks (mansabs) that determined their status, responsibilities, and compensation. Each mansabdar maintained estates that served as centers of local governance and military recruitment. These estates not only strengthened imperial control but also served as cultural centers that promoted Mughal artistic and architectural styles. The system helped integrate diverse ethnic and religious groups into the empire's administrative framework, reflecting the Mughals' skill at incorporating various cultural traditions into their governance model.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_MUGHALS_CARAVANSARY_HELP">			
-			<Text>Mughal replacement for the Caravansary. Available at Currency (vs. Horseback Riding). Provides +10 City [ICON_STRENGTH] Strength, +2 [ICON_GOLD] Gold and +3 [ICON_CULTURE] Culture if the city has a garrison. Provides 2 [ICON_RES_HORSE] Horse resource for the Empire.</Text>
+			<Text>Mughal replacement for the Caravansary. Available at Currency (vs. Horseback Riding).[NEWLINE]Provides +10 City [ICON_STRENGTH] Strength, +2 [ICON_GOLD] Gold and +3 [ICON_CULTURE] Culture if the city has a garrison.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_MUGHALS_CARAVANSARY_STRATEGY">			
 			<Text>The Mansabdari Estate is available at a different technology than the Caravansary it replaces, requiring Currency rather than Horseback Riding. Beyond improving land trade routes, it provides significant defensive bonuses to your cities and additional [ICON_GOLD] Gold and [ICON_CULTURE] Culture when the city is garrisoned, encouraging a balanced approach to growth and defense.</Text>
@@ -2802,7 +2802,7 @@
 		
 		<Replace Tag="TXT_KEY_BUILDING_HORDE_YAM_ROUTE_HELP"> 
 			<Text>
-				Replaces the Caravansary. Only the Golden Horde may build it. The Yam Route yields [ICON_RESEARCH] Science instead of [ICON_GOLD] Gold. In addition, it is available earlier and allows Airlifting in the City. Provides 2 [ICON_RES_HORSE] Horse resource for the Empire.
+				Replaces the Caravansary. Only the Golden Horde may build it.[NEWLINE]The Yam Route yields [ICON_RESEARCH] Science instead of [ICON_GOLD] Gold.[NEWLINE]It is available earlier and allows Airlifting in the City.
 			</Text>
 		</Replace>
 	
@@ -4696,7 +4696,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Perhaps the best known feature of Nabataean culture were the intricate rock-cut façades of their tombs. The tomb façades draw upon a rich array of Hellenistic and Near Eastern architecture and, in this sense, their architecture reflects the diverse and different cultures with which the Nabateans traded, interacted, and even intermarried (King Aretas IV''s daughter was married to Herod Antipas, the son of Herod the Great, whose mother was also Nabataean). Many of the tombs contain niches or small chambers for burials, cut into the stone walls. No human remains have ever been found in any of the tombs, and the exact funerary practices of the Nabataeans remain unknown.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_MC_KOKH_HELP">
-			<Text>Unique Building for Nabataea. Unlike the Caravansary that it replaces, it provides more [ICON_GOLD] Gold and +2 [ICON_FOOD] Food. In addition, every Trade Route Departing the city yields an additional [ICON_FOOD] Food. Provides 2 [ICON_RES_HORSE] Horse resource for the Empire.</Text>
+			<Text>Unique Building for Nabataea. Unlike the Caravansary that it replaces, it provides more [ICON_GOLD] Gold and +2 [ICON_FOOD] Food.[NEWLINE]Every Trade Route departing the city yields an additional [ICON_FOOD] Food.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_TRAIT_FOOD_FOR_TOUGHT">
 			<Text>Fresh Water Farms yield +1 [ICON_FOOD] Food at [ICON_TECH_MATHEMATICS] Mathematics rather than [ICON_TECH_CIVIL_SERVICE] Civil Service.</Text>
@@ -5042,7 +5042,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Burj</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_BURJ_HELP">
-			<Text>Unique Hotel Replacement for the U.A.E. Available at the Radio Technology. 50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city. [ICON_TOURISM] Tourism output from Great Works +50%. Every Great Person Tile Improvement and (non Flood Plains) Desert tile in the City yields +2 [ICON_GOLD] Gold and +2 [ICON_CULTURE] Culture.</Text>
+			<Text>Unique Hotel Replacement for the U.A.E. Available at the Radio Technology.[NEWLINE]50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city.[NEWLINE][ICON_TOURISM] Tourism output from Great Works +50%.[NEWLINE][NEWLINE]Natural Wonders worked by this City produce +10 [ICON_CULTURE] Culture.[NEWLINE]Every Great Person Tile Improvement and (non Flood Plains) Desert tile in the City yields +2 [ICON_GOLD] Gold and +2 [ICON_CULTURE] Culture.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_BURJ_PEDIA">
 			<Text>The glimmering towers of the Abu Dhabi and Dubai skylines have come to define the nation and its otherwordly extravegance. Starting in the late 20th century, as wealth flooded into the UAE from the increasing value of oil, businesses flocked to the fledgling nation. Nonexistent tax rates, a cooperative government and a fantastic climate turned the barren desert into a haven for the rich and famous and within mere decades some of the most incredible feats of modern engineering began to spring up across the nation. [NEWLINE] [NEWLINE] Some of the most famous towers are the mega-skyscrapers of Dubai, the nations most populous and important city. The Burj Al-Arab, an enormous mega-hotel in the cities prestigious coastal Jumeirah district, boasts an alleged 7 star rating, invidiual rooms spanning nearly 800 square metres, an underwater restaurant and prices of up to 24,000 USD per night! The Burj-Khalifa, constructed in 2010 after six years of construction and costing over 1.5 billion USD (Which is roughly the entire annual GDP of Belize) is the worlds tallest building at over 800m (nearly 3000ft) tall. That's taller than 18 Statue of Liberties! Besides its size, the tower also boasts a 200 million dollar fountain which hosts shows every 30 minutes, in which water is projected 150m into the air (Roughly the height of the Great Pyramid of Giza.) The megacities boast dozens of these megaskyscrapers, from a replica giant big ben to a rotating hotel, each more opulent than the last. All this in one of the the driest most inhospitable places in the world.</Text>
@@ -8605,7 +8605,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 		</Row>
 	<!-- Celts UB -->
 		<Row Tag="TXT_KEY_BUILDING_SILVERSMITH_HELP">
-			<Text>Replaces the Mint. Provides additional yields and does not require any improved resources nearby. Each source of [ICON_RES_GOLD] Gold, [ICON_RES_SILVER] Silver, and [ICON_RES_COPPER] Copper worked by this City produces +2 [ICON_GOLD] Gold.</Text>
+			<Text>Replaces the Mint. Provides additional yields and does not require any improved resources nearby.[NEWLINE]Each source of [ICON_RES_GOLD] Gold, [ICON_RES_SILVER] Silver and [ICON_RES_COPPER] Copper worked by this City produces +2 [ICON_GOLD] Gold.[NEWLINE]Mountains worked by this City produce +2 [ICON_GOLD] Gold (not Natural Wonders).</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_SILVERSMITH">
 			<Text>Silversmith</Text>
@@ -18578,7 +18578,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BOMB_SHELTER_HELP"> 
 			<Text>
-				Reduces population loss from nuclear attack by 75%.
+				Reduces population loss from nuclear attack by 75%.[NEWLINE][NEWLINE]Military units (including planes) in this city take 50 damage from a nuclear attack.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BOMB_SHELTER_STRATEGY"> 
@@ -18619,7 +18619,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BREWERY_HELP"> 
 			<Text>
-				Each source of [ICON_RES_WINE] Wine, [ICON_RES_COFFEE] Coffee, [ICON_RES_TEA] Tea, [ICON_RES_SUGAR] Sugar and [ICON_RES_SALT] Salt worked by this City produce +2 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]City must have at least one of these resources improved.
+				Each source of [ICON_RES_WINE] Wine, [ICON_RES_COFFEE] Coffee, [ICON_RES_TEA] Tea and [ICON_RES_SUGAR] Sugar worked by this City produces +2 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]City must have at least one of these resources improved.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BROADCAST_TOWER"> 
@@ -18705,7 +18705,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CARAVANSARY_HELP"> 
 			<Text>
-				Land trade routes originating from this city have a 50% increase in range and produce an additional 2 [ICON_GOLD] Gold when connecting to another civilization. Provides 2 [ICON_RES_HORSE] Horse resource for the Empire.
+				Land trade routes originating from this city have a 50% increase in range and produce an additional 2 [ICON_GOLD] Gold when connecting to another civilization.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CARAVANSARY_STRATEGY"> 
@@ -18964,7 +18964,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_COTHON_HELP"> 
 			<Text>
-				Replaces the [ICON_BUILDING_LIGHTHOUSE] [COLOR_YELLOW]Lighthouses[ENDCOLOR]. Provides +1 [ICON_FOOD] Food and +1 [ICON_PRODUCTION] Production in addition to the [ICON_BUILDING_LIGHTHOUSE] [COLOR_YELLOW]Lighthouses'[ENDCOLOR] other effects.
+				Replaces the [ICON_BUILDING_LIGHTHOUSE] Lighthouse. Provides +1 [ICON_FOOD] Food and +1 [ICON_PRODUCTION] Production on the building.[NEWLINE][NEWLINE]Each source of [ICON_RES_FISH] Fish worked by this City produces +1 [ICON_FOOD] Food.[NEWLINE]Each source of [ICON_RES_AMBER] Amber and each Atoll worked by this City produces +1 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]Buying tiles in this City costs 33% less [ICON_GOLD] Gold.[NEWLINE][NEWLINE]With Construction: Coast tiles worked by this City produce +1 [ICON_PRODUCTION] Production.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_COURTHOUSE"> 
@@ -19111,7 +19111,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FACTORY_HELP"> 
 			<Text>
-				Requires 1 [ICON_RES_COAL] Coal.[NEWLINE]Additionally provides +2 [ICON_GOLD] Gold from [ICON_RES_RUBBER] Rubber.[NEWLINE][NEWLINE]City must have a workshop
+				Requires 2 [ICON_RES_COAL] Coal and 1 [ICON_RES_IRON] Iron.[NEWLINE]Additionally provides +2 [ICON_GOLD] Gold from [ICON_RES_RUBBER] Rubber.[NEWLINE][NEWLINE]City must have a Workshop.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FACTORY_STRATEGY"> 
@@ -19189,7 +19189,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FORGE_HELP"> 
 			<Text>
-				+15% [ICON_PRODUCTION] Production when building Land Units.[NEWLINE][NEWLINE]Each source of [ICON_RES_IRON] Iron worked by this City produces +1 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]City must have a mined source of Iron nearby.
+				+15% [ICON_PRODUCTION] Production when building Land Units.[NEWLINE][NEWLINE]Each source of [ICON_RES_IRON] Iron worked by this City produces +1 [ICON_PRODUCTION] Production.[NEWLINE]Mountains worked by this City produce +1 [ICON_PRODUCTION] Production (not Natural Wonders).[NEWLINE][NEWLINE]City must have a mined source of Iron nearby.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FORGE_STRATEGY"> 
@@ -19244,7 +19244,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GEMCUTTER_HELP"> 
 			<Text>
-				Each source of [ICON_RES_JADE] Jade, [ICON_RES_GEMS] Gems, [ICON_RES_LAPIS] Lapis Lazuli and [ICON_RES_AMBER] Amber worked by this City produce +1 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]City must have at least one of these resources improved.
+				Each source of [ICON_RES_JADE] Jade, [ICON_RES_GEMS] Gems, [ICON_RES_LAPIS] Lapis Lazuli and [ICON_RES_AMBER] Amber worked by this City produces +1 [ICON_CULTURE] Culture.[NEWLINE]Mountains worked by this City produce +1 [ICON_CULTURE] Culture (not Natural Wonders).[NEWLINE][NEWLINE]City must have at least one of these resources improved.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GLOBE_THEATER"> 
@@ -19439,7 +19439,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GROCKER_HELP"> 
 			<Text>
-				Each source of [ICON_RES_TRUFFLES] Truffles, [ICON_RES_CITRUS] Citrus, [ICON_RES_OLIVE] Olives, [ICON_RES_COCONUT] Coconuts, [ICON_RES_COCOA] Cocoa and [ICON_RES_SPICES] Spices worked by this City produce +1 [ICON_FOOD] Food.[NEWLINE][NEWLINE]City must have at least one of these resources improved.
+				Each source of [ICON_RES_TRUFFLES] Truffles, [ICON_RES_CITRUS] Citrus, [ICON_RES_OLIVE] Olives, [ICON_RES_COCONUT] Coconuts, [ICON_RES_COCOA] Cocoa, [ICON_RES_SPICES] Spices and [ICON_RES_SALT] Salt worked by this City produces +1 [ICON_FOOD] Food.[NEWLINE][NEWLINE]City must have at least one of these resources improved.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GUNSMITH_SHOP_HELP"> 
@@ -19644,7 +19644,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HOTEL_HELP"> 
 			<Text>
-				50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city. [ICON_TOURISM] Tourism output from Great Works +50%.[NEWLINE][NEWLINE]+1 [ICON_CULTURE] Culture from Lake and Oasis tiles.
+				50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city.[NEWLINE][ICON_TOURISM] Tourism output from Great Works +50%.[NEWLINE][NEWLINE]Natural Wonders worked by this City produce +10 [ICON_CULTURE] Culture.[NEWLINE]+1 [ICON_CULTURE] Culture from Lake and Oasis tiles.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HOTEL_STRATEGY"> 
@@ -19890,7 +19890,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_LABORATORY_HELP"> 
 			<Text>
-				City must have a Public School.
+				Snow tiles worked by this City produce +3 [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]City must have a Public School.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_LABORATORY_STRATEGY"> 
@@ -19938,12 +19938,12 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_LIGHTHOUSE_HELP"> 
 			<Text>
-				+1 [ICON_FOOD] Food from Coast and Ocean Tiles. +1 [ICON_PRODUCTION] Production from Sea Resources worked by this City.[NEWLINE][NEWLINE]Each source of [ICON_RES_FISH] Fish worked by this City produces +1 [ICON_FOOD] Food.[NEWLINE][NEWLINE]City must be built on the coast.
+				Each source of [ICON_RES_FISH] Fish worked by this City produces +1 [ICON_FOOD] Food.[NEWLINE]Each source of [ICON_RES_AMBER] Amber and each Atoll worked by this City produces +1 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]Buying tiles in this City costs 33% less [ICON_GOLD] Gold.[NEWLINE][NEWLINE]With Construction: Coast tiles worked by this City produce +1 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]City must be built on the coast.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_LIGHTHOUSE_STRATEGY"> 
 			<Text>
-				The Lighthouse can only be constructed in a city next to a coastal tile. It increases the [ICON_FOOD] Food output of water tiles and [ICON_RES_FISH] Fish and it increases the [ICON_PRODUCTION] Production output of all sea resources.
+				The Lighthouse can only be constructed in a city next to the coast. It improves Fish, Amber and Atolls, makes buying tiles cheaper, and from Construction on adds [ICON_PRODUCTION] Production to Coast tiles.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_LIONS_GATE"> 
@@ -20181,7 +20181,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MINT_HELP"> 
 			<Text>
-				Each source of [ICON_RES_GOLD] Gold, [ICON_RES_SILVER] Silver, and [ICON_RES_COPPER] Copper worked by this City produces +2 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]City must have at least one of these resources mined nearby.
+				Each source of [ICON_RES_GOLD] Gold, [ICON_RES_SILVER] Silver and [ICON_RES_COPPER] Copper worked by this City produces +2 [ICON_GOLD] Gold.[NEWLINE]Mountains worked by this City produce +2 [ICON_GOLD] Gold (not Natural Wonders).[NEWLINE][NEWLINE]City must have at least one of these resources mined nearby.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MINT_STRATEGY"> 
@@ -20907,7 +20907,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SERAI_HELP"> 
 			<Text>
-				In addition to the regular effects of a [ICON_BUILDING_CARAVANSARY] Caravansary, the Serai provides +1 [ICON_GOLD] Gold per 3 [ICON_CITIZEN] Citizens, increases the city's air unit capacity by 1 and allows units to fast travel between other cities with Serais with the Airlift function. Provides 2 [ICON_RES_HORSE] Horse resource for the Empire.
+				In addition to the regular effects of a [ICON_BUILDING_CARAVANSARY] Caravansary, the Serai provides +1 [ICON_GOLD] Gold per 3 [ICON_CITIZEN] Citizens, increases the city's air unit capacity by 1 and allows units to fast travel between other cities with Serais with the Airlift function.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SHRINE"> 
@@ -21312,7 +21312,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TEXTILE_HELP"> 
 			<Text>
-				Each source of [ICON_RES_DYE] Dyes, [ICON_RES_FUR] Furs, [ICON_RES_SILK] Silk and [ICON_RES_COTTON] Cotton worked by this City produce +2 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]City must have at least one of these resources improved.
+				Each source of [ICON_RES_DYE] Dyes, [ICON_RES_FUR] Furs, [ICON_RES_SILK] Silk and [ICON_RES_COTTON] Cotton worked by this City produces +1 [ICON_PRODUCTION] Production and +1 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]City must have at least one of these resources improved.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_THEATRE"> 

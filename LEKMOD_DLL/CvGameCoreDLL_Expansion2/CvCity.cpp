@@ -8587,6 +8587,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			{
 				ChangeTerrainExtraYield(((TerrainTypes)iJ), eYield, (GC.getBuildingInfo(eBuilding)->GetTerrainYieldChange(iJ, eYield) * iChange));
 			}
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+			if (eYield == 0 && !pBuildingInfo->GetLekmodTechTerrainYields().empty())
+				updateYield();
+#endif
 
 			if(pBuildingInfo->GetEnhancedYieldTech() != NO_TECH)
 			{
@@ -14512,6 +14516,7 @@ int CvCity::GetLekmodBuildingStat(int iStat, bool bMax) const
 		case 2: iValue = pkBuilding->GetHillCityStrength(); break;
 		case 3: iValue = pkBuilding->GetMountainCityStrength(); break;
 		case 4: iValue = pkBuilding->GetCityAttackRangeChange(); break;
+		case 5: iValue = pkBuilding->GetNukeUnitDamageFixed(); break;
 		}
 		if (iValue == 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
 			continue;
@@ -14528,6 +14533,42 @@ int CvCity::GetLekmodAttackRange() const
 int CvCity::GetLekmodHealPerTurn() const
 {
 	return std::max(GC.getCITY_HIT_POINTS_HEALED_PER_TURN(), GetLekmodBuildingStat(0, true));
+}
+#endif
+
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+//	--------------------------------------------------------------------------------
+/// Extra yield on pPlot from this city's buildings whose terrain bonus needs a tech (Lighthouse: Coast, not lakes)
+int CvCity::GetLekmodTechTerrainYield(const CvPlot* pPlot, YieldTypes eYield) const
+{
+	static std::vector<int> s_aiBuildings;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding && !pkBuilding->GetLekmodTechTerrainYields().empty())
+				s_aiBuildings.push_back(iBuilding);
+		}
+		s_bInit = true;
+	}
+	if (pPlot == NULL || pPlot->isLake())
+		return 0;
+	int iYield = 0;
+	CvTeamTechs* pTechs = GET_TEAM(getTeam()).GetTeamTechs();
+	for (uint i = 0; i < s_aiBuildings.size(); i++)
+	{
+		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)s_aiBuildings[i]) <= 0)
+			continue;
+		const std::vector<LekmodBuildingTechTerrainYield>& aEntries = GC.getBuildingInfo((BuildingTypes)s_aiBuildings[i])->GetLekmodTechTerrainYields();
+		for (uint j = 0; j < aEntries.size(); j++)
+		{
+			if (aEntries[j].m_eYield == eYield && aEntries[j].m_eTerrain == pPlot->getTerrainType() && pTechs->HasTech(aEntries[j].m_eTech))
+				iYield += aEntries[j].m_iYield;
+		}
+	}
+	return iYield;
 }
 #endif
 

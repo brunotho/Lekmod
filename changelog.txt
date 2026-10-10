@@ -1185,3 +1185,49 @@ Cities heal at a flat rate that only defense buildings raise.
 - Removed: capitals no longer heal 1 extra HP per turn
 - Removed: Defense from buildings (and the Mughal Caravansary's garrison bonus) no longer adds healing
 - Changed: Civilopedia pages on city Hit Points and healing updated
+
+BUILDING COSTS AND MAINTENANCE (BUILDING_COURTHOUSE, BUILDING_BOMB_SHELTER, BUILDING_STADIUM, BUILDING_WINDMILL, BUILDING_FACTORY)
+---------------------------------------------------------------------------------------------------------------------------
+Tags: buildings
+Several buildings cost more or less to build and keep.
+- Changed: Courthouse (and unique replacements): 2 Gold maintenance (Courthouse was 4)
+- Changed: Bomb Shelter: 5 Gold maintenance (was 1)
+- Added: Bomb Shelter: military units (planes too) in the city take only 50 damage from a nuclear attack
+- Changed: Stadium: cost 335 -> 284, 5 Gold maintenance (was 2)
+- Changed: Windmill (and unique replacements): buying it with Gold costs 15% extra (was 25%)
+- Changed: Factory: cost 241 -> 260 (Faith cost with Work Ethic too), needs 2 Coal (was 1) and 1 Iron
+- Note: unique Factory and Stadium replacements keep their own costs and resources (the spec names only the Factory and the Stadium)
+- DLL: Buildings.NukeUnitDamageFixed (LEKMOD_DEFENSE_BUILDINGS); a GDR's Nuke Resistance (20) still wins when lower
+
+RESOURCE BUILDINGS (BUILDING_GROCER, BUILDING_BREWERY, BUILDING_GEMCUTTER, BUILDING_TEXTILE, BUILDING_MINT, BUILDING_FORGE)
+------------------------------------------------------------------------------------------------------------------------
+Tags: buildings
+Salt moves to the Grocer, and the Mint, Gem Cutter and Forge make Mountains workable.
+- Changed: Grocer: +2 Food on the building (was 1), no Gold maintenance (was 1), Salt gives +1 Food
+- Removed: Brewery: no longer improves Salt (and Salt no longer unlocks it)
+- Changed: Gem Cutter: needs Guilds (was Machinery)
+- Added: Gem Cutter: Mountains +1 Culture
+- Changed: Textile Mill: its resources give +1 Production (was 2) and +1 Gold
+- Added: Mint (and unique replacements): Mountains +2 Gold
+- Added: Forge: Mountains +1 Production
+- Note: the Mountain bonuses never apply to natural wonders
+
+RESEARCH LAB, CARAVANSARY, HOTEL (BUILDING_LABORATORY, BUILDING_CARAVANSARY, BUILDING_HOTEL)
+-----------------------------------------------------------------------------------------
+Tags: buildings
+- Added: Research Lab: Snow +3 Science
+- Removed: Caravansary (and unique replacements): no longer provides 2 Horses
+- Added: Hotel (and unique replacements): natural wonders worked by the city give +10 Culture (was +1 on Lake Victoria only)
+
+LIGHTHOUSE (BUILDING_LIGHTHOUSE)
+--------------------------------
+Tags: buildings, naval
+Redesigned: the Lighthouse no longer boosts every water tile.
+- Removed: +1 Food on Coast and Ocean, +1 Food on the Great Barrier Reef, +1 Production on sea resources
+- Changed: Fish still give +1 Food
+- Added: Amber and Atolls give +1 Culture
+- Added: buying tiles in the city costs 33% less Gold
+- Added: with Construction, Coast tiles (not lakes) give +1 Production
+- Changed: Carthage's Cothon follows the same changes and keeps its +1 Food and +1 Production on the building
+- DLL: Building_TechTerrainYieldChanges (LEKMOD_BUILDING_TECH_TERRAIN_YIELDS); plot yields refresh when the tech arrives or the building is built
+

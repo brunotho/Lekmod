@@ -859,6 +859,9 @@ public:
 	int GetLekmodAttackRange() const;
 	int GetLekmodHealPerTurn() const;
 #endif
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+	int GetLekmodTechTerrainYield(const CvPlot* pPlot, YieldTypes eYield) const;
+#endif
 	bool CanRangeStrikeNow() const;
 	bool IsHasBuildingThatAllowsRangeStrike() const;
 

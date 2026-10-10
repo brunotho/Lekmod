@@ -97,6 +97,7 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iHillCityStrength(0),
 	m_iMountainCityStrength(0),
 	m_iCityAttackRangeChange(0),
+	m_iNukeUnitDamageFixed(0),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
@@ -484,6 +485,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iHillCityStrength = kResults.GetInt("HillCityStrength");
 	m_iMountainCityStrength = kResults.GetInt("MountainCityStrength");
 	m_iCityAttackRangeChange = kResults.GetInt("CityAttackRangeChange");
+	m_iNukeUnitDamageFixed = kResults.GetInt("NukeUnitDamageFixed");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
@@ -1093,6 +1095,32 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 			kFreeTerrainYield.m_iYieldChange = pResults->GetInt(5);
 
 			m_aFreeTerrainYields.push_back(kFreeTerrainYield);
+		}
+	}
+#endif
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+	{
+		m_aLekmodTechTerrainYields.clear();
+		std::string strKey("Building_TechTerrainYieldChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select Technologies.ID, Terrains.ID, Yields.ID, Yield from Building_TechTerrainYieldChanges "
+				"inner join Technologies on Technologies.Type = TechType "
+				"inner join Terrains on Terrains.Type = TerrainType "
+				"inner join Yields on Yields.Type = YieldType "
+				"where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+		{
+			LekmodBuildingTechTerrainYield kEntry;
+			kEntry.m_eTech = (TechTypes)pResults->GetInt(0);
+			kEntry.m_eTerrain = (TerrainTypes)pResults->GetInt(1);
+			kEntry.m_eYield = (YieldTypes)pResults->GetInt(2);
+			kEntry.m_iYield = pResults->GetInt(3);
+			m_aLekmodTechTerrainYields.push_back(kEntry);
 		}
 	}
 #endif
@@ -1792,6 +1820,12 @@ int CvBuildingEntry::GetMountainCityStrength() const
 int CvBuildingEntry::GetCityAttackRangeChange() const
 {
 	return m_iCityAttackRangeChange;
+}
+
+/// Military units in the city take exactly this damage from nukes (Bomb Shelter)
+int CvBuildingEntry::GetNukeUnitDamageFixed() const
+{
+	return m_iNukeUnitDamageFixed;
 }
 #endif
 
@@ -3012,6 +3046,13 @@ int CvBuildingEntry::GetDifferentLandMassYieldChange(int i) const
 const std::vector<BuildingFreeTerrainYields>& CvBuildingEntry::GetFreeTerrainYields() const
 {
 	return m_aFreeTerrainYields;
+}
+#endif
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+/// Terrain yields that need a tech (Building_TechTerrainYieldChanges)
+const std::vector<LekmodBuildingTechTerrainYield>& CvBuildingEntry::GetLekmodTechTerrainYields() const
+{
+	return m_aLekmodTechTerrainYields;
 }
 #endif
 #ifdef LEKMOD_BUILDING_GP_EXPEND_YIELD

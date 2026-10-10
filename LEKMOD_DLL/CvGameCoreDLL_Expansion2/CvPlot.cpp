@@ -9328,6 +9328,9 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 			if(pWorkingCity != NULL && !isImpassable() && !isMountain())
 			{
 				iYield += pWorkingCity->GetTerrainExtraYield(getTerrainType(), eYield);
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+				iYield += pWorkingCity->GetLekmodTechTerrainYield(this, eYield);
+#endif
 			}
 		}
 
@@ -12552,6 +12555,9 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 			if(pWorkingCity != NULL && !isImpassable() && !isMountain())
 			{
 				iYield += pWorkingCity->GetTerrainExtraYield(getTerrainType(), eYield);
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+				iYield += pWorkingCity->GetLekmodTechTerrainYield(this, eYield);
+#endif
 			}
 		}
 

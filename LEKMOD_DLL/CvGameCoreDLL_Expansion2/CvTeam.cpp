@@ -6759,6 +6759,25 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 		SetHasTechForWorldCongress(true);
 	}
 
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+	// building terrain yields that need this tech: refresh the cached plot yields
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding == NULL)
+			continue;
+		const std::vector<LekmodBuildingTechTerrainYield>& aEntries = pkBuilding->GetLekmodTechTerrainYields();
+		bool bUses = false;
+		for (uint j = 0; j < aEntries.size(); j++)
+			bUses = bUses || aEntries[j].m_eTech == eTech;
+		if (bUses)
+		{
+			updateYield();
+			break;
+		}
+	}
+#endif
+
 	if(pTech->IsTriggersArchaeologicalSites())
 	{
 		GC.getGame().TriggerArchaeologySiteCreation(true /*bCheckInitialized*/);

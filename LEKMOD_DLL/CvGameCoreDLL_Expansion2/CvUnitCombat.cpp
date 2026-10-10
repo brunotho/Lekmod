@@ -2023,11 +2023,18 @@ void CvUnitCombat::GenerateNuclearExplosionDamage(CvPlot* pkTargetPlot, int iDam
 									iNukeDamage *= std::max(0, (pLoopCity->getNukeModifier() + 100));
 									iNukeDamage /= 100;
 								}
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+								// Bomb Shelter: military units (planes too) in the city take exactly this damage
+								if (pLoopCity != NULL && (pLoopUnit->IsCombatUnit() || pLoopUnit->getDomainType() == DOMAIN_AIR) && pLoopCity->GetLekmodBuildingStat(5, true) > 0)
+								{
+									iNukeDamage = pLoopCity->GetLekmodBuildingStat(5, true);
+								}
+#endif
 #ifdef LEKMOD_NUKE_RESISTANCE
-								// Nuke resistance: the same damage everywhere (ground zero, open terrain, a city with a Bomb Shelter)
+								// Nuke resistance: the same damage everywhere (ground zero, open terrain); a lower Bomb Shelter value wins
 								if (pLoopUnit->GetLekmodNukeDamageFixed() > 0)
 								{
-									iNukeDamage = pLoopUnit->GetLekmodNukeDamageFixed();
+									iNukeDamage = std::min(iNukeDamage, pLoopUnit->GetLekmodNukeDamageFixed());
 								}
 #endif
 

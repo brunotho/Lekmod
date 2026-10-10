@@ -32,6 +32,17 @@ struct BuildingFreeTerrainYields
 	int m_iMinTerrainRequired;
 	int m_iYieldChange;
 };
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+// Building_TechTerrainYieldChanges: worked tiles of a terrain yield more once the owner knows the tech (Lighthouse: Coast +1 Production with Construction)
+struct LekmodBuildingTechTerrainYield
+{
+	LekmodBuildingTechTerrainYield() : m_eTech(NO_TECH), m_eTerrain(NO_TERRAIN), m_eYield(NO_YIELD), m_iYield(0) {};
+	TechTypes m_eTech;
+	TerrainTypes m_eTerrain;
+	YieldTypes m_eYield;
+	int m_iYield;
+};
+#endif
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //  class : CvThemingBonusInfo
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,6 +206,7 @@ public:
 	int GetHillCityStrength() const;
 	int GetMountainCityStrength() const;
 	int GetCityAttackRangeChange() const;
+	int GetNukeUnitDamageFixed() const;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int GetTerritoryHealChange() const;
@@ -393,6 +405,9 @@ public:
 #endif
 #if defined(LEKMOD_NEARBY_TERRAIN_FREE_YIELDS)
 	const std::vector<BuildingFreeTerrainYields>& GetFreeTerrainYields() const;
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+	const std::vector<LekmodBuildingTechTerrainYield>& GetLekmodTechTerrainYields() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -517,6 +532,7 @@ private:
 	int m_iHillCityStrength;
 	int m_iMountainCityStrength;
 	int m_iCityAttackRangeChange;
+	int m_iNukeUnitDamageFixed;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;
@@ -701,6 +717,9 @@ private:
 #endif
 #if defined(LEKMOD_NEARBY_TERRAIN_FREE_YIELDS)
 	std::vector<BuildingFreeTerrainYields> m_aFreeTerrainYields;
+#endif
+#ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+	std::vector<LekmodBuildingTechTerrainYield> m_aLekmodTechTerrainYields;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;

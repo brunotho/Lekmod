@@ -41889,6 +41889,7 @@
 		<Column name="HillCityStrength" type="integer" default="0" /> <!-- LEKMOD: extra city Defense (whole points) if the city is on a Hill -->
 		<Column name="MountainCityStrength" type="integer" default="0" /> <!-- LEKMOD: extra city Defense (whole points) if the city is next to a Mountain -->
 		<Column name="CityAttackRangeChange" type="integer" default="0" /> <!-- LEKMOD: extra city ranged attack range -->
+		<Column name="NukeUnitDamageFixed" type="integer" default="0" /> <!-- LEKMOD: military units (and planes) in the city take exactly this damage from nukes -->
 		<Column name="Happiness" type="integer" default="0" /> <!-- Changes the amount of local happiness the city has. -->
 		<Column name="UnmoddedHappiness" type="integer" default="0" /> <!-- Changes the amount of global happiness the city is adding to the empire -->
 		<Column name="UnhappinessModifier" type="integer" default="0" /> <!-- Changes the amount of unhappiness in the empire by a % value. -->
@@ -47451,6 +47452,426 @@
 			<Set CityHealRate="50" CityAttackRangeChange="1" ExtraCityHitPoints="75" Cost="575" PrereqTech="TECH_RADAR"/>
 		</Update>
 	</Buildings>
+	<!-- LEKMOD: Phase 3 building changes (costs, resource buildings, Lighthouse, Research Lab, Caravansary, Hotel) -->
+	<Buildings>
+		<Update>
+			<Where BuildingClass="BUILDINGCLASS_COURTHOUSE"/>
+			<Set GoldMaintenance="2"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BOMB_SHELTER"/>
+			<Set GoldMaintenance="5" NukeUnitDamageFixed="50"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_STADIUM"/>
+			<Set Cost="425" GoldMaintenance="5"/>
+		</Update>
+		<Update>
+			<Where BuildingClass="BUILDINGCLASS_WINDMILL"/>
+			<Set HurryCostModifier="15"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_FACTORY"/>
+			<Set Cost="389" FaithCost="389"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_GROCER"/>
+			<Set GoldMaintenance="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_GEMCUTTER"/>
+			<Set PrereqTech="TECH_GUILDS"/>
+		</Update>
+		<Update>
+			<Where BuildingClass="BUILDINGCLASS_LIGHTHOUSE"/>
+			<Set PlotBuyCostModifier="-33"/>
+		</Update>
+	</Buildings>
+	<Building_ResourceQuantityRequirements>
+		<Update>
+			<Where BuildingType="BUILDING_FACTORY" ResourceType="RESOURCE_COAL"/>
+			<Set Cost="2"/>
+		</Update>
+		<Row>
+			<BuildingType>BUILDING_FACTORY</BuildingType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Building_ResourceQuantityRequirements>
+	<Building_YieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_GROCER" YieldType="YIELD_FOOD"/>
+			<Set Yield="2"/>
+		</Update>
+	</Building_YieldChanges>
+	<Building_ResourceYieldChanges>
+		<Delete BuildingType="BUILDING_BREWERY" ResourceType="RESOURCE_SALT"/>
+		<Row>
+			<BuildingType>BUILDING_GROCER</BuildingType>
+			<ResourceType>RESOURCE_SALT</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Update>
+			<Where BuildingType="BUILDING_TEXTILE" YieldType="YIELD_PRODUCTION"/>
+			<Set Yield="1"/>
+		</Update>
+		<Row>
+			<BuildingType>BUILDING_TEXTILE</BuildingType>
+			<ResourceType>RESOURCE_SILK</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEXTILE</BuildingType>
+			<ResourceType>RESOURCE_COTTON</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEXTILE</BuildingType>
+			<ResourceType>RESOURCE_DYE</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEXTILE</BuildingType>
+			<ResourceType>RESOURCE_FUR</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Delete BuildingType="BUILDING_LIGHTHOUSE"/>
+		<Row>
+			<BuildingType>BUILDING_LIGHTHOUSE</BuildingType>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LIGHTHOUSE</BuildingType>
+			<ResourceType>RESOURCE_AMBER</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Delete BuildingType="BUILDING_COTHON"/>
+		<Row>
+			<BuildingType>BUILDING_COTHON</BuildingType>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_COTHON</BuildingType>
+			<ResourceType>RESOURCE_AMBER</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_ResourceYieldChanges>
+	<Building_LocalResourceOrs>
+		<Delete BuildingType="BUILDING_BREWERY" ResourceType="RESOURCE_SALT"/>
+		<Row>
+			<BuildingType>BUILDING_GROCER</BuildingType>
+			<ResourceType>RESOURCE_SALT</ResourceType>
+		</Row>
+	</Building_LocalResourceOrs>
+	<Building_SeaPlotYieldChanges>
+		<Delete BuildingType="BUILDING_LIGHTHOUSE"/>
+		<Delete BuildingType="BUILDING_COTHON"/>
+	</Building_SeaPlotYieldChanges>
+	<Building_SeaResourceYieldChanges>
+		<Delete BuildingType="BUILDING_LIGHTHOUSE"/>
+		<Delete BuildingType="BUILDING_COTHON"/>
+	</Building_SeaResourceYieldChanges>
+	<Building_FeatureYieldChanges>
+		<Delete BuildingType="BUILDING_LIGHTHOUSE"/>
+		<Row>
+			<BuildingType>BUILDING_LIGHTHOUSE</BuildingType>
+			<FeatureType>FEATURE_ATOLL</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Delete BuildingType="BUILDING_COTHON"/>
+		<Row>
+			<BuildingType>BUILDING_COTHON</BuildingType>
+			<FeatureType>FEATURE_ATOLL</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Delete BuildingType="BUILDING_HOTEL" FeatureType="FEATURE_LAKE_VICTORIA"/>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_CRATER</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_EL_DORADO</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_FOUNTAIN_YOUTH</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_FUJI</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_GEYSER</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_GIBRALTAR</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_KILIMANJARO</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_LAKE_VICTORIA</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_MESA</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_MT_KAILASH</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_MT_SINAI</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_POTOSI</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_REEF</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_SOLOMONS_MINES</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_SRI_PADA</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_ULURU</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HOTEL</BuildingType>
+			<FeatureType>FEATURE_VOLCANO</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Delete BuildingType="BUILDING_BURJ" FeatureType="FEATURE_LAKE_VICTORIA"/>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_CRATER</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_EL_DORADO</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_FOUNTAIN_YOUTH</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_FUJI</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_GEYSER</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_GIBRALTAR</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_KILIMANJARO</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_LAKE_VICTORIA</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_MESA</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_MT_KAILASH</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_MT_SINAI</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_POTOSI</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_REEF</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_SOLOMONS_MINES</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_SRI_PADA</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_ULURU</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<FeatureType>FEATURE_VOLCANO</FeatureType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>10</Yield>
+		</Row>
+	</Building_FeatureYieldChanges>
+	<Building_TerrainYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_MINT</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SILVERSMITH</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_CZECHIA_MINT</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_GEMCUTTER</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_FORGE</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LABORATORY</BuildingType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Building_TerrainYieldChanges>
+	<Building_ResourceQuantity>
+		<Delete BuildingType="BUILDING_CARAVANSARY" ResourceType="RESOURCE_HORSE"/>
+		<Delete BuildingType="BUILDING_SERAI" ResourceType="RESOURCE_HORSE"/>
+		<Delete BuildingType="BUILDING_MC_KOKH" ResourceType="RESOURCE_HORSE"/>
+		<Delete BuildingType="BUILDING_HORDE_YAM_ROUTE" ResourceType="RESOURCE_HORSE"/>
+		<Delete BuildingType="BUILDING_MUGHALS_CARAVANSARY" ResourceType="RESOURCE_HORSE"/>
+	</Building_ResourceQuantity>
+	<Table name="Building_TechTerrainYieldChanges"> <!-- LEKMOD: terrain yields for worked tiles once the owner knows TechType (lakes excluded) -->
+		<Column name="BuildingType" type="text" reference="Buildings(Type)" />
+		<Column name="TechType" type="text" reference="Technologies(Type)" />
+		<Column name="TerrainType" type="text" reference="Terrains(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" />
+	</Table>
+	<Building_TechTerrainYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LIGHTHOUSE</BuildingType>
+			<TechType>TECH_CONSTRUCTION</TechType>
+			<TerrainType>TERRAIN_COAST</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_COTHON</BuildingType>
+			<TechType>TECH_CONSTRUCTION</TechType>
+			<TerrainType>TERRAIN_COAST</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_TechTerrainYieldChanges>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
