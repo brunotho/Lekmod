@@ -189,6 +189,9 @@ public:
 	int GetMinAreaSize() const;
 	int GetConquestProbability() const;
 	int GetHealRateChange() const;
+#ifdef LEKMOD_TERRITORY_HEAL
+	int GetTerritoryHealChange() const;
+#endif
 	int GetHappiness() const;
 	int GetUnmoddedHappiness() const;
 	int GetUnhappinessModifier() const;
@@ -501,6 +504,9 @@ private:
 	int m_iMinAreaSize;
 	int m_iConquestProbability;
 	int m_iHealRateChange;
+#ifdef LEKMOD_TERRITORY_HEAL
+	int m_iTerritoryHealChange;
+#endif
 	int m_iHappiness;
 	int m_iUnmoddedHappiness;
 	int m_iUnhappinessModifier;

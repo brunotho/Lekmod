@@ -34327,6 +34327,18 @@
 			<NoLimit>false</NoLimit> 
 			<Monument>false</Monument> 
 		</Row>
+		<Row>
+			<ID>176</ID>
+			<Type>BUILDINGCLASS_LEKMOD_FIELD_HOSPITAL</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_FIELD_HOSPITAL</DefaultBuilding>
+			<Description>TXT_KEY_BUILDING_LEKMOD_FIELD_HOSPITAL</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
 	</BuildingClasses> 
 
 	<Table name="Building_AreaYieldModifiers">
@@ -41837,6 +41849,7 @@
 		<Column name="NukeModifier" type="integer" default="0" /> <!-- Percent Modifier of the amount of population lost when the city is attacked with an Atomic Bomb, or Nuclear Missile -->
 		<Column name="NukeExplosionRand" type="integer" default="0" /> <!-- If a City is Not being Razed, Every turn there is X chance that the city will experience a "Meltdown" this attacks the city plot with an Atomic bomb level nuclear strike, and removes the melted building. Only one Meltdown per turn, even if many buildings have this value. -->
 		<Column name="HealRateChange" type="integer" default="0" /> <!-- Changes the amount a unit heals while inside the city. -->
+		<Column name="TerritoryHealChange" type="integer" default="0" /> <!-- LEKMOD: extra healing for the owner's non-air units on all tiles of the city -->
 		<Column name="Happiness" type="integer" default="0" /> <!-- Changes the amount of local happiness the city has. -->
 		<Column name="UnmoddedHappiness" type="integer" default="0" /> <!-- Changes the amount of global happiness the city is adding to the empire -->
 		<Column name="UnhappinessModifier" type="integer" default="0" /> <!-- Changes the amount of unhappiness in the empire by a % value. -->
@@ -47152,6 +47165,25 @@
 			<ArtDefineTag>ART_DEF_BUILDING_NATIONAL_TREASURY</ArtDefineTag> 
 			<PortraitIndex>0</PortraitIndex> 
 			<IconAtlas>EXPANSION2_WONDER_ATLAS</IconAtlas> 
+		</Row>
+		<!-- LEKMOD: Field Hospital, given to cities founded by a Vanguard Corps -->
+		<Row>
+			<ID>269</ID>
+			<Type>BUILDING_LEKMOD_FIELD_HOSPITAL</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_FIELD_HOSPITAL</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_FIELD_HOSPITAL</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_FIELD_HOSPITAL_HELP</Civilopedia>
+			<Help>TXT_KEY_BUILDING_LEKMOD_FIELD_HOSPITAL_HELP</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<Happiness>4</Happiness>
+			<TerritoryHealChange>5</TerritoryHealChange>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>45</PortraitIndex>
+			<IconAtlas>BW_ATLAS_1</IconAtlas>
 		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
@@ -74807,6 +74839,31 @@
 			<CivilizationType>CIVILIZATION_PHILIPPINES</CivilizationType>
 			<UnitClassType>UNITCLASS_SKIFF</UnitClassType>
 			<UnitType>UNIT_NELAYAN</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_SPAIN</CivilizationType>
+			<UnitClassType>UNITCLASS_CONQUISTADOR</UnitClassType>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_PORTUGAL</CivilizationType>
+			<UnitClassType>UNITCLASS_CONQUISTADOR</UnitClassType>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_NETHERLANDS</CivilizationType>
+			<UnitClassType>UNITCLASS_CONQUISTADOR</UnitClassType>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_FRANCE</CivilizationType>
+			<UnitClassType>UNITCLASS_CONQUISTADOR</UnitClassType>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_BELGIUM</CivilizationType>
+			<UnitClassType>UNITCLASS_CONQUISTADOR</UnitClassType>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
 		</Row>
 	</Civilization_UnitClassOverrides> 
 
@@ -135805,6 +135862,13 @@
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>swift_transport_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>swift_transport_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>swift_transport_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- Vanguard Corps unit portrait -->
+		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>256</IconSize><Filename>vanguard_corps_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>128</IconSize><Filename>vanguard_corps_128.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>80</IconSize><Filename>vanguard_corps_80.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>64</IconSize><Filename>vanguard_corps_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>45</IconSize><Filename>vanguard_corps_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>32</IconSize><Filename>vanguard_corps_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<!-- SITTING_DUCKS promotion -->
 		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>sitting_ducks_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>sitting_ducks_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
@@ -210141,6 +210205,16 @@
 			<InstanceCostModifier>0</InstanceCostModifier>
 			<DefaultUnit>UNIT_SELF_PROPELLED_ARTILLERY</DefaultUnit>
 		</Row>
+		<Row>
+			<ID>117</ID>
+			<Type>UNITCLASS_VANGUARD_CORPS</Type>
+			<Description>TXT_KEY_UNIT_VANGUARD_CORPS</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<InstanceCostModifier>0</InstanceCostModifier>
+			<DefaultUnit>UNIT_VANGUARD_CORPS</DefaultUnit>
+		</Row>
 	</UnitClasses> 
 
 	<Table name="UnitCombatInfos">
@@ -259029,6 +259103,22 @@
 			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
 			<UnitAIType>UNITAI_RANGED</UnitAIType>
 		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<UnitAIType>UNITAI_ATTACK</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<UnitAIType>UNITAI_DEFENSE</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<UnitAIType>UNITAI_FAST_ATTACK</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<UnitAIType>UNITAI_SETTLE</UnitAIType>
+		</Row>
 	</Unit_AITypes> 
 
 	<Table name="Unit_BuildingClassRequireds">
@@ -260326,6 +260416,42 @@
 		<Row>
 			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
 			<UnitClassType>UNITCLASS_ROCKET_ARTILLERY</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SETTLER</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_IMPRENDITORE</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_IMPRENDITORO</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BURMA_SETTLER</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_RANCHERO</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PIONEER</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MAORI_PIONEER</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SPANISH_CONQUISTADOR</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<UnitClassType>UNITCLASS_VANGUARD_CORPS</UnitClassType>
 		</Row>
 	</Unit_ClassUpgrades> 
 
@@ -263799,10 +263925,6 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_SPANISH_CONQUISTADOR</UnitType> 
-			<PromotionType>PROMOTION_EXTRA_SIGHT_II</PromotionType> 
-		</Row>
-		<Row> 
-			<UnitType>UNIT_SPANISH_CONQUISTADOR</UnitType> 
 			<PromotionType>PROMOTION_DEFENSIVE_EMBARKATION</PromotionType> 
 		</Row>
 		<Row> 
@@ -265331,7 +265453,77 @@
 			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
 			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
 		</Row>
+		<Row>
+			<UnitType>UNIT_SPANISH_CONQUISTADOR</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<PromotionType>PROMOTION_DEFENSIVE_EMBARKATION</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType>
+		</Row>
 	</Unit_FreePromotions> 
+
+	<!-- LEKMOD: free buildings / units for a city founded by the unit (LEKMOD_FOUNDING_UNIT_EFFECTS) -->
+	<Table name="Unit_FoundCityBuildingClasses">
+		<Column name="UnitType" type="text" reference="Units(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+	</Table>
+	<Unit_FoundCityBuildingClasses>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<BuildingClassType>BUILDINGCLASS_WALLS</BuildingClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<BuildingClassType>BUILDINGCLASS_CASTLE</BuildingClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<BuildingClassType>BUILDINGCLASS_WORKSHOP</BuildingClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<BuildingClassType>BUILDINGCLASS_LEKMOD_FIELD_HOSPITAL</BuildingClassType>
+		</Row>
+	</Unit_FoundCityBuildingClasses>
+	<Table name="Unit_FoundCityUnitClasses">
+		<Column name="UnitType" type="text" reference="Units(Type)" />
+		<Column name="UnitClassType" type="text" reference="UnitClasses(Type)" />
+	</Table>
+	<Unit_FoundCityUnitClasses>
+		<Row>
+			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
+			<UnitClassType>UNITCLASS_WORKER</UnitClassType>
+		</Row>
+	</Unit_FoundCityUnitClasses>
 
 	<Table name="Unit_GreatPersons">
 		<Column name="UnitType" type="text" reference="Units(Type)" />
@@ -265919,6 +266111,26 @@
 		<Row>
 			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
 			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SPANISH_CONQUISTADOR</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SPANISH_CONQUISTADOR</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
 			<Cost>1</Cost>
 		</Row>
 	</Unit_ResourceQuantityRequirements> 
@@ -268840,6 +269052,9 @@
 		<Column name="PopulationReq" type="integer"  default="0"/>
 		<Column name="SettlerCostModifier" type="integer"  default="0"/>
 		<Column name="LocalPopChange" type="integer"  default="0"/>
+		<Column name="FoundCityPopulation" type="integer" default="0"/>
+		<Column name="FoundCityExtraPlots" type="integer" default="0"/>
+		<Column name="PolicyAlternateTech" type="text" reference="Technologies(Type)" default="NULL"/>
 	</Table> 
 	<Units>
 		<Delete />
@@ -271766,8 +271981,8 @@
 			<Civilopedia>TXT_KEY_CIV5_SPAIN_CONQUISTADOR_TEXT</Civilopedia>
 			<Strategy>TXT_KEY_CIV5_SPAIN_CONQUISTADOR_STRATEGY</Strategy>
 			<Help>TXT_KEY_CIV5_SPAIN_CONQUISTADOR_HELP</Help>
-			<Combat>16</Combat>
-			<Cost>32</Cost>
+			<Combat>17</Combat>
+			<Cost>0</Cost>
 			<FaithCost>270</FaithCost>
 			<RequiresFaithPurchaseEnabled>true</RequiresFaithPurchaseEnabled>
 			<Moves>4</Moves>
@@ -271782,6 +271997,43 @@
 			<FoundAbroad>true</FoundAbroad>
 			<AdvancedStartCost>25</AdvancedStartCost>
 			<PolicyType>POLICY_EXPLORATION</PolicyType>
+			<ObsoleteTech>TECH_RAILROAD</ObsoleteTech>
+			<FoundCityPopulation>2</FoundCityPopulation>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>3</XPValueDefense>
+			<UnitArtInfo>ART_DEF_UNIT_U_SPANISH_CONQUISTADOR</UnitArtInfo>
+			<UnitFlagIconOffset>1</UnitFlagIconOffset>
+			<PortraitIndex>1</PortraitIndex>
+			<IconAtlas>DLC02_UNIT_ATLAS</IconAtlas>
+			<UnitFlagAtlas>DLC02_UNIT_FLAG_ATLAS</UnitFlagAtlas>
+		</Row>
+		<!-- LEKMOD (2026-10-10): shared unique Conquistador (Spain, Portugal, Netherlands, France, Belgium): Exploration opener or Civil Service -->
+		<Row>
+			<ID>272</ID>
+			<Type>UNIT_CONQUISTADOR_SHARED</Type>
+			<Description>TXT_KEY_UNIT_SPANISH_CONQUISTADOR</Description>
+			<Civilopedia>TXT_KEY_CIV5_SPAIN_CONQUISTADOR_TEXT</Civilopedia>
+			<Strategy>TXT_KEY_CIV5_SPAIN_CONQUISTADOR_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_HELP_CONQUISTADOR_SHARED</Help>
+			<Combat>17</Combat>
+			<Cost>0</Cost>
+			<FaithCost>270</FaithCost>
+			<RequiresFaithPurchaseEnabled>true</RequiresFaithPurchaseEnabled>
+			<Moves>4</Moves>
+			<Class>UNITCLASS_CONQUISTADOR</Class>
+			<CombatClass>UNITCOMBAT_MOUNTED</CombatClass>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<Pillage>true</Pillage>
+			<Found>true</Found>
+			<FoundAbroad>true</FoundAbroad>
+			<AdvancedStartCost>25</AdvancedStartCost>
+			<PolicyType>POLICY_EXPLORATION</PolicyType>
+			<PolicyAlternateTech>TECH_CIVIL_SERVICE</PolicyAlternateTech>
+			<ObsoleteTech>TECH_RAILROAD</ObsoleteTech>
+			<FoundCityPopulation>2</FoundCityPopulation>
 			<XPValueAttack>3</XPValueAttack>
 			<XPValueDefense>3</XPValueDefense>
 			<UnitArtInfo>ART_DEF_UNIT_U_SPANISH_CONQUISTADOR</UnitArtInfo>
@@ -276252,9 +276504,70 @@
 			<IconAtlas>UNIT_ATLAS_2</IconAtlas>
 			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
 		</Row>
+		<!-- LEKMOD Vanguard Corps (2026-10-10): late settler; Settlers and Conquistadors upgrade to it -->
+		<Row>
+			<ID>271</ID>
+			<Type>UNIT_VANGUARD_CORPS</Type>
+			<Description>TXT_KEY_UNIT_VANGUARD_CORPS</Description>
+			<Civilopedia>TXT_KEY_UNIT_VANGUARD_CORPS_STRATEGY</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_VANGUARD_CORPS_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_HELP_VANGUARD_CORPS</Help>
+			<Requirements>TXT_KEY_NO_ACTION_SETTLER_SIZE_LIMIT_HARDCODED</Requirements>
+			<Cost>327</Cost>
+			<Moves>3</Moves>
+			<BaseSightRange>2</BaseSightRange>
+			<Class>UNITCLASS_VANGUARD_CORPS</Class>
+			<Capture>UNITCLASS_WORKER</Capture>
+			<Domain>DOMAIN_LAND</Domain>
+			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
+			<DefaultUnitAI>UNITAI_SETTLE</DefaultUnitAI>
+			<Found>true</Found>
+			<FoundCityPopulation>4</FoundCityPopulation>
+			<FoundCityExtraPlots>6</FoundCityExtraPlots>
+			<HurryCostModifier>20</HurryCostModifier>
+			<PrereqTech>TECH_RAILROAD</PrereqTech>
+			<MinAreaSize>-1</MinAreaSize>
+			<NukeDamageLevel>-1</NukeDamageLevel>
+			<UnitArtInfo>ART_DEF_UNIT_GENERAL_LATE</UnitArtInfo>
+			<ShowInPedia>true</ShowInPedia>
+			<MoveRate>BIPED</MoveRate>
+			<UnitFlagIconOffset>90</UnitFlagIconOffset>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_VANGUARD_CORPS_ATLAS</IconAtlas>
+			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
+		</Row>
 	</Units>
 	<!-- LEKMOD naval rework (2026-10-09) -->
 	<Units>
+		<!-- Vanguard Corps (2026-10-10) replaces the Settlers at Railroad -->
+		<Update>
+			<Where Type="UNIT_SETTLER"/>
+			<Set ObsoleteTech="TECH_RAILROAD"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_IMPRENDITORE"/>
+			<Set ObsoleteTech="TECH_RAILROAD"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_IMPRENDITORO"/>
+			<Set ObsoleteTech="TECH_RAILROAD"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BURMA_SETTLER"/>
+			<Set ObsoleteTech="TECH_RAILROAD"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_RANCHERO"/>
+			<Set ObsoleteTech="TECH_RAILROAD"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_PIONEER"/>
+			<Set ObsoleteTech="TECH_RAILROAD"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_MAORI_PIONEER"/>
+			<Set ObsoleteTech="TECH_RAILROAD"/>
+		</Update>
 		<!-- Self-Propelled Artillery (2026-10-10) replaces the Artillery at Ballistics -->
 		<Update>
 			<Where Type="UNIT_ARTILLERY"/>

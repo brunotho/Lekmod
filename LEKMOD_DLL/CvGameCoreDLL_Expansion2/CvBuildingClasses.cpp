@@ -91,6 +91,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iMinAreaSize(0),
 	m_iConquestProbability(0),
 	m_iHealRateChange(0),
+#ifdef LEKMOD_TERRITORY_HEAL
+	m_iTerritoryHealChange(0),
+#endif
 	m_iHappiness(0),
 	m_iUnmoddedHappiness(0),
 	m_iUnhappinessModifier(0),
@@ -468,6 +471,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iNukeModifier = kResults.GetInt("NukeModifier");
 	m_iNukeExplosionRand = kResults.GetInt("NukeExplosionRand");
 	m_iHealRateChange = kResults.GetInt("HealRateChange");
+#ifdef LEKMOD_TERRITORY_HEAL
+	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
+#endif
 	m_iHappiness = kResults.GetInt("Happiness");
 	m_iUnmoddedHappiness = kResults.GetInt("UnmoddedHappiness");
 	m_iUnhappinessModifier = kResults.GetInt("UnhappinessModifier");
@@ -1742,6 +1748,14 @@ int CvBuildingEntry::GetHealRateChange() const
 {
 	return m_iHealRateChange;
 }
+
+#ifdef LEKMOD_TERRITORY_HEAL
+/// Extra healing for the owner's non-air units on any tile of the city (Field Hospital)
+int CvBuildingEntry::GetTerritoryHealChange() const
+{
+	return m_iTerritoryHealChange;
+}
+#endif
 
 /// Happiness provided by this building
 int CvBuildingEntry::GetHappiness() const

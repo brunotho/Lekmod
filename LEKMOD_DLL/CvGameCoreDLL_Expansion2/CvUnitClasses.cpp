@@ -113,6 +113,15 @@ CvUnitEntry::CvUnitEntry(void) :
 	m_pbGreatPeoples(NULL),
 	m_pbBuildings(NULL),
 	m_pbBuildingClassRequireds(NULL),
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+	m_iFoundCityPopulation(0),
+	m_iFoundCityExtraPlots(0),
+	m_pbFoundCityBuildingClasses(NULL),
+	m_pbFoundCityUnitClasses(NULL),
+#endif
+#ifdef LEKMOD_POLICY_ALTERNATE_TECH
+	m_iPolicyAlternateTech(NO_TECH),
+#endif
 	m_piPrereqAndTechs(NULL),
 	m_piResourceQuantityRequirements(NULL),
 	m_piProductionTraits(NULL),
@@ -156,6 +165,10 @@ CvUnitEntry::~CvUnitEntry(void)
 	SAFE_DELETE_ARRAY(m_pbGreatPeoples);
 	SAFE_DELETE_ARRAY(m_pbBuildings);
 	SAFE_DELETE_ARRAY(m_pbBuildingClassRequireds);
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+	SAFE_DELETE_ARRAY(m_pbFoundCityBuildingClasses);
+	SAFE_DELETE_ARRAY(m_pbFoundCityUnitClasses);
+#endif
 	SAFE_DELETE_ARRAY(m_piPrereqAndTechs);
 	SAFE_DELETE_ARRAY(m_piResourceQuantityRequirements);
 	SAFE_DELETE_ARRAY(m_piProductionTraits);
@@ -245,6 +258,10 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 	m_iSettlerCostModifier = kResults.GetInt("SettlerCostModifier");
 	m_iLocalPopChange = kResults.GetInt("LocalPopChange");
 #endif
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+	m_iFoundCityPopulation = kResults.GetInt("FoundCityPopulation");
+	m_iFoundCityExtraPlots = kResults.GetInt("FoundCityExtraPlots");
+#endif
 	m_iCultureBombRadius = kResults.GetInt("CultureBombRadius");
 	m_iGoldenAgeTurns = kResults.GetInt("GoldenAgeTurns");
 	m_iFreePolicies = kResults.GetInt("FreePolicies");
@@ -303,6 +320,10 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 
 	szTextVal = kResults.GetText("PolicyType");
 	m_iPolicyType = GC.getInfoTypeForString(szTextVal, true);
+#ifdef LEKMOD_POLICY_ALTERNATE_TECH
+	szTextVal = kResults.GetText("PolicyAlternateTech");
+	m_iPolicyAlternateTech = GC.getInfoTypeForString(szTextVal, true);
+#endif
 #if defined(MISC_CHANGES) // CvUnitClasses
 	szTextVal = kResults.GetText("PolicyBranchType");
 	m_iPolicyBranchType = GC.getInfoTypeForString(szTextVal, true);
@@ -370,6 +391,10 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 	kUtility.PopulateArrayByExistence(m_pbGreatPeoples, "Specialists", "Unit_GreatPersons", "GreatPersonType", "UnitType", szUnitType);
 	kUtility.PopulateArrayByExistence(m_pbBuildings, "Buildings", "Unit_Buildings", "BuildingType", "UnitType", szUnitType);
 	kUtility.PopulateArrayByExistence(m_pbBuildingClassRequireds, "BuildingClasses", "Unit_BuildingClassRequireds", "BuildingClassType", "UnitType", szUnitType);
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+	kUtility.PopulateArrayByExistence(m_pbFoundCityBuildingClasses, "BuildingClasses", "Unit_FoundCityBuildingClasses", "BuildingClassType", "UnitType", szUnitType);
+	kUtility.PopulateArrayByExistence(m_pbFoundCityUnitClasses, "UnitClasses", "Unit_FoundCityUnitClasses", "UnitClassType", "UnitType", szUnitType);
+#endif
 #if defined(LEKMOD_UNIT_STRENGTH_PROMOTION_ERA)
 	{
 		kUtility.InitializeArray(m_piEraStrengthChanges, "Eras", 0);
@@ -1024,6 +1049,40 @@ int CvUnitEntry::GetSettlerCostModifier() const
 int CvUnitEntry::GetLocalPopChange() const
 {
 	return m_iLocalPopChange;
+}
+#endif
+
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+/// Extra population for a city founded by this unit
+int CvUnitEntry::GetFoundCityPopulation() const
+{
+	return m_iFoundCityPopulation;
+}
+
+/// Extra tiles claimed by a city founded by this unit
+int CvUnitEntry::GetFoundCityExtraPlots() const
+{
+	return m_iFoundCityExtraPlots;
+}
+
+/// Free building (this civ's building of the class) in a city founded by this unit
+bool CvUnitEntry::IsFoundCityBuildingClass(int i) const
+{
+	return m_pbFoundCityBuildingClasses ? m_pbFoundCityBuildingClasses[i] : false;
+}
+
+/// Free unit (this civ's unit of the class) in a city founded by this unit
+bool CvUnitEntry::IsFoundCityUnitClass(int i) const
+{
+	return m_pbFoundCityUnitClasses ? m_pbFoundCityUnitClasses[i] : false;
+}
+#endif
+
+#ifdef LEKMOD_POLICY_ALTERNATE_TECH
+/// A tech that unlocks the unit without its PolicyType
+int CvUnitEntry::GetPolicyAlternateTech() const
+{
+	return m_iPolicyAlternateTech;
 }
 #endif
 

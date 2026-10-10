@@ -50743,15 +50743,11 @@ Nebuchadnezzar II died in Babylon in 562 BC. He is remembered as a successful mi
 				Conquistador
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_HELP"> 
-			<Text>
-				Medieval Era unit that specializes in scouting and colonizing new lands. Unlocked by opening the Exploration social policy tree.
-			</Text>
+		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_HELP">
+			<Text>Available with the Exploration opener.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Defends itself when embarked; disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_STRATEGY"> 
-			<Text>
-				The Conquistador, which is only available by opening the Exploration social policy tree, is a multi-purpose unit that serves as an exceptional scout on land with extra visibility and the ability to found new cities. In the water, the Conquistador has the defensive embarkation promotion that allows it to defend itself against naval units.
-			</Text>
+		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_STRATEGY">
+			<Text>Available to everyone with the Exploration opener; Spain, Portugal, the Netherlands, France and Belgium get it already with Civil Service.[NEWLINE]17 [ICON_STRENGTH] Combat Strength, 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Defends itself when embarked; disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_TEXT"> 
 			<Text>
@@ -101659,6 +101655,24 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_DISMISS_ALL_TT">
 			<Text>Dismiss all notifications except the research and production prompts.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_VANGUARD_CORPS">
+			<Text>Vanguard Corps</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_HELP_VANGUARD_CORPS">
+			<Text>Founds a fortified city with 5 [ICON_CITIZEN] Population, free Walls, Castle, Barracks, Workshop and Field Hospital, 6 extra tiles and a free Worker.[NEWLINE][NEWLINE]The city keeps growing while it is built.[NEWLINE]Embarking and disembarking cost only 1 [ICON_MOVES] Movement.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_VANGUARD_CORPS_STRATEGY">
+			<Text>The Vanguard Corps replaces the Settler (and Conquistador) with Railroad; both upgrade to it.[NEWLINE]It moves 3 tiles and cannot defend itself.[NEWLINE][NEWLINE]A city it founds starts with 4 more [ICON_CITIZEN] Population, claims 6 extra tiles and gets a free Worker.[NEWLINE]It also gets Walls, Castle, Barracks, Workshop and a Field Hospital for free.[NEWLINE]The Field Hospital gives +4 [ICON_HAPPINESS_1] Happiness and heals your non-air units on the city's tiles by 5 more HP per turn.[NEWLINE][NEWLINE]Unlike the Settler, building it does not stop the city's growth.[NEWLINE]Embarking and disembarking cost only 1 [ICON_MOVES] Movement (Amphibious I and II).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_FIELD_HOSPITAL">
+			<Text>Field Hospital</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_FIELD_HOSPITAL_HELP">
+			<Text>Given to cities founded by a Vanguard Corps.[NEWLINE][NEWLINE]+4 [ICON_HAPPINESS_1] Happiness.[NEWLINE]Your non-air units on this city's tiles heal 5 more HP per turn.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_HELP_CONQUISTADOR_SHARED">
+			<Text>Unique Conquistador of Spain, Portugal, the Netherlands, France and Belgium: available with Civil Service or the Exploration opener.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Defends itself when embarked; disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_SITTING_DUCKS">
 			<Text>Sitting Ducks</Text>

@@ -116,6 +116,15 @@ public:
 	int GetSettlerCostModifier() const;
 	int GetLocalPopChange() const;
 #endif
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+	int GetFoundCityPopulation() const;
+	int GetFoundCityExtraPlots() const;
+	bool IsFoundCityBuildingClass(int i) const;
+	bool IsFoundCityUnitClass(int i) const;
+#endif
+#ifdef LEKMOD_POLICY_ALTERNATE_TECH
+	int GetPolicyAlternateTech() const;
+#endif
 	int GetCultureBombRadius() const;
 	int GetCultureBombRadiusNeutral() const;
 	int GetGoldenAgeTurns() const;
@@ -270,6 +279,15 @@ private:
 	int m_iPopulationReq;
 	int m_iSettlerCostModifier;
 	int m_iLocalPopChange;
+#endif
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+	int m_iFoundCityPopulation;
+	int m_iFoundCityExtraPlots;
+	bool* m_pbFoundCityBuildingClasses;
+	bool* m_pbFoundCityUnitClasses;
+#endif
+#ifdef LEKMOD_POLICY_ALTERNATE_TECH
+	int m_iPolicyAlternateTech;
 #endif
 	int m_iCultureBombRadius;
 	int m_iCultureBombRadiusNeutral;

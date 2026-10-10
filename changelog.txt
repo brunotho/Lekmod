@@ -1078,6 +1078,31 @@ A new mobile siege unit that does not need to set up.
 - Changed: the Artillery (and the Rocket Corps) becomes obsolete with Ballistics and upgrades to the Self-Propelled Artillery; the Self-Propelled Artillery becomes obsolete with Rocketry and upgrades to the Rocket Artillery
 - Note: uses the Artillery's look as a placeholder (user decision)
 
+VANGUARD CORPS (UNIT_VANGUARD_CORPS, BUILDING_LEKMOD_FIELD_HOSPITAL)
+--------------------------------------------------------------------
+Tags: units, game mechanics
+A late-game settler that founds ready-made frontier cities.
+- Added: Vanguard Corps: Railroad, 290 Production, 3 movement, founds cities; building it does not stop the city's growth
+- Added: a city it founds starts with 4 more Population, claims 6 extra tiles, gets a free Worker and free Walls, Castle, Barracks, Workshop and Field Hospital
+- Added: Field Hospital: +4 Happiness in the city; your non-air units on the city's tiles heal 5 more HP per turn
+- Added: embarking and disembarking cost only 1 movement (Amphibious I and II)
+- Changed: Settlers (and their unique replacements) become obsolete with Railroad and upgrade to the Vanguard Corps
+- Note: unit art from the user (portrait) and the late Great General model
+- DLL: Units.FoundCityPopulation / FoundCityExtraPlots, Unit_FoundCityBuildingClasses / Unit_FoundCityUnitClasses (LEKMOD_FOUNDING_UNIT_EFFECTS, CvPlayer::found); Buildings.TerritoryHealChange (LEKMOD_TERRITORY_HEAL, CvUnit::healRate); unit ID 271, class 117, building 269, class 176
+
+CONQUISTADOR (UNIT_SPANISH_CONQUISTADOR, UNIT_CONQUISTADOR_SHARED)
+-----------------------------------------------------------------
+Tags: units, civs, policies
+The Conquistador becomes a sturdier colonist and a shared unique unit of the colonial powers.
+- Changed: 17 Strength (was 16), costs 71 Production (was 92), needs 2 Horses and 1 Iron
+- Changed: a city it founds starts with 2 more Population
+- Removed: its extra sight
+- Added: disembarking costs only 1 movement (Amphibious II)
+- Changed: obsolete with Railroad, upgrades to the Vanguard Corps
+- Added: Spain, Portugal, the Netherlands, France and Belgium can build it already with Civil Service (everyone else still needs the Exploration opener)
+- Note: like every city-founding unit it costs its own value plus a fixed amount (about 71 on quick); the user chose shown costs: the Conquistador shows about 71 (spec 70), the Vanguard Corps 290 (= Infantry)
+- DLL: Units.PolicyAlternateTech (LEKMOD_POLICY_ALTERNATE_TECH, CvPlayer::canTrain); shared copy is unit ID 272
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

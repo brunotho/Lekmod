@@ -38,6 +38,7 @@
 #include "CvCityConnections.h"
 #include "CvNotifications.h"
 #include "CvDiplomacyRequests.h"
+#include "CvDllPlot.h"
 #include "cvStopWatch.h"
 #include "CvTypes.h"
 
@@ -9661,6 +9662,53 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 		}
 	}
 
+#ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
+	// Effects of the unit that founded the city (Vanguard Corps, Conquistador): population, tiles, free buildings and units
+	CvUnitEntry* pkFoundingUnit = (eSettlerUnit != NO_UNIT) ? GC.getUnitInfo(eSettlerUnit) : NULL;
+	if (pkFoundingUnit != NULL)
+	{
+		for (int i = 0; i < pkFoundingUnit->GetFoundCityExtraPlots(); i++)
+		{
+			CvPlot* pPlotToAcquire = pCity->GetNextBuyablePlot();
+			if (pPlotToAcquire)
+			{
+				pCity->DoAcquirePlot(pPlotToAcquire->getX(), pPlotToAcquire->getY());
+			}
+		}
+		if (pkFoundingUnit->GetFoundCityPopulation() != 0)
+		{
+			pCity->changePopulation(pkFoundingUnit->GetFoundCityPopulation());
+		}
+		for (int iClass = 0; iClass < GC.getNumBuildingClassInfos(); iClass++)
+		{
+			if (!pkFoundingUnit->IsFoundCityBuildingClass(iClass))
+				continue;
+			const BuildingTypes eFreeBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(iClass);
+			if (eFreeBuilding != NO_BUILDING && pCity->GetCityBuildings()->GetNumRealBuilding(eFreeBuilding) == 0)
+			{
+				pCity->GetCityBuildings()->SetNumFreeBuilding(eFreeBuilding, 1);
+				// free buildings don't notify the renderer (real ones do): show walls now
+				CvBuildingEntry* pkFreeBuilding = GC.getBuildingInfo(eFreeBuilding);
+				if (pkFreeBuilding && pkFreeBuilding->IsCityWall() && GC.IsGraphicsInitialized())
+				{
+					auto_ptr<ICvPlot1> pDllPlot(new CvDllPlot(pCity->plot()));
+					gDLL->GameplayWallCreated(pDllPlot.get());
+				}
+			}
+		}
+		for (int iClass = 0; iClass < GC.getNumUnitClassInfos(); iClass++)
+		{
+			if (!pkFoundingUnit->IsFoundCityUnitClass(iClass))
+				continue;
+			const UnitTypes eFreeUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(iClass);
+			if (eFreeUnit != NO_UNIT)
+			{
+				initUnit(eFreeUnit, pCity->getX(), pCity->getY());
+			}
+		}
+	}
+#endif
+
 #ifdef AUI_WARNING_FIXES
 	for (uint iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 #else
@@ -9890,7 +9938,16 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	{
 		if (!GetPlayerPolicies()->HasPolicy(ePolicy))
 		{
+#ifdef LEKMOD_POLICY_ALTERNATE_TECH
+			// ... or the alternate tech (shared unique Conquistador: Exploration opener or Civil Service)
+			const TechTypes eAlternateTech = (TechTypes)pUnitInfo.GetPolicyAlternateTech();
+			if (eAlternateTech == NO_TECH || !GET_TEAM(getTeam()).GetTeamTechs()->HasTech(eAlternateTech))
+			{
+				return false;
+			}
+#else
 			return false;
+#endif
 		}
 	}
 

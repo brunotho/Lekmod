@@ -6549,6 +6549,35 @@ int CvUnit::healRate(const CvPlot* pPlot) const
 		}
 	}
 
+#ifdef LEKMOD_TERRITORY_HEAL
+	// Buildings that heal units on all of their city's tiles (Field Hospital), non-air units only
+	if (getDomainType() != DOMAIN_AIR)
+	{
+		CvCity* pOwningCity = pPlot->getWorkingCity(); // the city whose tiles these are (getOwningCity is declared but not defined)
+		if (pOwningCity != NULL && pOwningCity->getOwner() == getOwner())
+		{
+			static std::vector<BuildingTypes> s_aHealBuildings;
+			static bool s_bInit = false;
+			if (!s_bInit)
+			{
+				s_bInit = true;
+				for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+				{
+					CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+					if (pkBuilding && pkBuilding->GetTerritoryHealChange() != 0)
+						s_aHealBuildings.push_back((BuildingTypes)iBuilding);
+				}
+			}
+			for (uint i = 0; i < s_aHealBuildings.size(); i++)
+			{
+				const int iNum = pOwningCity->GetCityBuildings()->GetNumBuilding(s_aHealBuildings[i]);
+				if (iNum > 0)
+					iExtraHeal += iNum * GC.getBuildingInfo(s_aHealBuildings[i])->GetTerritoryHealChange();
+			}
+		}
+	}
+#endif
+
 	// Base healing rate mod
 	int iBaseHealMod = GET_PLAYER(getOwner()).getUnitBaseHealModifier();
 	if(iBaseHealMod != 0)
