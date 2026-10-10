@@ -7942,8 +7942,8 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		}
 	}
 
-	// Promotion
-	if (kGoodyInfo.getFreePromotion() != NO_PROMOTION)
+	// Promotion (LEKMOD: the unit may be gone when a ruin choice resolves later, e.g. a settler that founded the city)
+	if (kGoodyInfo.getFreePromotion() != NO_PROMOTION && pUnit != NULL)
 	{
 		pUnit->setHasPromotion((PromotionTypes)kGoodyInfo.getFreePromotion(), true);
 		strBuffer = GetLocalizedText(kGoodyInfo.GetDescriptionKey(), GC.getPromotionInfo((PromotionTypes)kGoodyInfo.getFreePromotion())->GetTextKey());
