@@ -316,7 +316,7 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
 - `LEKMOD_AIR_COMBAT_FEEDBACK` (floating damage, "No resistance"), `LEKMOD_UNIT_ATTACKED_FLAG_ICON`.
 - `LEKMOD_POLICY_GARRISON_ATTACH_TURN 70`, `LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 70`, `LEKMOD_RUIN_CHOICE`.
 - `LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS` (UnitPromotions_UnitCombatMods.Attack/Defense; both strength code paths), `LEKMOD_IMPROVEMENT_YIELD_PER_OWNER_ERA` (Improvement_YieldPerOwnerEra; refresh on era change in CvTeam::SetCurrentEra), `LEKMOD_NAVAL_PENALTY_PROMOTIONS` (Blind Spot/Minimum Range/Docked, looked up from promotions without saved unit fields).
-- `LEKMOD_RESOURCE_CITY_EFFECTS` (Resources columns `ImprovementBuildTimeChange`, `FoundCity*`, `CityCenter*`: Gems/Perfume build time, Salt/Stone/Cattle/Rubber/Marble settle-on), `LEKMOD_NATURAL_WONDER_EFFECTS` (feature tables, see §4).
+- `LEKMOD_RESOURCE_CITY_EFFECTS` (Resources columns `ImprovementBuildTimeChange`, `FoundCity*`, `CityCenter*`: Gems/Perfume build time, Salt/Stone/Cattle/Rubber/Marble settle-on), `LEKMOD_NATURAL_WONDER_EFFECTS` (feature tables, see §4), `LEKMOD_YIELD_WITH_BUILD_VIEWER_TEAM` (`CvPlot::getYieldWithBuild` counts the resource for the asking player's team; with the owner's team, unowned tiles lost the resource's own yields in the tooltip preview).
 - Older ones from the port: ruins overhaul (`LEKMOD_NEW_ANCIENT_RUIN_REWARDS`), kill-yield era fix, Amphibious, Carpet Bombing, Iaijutsu/Hatamoto (see below).
 
 ### Behaviour and decisions to remember
