@@ -2906,7 +2906,23 @@ int CvPlayerTrade::GetTradeConnectionTraitValueModifierTimes100(const TradeConne
 int CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield)
 {
 	CvAssertMsg(kTradeConnection.m_eDomain != NO_DOMAIN, "CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100 - Invalid Domain Type");
+#ifdef LEKMOD_TRADE_COASTAL_ORIGIN_BONUS
+	// Caravans and Cargo Ships are equal: Gold, Food and Production +X% when the route starts in a coastal city
+	// (the sea-only +100% in TradeConnections_DomainYieldModifiers was removed from the data)
+	int iCoastalBonus = 0;
+	if (eYield == YIELD_GOLD || eYield == YIELD_FOOD || eYield == YIELD_PRODUCTION)
+	{
+		CvPlot* pCoastalOriginPlot = GC.getMap().plot(kTradeConnection.m_iOriginX, kTradeConnection.m_iOriginY);
+		CvCity* pCoastalOriginCity = pCoastalOriginPlot ? pCoastalOriginPlot->getPlotCity() : NULL;
+		if (pCoastalOriginCity != NULL && pCoastalOriginCity->isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
+		{
+			iCoastalBonus = LEKMOD_TRADE_COASTAL_ORIGIN_BONUS;
+		}
+	}
+	return iCoastalBonus + GC.getTradeConnectionInfo(kTradeConnection.m_eConnectionType)->getDomainYieldModifier(kTradeConnection.m_eDomain, eYield);
+#else
 	return GC.getTradeConnectionInfo(kTradeConnection.m_eConnectionType)->getDomainYieldModifier(kTradeConnection.m_eDomain, eYield);
+#endif
 }
 int CvPlayerTrade::GetTradeConnectionRiverValueModifierTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield, bool bAsOriginPlayer)
 {
@@ -3431,24 +3447,6 @@ int CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100(const TradeConn
 #if !defined(LEKMOD_v34) // Moved Tunis Trait to CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100 and not CvGameTrade::GetDomainModifierTimes100
 	return GC.getGame().GetGameTrade()->GetDomainModifierTimes100(kTradeConnection.m_eDomain);
 #else
-#ifdef LEKMOD_TRADE_COASTAL_ORIGIN_BONUS
-	// Caravans and Cargo Ships are equal: +X% when the route starts in a coastal city (was +100% for every sea route)
-	int iCoastalBonus = 0;
-	CvPlot* pCoastalOriginPlot = GC.getMap().plot(kTradeConnection.m_iOriginX, kTradeConnection.m_iOriginY);
-	CvCity* pCoastalOriginCity = pCoastalOriginPlot ? pCoastalOriginPlot->getPlotCity() : NULL;
-	if (pCoastalOriginCity != NULL && pCoastalOriginCity->isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
-	{
-		iCoastalBonus = LEKMOD_TRADE_COASTAL_ORIGIN_BONUS;
-	}
-	if (kTradeConnection.m_eDomain == DOMAIN_LAND)
-	{
-		return iCoastalBonus + m_pPlayer->GetPlayerTraits()->GetLandTradeRouteYieldBonus();
-	}
-	else if (kTradeConnection.m_eDomain == DOMAIN_SEA)
-	{
-		return iCoastalBonus;
-	}
-#endif
 	if (kTradeConnection.m_eDomain == DOMAIN_LAND)
 	{
 		int iTraitBonus = m_pPlayer->GetPlayerTraits()->GetLandTradeRouteYieldBonus();

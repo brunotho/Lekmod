@@ -1884,24 +1884,7 @@
 	</Table>
 	<TradeConnections_DomainYieldModifiers>
 		<Delete />
-		<Row>
-			<TradeConnectionType>TRADE_CONNECTION_INTERNATIONAL</TradeConnectionType>
-			<DomainType>DOMAIN_SEA</DomainType>
-			<YieldType>YIELD_GOLD</YieldType>
-			<Modifier>100</Modifier>
-		</Row>
-		<Row>
-			<TradeConnectionType>TRADE_CONNECTION_FOOD</TradeConnectionType>
-			<DomainType>DOMAIN_SEA</DomainType>
-			<YieldType>YIELD_FOOD</YieldType>
-			<Modifier>100</Modifier>
-		</Row>
-		<Row>
-			<TradeConnectionType>TRADE_CONNECTION_PRODUCTION</TradeConnectionType>
-			<DomainType>DOMAIN_SEA</DomainType>
-			<YieldType>YIELD_PRODUCTION</YieldType>
-			<Modifier>100</Modifier>
-		</Row>
+		<!-- LEKMOD (2026-10-10): the sea-only +100% Gold/Food/Production is gone; every route from a coastal city gets +50% in the DLL (LEKMOD_TRADE_COASTAL_ORIGIN_BONUS) -->
 	</TradeConnections_DomainYieldModifiers>
 	<Table name="TradeConnections_Yields">
 		<Column name="TradeConnectionType" type="text" reference="TradeConnections(Type)" />

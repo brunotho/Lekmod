@@ -1029,7 +1029,8 @@ Caravans and Cargo Ships are now equal; only where they travel differs.
 - Changed: plundering a Cargo Ship gives 100 Gold like a Caravan (was 200)
 - Changed: the trade route tooltip shows this bonus as "Coastal city"
 - Note: they still unlock at different technologies (Animal Husbandry / Sailing), and buildings or traits that boost only land or only sea routes keep doing so
-- DLL: LEKMOD_TRADE_COASTAL_ORIGIN_BONUS 50 (CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100, plunder); Lua Player.GetTradeConnectionDomainValueModifier now reads the (origin, destination, type, yield, domain) arguments the UI passes (it read them shifted before)
+- Dev: the first version changed the inactive copy of the domain modifier (TRADE_REFACTOR uses the data-driven one), so sea routes stayed at +100% and coastal Caravans got nothing; fixed
+- DLL: LEKMOD_TRADE_COASTAL_ORIGIN_BONUS 50 (TRADE_REFACTOR CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100, plunder); TradeConnections_DomainYieldModifiers sea rows removed; Lua Player.GetTradeConnectionDomainValueModifier now reads the (origin, destination, type, yield, domain) arguments the UI passes (it read them shifted before)
 
 GIANT DEATH ROBOT (UNIT_MECH, PROMOTION_NUKE_RESISTANCE)
 --------------------------------------------------------
