@@ -1014,7 +1014,7 @@ CARAVAN AND CARGO SHIP (UNIT_CARAVAN, UNIT_CARGO_SHIP)
 -----------------------------------------------------
 Tags: units, naval, game mechanics
 Caravans and Cargo Ships are now equal; only where they travel differs.
-- Changed: Cargo Ship costs 50 Production like the Caravan (was 67); Venezuela's Cargo Ship 33 like its Caravan (was 45)
+- Changed: Cargo Ship costs 50 Production like the Caravan (was 67); Venezuela's Cargo Ship 33 like its Caravan (was 44)
 - Changed: every trade route that starts in a coastal city yields 50% more Gold, Food or Production, whether by Caravan or Cargo Ship (sea routes used to yield 100% more, land routes nothing)
 - Changed: plundering a Cargo Ship gives 100 Gold like a Caravan (was 200)
 - Changed: the trade route tooltip shows this bonus as "Coastal city"
