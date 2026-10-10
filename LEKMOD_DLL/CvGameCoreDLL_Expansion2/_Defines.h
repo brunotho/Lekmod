@@ -1422,6 +1422,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_FAST_HAND_NUKE_REBASE
 // Enemy Citadels exert zone of control on naval units, like cities (CvUnitMovement::IsSlowedByZOC)
 #define LEKMOD_CITADEL_NAVAL_ZOC
+// Great Admiral's Repair Fleet heals this many HP instead of fully (CvUnit::repairFleet)
+#define LEKMOD_REPAIR_FLEET_HP 25
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

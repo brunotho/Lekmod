@@ -990,6 +990,19 @@ Citadels yield Culture and hold back enemy ships.
 - Added: Citadels exert zone of control on enemy ships: a ship moving from one tile next to an enemy Citadel to another loses its remaining movement, as next to an enemy city
 - DLL: LEKMOD_CITADEL_NAVAL_ZOC (CvUnitMovement::IsSlowedByZOC; any improvement with NearbyEnemyDamage counts, not when pillaged)
 
+GREAT ADMIRAL AND DRYDOCK (UNIT_GREAT_ADMIRAL, IMPROVEMENT_DOCK)
+----------------------------------------------------------------
+Tags: units, naval
+Drydocks work like naval Citadels; Repair Fleet heals less.
+- Added: Drydocks claim all surrounding tiles, like Citadels
+- Added: Drydocks can be built directly next to your territory, not only inside it
+- Added: units in a Drydock get +25% defense
+- Changed: Drydock: 4 Production (was 5)
+- Changed: Repair Fleet heals 25 HP (was a full heal)
+- Changed: Chile: only Fishing Boats claim the surrounding tiles in its unique ability (Drydocks now do this for everyone)
+- Fixed: the Drydock's Civilopedia page showed the Manufactory's text
+- DLL: LEKMOD_REPAIR_FLEET_HP 25 (CvUnit::repairFleet)
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

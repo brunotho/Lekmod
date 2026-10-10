@@ -6308,7 +6308,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 	
 	<Row Tag="TXT_KEY_TRAIT_BY_REASON">
 			<Text>
-				[ICON_BUILD_FISHING_BOATS] Fishing Boats and [COLOR_GREEN]Dry Docks[ENDCOLOR] instantly claim all surrounding Neutral Tiles. Receive a free [ICON_GREAT_ADMIRAL] Great Admiral at the [ICON_TECH_COMPASS] [COLOR_CYAN]Compass[ENDCOLOR] technology. Sword and Gunpowder units reduce nearby enemy Naval units' and Naval Melee units reduce nearby enemy Land units’ combat strength by 25%. 
+				[ICON_BUILD_FISHING_BOATS] Fishing Boats instantly claim all surrounding Neutral Tiles. Receive a free [ICON_GREAT_ADMIRAL] Great Admiral at the [ICON_TECH_COMPASS] [COLOR_CYAN]Compass[ENDCOLOR] technology. Sword and Gunpowder units reduce nearby enemy Naval units' and Naval Melee units reduce nearby enemy Land units’ combat strength by 25%. 
 			</Text>
 	</Row>
 	<Row Tag="TXT_KEY_TRAIT_BY_REASON_SHORT">
@@ -101617,6 +101617,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_PROMOTION_DOCKED_HELP">
 			<Text>Cannot attack while inside a city.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_IMPROVEMENT_DOCK_TEXT">
+			<Text>Built by a Great Admiral on a coast tile next to land, inside your territory or directly next to it (the Great Admiral is consumed).[NEWLINE]Its tile and all tiles around it join your territory (claiming another civilization's tiles angers it).[NEWLINE][NEWLINE]Yields 4 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Units in the Drydock get +25% defense.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_HELI_SENTRY_HELP">
 			<Text>+2 Visibility Range</Text>
 		</Row>
@@ -102434,7 +102437,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_MISSION_REPAIR_FLEET_HELP"> 
 			<Text>
-				This order will consume the Great Admiral and heal all of your naval units and embarked units in this tile and all adjacent tiles.
+				This order will consume the Great Admiral.[NEWLINE]All of your naval units and embarked units in this tile and all adjacent tiles heal 25 HP.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MISSION_ROUTE_TO"> 
@@ -140472,7 +140475,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREAT_ADMIRAL_STRATEGY"> 
 			<Text>
-				The Great Admiral has the ability to instantly repair every naval and embarked unit in the same hex, as well as in adjacent hexes. The Great Admiral is consumed when performing this action. The Great Admiral also provides a 15% combat bonus to all player-owned naval units within 2 tiles. The Great Admiral is NOT consumed when he provides this bonus.
+				Gives +15% combat strength to your naval units within 2 tiles (the Great Admiral is not consumed).[NEWLINE][NEWLINE]Repair Fleet (consumes the Great Admiral): your naval and embarked units in its tile and the adjacent tiles heal 25 HP.[NEWLINE][NEWLINE]Drydock (consumes the Great Admiral): built on a coast tile next to land, inside your territory or directly next to it. It claims the surrounding tiles, yields 4 [ICON_PRODUCTION] Production and gives units in it +25% defense.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREAT_ARTIST"> 

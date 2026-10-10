@@ -10057,7 +10057,11 @@ bool CvUnit::repairFleet()
 		CvUnit *pUnit = pPlot->getUnitByIndex(iUnitLoop);
 		if (pUnit->getOwner() == getOwner() && (pUnit->isEmbarked() || pUnit->getDomainType() == DOMAIN_SEA))
 		{
+#ifdef LEKMOD_REPAIR_FLEET_HP
+			pUnit->changeDamage(-std::min(pUnit->getDamage(), LEKMOD_REPAIR_FLEET_HP));
+#else
 			pUnit->changeDamage(-pUnit->getDamage());
+#endif
 		}
 	}
 
@@ -10073,7 +10077,11 @@ bool CvUnit::repairFleet()
 				CvUnit *pUnit = pAdjacentPlot->getUnitByIndex(iUnitLoop);
 				if (pUnit->getOwner() == getOwner() && (pUnit->isEmbarked() || pUnit->getDomainType() == DOMAIN_SEA))
 				{
+#ifdef LEKMOD_REPAIR_FLEET_HP
+					pUnit->changeDamage(-std::min(pUnit->getDamage(), LEKMOD_REPAIR_FLEET_HP));
+#else
 					pUnit->changeDamage(-pUnit->getDamage());
+#endif
 				}
 			}
 		}
