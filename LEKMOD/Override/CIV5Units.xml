@@ -74795,6 +74795,36 @@
 			<UnitClassType>UNITCLASS_EXPEDITIONARY_FORCE</UnitClassType> 
 			<UnitType>UNIT_BUGANDA_EXPEDITIONARY_FORCE</UnitType> 
 		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_BRUNEI</CivilizationType>
+			<UnitClassType>UNITCLASS_SKIFF</UnitClassType>
+			<UnitType>UNIT_NELAYAN</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_POLYNESIA</CivilizationType>
+			<UnitClassType>UNITCLASS_SKIFF</UnitClassType>
+			<UnitType>UNIT_NELAYAN</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_MAORI</CivilizationType>
+			<UnitClassType>UNITCLASS_SKIFF</UnitClassType>
+			<UnitType>UNIT_NELAYAN</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_TONGA</CivilizationType>
+			<UnitClassType>UNITCLASS_SKIFF</UnitClassType>
+			<UnitType>UNIT_NELAYAN</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_INDONESIA</CivilizationType>
+			<UnitClassType>UNITCLASS_SKIFF</UnitClassType>
+			<UnitType>UNIT_NELAYAN</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_PHILIPPINES</CivilizationType>
+			<UnitClassType>UNITCLASS_SKIFF</UnitClassType>
+			<UnitType>UNIT_NELAYAN</UnitType>
+		</Row>
 	</Civilization_UnitClassOverrides> 
 
 	<Table name="Civilizations">
@@ -258990,6 +259020,14 @@
 			<UnitType>UNIT_SKIFF</UnitType>
 			<UnitAIType>UNITAI_WORKER_SEA</UnitAIType>
 		</Row>
+		<Row>
+			<UnitType>UNIT_NELAYAN</UnitType>
+			<UnitAIType>UNITAI_EXPLORE_SEA</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NELAYAN</UnitType>
+			<UnitAIType>UNITAI_WORKER_SEA</UnitAIType>
+		</Row>
 	</Unit_AITypes> 
 
 	<Table name="Unit_BuildingClassRequireds">
@@ -259548,6 +259586,14 @@
 		</Row>
 		<Row>
 			<UnitType>UNIT_SKIFF</UnitType>
+			<BuildType>BUILD_PONTOON_BRIDGE_SKIFF</BuildType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NELAYAN</UnitType>
+			<BuildType>BUILD_FISHING_BOATS_WORKER</BuildType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NELAYAN</UnitType>
 			<BuildType>BUILD_PONTOON_BRIDGE_SKIFF</BuildType>
 		</Row>
 	</Unit_Builds> 
@@ -265235,6 +265281,10 @@
 		</Row>
 		<Row>
 			<UnitType>UNIT_SKIFF</UnitType>
+			<PromotionType>PROMOTION_OCEAN_IMPASSABLE_UNTIL_ASTRONOMY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NELAYAN</UnitType>
 			<PromotionType>PROMOTION_OCEAN_IMPASSABLE_UNTIL_ASTRONOMY</PromotionType>
 		</Row>
 	</Unit_FreePromotions> 
@@ -276075,6 +276125,42 @@
 			<PortraitIndex>2</PortraitIndex>
 			<IconAtlas>UNIT_ATLAS_1</IconAtlas>
 			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
+		</Row>
+		<!-- LEKMOD Nelayan (2026-10-10): shared unique Skiff; builds Fishing Boats like a Worker (not consumed); art as the original Lekmod Nelayan (removed in v31) -->
+		<Row>
+			<ID>269</ID>
+			<Type>UNIT_NELAYAN</Type>
+			<Description>TXT_KEY_UNIT_NELAYAN</Description>
+			<Civilopedia>TXT_KEY_UNIT_NELAYAN_STRATEGY</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_NELAYAN_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_NELAYAN_HELP</Help>
+			<Combat>3</Combat>
+			<Cost>32</Cost>
+			<Moves>3</Moves>
+			<BaseSightRange>2</BaseSightRange>
+			<Class>UNITCLASS_SKIFF</Class>
+			<CombatClass>UNITCOMBAT_RECON</CombatClass>
+			<Domain>DOMAIN_SEA</Domain>
+			<DefaultUnitAI>UNITAI_EXPLORE_SEA</DefaultUnitAI>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<PrereqTech>TECH_AGRICULTURE</PrereqTech>
+			<ObsoleteTech>TECH_EDUCATION</ObsoleteTech>
+			<AdvancedStartCost>10</AdvancedStartCost>
+			<MinAreaSize>6</MinAreaSize>
+			<NukeDamageLevel>-1</NukeDamageLevel>
+			<WorkRate>100</WorkRate>
+			<CombatLimit>100</CombatLimit>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>3</XPValueDefense>
+			<UnitArtInfo>ART_DEF_UNIT_U_POLYNESIAN_WAR_CANOE</UnitArtInfo>
+			<UnitArtInfoEraVariation>false</UnitArtInfoEraVariation>
+			<ShowInPedia>true</ShowInPedia>
+			<MoveRate>WOODEN_BOAT</MoveRate>
+			<UnitFlagIconOffset>3</UnitFlagIconOffset>
+			<PortraitIndex>4</PortraitIndex>
+			<IconAtlas>TECH_ATLAS_DLC_03</IconAtlas>
+			<UnitFlagAtlas>KAMEHAMEHA_CIV_COLOR_ATLAS</UnitFlagAtlas>
 		</Row>
 	</Units>
 	<!-- LEKMOD naval rework (2026-10-09) -->

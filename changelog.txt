@@ -1050,6 +1050,14 @@ A new early scouting boat that can also place Fishing Boats and Pontoon Bridges.
 - Note: it uses the Work Boat's look; the user chose Fishing Boats only with Sailing, as for the Work Boat
 - DLL: LEKMOD_SKIFF (gift check, both gift functions)
 
+NELAYAN (UNIT_NELAYAN)
+----------------------
+Tags: units, naval, civs
+The Nelayan returns as a shared unique Skiff for seafaring civilizations.
+- Added: Nelayan replaces the Skiff for Brunei, Polynesia, the Maori, Tonga, Indonesia and the Philippines
+- Added: unlike the Skiff it builds Fishing Boats over several turns like a Worker and is not used up; a Pontoon Bridge still uses it up at once
+- Note: art as Lekmod's original Nelayan (Polynesian war canoe model, removed in v31); the user checks the look in game
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions
