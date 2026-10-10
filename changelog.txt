@@ -492,6 +492,8 @@ Tags: ui
 Hovering an unimproved resource shows what improving it would give.
 - Added: the improvement that connects the resource, how many turns one Worker needs to build it, and the tile's yields with it (e.g. "With a Mine (5 turns for one Worker): 1 Food 3 Production")
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
+- Added: these lines and the resource's special effects show in the tile info box at the bottom right, below the tile's yields, and in the detailed tile tooltip
+- Dev: the lines first only reached the detailed tooltip (GetResourceString long form); the bottom-right box (PlotHelpText.lua) asks for the short form. Lekmod now overrides PlotHelpText.lua and appends LekmodResourceDetailsString
 - Note: standard UI only (EUI uses its own tile tooltip)
 
 LUXURY YIELDS

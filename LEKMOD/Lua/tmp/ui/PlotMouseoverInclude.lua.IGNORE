@@ -245,21 +245,35 @@ function GetResourceString(plot, bLongForm)
 			end
 		end
 
-		-- LEKMOD: for an unimproved resource, show which improvement connects it, how long a Worker needs and the yields it would give
-		if (bLongForm and not plot:IsCity() and plot:GetRevealedImprovementType(iActiveTeam, false) < 0) then
-			improvementStr = improvementStr .. LekmodResourceImprovementString(plot, pResource);
-		end
-		-- LEKMOD: special effects of the resource (production bonus, effects for a city founded on it)
+		-- LEKMOD: improvement, production and settle-on details (the short form gets them from PlotHelpText via LekmodResourceDetailsString)
 		if (bLongForm) then
-			improvementStr = improvementStr .. LekmodResourceLocalEffectsString(pResource);
-			if (not plot:IsCity()) then
-				improvementStr = improvementStr .. LekmodResourceSettleEffectsString(pResource);
-			end
+			improvementStr = improvementStr .. LekmodResourceDetailsString(plot);
 		end
 	end
-	
+
 	return improvementStr;
-	
+
+end
+
+-- LEKMOD: details of the plot's resource, each part starting with [NEWLINE]:
+-- for an unimproved resource, which improvement connects it, how long a Worker needs and the yields it would give;
+-- then its special effects (production bonus, effects for a city founded on it)
+function LekmodResourceDetailsString(plot)
+	local iActiveTeam = Game.GetActiveTeam();
+	local resourceType = plot:GetResourceType(iActiveTeam);
+	if (resourceType < 0) then
+		return "";
+	end
+	local pResource = GameInfo.Resources[resourceType];
+	local str = "";
+	if (not plot:IsCity() and plot:GetRevealedImprovementType(iActiveTeam, false) < 0) then
+		str = str .. LekmodResourceImprovementString(plot, pResource);
+	end
+	str = str .. LekmodResourceLocalEffectsString(pResource);
+	if (not plot:IsCity()) then
+		str = str .. LekmodResourceSettleEffectsString(pResource);
+	end
+	return str;
 end
 
 function LekmodResourceImprovementString(plot, pResource)
