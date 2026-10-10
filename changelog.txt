@@ -963,6 +963,13 @@ Several units get new strength, movement or cost.
 - Changed: Submarine and Nuclear Submarine can no longer move after attacking
 - Changed: all other Modern-era units cost 3% more, all other Atomic-era units 5% more
 
+MARINES AND EXPEDITIONARY FORCE (UNIT_MARINE, UNIT_EXPEDITIONARY_FORCE)
+-----------------------------------------------------------------------
+Tags: units, naval
+Landing troops embark and land faster instead of fighting better from the water.
+- Changed: Expeditionary Force, Marines and their unique replacements (Gerilya, Buganda Expeditionary Force) start with Amphibious I and II (embarking and disembarking cost only 1 movement) instead of Amphibious and Embarkation with Defense
+- Added: Marines upgrade to Mechanized Infantry and keep their promotions
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

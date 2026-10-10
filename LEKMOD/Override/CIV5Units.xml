@@ -260040,6 +260040,10 @@
 			<UnitClassType>UNITCLASS_MARINE</UnitClassType> 
 		</Row>
 		<Row>
+			<UnitType>UNIT_MARINE</UnitType>
+			<UnitClassType>UNITCLASS_MECHANIZED_INFANTRY</UnitClassType>
+		</Row>
+		<Row>
 			<UnitType>UNIT_DESTROYER</UnitType>
 			<UnitClassType>UNITCLASS_HEAVY_CRUISER</UnitClassType>
 		</Row>
@@ -263644,15 +263648,15 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_MARINE</UnitType> 
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_MARINE</UnitType> 
-			<PromotionType>PROMOTION_DEFENSIVE_EMBARKATION</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PHILIPINO_MARINE</UnitType> 
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PHILIPINO_MARINE</UnitType> 
@@ -263664,7 +263668,7 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_PHILIPINO_MARINE</UnitType> 
-			<PromotionType>PROMOTION_DEFENSIVE_EMBARKATION</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_MC_NEW_ZEALAND_MAORI_BATTALION</UnitType> 
@@ -264642,11 +264646,11 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_EXPEDITIONARY_FORCE</UnitType> 
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_EXPEDITIONARY_FORCE</UnitType> 
-			<PromotionType>PROMOTION_DEFENSIVE_EMBARKATION</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_HEAVY_CRUISER</UnitType> 
@@ -264793,11 +264797,11 @@
 		<!-- Buganda -->
 		<Row> 
 			<UnitType>UNIT_BUGANDA_EXPEDITIONARY_FORCE</UnitType> 
-			<PromotionType>PROMOTION_AMPHIBIOUS</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_BUGANDA_EXPEDITIONARY_FORCE</UnitType> 
-			<PromotionType>PROMOTION_DEFENSIVE_EMBARKATION</PromotionType> 
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_BUGANDA_EXPEDITIONARY_FORCE</UnitType> 
