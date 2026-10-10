@@ -276,6 +276,39 @@ function LekmodResourceDetailsString(plot)
 	return str;
 end
 
+-- LEKMOD: is unitType the player's own version of its unit class (unique units replace the default)?
+function LekmodIsPlayersUnit(pPlayer, unitType)
+	local pUnit = GameInfo.Units[unitType];
+	if (pUnit == nil) then
+		return false;
+	end
+	local civType = GameInfo.Civilizations[pPlayer:GetCivilizationType()].Type;
+	local pOverride = GameInfo.Civilization_UnitClassOverrides{ CivilizationType = civType, UnitClassType = pUnit.Class }();
+	if (pOverride ~= nil) then
+		return pOverride.UnitType == unitType;
+	end
+	local pClass = GameInfo.UnitClasses[pUnit.Class];
+	return pClass ~= nil and pClass.DefaultUnit == unitType;
+end
+
+-- LEKMOD: the build the player would use for an improvement: a sea builder that is not used up (Nelayan) first,
+-- then a sea builder that is used up (Skiff, Work Boat: instant), then a land builder (Worker), else the first build
+function LekmodPickBuildForPlayer(pImprovement, pPlayer)
+	local tBest = {};
+	local pFirst = nil;
+	for pBuild in GameInfo.Builds{ ImprovementType = pImprovement.Type } do
+		pFirst = pFirst or pBuild;
+		for row in GameInfo.Unit_Builds{ BuildType = pBuild.Type } do
+			if (LekmodIsPlayersUnit(pPlayer, row.UnitType)) then
+				local bSea = (GameInfo.Units[row.UnitType].Domain == "DOMAIN_SEA");
+				local iRank = bSea and (pBuild.Kill and 2 or 1) or 3;
+				tBest[iRank] = tBest[iRank] or pBuild;
+			end
+		end
+	end
+	return tBest[1] or tBest[2] or tBest[3] or pFirst;
+end
+
 function LekmodResourceImprovementString(plot, pResource)
 	local iActivePlayer = Game.GetActivePlayer();
 	local pPlayer = Players[iActivePlayer];
@@ -284,7 +317,7 @@ function LekmodResourceImprovementString(plot, pResource)
 	end
 	for row in GameInfo.Improvement_ResourceTypes{ ResourceType = pResource.Type } do
 		local pImprovement = GameInfo.Improvements[row.ImprovementType];
-		local pBuild = pImprovement and GameInfo.Builds{ ImprovementType = pImprovement.Type }();
+		local pBuild = pImprovement and LekmodPickBuildForPlayer(pImprovement, pPlayer);
 		if (pBuild ~= nil and plot:CanHaveImprovement(pImprovement.ID, Game.GetActiveTeam())) then
 			-- Turns for one Worker (base work rate and the player's worker speed modifier). GetBuildTime is already
 			-- scaled by game speed; the first turn's work counts right away, as on the unit panel's build button (GetBuildTurnsLeft)
