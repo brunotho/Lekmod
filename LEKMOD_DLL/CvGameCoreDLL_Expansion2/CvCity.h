@@ -859,6 +859,9 @@ public:
 	int GetLekmodAttackRange() const;
 	int GetLekmodHealPerTurn() const;
 #endif
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+	int GetLekmodBeliefCityConditionYield(const class CvReligion* pReligion, BeliefTypes eSecondaryPantheon, YieldTypes eYield) const;
+#endif
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 	int GetLekmodTechTerrainYield(const CvPlot* pPlot, YieldTypes eYield) const;
 #endif

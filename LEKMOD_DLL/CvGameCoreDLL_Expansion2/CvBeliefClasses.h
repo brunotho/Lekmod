@@ -102,6 +102,7 @@ public:
 	const std::vector<LekmodRow>& GetLekmodBuildingFreeUnits() const { return m_aLekmodBuildingFreeUnits; }		// BuildingClass, UnitClass, -, Count
 	const std::vector<LekmodRow>& GetLekmodFlatOpenTerrainYields() const { return m_aLekmodFlatOpenTerrainYields; }	// Terrain, Yield, -, Yield
 	const std::vector<LekmodRow>& GetLekmodImprovementBuildingYields() const { return m_aLekmodImprovementBuildingYields; }	// Improvement, BuildingClass, Yield, Yield
+	const std::vector<LekmodRow>& GetLekmodCityConditionYields() const { return m_aLekmodCityConditionYields; }	// Condition (0 no fresh water, 1 next to a mountain), Yield, -, Yield
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	bool IsMissionaryProphetSpread() const { return m_bLekmodMissionaryProphetSpread; }
@@ -328,6 +329,7 @@ protected:
 	std::vector<LekmodRow> m_aLekmodBuildingFreeUnits;
 	std::vector<LekmodRow> m_aLekmodFlatOpenTerrainYields;
 	std::vector<LekmodRow> m_aLekmodImprovementBuildingYields;
+	std::vector<LekmodRow> m_aLekmodCityConditionYields;
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	bool m_bLekmodMissionaryProphetSpread;

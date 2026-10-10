@@ -1321,3 +1321,10 @@ Six new pantheons.
 - Added: Offering of Plenty: +1 Culture and +1 Faith from Fish, Wheat, Granaries and Lighthouses; Granaries and Lighthouses -1 Food
 - Note: belief IDs 94-99 (BELIEF_LEKMOD_MIDAS_TOUCH, _NECTAR_GODS, _SONGS_LEVIATHAN, _HARVEST_CONFLUENCE, _SACRED_CRAFTWORK, _OFFERING_PLENTY)
 
+ZAMZAM, PILLARS OF HEAVEN (BELIEF_LEKMOD_ZAMZAM, BELIEF_LEKMOD_PILLARS_HEAVEN)
+---------------------------------------------------------------------------
+Tags: religion
+- Added: follower belief Zamzam: +2 Food and +2 Faith in cities without fresh water
+- Added: pantheon Pillars of Heaven: +3 Faith and +1 Food in cities next to a Mountain
+- DLL: Belief_CityConditionYieldChanges (Condition NO_FRESH_WATER / ADJACENT_MOUNTAIN; LEKMOD_BELIEF_EXTRA_TABLES); belief IDs 100-101
+

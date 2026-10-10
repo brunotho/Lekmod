@@ -120396,6 +120396,18 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_OFFERING_PLENTY_SHORT">
 			<Text>Offering of Plenty</Text>
 		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_ZAMZAM">
+			<Text>+2 [ICON_FOOD] Food and +2 [ICON_PEACE] Faith in cities without fresh water.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_ZAMZAM_SHORT">
+			<Text>Zamzam</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_PILLARS_HEAVEN">
+			<Text>+3 [ICON_PEACE] Faith and +1 [ICON_FOOD] Food in cities next to a Mountain.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_PILLARS_HEAVEN_SHORT">
+			<Text>Pillars of Heaven</Text>
+		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>
 		</Row>

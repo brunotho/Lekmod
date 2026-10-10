@@ -31549,6 +31549,55 @@
 			<InquisitorPressureRetention>50</InquisitorPressureRetention>
 		</Row>
 	</Beliefs>
+	<!-- LEKMOD: Zamzam (follower), Pillars of Heaven (pantheon) -->
+	<Table name="Belief_CityConditionYieldChanges"> <!-- LEKMOD: city yields when the city meets Condition: NO_FRESH_WATER, ADJACENT_MOUNTAIN -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="Condition" type="text" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Beliefs>
+		<Row>
+			<ID>100</ID>
+			<Type>BELIEF_LEKMOD_ZAMZAM</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_ZAMZAM</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_ZAMZAM_SHORT</ShortDescription>
+			<Follower>true</Follower>
+		</Row>
+		<Row>
+			<ID>101</ID>
+			<Type>BELIEF_LEKMOD_PILLARS_HEAVEN</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_PILLARS_HEAVEN</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_PILLARS_HEAVEN_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+		</Row>
+	</Beliefs>
+	<Belief_CityConditionYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_ZAMZAM</BeliefType>
+			<Condition>NO_FRESH_WATER</Condition>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_ZAMZAM</BeliefType>
+			<Condition>NO_FRESH_WATER</Condition>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_PILLARS_HEAVEN</BeliefType>
+			<Condition>ADJACENT_MOUNTAIN</Condition>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_PILLARS_HEAVEN</BeliefType>
+			<Condition>ADJACENT_MOUNTAIN</Condition>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_CityConditionYieldChanges>
 	<!-- LEKMOD: Phase 3 new pantheons (data only) -->
 	<Beliefs>
 		<Row>

@@ -8915,6 +8915,9 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 				{
 					iReligionYieldChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityYieldChange((YieldTypes)iYield);
 				}
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+				iReligionYieldChange += GetLekmodBeliefCityConditionYield(pReligion, eSecondaryPantheon, (YieldTypes)iYield);
+#endif
 #if !defined(STANDARDIZE_YIELDS) // remove switch and compress stack
 				switch (iYield)
 				{
@@ -14574,6 +14577,40 @@ int CvCity::GetLekmodAttackRange() const
 int CvCity::GetLekmodHealPerTurn() const
 {
 	return std::max(GC.getCITY_HIT_POINTS_HEALED_PER_TURN(), GetLekmodBuildingStat(0, true));
+}
+#endif
+
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+//	--------------------------------------------------------------------------------
+/// Belief_CityConditionYieldChanges: city yields when the city meets a condition (Zamzam: no fresh water; Pillars of Heaven: next to a mountain)
+int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, BeliefTypes eSecondaryPantheon, YieldTypes eYield) const
+{
+	if (pReligion == NULL)
+		return 0;
+	bool abCondition[2];
+	abCondition[0] = !plot()->isFreshWater();
+	abCondition[1] = false;
+	for (int iDir = 0; iDir < NUM_DIRECTION_TYPES; iDir++)
+	{
+		CvPlot* pAdjacent = plotDirection(getX(), getY(), (DirectionTypes)iDir);
+		if (pAdjacent != NULL && pAdjacent->isMountain())
+			abCondition[1] = true;
+	}
+	int iYield = 0;
+	CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+	for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+	{
+		CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+		if (pkBelief == NULL || pkBelief->GetLekmodCityConditionYields().empty())
+			continue;
+		if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+			continue;
+		const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodCityConditionYields();
+		for (uint j = 0; j < aRows.size(); j++)
+			if (aRows[j].a >= 0 && aRows[j].a < 2 && abCondition[aRows[j].a] && aRows[j].b == eYield)
+				iYield += aRows[j].d;
+	}
+	return iYield;
 }
 #endif
 

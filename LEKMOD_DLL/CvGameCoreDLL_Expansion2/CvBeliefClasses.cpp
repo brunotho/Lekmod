@@ -944,13 +944,14 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 	{
 		const char* szLekmodBelief = GetType();
-		const char* aszSql[3] = {
+		const char* aszSql[4] = {
 			"select BuildingClasses.ID, UnitClasses.ID, 0, Count from Belief_BuildingClassFreeUnits inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join UnitClasses on UnitClasses.Type = UnitClassType where BeliefType = ?",
 			"select Terrains.ID, Yields.ID, 0, Yield from Belief_FlatOpenTerrainYieldChanges inner join Terrains on Terrains.Type = TerrainType inner join Yields on Yields.Type = YieldType where BeliefType = ?",
-			"select Improvements.ID, BuildingClasses.ID, Yields.ID, Yield from Belief_ImprovementBuildingYieldChanges inner join Improvements on Improvements.Type = ImprovementType inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Yields on Yields.Type = YieldType where BeliefType = ?" };
-		const char* aszKey[3] = { "Belief_BuildingClassFreeUnits", "Belief_FlatOpenTerrainYieldChanges", "Belief_ImprovementBuildingYieldChanges" };
-		std::vector<LekmodRow>* apVec[3] = { &m_aLekmodBuildingFreeUnits, &m_aLekmodFlatOpenTerrainYields, &m_aLekmodImprovementBuildingYields };
-		for (int iTable = 0; iTable < 3; iTable++)
+			"select Improvements.ID, BuildingClasses.ID, Yields.ID, Yield from Belief_ImprovementBuildingYieldChanges inner join Improvements on Improvements.Type = ImprovementType inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Yields on Yields.Type = YieldType where BeliefType = ?",
+			"select case Condition when 'NO_FRESH_WATER' then 0 when 'ADJACENT_MOUNTAIN' then 1 else -1 end, Yields.ID, 0, Yield from Belief_CityConditionYieldChanges inner join Yields on Yields.Type = YieldType where BeliefType = ?" };
+		const char* aszKey[4] = { "Belief_BuildingClassFreeUnits", "Belief_FlatOpenTerrainYieldChanges", "Belief_ImprovementBuildingYieldChanges", "Belief_CityConditionYieldChanges" };
+		std::vector<LekmodRow>* apVec[4] = { &m_aLekmodBuildingFreeUnits, &m_aLekmodFlatOpenTerrainYields, &m_aLekmodImprovementBuildingYields, &m_aLekmodCityConditionYields };
+		for (int iTable = 0; iTable < 4; iTable++)
 		{
 			apVec[iTable]->clear();
 			std::string strKey(aszKey[iTable]);
