@@ -1,0 +1,22 @@
+name,source,scale,notes
+amphibious_1,user_art/amphibious_1_45px.png,0.72,user art 2026-10-10 (bold trident + 1 bar); only 45 px exists, so the 256 px file is an upscale
+amphibious_2,user_art/amphibious_2_45px.png,0.72,user art 2026-10-10 (2 bars); 45 px source
+amphibious_3,user_art/amphibious_3_45px.png,0.72,user art 2026-10-10 (3 bars); 45 px source
+nuke_resistance,user_art/nuke_resistance_45px.png,0.80,user art 2026-10-10; larger symbol (80%) because the trefoil detail is lost at 72%; 45 px source
+bunker_busting,user_art/bunker_busting_256.dds,0.72,user art 2026-10-05
+envelopment,user_art/envelopment_256.dds,0.72,user art 2026-10-05; the user's reference for a good icon (bold and simple)
+sitting_ducks,user_art/sitting_duck_64.dds,0.72,user art 2026-10-10; only 64 px exists
+carpet_bombing,original_ai_2026-04/carpet_bombing_256.dds,0.72,April 2026 AI art (commit d224c97d)
+discipline,original_ai_2026-04/discipline_256.dds,0.72,April 2026 AI art
+fear_aura,original_ai_2026-04/fear_aura_256.dds,0.72,April 2026 AI art (the user's intended image)
+feared_elephant,original_ai_2026-04/feared_elephant_256.dds,0.72,April 2026 AI art
+hatamoto,original_ai_2026-04/hatamoto_256.dds,0.72,April 2026 AI art
+iaijutsu,original_ai_2026-04/iaijutsu_256.dds,0.72,April 2026 AI art
+marauder,original_ai_2026-04/marauder_256.dds,0.72,April 2026 AI art
+mountaineering,original_ai_2026-04/mountaineering_256.dds,0.72,April 2026 AI art
+one_good_eye,original_ai_2026-04/one_good_eye_256.dds,0.72,April 2026 AI art
+repair_crew,original_ai_2026-04/repair_crew_256.dds,0.72,April 2026 AI art
+stargazing,original_ai_2026-04/stargazing_256.dds,0.72,April 2026 AI art
+supply_ship,original_ai_2026-04/supply_ship_256.dds,0.72,April 2026 AI art
+swift_transport,original_ai_2026-04/swift_transport_256.dds,0.72,April 2026 AI art
+zealot,original_ai_2026-04/zealot_256.dds,0.72,April 2026 AI art

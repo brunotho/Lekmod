@@ -196,7 +196,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
   - Distinctions that matter to players stay, e.g. Discipline "(non-air units)" vs Discipline (Air) "(air units)".
   - After changing any number, update its tooltip (failure pattern 7b).
 - **Civilopedia (user, 2026-10-08):** update pages aggressively to the current rules whenever work touches a topic. Be verbose with gameplay information (all relevant numbers, at quick speed), and remove history and flavor text. Goal: every page eventually shows all relevant gameplay info and nothing else. Pages are `Concepts` rows in `CIV5Units.xml` (explicit IDs; check uniqueness *within the section*, other tables reuse the numbers) with texts in `CIV5Units_Mongol.xml`. The pedia has no clickable links between concepts; order comes from `InsertAfter` chains. Since 2026-10-08 Lekmod overrides the pedia script (`Lua/tmp/ui/Civilopedia/CivilopediaScreen.lua.ignore`, a copy of Expansion2's; ui_check.bat copies it for both UIs), so page layouts per category can be changed there (e.g. the City-States tab shows type rules instead of history).
-- Promotion icons: 4 sizes (256/64/45/32), DXT5 `.dds`. **256/64/45: gold glyph on a transparent background** (the promotion choice draws the round frame). **32 px: the same gold glyph on a blue square tile** (the unit panel shows earned promotions at 32 px without a frame; base game `PromotionSquare32`); without the tile they vanish into the dark panel. `civ-tools\promo32_icons.py <dir> [names]` builds the 32 px icon from `<name>_256.dds` (a blue-recoloured glyph was tried and rejected 2026-10-10). The 256/64/45 icons of our 20 promotions had their gold brightness evened and were shifted 8 px right at 256 (2 px at 64, the size of the promotion choice) with `civ-tools\promo_even_icons.py`; run it only on new icons (once), it shifts again on every run. See §7.
+- Promotion icons: 4 sizes (256/64/45/32); 256/64/45 gold glyph on transparency, 32 px gold glyph on a blue tile. Sources, pipeline and reasons: `art_sources/README.md` (§7).
 - C++ feature switches live in `LEKMOD_DLL/CvGameCoreDLL_Expansion2/_Defines.h` (e.g. `LEKMOD_NEW_ANCIENT_RUIN_REWARDS`, `FULL_YIELD_FROM_KILLS`, `LEKMOD_RELOCATE_PROMOTION_PREREQ_ORS`). Check which are on before reasoning about code paths.
 - Lekmod-specific tables worth knowing:
   - `UnitPromotions_PromotionPrereqOrs`: a missing referenced promotion is silently skipped through an INNER JOIN.
@@ -246,21 +246,17 @@ Set-Location C:\Users\bbruno\civ-tools\lek
 - For gameplay checks, give the user **concrete expected values** (formulas → numbers) to compare against, then cross-check the database and logs yourself.
 
 ## 7. Art pipeline
-Python with Pillow reads `.dds`. `civ-tools\texconv.exe` writes them:
-```
-texconv -nologo -y -f BC3_UNORM -m 0 -o out icon_N.png    # 256/64/32: full mips
-texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matching the originals
-```
-- Fixing the AI-made promotion icons: key out the dark background (alpha from brightness of max(R,G)), crop to the glyph, scale to ~70%, center, then export all 4 sizes.
-- **Reshape done for all 19 icons in `Art\Promotions`** (originals in scratchpad `backup/icons_all`). The improved method only makes background *connected to the image border* transparent, so dark interior details (One Good Eye's patch, Stargazing's pupil) are kept. No colours are changed.
-- **Icon provenance:**
-  - The user's original art set has 15 distinct icons, added in commit `d224c97d`: Amphibious I–III, Carpet Bombing, Discipline, Feared Elephant, Hatamoto, Iaijutsu, Marauder, Mountaineering, One Good Eye, Repair Crew, Stargazing, Supply Ship, Swift Transport.
-  - Fear Aura (17:31) and Zealot (17:12) were added on 2026-04-06 with their own images; the Fear Aura image is the user's intended art.
-  - Envelopment and Bunker Busting were added later the same day and **copied the Fear Aura image as a placeholder**. Those two need real art.
-  - Glutton uses a generic shield (`ABILITY_ATLAS` 14). The user remembers an apple icon, but none exists in the repo, the mod folder or the user's folders. Ask the user for the original art file.
+**All custom art has its original source and its conversion documented in `art_sources/` (repo root, not shipped).
+Read `art_sources/README.md` before touching any icon, portrait, flag or menu background.** In short:
+- Never edit `LEKMOD/Art/...` images by hand: change the source or the tool in `art_sources/`, then rebuild.
+- Promotion icons: `python art_sources/tools/build_promotion_icons.py [names]` builds all four sizes from the sources listed in `art_sources/promotions/manifest.csv` (key out background, fit to 72%, even the gold, shift 8 px right, 256 px BC3, 64/45/32 px uncompressed, 32 px on a blue tile). It always starts from the sources, so it can be rerun any number of times.
+- Tools: Python + Pillow reads `.dds`; `civ-tools	exconv.exe` writes them (`-f BC3_UNORM` / `B8G8R8A8_UNORM` / `BC1_UNORM`, `-m 0` full mips, `-m 1` one mip). Old one-off scripts in `civ-tools\` (`reshape_icons.py`, `promo_even_icons.py`, `promo32_icons.py`, `promo_small_sizes.py`, `promo_boldify_icons.py`) are superseded by the repo tool.
+- Backups of earlier states (outside the repo): `civ-toolsrt_backup\` (32 px originals, 256/64/45 before evening, Amphibious before the new art).
+- **Icon provenance and open art:**
+  - The April 2026 AI set (`d224c97d`) and Fear Aura/Zealot: sources in `art_sources/promotions/original_ai_2026-04/`. Envelopment and Bunker Busting first copied the Fear Aura image; the user's real art (2026-10-05) is in `user_art/`.
+  - Glutton uses a generic icon (`ABILITY_ATLAS` 57, user decision); the remembered apple icon was never found.
   - The Feared Elephant original icon isn't wired up; the upstream promotion has its own icon.
-
-- **Unit map flags:** 32×32 white silhouette on transparency (about 20–22 px tall, slightly above centre), one-icon atlas row with IconSize 32; the game tints it. Unit portraits: 173 px circle at (41,42) in a 256 cell, sizes 256/128/80/64/45/32.
+- **Unit map flags:** 32×32 white silhouette on transparency (about 18–22 px tall, inside the tapering flag shape), one-icon atlas row with IconSize 32; the game tints it. **Unit portraits:** 173 px circle at (41,42) in a 256 cell, sizes 256/128/80/64/45/32.
 
 ## 8. Failure patterns found in the fork (check new work for these)
 1. **Data placed where the game doesn't read it**: XML under `Art\`, `.modinfo` edits.
