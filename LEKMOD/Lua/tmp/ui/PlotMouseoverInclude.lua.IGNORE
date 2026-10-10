@@ -296,10 +296,10 @@ function LekmodResourceImprovementString(plot, pResource)
 			for pYield in GameInfo.Yields() do
 				local iYield = plot:GetYieldWithBuild(pBuild.ID, pYield.ID, false, iActivePlayer);
 				if (iYield > 0) then
-					strYields = strYields .. " " .. iYield .. pYield.IconString;
+					strYields = strYields .. ((strYields ~= "") and " " or "") .. iYield .. pYield.IconString;
 				end
 			end
-			return "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns) .. strYields;
+			return "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns) .. "[NEWLINE]" .. strYields;
 		end
 	end
 	return "";

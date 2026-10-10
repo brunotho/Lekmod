@@ -490,10 +490,10 @@ TILE TOOLTIP: UNIMPROVED RESOURCES
 ----------------------------------
 Tags: ui
 Hovering an unimproved resource shows what improving it would give.
-- Added: the improvement that connects the resource, how many turns it takes to build, and the tile's yields with it (e.g. "With a Mine (4 turns to improve): 1 Food 3 Production")
+- Added: the improvement that connects the resource, how many turns it takes to build, and the tile's yields with it (e.g. "With a Mine (4 turns to improve):", then "1 Food 3 Production" on the next line)
 - Added: these lines and the resource's special effects show in the tile info box at the bottom right, below the tile's yields, and in the detailed tile tooltip
 - Dev: the lines first only reached the detailed tooltip (GetResourceString long form); the bottom-right box (PlotHelpText.lua) asks for the short form. Lekmod now overrides PlotHelpText.lua and appends LekmodResourceDetailsString
-- Changed: long lines in the tile info box wrap instead of running off the screen edge
+- Changed: long lines in the tile info box wrap instead of running off the screen edge; the box stays left of the notification icons
 - Dev: on tiles outside anyone's borders, the improved yields left out the resource's own yields (e.g. Lapis showed no Gold), because the game's yield preview counted the resource only for the tile owner's team; fixed in the DLL (LEKMOD_YIELD_WITH_BUILD_VIEWER_TEAM)
 - Dev: the build turns were one too high (the first turn's work counts right away, as on the build button); fixed
 - Note: standard UI only (EUI uses its own tile tooltip)
