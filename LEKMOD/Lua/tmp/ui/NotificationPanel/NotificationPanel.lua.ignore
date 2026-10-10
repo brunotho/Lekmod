@@ -548,7 +548,6 @@ Controls.LekmodDismissAll:RegisterCallback( Mouse.eLClick, LekmodDismissAll );
 
 function ProcessStackSizes()
 
-    Controls.BigStack:CalculateSize();
     -- LEKMOD: the dismiss-all button only shows when there is something to dismiss
     local bAnyDismissable = false;
     for id, type in pairs( g_ActiveNotifications ) do
@@ -558,7 +557,13 @@ function ProcessStackSizes()
         end
     end
     Controls.LekmodDismissAll:SetHide( not bAnyDismissable );
+
+    Controls.BigStack:CalculateSize();
     local bigY = Controls.BigStack:GetSizeY();
+    -- LEKMOD: leave room for the dismiss-all button (between the big prompts and the small notifications)
+    if bAnyDismissable then
+        bigY = bigY + Controls.LekmodDismissAll:GetSizeY();
+    end
     Controls.SmallScrollPanel:SetSizeY( g_SmallScrollMax - bigY );
 
     Controls.SmallStack:CalculateSize();
