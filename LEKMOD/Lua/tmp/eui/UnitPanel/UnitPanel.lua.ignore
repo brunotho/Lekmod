@@ -1904,7 +1904,7 @@ function ActionToolTipHandler( control )
 			toolTip:insertLocalized( "TXT_KEY_BUILD_FEATURE_CLEARED", feature.Description )
 
 			local featureProduction = plot:GetFeatureProduction(buildID, g_activeTeamID)
-			local featureFood = 0 --plot:GetFeatureFood(buildID, g_activeTeamID)
+			local featureFood = plot:GetFeatureFood(buildID, g_activePlayerID) -- LEKMOD: Marsh gives Food when cleared
 			if featureProduction > 0 then
 				toolTip:append( L("TXT_KEY_BUILD_FEATURE_PRODUCTION", featureProduction) )
 				local city = plot:GetWorkingCity()

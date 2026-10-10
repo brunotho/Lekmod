@@ -1807,8 +1807,13 @@ function TipHandler( control )
 			end
 			
 			local iFeatureProduction = pPlot:GetFeatureProduction(iBuildID, iActiveTeam);
+			-- LEKMOD: some features give Food when cleared (Marsh; Features/BuildFeatures food, NQ_FOOD_FROM_CHOPS)
+			local iFeatureFood = pPlot:GetFeatureFood(iBuildID, iActivePlayer);
 			if (iFeatureProduction > 0) then
 				strClearFeatureString = strClearFeatureString .. Locale.ConvertTextKey("TXT_KEY_BUILD_FEATURE_PRODUCTION", iFeatureProduction);
+				
+			elseif (iFeatureFood > 0) then
+				strClearFeatureString = strClearFeatureString .. Locale.ConvertTextKey("TXT_KEY_BUILD_FEATURE_FOOD", iFeatureFood);
 				
 			-- Add period to end if we're not going to append info about feature production
 			elseif (bFeatureRemoved) then

@@ -203,6 +203,7 @@ MARSH CLEARING (FEATURE_MARSH)
 Tags: game mechanics
 Clearing a marsh gives Food to the nearby city instead of Production.
 - Changed: clearing a marsh gives up to 13 Food instead of 13 Production (less the farther the marsh is from the city)
+- Added: the Worker's build tooltip shows how much Food clearing the marsh gives
 - Dev: BuildFeatures for FEATURE_MARSH: Production 20 -> 0, Food 20 (NQ_FOOD_FROM_CHOPS, same scaling as chop production). Added the missing text TXT_KEY_MISC_CLEARING_FEATURE_FOOD.
 
 
