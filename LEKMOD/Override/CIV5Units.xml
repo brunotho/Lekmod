@@ -252990,6 +252990,19 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_BROADSIDE</PediaEntry>
 		</Row>
+		<Row>
+			<ID>372</ID>
+			<Type>PROMOTION_HELI_SENTRY</Type>
+			<Description>TXT_KEY_PROMOTION_SENTRY</Description>
+			<Help>TXT_KEY_PROMOTION_HELI_SENTRY_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<OrderPriority>3</OrderPriority>
+			<PortraitIndex>43</PortraitIndex>
+			<IconAtlas>PROMOTION_ATLAS</IconAtlas>
+			<VisibilityChange>2</VisibilityChange>
+			<PediaType>PEDIA_AIR</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_SENTRY</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -253791,6 +253804,40 @@
 		</Row>
 		<Row>
 			<PromotionType>PROMOTION_HELI_REPAIR</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
+		</Row>
+		<!-- Helicopter, Sentry (+2) -->
+		<Row>
+			<PromotionType>PROMOTION_HELI_SENTRY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_HELI_AMBUSH_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_HELI_SENTRY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_HELI_MOBILITY_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_HELI_SENTRY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ANTI_NAVAL_HELI_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_HELI_SENTRY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
+		</Row>
+		<!-- Helicopter, Quick Study (no other unit type can choose it) -->
+		<Row>
+			<PromotionType>PROMOTION_GAIN_EXPERIENCE</PromotionType>
+			<PrerequisitePromotion>PROMOTION_HELI_AMBUSH_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_GAIN_EXPERIENCE</PromotionType>
+			<PrerequisitePromotion>PROMOTION_HELI_MOBILITY_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_GAIN_EXPERIENCE</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ANTI_NAVAL_HELI_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_GAIN_EXPERIENCE</PromotionType>
 			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
 		</Row>
 		<!-- Coastal Raider -->
@@ -255673,6 +255720,14 @@
 		<Row> 
 			<PromotionType>PROMOTION_HELI_REPAIR</PromotionType> 
 			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType> 
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_HELI_SENTRY</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_GAIN_EXPERIENCE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
 		</Row>
 		<Row> 
 			<PromotionType>PROMOTION_MORALE</PromotionType> 

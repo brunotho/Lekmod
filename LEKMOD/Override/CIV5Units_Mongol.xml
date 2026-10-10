@@ -101619,6 +101619,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_PROMOTION_DOCKED_HELP">
 			<Text>Cannot attack while inside a city.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_HELI_SENTRY_HELP">
+			<Text>+2 Visibility Range</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_BROADSIDE">
 			<Text>Broadside</Text>
 		</Row>
