@@ -96,6 +96,10 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_iLekmodCampClearCapitalPopulation(0),
 	m_iLekmodCampClearFaith(0),
 	m_iLekmodFoundFreeUnitClass(-1),
+	m_iLekmodStarvationFaith(0),
+	m_iLekmodStarvationCapitalPlots(0),
+	m_iLekmodFirstGrowthBuildingClass(-1),
+	m_iLekmodFirstGrowthFaith(0),
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	m_bLekmodMissionaryProphetSpread(false),
@@ -950,6 +954,25 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iLekmodCampClearCapitalPopulation = kResults.GetInt("CampClearCapitalPopulation");
 	m_iLekmodCampClearFaith = kResults.GetInt("CampClearFaith");
 	m_iLekmodFoundFreeUnitClass = GC.getInfoTypeForString(kResults.GetText("FoundFreeUnitClass"), true);
+	m_iLekmodStarvationFaith = kResults.GetInt("StarvationFaith");
+	m_iLekmodStarvationCapitalPlots = kResults.GetInt("StarvationCapitalPlots");
+	m_iLekmodFirstGrowthBuildingClass = GC.getInfoTypeForString(kResults.GetText("FirstGrowthBuildingClass"), true);
+	m_iLekmodFirstGrowthFaith = kResults.GetInt("FirstGrowthFaith");
+	for (int iY = 0; iY < NUM_YIELD_TYPES; iY++)
+		m_aiLekmodCapitalYieldPerExpand[iY] = 0;
+	{
+		std::string strKey("Belief_CapitalYieldPerExpand");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select Yields.ID, Yield from Belief_CapitalYieldPerExpand inner join Yields on Yields.Type = YieldType where BeliefType = ?");
+		pResults->Bind(1, GetType());
+		while (pResults->Step())
+		{
+			const int iYieldID = pResults->GetInt(0);
+			if (iYieldID >= 0 && iYieldID < NUM_YIELD_TYPES)
+				m_aiLekmodCapitalYieldPerExpand[iYieldID] = pResults->GetInt(1);
+		}
+	}
 	for (int iY = 0; iY < NUM_YIELD_TYPES; iY++)
 		m_aiLekmodCoastalCapitalYieldPerInlandCity[iY] = 0;
 	{
@@ -973,14 +996,15 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 	{
 		const char* szLekmodBelief = GetType();
-		const char* aszSql[4] = {
+		const char* aszSql[5] = {
 			"select BuildingClasses.ID, UnitClasses.ID, 0, Count from Belief_BuildingClassFreeUnits inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join UnitClasses on UnitClasses.Type = UnitClassType where BeliefType = ?",
 			"select Terrains.ID, Yields.ID, 0, Yield from Belief_FlatOpenTerrainYieldChanges inner join Terrains on Terrains.Type = TerrainType inner join Yields on Yields.Type = YieldType where BeliefType = ?",
 			"select Improvements.ID, BuildingClasses.ID, Yields.ID, Yield from Belief_ImprovementBuildingYieldChanges inner join Improvements on Improvements.Type = ImprovementType inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Yields on Yields.Type = YieldType where BeliefType = ?",
-			"select case Condition when 'NO_FRESH_WATER' then 0 when 'ADJACENT_MOUNTAIN' then 1 else -1 end, Yields.ID, 0, Yield from Belief_CityConditionYieldChanges inner join Yields on Yields.Type = YieldType where BeliefType = ?" };
-		const char* aszKey[4] = { "Belief_BuildingClassFreeUnits", "Belief_FlatOpenTerrainYieldChanges", "Belief_ImprovementBuildingYieldChanges", "Belief_CityConditionYieldChanges" };
-		std::vector<LekmodRow>* apVec[4] = { &m_aLekmodBuildingFreeUnits, &m_aLekmodFlatOpenTerrainYields, &m_aLekmodImprovementBuildingYields, &m_aLekmodCityConditionYields };
-		for (int iTable = 0; iTable < 4; iTable++)
+			"select case Condition when 'NO_FRESH_WATER' then 0 when 'ADJACENT_MOUNTAIN' then 1 when 'NOT_CAPITAL' then 2 else -1 end, Yields.ID, 0, Yield, -1 from Belief_CityConditionYieldChanges inner join Yields on Yields.Type = YieldType where BeliefType = ?",
+			"select coalesce((select ID from Resources where Type = t.ResourceType), -1), coalesce((select ID from Features where Type = t.FeatureType), -1), Yields.ID, t.Yield, coalesce((select ID from Features where Type = t.AdjacentFeatureType), -1) from Belief_CityFeatureAdjacentYieldChanges t inner join Yields on Yields.Type = t.YieldType where t.BeliefType = ?" };
+		const char* aszKey[5] = { "Belief_BuildingClassFreeUnits", "Belief_FlatOpenTerrainYieldChanges", "Belief_ImprovementBuildingYieldChanges", "Belief_CityConditionYieldChanges", "Belief_CityFeatureAdjacentYieldChanges" };
+		std::vector<LekmodRow>* apVec[5] = { &m_aLekmodBuildingFreeUnits, &m_aLekmodFlatOpenTerrainYields, &m_aLekmodImprovementBuildingYields, &m_aLekmodCityConditionYields, &m_aLekmodCityFeatureAdjacentYields };
+		for (int iTable = 0; iTable < 5; iTable++)
 		{
 			apVec[iTable]->clear();
 			std::string strKey(aszKey[iTable]);
@@ -995,6 +1019,7 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 				kRow.b = pResults->GetInt(1);
 				kRow.c = pResults->GetInt(2);
 				kRow.d = pResults->GetInt(3);
+				kRow.e = (iTable == 4) ? pResults->GetInt(4) : -1;
 				apVec[iTable]->push_back(kRow);
 			}
 		}

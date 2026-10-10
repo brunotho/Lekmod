@@ -8588,6 +8588,44 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetTerrainYieldChange(getTerrainType(), eYield);
 			}
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
+			// Belief_CityFeatureAdjacentYieldChanges: resource/feature tiles next to a city and next to a feature (Mangrove Mysteries)
+			{
+				bool bNextToCity = false;
+				for (int iDir = 0; iDir < NUM_DIRECTION_TYPES && !bNextToCity; iDir++)
+				{
+					CvPlot* pAdjacent = plotDirection(getX(), getY(), (DirectionTypes)iDir);
+					bNextToCity = pAdjacent != NULL && pAdjacent->isCity();
+				}
+				if (bNextToCity)
+				{
+					ResourceTypes eHere = getResourceType(pWorkingCity->getTeam());
+					CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+					for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+					{
+						CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+						if (pkBelief == NULL || pkBelief->GetLekmodCityFeatureAdjacentYields().empty())
+							continue;
+						if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+							continue;
+						const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodCityFeatureAdjacentYields();
+						for (uint j = 0; j < aRows.size(); j++)
+						{
+							if (aRows[j].c != eYield)
+								continue;
+							if (!((aRows[j].a != -1 && aRows[j].a == eHere) || (aRows[j].b != -1 && aRows[j].b == getFeatureType())))
+								continue;
+							bool bNextToFeature = (aRows[j].e == -1);
+							for (int iDir = 0; iDir < NUM_DIRECTION_TYPES && !bNextToFeature; iDir++)
+							{
+								CvPlot* pAdjacent = plotDirection(getX(), getY(), (DirectionTypes)iDir);
+								bNextToFeature = pAdjacent != NULL && pAdjacent->getFeatureType() == aRows[j].e;
+							}
+							if (bNextToFeature)
+								iReligionChange += aRows[j].d;
+						}
+					}
+				}
+			}
 			// Belief_FlatOpenTerrainYieldChanges: flat tiles without a feature (Dance of the Aurora: flat Tundra, no forest)
 			if (!isHills() && getFeatureType() == NO_FEATURE)
 			{

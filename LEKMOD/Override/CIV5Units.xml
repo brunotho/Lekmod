@@ -30864,6 +30864,10 @@
 		<Column name="CampClearCapitalPopulation" type="integer" default="0"/> <!-- LEKMOD: clearing a barbarian camp adds capital population -->
 		<Column name="CampClearFaith" type="integer" default="0"/> <!-- LEKMOD: clearing a barbarian camp gives Faith -->
 		<Column name="FoundFreeUnitClass" type="text" default="NULL"/> <!-- LEKMOD: free unit in the capital when the pantheon is founded -->
+		<Column name="StarvationFaith" type="integer" default="0"/> <!-- LEKMOD: Faith when a city with the belief loses a citizen to starvation -->
+		<Column name="StarvationCapitalPlots" type="integer" default="0"/> <!-- LEKMOD: the capital claims tiles when another city with the belief starves -->
+		<Column name="FirstGrowthBuildingClass" type="text" default="NULL"/> <!-- LEKMOD: a city reaching 2 citizens drops back to 1 and gets this building (once) -->
+		<Column name="FirstGrowthFaith" type="integer" default="0"/> <!-- LEKMOD: Faith for that -->
 		<Column name="FaithBuildingTourism" type="integer" default="0" />
 		<Column name="ObsoleteEra" type="text" default="NULL" />
 		<Column name="ResourceRevealed" type="text" default="NULL" />
@@ -31712,6 +31716,171 @@
 			<Yield>1</Yield>
 		</Row>
 	</Belief_CoastalCapitalYieldPerInlandCity>
+	<!-- LEKMOD: pantheons Mangrove Mysteries, The Hungering Throne, Ascetic Discipline, Rite of the First-Born -->
+	<Table name="Belief_CapitalYieldPerExpand"> <!-- LEKMOD: capital yields per other city where the belief is active -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Table name="Belief_CityFeatureAdjacentYieldChanges"> <!-- LEKMOD: yields on a resource or feature tile next to a city and next to AdjacentFeatureType -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="ResourceType" type="text" default="NULL" />
+		<Column name="FeatureType" type="text" default="NULL" />
+		<Column name="AdjacentFeatureType" type="text" default="NULL" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Beliefs>
+		<Row>
+			<ID>105</ID>
+			<Type>BELIEF_LEKMOD_MANGROVE</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_MANGROVE</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_MANGROVE_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+		</Row>
+		<Row>
+			<ID>106</ID>
+			<Type>BELIEF_LEKMOD_HUNGERING_THRONE</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_HUNGERING_THRONE</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_HUNGERING_THRONE_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+			<StarvationCapitalPlots>2</StarvationCapitalPlots>
+		</Row>
+		<Row>
+			<ID>107</ID>
+			<Type>BELIEF_LEKMOD_ASCETIC</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_ASCETIC</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_ASCETIC_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+			<StarvationFaith>20</StarvationFaith>
+		</Row>
+		<Row>
+			<ID>108</ID>
+			<Type>BELIEF_LEKMOD_FIRST_BORN</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_FIRST_BORN</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_FIRST_BORN_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+			<FirstGrowthBuildingClass>BUILDINGCLASS_LEKMOD_FIRST_BORN</FirstGrowthBuildingClass>
+			<FirstGrowthFaith>20</FirstGrowthFaith>
+		</Row>
+	</Beliefs>
+	<Belief_FeatureYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<FeatureType>FEATURE_FOREST</FeatureType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_FeatureYieldChanges>
+	<Belief_ResourceYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_ResourceYieldChanges>
+	<Belief_CityFeatureAdjacentYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<ResourceType>RESOURCE_CORAL</ResourceType>
+			<AdjacentFeatureType>FEATURE_FOREST</AdjacentFeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<ResourceType>RESOURCE_CORAL</ResourceType>
+			<AdjacentFeatureType>FEATURE_FOREST</AdjacentFeatureType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<ResourceType>RESOURCE_PEARLS</ResourceType>
+			<AdjacentFeatureType>FEATURE_FOREST</AdjacentFeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<ResourceType>RESOURCE_PEARLS</ResourceType>
+			<AdjacentFeatureType>FEATURE_FOREST</AdjacentFeatureType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<FeatureType>FEATURE_ATOLL</FeatureType>
+			<AdjacentFeatureType>FEATURE_FOREST</AdjacentFeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_MANGROVE</BeliefType>
+			<FeatureType>FEATURE_ATOLL</FeatureType>
+			<AdjacentFeatureType>FEATURE_FOREST</AdjacentFeatureType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Belief_CityFeatureAdjacentYieldChanges>
+	<Belief_CityConditionYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_HUNGERING_THRONE</BeliefType>
+			<Condition>NOT_CAPITAL</Condition>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>-1</Yield>
+		</Row>
+	</Belief_CityConditionYieldChanges>
+	<Belief_CapitalYieldPerExpand>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_HUNGERING_THRONE</BeliefType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_HUNGERING_THRONE</BeliefType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_HUNGERING_THRONE</BeliefType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_CapitalYieldPerExpand>
+	<Belief_BuildingClassYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_ASCETIC</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_SHRINE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>-1</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_ASCETIC</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_SHRINE</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>-1</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_ASCETIC</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_SHRINE</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+	</Belief_BuildingClassYieldChanges>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FIRST_BORN</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FIRST_BORN</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
 	<!-- LEKMOD: Phase 3 new pantheons (data only) -->
 	<Beliefs>
 		<Row>
@@ -35225,6 +35394,15 @@
 			<MaxGlobalInstances>-1</MaxGlobalInstances>
 			<MaxTeamInstances>-1</MaxTeamInstances>
 			<MaxPlayerInstances>1</MaxPlayerInstances>
+		</Row>
+		<Row>
+			<ID>179</ID>
+			<Type>BUILDINGCLASS_LEKMOD_FIRST_BORN</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_FIRST_BORN_SHORT</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_FIRST_BORN</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
 		</Row>
 	</BuildingClasses> 
 
@@ -48152,6 +48330,24 @@
 			<ArtDefineTag>ART_DEF_BUILDING_LABORATORY</ArtDefineTag>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</IconAtlas>
+		</Row>
+		<!-- LEKMOD: Rite of the First-Born, given when a city first reaches 2 citizens; kept on capture -->
+		<Row>
+			<ID>272</ID>
+			<Type>BUILDING_LEKMOD_FIRST_BORN</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_FIRST_BORN</BuildingClass>
+			<Description>TXT_KEY_BELIEF_LEKMOD_FIRST_BORN_SHORT</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_FIRST_BORN_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_FIRST_BORN_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_FIRST_BORN_HELP</Help>
+			<ConquestProb>100</ConquestProb>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>13</PortraitIndex>
+			<IconAtlas>TECH_ATLAS_1</IconAtlas>
 		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->

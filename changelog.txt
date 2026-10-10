@@ -1338,3 +1338,13 @@ Three new pantheons.
 - Note: "in your capital" means the capital follows a religion with this pantheon, or has it as its own pantheon
 - DLL: Beliefs.NewUnitPromotion/NewUnitPromotionAllLand/CampClearCapitalPopulation/CampClearFaith/FoundFreeUnitClass, Belief_CoastalCapitalYieldPerInlandCity (LEKMOD_CAPITAL_PANTHEON_EFFECTS); belief IDs 102-104; promotion 378 PROMOTION_LEKMOD_SALT_STARS
 
+MANGROVE MYSTERIES, THE HUNGERING THRONE, ASCETIC DISCIPLINE, RITE OF THE FIRST-BORN (BELIEF_LEKMOD_MANGROVE, BELIEF_LEKMOD_HUNGERING_THRONE, BELIEF_LEKMOD_ASCETIC, BELIEF_LEKMOD_FIRST_BORN)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Tags: religion
+Four new pantheons.
+- Added: Mangrove Mysteries: +1 Faith from Forests and Fish; Coral, Pearls and Atolls next to a city and a Forest yield +1 Production and +2 Science
+- Added: The Hungering Throne: cities other than the capital -1 Food; the capital gets +1 Production, +1 Science and +1 Faith per other city with the pantheon; when such a city starves, the capital claims 2 tiles
+- Added: Ascetic Discipline: Shrines -1 Food, -1 Gold, +2 Production; +20 Faith whenever a city loses a citizen to starvation
+- Added: Rite of the First-Born: when a city first grows to 2 citizens it drops back to 1, you gain 20 Faith, and the city tile gets +1 Production and +1 Culture for good (kept on capture)
+- DLL: Beliefs.StarvationFaith/StarvationCapitalPlots/FirstGrowthBuildingClass/FirstGrowthFaith, Belief_CapitalYieldPerExpand, Belief_CityFeatureAdjacentYieldChanges, condition NOT_CAPITAL; belief IDs 105-108; building BUILDING_LEKMOD_FIRST_BORN (272, class 179)
+

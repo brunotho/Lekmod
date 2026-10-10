@@ -120432,6 +120432,33 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_SALT_STARS_HELP">
 			<Text>+1 sight while embarked.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_MANGROVE">
+			<Text>+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Forests[ENDCOLOR] and [ICON_RES_FISH] Fish.[NEWLINE][ICON_RES_CORAL] Coral, [ICON_RES_PEARLS] Pearls and [COLOR_POSITIVE_TEXT]Atolls[ENDCOLOR] next to a city and a Forest yield +1 [ICON_PRODUCTION] Production and +2 [ICON_RESEARCH] Science.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_MANGROVE_SHORT">
+			<Text>Mangrove Mysteries</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_HUNGERING_THRONE">
+			<Text>Cities other than the capital get -1 [ICON_FOOD] Food.[NEWLINE]The capital gets +1 [ICON_PRODUCTION] Production, +1 [ICON_RESEARCH] Science and +1 [ICON_PEACE] Faith for each other city with this pantheon.[NEWLINE][NEWLINE]Whenever such a city loses a citizen to starvation, the capital claims 2 tiles.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_HUNGERING_THRONE_SHORT">
+			<Text>The Hungering Throne</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_ASCETIC">
+			<Text>[ICON_BUILDING_SHRINE] Shrines yield -1 [ICON_FOOD] Food, -1 [ICON_GOLD] Gold and +2 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Whenever a city loses a citizen to starvation, gain 20 [ICON_PEACE] Faith.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_ASCETIC_SHORT">
+			<Text>Ascetic Discipline</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_FIRST_BORN">
+			<Text>When a city grows to 2 [ICON_CITIZEN] Citizens for the first time, it drops back to 1, you gain 20 [ICON_PEACE] Faith, and the city tile gets +1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture permanently (kept when the city is captured).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_FIRST_BORN_SHORT">
+			<Text>Rite of the First-Born</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_FIRST_BORN_HELP">
+			<Text>+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from the Rite of the First-Born.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>
 		</Row>

@@ -859,6 +859,12 @@ public:
 	int GetLekmodAttackRange() const;
 	int GetLekmodHealPerTurn() const;
 #endif
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	bool LekmodCityHasBelief(BeliefTypes eBelief) const;
+	void LekmodOnStarvation();
+	void LekmodOnGrowth();
+	int LekmodCapitalYieldFromExpands(YieldTypes eYield) const;
+#endif
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 	int GetLekmodBeliefCityConditionYield(const class CvReligion* pReligion, BeliefTypes eSecondaryPantheon, YieldTypes eYield) const;
 #endif

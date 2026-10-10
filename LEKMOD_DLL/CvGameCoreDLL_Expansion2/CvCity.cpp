@@ -8876,6 +8876,22 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 
 	for(int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
 	{
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+		{
+			int iFromExpands = LekmodCapitalYieldFromExpands((YieldTypes)iYield);
+			if (iFromExpands != 0)
+			{
+#if !defined(STANDARDIZE_YIELDS)
+				if (iYield == YIELD_CULTURE)
+					ChangeJONSCulturePerTurnFromReligion(iFromExpands);
+				else if (iYield == YIELD_FAITH)
+					ChangeFaithPerTurnFromReligion(iFromExpands);
+				else
+#endif
+					ChangeBaseYieldRateFromReligion((YieldTypes)iYield, iFromExpands);
+			}
+		}
+#endif
 		int iYieldPerReligion = GetYieldPerReligionTimes100((YieldTypes)iYield);
 		if (iYieldPerReligion > 0)
 		{
@@ -9117,6 +9133,14 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 		}
 	}
 
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// The Hungering Throne counts the other cities' religions: refresh the capital
+	if (!isCapital() && GET_PLAYER(getOwner()).getCapitalCity() != NULL)
+	{
+		CvCity* pCapital = GET_PLAYER(getOwner()).getCapitalCity();
+		pCapital->UpdateReligion(pCapital->GetCityReligions()->GetReligiousMajority());
+	}
+#endif
 	GET_PLAYER(getOwner()).UpdateReligion();
 }
 
@@ -14580,6 +14604,93 @@ int CvCity::GetLekmodHealPerTurn() const
 }
 #endif
 
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+//	--------------------------------------------------------------------------------
+/// is the belief active in this city (majority religion or secondary pantheon)?
+bool CvCity::LekmodCityHasBelief(BeliefTypes eBelief) const
+{
+	if (GetCityReligions()->GetSecondaryReligionPantheonBelief() == eBelief)
+		return true;
+	ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
+	if (eMajority == NO_RELIGION)
+		return false;
+	const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, getOwner());
+	return pReligion != NULL && pReligion->m_Beliefs.HasBelief(eBelief);
+}
+
+/// the city lost a citizen to starvation (Ascetic Discipline: Faith; The Hungering Throne: the capital claims tiles)
+void CvCity::LekmodOnStarvation()
+{
+	CvPlayer& kOwner = GET_PLAYER(getOwner());
+	CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+	for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+	{
+		CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+		if (pkBelief == NULL || (pkBelief->GetStarvationFaith() == 0 && pkBelief->GetStarvationCapitalPlots() == 0))
+			continue;
+		if (!LekmodCityHasBelief((BeliefTypes)iBelief))
+			continue;
+		if (pkBelief->GetStarvationFaith() != 0)
+			kOwner.ChangeFaith(pkBelief->GetStarvationFaith());
+		CvCity* pCapital = kOwner.getCapitalCity();
+		if (pCapital != NULL && pCapital != this)
+		{
+			for (int i = 0; i < pkBelief->GetStarvationCapitalPlots(); i++)
+			{
+				CvPlot* pPlot = pCapital->GetNextBuyablePlot();
+				if (pPlot != NULL)
+					pCapital->DoAcquirePlot(pPlot->getX(), pPlot->getY());
+			}
+		}
+	}
+}
+
+/// the city reached 2 citizens (Rite of the First-Born: back to 1, Faith, and a permanent building marks the city)
+void CvCity::LekmodOnGrowth()
+{
+	if (getPopulation() != 2)
+		return;
+	CvPlayer& kOwner = GET_PLAYER(getOwner());
+	CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+	for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+	{
+		CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+		if (pkBelief == NULL || pkBelief->GetFirstGrowthBuildingClass() == -1)
+			continue;
+		BuildingTypes eMarker = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(pkBelief->GetFirstGrowthBuildingClass());
+		if (eMarker == NO_BUILDING || GetCityBuildings()->GetNumBuilding(eMarker) > 0)
+			continue;
+		if (!LekmodCityHasBelief((BeliefTypes)iBelief))
+			continue;
+		changePopulation(-1);
+		kOwner.ChangeFaith(pkBelief->GetFirstGrowthFaith());
+		GetCityBuildings()->SetNumRealBuilding(eMarker, 1);
+		return;
+	}
+}
+
+/// The Hungering Throne: yields in the capital for each other city where the belief is active
+int CvCity::LekmodCapitalYieldFromExpands(YieldTypes eYield) const
+{
+	if (!isCapital())
+		return 0;
+	CvPlayer& kOwner = GET_PLAYER(getOwner());
+	int iTotal = 0;
+	CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+	for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+	{
+		CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+		if (pkBelief == NULL || pkBelief->GetCapitalYieldPerExpand(eYield) == 0)
+			continue;
+		int iLoop;
+		for (const CvCity* pLoopCity = kOwner.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kOwner.nextCity(&iLoop))
+			if (pLoopCity != this && pLoopCity->LekmodCityHasBelief((BeliefTypes)iBelief))
+				iTotal += pkBelief->GetCapitalYieldPerExpand(eYield);
+	}
+	return iTotal;
+}
+#endif
+
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 //	--------------------------------------------------------------------------------
 /// Belief_CityConditionYieldChanges: city yields when the city meets a condition (Zamzam: no fresh water; Pillars of Heaven: next to a mountain)
@@ -14587,9 +14698,10 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 {
 	if (pReligion == NULL)
 		return 0;
-	bool abCondition[2];
+	bool abCondition[3];
 	abCondition[0] = !plot()->isFreshWater();
 	abCondition[1] = false;
+	abCondition[2] = !isCapital();
 	for (int iDir = 0; iDir < NUM_DIRECTION_TYPES; iDir++)
 	{
 		CvPlot* pAdjacent = plotDirection(getX(), getY(), (DirectionTypes)iDir);
@@ -14607,7 +14719,7 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 			continue;
 		const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodCityConditionYields();
 		for (uint j = 0; j < aRows.size(); j++)
-			if (aRows[j].a >= 0 && aRows[j].a < 2 && abCondition[aRows[j].a] && aRows[j].b == eYield)
+			if (aRows[j].a >= 0 && aRows[j].a < 3 && abCondition[aRows[j].a] && aRows[j].b == eYield)
 				iYield += aRows[j].d;
 	}
 	return iYield;
@@ -18336,6 +18448,9 @@ void CvCity::doGrowth()
 			changeFood(-(std::max(0, (growthThreshold() - getFoodKept()))));
 #endif
 			changePopulation(1);
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+			LekmodOnGrowth();
+#endif
 
 			// Only show notification if the city is small
 #ifndef NQ_ALWAYS_SHOW_POP_GROWTH_NOTIFICATION
@@ -18368,6 +18483,9 @@ void CvCity::doGrowth()
 		if(getPopulation() > 1)
 		{
 			changePopulation(-1);
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+			LekmodOnStarvation();
+#endif
 #ifdef AUI_CITY_FIX_DO_GROWTH_USE_FOOD_AFTER_POP_CHANGE
 			int iNewDiff = foodDifferenceTimes100() - iDiff;
 			changeFoodTimes100(iNewDiff);

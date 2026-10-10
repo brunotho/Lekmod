@@ -98,11 +98,12 @@ public:
 #endif
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 	// a = first key, b = second key, c = yield/unit class, d = amount (see the loader in CacheResults)
-	struct LekmodRow { int a; int b; int c; int d; };
+	struct LekmodRow { int a; int b; int c; int d; int e; };
 	const std::vector<LekmodRow>& GetLekmodBuildingFreeUnits() const { return m_aLekmodBuildingFreeUnits; }		// BuildingClass, UnitClass, -, Count
 	const std::vector<LekmodRow>& GetLekmodFlatOpenTerrainYields() const { return m_aLekmodFlatOpenTerrainYields; }	// Terrain, Yield, -, Yield
 	const std::vector<LekmodRow>& GetLekmodImprovementBuildingYields() const { return m_aLekmodImprovementBuildingYields; }	// Improvement, BuildingClass, Yield, Yield
-	const std::vector<LekmodRow>& GetLekmodCityConditionYields() const { return m_aLekmodCityConditionYields; }	// Condition (0 no fresh water, 1 next to a mountain), Yield, -, Yield
+	const std::vector<LekmodRow>& GetLekmodCityConditionYields() const { return m_aLekmodCityConditionYields; }
+	const std::vector<LekmodRow>& GetLekmodCityFeatureAdjacentYields() const { return m_aLekmodCityFeatureAdjacentYields; }	// Resource, Feature, Yield, Yield, adjacent Feature (tile next to a city and to that feature)	// Condition (0 no fresh water, 1 next to a mountain), Yield, -, Yield
 #endif
 #ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
 	int GetNewUnitPromotion() const { return m_iLekmodNewUnitPromotion; }
@@ -110,6 +111,11 @@ public:
 	int GetCampClearCapitalPopulation() const { return m_iLekmodCampClearCapitalPopulation; }
 	int GetCampClearFaith() const { return m_iLekmodCampClearFaith; }
 	int GetFoundFreeUnitClass() const { return m_iLekmodFoundFreeUnitClass; }
+	int GetStarvationFaith() const { return m_iLekmodStarvationFaith; }
+	int GetStarvationCapitalPlots() const { return m_iLekmodStarvationCapitalPlots; }
+	int GetFirstGrowthBuildingClass() const { return m_iLekmodFirstGrowthBuildingClass; }
+	int GetFirstGrowthFaith() const { return m_iLekmodFirstGrowthFaith; }
+	int GetCapitalYieldPerExpand(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiLekmodCapitalYieldPerExpand[i] : 0; }
 	int GetCoastalCapitalYieldPerInlandCity(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiLekmodCoastalCapitalYieldPerInlandCity[i] : 0; }
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
@@ -338,6 +344,7 @@ protected:
 	std::vector<LekmodRow> m_aLekmodFlatOpenTerrainYields;
 	std::vector<LekmodRow> m_aLekmodImprovementBuildingYields;
 	std::vector<LekmodRow> m_aLekmodCityConditionYields;
+	std::vector<LekmodRow> m_aLekmodCityFeatureAdjacentYields;
 #endif
 #ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
 	int m_iLekmodNewUnitPromotion;
@@ -345,6 +352,11 @@ protected:
 	int m_iLekmodCampClearCapitalPopulation;
 	int m_iLekmodCampClearFaith;
 	int m_iLekmodFoundFreeUnitClass;
+	int m_iLekmodStarvationFaith;
+	int m_iLekmodStarvationCapitalPlots;
+	int m_iLekmodFirstGrowthBuildingClass;
+	int m_iLekmodFirstGrowthFaith;
+	int m_aiLekmodCapitalYieldPerExpand[NUM_YIELD_TYPES];
 	int m_aiLekmodCoastalCapitalYieldPerInlandCity[NUM_YIELD_TYPES];
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
