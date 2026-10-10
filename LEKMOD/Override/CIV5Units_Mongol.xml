@@ -101546,7 +101546,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>With a {1_Improvement:textkey} ({2_Turns} {2_Turns: plural 1?turn; other?turns;} to improve):</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_EFFECTS">
-			<Text>A city founded on it also gets:</Text>
+			<Text>A city founded on it gets:</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PLOTROLL_SETTLE_WITH_TECH">
 			<Text>(if you know {1_Tech:textkey})</Text>
