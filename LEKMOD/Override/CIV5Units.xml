@@ -135863,6 +135863,7 @@
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>swift_transport_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>swift_transport_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<!-- Vanguard Corps unit portrait -->
+		<Row><Atlas>LEKMOD_VANGUARD_CORPS_FLAG</Atlas><IconSize>32</IconSize><Filename>vanguard_corps_flag_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>256</IconSize><Filename>vanguard_corps_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>128</IconSize><Filename>vanguard_corps_128.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>80</IconSize><Filename>vanguard_corps_80.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
@@ -276702,10 +276703,10 @@
 			<UnitArtInfo>ART_DEF_UNIT_GENERAL_LATE</UnitArtInfo>
 			<ShowInPedia>true</ShowInPedia>
 			<MoveRate>BIPED</MoveRate>
-			<UnitFlagIconOffset>90</UnitFlagIconOffset>
+			<UnitFlagIconOffset>0</UnitFlagIconOffset>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>LEKMOD_VANGUARD_CORPS_ATLAS</IconAtlas>
-			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
+			<UnitFlagAtlas>LEKMOD_VANGUARD_CORPS_FLAG</UnitFlagAtlas>
 		</Row>
 	</Units>
 	<!-- LEKMOD naval rework (2026-10-09) -->

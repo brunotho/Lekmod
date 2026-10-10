@@ -1089,7 +1089,7 @@ A late-game settler that founds ready-made frontier cities.
 - Added: Field Hospital: +4 Happiness in the city; your non-air units on the city's tiles heal 5 more HP per turn
 - Added: embarking and disembarking cost only 1 movement (Amphibious I and II)
 - Changed: Settlers (and their unique replacements) become obsolete with Railroad and upgrade to the Vanguard Corps
-- Note: unit art from the user (portrait) and the late Great General model
+- Note: unit art from the user (portrait and map flag) and the late Great General model
 - DLL: Units.FoundCityPopulation / FoundCityExtraPlots, Unit_FoundCityBuildingClasses / Unit_FoundCityUnitClasses (LEKMOD_FOUNDING_UNIT_EFFECTS, CvPlayer::found); Buildings.TerritoryHealChange (LEKMOD_TERRITORY_HEAL, CvUnit::healRate); unit ID 271, class 117, building 269, class 176
 
 CONQUISTADOR (UNIT_SPANISH_CONQUISTADOR, UNIT_CONQUISTADOR_SHARED)
