@@ -1043,6 +1043,7 @@ The Giant Death Robot is weaker but gets a set of combat promotions, and nukes c
 - Changed: Nuke Resistance instead of nuke immunity: nuclear weapons deal it 20 damage, wherever it stands (also in the blast center and in cities)
 - Added: starts with Fear Aura, Charge, Armor Plating I and Repair
 - DLL: UnitPromotions.NukeDamageFixed (LEKMOD_NUKE_RESISTANCE, CvUnitCombat nuke damage); promotion ID 373
+- Note: Nuke Resistance has its own icon (radiation shield, user art)
 
 SITTING DUCKS (PROMOTION_SITTING_DUCKS)
 ---------------------------------------

@@ -135870,6 +135870,11 @@
 		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>64</IconSize><Filename>vanguard_corps_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>45</IconSize><Filename>vanguard_corps_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_VANGUARD_CORPS_ATLAS</Atlas><IconSize>32</IconSize><Filename>vanguard_corps_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- NUKE_RESISTANCE promotion -->
+		<Row><Atlas>LEKMOD_NUKE_RESISTANCE_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>nuke_resistance_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_NUKE_RESISTANCE_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>nuke_resistance_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_NUKE_RESISTANCE_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>nuke_resistance_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_NUKE_RESISTANCE_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>nuke_resistance_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<!-- SITTING_DUCKS promotion -->
 		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>sitting_ducks_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>sitting_ducks_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
@@ -253152,8 +253157,8 @@
 			<Description>TXT_KEY_PROMOTION_NUKE_RESISTANCE</Description>
 			<Help>TXT_KEY_PROMOTION_NUKE_RESISTANCE_HELP</Help>
 			<Sound>AS2D_IF_LEVELUP</Sound>
-			<PortraitIndex>59</PortraitIndex>
-			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_NUKE_RESISTANCE_PROMOTION_ATLAS</IconAtlas>
 			<NukeDamageFixed>20</NukeDamageFixed>
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_NUKE_RESISTANCE</PediaEntry>
