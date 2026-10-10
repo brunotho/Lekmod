@@ -192,7 +192,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
     - Each sentence goes on its own line (`[NEWLINE]`).
     - Distinct topics or effects are separated by an empty line (`[NEWLINE][NEWLINE]`), e.g. bonus vs. penalty, or combat vs. movement.
     - This applies to all new and changed tooltips. Older tooltips will be retrofitted later (user's intention).
-  - **Beliefs (user, 2026-10-11):** pantheons: every effect (even a single one) as an `[ICON_BULLET]` line, joined by `[NEWLINE]`; the pantheon popup renders each bullet as its own row with a hanging indent (`LekmodFillBulletLines`). Other beliefs: separate effects on separate lines (`[NEWLINE]`), no bullets. No empty lines in either.
+  - **Beliefs (user, 2026-10-11):** one line per effect/sentence (`[NEWLINE]`), no bullets, no empty lines. Bullets with a hanging-indent pantheon popup were tried and dropped (rows overlapped).
   - **Exception:** list or menu rows with fixed height, like the Shoshone ruin choice (`ChooseDescription`), must be short, matter-of-fact one-liners.
   - No spec or implementation notes ("Eligible: naval melee", "Requires Bombardment II", "policy-granted"); the UI shows those itself.
   - Distinctions that matter to players stay, e.g. Discipline "(non-air units)" vs Discipline (Air) "(air units)".

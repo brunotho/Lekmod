@@ -1370,10 +1370,8 @@ RELIGION SCREEN (ChooseReligionPopup)
 ------------------------------------
 Tags: ui, religion
 The screen for founding and enhancing a religion fits long beliefs.
-- Changed: the screen is taller; chosen beliefs show their full text and their rows grow to fit (they were cut to one line)
+- Changed: chosen beliefs show their full text and their rows grow to fit (they were cut to one line)
 - Changed: the Bonus belief row only shows for civs that can pick one (Byzantium)
-- Changed: pantheon texts are bullet points; in the pantheon choice, wrapped lines start under the text, not under the bullet
-- Changed: other beliefs put separate effects on separate lines
-- Dev: ChoosePantheonPopup.lua/.xml are Lekmod overrides too
+- Changed: belief texts put separate effects on separate lines
 - Dev: ChooseReligionPopup.lua/.xml are now Lekmod overrides (Lua/tmp/ui/Religion, copied by ui_check.bat for both UIs)
 

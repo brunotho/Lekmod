@@ -23,8 +23,8 @@
 			<Image Anchor="C,B" Texture="bar400x2.dds" Size="400,1"/> 
 		</Button>
 	</Instance>
-	<!-- LEKMOD: popup 200 px taller so long belief texts fit (original width); chosen beliefs wrap and their rows grow (Lua) -->
-	<Grid Size="990,853" Anchor="C,C" Offset="0,6" Padding="0,0" Style="Grid9DetailFive140">
+	<!-- LEKMOD: chosen beliefs wrap and their rows grow (Lua); Bonus belief row has an ID to hide it -->
+	<Grid Size="990,653" Anchor="C,C" Offset="0,6" Padding="0,0" Style="Grid9DetailFive140">
 		<!-- Decoration -->
 		<!-- Top -->
 		<Image Anchor="C,T" AnchorSide="I.O" Size="420,128" Offset="0,-24" Texture="assets\UI\Art\Icons\Top1024IconTrim.dds">
@@ -35,7 +35,7 @@
     <Box Style="MenuLeftSideTreatment"/>
     <Box Style="MenuRightSideTreatment"/>
     
-		<Image Anchor="L,T" Texture="Found_Religion_background.dds" Size="951,767" Offset="20,44"/>
+		<Image Anchor="L,T" Texture="Found_Religion_background.dds" Size="951,567" Offset="20,44"/>
 		<Label Style="MenuTitleCaption" String="TXT_KEY_CHOOSE_RELIGION_TITLE" ID="FoundReligionHeading" />
 		<Image Anchor="C,T" Offset="0,130" Texture="bar900x2.dds" Size="900,1"/>
 		<ScrollPanel Anchor="L,T" Offset="20,55" Size="950,66" Vertical="0" ID="ReligionScrollPanel">
@@ -47,8 +47,8 @@
 		</ScrollPanel>
 
 		<Label Anchor="C,C" Offset="0,0" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LabelPleaseSelectAReligion" String="TXT_KEY_CHOOSE_RELIGION_SELECT_ICON"/>
-		<Box Color="0,0,0,100" Size="953,679" Offset="19,132" ID="ReligionPanel" Hidden="1">
-      <Box Color="0,0,0,0" Size="953,673" Offset="0,6">
+		<Box Color="0,0,0,100" Size="953,479" Offset="19,132" ID="ReligionPanel" Hidden="1">
+      <Box Color="0,0,0,0" Size="953,473" Offset="0,6">
         <Image Anchor="L,T" Offset="0,-10" TextureOffset="256,0" Texture="Assets/DLC/Expansion/UI/Art/Icons/ReligiousSymbolsWhite80_Expansion.dds" Size="80,80" ID="ReligionIcon"/>
         <TextButton Anchor="L,T" Offset="80,10" Font="TwCenMT22" NormalState="White_Black" MouseOver="Beige_Black_Alpha" FontStyle="Shadow" ID="LabelReligionName"/>
         <Label Anchor="L,T" Offset="80,30" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LabelReligionFoundedIn"/>
@@ -117,10 +117,10 @@
             <Label Anchor="L,T" Offset="52,28" WrapWidth="460" Font="TwCenMT16" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="BonusBeliefDescription" String="TXT_KEY_CHOOSE_RELIGION_SELECT_BONUS_BELIEF"/>
           </Button>
         </Stack>
-        <Box Anchor="R,T" Color="0,0,0,0" Size="450,612" Offset="20,61" ID="BeliefPanel" Hidden="1">
-          <ScrollPanel Anchor="L,T" Offset="0,0" Size="450,612" Vertical="1" ID="BeliefScrollPanel">
+        <Box Anchor="R,T" Color="0,0,0,0" Size="450,412" Offset="20,61" ID="BeliefPanel" Hidden="1">
+          <ScrollPanel Anchor="L,T" Offset="0,0" Size="450,412" Vertical="1" ID="BeliefScrollPanel">
             <!-- Scroll Controls -->
-            <ScrollBar Style="VertSlider" Length="582" Offset="0.18" Anchor="R,T" AnchorSide="O,I"/>
+            <ScrollBar Style="VertSlider" Length="382" Offset="0.18" Anchor="R,T" AnchorSide="O,I"/>
             <UpButton Offset="0.0" Style="ScrollBarUp" Anchor="R,T" AnchorSide="O,I"/>
             <DownButton Offset="0.0" Style="ScrollBarDown" Anchor="R,B" AnchorSide="O,I"/>
             <Stack Anchor="L,T" Offset="0,0" StackGrowth="Bottom" Padding="0" ID="BeliefStack"/>
@@ -129,7 +129,7 @@
         <GridButton Anchor="R,B" ID="FoundReligion" Offset="38,10" Size="180,45" Style="BaseButton" Font="TwCenMT22" String="TXT_KEY_CHOOSE_RELIGION_OK_BUTTON" Hidden="0"/>
       </Box>
 		</Box>
-    <GridButton Anchor="L,T" Style="SmallButton" Size="150,32" Offset="57,769" StateOffsetIncrement="0,0" ID="CloseButton" String="TXT_KEY_CLOSE"/>
+    <GridButton Anchor="L,T" Style="SmallButton" Size="150,32" Offset="57,569" StateOffsetIncrement="0,0" ID="CloseButton" String="TXT_KEY_CLOSE"/>
   </Grid>
 	<!-- Change Name Popup -->
 	<Box Color="Black.200" Size="Full.Full" ID="ChangeNamePopup" Hidden="1" ConsumeMouseOver="1">
