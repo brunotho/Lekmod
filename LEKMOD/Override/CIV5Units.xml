@@ -43201,6 +43201,7 @@
 		<Column name="AirportRebase" type="boolean" default="false" /> <!-- LEKMOD: planes rebasing between two cities with this building keep their moves (once per turn) -->
 		<Column name="NearRiver" type="boolean" default="false" /> <!-- LEKMOD: the city must be on a river or next to a river tile -->
 		<Column name="NoMaintenanceOnRiver" type="boolean" default="false" /> <!-- LEKMOD: no Gold maintenance when the city is on a river -->
+		<Column name="WorshipHouse" type="boolean" default="false" /> <!-- LEKMOD: Houses of Worship: 4 Culture for the first in a city, 2 for the second, 0 after -->
 		<Column name="RevealResource" type="text" default="NULL" /> <!-- LEKMOD: building it reveals this resource for the team (like its reveal tech) -->
 		<Column name="Happiness" type="integer" default="0" /> <!-- Changes the amount of local happiness the city has. -->
 		<Column name="UnmoddedHappiness" type="integer" default="0" /> <!-- Changes the amount of global happiness the city is adding to the empire -->
@@ -49446,6 +49447,46 @@
 			<BuildingType>BUILDING_LEKMOD_STUPA</BuildingType>
 			<YieldType>YIELD_FOOD</YieldType>
 			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- LEKMOD: Houses of Worship (yields from scratch) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_ARTIST_HOUSE"/>
+			<Set Help="TXT_KEY_LEKMOD_WORSHIP_HOUSE_HELP" WorshipHouse="true" FaithCost="188" Happiness="-1" GoldMaintenance="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_WRITER_HOUSE"/>
+			<Set Help="TXT_KEY_LEKMOD_WORSHIP_HOUSE_HELP" WorshipHouse="true" FaithCost="188" Happiness="1" GoldMaintenance="4"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_MUSIC_HOUSE"/>
+			<Set Help="TXT_KEY_LEKMOD_WORSHIP_HOUSE_HELP" WorshipHouse="true" FaithCost="188" Happiness="0" GoldMaintenance="0"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_ARTIST_HOUSE"/>
+		<Row>
+			<BuildingType>BUILDING_ARTIST_HOUSE</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Delete BuildingType="BUILDING_WRITER_HOUSE"/>
+		<Row>
+			<BuildingType>BUILDING_WRITER_HOUSE</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Delete BuildingType="BUILDING_MUSIC_HOUSE"/>
+		<Row>
+			<BuildingType>BUILDING_MUSIC_HOUSE</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MUSIC_HOUSE</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>-4</Yield>
 		</Row>
 	</Building_YieldChanges>
 	<!-- LEKMOD: belief-related building data (after all building rows and wipes): Rite of the First-Born yields; Jesuit Education / Work Ethic Faith cost = 130% of Production -->

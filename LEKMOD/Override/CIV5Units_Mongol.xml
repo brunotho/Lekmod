@@ -3903,7 +3903,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Houses of Worship</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BELIEF_HOUSES_OF_WORSHIP">
-			<Text>Use 100 [ICON_PEACE] Faith to buy an Art Hall (+1 [ICON_CULTURE] Culture, +4 [ICON_PEACE] Faith, +3 [ICON_TOURISM] Tourism), Writing Auditorium (+2 [ICON_CULTURE] Culture, +1 [ICON_RESEARCH] Science) and a Vocal Chamber (+3 [ICON_CULTURE] Culture, +1 [ICON_HAPPINESS_1] Happiness, 1 [ICON_GREAT_MUSICIAN] Great Musician Slot) </Text>
+			<Text>Use [ICON_PEACE] Faith to buy an Art Hall (+2 [ICON_PRODUCTION] Production, -1 [ICON_HAPPINESS_1] Happiness), a Writing Auditorium (+2 [ICON_RESEARCH] Science, +1 [ICON_HAPPINESS_1] Happiness, 4 [ICON_GOLD] Maintenance) and a Vocal Chamber (+2 [ICON_FOOD] Food, -4 [ICON_PEACE] Faith)[NEWLINE]The first of these in a city gives +4 [ICON_CULTURE] Culture, the second +2, the third none</Text>
 	</Row>
 	
 	<Row Tag="TXT_KEY_BELIEF_DEVOTED_ELITE_SHORT">
@@ -120494,6 +120494,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_STUPA_HELP">
 			<Text>+2 [ICON_FOOD] Food and +1 [ICON_HAPPINESS_1] Happiness.[NEWLINE]Bought with [ICON_PEACE] Faith in cities following a religion with the Stupas belief.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_WORSHIP_HOUSE_HELP">
+			<Text>House of Worship: the first one in a city gives +4 [ICON_CULTURE] Culture, the second +2, the third none.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>

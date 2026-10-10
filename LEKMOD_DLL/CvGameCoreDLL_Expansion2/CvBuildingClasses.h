@@ -211,6 +211,7 @@ public:
 	bool IsNearRiver() const;
 	bool IsNoMaintenanceOnRiver() const;
 	int GetRevealResource() const;
+	bool IsWorshipHouse() const { return m_bLekmodWorshipHouse; }
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int GetTerritoryHealChange() const;
@@ -541,6 +542,7 @@ private:
 	bool m_bNearRiver;
 	bool m_bNoMaintenanceOnRiver;
 	int m_iRevealResource;
+	bool m_bLekmodWorshipHouse;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;

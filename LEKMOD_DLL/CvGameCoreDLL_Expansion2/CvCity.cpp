@@ -7688,6 +7688,24 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 
 	BuildingClassTypes eBuildingClass = (BuildingClassTypes) pBuildingInfo->GetBuildingClassType();
 
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	// Houses of Worship (Buildings.WorshipHouse): the first in a city gives 4 Culture, the second 2, further ones nothing
+	if (pBuildingInfo->IsWorshipHouse() && iChange != 0)
+	{
+		int iHouses = 0;
+		for (int iLoop = 0; iLoop < GC.getNumBuildingInfos(); iLoop++)
+		{
+			CvBuildingEntry* pkLoop = GC.getBuildingInfo((BuildingTypes)iLoop);
+			if (pkLoop && pkLoop->IsWorshipHouse())
+				iHouses += m_pCityBuildings->GetNumBuilding((BuildingTypes)iLoop);
+		}
+		const int aiTotal[3] = { 0, 4, 6 };
+		int iAfter = aiTotal[std::min(std::max(iHouses, 0), 2)];
+		int iBefore = aiTotal[std::min(std::max(iHouses - iChange, 0), 2)];
+		ChangeJONSCulturePerTurnFromBuildings(iAfter - iBefore);
+	}
+#endif
+
 	CvPlayer& owningPlayer = GET_PLAYER(getOwner());
 	CvTeam& owningTeam = GET_TEAM(getTeam());
 #if defined(STANDARDIZE_YIELDS) // move policy and trait pointers moved to the top of processBuilding

@@ -102,6 +102,7 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_bNearRiver(false),
 	m_bNoMaintenanceOnRiver(false),
 	m_iRevealResource(-1),
+	m_bLekmodWorshipHouse(false),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
@@ -494,6 +495,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bNearRiver = kResults.GetBool("NearRiver");
 	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
 	m_iRevealResource = GC.getInfoTypeForString(kResults.GetText("RevealResource"), true);
+	m_bLekmodWorshipHouse = kResults.GetBool("WorshipHouse");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");

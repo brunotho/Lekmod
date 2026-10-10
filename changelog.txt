@@ -1383,3 +1383,14 @@ Two new follower beliefs with their own buildings.
 - Added: Stupas: buy Stupas with 100 Faith (+2 Food, +1 Happiness)
 - Note: belief IDs 111-112, buildings 273-274 (classes 180-181); icons from the user (art_sources/buildings), 32 and 80 px sizes scaled from 256
 
+HOUSES OF WORSHIP (BELIEF_HOUSES_OF_WORSHIP)
+-------------------------------------------
+Tags: religion, buildings
+The three houses got new yields; Culture now depends on how many a city has.
+- Changed: Art Hall, Writing Auditorium and Vocal Chamber cost 120 Faith (100 with Mandate of Heaven; was 100 for all)
+- Changed: the first house in a city gives +4 Culture, the second +2, the third none
+- Changed: Art Hall: +2 Production, -1 Happiness (was +1 Culture, +4 Faith, +3 Tourism)
+- Changed: Writing Auditorium: +2 Science, +1 Happiness, 4 Gold maintenance (was +2 Culture, +1 Science)
+- Changed: Vocal Chamber: +2 Food, -4 Faith (was +3 Culture, +1 Happiness); keeps its Great Musician slot
+- DLL: Buildings.WorshipHouse, Culture added in CvCity::processBuilding (LEKMOD_DEFENSE_BUILDINGS group)
+
