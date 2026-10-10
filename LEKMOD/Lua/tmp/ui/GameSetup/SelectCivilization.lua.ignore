@@ -134,9 +134,17 @@ function AddCivilizationEntry(traitsQuery, populateUniqueBonuses, civ, leaderTyp
 	
 	for row in traitsQuery(leaderType) do
 		controlTable.BonusDescription:LocalizeAndSetText(row.Description);
-		-- LEKMOD: the row has no room for more lines, so the start bias goes into the tooltip
+		-- LEKMOD: a long ability text makes the row taller instead of running into the next row
+		-- (text starts 38 px below the row top: 4 offset + 28 title + 6 stack padding; 8 px margin below)
+		local iNeeded = 38 + controlTable.BonusDescription:GetSizeY() + 8;
+		if iNeeded > controlTable.Button:GetSizeY() then
+			controlTable.Button:SetSizeY( iNeeded );
+		end
+		-- LEKMOD: the start bias goes into the tooltip
 		local strBias = LekmodStartBiasText( civ.Type ):gsub( "^%[NEWLINE%]%[NEWLINE%]", "" );
-		controlTable.Button:SetToolTipString( strBias ~= "" and strBias or nil );
+		if strBias ~= "" then
+			controlTable.Button:SetToolTipString( strBias );
+		end
 		shortDescription = row.ShortDescription;
 	end
 	
