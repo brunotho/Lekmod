@@ -17271,6 +17271,25 @@ bool CvUnit::IsLekmodNoAttackFromCity() const
 }
 #endif
 
+#ifdef LEKMOD_NUKE_RESISTANCE
+//	--------------------------------------------------------------------------------
+/// Nuke resistance: fixed damage from nukes (smallest of the unit's promotions), 0 = normal nuke damage
+int CvUnit::GetLekmodNukeDamageFixed() const
+{
+	int iFixed = 0;
+	for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
+	{
+		CvPromotionEntry* pkPromotion = GC.getPromotionInfo((PromotionTypes)iPromotion);
+		if (pkPromotion && pkPromotion->GetNukeDamageFixed() > 0 && isHasPromotion((PromotionTypes)iPromotion))
+		{
+			if (iFixed == 0 || pkPromotion->GetNukeDamageFixed() < iFixed)
+				iFixed = pkPromotion->GetNukeDamageFixed();
+		}
+	}
+	return iFixed;
+}
+#endif
+
 #ifdef LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS
 //	--------------------------------------------------------------------------------
 /// Sum of the unit's promotions' UnitPromotions_UnitCombatMods.Attack (or .Defense) vs a unit combat type

@@ -211236,6 +211236,7 @@
 		<Column name="MaxMovesAfterDomainChange" type="integer" default="0"/>
 		<Column name="HealWhileEmbarked" type="boolean" default="0"/>
 		<Column name="ExtraAttackVsFullHP" type="boolean" default="false"/>
+		<Column name="NukeDamageFixed" type="integer" default="0"/>
 		<Column name="MovesNearGeneralChange" type="integer" default="0"/>
 		<Column name="CitySplashDamage" type="integer" default="0"/>
 		<Column name="CanCrossMountains" type="boolean" default="0"/>
@@ -253006,6 +253007,19 @@
 			<PediaType>PEDIA_AIR</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_SENTRY</PediaEntry>
 		</Row>
+		<Row>
+			<ID>373</ID>
+			<Type>PROMOTION_NUKE_RESISTANCE</Type>
+			<Description>TXT_KEY_PROMOTION_NUKE_RESISTANCE</Description>
+			<Help>TXT_KEY_PROMOTION_NUKE_RESISTANCE_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<NukeDamageFixed>20</NukeDamageFixed>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_NUKE_RESISTANCE</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -263230,7 +263244,7 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_MECH</UnitType> 
-			<PromotionType>PROMOTION_NUKE_IMMUNE</PromotionType> 
+			<PromotionType>PROMOTION_NUKE_RESISTANCE</PromotionType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_MECH</UnitType> 
@@ -264228,9 +264242,21 @@
 			<UnitType>UNIT_CATAPULT</UnitType> 
 			<PromotionType>PROMOTION_INDIRECT_FIRE</PromotionType> 
 		</Row>
-		<Row> 
-			<UnitType>UNIT_MECH</UnitType> 
-			<PromotionType>PROMOTION_INTERCEPTION_IV</PromotionType> 
+		<Row>
+			<UnitType>UNIT_MECH</UnitType>
+			<PromotionType>PROMOTION_FEAR_AURA</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MECH</UnitType>
+			<PromotionType>PROMOTION_CHARGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MECH</UnitType>
+			<PromotionType>PROMOTION_ARMOR_PLATING_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MECH</UnitType>
+			<PromotionType>PROMOTION_REPAIR</PromotionType>
 		</Row>
 		<Row> 
 			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType> 
@@ -269283,8 +269309,8 @@
 			<Civilopedia>TXT_KEY_CIVILOPEDIA_UNITS_MODERN_MECH_TEXT</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_MECH_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_MECH</Help>
-			<Combat>240</Combat>
-			<Cost>600</Cost>
+			<Combat>190</Combat>
+			<Cost>720</Cost>
 			<FaithCost>1000</FaithCost>
 			<RequiresFaithPurchaseEnabled>true</RequiresFaithPurchaseEnabled>
 			<Moves>5</Moves>
@@ -269298,7 +269324,7 @@
 			<Mechanized>true</Mechanized>
 			<PrereqTech>TECH_NUCLEAR_FUSION</PrereqTech>
 			<AdvancedStartCost>80</AdvancedStartCost>
-			<AirInterceptRange>2</AirInterceptRange>
+			<AirInterceptRange>0</AirInterceptRange>
 			<XPValueAttack>3</XPValueAttack>
 			<XPValueDefense>3</XPValueDefense>
 			<UnitArtInfo>ART_DEF_UNIT_MECH</UnitArtInfo>

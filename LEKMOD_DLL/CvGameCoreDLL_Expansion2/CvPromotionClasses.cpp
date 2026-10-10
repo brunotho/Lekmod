@@ -121,6 +121,9 @@ CvPromotionEntry::CvPromotionEntry():
 	m_iMaxMovesAfterDomainChange(0),
 	m_bHealWhileEmbarked(false),
 	m_bExtraAttackVsFullHP(false),
+#ifdef LEKMOD_NUKE_RESISTANCE
+	m_iNukeDamageFixed(0),
+#endif
 	m_iMovesNearGeneralChange(0),
 	m_iCapitalDefenseModifier(0),
 	m_iCapitalDefenseFalloff(0),
@@ -460,6 +463,9 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_iMaxMovesAfterDomainChange = kResults.GetInt("MaxMovesAfterDomainChange");
 	m_bHealWhileEmbarked = kResults.GetBool("HealWhileEmbarked");
 	m_bExtraAttackVsFullHP = kResults.GetBool("ExtraAttackVsFullHP");
+#ifdef LEKMOD_NUKE_RESISTANCE
+	m_iNukeDamageFixed = kResults.GetInt("NukeDamageFixed");
+#endif
 	m_iMovesNearGeneralChange = kResults.GetInt("MovesNearGeneralChange");
 	m_iCapitalDefenseModifier = kResults.GetInt("CapitalDefenseModifier");
 	m_iCapitalDefenseFalloff = kResults.GetInt("CapitalDefenseFalloff");
@@ -1619,6 +1625,14 @@ bool CvPromotionEntry::IsExtraAttackVsFullHP() const
 {
 	return m_bExtraAttackVsFullHP;
 }
+
+#ifdef LEKMOD_NUKE_RESISTANCE
+/// Nuke resistance: nukes deal exactly this much damage to the unit, wherever it stands (0 = normal nuke damage)
+int CvPromotionEntry::GetNukeDamageFixed() const
+{
+	return m_iNukeDamageFixed;
+}
+#endif
 
 /// Hatamoto: extra moves when starting the turn within 1 tile of a friendly Great General
 int CvPromotionEntry::GetMovesNearGeneralChange() const

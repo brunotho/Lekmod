@@ -154,6 +154,9 @@ public:
 	int GetMaxMovesAfterDomainChange() const;
 	bool IsHealWhileEmbarked() const;
 	bool IsExtraAttackVsFullHP() const;
+#ifdef LEKMOD_NUKE_RESISTANCE
+	int GetNukeDamageFixed() const;
+#endif
 	int GetMovesNearGeneralChange() const;
 	int GetCapitalDefenseModifier() const;
 	int GetCapitalDefenseFalloff() const;
@@ -424,6 +427,9 @@ protected:
 	int m_iMaxMovesAfterDomainChange;
 	bool m_bHealWhileEmbarked;
 	bool m_bExtraAttackVsFullHP;
+#ifdef LEKMOD_NUKE_RESISTANCE
+	int m_iNukeDamageFixed;
+#endif
 	int m_iMovesNearGeneralChange;
 	int m_iCapitalDefenseModifier;
 	int m_iCapitalDefenseFalloff;

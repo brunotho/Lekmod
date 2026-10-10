@@ -1021,6 +1021,16 @@ Caravans and Cargo Ships are now equal; only where they travel differs.
 - Note: they still unlock at different technologies (Animal Husbandry / Sailing), and buildings or traits that boost only land or only sea routes keep doing so
 - DLL: LEKMOD_TRADE_COASTAL_ORIGIN_BONUS 50 (CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100, plunder); Lua Player.GetTradeConnectionDomainValueModifier now reads the (origin, destination, type, yield, domain) arguments the UI passes (it read them shifted before)
 
+GIANT DEATH ROBOT (UNIT_MECH, PROMOTION_NUKE_RESISTANCE)
+--------------------------------------------------------
+Tags: units, combat, promotions
+The Giant Death Robot is weaker but gets a set of combat promotions, and nukes can hurt it.
+- Changed: 190 Strength (was 240), cost 402 (was 335)
+- Removed: it no longer intercepts aircraft
+- Changed: Nuke Resistance instead of nuke immunity: nuclear weapons deal it 20 damage, wherever it stands (also in the blast center and in cities)
+- Added: starts with Fear Aura, Charge, Armor Plating I and Repair
+- DLL: UnitPromotions.NukeDamageFixed (LEKMOD_NUKE_RESISTANCE, CvUnitCombat nuke damage); promotion ID 373
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

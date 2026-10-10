@@ -2023,6 +2023,13 @@ void CvUnitCombat::GenerateNuclearExplosionDamage(CvPlot* pkTargetPlot, int iDam
 									iNukeDamage *= std::max(0, (pLoopCity->getNukeModifier() + 100));
 									iNukeDamage /= 100;
 								}
+#ifdef LEKMOD_NUKE_RESISTANCE
+								// Nuke resistance: the same damage everywhere (ground zero, open terrain, a city with a Bomb Shelter)
+								if (pLoopUnit->GetLekmodNukeDamageFixed() > 0)
+								{
+									iNukeDamage = pLoopUnit->GetLekmodNukeDamageFixed();
+								}
+#endif
 
 								CvCombatMemberEntry* pkDamageEntry = AddCombatMember(pkDamageArray, piDamageMembers, iMaxDamageMembers, pLoopUnit);
 								if(pkDamageEntry)

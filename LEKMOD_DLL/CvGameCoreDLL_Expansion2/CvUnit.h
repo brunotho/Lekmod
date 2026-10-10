@@ -715,6 +715,9 @@ public:
 	bool IsLekmodNoAdjacentRangedAttack() const;
 	bool IsLekmodNoAttackFromCity() const;
 #endif
+#ifdef LEKMOD_NUKE_RESISTANCE
+	int GetLekmodNukeDamageFixed() const;
+#endif
 	int domainModifier(DomainTypes eDomain) const;
 #if defined(LEKMOD_DOMAIN_PROMO_ATTACK_DEFENSE)
 	int domainAttackModifier(DomainTypes eDomain) const;

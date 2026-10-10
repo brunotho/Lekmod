@@ -101618,6 +101618,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_IMPROVEMENT_DOCK_TEXT">
 			<Text>Built by a Great Admiral on a coast tile next to land, inside your territory or directly next to it (the Great Admiral is consumed).[NEWLINE]Its tile and all tiles around it join your territory (claiming another civilization's tiles angers it).[NEWLINE][NEWLINE]Yields 4 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Units in the Drydock get +25% defense.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_NUKE_RESISTANCE">
+			<Text>Nuke Resistance</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_NUKE_RESISTANCE_HELP">
+			<Text>Takes 20 damage from nuclear weapons, wherever it stands (also in the blast center and in cities).</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_HELI_SENTRY_HELP">
 			<Text>+2 Visibility Range</Text>
 		</Row>
@@ -141014,10 +141020,8 @@ The ship has weather'd every rack; the prize we sought is won."
 				Only the Maya may build this unit. It is cheaper and available sooner than the Archer, which it replaces.
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_HELP_MECH"> 
-			<Text>
-				Isn't benefiting from any defensive terrain bonuses, but is otherwise stronger than any other military unit in the game.
-			</Text>
+		<Replace Tag="TXT_KEY_UNIT_HELP_MECH">
+			<Text>Gets no defensive terrain bonuses.[NEWLINE]Can move after attacking.[NEWLINE][NEWLINE]Nuke Resistance: takes only 20 damage from nuclear weapons.[NEWLINE][NEWLINE]Starts with Fear Aura, Charge, Armor Plating I and Repair.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MECHANIZED_INFANTRY"> 
 			<Text>
@@ -141747,10 +141751,8 @@ The ship has weather'd every rack; the prize we sought is won."
 				Mechanized Infantry are stronger and faster than regular Infantry. Although fast, Mech Infantry cannot move after combat like Tanks; their primary responsibility is, as always, to take and hold the ground.
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_MECH_STRATEGY"> 
-			<Text>
-				The "mech" is a Modern Armor unit on steroids. It has a shockingly high Combat Strength, allowing it to stomp virtually any unit it meets into paste. It can also move after attacking. The GDR doesn't benefit from any defensive terrain bonuses, but frankly, who cares? It's really cool!
-			</Text>
+		<Replace Tag="TXT_KEY_UNIT_MECH_STRATEGY">
+			<Text>The strongest land unit in the game.[NEWLINE]It gets no defensive terrain bonuses and can move after attacking.[NEWLINE][NEWLINE]Nuclear weapons deal it only 20 damage, wherever it stands; it is no longer immune.[NEWLINE]It no longer intercepts aircraft.[NEWLINE][NEWLINE]It starts with Fear Aura (enemies within 1 tile: -15% [ICON_STRENGTH] Combat Strength), Charge (+33% vs wounded units), Armor Plating I (+25% defense) and Repair (heals every turn).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_MEHAL_SEFARI"> 
 			<Text>
