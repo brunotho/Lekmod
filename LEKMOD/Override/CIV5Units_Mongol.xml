@@ -20814,7 +20814,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		
 		<Replace Tag="TXT_KEY_BUILDING_REFINERY_HELP"> 
 			<Text>
-				Provides 6 [ICON_RES_OIL] Oil.[NEWLINE]Each source of [ICON_RES_OIL] Oil worked by this City produces +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Maximum of 5 of these buildings in your empire.
+				Provides 6 [ICON_RES_OIL] Oil.[NEWLINE]+3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold on the building.[NEWLINE]Each source of [ICON_RES_OIL] Oil worked by this City produces +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Maximum of 5 of these buildings in your empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_RENAISSANCE_CONSULATE_DESC"> 

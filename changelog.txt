@@ -1244,7 +1244,7 @@ INDUSTRIAL BUILDINGS (BUILDING_REFINERY, BUILDING_RECYCLING_CENTER, BUILDING_SPA
 -------------------------------------------------------------------------------------------------------------------------------------
 Tags: buildings
 Strategic resource buildings are stronger, rarer and more expensive.
-- Changed: Oil Refinery: no longer needs improved Oil nearby; provides 6 Oil and +3 Production on the building; cost 134 -> 260, 12 Gold maintenance (was 0); at most 5 per player
+- Changed: Oil Refinery: no longer needs improved Oil nearby; provides 6 Oil and +3 Production and +3 Gold on the building (Oil tiles keep +3 Production and +3 Gold); cost 134 -> 260, 12 Gold maintenance (was 0); at most 5 per player
 - Changed: Recycling Center: at Plastics (was Ecology); provides 10 Aluminum (was 2); +5 Production on the building and on Aluminum tiles; 20 Gold maintenance (was 3)
 - Changed: Spaceship Factory: cost 241 -> 289, needs 10 Aluminum (was 1), 20 Gold maintenance (was 3), no longer +3 Production on the building, +90% Production towards spaceship parts (was +100%), +30% towards air units; at most 2 per player
 - Changed: Nuclear Plant: needs 2 Uranium (was 1)

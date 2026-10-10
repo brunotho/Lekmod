@@ -271,7 +271,12 @@ function LekmodResourceDetailsString(plot)
 	end
 	str = str .. LekmodResourceLocalEffectsString(pResource);
 	if (not plot:IsCity()) then
-		str = str .. LekmodResourceSettleEffectsString(pResource);
+		local settle = LekmodResourceSettleEffectsString(pResource);
+		-- an empty line between the improvement/effect lines and the settle-on lines (separate topics)
+		if (settle ~= "" and str ~= "") then
+			settle = "[NEWLINE]" .. settle;
+		end
+		str = str .. settle;
 	end
 	return str;
 end

@@ -48003,6 +48003,11 @@
 			<Yield>3</Yield>
 		</Row>
 		<Row>
+			<BuildingType>BUILDING_REFINERY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
 			<BuildingType>BUILDING_RECYCLING_CENTER</BuildingType>
 			<YieldType>YIELD_PRODUCTION</YieldType>
 			<Yield>5</Yield>
