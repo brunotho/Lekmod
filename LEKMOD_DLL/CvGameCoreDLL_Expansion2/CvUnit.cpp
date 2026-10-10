@@ -611,6 +611,21 @@ void CvUnit::initWithNameOffset(int iID, UnitTypes eUnit, int iNameOffset, UnitA
 		}
 	}
 
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// Beliefs.NewUnitPromotion: new units get it while the capital has the belief; units keep it afterwards
+	{
+		CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+		for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+		{
+			CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+			if (pkBelief == NULL || pkBelief->GetNewUnitPromotion() == -1)
+				continue;
+			bool bEligible = pkBelief->IsNewUnitPromotionAllLand() ? (getDomainType() == DOMAIN_LAND) : IsCombatUnit();
+			if (bEligible && kPlayer.LekmodCapitalHasBelief((BeliefTypes)iBelief))
+				setHasPromotion((PromotionTypes)pkBelief->GetNewUnitPromotion(), true);
+		}
+	}
+#endif
 	// Free Promotions from Policies, Techs, etc.
 	for(iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
@@ -18367,6 +18382,23 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 						CvBarbarians::DoBarbCampCleared(pNewPlot, getOwner());
 
 						kPlayer.GetTreasury()->ChangeGold(iNumGold);
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+						// Kin Forged in Blood: clearing a camp gives the capital population and the player Faith
+						{
+							CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+							for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+							{
+								CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+								if (pkBelief == NULL || (pkBelief->GetCampClearCapitalPopulation() == 0 && pkBelief->GetCampClearFaith() == 0))
+									continue;
+								if (!kPlayer.LekmodCapitalHasBelief((BeliefTypes)iBelief))
+									continue;
+								if (kPlayer.getCapitalCity() && pkBelief->GetCampClearCapitalPopulation() != 0)
+									kPlayer.getCapitalCity()->changePopulation(pkBelief->GetCampClearCapitalPopulation());
+								kPlayer.ChangeFaith(pkBelief->GetCampClearFaith());
+							}
+						}
+#endif
 
 						// Set who last cleared the camp here
 						pNewPlot->SetPlayerThatClearedBarbCampHere(getOwner());

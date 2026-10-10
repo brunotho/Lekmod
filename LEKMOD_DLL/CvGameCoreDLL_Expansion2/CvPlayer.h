@@ -1594,6 +1594,10 @@ public:
 	const CvCity* nextCity(int* pIterIdx, bool bRev=false) const;
 	CvCity* nextCity(int* pIterIdx, bool bRev=false);
 	int getNumCities() const;
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// does the capital's religion (or its secondary pantheon) have this belief? (Kin Forged in Blood, Salt and Stars)
+	bool LekmodCapitalHasBelief(BeliefTypes eBelief) const;
+#endif
 	CvCity* getCity(int iID);
 	const CvCity* getCity(int iID) const;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)

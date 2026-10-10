@@ -787,6 +787,24 @@ void CvGameReligions::FoundPantheon(PlayerTypes ePlayer, BeliefTypes eBelief)
 	// Found it
 	m_CurrentReligions.push_back(newReligion);
 
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// Beliefs.FoundFreeUnitClass: a free unit in the capital when the pantheon is founded (The Tide's Calling: Skiff, Nelayan for Brunei)
+	{
+		CvBeliefEntry* pkFoundBelief = GC.GetGameBeliefs()->GetEntry(eBelief);
+		CvCity* pFoundCapital = kPlayer.getCapitalCity();
+		if (pkFoundBelief && pFoundCapital && pkFoundBelief->GetFoundFreeUnitClass() != -1)
+		{
+			UnitTypes eFreeUnit = (UnitTypes)kPlayer.getCivilizationInfo().getCivilizationUnits(pkFoundBelief->GetFoundFreeUnitClass());
+			if (eFreeUnit != NO_UNIT)
+			{
+				CvUnit* pFreeUnit = kPlayer.initUnit(eFreeUnit, pFoundCapital->getX(), pFoundCapital->getY());
+				if (pFreeUnit && !pFreeUnit->jumpToNearestValidPlot())
+					pFreeUnit->kill(false);
+			}
+		}
+	}
+#endif
+
 	// Update game systems
 	kPlayer.UpdateReligion();
 #ifdef AUI_CITIZENS_MID_TURN_ASSIGN_RUNS_SELF_CONSISTENCY

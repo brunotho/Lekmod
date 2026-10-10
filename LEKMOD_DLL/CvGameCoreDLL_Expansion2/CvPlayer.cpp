@@ -9665,6 +9665,11 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 	CvAssertMsg(pCity != NULL, "City is not assigned a valid value");
 	if(pCity == NULL)
 		return;
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// the capital tile's yields can depend on the number of inland cities (The Tide's Calling)
+	if (getCapitalCity() != NULL)
+		getCapitalCity()->plot()->updateYield();
+#endif
 
 	int iExtraTerritoryClaim = GetPlayerTraits()->GetExtraFoundedCityTerritoryClaimRange();
 	iExtraTerritoryClaim += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_EXTRA_TERRITORY_CLAIM); // NQMP GJS - Colonialism
@@ -26132,6 +26137,24 @@ const CvCity* CvPlayer::nextCity(int* pIterIdx, bool bRev) const
 {
 	return !bRev ? m_cities.NextIter(pIterIdx) : m_cities.PrevIter(pIterIdx);
 }
+
+//	--------------------------------------------------------------------------------
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+//	--------------------------------------------------------------------------------
+bool CvPlayer::LekmodCapitalHasBelief(BeliefTypes eBelief) const
+{
+	const CvCity* pCapital = getCapitalCity();
+	if (pCapital == NULL)
+		return false;
+	if (pCapital->GetCityReligions()->GetSecondaryReligionPantheonBelief() == eBelief)
+		return true;
+	ReligionTypes eMajority = pCapital->GetCityReligions()->GetReligiousMajority();
+	if (eMajority == NO_RELIGION)
+		return false;
+	const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eMajority, GetID());
+	return pReligion != NULL && pReligion->m_Beliefs.HasBelief(eBelief);
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvPlayer::getNumCities() const

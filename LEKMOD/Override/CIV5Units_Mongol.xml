@@ -120408,6 +120408,30 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_PILLARS_HEAVEN_SHORT">
 			<Text>Pillars of Heaven</Text>
 		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_KIN_BLOOD">
+			<Text>Clearing a barbarian encampment gives +1 [ICON_CITIZEN] Population in the capital and 30 [ICON_PEACE] Faith.[NEWLINE][NEWLINE]New military units get the [COLOR_POSITIVE_TEXT]Zealot[ENDCOLOR] promotion while this pantheon is in your capital; units keep it afterwards.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_KIN_BLOOD_SHORT">
+			<Text>Kin Forged in Blood</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_SALT_STARS">
+			<Text>+2 [ICON_PRODUCTION] Production from [ICON_RES_SALT] Salt.[NEWLINE]+1 [ICON_PEACE] Faith from [ICON_RES_FISH] Fish, [ICON_RES_WHALE] Whales, [ICON_RES_CORAL] Coral, [ICON_RES_PEARLS] Pearls and [ICON_RES_CRAB] Crabs.[NEWLINE][NEWLINE]New land units get +1 sight while embarked as long as this pantheon is in your capital; units keep it afterwards.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_SALT_STARS_SHORT">
+			<Text>Salt and Stars</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_TIDES_CALLING">
+			<Text>A coastal capital gets +1 [ICON_PEACE] Faith and +1 [ICON_GOLD] Gold on its tile for each inland city.[NEWLINE]+1 [ICON_PEACE] Faith and +1 [ICON_GOLD] Gold from [ICON_RES_STONE] Stone and [ICON_RES_WHEAT] Wheat.[NEWLINE][NEWLINE]Founding this pantheon gives a free Skiff.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_TIDES_CALLING_SHORT">
+			<Text>The Tide's Calling</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_SALT_STARS">
+			<Text>Salt and Stars</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_SALT_STARS_HELP">
+			<Text>+1 sight while embarked.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>
 		</Row>

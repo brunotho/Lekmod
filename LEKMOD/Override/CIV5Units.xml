@@ -30859,6 +30859,11 @@
 		<Column name="ImprovementYieldNeedsResource" type="boolean" default="false"/> <!-- LEKMOD: improvement yields only on tiles with a resource -->
 		<Column name="MissionaryProphetSpread" type="boolean" default="false"/> <!-- LEKMOD: missionaries spread like Great Prophets -->
 		<Column name="MissionaryExtraMoves" type="integer" default="0"/> <!-- LEKMOD: extra moves for missionaries -->
+		<Column name="NewUnitPromotion" type="text" default="NULL"/> <!-- LEKMOD: new units get this promotion while the capital has the belief -->
+		<Column name="NewUnitPromotionAllLand" type="boolean" default="false"/> <!-- LEKMOD: all land units instead of combat units -->
+		<Column name="CampClearCapitalPopulation" type="integer" default="0"/> <!-- LEKMOD: clearing a barbarian camp adds capital population -->
+		<Column name="CampClearFaith" type="integer" default="0"/> <!-- LEKMOD: clearing a barbarian camp gives Faith -->
+		<Column name="FoundFreeUnitClass" type="text" default="NULL"/> <!-- LEKMOD: free unit in the capital when the pantheon is founded -->
 		<Column name="FaithBuildingTourism" type="integer" default="0" />
 		<Column name="ObsoleteEra" type="text" default="NULL" />
 		<Column name="ResourceRevealed" type="text" default="NULL" />
@@ -31598,6 +31603,115 @@
 			<Yield>1</Yield>
 		</Row>
 	</Belief_CityConditionYieldChanges>
+	<!-- LEKMOD: pantheons Kin Forged in Blood, Salt and Stars, The Tide's Calling -->
+	<Table name="Belief_CoastalCapitalYieldPerInlandCity"> <!-- LEKMOD: yields on a coastal capital's tile per inland city -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Beliefs>
+		<Row>
+			<ID>102</ID>
+			<Type>BELIEF_LEKMOD_KIN_BLOOD</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_KIN_BLOOD</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_KIN_BLOOD_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+			<NewUnitPromotion>PROMOTION_ZEALOT</NewUnitPromotion>
+			<CampClearCapitalPopulation>1</CampClearCapitalPopulation>
+			<CampClearFaith>30</CampClearFaith>
+		</Row>
+		<Row>
+			<ID>103</ID>
+			<Type>BELIEF_LEKMOD_SALT_STARS</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_SALT_STARS</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_SALT_STARS_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+			<NewUnitPromotion>PROMOTION_LEKMOD_SALT_STARS</NewUnitPromotion>
+			<NewUnitPromotionAllLand>true</NewUnitPromotionAllLand>
+		</Row>
+		<Row>
+			<ID>104</ID>
+			<Type>BELIEF_LEKMOD_TIDES_CALLING</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_TIDES_CALLING</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_TIDES_CALLING_SHORT</ShortDescription>
+			<Pantheon>true</Pantheon>
+			<FoundFreeUnitClass>UNITCLASS_SKIFF</FoundFreeUnitClass>
+		</Row>
+	</Beliefs>
+	<Belief_ResourceYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_SALT_STARS</BeliefType>
+			<ResourceType>RESOURCE_SALT</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_SALT_STARS</BeliefType>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_SALT_STARS</BeliefType>
+			<ResourceType>RESOURCE_WHALE</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_SALT_STARS</BeliefType>
+			<ResourceType>RESOURCE_CORAL</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_SALT_STARS</BeliefType>
+			<ResourceType>RESOURCE_PEARLS</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_SALT_STARS</BeliefType>
+			<ResourceType>RESOURCE_CRAB</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_TIDES_CALLING</BeliefType>
+			<ResourceType>RESOURCE_STONE</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_TIDES_CALLING</BeliefType>
+			<ResourceType>RESOURCE_STONE</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_TIDES_CALLING</BeliefType>
+			<ResourceType>RESOURCE_WHEAT</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_TIDES_CALLING</BeliefType>
+			<ResourceType>RESOURCE_WHEAT</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_ResourceYieldChanges>
+	<Belief_CoastalCapitalYieldPerInlandCity>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_TIDES_CALLING</BeliefType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_TIDES_CALLING</BeliefType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_CoastalCapitalYieldPerInlandCity>
 	<!-- LEKMOD: Phase 3 new pantheons (data only) -->
 	<Beliefs>
 		<Row>
@@ -254741,6 +254855,19 @@
 			<CannotBeChosen>true</CannotBeChosen>
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_SPACESHIP_PART</PediaEntry>
+		</Row>
+		<Row>
+			<ID>378</ID>
+			<Type>PROMOTION_LEKMOD_SALT_STARS</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_SALT_STARS</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_SALT_STARS_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<EmbarkExtraVisibility>1</EmbarkExtraVisibility>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_SALT_STARS</PediaEntry>
 		</Row>
 	</UnitPromotions>
 

@@ -160,7 +160,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
 - (optional) Lua UI displays it, and the Lua logic matches the data
 
 ## 4. Data conventions and gotchas
-- **Promotion IDs are explicit** (`<ID>`). Every row in the `UnitPromotions` section has one. New rows get the next unused ID: currently up to **377**. v35.4 uses IDs up to 343; ours are 344–377. Upstream's IDs already have gaps (e.g. 271–273), which is fine. Check uniqueness *within the section*, since other tables reuse the same numbers.
+- **Promotion IDs are explicit** (`<ID>`). Every row in the `UnitPromotions` section has one. New rows get the next unused ID: currently up to **378**. v35.4 uses IDs up to 343; ours are 344–378. Upstream's IDs already have gaps (e.g. 271–273), which is fine. Check uniqueness *within the section*, since other tables reuse the same numbers.
 - **Line endings differ per file; check before scripting.** The repo stores LF; in the `lek` working copy most C++ and Lua templates are CRLF, while **both Override XML files**, `_Defines.h`, `changelog.txt` and `CLAUDE.md` are LF (verified 2026-10-08 with byte counts; an earlier note here said the Override files were CRLF, which was wrong). The game reads either.
   - Prefer the Edit tool, which keeps a file's endings.
   - When scripting, read and write **bytes** and match the file's ending. Count with Python (`b.count(b'\r\n')`); `grep -c $'\r'` in Git Bash gave wrong answers.

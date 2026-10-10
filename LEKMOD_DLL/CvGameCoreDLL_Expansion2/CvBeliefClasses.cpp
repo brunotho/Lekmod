@@ -90,6 +90,13 @@ CvBeliefEntry::CvBeliefEntry() :
 #ifdef LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
 	m_bLekmodImprovementYieldNeedsResource(false),
 #endif
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	m_iLekmodNewUnitPromotion(-1),
+	m_bLekmodNewUnitPromotionAllLand(false),
+	m_iLekmodCampClearCapitalPopulation(0),
+	m_iLekmodCampClearFaith(0),
+	m_iLekmodFoundFreeUnitClass(-1),
+#endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	m_bLekmodMissionaryProphetSpread(false),
 	m_iLekmodMissionaryExtraMoves(0),
@@ -936,6 +943,28 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iInquisitorPressureRetention    = kResults.GetInt("InquisitorPressureRetention");
 #ifdef LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
 	m_bLekmodImprovementYieldNeedsResource = kResults.GetBool("ImprovementYieldNeedsResource");
+#endif
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	m_iLekmodNewUnitPromotion = GC.getInfoTypeForString(kResults.GetText("NewUnitPromotion"), true);
+	m_bLekmodNewUnitPromotionAllLand = kResults.GetBool("NewUnitPromotionAllLand");
+	m_iLekmodCampClearCapitalPopulation = kResults.GetInt("CampClearCapitalPopulation");
+	m_iLekmodCampClearFaith = kResults.GetInt("CampClearFaith");
+	m_iLekmodFoundFreeUnitClass = GC.getInfoTypeForString(kResults.GetText("FoundFreeUnitClass"), true);
+	for (int iY = 0; iY < NUM_YIELD_TYPES; iY++)
+		m_aiLekmodCoastalCapitalYieldPerInlandCity[iY] = 0;
+	{
+		std::string strKey("Belief_CoastalCapitalYieldPerInlandCity");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select Yields.ID, Yield from Belief_CoastalCapitalYieldPerInlandCity inner join Yields on Yields.Type = YieldType where BeliefType = ?");
+		pResults->Bind(1, GetType());
+		while (pResults->Step())
+		{
+			const int iYieldID = pResults->GetInt(0);
+			if (iYieldID >= 0 && iYieldID < NUM_YIELD_TYPES)
+				m_aiLekmodCoastalCapitalYieldPerInlandCity[iYieldID] = pResults->GetInt(1);
+		}
+	}
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	m_bLekmodMissionaryProphetSpread = kResults.GetBool("MissionaryProphetSpread");

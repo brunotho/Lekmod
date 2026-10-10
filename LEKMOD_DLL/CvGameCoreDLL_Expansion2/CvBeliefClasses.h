@@ -104,6 +104,14 @@ public:
 	const std::vector<LekmodRow>& GetLekmodImprovementBuildingYields() const { return m_aLekmodImprovementBuildingYields; }	// Improvement, BuildingClass, Yield, Yield
 	const std::vector<LekmodRow>& GetLekmodCityConditionYields() const { return m_aLekmodCityConditionYields; }	// Condition (0 no fresh water, 1 next to a mountain), Yield, -, Yield
 #endif
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	int GetNewUnitPromotion() const { return m_iLekmodNewUnitPromotion; }
+	bool IsNewUnitPromotionAllLand() const { return m_bLekmodNewUnitPromotionAllLand; }
+	int GetCampClearCapitalPopulation() const { return m_iLekmodCampClearCapitalPopulation; }
+	int GetCampClearFaith() const { return m_iLekmodCampClearFaith; }
+	int GetFoundFreeUnitClass() const { return m_iLekmodFoundFreeUnitClass; }
+	int GetCoastalCapitalYieldPerInlandCity(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiLekmodCoastalCapitalYieldPerInlandCity[i] : 0; }
+#endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	bool IsMissionaryProphetSpread() const { return m_bLekmodMissionaryProphetSpread; }
 	int GetMissionaryExtraMoves() const { return m_iLekmodMissionaryExtraMoves; }
@@ -330,6 +338,14 @@ protected:
 	std::vector<LekmodRow> m_aLekmodFlatOpenTerrainYields;
 	std::vector<LekmodRow> m_aLekmodImprovementBuildingYields;
 	std::vector<LekmodRow> m_aLekmodCityConditionYields;
+#endif
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	int m_iLekmodNewUnitPromotion;
+	bool m_bLekmodNewUnitPromotionAllLand;
+	int m_iLekmodCampClearCapitalPopulation;
+	int m_iLekmodCampClearFaith;
+	int m_iLekmodFoundFreeUnitClass;
+	int m_aiLekmodCoastalCapitalYieldPerInlandCity[NUM_YIELD_TYPES];
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	bool m_bLekmodMissionaryProphetSpread;

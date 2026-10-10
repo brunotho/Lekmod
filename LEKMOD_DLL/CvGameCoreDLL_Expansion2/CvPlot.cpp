@@ -8555,6 +8555,26 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 	}
 #endif
 
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// Belief_CoastalCapitalYieldPerInlandCity: the coastal capital's tile gets yields per inland city (The Tide's Calling)
+	if (pWorkingCity != NULL && pWorkingCity->plot() == this && pWorkingCity->isCapital() && pWorkingCity->isCoastal())
+	{
+		CvPlayer& kCapitalOwner = GET_PLAYER(pWorkingCity->getOwner());
+		CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+		for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+		{
+			CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+			if (pkBelief == NULL || pkBelief->GetCoastalCapitalYieldPerInlandCity(eYield) == 0 || !kCapitalOwner.LekmodCapitalHasBelief((BeliefTypes)iBelief))
+				continue;
+			int iInland = 0;
+			int iCityLoop;
+			for (CvCity* pLoopCity = kCapitalOwner.firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = kCapitalOwner.nextCity(&iCityLoop))
+				if (!pLoopCity->isCoastal())
+					iInland++;
+			iYield += iInland * pkBelief->GetCoastalCapitalYieldPerInlandCity(eYield);
+		}
+	}
+#endif
 	// GJS - this was moved after the Feature terrain yield replacement if statement (just above this) to allow yield changes from religion based on terrain with replacement features
 	// Extra yield for religion on this terrain
 	if(pWorkingCity != NULL && eMajority != NO_RELIGION && !isMountain())

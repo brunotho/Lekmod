@@ -1328,3 +1328,13 @@ Tags: religion
 - Added: pantheon Pillars of Heaven: +3 Faith and +1 Food in cities next to a Mountain
 - DLL: Belief_CityConditionYieldChanges (Condition NO_FRESH_WATER / ADJACENT_MOUNTAIN; LEKMOD_BELIEF_EXTRA_TABLES); belief IDs 100-101
 
+KIN FORGED IN BLOOD, SALT AND STARS, THE TIDE'S CALLING (BELIEF_LEKMOD_KIN_BLOOD, BELIEF_LEKMOD_SALT_STARS, BELIEF_LEKMOD_TIDES_CALLING)
+-----------------------------------------------------------------------------------------------------------------------------------
+Tags: religion
+Three new pantheons.
+- Added: Kin Forged in Blood: clearing a barbarian encampment gives +1 Population in the capital and 30 Faith; new military units get Zealot while the pantheon is in your capital (units keep it afterwards)
+- Added: Salt and Stars: +2 Production from Salt; +1 Faith from Fish, Whales, Coral, Pearls and Crabs; new land units get +1 sight while embarked while the pantheon is in your capital (units keep it afterwards)
+- Added: The Tide's Calling: a coastal capital gets +1 Faith and +1 Gold on its tile per inland city; +1 Faith and +1 Gold from Stone and Wheat; founding it gives a free Skiff (Brunei: Nelayan)
+- Note: "in your capital" means the capital follows a religion with this pantheon, or has it as its own pantheon
+- DLL: Beliefs.NewUnitPromotion/NewUnitPromotionAllLand/CampClearCapitalPopulation/CampClearFaith/FoundFreeUnitClass, Belief_CoastalCapitalYieldPerInlandCity (LEKMOD_CAPITAL_PANTHEON_EFFECTS); belief IDs 102-104; promotion 378 PROMOTION_LEKMOD_SALT_STARS
+

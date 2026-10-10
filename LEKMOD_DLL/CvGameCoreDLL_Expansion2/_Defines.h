@@ -1457,6 +1457,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_JUST_WAR_MISSIONARIES
 // Belief_BuildingClassFreeUnits (Grand Temple: Choral Music, Religious Center), Belief_FlatOpenTerrainYieldChanges (Dance of the Aurora), Belief_ImprovementBuildingYieldChanges (Ocean's Bounty)
 #define LEKMOD_BELIEF_EXTRA_TABLES
+// Beliefs.NewUnitPromotion/NewUnitPromotionAllLand and CampClearCapitalPopulation/CampClearFaith, active while the capital has the belief (Kin Forged in Blood, Salt and Stars)
+#define LEKMOD_CAPITAL_PANTHEON_EFFECTS
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5
