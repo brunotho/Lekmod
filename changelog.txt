@@ -1195,7 +1195,7 @@ Several buildings cost more or less to build and keep.
 - Added: Bomb Shelter: military units (planes too) in the city take only 50 damage from a nuclear attack
 - Changed: Stadium: cost 335 -> 284, 5 Gold maintenance (was 2)
 - Changed: Factory: cost 241 -> 260 (Faith cost with Work Ethic too), needs 2 Coal (was 1) and 1 Iron
-- Changed: Prussian Factory: cost 181 -> 195 (Faith 144 -> 156), now needs 2 Coal and 1 Iron (needed none)
+- Changed: Prussian Factory: cost 180 -> 195 (Faith 144 -> 156), now needs 2 Coal and 1 Iron (needed none)
 - Changed: Chilean Cooperative: cost 241 -> 260 (Faith too), needs 2 Coal (was 1) and 1 Iron
 - Note: the Swiss Ski Resort (Stadium replacement) keeps its cost
 - DLL: Buildings.NukeUnitDamageFixed (LEKMOD_DEFENSE_BUILDINGS); a GDR's Nuke Resistance (20) still wins when lower
