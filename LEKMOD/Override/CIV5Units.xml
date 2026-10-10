@@ -276180,7 +276180,6 @@
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
 			<PrereqTech>TECH_AGRICULTURE</PrereqTech>
-			<ObsoleteTech>TECH_EDUCATION</ObsoleteTech>
 			<AdvancedStartCost>10</AdvancedStartCost>
 			<MinAreaSize>6</MinAreaSize>
 			<NukeDamageLevel>-1</NukeDamageLevel>
@@ -276216,7 +276215,6 @@
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
 			<PrereqTech>TECH_AGRICULTURE</PrereqTech>
-			<ObsoleteTech>TECH_EDUCATION</ObsoleteTech>
 			<AdvancedStartCost>10</AdvancedStartCost>
 			<MinAreaSize>6</MinAreaSize>
 			<NukeDamageLevel>-1</NukeDamageLevel>

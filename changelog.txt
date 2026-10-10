@@ -1053,10 +1053,10 @@ SKIFF (UNIT_SKIFF)
 ------------------
 Tags: units, naval
 A new early scouting boat that can also place Fishing Boats and Pontoon Bridges.
-- Added: Skiff: available from the start (Agriculture), obsolete with Education, 21 Production, 3 Combat Strength, 3 movement, 2 sight
+- Added: Skiff: available from the start (Agriculture), never obsolete, 21 Production, 3 Combat Strength, 3 movement, 2 sight
 - Added: it gets the same promotions as the Scout and cannot be gifted to City-States
 - Added: with Sailing it can build Fishing Boats, with Construction a Pontoon Bridge; the improvement is finished at once and the Skiff is used up
-- Added: it cannot enter Ocean tiles (like the Work Boat before Astronomy)
+- Added: it cannot enter Ocean tiles before Astronomy (like the Work Boat)
 - Note: it uses the Work Boat's look; the user chose Fishing Boats only with Sailing, as for the Work Boat
 - DLL: LEKMOD_SKIFF (gift check, both gift functions)
 
