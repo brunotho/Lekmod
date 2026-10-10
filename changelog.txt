@@ -1025,7 +1025,7 @@ GIANT DEATH ROBOT (UNIT_MECH, PROMOTION_NUKE_RESISTANCE)
 --------------------------------------------------------
 Tags: units, combat, promotions
 The Giant Death Robot is weaker but gets a set of combat promotions, and nukes can hurt it.
-- Changed: 190 Strength (was 240), cost 402 (was 335)
+- Changed: 190 Strength (was 240), cost 482 (was 402)
 - Removed: it no longer intercepts aircraft
 - Changed: Nuke Resistance instead of nuke immunity: nuclear weapons deal it 20 damage, wherever it stands (also in the blast center and in cities)
 - Added: starts with Fear Aura, Charge, Armor Plating I and Repair
