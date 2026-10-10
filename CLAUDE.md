@@ -240,6 +240,7 @@ Set-Location C:\Users\bbruno\civ-tools\lek
   - `Lua.log`: Lua errors and `print()` output. Pre-existing noise: Lekmap `FeatureGenerator` and `Demographics.lua manyinclude` errors.
   - `GameCore.log`: DLL load problems.
   - `stopwatch.log`: load phases.
+- **Crash dumps (2026-10-10, worked):** a crash writes `CvMiniDump_<date>_LEKMOD.dmp` into the game folder. `pip install minidump pefile`; read the exception address and module (offset into `CvGameCore_Expansion2.dll`). The release build has no PDB/map, but relinking the existing objects with `/MAP` reproduces an identical `.text` section: scratchpad script `relink.py` (takes the link command from `BuildTemp/.../BuildLog.htm`, runs `link.exe` from the project dir via `vcvars32.bat`), then map the offset and scan the crashed thread's stack for return addresses into the DLL (`stackscan.py`). Do this right after a build, before the objects change.
 - **Lua diagnostic trick:** add a temporary `print("TAG", ...)` to a UI script that runs at the right moment (e.g. `GoodyHutPopup.lua`), have the user trigger it in game, then `grep TAG Lua.log`. Back up the file first, and remove the print afterwards.
 - For gameplay checks, give the user **concrete expected values** (formulas → numbers) to compare against, then cross-check the database and logs yourself.
 
