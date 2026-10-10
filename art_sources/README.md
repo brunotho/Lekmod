@@ -8,7 +8,7 @@ game files. It is not part of the mod download (players only get `LEKMOD/`). The
 
 | Path | What |
 |---|---|
-| `promotions/manifest.csv` | One line per custom promotion icon: name, source file, symbol size (`scale`), notes. **The single place to look up where an icon comes from.** |
+| `promotions/manifest.csv` | One line per custom promotion icon: name, source file, symbol size (`scale`), `key` (`border` or `all`, see step 2), notes. **The single place to look up where an icon comes from.** |
 | `promotions/original_ai_2026-04/` | The April 2026 AI-made icons (256 px, opaque dark background), recovered from git (`fde09fce^`). Amphibious I-III here are superseded by the user art. |
 | `promotions/user_art/` | Art the user supplied later: Envelopment and Bunker Busting (2026-10-05, 256 px), Sitting Ducks (64 px), Amphibious I-III and Nuke Resistance (45 px PNG, 2026-10-10). |
 | `promotions/superseded/` | Earlier user versions that were replaced (kept for reference). |
@@ -31,7 +31,7 @@ e.g. `LEKMOD_NUKE_RESISTANCE_PROMOTION_ATLAS`) and the promotion's `IconAtlas`/`
 
 ### Pipeline steps and why
 1. **Upscale the source to 256 px.** Sources come in 45, 64 or 256 px. A small source makes the 256 px (Civilopedia) image soft; ask for 256 px or larger art when possible.
-2. **Key out the background** (`reshape_icons.reshape`): only background **connected to the image border** becomes transparent, so dark details inside the glyph (eye patch, the shield's inside) stay. The glyph test is "max(R,G) > 90" (gold); edges get a soft alpha.
+2. **Key out the background** (`reshape_icons.reshape`): only background **connected to the image border** becomes transparent, so dark details inside the glyph (eye patch, skull eyes) stay. With `key=all` in the manifest, enclosed dark areas are cleared too (outline shapes, e.g. the Nuke Resistance shield, whose inside would otherwise show as a dark patch on the 32 px tile). The glyph test is "max(R,G) > 90" (gold); edges get a soft alpha.
 3. **Crop and fit the glyph** to `scale` x 256 px (0.72 normally, leaves room for the round frame). Nuke Resistance uses 0.80 because its trefoil detail was lost at 0.72.
 4. **Even out the gold**: the AI art had baked-in lighting (bright top-left, darker orange right/bottom), which looked thin and weak on the right at 64 px. Gold/orange pixels (hue 25-60 deg, saturated) are lifted to the same brightness (V 0.97, hue at least 42 deg); dark details are untouched.
 5. **Shift 8 px right** (2 px at 64 px): in the promotion choice the icons looked 1-2 px too far left.

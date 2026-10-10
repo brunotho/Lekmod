@@ -7,7 +7,8 @@ Needs Pillow and texconv.exe (civ-tools\texconv.exe, or set TEXCONV).
 
 Pipeline (see art_sources/README.md for the reasons behind each step):
  1. load the source (any size), upscale to 256 px
- 2. key out the background: only background connected to the border becomes transparent (reshape_icons.reshape)
+ 2. key out the background: only background connected to the border becomes transparent (reshape_icons.reshape);
+    manifest column key=all also clears enclosed dark areas (outline shapes such as the Nuke Resistance shield)
  3. crop to the glyph and fit it into <scale> of the 256 px canvas (0.72 normally), centred
  4. even out the baked-in lighting: gold/orange pixels get the same bright gold, dark details stay
  5. shift the glyph 8 px right (2 px at 64 px, where the promotion choice looked off-centre)
@@ -29,9 +30,22 @@ SHIFT_X = 8          # at 256 px
 TILE = (4, 5, 27, 28)  # 32 px tile box
 
 
-def key_out(src, scale):
+def key_dark_everywhere(im):
+    """Also clear enclosed dark areas (e.g. the inside of an outline shield): same alpha ramp as reshape_icons."""
+    px = im.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            r, g, b, a = px[x, y]
+            if max(r, g) <= 90:
+                px[x, y] = (r, g, b, min(a, max(0, min(255, (max(r, g) - 60) * 255 // 30))))
+    return im
+
+
+def key_out(src, scale, key='border'):
     im = src.convert('RGBA').resize((256, 256), Image.LANCZOS)
     glyph = reshape_icons.reshape(im)                       # transparent background, glyph at 72%
+    if key == 'all':
+        glyph = key_dark_everywhere(glyph)
     glyph = glyph.crop(glyph.getchannel('A').point(lambda v: 255 if v > 40 else 0).getbbox())
     s = int(256 * scale)
     glyph.thumbnail((s, s), Image.LANCZOS)
@@ -88,7 +102,7 @@ def write(im, name, fmt, mips, tmp):
 
 def build(row, tmp):
     src = Image.open(os.path.join(SRC_DIR, row['source']))
-    icon = shift(even(key_out(src, float(row['scale']))), SHIFT_X)
+    icon = shift(even(key_out(src, float(row['scale']), row.get('key') or 'border')), SHIFT_X)
     n = row['name']
     write(icon, n + '_256', 'BC3_UNORM', 0, tmp)
     for sz in (64, 45):
@@ -108,7 +122,7 @@ def main(argv):
     icons = []
     for r in rows:
         if preview:
-            icons.append(shift(even(key_out(Image.open(os.path.join(SRC_DIR, r['source'])), float(r['scale']))), SHIFT_X))
+            icons.append(shift(even(key_out(Image.open(os.path.join(SRC_DIR, r['source'])), float(r['scale']), r.get('key') or 'border')), SHIFT_X))
         else:
             icons.append(build(r, tmp))
             print('built', r['name'])
