@@ -1375,3 +1375,11 @@ The screen for founding and enhancing a religion fits long beliefs.
 - Changed: belief texts put separate effects on separate lines
 - Dev: ChooseReligionPopup.lua/.xml are now Lekmod overrides (Lua/tmp/ui/Religion, copied by ui_check.bat for both UIs)
 
+SANCTUARIES, STUPAS (BELIEF_LEKMOD_SANCTUARY, BELIEF_LEKMOD_STUPA)
+----------------------------------------------------------------
+Tags: religion, buildings
+Two new follower beliefs with their own buildings.
+- Added: Sanctuaries: buy Sanctuaries with 220 Faith (+2 Happiness, +2 Culture)
+- Added: Stupas: buy Stupas with 100 Faith (+2 Food, +1 Happiness)
+- Note: belief IDs 111-112, buildings 273-274 (classes 180-181); icons from the user (art_sources/buildings), 32 and 80 px sizes scaled from 256
+

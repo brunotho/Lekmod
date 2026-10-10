@@ -32079,6 +32079,33 @@
 			<Yield>1</Yield>
 		</Row>
 	</Belief_ResourceYieldChanges>
+	<!-- LEKMOD: follower beliefs Sanctuary, Stupa -->
+	<Beliefs>
+		<Row>
+			<ID>111</ID>
+			<Type>BELIEF_LEKMOD_SANCTUARY</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_SANCTUARY</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_SANCTUARY_SHORT</ShortDescription>
+			<Follower>true</Follower>
+		</Row>
+		<Row>
+			<ID>112</ID>
+			<Type>BELIEF_LEKMOD_STUPA</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_STUPA</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_STUPA_SHORT</ShortDescription>
+			<Follower>true</Follower>
+		</Row>
+	</Beliefs>
+	<Belief_BuildingClassFaithPurchase>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_SANCTUARY</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_LEKMOD_SANCTUARY</BuildingClassType>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_STUPA</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_LEKMOD_STUPA</BuildingClassType>
+		</Row>
+	</Belief_BuildingClassFaithPurchase>
 	<!-- LEKMOD: Phase 3 new pantheons (data only) -->
 	<Beliefs>
 		<Row>
@@ -35598,6 +35625,24 @@
 			<Type>BUILDINGCLASS_LEKMOD_FIRST_BORN</Type>
 			<Description>TXT_KEY_BELIEF_LEKMOD_FIRST_BORN_SHORT</Description>
 			<DefaultBuilding>BUILDING_LEKMOD_FIRST_BORN</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+		</Row>
+		<Row>
+			<ID>180</ID>
+			<Type>BUILDINGCLASS_LEKMOD_SANCTUARY</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_SANCTUARY</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_SANCTUARY</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+		</Row>
+		<Row>
+			<ID>181</ID>
+			<Type>BUILDINGCLASS_LEKMOD_STUPA</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_STUPA</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_STUPA</DefaultBuilding>
 			<MaxGlobalInstances>-1</MaxGlobalInstances>
 			<MaxTeamInstances>-1</MaxTeamInstances>
 			<MaxPlayerInstances>-1</MaxPlayerInstances>
@@ -48547,6 +48592,43 @@
 			<PortraitIndex>9</PortraitIndex>
 			<IconAtlas>EXPANSION_BW_ATLAS_1</IconAtlas>
 		</Row>
+		<!-- LEKMOD: follower-belief buildings -->
+		<Row>
+			<ID>273</ID>
+			<Type>BUILDING_LEKMOD_SANCTUARY</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_SANCTUARY</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_SANCTUARY</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_SANCTUARY_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_SANCTUARY_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_SANCTUARY_HELP</Help>
+			<IsReligious>true</IsReligious>
+			<Cost>-1</Cost>
+			<FaithCost>330</FaithCost>
+			<UnlockedByBelief>true</UnlockedByBelief>
+			<ConquestProb>100</ConquestProb>
+			<Happiness>2</Happiness>
+			<ArtDefineTag>TEMPLE</ArtDefineTag>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_SANCTUARY_ATLAS</IconAtlas>
+		</Row>
+		<Row>
+			<ID>274</ID>
+			<Type>BUILDING_LEKMOD_STUPA</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_STUPA</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_STUPA</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_STUPA_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_STUPA_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_STUPA_HELP</Help>
+			<IsReligious>true</IsReligious>
+			<Cost>-1</Cost>
+			<FaithCost>150</FaithCost>
+			<UnlockedByBelief>true</UnlockedByBelief>
+			<ConquestProb>100</ConquestProb>
+			<Happiness>1</Happiness>
+			<ArtDefineTag>TEMPLE</ArtDefineTag>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_STUPA_ATLAS</IconAtlas>
+		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
 	<Buildings>
@@ -49354,6 +49436,18 @@
 			<Yield>2</Yield>
 		</Row>
 	</Building_TerrainYieldChanges>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SANCTUARY</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_STUPA</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
 	<!-- LEKMOD: belief-related building data (after all building rows and wipes): Rite of the First-Born yields; Jesuit Education / Work Ethic Faith cost = 130% of Production -->
 	<Building_YieldChanges>
 		<Row>
@@ -137614,6 +137708,90 @@
 			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
 			<IconSize>256</IconSize>
 			<Filename>uranium_mapping_project_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SANCTUARY_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>sanctuary_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SANCTUARY_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>sanctuary_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SANCTUARY_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>sanctuary_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SANCTUARY_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>sanctuary_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SANCTUARY_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>sanctuary_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SANCTUARY_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>sanctuary_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_STUPA_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>stupa_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_STUPA_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>stupa_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_STUPA_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>stupa_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_STUPA_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>stupa_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_STUPA_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>stupa_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_STUPA_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>stupa_256.dds</Filename>
 			<IconsPerRow>1</IconsPerRow>
 			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
