@@ -508,6 +508,10 @@ public:
 	void setNumResource(int iNum);
 	void changeNumResource(int iChange);
 	int getNumResourceForPlayer(PlayerTypes ePlayer) const;
+#ifdef LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION
+	// eImprovement: the improvement that connects the resource (setImprovementType removes the old one's resources after the swap)
+	int getNumResourceForPlayer(PlayerTypes ePlayer, ImprovementTypes eImprovement) const;
+#endif
 #ifdef LEKMOD_PRESERVE_UNDISCOVERED_RESOURCES_ON_REMOVE_IMPROVEMENT
 	bool DoesImprovementConnectResource(ResourceTypes eResource) const;
 #endif

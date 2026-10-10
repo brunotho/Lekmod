@@ -1003,6 +1003,13 @@ Drydocks work like naval Citadels; Repair Fleet heals less.
 - Fixed: the Drydock's Civilopedia page showed the Manufactory's text
 - DLL: LEKMOD_REPAIR_FLEET_HP 25 (CvUnit::repairFleet)
 
+GREAT MERCHANT: CUSTOMS HOUSE (IMPROVEMENT_CUSTOMS_HOUSE)
+--------------------------------------------------------
+Tags: units, game mechanics
+A Customs House on a strategic resource gives more of it.
+- Added: a Customs House built on a strategic resource gives 50% more of it (rounded down; e.g. 13 instead of 9 Iron)
+- DLL: Improvements.ResourceExtractionMod is now read for strategic resources (LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION); setImprovementType removes the old improvement's amount with that improvement's modifier
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

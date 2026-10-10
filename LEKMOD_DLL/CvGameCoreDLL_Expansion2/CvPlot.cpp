@@ -6880,7 +6880,16 @@ void CvPlot::changeNumResource(int iChange)
 }
 
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION
 int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
+{
+	return getNumResourceForPlayer(ePlayer, getImprovementType());
+}
+
+int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer, ImprovementTypes eImprovement) const
+#else
+int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
+#endif
 {
 	int iRtnValue = m_iResourceNum;
 
@@ -6898,6 +6907,15 @@ int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
 					int iQuantityMod = GET_PLAYER(ePlayer).GetPlayerTraits()->GetStrategicResourceQuantityModifier(getTerrainType());
 					iRtnValue *= 100 + iQuantityMod;
 					iRtnValue /= 100;
+#ifdef LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION
+					// Improvements with ResourceExtractionMod (Customs House) give more of a strategic resource
+					CvImprovementEntry* pkExtractionImprovement = (eImprovement != NO_IMPROVEMENT) ? GC.getImprovementInfo(eImprovement) : NULL;
+					if (pkExtractionImprovement != NULL && pkExtractionImprovement->GetResourceExtractionMod() != 0)
+					{
+						iRtnValue *= 100 + pkExtractionImprovement->GetResourceExtractionMod();
+						iRtnValue /= 100;
+					}
+#endif
 				}
 
 				else if(pkResource->getResourceUsage() == RESOURCEUSAGE_LUXURY)
@@ -7331,7 +7349,11 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue, PlayerTypes eBuilder
 					{
 						if(GC.getImprovementInfo(eOldImprovement)->IsImprovementResourceTrade(getResourceType()))
 						{
+#ifdef LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION
+							owningPlayer.changeNumResourceTotal(getResourceType(), -getNumResourceForPlayer(owningPlayerID, eOldImprovement));
+#else
 							owningPlayer.changeNumResourceTotal(getResourceType(), -getNumResourceForPlayer(owningPlayerID));
+#endif
 
 							// Disconnect resource link
 							if(GetResourceLinkedCity() != NULL)

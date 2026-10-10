@@ -139084,6 +139084,7 @@
 			<Civilopedia>TXT_KEY_CIV5_IMPROVEMENTS_CUSTOMS_HOUSE_TEXT</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_CUSTOMS_HOUSE</ArtDefineTag>
 			<BuildableOnResources>true</BuildableOnResources>
+			<ResourceExtractionMod>50</ResourceExtractionMod>
 			<CreatedByGreatPerson>true</CreatedByGreatPerson>
 			<PillageGold>20</PillageGold>
 			<PortraitIndex>33</PortraitIndex>

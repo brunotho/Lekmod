@@ -1424,6 +1424,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_CITADEL_NAVAL_ZOC
 // Great Admiral's Repair Fleet heals this many HP instead of fully (CvUnit::repairFleet)
 #define LEKMOD_REPAIR_FLEET_HP 25
+// Improvements.ResourceExtractionMod (unused base column): % more of a strategic resource the improvement connects (Customs House 50)
+#define LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

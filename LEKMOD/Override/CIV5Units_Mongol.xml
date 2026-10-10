@@ -44897,10 +44897,8 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 				Resource Accessed
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_CUSTOMS_HOUSE_TEXT"> 
-			<Text>
-				A Customs House is a governmental building where taxes are paid on a country's imported and exported goods. It ensures that the government gets its cut (or "fair share," if you prefer) of profits on every cargo moving through a harbor. Given the amount of money involved, the opportunity for corruption is unlimited. Throughout history customs officials have not been famous for resisting temptation.
-			</Text>
+		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_CUSTOMS_HOUSE_TEXT">
+			<Text>Built by a Great Merchant inside your territory (the Great Merchant is consumed).[NEWLINE][NEWLINE]Yields 4 [ICON_GOLD] Gold, +4 [ICON_GOLD] Gold with Economics.[NEWLINE][NEWLINE]Built on a strategic resource, it connects the resource and gives 50% more of it (rounded down; e.g. 13 instead of 9 Iron).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_ENCAMPMENT"> 
 			<Text>
