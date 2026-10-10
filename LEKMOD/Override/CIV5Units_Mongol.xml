@@ -120360,6 +120360,42 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT_PEDIA">
 			<Text>National Wonder, available with Plastics.[NEWLINE][NEWLINE]Reveals all [ICON_RES_URANIUM] Uranium on the map for your team, as Atomic Theory does. Mining and using it still needs Atomic Theory.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_MIDAS_TOUCH">
+			<Text>+1 [ICON_GOLD] Gold from all Luxury resources.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_MIDAS_TOUCH_SHORT">
+			<Text>Midas Touch</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NECTAR_GODS">
+			<Text>+1 [ICON_FOOD] Food and +1 [ICON_GOLD] Gold from [ICON_RES_WINE] Wine, [ICON_RES_SUGAR] Sugar and [ICON_RES_SPICES] Spices.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_NECTAR_GODS_SHORT">
+			<Text>Nectar of the Gods</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SONGS_LEVIATHAN">
+			<Text>+2 [ICON_PEACE] Faith from [ICON_RES_WHALE] Whales.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SONGS_LEVIATHAN_SHORT">
+			<Text>Songs of the Leviathan</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_HARVEST_CONFLUENCE">
+			<Text>+2 [ICON_GOLD] Gold from [ICON_RES_CRAB] Crabs, [ICON_RES_WHEAT] Wheat, [ICON_RES_BANANA] Bananas and [ICON_RES_COW] Cattle.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_HARVEST_CONFLUENCE_SHORT">
+			<Text>Harvest Confluence</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SACRED_CRAFTWORK">
+			<Text>+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from [ICON_RES_HARDWOOD] Hardwood.[NEWLINE]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Forests[ENDCOLOR], [ICON_RES_CORAL] Coral and [ICON_RES_PEARLS] Pearls.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SACRED_CRAFTWORK_SHORT">
+			<Text>Sacred Craftwork</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_OFFERING_PLENTY">
+			<Text>+1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith from [ICON_RES_FISH] Fish, [ICON_RES_WHEAT] Wheat, [ICON_BUILDING_GRANARY] Granaries and [ICON_BUILDING_LIGHTHOUSE] Lighthouses.[NEWLINE]Granaries and Lighthouses yield -1 [ICON_FOOD] Food.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_OFFERING_PLENTY_SHORT">
+			<Text>Offering of Plenty</Text>
+		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>
 		</Row>

@@ -1309,3 +1309,15 @@ Tags: religion
 - Note: the Grand Temple units come from the religion the player founded
 - DLL: Beliefs.MissionaryProphetSpread/MissionaryExtraMoves (LEKMOD_JUST_WAR_MISSIONARIES); Belief_BuildingClassFreeUnits, Belief_FlatOpenTerrainYieldChanges, Belief_ImprovementBuildingYieldChanges (LEKMOD_BELIEF_EXTRA_TABLES)
 
+NEW PANTHEONS: MIDAS TOUCH, NECTAR OF THE GODS, SONGS OF THE LEVIATHAN, HARVEST CONFLUENCE, SACRED CRAFTWORK, OFFERING OF PLENTY
+--------------------------------------------------------------------------------------------------------------------------------
+Tags: religion
+Six new pantheons.
+- Added: Midas Touch: +1 Gold from all Luxury resources
+- Added: Nectar of the Gods: +1 Food and +1 Gold from Wine, Sugar and Spices
+- Added: Songs of the Leviathan: +2 Faith from Whales
+- Added: Harvest Confluence: +2 Gold from Crabs, Wheat, Bananas and Cattle
+- Added: Sacred Craftwork: +1 Production and +1 Culture from Hardwood; +1 Faith from Forests, Coral and Pearls
+- Added: Offering of Plenty: +1 Culture and +1 Faith from Fish, Wheat, Granaries and Lighthouses; Granaries and Lighthouses -1 Food
+- Note: belief IDs 94-99 (BELIEF_LEKMOD_MIDAS_TOUCH, _NECTAR_GODS, _SONGS_LEVIATHAN, _HARVEST_CONFLUENCE, _SACRED_CRAFTWORK, _OFFERING_PLENTY)
+
