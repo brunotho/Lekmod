@@ -460,6 +460,9 @@ function RefreshExistingBeliefs()
         Controls.EnhancerLock:SetHide(false);
 	end
 
+	-- LEKMOD: the Bonus belief row only shows for civs that can pick one (Byzantium); the base game showed it locked to everyone
+	Controls.BonusBeliefButton:SetHide(not pPlayer:IsTraitBonusReligiousBelief());
+	Controls.LekmodBonusBar:SetHide(not pPlayer:IsTraitBonusReligiousBelief());
 	if (pPlayer:IsTraitBonusReligiousBelief()) then
 		if (not pPlayer:HasCreatedReligion()) then
 			Controls.BonusBeliefButton:RegisterCallback(Mouse.eLClick, OnBonusBeliefClick);

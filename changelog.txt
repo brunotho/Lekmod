@@ -1332,7 +1332,7 @@ KIN FORGED IN BLOOD, SALT AND STARS, THE TIDE'S CALLING (BELIEF_LEKMOD_KIN_BLOOD
 -----------------------------------------------------------------------------------------------------------------------------------
 Tags: religion
 Three new pantheons.
-- Added: Kin Forged in Blood: clearing a barbarian encampment gives +1 Population in the capital and 30 Faith; new military units get Zealot while the pantheon is in your capital (units keep it afterwards)
+- Added: Kin Forged in Blood: clearing a barbarian encampment gives +1 Population in the capital and 30 Faith (shown over the camp); new military units get Zealot while the pantheon is in your capital (units keep it afterwards)
 - Added: Salt and Stars: +2 Production from Salt; +1 Faith from Fish, Whales, Coral, Pearls and Crabs; new land units get +1 sight while embarked while the pantheon is in your capital (units keep it afterwards)
 - Added: The Tide's Calling: a coastal capital gets +1 Faith and +1 Gold on its tile per inland city; +1 Faith and +1 Gold from Stone and Wheat; founding it gives a free Skiff (Brunei: Nelayan)
 - Note: "in your capital" means the capital follows a religion with this pantheon, or has it as its own pantheon
@@ -1370,7 +1370,10 @@ RELIGION SCREEN (ChooseReligionPopup)
 ------------------------------------
 Tags: ui, religion
 The screen for founding and enhancing a religion fits long beliefs.
-- Changed: the screen is larger; chosen beliefs show their full text and their rows grow to fit (they were cut to one line)
-- Changed: belief texts list separate effects as bullet points
+- Changed: the screen is taller; chosen beliefs show their full text and their rows grow to fit (they were cut to one line)
+- Changed: the Bonus belief row only shows for civs that can pick one (Byzantium)
+- Changed: pantheon texts are bullet points; in the pantheon choice, wrapped lines start under the text, not under the bullet
+- Changed: other beliefs put separate effects on separate lines
+- Dev: ChoosePantheonPopup.lua/.xml are Lekmod overrides too
 - Dev: ChooseReligionPopup.lua/.xml are now Lekmod overrides (Lua/tmp/ui/Religion, copied by ui_check.bat for both UIs)
 

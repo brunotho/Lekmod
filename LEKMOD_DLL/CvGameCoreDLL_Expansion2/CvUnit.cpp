@@ -18396,6 +18396,12 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 								if (kPlayer.getCapitalCity() && pkBelief->GetCampClearCapitalPopulation() != 0)
 									kPlayer.getCapitalCity()->changePopulation(pkBelief->GetCampClearCapitalPopulation());
 								kPlayer.ChangeFaith(pkBelief->GetCampClearFaith());
+								if (pkBelief->GetCampClearFaith() > 0 && getOwner() == GC.getGame().getActivePlayer())
+								{
+									char szFaithText[256] = {0};
+									sprintf_s(szFaithText, "[COLOR_WHITE]+%d[ENDCOLOR][ICON_PEACE]", pkBelief->GetCampClearFaith());
+									GC.GetEngineUserInterface()->AddPopupText(pNewPlot->getX(), pNewPlot->getY(), szFaithText, 0.0f);
+								}
 							}
 						}
 #endif
