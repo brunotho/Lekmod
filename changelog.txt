@@ -490,10 +490,12 @@ TILE TOOLTIP: UNIMPROVED RESOURCES
 ----------------------------------
 Tags: ui
 Hovering an unimproved resource shows what improving it would give.
-- Added: the improvement that connects the resource, how many turns one Worker needs to build it, and the tile's yields with it (e.g. "With a Mine (5 turns for one Worker): 1 Food 3 Production")
+- Added: the improvement that connects the resource, how many turns it takes to build, and the tile's yields with it (e.g. "With a Mine (4 turns to improve): 1 Food 3 Production")
 - Added: a line saying what a city founded on the tile gets: it connects a luxury or strategic resource, but only gets the base yields
 - Added: these lines and the resource's special effects show in the tile info box at the bottom right, below the tile's yields, and in the detailed tile tooltip
 - Dev: the lines first only reached the detailed tooltip (GetResourceString long form); the bottom-right box (PlotHelpText.lua) asks for the short form. Lekmod now overrides PlotHelpText.lua and appends LekmodResourceDetailsString
+- Changed: long lines in the tile info box wrap instead of running off the screen edge
+- Dev: the build turns were one too high (the first turn's work counts right away, as on the build button); fixed
 - Note: standard UI only (EUI uses its own tile tooltip)
 
 LUXURY YIELDS
@@ -906,7 +908,7 @@ Most natural wonders were reworked, several of them reward building around them.
 - Changed: Krakatoa: 10 Science (was 2 Food 8 Science)
 - Changed: Fountain of Youth: 2 Food 2 Culture 2 Faith (was nothing), no Happiness; cities next to it get +10% Food
 - Changed: Mt. Kilimanjaro: is a source of fresh water; Pastures next to it yield +1 Food
-- Added: hovering a natural wonder shows its yields and special effects
+- Added: hovering a natural wonder shows its yields and special effects (the yields are listed once, at the top)
 - Dev: building-dependent wonder yields never applied at first (CvCityBuildings::HasBuildingClass reads a list upstream never fills); now checks the buildings of the class directly
 - Fixed: the Kilimanjaro tooltip described the old Altitude Training effect
 - DLL: tables Feature_BuildingClassYieldChanges, Feature_HolyCityYieldChanges, Feature_AdjacentPlotYieldChanges, Feature_AdjacentCityYieldModifiers and column Features.FirstFinderGoldPerEra (LEKMOD_NATURAL_WONDER_EFFECTS)

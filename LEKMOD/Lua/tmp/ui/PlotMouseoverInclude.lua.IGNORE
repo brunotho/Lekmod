@@ -286,10 +286,11 @@ function LekmodResourceImprovementString(plot, pResource)
 		local pImprovement = GameInfo.Improvements[row.ImprovementType];
 		local pBuild = pImprovement and GameInfo.Builds{ ImprovementType = pImprovement.Type }();
 		if (pBuild ~= nil and plot:CanHaveImprovement(pImprovement.ID, Game.GetActiveTeam())) then
-			-- Turns for one Worker (base work rate and the player's worker speed modifier)
+			-- Turns for one Worker (base work rate and the player's worker speed modifier). GetBuildTime is already
+			-- scaled by game speed; the first turn's work counts right away, as on the unit panel's build button (GetBuildTurnsLeft)
 			local pWorker = GameInfo.Units["UNIT_WORKER"];
 			local iWorkRate = (pWorker and pWorker.WorkRate or 100) * math.max(0, 100 + pPlayer:GetWorkerSpeedModifier()) / 100;
-			local iTurns = (iWorkRate > 0) and math.ceil(plot:GetBuildTime(pBuild.ID, iActivePlayer) / iWorkRate) or 0;
+			local iTurns = (iWorkRate > 0) and math.max(1, math.ceil(math.max(0, plot:GetBuildTime(pBuild.ID, iActivePlayer) - iWorkRate) / iWorkRate)) or 0;
 			-- Yields of the tile with the improvement
 			local strYields = "";
 			for pYield in GameInfo.Yields() do
@@ -556,6 +557,11 @@ function GetYieldString(plot) -- v34. Changed this whole function lol.
 	local featureType = plot:GetFeatureType()
 	local featureInfo = (featureType ~= FeatureTypes.NO_FEATURE) and GameInfo.Features[featureType] or nil
 	local bIsNaturalWonder = featureInfo and featureInfo.NaturalWonder
+
+	-- LEKMOD: a natural wonder with a Help text already lists its yields in GetNatureString; don't repeat them
+	if bIsNaturalWonder and featureInfo.Help ~= nil then
+		return strYield
+	end
 
 	-- YIELDS
 	for row in GameInfo.Yields() do 
