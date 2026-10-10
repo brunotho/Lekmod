@@ -115,6 +115,12 @@ public:
 	int GetStarvationCapitalPlots() const { return m_iLekmodStarvationCapitalPlots; }
 	int GetFirstGrowthBuildingClass() const { return m_iLekmodFirstGrowthBuildingClass; }
 	int GetFirstGrowthFaith() const { return m_iLekmodFirstGrowthFaith; }
+	bool IsNoProphetSpawn() const { return m_bLekmodNoProphetSpawn; }
+	int GetFreeBuildingClassInCapital() const { return m_iLekmodFreeBuildingClassInCapital; }
+	int GetOnAdoptCulture() const { return m_iLekmodOnAdoptCulture; }
+	int GetOnAdoptGold() const { return m_iLekmodOnAdoptGold; }
+	int GetOnAdoptCityPlots() const { return m_iLekmodOnAdoptCityPlots; }
+	const std::vector<int>& GetFaithPurchaseUnitClasses() const { return m_aiLekmodFaithPurchaseUnitClasses; }
 	int GetCapitalYieldPerExpand(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiLekmodCapitalYieldPerExpand[i] : 0; }
 	int GetCoastalCapitalYieldPerInlandCity(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiLekmodCoastalCapitalYieldPerInlandCity[i] : 0; }
 #endif
@@ -356,6 +362,12 @@ protected:
 	int m_iLekmodStarvationCapitalPlots;
 	int m_iLekmodFirstGrowthBuildingClass;
 	int m_iLekmodFirstGrowthFaith;
+	bool m_bLekmodNoProphetSpawn;
+	int m_iLekmodFreeBuildingClassInCapital;
+	int m_iLekmodOnAdoptCulture;
+	int m_iLekmodOnAdoptGold;
+	int m_iLekmodOnAdoptCityPlots;
+	std::vector<int> m_aiLekmodFaithPurchaseUnitClasses;
 	int m_aiLekmodCapitalYieldPerExpand[NUM_YIELD_TYPES];
 	int m_aiLekmodCoastalCapitalYieldPerInlandCity[NUM_YIELD_TYPES];
 #endif

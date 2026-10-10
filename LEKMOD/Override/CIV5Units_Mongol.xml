@@ -17267,7 +17267,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JESUIT_EDUCATION"> 
 			<Text>
-				May build [COLOR_POSITIVE_TEXT]Libraries[ENDCOLOR], [COLOR_POSITIVE_TEXT]Universities[ENDCOLOR], [COLOR_POSITIVE_TEXT]Observatories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Public Schools[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Research Labs[ENDCOLOR] with [ICON_PEACE] Faith.
+				May build [COLOR_POSITIVE_TEXT]Libraries[ENDCOLOR], [COLOR_POSITIVE_TEXT]Universities[ENDCOLOR], [COLOR_POSITIVE_TEXT]Observatories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Public Schools[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Research Labs[ENDCOLOR] with [ICON_PEACE] Faith ([ICON_PEACE] Faith cost = 130% of the [ICON_PRODUCTION] Production cost).[NEWLINE]These buildings yield +2 [ICON_PEACE] Faith; [COLOR_POSITIVE_TEXT]Academies[ENDCOLOR] yield +10 [ICON_PEACE] Faith.[NEWLINE][NEWLINE]Great Prophets no longer appear from [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JESUIT_EDUCATION_SHORT"> 
@@ -17737,7 +17737,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES"> 
 			<Text>
-				All buildings purchased with [ICON_PEACE] Faith provide 2 [ICON_TOURISM] Tourism each.
+				+3 [ICON_GOLD] Gold and +3 [ICON_PEACE] Faith from buildings unlocked by [COLOR_POSITIVE_TEXT]Religious Beliefs[ENDCOLOR] (Pagodas, Mosques, Cathedrals, Gurdwaras, Synagogues, Viharas, Mandirs).[NEWLINE][NEWLINE]Adopting it gives a free [COLOR_POSITIVE_TEXT]Vihara[ENDCOLOR] in your capital.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES_SHORT"> 
@@ -17987,7 +17987,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC"> 
 			<Text>
-				+8 [ICON_PRODUCTION] Production in each following city
+				May purchase [COLOR_POSITIVE_TEXT]Workshops[ENDCOLOR], [COLOR_POSITIVE_TEXT]Windmills[ENDCOLOR], [COLOR_POSITIVE_TEXT]Factories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Hydro Plants[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Workers[ENDCOLOR] with [ICON_PEACE] Faith ([ICON_PEACE] Faith cost = 130% of the [ICON_PRODUCTION] Production cost).[NEWLINE][NEWLINE]Great Prophets no longer appear from [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC_SHORT"> 
@@ -17997,7 +17997,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC"> 
 			<Text>
-				May purchase [COLOR_POSITIVE_TEXT]Workshops[ENDCOLOR], [COLOR_POSITIVE_TEXT]Windmills[ENDCOLOR], [COLOR_POSITIVE_TEXT]Factories[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Hydro Plants[ENDCOLOR] with [ICON_PEACE] Faith
+				May purchase [COLOR_POSITIVE_TEXT]Workshops[ENDCOLOR], [COLOR_POSITIVE_TEXT]Windmills[ENDCOLOR], [COLOR_POSITIVE_TEXT]Factories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Hydro Plants[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Workers[ENDCOLOR] with [ICON_PEACE] Faith ([ICON_PEACE] Faith cost = 130% of the [ICON_PRODUCTION] Production cost).[NEWLINE][NEWLINE]Great Prophets no longer appear from [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC_SHORT"> 
@@ -18027,7 +18027,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES"> 
 			<Text>
-				+2 [ICON_CULTURE] Culture, +2 [ICON_GOLD] Gold, and +2 [ICON_PEACE] Faith from buildings unlocked by [COLOR_POSITIVE_TEXT]Religious Beliefs[ENDCOLOR]
+				+3 [ICON_GOLD] Gold and +3 [ICON_PEACE] Faith from buildings unlocked by [COLOR_POSITIVE_TEXT]Religious Beliefs[ENDCOLOR] (Pagodas, Mosques, Cathedrals, Gurdwaras, Synagogues, Viharas, Mandirs).[NEWLINE][NEWLINE]Adopting it gives a free [COLOR_POSITIVE_TEXT]Vihara[ENDCOLOR] in your capital.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES_SHORT"> 
@@ -120458,6 +120458,18 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_FIRST_BORN_HELP">
 			<Text>+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from the Rite of the First-Born.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_CHARTER">
+			<Text>When adopted: +150 [ICON_CULTURE] Culture, +150 [ICON_GOLD] Gold, and every city claims 2 tiles.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_CHARTER_SHORT">
+			<Text>Charter of Settlement</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_XIAN">
+			<Text>+1 [ICON_PEACE] Faith from Strategic resources.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_XIAN_SHORT">
+			<Text>Xian</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>

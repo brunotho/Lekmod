@@ -172,6 +172,12 @@ public:
 	void FoundReligion(PlayerTypes ePlayer, ReligionTypes eReligion, const char* szCustomName, BeliefTypes eBelief1, BeliefTypes eBelief2, BeliefTypes eBelief3, BeliefTypes eBelief4, CvCity* pkHolyCity);
 	void EnhanceReligion(PlayerTypes ePlayer, ReligionTypes eReligion, BeliefTypes eBelief1, BeliefTypes eBelief2);
 	void AddReformationBelief(PlayerTypes ePlayer, ReligionTypes eReligion, BeliefTypes eBelief1);
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// one-time effects when a player adopts a belief (Charter of Settlement, Sacred Sites' free Vihara)
+	void LekmodOnBeliefAdopted(PlayerTypes ePlayer, BeliefTypes eBelief);
+	// does any belief of the player's founded religion stop Great Prophets from spawning? (Jesuit Education, Work Ethic)
+	bool LekmodIsProphetSpawnBlocked(PlayerTypes ePlayer) const;
+#endif
 	void SetHolyCity(ReligionTypes eReligion, CvCity* pkHolyCity);
 	void SetFounder(ReligionTypes eReligion, PlayerTypes eFounder);
 	void UpdateAllCitiesThisReligion(ReligionTypes eReligion);

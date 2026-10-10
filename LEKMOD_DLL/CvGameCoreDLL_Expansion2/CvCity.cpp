@@ -17772,6 +17772,36 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 			{
 				return false;
 			}
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+			// Belief_UnitClassFaithPurchase: these unit classes can only be bought with Faith where the city's religion has such a belief (Work Ethic: Workers)
+			{
+				CvUnitEntry* pkLekmodUnit = GC.getUnitInfo(eUnitType);
+				int eLekmodClass = pkLekmodUnit ? pkLekmodUnit->GetUnitClassType() : -1;
+				bool bListed = false;
+				bool bAllowed = false;
+				const CvReligion* pLekmodReligion = (eReligion > RELIGION_PANTHEON) ? GC.getGame().GetGameReligions()->GetReligion(eReligion, NO_PLAYER) : NULL;
+				CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+				for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+				{
+					CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+					if (pkBelief == NULL)
+						continue;
+					const std::vector<int>& aiClasses = pkBelief->GetFaithPurchaseUnitClasses();
+					for (uint j = 0; j < aiClasses.size(); j++)
+					{
+						if (aiClasses[j] != eLekmodClass)
+							continue;
+						bListed = true;
+						if (pLekmodReligion != NULL && pLekmodReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+							bAllowed = true;
+					}
+				}
+				if (bListed && !bAllowed)
+					return false;
+				if (bListed && !canTrain(eUnitType, false, !bTestTrainable, false, true))
+					return false;
+			}
+#endif
 #ifdef LEK_UNIQUE_FAITH_UNIT_FIX
 
 			//EAP: Unique Faith units

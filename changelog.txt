@@ -1348,3 +1348,21 @@ Four new pantheons.
 - Added: Rite of the First-Born: when a city first grows to 2 citizens it drops back to 1, you gain 20 Faith, and the city tile gets +1 Production and +1 Culture for good (kept on capture)
 - DLL: Beliefs.StarvationFaith/StarvationCapitalPlots/FirstGrowthBuildingClass/FirstGrowthFaith, Belief_CapitalYieldPerExpand, Belief_CityFeatureAdjacentYieldChanges, condition NOT_CAPITAL; belief IDs 105-108; building BUILDING_LEKMOD_FIRST_BORN (272, class 179)
 
+SACRED SITES, JESUIT EDUCATION, WORK ETHIC (BELIEF_SACRED_SITES, BELIEF_JESUIT_EDUCATION, BELIEF_WORK_ETHIC)
+------------------------------------------------------------------------------------------------------
+Tags: religion
+- Changed: Sacred Sites: +3 Gold and +3 Faith from Pagodas, Mosques, Cathedrals, Gurdwaras, Synagogues, Viharas and Mandirs (was +2 Culture +2 Gold +2 Faith)
+- Added: Sacred Sites: adopting it gives a free Vihara in the capital
+- Added: Jesuit Education: Libraries, Universities, Observatories, Public Schools and Research Labs yield +2 Faith; Academies +10 Faith
+- Added: Work Ethic: Workers can be bought with Faith
+- Changed: Jesuit Education and Work Ethic: buildings and Workers cost 130% of their Production cost in Faith (e.g. Library 63 Faith at quick speed), unique replacements included
+- Changed: Jesuit Education and Work Ethic: Great Prophets no longer appear from Faith (as in the Industrial Era)
+- DLL: Beliefs.NoProphetSpawn/FreeBuildingClassInCapital, Belief_UnitClassFaithPurchase (LEKMOD_CAPITAL_PANTHEON_EFFECTS)
+
+CHARTER OF SETTLEMENT, XIAN (BELIEF_LEKMOD_CHARTER, BELIEF_LEKMOD_XIAN)
+--------------------------------------------------------------------
+Tags: religion
+- Added: founder belief Charter of Settlement: when adopted +150 Culture, +150 Gold and every city claims 2 tiles
+- Added: enhancer belief Xian: +1 Faith from Strategic resources
+- DLL: Beliefs.OnAdoptCulture/OnAdoptGold/OnAdoptCityPlots; belief IDs 109-110
+

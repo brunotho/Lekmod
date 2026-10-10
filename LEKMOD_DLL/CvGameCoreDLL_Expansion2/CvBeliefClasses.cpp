@@ -100,6 +100,11 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_iLekmodStarvationCapitalPlots(0),
 	m_iLekmodFirstGrowthBuildingClass(-1),
 	m_iLekmodFirstGrowthFaith(0),
+	m_bLekmodNoProphetSpawn(false),
+	m_iLekmodFreeBuildingClassInCapital(-1),
+	m_iLekmodOnAdoptCulture(0),
+	m_iLekmodOnAdoptGold(0),
+	m_iLekmodOnAdoptCityPlots(0),
 #endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	m_bLekmodMissionaryProphetSpread(false),
@@ -958,6 +963,21 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iLekmodStarvationCapitalPlots = kResults.GetInt("StarvationCapitalPlots");
 	m_iLekmodFirstGrowthBuildingClass = GC.getInfoTypeForString(kResults.GetText("FirstGrowthBuildingClass"), true);
 	m_iLekmodFirstGrowthFaith = kResults.GetInt("FirstGrowthFaith");
+	m_bLekmodNoProphetSpawn = kResults.GetBool("NoProphetSpawn");
+	m_iLekmodFreeBuildingClassInCapital = GC.getInfoTypeForString(kResults.GetText("FreeBuildingClassInCapital"), true);
+	m_iLekmodOnAdoptCulture = kResults.GetInt("OnAdoptCulture");
+	m_iLekmodOnAdoptGold = kResults.GetInt("OnAdoptGold");
+	m_iLekmodOnAdoptCityPlots = kResults.GetInt("OnAdoptCityPlots");
+	m_aiLekmodFaithPurchaseUnitClasses.clear();
+	{
+		std::string strKey("Belief_UnitClassFaithPurchase");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select UnitClasses.ID from Belief_UnitClassFaithPurchase inner join UnitClasses on UnitClasses.Type = UnitClassType where BeliefType = ?");
+		pResults->Bind(1, GetType());
+		while (pResults->Step())
+			m_aiLekmodFaithPurchaseUnitClasses.push_back(pResults->GetInt(0));
+	}
 	for (int iY = 0; iY < NUM_YIELD_TYPES; iY++)
 		m_aiLekmodCapitalYieldPerExpand[iY] = 0;
 	{

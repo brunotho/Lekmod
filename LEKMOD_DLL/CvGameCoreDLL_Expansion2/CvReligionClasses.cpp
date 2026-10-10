@@ -451,6 +451,9 @@ void CvGameReligions::DoPlayerTurn(CvPlayer& kPlayer)
 		{
 		case NO_AUTOMATIC_FAITH_PURCHASE:
 		case FAITH_PURCHASE_SAVE_PROPHET:
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+				if (!LekmodIsProphetSpawnBlocked(ePlayer))
+#endif
 				CheckSpawnGreatProphet(kPlayer);
 				break;
 		}
@@ -950,6 +953,12 @@ void CvGameReligions::FoundReligion(PlayerTypes ePlayer, ReligionTypes eReligion
 
 	// Inform the holy city
 	pkHolyCity->GetCityReligions()->DoReligionFounded(kReligion.m_eReligion);
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	LekmodOnBeliefAdopted(ePlayer, eBelief1);
+	LekmodOnBeliefAdopted(ePlayer, eBelief2);
+	LekmodOnBeliefAdopted(ePlayer, eBelief3);
+	LekmodOnBeliefAdopted(ePlayer, eBelief4);
+#endif
 
 	// Update game systems
 	kPlayer.UpdateReligion();
@@ -1212,6 +1221,10 @@ void CvGameReligions::EnhanceReligion(PlayerTypes ePlayer, ReligionTypes eReligi
 #ifndef AUI_WARNING_FIXES
 	it->m_bEnhanced = true;
 #endif
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	LekmodOnBeliefAdopted(ePlayer, eBelief1);
+	LekmodOnBeliefAdopted(ePlayer, eBelief2);
+#endif
 	// Update game systems
 	UpdateAllCitiesThisReligion(eReligion);
 	kPlayer.UpdateReligion();
@@ -1350,6 +1363,62 @@ CvGameReligions::FOUNDING_RESULT CvGameReligions::CanEnhanceReligion(PlayerTypes
 }
 
 /// Add an extra belief to a religion (through a policy)
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+//	--------------------------------------------------------------------------------
+void CvGameReligions::LekmodOnBeliefAdopted(PlayerTypes ePlayer, BeliefTypes eBelief)
+{
+	if (eBelief == NO_BELIEF || ePlayer == NO_PLAYER)
+		return;
+	CvBeliefEntry* pkBelief = GC.GetGameBeliefs()->GetEntry(eBelief);
+	if (pkBelief == NULL)
+		return;
+	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	if (pkBelief->GetOnAdoptCulture() != 0)
+		kPlayer.changeJONSCulture(pkBelief->GetOnAdoptCulture());
+	if (pkBelief->GetOnAdoptGold() != 0)
+		kPlayer.GetTreasury()->ChangeGold(pkBelief->GetOnAdoptGold());
+	if (pkBelief->GetOnAdoptCityPlots() > 0)
+	{
+		int iLoop;
+		for (CvCity* pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+		{
+			for (int i = 0; i < pkBelief->GetOnAdoptCityPlots(); i++)
+			{
+				CvPlot* pPlot = pLoopCity->GetNextBuyablePlot();
+				if (pPlot != NULL)
+					pLoopCity->DoAcquirePlot(pPlot->getX(), pPlot->getY());
+			}
+		}
+	}
+	if (pkBelief->GetFreeBuildingClassInCapital() != -1 && kPlayer.getCapitalCity() != NULL)
+	{
+		BuildingTypes eFree = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(pkBelief->GetFreeBuildingClassInCapital());
+		if (eFree != NO_BUILDING)
+			kPlayer.getCapitalCity()->GetCityBuildings()->SetNumFreeBuilding(eFree, 1);
+	}
+}
+
+//	--------------------------------------------------------------------------------
+bool CvGameReligions::LekmodIsProphetSpawnBlocked(PlayerTypes ePlayer) const
+{
+	ReligionTypes eReligion = GetReligionCreatedByPlayer(ePlayer);
+	if (eReligion <= RELIGION_PANTHEON)
+		return false;
+	const CvReligion* pReligion = GetReligion(eReligion, ePlayer);
+	if (pReligion == NULL)
+		return false;
+	CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+	for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+	{
+		CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+		if (pkBelief != NULL && pkBelief->IsNoProphetSpawn() && pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+			return true;
+	}
+	return false;
+}
+#endif
+
+//	--------------------------------------------------------------------------------
 void CvGameReligions::AddReformationBelief(PlayerTypes ePlayer, ReligionTypes eReligion, BeliefTypes eBelief1)
 {
 	bool bFoundIt = false;
@@ -1374,6 +1443,9 @@ void CvGameReligions::AddReformationBelief(PlayerTypes ePlayer, ReligionTypes eR
 	}
 
 	it->m_Beliefs.AddBelief(eBelief1);
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	LekmodOnBeliefAdopted(ePlayer, eBelief1);
+#endif
 
 	// Update game systems
 	UpdateAllCitiesThisReligion(eReligion);

@@ -30868,6 +30868,11 @@
 		<Column name="StarvationCapitalPlots" type="integer" default="0"/> <!-- LEKMOD: the capital claims tiles when another city with the belief starves -->
 		<Column name="FirstGrowthBuildingClass" type="text" default="NULL"/> <!-- LEKMOD: a city reaching 2 citizens drops back to 1 and gets this building (once) -->
 		<Column name="FirstGrowthFaith" type="integer" default="0"/> <!-- LEKMOD: Faith for that -->
+		<Column name="NoProphetSpawn" type="boolean" default="false"/> <!-- LEKMOD: Great Prophets no longer spawn from Faith -->
+		<Column name="FreeBuildingClassInCapital" type="text" default="NULL"/> <!-- LEKMOD: adopting the belief gives this building in the capital -->
+		<Column name="OnAdoptCulture" type="integer" default="0"/> <!-- LEKMOD: one-time Culture when adopted -->
+		<Column name="OnAdoptGold" type="integer" default="0"/> <!-- LEKMOD: one-time Gold when adopted -->
+		<Column name="OnAdoptCityPlots" type="integer" default="0"/> <!-- LEKMOD: every city claims this many tiles when adopted -->
 		<Column name="FaithBuildingTourism" type="integer" default="0" />
 		<Column name="ObsoleteEra" type="text" default="NULL" />
 		<Column name="ResourceRevealed" type="text" default="NULL" />
@@ -31869,18 +31874,211 @@
 			<YieldChange>2</YieldChange>
 		</Row>
 	</Belief_BuildingClassYieldChanges>
-	<Building_YieldChanges>
+	<!-- LEKMOD: Sacred Sites, Jesuit Education, Work Ethic, Charter of Settlement, Xian -->
+	<Table name="Belief_UnitClassFaithPurchase"> <!-- LEKMOD: these unit classes can be bought with Faith only in cities whose religion has the belief -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="UnitClassType" type="text" reference="UnitClasses(Type)" />
+	</Table>
+	<Beliefs>
+		<Update>
+			<Where Type="BELIEF_JESUIT_EDUCATION"/>
+			<Set NoProphetSpawn="true"/>
+		</Update>
+		<Update>
+			<Where Type="BELIEF_WORK_ETHIC"/>
+			<Set NoProphetSpawn="true"/>
+		</Update>
+		<Update>
+			<Where Type="BELIEF_SACRED_SITES"/>
+			<Set FreeBuildingClassInCapital="BUILDINGCLASS_VIHARA"/>
+		</Update>
 		<Row>
-			<BuildingType>BUILDING_LEKMOD_FIRST_BORN</BuildingType>
-			<YieldType>YIELD_PRODUCTION</YieldType>
+			<ID>109</ID>
+			<Type>BELIEF_LEKMOD_CHARTER</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_CHARTER</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_CHARTER_SHORT</ShortDescription>
+			<Founder>true</Founder>
+			<OnAdoptCulture>150</OnAdoptCulture>
+			<OnAdoptGold>150</OnAdoptGold>
+			<OnAdoptCityPlots>2</OnAdoptCityPlots>
+		</Row>
+		<Row>
+			<ID>110</ID>
+			<Type>BELIEF_LEKMOD_XIAN</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_XIAN</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_XIAN_SHORT</ShortDescription>
+			<Enhancer>true</Enhancer>
+		</Row>
+	</Beliefs>
+	<Belief_BuildingClassYieldChanges>
+		<Delete BeliefType="BELIEF_SACRED_SITES"/>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_PAGODA</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_PAGODA</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_MOSQUE</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_MOSQUE</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_CATHEDRAL</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_CATHEDRAL</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GURDWARA</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GURDWARA</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_SYNAGOGUE</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_SYNAGOGUE</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_VIHARA</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_VIHARA</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_MANDIR</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_SITES</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_MANDIR</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_LIBRARY</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_UNIVERSITY</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_PUBLIC_SCHOOL</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_LABORATORY</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_OBSERVATORY</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+	</Belief_BuildingClassYieldChanges>
+	<Belief_ImprovementYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_JESUIT_EDUCATION</BeliefType>
+			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>10</Yield>
+		</Row>
+	</Belief_ImprovementYieldChanges>
+	<Belief_UnitClassFaithPurchase>
+		<Row>
+			<BeliefType>BELIEF_WORK_ETHIC</BeliefType>
+			<UnitClassType>UNITCLASS_WORKER</UnitClassType>
+		</Row>
+	</Belief_UnitClassFaithPurchase>
+	<Belief_ResourceYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_XIAN</BeliefType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
 			<Yield>1</Yield>
 		</Row>
 		<Row>
-			<BuildingType>BUILDING_LEKMOD_FIRST_BORN</BuildingType>
-			<YieldType>YIELD_CULTURE</YieldType>
+			<BeliefType>BELIEF_LEKMOD_XIAN</BeliefType>
+			<ResourceType>RESOURCE_COAL</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
 			<Yield>1</Yield>
 		</Row>
-	</Building_YieldChanges>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_XIAN</BeliefType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_XIAN</BeliefType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_XIAN</BeliefType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_LEKMOD_XIAN</BeliefType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_ResourceYieldChanges>
 	<!-- LEKMOD: Phase 3 new pantheons (data only) -->
 	<Beliefs>
 		<Row>
@@ -49156,6 +49354,109 @@
 			<Yield>2</Yield>
 		</Row>
 	</Building_TerrainYieldChanges>
+	<!-- LEKMOD: belief-related building data (after all building rows and wipes): Rite of the First-Born yields; Jesuit Education / Work Ethic Faith cost = 130% of Production -->
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FIRST_BORN</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FIRST_BORN</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_AKKAD_LIBRARY"/>
+			<Set FaithCost="78"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ARMENIA_OBSERVATORY"/>
+			<Set FaithCost="260"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_AYYUBIDS_UNIVERSITY"/>
+			<Set FaithCost="208"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_COFFEE_HOUSE"/>
+			<Set FaithCost="195"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_COOPERATIVE"/>
+			<Set FaithCost="506"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_CORALSHOP"/>
+			<Set FaithCost="156"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_FACTORY"/>
+			<Set FaithCost="506"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HACIENDA"/>
+			<Set FaithCost="325"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HYDRO_PLANT"/>
+			<Set FaithCost="543"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_LABORATORY"/>
+			<Set FaithCost="650"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_LIBRARY"/>
+			<Set FaithCost="98"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_LONGHOUSE"/>
+			<Set FaithCost="98"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_OBSERVATORY"/>
+			<Set FaithCost="260"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_PAPER_MAKER"/>
+			<Set FaithCost="98"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_PRUSSIAN_FACTORY"/>
+			<Set FaithCost="380"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_PUBLIC_SCHOOL"/>
+			<Set FaithCost="390"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ROYAL_LIBRARY"/>
+			<Set FaithCost="98"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_UC_HALKEVLERI"/>
+			<Set FaithCost="312"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_UNIVERSITY"/>
+			<Set FaithCost="208"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_WAT"/>
+			<Set FaithCost="156"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_WINDMILL"/>
+			<Set FaithCost="325"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_WORKSHOP"/>
+			<Set FaithCost="156"/>
+		</Update>
+	</Buildings>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -278823,6 +279124,21 @@
 		<Update>
 			<Where Type="UNIT_YUGO_M84"/>
 			<Set Cost="473"/>
+		</Update>
+	</Units>
+	<!-- LEKMOD: Work Ethic, Workers can be bought with Faith (130% of the Production cost) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_WORKER"/>
+			<Set FaithCost="62"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_AUSTRALIA_WORKER"/>
+			<Set FaithCost="62"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_FAST_WORKER"/>
+			<Set FaithCost="62"/>
 		</Update>
 	</Units>
 	
