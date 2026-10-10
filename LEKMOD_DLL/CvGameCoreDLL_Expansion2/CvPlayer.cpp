@@ -7917,7 +7917,8 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 							if (pkImprovementInfo->GetCultureBombRadius() > 0)
 							{
 
-								UnitTypes eDummyUnit = pUnit->getUnitType();
+								// LEKMOD: the ruin's unit may be gone (ruin choice resolved later); any unit type works for the dummy
+								UnitTypes eDummyUnit = pUnit ? pUnit->getUnitType() : (UnitTypes)GC.getInfoTypeForString("UNIT_WORKER");
 								CvUnit* pDummyUnit = initUnit(eDummyUnit, pCityPlot->getX(), pCityPlot->getY(), NO_UNITAI, NO_DIRECTION, true, true);
 								pDummyUnit->PerformCultureBomb(pkImprovementInfo->GetCultureBombRadius());
 								pDummyUnit->kill(true);
@@ -7926,7 +7927,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 
 							if (pkImprovementInfo->GetCultureBombRadiusNeutral() > 0)
 							{
-								UnitTypes eDummyUnit = pUnit->getUnitType();
+								UnitTypes eDummyUnit = pUnit ? pUnit->getUnitType() : (UnitTypes)GC.getInfoTypeForString("UNIT_WORKER");
 								CvUnit* pDummyUnit = initUnit(eDummyUnit, pCityPlot->getX(), pCityPlot->getY(), NO_UNITAI, NO_DIRECTION, true, true);
 								pDummyUnit->PerformNeutralCultureBomb(pkImprovementInfo->GetCultureBombRadiusNeutral());
 								pDummyUnit->kill(true);
@@ -8001,7 +8002,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	int iEraRuinValue = 0;
 
 	// Food era scale: 7 + floor(2 * era * 1.1 * capital_pop)
-	if(kGoodyInfo.isFoodEraScale() && pUnit != NULL)
+	if(kGoodyInfo.isFoodEraScale())
 	{
 		CvCity* pCapital = getCapitalCity();
 		if(pCapital != NULL)
@@ -8009,8 +8010,8 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 			int iFood = 7 + (int)(2.0 * iEra * 1.1 * pCapital->getPopulation());
 			pCapital->changeFood(iFood);
 			iEraRuinValue = iFood;
-			// Grant Glutton promotion if a FreePromotion is set
-			if(kGoodyInfo.getFreePromotion() != NO_PROMOTION)
+			// Grant Glutton promotion if a FreePromotion is set (LEKMOD: only when the ruin's unit still exists)
+			if(kGoodyInfo.getFreePromotion() != NO_PROMOTION && pUnit != NULL)
 			{
 				pUnit->setHasPromotion((PromotionTypes)kGoodyInfo.getFreePromotion(), true);
 			}
@@ -8041,14 +8042,15 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	}
 
 	// Faith era-turn: faith = turn * 2 * era, heal unit to full
-	if(kGoodyInfo.isFaithEraTurn() && pUnit != NULL)
+	if(kGoodyInfo.isFaithEraTurn())
 	{
 		int iFaithAmount = GC.getGame().getElapsedGameTurns() * 2 * iEra;
 		if(iFaithAmount > 0)
 		{
 			ChangeFaith(iFaithAmount);
 			iEraRuinValue = iFaithAmount;
-			pUnit->changeDamage(-pUnit->getDamage()); // heal to full
+			if(pUnit != NULL)
+				pUnit->changeDamage(-pUnit->getDamage()); // heal to full
 			if(GetID() == GC.getGame().getActivePlayer())
 			{
 				strBuffer = GetLocalizedText(kGoodyInfo.GetDescriptionKey(), iFaithAmount);
@@ -8109,7 +8111,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	}
 
 	// Science era ruin: X = rand(20..30) * era, capped at 90; unit loses 3X HP (keeps at least 1); X/2 gold (rounded to 5)
-	if(kGoodyInfo.isScienceEraRuin() && pUnit != NULL)
+	if(kGoodyInfo.isScienceEraRuin())
 	{
 		int iX = (20 + LekmodGoodyRand(11, "Goody Science Era Rand")) * iEra;
 		iX = std::min(iX, 90);
@@ -8121,7 +8123,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		else
 			changeOverflowResearch(iX);
 		// HP damage (leave at least 1 HP)
-		int iDamage = std::min(3 * iX, pUnit->GetMaxHitPoints() - pUnit->getDamage() - 1);
+		int iDamage = (pUnit != NULL) ? std::min(3 * iX, pUnit->GetMaxHitPoints() - pUnit->getDamage() - 1) : 0;
 		if(iDamage > 0) pUnit->changeDamage(iDamage);
 		// A little gold: half the science, rounded to 5
 		GetTreasury()->ChangeGold(((iX / 2) + 2) / 5 * 5);
