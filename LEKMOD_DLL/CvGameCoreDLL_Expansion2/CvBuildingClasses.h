@@ -189,6 +189,13 @@ public:
 	int GetMinAreaSize() const;
 	int GetConquestProbability() const;
 	int GetHealRateChange() const;
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	int GetCityHealRate() const;
+	int GetAdjacentEnemyDamage() const;
+	int GetHillCityStrength() const;
+	int GetMountainCityStrength() const;
+	int GetCityAttackRangeChange() const;
+#endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int GetTerritoryHealChange() const;
 #endif
@@ -504,6 +511,13 @@ private:
 	int m_iMinAreaSize;
 	int m_iConquestProbability;
 	int m_iHealRateChange;
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	int m_iCityHealRate;
+	int m_iAdjacentEnemyDamage;
+	int m_iHillCityStrength;
+	int m_iMountainCityStrength;
+	int m_iCityAttackRangeChange;
+#endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;
 #endif

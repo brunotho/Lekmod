@@ -9,7 +9,7 @@ Format (also the source for player patch notes on the website):
   in quick-speed numbers, for players with no development knowledge. Bugs we introduced and fixed
   before a release are not player-facing.
 - Developer-only lines (skipped for patch notes): "- Note:", "- DLL:", "- Dev:".
-- Tags: promotions, units, civs, policies, religion, ruins, combat, movement, naval, air,
+- Tags: promotions, units, buildings, civs, policies, religion, ruins, combat, movement, naval, air,
   game mechanics, world congress, ui, art, bugfix.
 
 
@@ -1157,3 +1157,31 @@ New upgrade paths, a buildable Quinquereme, the Ship of the Line for everyone, t
 - Removed: England no longer has the Ship of the Line as a unique unit (civ changes come later)
 - Note: unique replacements of the named classes get the same promotions; the Quinquereme's and Dreadnought's obsolete techs (Navigation, Electronics) were not in the spec
 - DLL: UnitPromotions.AdjacentRangedAttackMod / NoAdjacentRangedAttack / NoAttackFromCity (LEKMOD_NAVAL_PENALTY_PROMOTIONS); promotion IDs 368-371
+
+DEFENSE BUILDINGS (BUILDING_WALLS, BUILDING_CASTLE, BUILDING_ARSENAL, BUILDING_MILITARY_BASE)
+--------------------------------------------------------------------------------------------
+Tags: buildings, combat
+Each defense building now has its own role, and its tooltip shows the city's total Hit Points and healing.
+- Changed: Walls (and unique replacements): Defense +1 lower (Walls 5 -> 4; Walls of Babylon and Murus Gallicus 6 -> 5)
+- Added: Walls (and unique replacements): +1 Defense if the city is on a Hill, +1 Defense if the city is next to a Mountain
+- Added: Walls (and unique replacements): enemy units next to the city take 10 damage at the start of their turn, like next to a Citadel (the two do not stack)
+- Added: Walls (and unique replacements): the city heals 15 HP per turn
+- Added: Castle (and unique replacements): provides 3 Horses, +3 Defense if the city is next to a Mountain, the city heals 20 HP per turn
+- Changed: Arsenal: needs Chemistry (was Metallurgy)
+- Added: Arsenal: +15% Production towards gunpowder and siege units, the city heals 30 HP per turn
+- Changed: Military Base renamed to Command Bunker; needs Radar (was Replaceable Parts); cost 335 -> 385; +75 Hit Points (was +25)
+- Added: Command Bunker: city attack range 3 (was 2), the city heals 50 HP per turn
+- Changed: building tooltips show the city's total Hit Points with the building (e.g. Walls 250, Command Bunker 375) and the healing rate
+- Note: Walls already cost 50; Walls of Babylon, Murus Gallicus and Lion's Gate keep their costs (spec)
+- Note: the HP total in the tooltip adds the defense buildings that the building requires, in the player's own unique versions; India's Mughal Fort and Tunisia's castle do not require Walls, so they count without them
+- DLL: Buildings.CityHealRate / AdjacentEnemyDamage / HillCityStrength / MountainCityStrength / CityAttackRangeChange (LEKMOD_DEFENSE_BUILDINGS), computed from the city's buildings on the fly (no saved fields); range used by city attacks, AI danger and the attack highlight
+
+CITY HEALING (CITY_HIT_POINTS_HEALED_PER_TURN)
+----------------------------------------------
+Tags: game mechanics, combat
+Cities heal at a flat rate that only defense buildings raise.
+- Changed: cities heal 10 HP per turn (was 20)
+- Changed: Walls 15, Castle 20, Arsenal 30, Command Bunker 50 HP per turn; the highest one counts
+- Removed: capitals no longer heal 1 extra HP per turn
+- Removed: Defense from buildings (and the Mughal Caravansary's garrison bonus) no longer adds healing
+- Changed: Civilopedia pages on city Hit Points and healing updated

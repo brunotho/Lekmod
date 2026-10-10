@@ -23,6 +23,12 @@ function RangedStrikeHighlight()
 
 	if pHeadSelectedCity and pHeadSelectedCity:CanRangeStrike() then
 		iRange = GameDefines.CITY_ATTACK_RANGE;
+		-- LEKMOD: buildings can extend the city's range (Command Bunker +1)
+		for building in GameInfo.Buildings() do
+			if building.CityAttackRangeChange ~= 0 and pHeadSelectedCity:IsHasBuilding(building.ID) then
+				iRange = iRange + building.CityAttackRangeChange;
+			end
+		end
 		bIndirectFireAllowed = GameDefines.CAN_CITY_USE_INDIRECT_FIRE == 1;
 		thisPlot = pHeadSelectedCity:Plot();
 		thisX = pHeadSelectedCity:GetX();

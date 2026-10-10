@@ -1440,6 +1440,9 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_POLICY_ALTERNATE_TECH
 // Buildings.TerritoryHealChange: extra healing for the owner's non-air units on all tiles of the city (Field Hospital)
 #define LEKMOD_TERRITORY_HEAL
+// Buildings.CityHealRate/AdjacentEnemyDamage/HillCityStrength/MountainCityStrength/CityAttackRangeChange (Walls, Castle, Arsenal, Command Bunker);
+// city regen = max(CITY_HIT_POINTS_HEALED_PER_TURN, best CityHealRate), without the capital and building-defense bonuses
+#define LEKMOD_DEFENSE_BUILDINGS
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

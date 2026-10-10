@@ -2219,6 +2219,10 @@ void CvCity::doTurn()
 	{
 		CvAssertMsg(m_iDamage <= GetMaxHitPoints(), "Somehow a city has more damage than hit points. Please show this to a gameplay programmer immediately.");
 
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+		// Base rate, or the defense buildings' rate (Walls 15 ... Command Bunker 50); no capital or building-defense bonus
+		int iHitsHealed = GetLekmodHealPerTurn();
+#else
 		int iHitsHealed = GC.getCITY_HIT_POINTS_HEALED_PER_TURN();
 		if(isCapital() && !GET_PLAYER(getOwner()).isMinorCiv())
 		{
@@ -2242,6 +2246,7 @@ void CvCity::doTurn()
 		iBuildingDefense *= (100 + m_pCityBuildings->GetBuildingDefenseMod());
 		iBuildingDefense /= 100;
 		iHitsHealed += iBuildingDefense / 500;
+#endif
 		changeDamage(-iHitsHealed);
 	}
 	if(getDamage() < 0)
@@ -14489,6 +14494,44 @@ void CvCity::RecomputeFreeTerrainYieldChanges()
 }
 #endif
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+//	--------------------------------------------------------------------------------
+int CvCity::GetLekmodBuildingStat(int iStat, bool bMax) const
+{
+	int iTotal = 0;
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding == NULL)
+			continue;
+		int iValue = 0;
+		switch (iStat)
+		{
+		case 0: iValue = pkBuilding->GetCityHealRate(); break;
+		case 1: iValue = pkBuilding->GetAdjacentEnemyDamage(); break;
+		case 2: iValue = pkBuilding->GetHillCityStrength(); break;
+		case 3: iValue = pkBuilding->GetMountainCityStrength(); break;
+		case 4: iValue = pkBuilding->GetCityAttackRangeChange(); break;
+		}
+		if (iValue == 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
+			continue;
+		iTotal = bMax ? std::max(iTotal, iValue) : iTotal + iValue;
+	}
+	return iTotal;
+}
+
+int CvCity::GetLekmodAttackRange() const
+{
+	return GC.getCITY_ATTACK_RANGE() + GetLekmodBuildingStat(4, false);
+}
+
+int CvCity::GetLekmodHealPerTurn() const
+{
+	return std::max(GC.getCITY_HIT_POINTS_HEALED_PER_TURN(), GetLekmodBuildingStat(0, true));
+}
+#endif
+
+//	--------------------------------------------------------------------------------
 void CvCity::updateStrengthValue()
 {
 	VALIDATE_OBJECT
@@ -14544,6 +14587,23 @@ int CvCity::calculateStrengthValue(bool bForRangeStrike, CvCombatModifierList* k
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 		if (GetGarrisonedUnit())
 			iBuildingStrength += m_pCityBuildings->GetGarrisonStrengthBonus();
+#endif
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+		// Walls: +1 on a hill, +1 next to a mountain; Castle: +3 next to a mountain
+		if (plot()->isHills())
+			iBuildingStrength += GetLekmodBuildingStat(2, false) * 100;
+		if (GetLekmodBuildingStat(3, false) != 0)
+		{
+			for (int iDir = 0; iDir < NUM_DIRECTION_TYPES; iDir++)
+			{
+				CvPlot* pAdjacent = plotDirection(getX(), getY(), (DirectionTypes)iDir);
+				if (pAdjacent != NULL && pAdjacent->isMountain())
+				{
+					iBuildingStrength += GetLekmodBuildingStat(3, false) * 100;
+					break;
+				}
+			}
+		}
 #endif
 	}
 
@@ -19702,7 +19762,11 @@ bool CvCity::CanRangeStrikeNow() const
 		return false;
 	}
 
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	int iRange = GetLekmodAttackRange();
+#else
 	int iRange = GC.getCITY_ATTACK_RANGE();
+#endif
 	bool bIndirectFireAllowed = GC.getCAN_CITY_USE_INDIRECT_FIRE();
 	CvPlot* pPlot = plot();
 	int iX = getX();
@@ -19825,7 +19889,11 @@ bool CvCity::canRangeStrikeAt(int iX, int iY) const
 		return false;
 	}
 
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	int iAttackRange = GetLekmodAttackRange();
+#else
 	int iAttackRange = GC.getCITY_ATTACK_RANGE();
+#endif
 
 	if(plotDistance(plot()->getX(), plot()->getY(), pTargetPlot->getX(), pTargetPlot->getY()) > iAttackRange)
 	{
@@ -20223,7 +20291,11 @@ void CvCity::DoNearbyEnemy()
 	if(!canRangeStrike())
 		return;
 
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	int iSearchRange = GetLekmodAttackRange();
+#else
 	int iSearchRange = GC.getCITY_ATTACK_RANGE();
+#endif
 #ifndef AUI_HEXSPACE_DX_LOOPS
 	CvPlot* pBestPlot = NULL;
 #endif

@@ -199,7 +199,11 @@ void CvDangerPlots::UpdateDanger(bool bPretendWarWithAllCivs, bool bIgnoreVisibi
 				continue;
 			}
 
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+			int iRange = pLoopCity->GetLekmodAttackRange();
+#else
 			int iRange = GC.getCITY_ATTACK_RANGE();
+#endif
 			CvPlot* pCityPlot = pLoopCity->plot();
 			AssignCityDangerValue(pLoopCity, pCityPlot);
 			CvPlot* pLoopPlot = NULL;

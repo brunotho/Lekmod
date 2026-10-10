@@ -176,9 +176,47 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 	end
 	
 	-- Hit Points
+	-- LEKMOD: total city HP once this building and the defense buildings it requires stand (each in the active civ's version)
 	local iHitPoints = pBuildingInfo.ExtraCityHitPoints;
 	if (iHitPoints ~= nil and iHitPoints ~= 0) then
-		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_HITPOINTS", iHitPoints));
+		local iTotal = GameDefines.MAX_CITY_HIT_POINTS + iHitPoints;
+		local civType = GameInfo.Civilizations[pActivePlayer:GetCivilizationType()].Type;
+		local seen = {};
+		local function AddRequired(buildingType)
+			for row in GameInfo.Building_ClassesNeededInCity{BuildingType = buildingType} do
+				if (not seen[row.BuildingClassType]) then
+					seen[row.BuildingClassType] = true;
+					local neededType = GameInfo.BuildingClasses[row.BuildingClassType].DefaultBuilding;
+					for override in GameInfo.Civilization_BuildingClassOverrides{CivilizationType = civType, BuildingClassType = row.BuildingClassType} do
+						neededType = override.BuildingType;
+					end
+					local neededInfo = neededType and GameInfo.Buildings[neededType];
+					if (neededInfo ~= nil) then
+						iTotal = iTotal + neededInfo.ExtraCityHitPoints;
+						AddRequired(neededType);
+					end
+				end
+			end
+		end
+		AddRequired(pBuildingInfo.Type);
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILDING_CITY_HITPOINTS", iTotal));
+	end
+	-- LEKMOD: city healing per turn (the highest rate among the city's buildings counts)
+	local iCityHeal = pBuildingInfo.CityHealRate;
+	if (iCityHeal ~= nil and iCityHeal > 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILDING_CITY_HEAL", iCityHeal));
+	end
+	if ((pBuildingInfo.HillCityStrength or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILDING_HILL_STRENGTH", pBuildingInfo.HillCityStrength));
+	end
+	if ((pBuildingInfo.MountainCityStrength or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILDING_MOUNTAIN_STRENGTH", pBuildingInfo.MountainCityStrength));
+	end
+	if ((pBuildingInfo.CityAttackRangeChange or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILDING_CITY_RANGE", GameDefines.CITY_ATTACK_RANGE + pBuildingInfo.CityAttackRangeChange));
+	end
+	if ((pBuildingInfo.AdjacentEnemyDamage or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILDING_ADJACENT_DAMAGE", pBuildingInfo.AdjacentEnemyDamage));
 	end
 	-- START Yields, this should support all yields, including modded Yields as long as they are defined in the XML
 	for Yields in GameInfo.Yields() do

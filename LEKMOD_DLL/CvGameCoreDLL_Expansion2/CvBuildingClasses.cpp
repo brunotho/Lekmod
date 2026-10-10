@@ -91,6 +91,13 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iMinAreaSize(0),
 	m_iConquestProbability(0),
 	m_iHealRateChange(0),
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	m_iCityHealRate(0),
+	m_iAdjacentEnemyDamage(0),
+	m_iHillCityStrength(0),
+	m_iMountainCityStrength(0),
+	m_iCityAttackRangeChange(0),
+#endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
 #endif
@@ -471,6 +478,13 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iNukeModifier = kResults.GetInt("NukeModifier");
 	m_iNukeExplosionRand = kResults.GetInt("NukeExplosionRand");
 	m_iHealRateChange = kResults.GetInt("HealRateChange");
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	m_iCityHealRate = kResults.GetInt("CityHealRate");
+	m_iAdjacentEnemyDamage = kResults.GetInt("AdjacentEnemyDamage");
+	m_iHillCityStrength = kResults.GetInt("HillCityStrength");
+	m_iMountainCityStrength = kResults.GetInt("MountainCityStrength");
+	m_iCityAttackRangeChange = kResults.GetInt("CityAttackRangeChange");
+#endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
 #endif
@@ -1748,6 +1762,38 @@ int CvBuildingEntry::GetHealRateChange() const
 {
 	return m_iHealRateChange;
 }
+
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+/// The city heals this many HP per turn (highest of its buildings; replaces the base rate when higher)
+int CvBuildingEntry::GetCityHealRate() const
+{
+	return m_iCityHealRate;
+}
+
+/// Damage to enemy units next to the city at the start of their turn (like a Citadel)
+int CvBuildingEntry::GetAdjacentEnemyDamage() const
+{
+	return m_iAdjacentEnemyDamage;
+}
+
+/// Extra city strength (whole points) when the city is on a hill
+int CvBuildingEntry::GetHillCityStrength() const
+{
+	return m_iHillCityStrength;
+}
+
+/// Extra city strength (whole points) when the city is next to a mountain
+int CvBuildingEntry::GetMountainCityStrength() const
+{
+	return m_iMountainCityStrength;
+}
+
+/// Extra city attack range
+int CvBuildingEntry::GetCityAttackRangeChange() const
+{
+	return m_iCityAttackRangeChange;
+}
+#endif
 
 #ifdef LEKMOD_TERRITORY_HEAL
 /// Extra healing for the owner's non-air units on any tile of the city (Field Hospital)

@@ -38438,6 +38438,28 @@
 	<Building_ResourceQuantity>
 		<Delete />
 
+		<!-- LEKMOD: Castles provide 3 Horses -->
+		<Row>
+			<BuildingType>BUILDING_CASTLE</BuildingType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Quantity>3</Quantity>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MUGHAL_FORT</BuildingType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Quantity>3</Quantity>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_ALCAZABA</BuildingType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Quantity>3</Quantity>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TUNISIA_CASTLE</BuildingType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Quantity>3</Quantity>
+		</Row>
+
 		<Row> 
 			<BuildingType>BUILDING_RECYCLING_CENTER</BuildingType> 
 			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
@@ -40021,6 +40043,18 @@
 	</Table> 
 	<Building_UnitCombatProductionModifiers>
 		<Delete />
+
+		<!-- LEKMOD: Arsenal +15% towards gunpowder and siege units -->
+		<Row>
+			<BuildingType>BUILDING_ARSENAL</BuildingType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_ARSENAL</BuildingType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
 
 		<Row> 
 			<BuildingType>BUILDING_STABLE</BuildingType> 
@@ -41850,6 +41884,11 @@
 		<Column name="NukeExplosionRand" type="integer" default="0" /> <!-- If a City is Not being Razed, Every turn there is X chance that the city will experience a "Meltdown" this attacks the city plot with an Atomic bomb level nuclear strike, and removes the melted building. Only one Meltdown per turn, even if many buildings have this value. -->
 		<Column name="HealRateChange" type="integer" default="0" /> <!-- Changes the amount a unit heals while inside the city. -->
 		<Column name="TerritoryHealChange" type="integer" default="0" /> <!-- LEKMOD: extra healing for the owner's non-air units on all tiles of the city -->
+		<Column name="CityHealRate" type="integer" default="0" /> <!-- LEKMOD: the city heals this many HP per turn (highest of its buildings; base CITY_HIT_POINTS_HEALED_PER_TURN if higher) -->
+		<Column name="AdjacentEnemyDamage" type="integer" default="0" /> <!-- LEKMOD: enemy units next to the city take this damage at the start of their turn (like a Citadel, no stacking) -->
+		<Column name="HillCityStrength" type="integer" default="0" /> <!-- LEKMOD: extra city Defense (whole points) if the city is on a Hill -->
+		<Column name="MountainCityStrength" type="integer" default="0" /> <!-- LEKMOD: extra city Defense (whole points) if the city is next to a Mountain -->
+		<Column name="CityAttackRangeChange" type="integer" default="0" /> <!-- LEKMOD: extra city ranged attack range -->
 		<Column name="Happiness" type="integer" default="0" /> <!-- Changes the amount of local happiness the city has. -->
 		<Column name="UnmoddedHappiness" type="integer" default="0" /> <!-- Changes the amount of global happiness the city is adding to the empire -->
 		<Column name="UnhappinessModifier" type="integer" default="0" /> <!-- Changes the amount of unhappiness in the empire by a % value. -->
@@ -47367,6 +47406,49 @@
 		<Update>
 			<Where Type="BUILDING_OUTREMER"/>
 			<Set HurryCostModifier="25"/>
+		</Update>
+	</Buildings>
+	<!-- LEKMOD: defense buildings (Walls, Castle, Arsenal, Command Bunker and their unique replacements) -->
+	<Buildings>
+		<Update>
+			<Where BuildingClass="BUILDINGCLASS_WALLS"/>
+			<Set CityHealRate="15" AdjacentEnemyDamage="10" HillCityStrength="1" MountainCityStrength="1"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_WALLS"/>
+			<Set Defense="400"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_LIONS_GATE"/>
+			<Set Defense="400"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ROVA"/>
+			<Set Defense="400"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_GEORGIA_TSIKHE"/>
+			<Set Defense="400"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_WALLS_OF_BABYLON"/>
+			<Set Defense="500"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_MURUS_GALLICUS"/>
+			<Set Defense="500"/>
+		</Update>
+		<Update>
+			<Where BuildingClass="BUILDINGCLASS_CASTLE"/>
+			<Set CityHealRate="20" MountainCityStrength="3"/>
+		</Update>
+		<Update>
+			<Where BuildingClass="BUILDINGCLASS_ARSENAL"/>
+			<Set CityHealRate="30" PrereqTech="TECH_CHEMISTRY"/>
+		</Update>
+		<Update>
+			<Where BuildingClass="BUILDINGCLASS_MILITARY_BASE"/>
+			<Set CityHealRate="50" CityAttackRangeChange="1" ExtraCityHitPoints="75" Cost="575" PrereqTech="TECH_RADAR"/>
 		</Update>
 	</Buildings>
 	<Table name="Builds">
@@ -94073,7 +94155,7 @@
 		</Row>
 		<Row> 
 			<Name>CITY_HIT_POINTS_HEALED_PER_TURN</Name> 
-			<Value>20</Value> 
+			<Value>10</Value> 
 		</Row>
 		<Row> 
 			<Name>FLAT_LAND_EXTRA_DEFENSE</Name> 

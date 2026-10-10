@@ -18403,7 +18403,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ARSENAL_STRATEGY"> 
 			<Text>
-				The Arsenal is a mid-game military building that increases a city's Defense Strength by 9 and Hit Points by 25, making the city more difficult to capture. The city must possess a Castle before it can construct an Arsenal.
+				The Arsenal strengthens a city that has a Castle and speeds up the production of gunpowder and siege units.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ARTISTS_GUILD"> 
@@ -18740,7 +18740,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CASTLE_STRATEGY"> 
 			<Text>
-				The Castle is a Medieval-era building which increases the city's Defensive Strength by 7 and Hit Points by 25. The city must possess Walls before the Castle can be constructed.
+				The Castle further strengthens a city that has Walls and provides Horses. It is especially strong next to a Mountain.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CATHDEDRAL_HELP"> 
@@ -20161,7 +20161,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MILITARY_BASE"> 
 			<Text>
-				Military Base
+				Command Bunker
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MILITARY_BASE_HELP"> 
@@ -20171,7 +20171,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MILITARY_BASE_STRATEGY"> 
 			<Text>
-				The Military Base is a mid-game building which increases the city's Defensive Strength by 12 and Hit Points by 25. The city must possess an Arsenal before a Military Base may be constructed.
+				The Command Bunker is the last defense building. It needs an Arsenal and gives the city many Hit Points, fast healing and a longer ranged attack.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MINT"> 
@@ -21540,7 +21540,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_WALLS_STRATEGY"> 
 			<Text>
-				Walls increase a city's Defense Strength by 5 and Hit Points by 50, making the city more difficult to capture. Walls are quite useful for cities located along a civilization's frontier.
+				Walls make a city harder to capture: more Defense and Hit Points, faster healing, and they damage enemy units standing next to the city. They are strongest on a Hill or next to a Mountain.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_WATCH_TOWER"> 
@@ -41495,12 +41495,12 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_MILITARYBASE_HEADING"> 
 			<Text>
-				Military Base
+				Command Bunker
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_MILITARYBASE_TEXT"> 
 			<Text>
-				A military base is a series of structures and parade grounds holding one or more major military units - a legion, division, corps, fleet, or other, depending upon the military organization in question. A military base will contain everything needed to keep the military unit in fighting trim, including training grounds, officers' quarters and enlisted barracks, prisons, armories, hospitals, supply depots, transport equipment, and so forth. These bases are usually heavily protected and sited on defensible terrain. Barring treachery from within, it would take an enemy army to capture or destroy a military base.
+				A command bunker is a hardened, partly underground headquarters from which a city's defense is directed. Protected against bombardment, it links radar, artillery and garrison so the city can strike at enemies farther away.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_BUILDINGS_MINT_HEADING"> 
@@ -59087,7 +59087,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_COMBAT_CITYHITPOINTS_HEADING4_BODY"> 
 			<Text>
-				A fully-healthy city has 200 hit points. As it takes damage, the city's hit points are reduced. If a city's hit points reach 0, an enemy unit can capture the city by entering its tile.
+				A city has 200 hit points.[NEWLINE]Defense buildings add more: Walls +50 (Walls of Babylon +100), Castle +25, Arsenal +25, Command Bunker +75. With all four a city has 375 hit points.[NEWLINE][NEWLINE]If a city's hit points reach 0, an enemy melee unit can capture the city by entering its tile.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_COMBAT_CITYHITPOINTS_HEADING4_TITLE"> 
@@ -59397,7 +59397,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_COMBAT_HEALINGDAMAGE_HEADING3_BODY"> 
 			<Text>
-				A city heals one point of damage every turn, even during combat. Therefore to capture a city the attacker must do more than one point of damage per turn (and usually a lot more than that).
+				A damaged city heals 10 HP every turn, even during combat.[NEWLINE][NEWLINE]Defense buildings raise this rate (the highest one counts, they do not add up):[NEWLINE]Walls: 15 HP per turn.[NEWLINE]Castle: 20 HP per turn.[NEWLINE]Arsenal: 30 HP per turn.[NEWLINE]Command Bunker: 50 HP per turn.[NEWLINE][NEWLINE]To capture a city, the attacker must deal more damage per turn than the city heals.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_COMBAT_HEALINGDAMAGE_HEADING3_TITLE"> 
@@ -120348,6 +120348,24 @@ The ship has weather'd every rack; the prize we sought is won."
 				[ICON_HAPPINESS_1] Happiness: +{1_Num}
 			</Text>
 		</Replace>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_CITY_HITPOINTS">
+			<Text>[ICON_STRENGTH] City Hit Points: {1_Num}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_CITY_HEAL">
+			<Text>[ICON_STRENGTH] City heals {1_Num} HP per turn</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_HILL_STRENGTH">
+			<Text>[ICON_STRENGTH] Defense: +{1_Num} more if the city is on a Hill</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_MOUNTAIN_STRENGTH">
+			<Text>[ICON_STRENGTH] Defense: +{1_Num} more if the city is next to a Mountain</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_CITY_RANGE">
+			<Text>[ICON_RANGE_STRENGTH] City attack range: {1_Num}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_ADJACENT_DAMAGE">
+			<Text>[ICON_WAR] Enemy units next to the city take {1_Num} damage at the start of their turn</Text>
+		</Row>
 		<Replace Tag="TXT_KEY_PRODUCTION_BUILDING_HITPOINTS"> 
 			<Text>
 				[ICON_STRENGTH] Hit Points: +{1_Num}
@@ -134266,7 +134284,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_CHEMISTRY_HELP"> 
 			<Text>
-				Allows you to build the [COLOR_POSITIVE_TEXT]Cannon[ENDCOLOR], a Renaissance-era siege unit.
+				Allows you to build the [COLOR_POSITIVE_TEXT]Cannon[ENDCOLOR], a Renaissance-era siege unit, and the [COLOR_POSITIVE_TEXT]Arsenal[ENDCOLOR], which boosts City defense.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_CHEMISTRY_QUOTE"> 
@@ -135236,7 +135254,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_METALLURGY_HELP"> 
 			<Text>
-				Allows you to build the [COLOR_POSITIVE_TEXT]Lancer[ENDCOLOR], a fast mounted unit designed to hunt down other mounted units, and the [COLOR_POSITIVE_TEXT]Arsenal[ENDCOLOR], which boosts City defense.
+				Allows you to build the [COLOR_POSITIVE_TEXT]Lancer[ENDCOLOR], a fast mounted unit designed to hunt down other mounted units.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_METALLURGY_QUOTE"> 
@@ -135686,7 +135704,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_RADAR_HELP"> 
 			<Text>
-				Allows you to build the [COLOR_POSITIVE_TEXT]Bomber[ENDCOLOR], a deadly air Unit capable of delivering death from afar, and the [COLOR_POSITIVE_TEXT]Fighter[ENDCOLOR], an air Unit designed to wrest control of the skies from enemy aircraft. Also allows you to build the [COLOR_POSITIVE_TEXT]Paratrooper[ENDCOLOR], a late-game infantry unit capable of paradropping behind enemy lines.
+				Allows you to build the [COLOR_POSITIVE_TEXT]Bomber[ENDCOLOR], a deadly air Unit capable of delivering death from afar, and the [COLOR_POSITIVE_TEXT]Fighter[ENDCOLOR], an air Unit designed to wrest control of the skies from enemy aircraft. Also allows you to build the [COLOR_POSITIVE_TEXT]Paratrooper[ENDCOLOR], a late-game infantry unit capable of paradropping behind enemy lines. Also allows you to build the [COLOR_POSITIVE_TEXT]Command Bunker[ENDCOLOR], which boosts City defense.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_RADAR_QUOTE"> 
@@ -135801,7 +135819,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_REPLACEABLE_PARTS_HELP"> 
 			<Text>
-				Allows you to build the basic land unit [COLOR_POSITIVE_TEXT]Great War Infantry[ENDCOLOR], and the [COLOR_POSITIVE_TEXT]Military Base[ENDCOLOR], which boosts City defense.
+				Allows you to build the basic land unit [COLOR_POSITIVE_TEXT]Great War Infantry[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_REPLACEABLE_PARTS_QUOTE"> 
@@ -138972,7 +138990,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_VERSZ"> 
 			<Text>
-				+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from [ICON_BUILDING_WALLS] Walls, [ICON_BUILDING_CASTLE] Castles, [ICON_BUILDING_ARSENAL] Arsenals and [ICON_BUILDING_MILITARY_BASE] Military Bases.
+				+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from [ICON_BUILDING_WALLS] Walls, [ICON_BUILDING_CASTLE] Castles, [ICON_BUILDING_ARSENAL] Arsenals and [ICON_BUILDING_MILITARY_BASE] Command Bunkers.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_VERSZ_SHORT"> 

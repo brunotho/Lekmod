@@ -853,6 +853,12 @@ public:
 	void setMadeAttack(bool bNewValue);
 
 	bool canRangeStrike() const;
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	// sum (or highest) of a defense-building column over the city's buildings: 0 heal, 1 adjacent damage, 2 hill, 3 mountain, 4 range
+	int GetLekmodBuildingStat(int iStat, bool bMax) const;
+	int GetLekmodAttackRange() const;
+	int GetLekmodHealPerTurn() const;
+#endif
 	bool CanRangeStrikeNow() const;
 	bool IsHasBuildingThatAllowsRangeStrike() const;
 

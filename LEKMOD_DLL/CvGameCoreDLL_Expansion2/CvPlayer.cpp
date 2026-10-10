@@ -5888,7 +5888,21 @@ void CvPlayer::DoUnitReset()
 		}
 
 		int iCitadelDamage;
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+		// Citadels and enemy cities with Walls damage adjacent units; the higher value counts (no stacking)
+		if (!pLoopUnit->IsNearEnemyCitadel(iCitadelDamage))
+			iCitadelDamage = 0;
+		for (int iDir = 0; iDir < NUM_DIRECTION_TYPES; iDir++)
+		{
+			CvPlot* pAdjacent = plotDirection(pLoopUnit->getX(), pLoopUnit->getY(), (DirectionTypes)iDir);
+			CvCity* pAdjacentCity = pAdjacent ? pAdjacent->getPlotCity() : NULL;
+			if (pAdjacentCity != NULL && GET_TEAM(pLoopUnit->getTeam()).isAtWar(pAdjacentCity->getTeam()))
+				iCitadelDamage = std::max(iCitadelDamage, pAdjacentCity->GetLekmodBuildingStat(1, true));
+		}
+		if (iCitadelDamage > 0)
+#else
 		if (pLoopUnit->IsNearEnemyCitadel(iCitadelDamage))
+#endif
 		{
 			pLoopUnit->changeDamage(iCitadelDamage, NO_PLAYER, /*fAdditionalTextDelay*/ 0.5f);
 		}
