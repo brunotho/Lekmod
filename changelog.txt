@@ -504,7 +504,7 @@ Hovering an unimproved resource shows what improving it would give.
 - Changed: long lines in the tile info box wrap instead of running off the screen edge
 - Dev: on tiles outside anyone's borders, the improved yields left out the resource's own yields (e.g. Lapis showed no Gold), because the game's yield preview counted the resource only for the tile owner's team; fixed in the DLL (LEKMOD_YIELD_WITH_BUILD_VIEWER_TEAM)
 - Dev: the build turns were one too high (the first turn's work counts right away, as on the build button); fixed
-- Added: the turns are those of your own builder: Fishing Boats show 1 turn for the Skiff or Work Boat (used up), and the Worker-like time for civilizations with the Nelayan
+- Added: Fishing Boats show the time for a Worker or Nelayan and the instant alternative, e.g. "4 turns to improve, 1 with a Skiff"
 - Note: standard UI only (EUI uses its own tile tooltip)
 
 LUXURY YIELDS

@@ -291,22 +291,32 @@ function LekmodIsPlayersUnit(pPlayer, unitType)
 	return pClass ~= nil and pClass.DefaultUnit == unitType;
 end
 
--- LEKMOD: the build the player would use for an improvement: a sea builder that is not used up (Nelayan) first,
--- then a sea builder that is used up (Skiff, Work Boat: instant), then a land builder (Worker), else the first build
+-- LEKMOD: the build the player would use for an improvement: one that keeps the unit (Worker, Nelayan) gives the turns;
+-- a build that uses the unit up at once (Skiff, Work Boat) is named as the quick alternative (returned second, with its unit)
 function LekmodPickBuildForPlayer(pImprovement, pPlayer)
-	local tBest = {};
+	local pKeep = nil;
 	local pFirst = nil;
+	local pInstant, strInstantUnit, iInstantRank = nil, nil, 99;
 	for pBuild in GameInfo.Builds{ ImprovementType = pImprovement.Type } do
 		pFirst = pFirst or pBuild;
 		for row in GameInfo.Unit_Builds{ BuildType = pBuild.Type } do
 			if (LekmodIsPlayersUnit(pPlayer, row.UnitType)) then
-				local bSea = (GameInfo.Units[row.UnitType].Domain == "DOMAIN_SEA");
-				local iRank = bSea and (pBuild.Kill and 2 or 1) or 3;
-				tBest[iRank] = tBest[iRank] or pBuild;
+				if (pBuild.Kill) then
+					-- prefer the Skiff (or its replacement) over the Work Boat
+					local iRank = (GameInfo.Units[row.UnitType].Class == "UNITCLASS_SKIFF") and 1 or 2;
+					if (iRank < iInstantRank) then
+						pInstant, strInstantUnit, iInstantRank = pBuild, GameInfo.Units[row.UnitType].Description, iRank;
+					end
+				else
+					pKeep = pKeep or pBuild;
+				end
 			end
 		end
 	end
-	return tBest[1] or tBest[2] or tBest[3] or pFirst;
+	if (pKeep == nil) then
+		return pInstant or pFirst, nil, nil;
+	end
+	return pKeep, pInstant, strInstantUnit;
 end
 
 function LekmodResourceImprovementString(plot, pResource)
@@ -317,7 +327,10 @@ function LekmodResourceImprovementString(plot, pResource)
 	end
 	for row in GameInfo.Improvement_ResourceTypes{ ResourceType = pResource.Type } do
 		local pImprovement = GameInfo.Improvements[row.ImprovementType];
-		local pBuild = pImprovement and LekmodPickBuildForPlayer(pImprovement, pPlayer);
+		local pBuild, pInstantBuild, strInstantUnit = nil, nil, nil;
+		if (pImprovement ~= nil) then
+			pBuild, pInstantBuild, strInstantUnit = LekmodPickBuildForPlayer(pImprovement, pPlayer);
+		end
 		if (pBuild ~= nil and plot:CanHaveImprovement(pImprovement.ID, Game.GetActiveTeam())) then
 			-- Turns for one Worker (base work rate and the player's worker speed modifier). GetBuildTime is already
 			-- scaled by game speed; the first turn's work counts right away, as on the unit panel's build button (GetBuildTurnsLeft)
@@ -332,7 +345,13 @@ function LekmodResourceImprovementString(plot, pResource)
 					strYields = strYields .. ((strYields ~= "") and " " or "") .. iYield .. pYield.IconString;
 				end
 			end
-			return "[NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns) .. "[NEWLINE]" .. strYields;
+			local strHeader;
+			if (pInstantBuild ~= nil and iTurns > 1) then
+				strHeader = Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT_QUICK", pImprovement.Description, iTurns, strInstantUnit);
+			else
+				strHeader = Locale.ConvertTextKey("TXT_KEY_LEKMOD_PLOTROLL_RESOURCE_IMPROVEMENT", pImprovement.Description, iTurns);
+			end
+			return "[NEWLINE]" .. strHeader .. "[NEWLINE]" .. strYields;
 		end
 	end
 	return "";
