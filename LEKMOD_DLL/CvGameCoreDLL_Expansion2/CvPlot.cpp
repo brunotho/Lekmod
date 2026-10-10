@@ -12275,7 +12275,12 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 	}
 
 	// Nature yield
+#ifdef LEKMOD_YIELD_WITH_BUILD_VIEWER_TEAM
+	// the resource counts if ePlayer's team sees it (getTeam() is the plot owner's: NO_TEAM on unowned plots, which dropped the resource's own yield)
+	iYield = calculateNatureYield(eYield, eTeam, bIgnoreFeature);
+#else
 	iYield = calculateNatureYield(eYield, getTeam(), bIgnoreFeature);
+#endif
 
 	ImprovementTypes eImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild)->getImprovement();
 
