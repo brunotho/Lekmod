@@ -529,9 +529,35 @@ Events.GameplaySetActivePlayer.Add(OnNotificationPanelActivePlayerChanged);
 
 -------------------------------------------------
 -------------------------------------------------
+-- LEKMOD: dismiss every notification except the research and production prompts (like right-clicking each)
+function LekmodIsDismissable( type )
+	return type ~= NotificationTypes.NOTIFICATION_TECH and type ~= NotificationTypes.NOTIFICATION_PRODUCTION;
+end
+function LekmodDismissAll()
+	local ids = {};
+	for id, type in pairs( g_ActiveNotifications ) do
+		if LekmodIsDismissable( type ) then
+			table.insert( ids, id );
+		end
+	end
+	for _, id in ipairs( ids ) do
+		UI.RemoveNotification( id );
+	end
+end
+Controls.LekmodDismissAll:RegisterCallback( Mouse.eLClick, LekmodDismissAll );
+
 function ProcessStackSizes()
 
     Controls.BigStack:CalculateSize();
+    -- LEKMOD: the dismiss-all button only shows when there is something to dismiss
+    local bAnyDismissable = false;
+    for id, type in pairs( g_ActiveNotifications ) do
+        if LekmodIsDismissable( type ) then
+            bAnyDismissable = true;
+            break;
+        end
+    end
+    Controls.LekmodDismissAll:SetHide( not bAnyDismissable );
     local bigY = Controls.BigStack:GetSizeY();
     Controls.SmallScrollPanel:SetSizeY( g_SmallScrollMax - bigY );
 
