@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- LEKMOD: anchored to the bottom-right corner with a 16 px gap (like the End Turn button), so the box grows to the left -->
+<Context>
+	<Grid Padding="8,8" Style="GridBlack8" Anchor="R,B" Offset="16,250" ID="TextBox" Color="White,200" >
+		<Label Anchor="C,C" String="Help text!" Font="TwCenMT16" FontStyle="Shadow" ColorSet="Beige_Black" ID="Text" />
+	</Grid>
+</Context>

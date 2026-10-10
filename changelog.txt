@@ -501,7 +501,7 @@ Hovering an unimproved resource shows what improving it would give.
 - Added: the improvement that connects the resource, how many turns it takes to build, and the tile's yields with it (e.g. "With a Mine (4 turns to improve):", then "1 Food 3 Production" on the next line)
 - Added: these lines and the resource's special effects show in the tile info box at the bottom right, below the tile's yields, and in the detailed tile tooltip
 - Dev: the lines first only reached the detailed tooltip (GetResourceString long form); the bottom-right box (PlotHelpText.lua) asks for the short form. Lekmod now overrides PlotHelpText.lua and appends LekmodResourceDetailsString
-- Changed: long lines in the tile info box wrap instead of running off the screen edge
+- Changed: the tile info box sits 16 px from the right screen edge (like the End Turn button), grows to the left, and wraps long lines at a wider width instead of running off the screen
 - Dev: on tiles outside anyone's borders, the improved yields left out the resource's own yields (e.g. Lapis showed no Gold), because the game's yield preview counted the resource only for the tile owner's team; fixed in the DLL (LEKMOD_YIELD_WITH_BUILD_VIEWER_TEAM)
 - Dev: the build turns were one too high (the first turn's work counts right away, as on the build button); fixed
 - Added: Fishing Boats show the time for a Worker or Nelayan and the instant alternative, e.g. "4 turns to improve, 1 with a Skiff"
@@ -1186,17 +1186,18 @@ Cities heal at a flat rate that only defense buildings raise.
 - Removed: Defense from buildings (and the Mughal Caravansary's garrison bonus) no longer adds healing
 - Changed: Civilopedia pages on city Hit Points and healing updated
 
-BUILDING COSTS AND MAINTENANCE (BUILDING_COURTHOUSE, BUILDING_BOMB_SHELTER, BUILDING_STADIUM, BUILDING_WINDMILL, BUILDING_FACTORY)
----------------------------------------------------------------------------------------------------------------------------
+BUILDING COSTS AND MAINTENANCE (BUILDING_COURTHOUSE, BUILDING_BOMB_SHELTER, BUILDING_STADIUM, BUILDING_FACTORY)
+------------------------------------------------------------------------------------------------------
 Tags: buildings
 Several buildings cost more or less to build and keep.
 - Changed: Courthouse (and unique replacements): 2 Gold maintenance (Courthouse was 4)
 - Changed: Bomb Shelter: 5 Gold maintenance (was 1)
 - Added: Bomb Shelter: military units (planes too) in the city take only 50 damage from a nuclear attack
 - Changed: Stadium: cost 335 -> 284, 5 Gold maintenance (was 2)
-- Changed: Windmill (and unique replacements): buying it with Gold costs 15% extra (was 25%)
 - Changed: Factory: cost 241 -> 260 (Faith cost with Work Ethic too), needs 2 Coal (was 1) and 1 Iron
-- Note: unique Factory and Stadium replacements keep their own costs and resources (the spec names only the Factory and the Stadium)
+- Changed: Prussian Factory: cost 181 -> 195 (Faith 144 -> 156), now needs 2 Coal and 1 Iron (needed none)
+- Changed: Chilean Cooperative: cost 241 -> 260 (Faith too), needs 2 Coal (was 1) and 1 Iron
+- Note: the Swiss Ski Resort (Stadium replacement) keeps its cost
 - DLL: Buildings.NukeUnitDamageFixed (LEKMOD_DEFENSE_BUILDINGS); a GDR's Nuke Resistance (20) still wins when lower
 
 RESOURCE BUILDINGS (BUILDING_GROCER, BUILDING_BREWERY, BUILDING_GEMCUTTER, BUILDING_TEXTILE, BUILDING_MINT, BUILDING_FORGE)
@@ -1209,7 +1210,7 @@ Salt moves to the Grocer, and the Mint, Gem Cutter and Forge make Mountains work
 - Added: Gem Cutter: Mountains +1 Culture
 - Changed: Textile Mill: its resources give +1 Production (was 2) and +1 Gold
 - Added: Mint (and unique replacements): Mountains +2 Gold
-- Added: Forge: Mountains +1 Production
+- Added: Forge (and Nubia's Blast Furnace): Mountains +1 Production
 - Note: the Mountain bonuses never apply to natural wonders
 
 RESEARCH LAB, CARAVANSARY, HOTEL (BUILDING_LABORATORY, BUILDING_CARAVANSARY, BUILDING_HOTEL)

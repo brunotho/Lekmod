@@ -6340,10 +6340,10 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 		</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_COOPERATIVE_HELP">
-		<Text>Unique Chilean Replacement for the Factory. Unlike the Factory you only need 1 Cooperative building to unlock your Ideology. Receives +2 [ICON_HAPPINESS_1] Happiness and has an additional Specialist Slot. Requires 1 [ICON_RES_COAL] Coal. [NEWLINE][NEWLINE]+2 [ICON_GOLD] Gold from [ICON_RES_RUBBER] Rubber.</Text>
+		<Text>Unique Chilean Replacement for the Factory.[NEWLINE]Unlike the Factory you only need 1 Cooperative building to unlock your Ideology.[NEWLINE]Receives +2 [ICON_HAPPINESS_1] Happiness and has an additional Specialist Slot.[NEWLINE]Requires 2 [ICON_RES_COAL] Coal and 1 [ICON_RES_IRON] Iron.[NEWLINE][NEWLINE]+2 [ICON_GOLD] Gold from [ICON_RES_RUBBER] Rubber.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_COOPERATIVE_STRATEGY">
-		<Text>Unique Chilean Replacement for the Factory. As a normal Factory, it provides +4 Production, +10% Production and 2 Engineer Specialists. Unlike a normal Factory however, only 1 is needed to choose an Ideology. Requires 1 Coal.</Text>
+		<Text>Unique Chilean Replacement for the Factory. As a normal Factory, it provides +4 Production, +10% Production and 2 Engineer Specialists. Unlike a normal Factory however, only 1 is needed to choose an Ideology. Requires 2 Coal and 1 Iron.</Text>
 	</Row>
 	
 	<Row Tag="TXT_KEY_CIV_LEU_CHILE_ADJECTIVE">
@@ -18553,7 +18553,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BLAST_FURNACE_HELP"> 
 			<Text>
-				Replaces the Forge. In addition to the typical perks, provides +2 [ICON_CULTURE] Culture by itself and from each [ICON_RES_IRON] Iron resource. Newly-trained Ranged, Siege and Recon units receive the Accuracy I (+15% bonus in Open terrain) promotion for free. Less costly to produce and does not require any resources nearby. Does not require Gold maintenance.
+				Replaces the Forge. In addition to the typical perks, provides +2 [ICON_CULTURE] Culture by itself and from each [ICON_RES_IRON] Iron resource.[NEWLINE]Mountains worked by this City produce +1 [ICON_PRODUCTION] Production (not Natural Wonders).[NEWLINE]Newly-trained Ranged, Siege and Recon units receive the Accuracy I (+15% bonus in Open terrain) promotion for free.[NEWLINE]Less costly to produce and does not require any resources nearby. Does not require Gold maintenance.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BLAST_FURNACE_STRATEGY"> 
@@ -19101,7 +19101,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_PRUSSIAN_FACTORY_HELP"> 
 			<Text>
-				Unique Building replacing the Factory. This building is cheaper and does not require [ICON_RES_COAL] Coal.[NEWLINE]Provides +2 [ICON_GOLD] Gold from [ICON_RES_RUBBER] Rubber.[NEWLINE][NEWLINE]City must have a workshop
+				Unique Building replacing the Factory. This building is 25% cheaper.[NEWLINE]Requires 2 [ICON_RES_COAL] Coal and 1 [ICON_RES_IRON] Iron.[NEWLINE]Provides +2 [ICON_GOLD] Gold from [ICON_RES_RUBBER] Rubber.[NEWLINE][NEWLINE]City must have a Workshop.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FACTORY"> 
@@ -19116,7 +19116,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FACTORY_STRATEGY"> 
 			<Text>
-				The Factory is an Industrial-era building which greatly increases a city's [ICON_PRODUCTION] Production. The city must already possess a Workshop (or Longhouse). 1 [ICON_RES_COAL] Coal is consumed when a Factory is created.
+				The Factory is an Industrial-era building which greatly increases a city's [ICON_PRODUCTION] Production. The city must already possess a Workshop (or Longhouse). 2 [ICON_RES_COAL] Coal and 1 [ICON_RES_IRON] Iron are consumed when a Factory is created.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FALU_GRUVA"> 

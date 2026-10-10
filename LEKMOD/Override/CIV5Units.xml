@@ -47467,11 +47467,16 @@
 			<Set Cost="425" GoldMaintenance="5"/>
 		</Update>
 		<Update>
-			<Where BuildingClass="BUILDINGCLASS_WINDMILL"/>
-			<Set HurryCostModifier="15"/>
+			<Where Type="BUILDING_FACTORY"/>
+			<Set Cost="389" FaithCost="389"/>
+		</Update>
+		<!-- unique Factories: same % below the Factory as before (Prussian 75% cost / 60% Faith, Cooperative 100%) -->
+		<Update>
+			<Where Type="BUILDING_PRUSSIAN_FACTORY"/>
+			<Set Cost="292" FaithCost="233"/>
 		</Update>
 		<Update>
-			<Where Type="BUILDING_FACTORY"/>
+			<Where Type="BUILDING_COOPERATIVE"/>
 			<Set Cost="389" FaithCost="389"/>
 		</Update>
 		<Update>
@@ -47494,6 +47499,27 @@
 		</Update>
 		<Row>
 			<BuildingType>BUILDING_FACTORY</BuildingType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Delete BuildingType="BUILDING_COOPERATIVE"/>
+		<Row>
+			<BuildingType>BUILDING_PRUSSIAN_FACTORY</BuildingType>
+			<ResourceType>RESOURCE_COAL</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_PRUSSIAN_FACTORY</BuildingType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_COOPERATIVE</BuildingType>
+			<ResourceType>RESOURCE_COAL</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_COOPERATIVE</BuildingType>
 			<ResourceType>RESOURCE_IRON</ResourceType>
 			<Cost>1</Cost>
 		</Row>
@@ -47831,6 +47857,12 @@
 		</Row>
 		<Row>
 			<BuildingType>BUILDING_FORGE</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BLAST_FURNACE</BuildingType>
 			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
 			<YieldType>YIELD_PRODUCTION</YieldType>
 			<Yield>1</Yield>

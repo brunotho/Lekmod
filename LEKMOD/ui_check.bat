@@ -126,6 +126,7 @@ copy /y "%patchfolder%\Lua\tmp\ui\Lobby\StagingRoom.xml.ignore" "%patchfolder%\L
  copy /y "%patchfolder%\Lua\tmp\ui\PlotMouseoverInclude.lua.ignore" "%patchfolder%\Lua\UI\PlotMouseoverInclude.lua" > nul
 IF NOT EXIST "%euifolder%" (
   copy /y "%patchfolder%\Lua\tmp\ui\PlotHelpText.lua.ignore" "%patchfolder%\Lua\UI\PlotHelpText.lua" > nul
+  copy /y "%patchfolder%\Lua\tmp\ui\PlotHelpText.xml.ignore" "%patchfolder%\Lua\UI\PlotHelpText.xml" > nul
 )
 REM --------------------------------------------------------------------------------------------------
 copy /y "%patchfolder%\Lua\tmp\ui\MiniMapPanel\MiniMapPanel.lua.ignore" "%patchfolder%\Lua\UI\MiniMapPanel.lua" > nul
