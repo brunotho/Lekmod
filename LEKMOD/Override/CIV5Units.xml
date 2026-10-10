@@ -2310,7 +2310,7 @@
 		<Row>
 			<BeliefType>BELIEF_PILGRIMAGE</BeliefType>
 			<YieldType>YIELD_FAITH</YieldType> 
-			<YieldPerForeignCity>4</YieldPerForeignCity>
+			<YieldPerForeignCity>3</YieldPerForeignCity>
 		</Row>
 		<Row>
 			<BeliefType>BELIEF_PILGRIMAGE</BeliefType>
@@ -30725,7 +30725,7 @@
 		<Row>
 			<BeliefType>BELIEF_PILGRIMAGE</BeliefType>
 			<YieldType>YIELD_FAITH</YieldType> 
-			<Yield>4</Yield>
+			<Yield>3</Yield>
 		</Row>
 		<Row>
 			<BeliefType>BELIEF_PILGRIMAGE</BeliefType>
@@ -30856,6 +30856,9 @@
 		<Column name="OtherReligionPressureErosion" type="integer" default="0" />
 		<Column name="SpyPressure" type="integer" default="0" />
 		<Column name="InquisitorPressureRetention" type="integer" default="0" />
+		<Column name="ImprovementYieldNeedsResource" type="boolean" default="false"/> <!-- LEKMOD: improvement yields only on tiles with a resource -->
+		<Column name="MissionaryProphetSpread" type="boolean" default="false"/> <!-- LEKMOD: missionaries spread like Great Prophets -->
+		<Column name="MissionaryExtraMoves" type="integer" default="0"/> <!-- LEKMOD: extra moves for missionaries -->
 		<Column name="FaithBuildingTourism" type="integer" default="0" />
 		<Column name="ObsoleteEra" type="text" default="NULL" />
 		<Column name="ResourceRevealed" type="text" default="NULL" />
@@ -31546,6 +31549,75 @@
 			<InquisitorPressureRetention>50</InquisitorPressureRetention>
 		</Row>
 	</Beliefs>
+	<!-- LEKMOD: Phase 3 religion 2 (Just War, Choral Music, Religious Center, Dance of the Aurora, Ocean's Bounty) -->
+	<Table name="Belief_BuildingClassFreeUnits"> <!-- LEKMOD: the founder's religion grants these units when the building is finished -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="UnitClassType" type="text" reference="UnitClasses(Type)" />
+		<Column name="Count" type="integer" default="1" />
+	</Table>
+	<Table name="Belief_FlatOpenTerrainYieldChanges"> <!-- LEKMOD: yields on flat tiles of the terrain without a feature -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="TerrainType" type="text" reference="Terrains(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Table name="Belief_ImprovementBuildingYieldChanges"> <!-- LEKMOD: improvement yields only in cities with the building -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Beliefs>
+		<Update>
+			<Where Type="BELIEF_JUST_WAR"/>
+			<Set CombatModifierEnemyCities="15" MissionaryProphetSpread="true" MissionaryExtraMoves="1"/>
+		</Update>
+	</Beliefs>
+	<Belief_BuildingClassFreeUnits>
+		<Row>
+			<BeliefType>BELIEF_CHORAL_MUSIQ</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GRAND_TEMPLE</BuildingClassType>
+			<UnitClassType>UNITCLASS_MUSICIAN</UnitClassType>
+			<Count>1</Count>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RELIGIOUS_CENTER</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GRAND_TEMPLE</BuildingClassType>
+			<UnitClassType>UNITCLASS_WORKER</UnitClassType>
+			<Count>2</Count>
+		</Row>
+	</Belief_BuildingClassFreeUnits>
+	<Belief_FlatOpenTerrainYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_DANCE_AURORA</BeliefType>
+			<TerrainType>TERRAIN_TUNDRA</TerrainType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_FlatOpenTerrainYieldChanges>
+	<Belief_ImprovementYieldChanges>
+		<Delete BeliefType="BELIEF_OCEANS_BOUNTY"/>
+	</Belief_ImprovementYieldChanges>
+	<Belief_FeatureYieldChanges>
+		<Delete BeliefType="BELIEF_OCEANS_BOUNTY"/>
+		<Row>
+			<BeliefType>BELIEF_OCEANS_BOUNTY</BeliefType>
+			<FeatureType>FEATURE_ATOLL</FeatureType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Belief_FeatureYieldChanges>
+	<Belief_ImprovementBuildingYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_OCEANS_BOUNTY</BeliefType>
+			<ImprovementType>IMPROVEMENT_FISHING_BOATS</ImprovementType>
+			<BuildingClassType>BUILDINGCLASS_LIGHTHOUSE</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_ImprovementBuildingYieldChanges>
 	<!-- LEKMOD: Phase 3 religion (removed beliefs, belief edits) -->
 	<Beliefs>
 		<Delete Type="BELIEF_SACRED_PATHS"/>
@@ -31556,6 +31628,10 @@
 		<Update>
 			<Where Type="BELIEF_SACRED_WATERS"/>
 			<Set RiverHappiness="0"/>
+		</Update>
+		<Update>
+			<Where Type="BELIEF_EARTH_MOTHER"/>
+			<Set ImprovementYieldNeedsResource="true"/>
 		</Update>
 		<Update>
 			<Where Type="BELIEF_UNITY_OF_PROPHETS"/>
@@ -31620,7 +31696,6 @@
 	</Belief_HolyCityYieldChanges>
 	<Belief_ImprovementYieldChanges>
 		<Delete BeliefType="BELIEF_SACRED_PATHS"/>
-		<Delete BeliefType="BELIEF_EARTH_MOTHER"/>
 	</Belief_ImprovementYieldChanges>
 	<Belief_ResourceYieldChanges>
 		<Delete BeliefType="BELIEF_GOD_SEA"/>
@@ -31735,72 +31810,6 @@
 			<Where BeliefType="BELIEF_EARTH_MOTHER" ResourceType="RESOURCE_IRON"/>
 			<Set Yield="2"/>
 		</Update>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_COAL</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_URANIUM</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_GEMS</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_GOLD</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_SILVER</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_COPPER</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_SALT</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_AMBER</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_JADE</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
-		<Row>
-			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
-			<ResourceType>RESOURCE_LAPIS</ResourceType>
-			<YieldType>YIELD_FAITH</YieldType>
-			<Yield>1</Yield>
-		</Row>
 	</Belief_ResourceYieldChanges>
 
 	<Table name="BuildFeatures">

@@ -1278,7 +1278,7 @@ Tags: religion
 - Removed: founder belief Promised Land
 - Note: Initiation Rites was already gone in v35.4 (only its text was left)
 
-BELIEF CHANGES (BELIEF_PEACE_GARDENZ, BELIEF_SACRED_WATERS, BELIEF_SALATT, BELIEF_DIVINE_JUDGEMENT, BELIEF_MYSTIC_RITUALS, BELIEF_WIND, BELIEF_UNITY_OF_PROPHETS, BELIEF_FORMAL_LITURGY, BELIEF_RITUAL_SACRIFICE, BELIEF_TEARS_OF_NOOBS, BELIEF_SEAFOOD, BELIEF_EARTH_MOTHER)
+BELIEF CHANGES (BELIEF_PEACE_GARDENZ, BELIEF_SACRED_WATERS, BELIEF_SALATT, BELIEF_DIVINE_JUDGEMENT, BELIEF_MYSTIC_RITUALS, BELIEF_WIND, BELIEF_UNITY_OF_PROPHETS, BELIEF_FORMAL_LITURGY, BELIEF_RITUAL_SACRIFICE, BELIEF_TEARS_OF_NOOBS, BELIEF_SEAFOOD, BELIEF_EARTH_MOTHER, BELIEF_PILGRIMAGE)
 --------------------------------------------------------------------------------------------------------------------------------------------------
 Tags: religion
 - Changed: Peace Gardens: +2 Food and +2 Culture from Gardens (was +1 Happiness from Gardens, +2 Gold +1 Production from Water Mills)
@@ -1292,7 +1292,20 @@ Tags: religion
 - Changed: Ritual Sacrifice: +1 Gold, +1 Faith and +1 Culture from Ivory, Furs and Truffles (was +2 Culture +1 Gold)
 - Changed: Tears of the Gods: Pearls also give +1 Faith and +2 Gold
 - Changed: Seafood Rituals: +2 Culture from Fish (was +1 Food +1 Culture +1 Faith)
-- Changed: Earth Mother: +1 Faith from resources that can be mined, Iron +2 (was +1 Faith from all Mines, +1 from Iron); Mines without a resource give no Faith
-- Note: Earth Mother's Faith is on the resource, so it also counts before the mine is built
+- Changed: Earth Mother: +2 Faith from Iron (was +1), and Mines give +1 Faith only on a resource (Iron or any other mined resource; was every Mine)
+- Changed: Pilgrimage: +3 Faith (was +4) and +3 Culture from every foreign city following your religion
+- DLL: Beliefs.ImprovementYieldNeedsResource (LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE) for Earth Mother's mines
 - DLL: Belief_HolyCityYieldChanges now also works for Production/Food/Gold/Science in the holy city (LEKMOD_HOLY_CITY_YIELDS)
+
+JUST WAR, CHORAL MUSIC, RELIGIOUS CENTER, DANCE OF THE AURORA, OCEAN'S BOUNTY (BELIEF_JUST_WAR, BELIEF_CHORAL_MUSIQ, BELIEF_RELIGIOUS_CENTER, BELIEF_DANCE_AURORA, BELIEF_OCEANS_BOUNTY)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Tags: religion
+- Changed: Just War: +15% Combat Strength near enemy cities of this religion (was +20%)
+- Added: Just War: Missionaries spread the religion as strongly as Great Prophets and have +1 Movement
+- Added: Choral Music: finishing the Grand Temple gives a free Great Musician
+- Added: Religious Center: finishing the Grand Temple gives 2 free Workers
+- Added: Dance of the Aurora: +1 Food on flat Tundra without forest
+- Changed: Ocean's Bounty: +2 Production from Atolls (was +1), Fishing Boats give +1 Production only in cities with a Lighthouse
+- Note: the Grand Temple units come from the religion the player founded
+- DLL: Beliefs.MissionaryProphetSpread/MissionaryExtraMoves (LEKMOD_JUST_WAR_MISSIONARIES); Belief_BuildingClassFreeUnits, Belief_FlatOpenTerrainYieldChanges, Belief_ImprovementBuildingYieldChanges (LEKMOD_BELIEF_EXTRA_TABLES)
 

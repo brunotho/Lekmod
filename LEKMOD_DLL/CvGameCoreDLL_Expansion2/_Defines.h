@@ -1451,6 +1451,12 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_PROJECT_FREE_BUILDING
 // Belief_HolyCityYieldChanges also for Food/Production/Gold/Science, added in the holy city when it follows the religion (Salat)
 #define LEKMOD_HOLY_CITY_YIELDS
+// Beliefs.ImprovementYieldNeedsResource: the belief's improvement yields count only on tiles with a resource (Earth Mother: mines)
+#define LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
+// Beliefs.MissionaryProphetSpread / MissionaryExtraMoves: missionaries spread like prophets, extra moves (Just War)
+#define LEKMOD_JUST_WAR_MISSIONARIES
+// Belief_BuildingClassFreeUnits (Grand Temple: Choral Music, Religious Center), Belief_FlatOpenTerrainYieldChanges (Dance of the Aurora), Belief_ImprovementBuildingYieldChanges (Ocean's Bounty)
+#define LEKMOD_BELIEF_EXTRA_TABLES
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

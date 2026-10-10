@@ -16772,7 +16772,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CHORAL_MUSIQ"> 
 			<Text>
-				+3 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]Temples[ENDCOLOR]
+				+3 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]Temples[ENDCOLOR].[NEWLINE][NEWLINE]Finishing the [COLOR_POSITIVE_TEXT]Grand Temple[ENDCOLOR] gives a free [ICON_GREAT_MUSICIAN] Great Musician.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CHORAL_MUSIQ_SHORT"> 
@@ -16822,7 +16822,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_DANCE_AURORA"> 
 			<Text>
-				+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Tundra[ENDCOLOR] tiles
+				+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Tundra[ENDCOLOR] tiles.[NEWLINE]+1 [ICON_FOOD] Food from flat [COLOR_POSITIVE_TEXT]Tundra[ENDCOLOR] tiles without forest.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_DANCE_AURORA_NWS"> 
@@ -16937,7 +16937,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_EARTH_MOTHER"> 
 			<Text>
-				+1 [ICON_PEACE] Faith from resources that can be mined ([ICON_RES_IRON] Iron +2).[NEWLINE]Mines without a resource give no [ICON_PEACE] Faith.
+				+2 [ICON_PEACE] Faith from [ICON_RES_IRON] Iron.[NEWLINE]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Mines[ENDCOLOR] on a resource (Iron and any other mined resource).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_EARTH_MOTHER_SHORT"> 
@@ -17277,7 +17277,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JUST_WAR"> 
 			<Text>
-				+20% [ICON_STRENGTH] Combat Strength near enemy cities that follow this [COLOR_POSITIVE_TEXT]Religion[ENDCOLOR]
+				+15% [ICON_STRENGTH] Combat Strength near enemy cities that follow this [COLOR_POSITIVE_TEXT]Religion[ENDCOLOR].[NEWLINE][NEWLINE][ICON_MISSIONARY] Missionaries spread this religion as strongly as [ICON_PROPHET] Great Prophets and have +1 [ICON_MOVES] Movement.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JUST_WAR_SHORT"> 
@@ -17437,7 +17437,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_OCEANS_BOUNTY"> 
 			<Text>
-				+1 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Fishing Boats[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Atolls[ENDCOLOR]
+				+2 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Atolls[ENDCOLOR].[NEWLINE]+1 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Fishing Boats[ENDCOLOR] in cities with a [ICON_BUILDING_LIGHTHOUSE] Lighthouse.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_OCEANS_BOUNTY_SHORT"> 
@@ -17557,7 +17557,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PILGRIMAGE"> 
 			<Text>
-				+4 [ICON_PEACE] Faith and +3 [ICON_CULTURE] Culture from every foreign city following your religion.
+				+3 [ICON_PEACE] Faith and +3 [ICON_CULTURE] Culture from every foreign city following your religion.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PILGRIMAGE_SHORT"> 
@@ -17602,7 +17602,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_CENTER"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Temples[ENDCOLOR] provide +1 [ICON_HAPPINESS_1] Happiness, +1 [ICON_GOLD] Gold, and +1 [ICON_PRODUCTION] Production
+				[COLOR_POSITIVE_TEXT]Temples[ENDCOLOR] provide +1 [ICON_HAPPINESS_1] Happiness, +1 [ICON_GOLD] Gold and +1 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Finishing the [COLOR_POSITIVE_TEXT]Grand Temple[ENDCOLOR] gives 2 free Workers in the Holy City.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_CENTER_SHORT"> 

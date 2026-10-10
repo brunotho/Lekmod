@@ -8567,6 +8567,25 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 			{
 				iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetTerrainYieldChange(getTerrainType(), eYield);
 			}
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+			// Belief_FlatOpenTerrainYieldChanges: flat tiles without a feature (Dance of the Aurora: flat Tundra, no forest)
+			if (!isHills() && getFeatureType() == NO_FEATURE)
+			{
+				CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+				for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+				{
+					CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+					if (pkBelief == NULL || pkBelief->GetLekmodFlatOpenTerrainYields().empty())
+						continue;
+					if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+						continue;
+					const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodFlatOpenTerrainYields();
+					for (uint j = 0; j < aRows.size(); j++)
+						if (aRows[j].a == getTerrainType() && aRows[j].b == eYield)
+							iReligionChange += aRows[j].d;
+				}
+			}
+#endif
 			iYield += iReligionChange;
 		}
 	}
@@ -8952,6 +8971,46 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 				{
 					iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetImprovementYieldChange(eImprovement, eYield);
 				}
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+				// Belief_ImprovementBuildingYieldChanges: improvement yields only in cities with the building (Ocean's Bounty: Fishing Boats with a Lighthouse)
+				{
+					CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+					for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+					{
+						CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+						if (pkBelief == NULL || pkBelief->GetLekmodImprovementBuildingYields().empty())
+							continue;
+						if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+							continue;
+						const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodImprovementBuildingYields();
+						for (uint j = 0; j < aRows.size(); j++)
+						{
+							if (aRows[j].a != eImprovement || aRows[j].c != eYield)
+								continue;
+							BuildingTypes eNeeded = (BuildingTypes)GET_PLAYER(pWorkingCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(aRows[j].b);
+							if (eNeeded != NO_BUILDING && pWorkingCity->GetCityBuildings()->GetNumBuilding(eNeeded) > 0)
+								iReligionChange += aRows[j].d;
+						}
+					}
+				}
+#endif
+#ifdef LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
+				// Beliefs.ImprovementYieldNeedsResource: their improvement yields count only on tiles with a resource (Earth Mother: mines)
+				if (getResourceType(pWorkingCity->getTeam()) == NO_RESOURCE)
+				{
+					CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+					for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+					{
+						CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+						if (pkBelief == NULL || !pkBelief->IsImprovementYieldNeedsResource())
+							continue;
+						if (pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+							iReligionChange -= pkBelief->GetImprovementYieldChange(eImprovement, eYield);
+						if (eSecondaryPantheon == (BeliefTypes)iBelief)
+							iReligionChange -= pkBelief->GetImprovementYieldChange(eImprovement, eYield);
+					}
+				}
+#endif
 				iYield += iReligionChange;
 			}
 		}

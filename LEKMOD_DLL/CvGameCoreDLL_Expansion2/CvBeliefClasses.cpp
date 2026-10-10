@@ -87,6 +87,13 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_iSpyPressure(0),
 	m_iInquisitorPressureRetention(0),
 	m_iFaithBuildingTourism(0),
+#ifdef LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
+	m_bLekmodImprovementYieldNeedsResource(false),
+#endif
+#ifdef LEKMOD_JUST_WAR_MISSIONARIES
+	m_bLekmodMissionaryProphetSpread(false),
+	m_iLekmodMissionaryExtraMoves(0),
+#endif
 #ifdef NQ_FREE_SETTLERS_FROM_BELIEF
 	m_iNumFreeSettlers(0),
 #endif
@@ -927,6 +934,42 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iOtherReligionPressureErosion   = kResults.GetInt("OtherReligionPressureErosion");
 	m_iSpyPressure					  = kResults.GetInt("SpyPressure");
 	m_iInquisitorPressureRetention    = kResults.GetInt("InquisitorPressureRetention");
+#ifdef LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
+	m_bLekmodImprovementYieldNeedsResource = kResults.GetBool("ImprovementYieldNeedsResource");
+#endif
+#ifdef LEKMOD_JUST_WAR_MISSIONARIES
+	m_bLekmodMissionaryProphetSpread = kResults.GetBool("MissionaryProphetSpread");
+	m_iLekmodMissionaryExtraMoves = kResults.GetInt("MissionaryExtraMoves");
+#endif
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+	{
+		const char* szLekmodBelief = GetType();
+		const char* aszSql[3] = {
+			"select BuildingClasses.ID, UnitClasses.ID, 0, Count from Belief_BuildingClassFreeUnits inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join UnitClasses on UnitClasses.Type = UnitClassType where BeliefType = ?",
+			"select Terrains.ID, Yields.ID, 0, Yield from Belief_FlatOpenTerrainYieldChanges inner join Terrains on Terrains.Type = TerrainType inner join Yields on Yields.Type = YieldType where BeliefType = ?",
+			"select Improvements.ID, BuildingClasses.ID, Yields.ID, Yield from Belief_ImprovementBuildingYieldChanges inner join Improvements on Improvements.Type = ImprovementType inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Yields on Yields.Type = YieldType where BeliefType = ?" };
+		const char* aszKey[3] = { "Belief_BuildingClassFreeUnits", "Belief_FlatOpenTerrainYieldChanges", "Belief_ImprovementBuildingYieldChanges" };
+		std::vector<LekmodRow>* apVec[3] = { &m_aLekmodBuildingFreeUnits, &m_aLekmodFlatOpenTerrainYields, &m_aLekmodImprovementBuildingYields };
+		for (int iTable = 0; iTable < 3; iTable++)
+		{
+			apVec[iTable]->clear();
+			std::string strKey(aszKey[iTable]);
+			Database::Results* pResults = kUtility.GetResults(strKey);
+			if (pResults == NULL)
+				pResults = kUtility.PrepareResults(strKey, aszSql[iTable]);
+			pResults->Bind(1, szLekmodBelief);
+			while (pResults->Step())
+			{
+				LekmodRow kRow;
+				kRow.a = pResults->GetInt(0);
+				kRow.b = pResults->GetInt(1);
+				kRow.c = pResults->GetInt(2);
+				kRow.d = pResults->GetInt(3);
+				apVec[iTable]->push_back(kRow);
+			}
+		}
+	}
+#endif
 	m_iFaithBuildingTourism           = kResults.GetInt("FaithBuildingTourism");
 #ifdef NQ_FREE_SETTLERS_FROM_BELIEF
 	m_iNumFreeSettlers				  = kResults.GetInt("NumFreeSettlers");

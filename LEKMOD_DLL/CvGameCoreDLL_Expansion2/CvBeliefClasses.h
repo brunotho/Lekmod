@@ -93,6 +93,20 @@ public:
 	int GetOtherReligionPressureErosion() const;
 	int GetSpyPressure() const;
 	int GetInquisitorPressureRetention() const;
+#ifdef LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
+	bool IsImprovementYieldNeedsResource() const { return m_bLekmodImprovementYieldNeedsResource; }
+#endif
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+	// a = first key, b = second key, c = yield/unit class, d = amount (see the loader in CacheResults)
+	struct LekmodRow { int a; int b; int c; int d; };
+	const std::vector<LekmodRow>& GetLekmodBuildingFreeUnits() const { return m_aLekmodBuildingFreeUnits; }		// BuildingClass, UnitClass, -, Count
+	const std::vector<LekmodRow>& GetLekmodFlatOpenTerrainYields() const { return m_aLekmodFlatOpenTerrainYields; }	// Terrain, Yield, -, Yield
+	const std::vector<LekmodRow>& GetLekmodImprovementBuildingYields() const { return m_aLekmodImprovementBuildingYields; }	// Improvement, BuildingClass, Yield, Yield
+#endif
+#ifdef LEKMOD_JUST_WAR_MISSIONARIES
+	bool IsMissionaryProphetSpread() const { return m_bLekmodMissionaryProphetSpread; }
+	int GetMissionaryExtraMoves() const { return m_iLekmodMissionaryExtraMoves; }
+#endif
 	int GetFaithBuildingTourism() const;
 #ifdef NQ_FREE_SETTLERS_FROM_BELIEF
 	int GetNumFreeSettlers() const;
@@ -307,6 +321,18 @@ protected:
 	int* m_piMaxYieldModifierPerFollower;
 	bool* m_pbFaithPurchaseUnitEraEnabled;
     bool* m_pbBuildingClassEnabled;
+#ifdef LEKMOD_BELIEF_IMPROVEMENT_NEEDS_RESOURCE
+	bool m_bLekmodImprovementYieldNeedsResource;
+#endif
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+	std::vector<LekmodRow> m_aLekmodBuildingFreeUnits;
+	std::vector<LekmodRow> m_aLekmodFlatOpenTerrainYields;
+	std::vector<LekmodRow> m_aLekmodImprovementBuildingYields;
+#endif
+#ifdef LEKMOD_JUST_WAR_MISSIONARIES
+	bool m_bLekmodMissionaryProphetSpread;
+	int m_iLekmodMissionaryExtraMoves;
+#endif
 
 private:
 	CvBeliefEntry(const CvBeliefEntry&);

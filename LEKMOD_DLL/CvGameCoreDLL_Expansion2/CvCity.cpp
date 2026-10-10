@@ -7701,6 +7701,36 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		// One-shot items
 		if(bFirst && iChange > 0)
 		{
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+			// Belief_BuildingClassFreeUnits: the owner's founded religion grants units when this building is finished (Grand Temple)
+			{
+				ReligionTypes eOwnReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
+				const CvReligion* pOwnReligion = (eOwnReligion > RELIGION_PANTHEON) ? GC.getGame().GetGameReligions()->GetReligion(eOwnReligion, getOwner()) : NULL;
+				if (pOwnReligion != NULL)
+				{
+					CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+					for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+					{
+						CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+						if (pkBelief == NULL || !pOwnReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+							continue;
+						const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodBuildingFreeUnits();
+						for (uint j = 0; j < aRows.size(); j++)
+						{
+							if (aRows[j].a != eBuildingClass)
+								continue;
+							UnitTypes eUnit = (UnitTypes)thisCiv.getCivilizationUnits(aRows[j].b);
+							for (int iCount = 0; eUnit != NO_UNIT && iCount < aRows[j].d; iCount++)
+							{
+								CvUnit* pNewUnit = owningPlayer.initUnit(eUnit, getX(), getY());
+								if (pNewUnit && !pNewUnit->jumpToNearestValidPlot())
+									pNewUnit->kill(false);
+							}
+						}
+					}
+				}
+			}
+#endif
 #ifdef LEKMOD_DEFENSE_BUILDINGS
 			// Buildings.RevealResource: the team sees this resource from now on (saved team list, also used by the base game)
 			if (pBuildingInfo->GetRevealResource() != -1)

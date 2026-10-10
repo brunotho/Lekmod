@@ -9140,7 +9140,11 @@ bool CvUnit::DoSpreadReligion()
             int iFollowersBefore = pCity->GetCityReligions()->GetNumFollowers(eReligion);
             ReligionTypes eMajorityBefore = pCity->GetCityReligions()->GetReligiousMajority();
             #endif
+#ifdef LEKMOD_JUST_WAR_MISSIONARIES
+            if(IsGreatPerson() || GetLekmodMissionaryBeliefValue(0) > 0)
+#else
             if(IsGreatPerson())
+#endif
 			{
 				pCity->GetCityReligions()->AddProphetSpread(eReligion, iConversionStrength, getOwner());
 			}
@@ -9394,6 +9398,33 @@ CvCity *CvUnit::GetSpreadReligionTargetCity() const
 	}
 	return pCity;
 }
+
+//	--------------------------------------------------------------------------------
+#ifdef LEKMOD_JUST_WAR_MISSIONARIES
+//	--------------------------------------------------------------------------------
+int CvUnit::GetLekmodMissionaryBeliefValue(int iWhich) const
+{
+	// missionaries only: spreads religion, not a Great Person
+	if (IsGreatPerson() || m_pUnitInfo->GetReligionSpreads() <= 0)
+		return 0;
+	ReligionTypes eReligion = GetReligionData()->GetReligion();
+	if (eReligion <= RELIGION_PANTHEON)
+		return 0;
+	const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(eReligion, getOwner());
+	if (pReligion == NULL)
+		return 0;
+	int iValue = 0;
+	CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+	for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+	{
+		CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+		if (pkBelief == NULL || !pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+			continue;
+		iValue += (iWhich == 0) ? (pkBelief->IsMissionaryProphetSpread() ? 1 : 0) : pkBelief->GetMissionaryExtraMoves();
+	}
+	return iValue;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 int CvUnit::GetConversionStrength() const
@@ -12226,6 +12257,9 @@ int CvUnit::baseMoves(DomainTypes eIntoDomain /* = NO_DOMAIN */) const
 	{
 		iMoves += pTraits->GetGoldenAgeMoveChange();
 	}
+#ifdef LEKMOD_JUST_WAR_MISSIONARIES
+	iMoves += GetLekmodMissionaryBeliefValue(1);
+#endif
 	// Unit Combat Type
 	iMoves += pTraits->GetMovesChangeUnitCombat((UnitCombatTypes)(m_pUnitInfo->GetUnitCombatType()));
 
