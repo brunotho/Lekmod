@@ -1418,6 +1418,8 @@ Diversify Spain and Australia's NW Discovery bonus
 /// Fast hand - Intercept and Paradrops can no longer be set when the turn timer is > 50% full
 #define CAN_PARADROP_HALF_TIMER
 #define CAN_SET_INTERCEPT_HALF_TIMER
+// Lekmod: fast hand also stops nuclear units (Nuclear Missile, Atomic Bomb) from rebasing in the second half of the turn timer
+#define LEKMOD_FAST_HAND_NUKE_REBASE
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

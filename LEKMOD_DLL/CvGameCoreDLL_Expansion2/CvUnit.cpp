@@ -7951,6 +7951,36 @@ void CvUnit::SetHomeCity(int iNewCity)
 
 #endif
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_FAST_HAND_NUKE_REBASE
+// Fast hand: true during the second half of the turn timer (same test as paradrop / intercept, CAN_PARADROP_HALF_TIMER)
+static bool LekmodIsFastHandSecondHalf()
+{
+	CvGame& kGame = GC.getGame();
+	if (kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) && (kGame.isOption("GAMEOPTION_FAST_HAND")) && kGame.getElapsedGameTurns() > 0 &&
+#ifdef AUI_GAME_RELATIVE_TURN_TIMERS
+		(kGame.getPitbossTurnTime() == 0 || kGame.isOption("GAMEOPTION_RELATIVE_TURN_TIMER")))
+#else
+		kGame.getPitbossTurnTime() == 0)
+#endif
+	{
+#ifdef GAME_UPDATE_TURN_TIMER_ONCE_PER_TURN
+		float fGameTurnEnd = kGame.getPreviousTurnLen();
+#else
+		float fGameTurnEnd = static_cast<float>(kGame.getMaxTurnLen());
+#endif
+#ifdef TURN_TIMER_PAUSE_BUTTON
+		float fTimeElapsed = kGame.getTimeElapsed();
+#else
+		float fTimeSinceCurrentTurnStart = kGame.m_curTurnTimer.Peek() + kGame.m_fCurrentTurnTimerPauseDelta;
+		float fTimeSinceGameTurnStart = kGame.m_timeSinceGameTurnStart.Peek() + kGame.m_fCurrentTurnTimerPauseDelta;
+		float fTimeElapsed = (GET_PLAYER(kGame.getActivePlayer()).isSimultaneousTurns() ? fTimeSinceGameTurnStart : fTimeSinceCurrentTurnStart);
+#endif
+		return fTimeElapsed * 2 > fGameTurnEnd;
+	}
+	return false;
+}
+#endif
+
 bool CvUnit::canRebase(const CvPlot* /*pPlot*/) const
 {
 	// Must be an air unit
@@ -7958,6 +7988,14 @@ bool CvUnit::canRebase(const CvPlot* /*pPlot*/) const
 	{
 		return false;
 	}
+
+#ifdef LEKMOD_FAST_HAND_NUKE_REBASE
+	// Nuclear units may not rebase in the second half of the turn timer (fast hand)
+	if (GetNukeDamageLevel() != -1 && LekmodIsFastHandSecondHalf())
+	{
+		return false;
+	}
+#endif
 
 	// Must be an "immobile" air unit (e.g. no helicopters)
 	if(!IsImmobile())

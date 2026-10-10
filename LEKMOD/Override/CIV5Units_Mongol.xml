@@ -7836,7 +7836,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Fast Hand</Text>
 		</Row>
 		<Row Tag="TXT_KEY_GAME_OPTION_FAST_HAND_HELP">
-			<Text>With this option enabled, given the turns are simultaneous and the turn timer is active, Units may no longer paradrop and Airplanes may no longer be set to intercept during the second half of the Turn Timer (planes still intercept enemy aircraft if set before).</Text>
+			<Text>With this option enabled, given the turns are simultaneous and the turn timer is active, these rules apply during the second half of the Turn Timer:[NEWLINE]Units may no longer paradrop.[NEWLINE]Airplanes may no longer be set to intercept (planes still intercept enemy aircraft if set before).[NEWLINE]Nuclear Missiles and Atomic Bombs may no longer rebase.</Text>
 		</Row>
 	<!-- --> 
 		
