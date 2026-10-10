@@ -210,6 +210,7 @@ public:
 	bool IsAirportRebase() const;
 	bool IsNearRiver() const;
 	bool IsNoMaintenanceOnRiver() const;
+	int GetRevealResource() const;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int GetTerritoryHealChange() const;
@@ -539,6 +540,7 @@ private:
 	bool m_bAirportRebase;
 	bool m_bNearRiver;
 	bool m_bNoMaintenanceOnRiver;
+	int m_iRevealResource;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;

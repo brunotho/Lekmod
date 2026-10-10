@@ -34348,6 +34348,15 @@
 			<MaxTeamInstances>-1</MaxTeamInstances>
 			<MaxPlayerInstances>-1</MaxPlayerInstances>
 		</Row>
+		<Row>
+			<ID>178</ID>
+			<Type>BUILDINGCLASS_URANIUM_MAPPING_PROJECT</Type>
+			<Description>TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT</Description>
+			<DefaultBuilding>BUILDING_URANIUM_MAPPING_PROJECT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>1</MaxPlayerInstances>
+		</Row>
 	</BuildingClasses> 
 
 	<Table name="Building_AreaYieldModifiers">
@@ -41902,6 +41911,7 @@
 		<Column name="AirportRebase" type="boolean" default="false" /> <!-- LEKMOD: planes rebasing between two cities with this building keep their moves (once per turn) -->
 		<Column name="NearRiver" type="boolean" default="false" /> <!-- LEKMOD: the city must be on a river or next to a river tile -->
 		<Column name="NoMaintenanceOnRiver" type="boolean" default="false" /> <!-- LEKMOD: no Gold maintenance when the city is on a river -->
+		<Column name="RevealResource" type="text" default="NULL" /> <!-- LEKMOD: building it reveals this resource for the team (like its reveal tech) -->
 		<Column name="Happiness" type="integer" default="0" /> <!-- Changes the amount of local happiness the city has. -->
 		<Column name="UnmoddedHappiness" type="integer" default="0" /> <!-- Changes the amount of global happiness the city is adding to the empire -->
 		<Column name="UnhappinessModifier" type="integer" default="0" /> <!-- Changes the amount of unhappiness in the empire by a % value. -->
@@ -47254,6 +47264,25 @@
 			<GreatWorkCount>-1</GreatWorkCount>
 			<PortraitIndex>13</PortraitIndex>
 			<IconAtlas>TECH_ATLAS_1</IconAtlas>
+		</Row>
+		<!-- LEKMOD: national wonder, reveals Uranium -->
+		<Row>
+			<ID>271</ID>
+			<Type>BUILDING_URANIUM_MAPPING_PROJECT</Type>
+			<BuildingClass>BUILDINGCLASS_URANIUM_MAPPING_PROJECT</BuildingClass>
+			<Description>TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT</Description>
+			<Civilopedia>TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT_STRATEGY</Strategy>
+			<Help>TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT_HELP</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>500</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<PrereqTech>TECH_PLASTIC</PrereqTech>
+			<RevealResource>RESOURCE_URANIUM</RevealResource>
+			<ArtDefineTag>ART_DEF_BUILDING_LABORATORY</ArtDefineTag>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</IconAtlas>
 		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
@@ -136172,6 +136201,55 @@
 			<Filename>canada_combat_engineer_flag_32.dds</Filename> 
 			<IconsPerRow>1</IconsPerRow> 
 			<IconsPerColumn>1</IconsPerColumn> 
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>uranium_mapping_project_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>uranium_mapping_project_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>uranium_mapping_project_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>uranium_mapping_project_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>uranium_mapping_project_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>uranium_mapping_project_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>uranium_mapping_project_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
 		<Row>
             <Atlas>LEKMOD_AESTHETICS_BUILDINGS</Atlas>

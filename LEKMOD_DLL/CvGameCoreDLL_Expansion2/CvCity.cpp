@@ -7701,6 +7701,11 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		// One-shot items
 		if(bFirst && iChange > 0)
 		{
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+			// Buildings.RevealResource: the team sees this resource from now on (saved team list, also used by the base game)
+			if (pBuildingInfo->GetRevealResource() != -1)
+				owningTeam.setForceRevealedResource((ResourceTypes)pBuildingInfo->GetRevealResource(), true);
+#endif
 			// Capital
 			if(pBuildingInfo->IsCapital())
 				owningPlayer.setCapitalCity(this);

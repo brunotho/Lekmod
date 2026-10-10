@@ -1263,3 +1263,11 @@ IRONWORKS (BUILDING_IRONWORKS)
 Tags: buildings
 - Added: Ironworks (and Sweden's Falu Gruva): provides 8 Iron, worked Mountains +2 Production (not natural wonders)
 
+URANIUM MAPPING PROJECT (BUILDING_URANIUM_MAPPING_PROJECT)
+---------------------------------------------------------
+Tags: buildings
+New national wonder.
+- Added: Uranium Mapping Project (Plastics, cost 335): reveals all Uranium on the map for your team, as Atomic Theory does; mining it still needs Atomic Theory
+- DLL: Buildings.RevealResource uses the team's saved force-revealed resource list (building ID 271, class 178)
+- Dev: icon sources in art_sources/buildings/uranium_mapping_project (user art via the Notion page "ART FOR CLAUDE")
+

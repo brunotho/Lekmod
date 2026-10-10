@@ -101,6 +101,7 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_bAirportRebase(false),
 	m_bNearRiver(false),
 	m_bNoMaintenanceOnRiver(false),
+	m_iRevealResource(-1),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
@@ -492,6 +493,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bAirportRebase = kResults.GetBool("AirportRebase");
 	m_bNearRiver = kResults.GetBool("NearRiver");
 	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
+	m_iRevealResource = GC.getInfoTypeForString(kResults.GetText("RevealResource"), true);
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
@@ -1850,6 +1852,12 @@ bool CvBuildingEntry::IsNearRiver() const
 bool CvBuildingEntry::IsNoMaintenanceOnRiver() const
 {
 	return m_bNoMaintenanceOnRiver;
+}
+
+/// Building it reveals this resource on the map for the team, as its reveal tech would (Uranium Mapping Project)
+int CvBuildingEntry::GetRevealResource() const
+{
+	return m_iRevealResource;
 }
 #endif
 
