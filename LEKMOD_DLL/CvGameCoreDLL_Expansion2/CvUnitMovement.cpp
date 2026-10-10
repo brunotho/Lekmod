@@ -477,6 +477,23 @@ bool CvUnitMovement::IsSlowedByZOC(const CvUnit* pUnit, const CvPlot* pFromPlot,
 						}
 					}
 				}
+#ifdef LEKMOD_CITADEL_NAVAL_ZOC
+				// An enemy Citadel (improvement that damages adjacent enemies) exerts ZoC on naval units, like a city
+				if (unit_domain_type == DOMAIN_SEA && pAdjPlot->getImprovementType() != NO_IMPROVEMENT && !pAdjPlot->IsImprovementPillaged()
+					&& (pAdjPlot->isRevealed(pUnit->getTeam()) || pUnit->plot() == pFromPlot))
+				{
+					CvImprovementEntry* pkCitadel = GC.getImprovementInfo(pAdjPlot->getImprovementType());
+					const PlayerTypes eCitadelOwner = pAdjPlot->getOwner();
+					if (pkCitadel && pkCitadel->GetNearbyEnemyDamage() > 0 && eCitadelOwner != NO_PLAYER && kUnitTeam.isAtWar(GET_PLAYER(eCitadelOwner).getTeam()))
+					{
+						// Destination adjacent to the Citadel too?
+						if (plotDistance(pAdjPlot->getX(), pAdjPlot->getY(), iToPlotX, iToPlotY) == 1)
+						{
+							return true;
+						}
+					}
+				}
+#endif
 				if (!pAdjPlot->isVisible(pUnit->getTeam()) && pUnit->plot() != pFromPlot)
 					continue;
 

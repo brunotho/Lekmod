@@ -981,6 +981,15 @@ Helicopter Gunships get two more promotion choices.
 - Added: Quick Study: +50% experience
 - Added: both can be picked once any helicopter promotion line is at level 2, like Repair
 
+GREAT GENERAL AND CITADEL (UNIT_GREAT_GENERAL, IMPROVEMENT_CITADEL)
+--------------------------------------------------------------------
+Tags: units, naval
+Citadels yield Culture and hold back enemy ships.
+- Changed: the Great General always looks like the early-era General
+- Added: Citadels yield 3 Culture
+- Added: Citadels exert zone of control on enemy ships: a ship moving from one tile next to an enemy Citadel to another loses its remaining movement, as next to an enemy city
+- DLL: LEKMOD_CITADEL_NAVAL_ZOC (CvUnitMovement::IsSlowedByZOC; any improvement with NearbyEnemyDamage counts, not when pillaged)
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

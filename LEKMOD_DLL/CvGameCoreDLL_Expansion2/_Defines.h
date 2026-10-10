@@ -1420,6 +1420,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define CAN_SET_INTERCEPT_HALF_TIMER
 // Lekmod: fast hand also stops nuclear units (Nuclear Missile, Atomic Bomb) from rebasing in the second half of the turn timer
 #define LEKMOD_FAST_HAND_NUKE_REBASE
+// Enemy Citadels exert zone of control on naval units, like cities (CvUnitMovement::IsSlowedByZOC)
+#define LEKMOD_CITADEL_NAVAL_ZOC
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

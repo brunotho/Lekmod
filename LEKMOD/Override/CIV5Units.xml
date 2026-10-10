@@ -138850,6 +138850,11 @@
 			<YieldType>YIELD_FAITH</YieldType>
 			<Yield>1</Yield>
 		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+		</Row>
 	</Improvement_Yields> 
 
 <Table name="Improvements">
@@ -268796,7 +268801,7 @@
 			<WorkRate>1</WorkRate>
 			<CombatLimit>0</CombatLimit>
 			<UnitArtInfo>ART_DEF_UNIT_GENERAL</UnitArtInfo>
-			<UnitArtInfoEraVariation>true</UnitArtInfoEraVariation>
+			<UnitArtInfoEraVariation>false</UnitArtInfoEraVariation>
 			<DontShowYields>true</DontShowYields>
 			<MoveRate>GREAT_PERSON</MoveRate>
 			<UnitFlagIconOffset>90</UnitFlagIconOffset>
