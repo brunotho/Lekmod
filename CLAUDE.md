@@ -196,7 +196,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
   - Distinctions that matter to players stay, e.g. Discipline "(non-air units)" vs Discipline (Air) "(air units)".
   - After changing any number, update its tooltip (failure pattern 7b).
 - **Civilopedia (user, 2026-10-08):** update pages aggressively to the current rules whenever work touches a topic. Be verbose with gameplay information (all relevant numbers, at quick speed), and remove history and flavor text. Goal: every page eventually shows all relevant gameplay info and nothing else. Pages are `Concepts` rows in `CIV5Units.xml` (explicit IDs; check uniqueness *within the section*, other tables reuse the numbers) with texts in `CIV5Units_Mongol.xml`. The pedia has no clickable links between concepts; order comes from `InsertAfter` chains. Since 2026-10-08 Lekmod overrides the pedia script (`Lua/tmp/ui/Civilopedia/CivilopediaScreen.lua.ignore`, a copy of Expansion2's; ui_check.bat copies it for both UIs), so page layouts per category can be changed there (e.g. the City-States tab shows type rules instead of history).
-- Promotion icons: 4 sizes (256/64/45/32), DXT5 `.dds`, **transparent background**; the game draws the round frame. See §7.
+- Promotion icons: 4 sizes (256/64/45/32), DXT5 `.dds`. **256/64/45: transparent background** (gold glyph; the promotion choice draws the round frame). **32 px is different:** the unit panel shows earned promotions at 32 px without a frame, so the 32 px icon is a dark blue square tile with a blue, cream-outlined glyph (base-game style). `civ-tools\promo32_icons.py <dir> [names]` builds it from `<name>_256.dds`. See §7.
 - C++ feature switches live in `LEKMOD_DLL/CvGameCoreDLL_Expansion2/_Defines.h` (e.g. `LEKMOD_NEW_ANCIENT_RUIN_REWARDS`, `FULL_YIELD_FROM_KILLS`, `LEKMOD_RELOCATE_PROMOTION_PREREQ_ORS`). Check which are on before reasoning about code paths.
 - Lekmod-specific tables worth knowing:
   - `UnitPromotions_PromotionPrereqOrs`: a missing referenced promotion is silently skipped through an INNER JOIN.
@@ -259,6 +259,8 @@ texconv -nologo -y -f BC3_UNORM -m 1 -o out icon_45.png   # 45px: 1 mip, matchin
   - Envelopment and Bunker Busting were added later the same day and **copied the Fear Aura image as a placeholder**. Those two need real art.
   - Glutton uses a generic shield (`ABILITY_ATLAS` 14). The user remembers an apple icon, but none exists in the repo, the mod folder or the user's folders. Ask the user for the original art file.
   - The Feared Elephant original icon isn't wired up; the upstream promotion has its own icon.
+
+- **Unit map flags:** 32×32 white silhouette on transparency (about 20–22 px tall, slightly above centre), one-icon atlas row with IconSize 32; the game tints it. Unit portraits: 173 px circle at (41,42) in a 256 cell, sizes 256/128/80/64/45/32.
 
 ## 8. Failure patterns found in the fork (check new work for these)
 1. **Data placed where the game doesn't read it**: XML under `Art\`, `.modinfo` edits.
