@@ -101677,6 +101677,21 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_UNIT_HELP_CONQUISTADOR_SHARED">
 			<Text>Unique Conquistador of Spain, Portugal, the Netherlands, France and Belgium: available with Civil Service or the Exploration opener.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Defends itself when embarked; disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_UNITCOMBAT_LEKMOD_SPACESHIP">
+			<Text>Spaceship Parts</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_MOBILITY_2">
+			<Text>Mobility II</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_MOBILITY_3">
+			<Text>Mobility III</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_SPACESHIP_PART">
+			<Text>Spaceship Part</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_SPACESHIP_PART_HELP">
+			<Text>A military unit that carries a spaceship part to your capital.[NEWLINE]Can take Mobility I-III and Armor Plating I-III; at level III of either: Repair and Nuke Resistance.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_SITTING_DUCKS">
 			<Text>Sitting Ducks</Text>
 		</Row>
@@ -122222,10 +122237,8 @@ The ship has weather'd every rack; the prize we sought is won."
 				All units in adjacent tiles [COLOR_POSITIVE_TEXT]Heal 5 Additional HP[ENDCOLOR] per turn. This unit [COLOR_POSITIVE_TEXT]Heals 5 Additional HP[ENDCOLOR] per turn when [COLOR_POSITIVE_TEXT]Outside of Friendly Territory[ENDCOLOR].
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_PROMOTION_MOBILITY"> 
-			<Text>
-				Mobility
-			</Text>
+		<Replace Tag="TXT_KEY_PROMOTION_MOBILITY">
+			<Text>Mobility I</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_MOBILITY_1"> 
 			<Text>

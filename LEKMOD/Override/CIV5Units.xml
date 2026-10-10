@@ -210315,6 +210315,11 @@
 			<Type>UNITCOMBAT_NUKE</Type> 
 			<Description>TXT_KEY_UNITCOMBAT_BOMBER</Description> 
 		</Row>
+		<Row>
+			<ID>18</ID>
+			<Type>UNITCOMBAT_SPACESHIP</Type>
+			<Description>TXT_KEY_UNITCOMBAT_LEKMOD_SPACESHIP</Description>
+		</Row>
 	</UnitCombatInfos> 
 
 	<Table name="UnitGameplay2DScripts">
@@ -253148,7 +253153,6 @@
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PortraitIndex>59</PortraitIndex>
 			<IconAtlas>ABILITY_ATLAS</IconAtlas>
-			<CannotBeChosen>true</CannotBeChosen>
 			<NukeDamageFixed>20</NukeDamageFixed>
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_NUKE_RESISTANCE</PediaEntry>
@@ -253165,6 +253169,44 @@
 			<AttackVsEmbarkedMod>33</AttackVsEmbarkedMod>
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_SITTING_DUCKS</PediaEntry>
+		</Row>
+		<Row>
+			<ID>375</ID>
+			<Type>PROMOTION_MOBILITY_2</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_MOBILITY_2</Description>
+			<Help>TXT_KEY_PROMOTION_MOBILITY_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<OrderPriority>7</OrderPriority>
+			<PortraitIndex>33</PortraitIndex>
+			<IconAtlas>PROMOTION_ATLAS</IconAtlas>
+			<MovesChange>1</MovesChange>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_MOBILITY_2</PediaEntry>
+		</Row>
+		<Row>
+			<ID>376</ID>
+			<Type>PROMOTION_MOBILITY_3</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_MOBILITY_3</Description>
+			<Help>TXT_KEY_PROMOTION_MOBILITY_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<OrderPriority>7</OrderPriority>
+			<PortraitIndex>33</PortraitIndex>
+			<IconAtlas>PROMOTION_ATLAS</IconAtlas>
+			<MovesChange>1</MovesChange>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_MOBILITY_3</PediaEntry>
+		</Row>
+		<Row>
+			<ID>377</ID>
+			<Type>PROMOTION_SPACESHIP_PART</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_SPACESHIP_PART</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_SPACESHIP_PART_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_SPACESHIP_PART</PediaEntry>
 		</Row>
 	</UnitPromotions>
 
@@ -254002,6 +254044,35 @@
 		<Row>
 			<PromotionType>PROMOTION_GAIN_EXPERIENCE</PromotionType>
 			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_2</PrerequisitePromotion>
+		</Row>
+		<!-- Spaceship parts (2026-10-10): Mobility I is a starting promotion for them (marker promotion), Mobility II/III continue the line -->
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<PrerequisitePromotion>PROMOTION_SPACESHIP_PART</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY_2</PromotionType>
+			<PrerequisitePromotion>PROMOTION_MOBILITY</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY_3</PromotionType>
+			<PrerequisitePromotion>PROMOTION_MOBILITY_2</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_REPAIR</PromotionType>
+			<PrerequisitePromotion>PROMOTION_MOBILITY_3</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_REPAIR</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_3</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_NUKE_RESISTANCE</PromotionType>
+			<PrerequisitePromotion>PROMOTION_MOBILITY_3</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_NUKE_RESISTANCE</PromotionType>
+			<PrerequisitePromotion>PROMOTION_ARMOR_PLATING_3</PrerequisitePromotion>
 		</Row>
 		<!-- Coastal Raider -->
 		<Row>
@@ -257285,6 +257356,38 @@
 		<Row>
 			<PromotionType>PROMOTION_NO_FORTIFY_VS_RANGED</PromotionType>
 			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY_2</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MOBILITY_3</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_1</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_2</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ARMOR_PLATING_3</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_REPAIR</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_NUKE_RESISTANCE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
 		</Row>
 	</UnitPromotions_UnitCombats> 
 
@@ -265485,6 +265588,54 @@
 			<UnitType>UNIT_VANGUARD_CORPS</UnitType>
 			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType>
 		</Row>
+		<Row>
+			<UnitType>UNIT_SS_STASIS_CHAMBER</UnitType>
+			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_STASIS_CHAMBER</UnitType>
+			<PromotionType>PROMOTION_SIGHT_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_STASIS_CHAMBER</UnitType>
+			<PromotionType>PROMOTION_SPACESHIP_PART</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_ENGINE</UnitType>
+			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_ENGINE</UnitType>
+			<PromotionType>PROMOTION_SIGHT_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_ENGINE</UnitType>
+			<PromotionType>PROMOTION_SPACESHIP_PART</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_COCKPIT</UnitType>
+			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_COCKPIT</UnitType>
+			<PromotionType>PROMOTION_SIGHT_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_COCKPIT</UnitType>
+			<PromotionType>PROMOTION_SPACESHIP_PART</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_BOOSTER</UnitType>
+			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_BOOSTER</UnitType>
+			<PromotionType>PROMOTION_SIGHT_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SS_BOOSTER</UnitType>
+			<PromotionType>PROMOTION_SPACESHIP_PART</PromotionType>
+		</Row>
 	</Unit_FreePromotions> 
 
 	<!-- LEKMOD: free buildings / units for a city founded by the unit (LEKMOD_FOUNDING_UNIT_EFFECTS) -->
@@ -265574,22 +265725,22 @@
 		<Row> 
 			<UnitType>UNIT_SS_STASIS_CHAMBER</UnitType> 
 			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
+			<Cost>10</Cost> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_SS_ENGINE</UnitType> 
 			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
+			<Cost>10</Cost> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_SS_COCKPIT</UnitType> 
 			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
+			<Cost>10</Cost> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_SS_BOOSTER</UnitType> 
 			<ResourceType>RESOURCE_ALUMINUM</ResourceType> 
-			<Cost>1</Cost> 
+			<Cost>10</Cost> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_TACHANKA</UnitType> 
@@ -269273,9 +269424,15 @@
 			<Strategy>TXT_KEY_PROJECT_SS_STASIS_CHAMBER_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_SS_PART</Help>
 			<Cost>1500</Cost>
-			<Moves>2</Moves>
+			<Combat>80</Combat>
+			<Moves>1</Moves>
 			<Class>UNITCLASS_SS_STASIS_CHAMBER</Class>
+			<CombatClass>UNITCOMBAT_SPACESHIP</CombatClass>
 			<Domain>DOMAIN_LAND</Domain>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<CombatLimit>100</CombatLimit>
+			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_NANOTECHNOLOGY</PrereqTech>
@@ -269299,9 +269456,15 @@
 			<Strategy>TXT_KEY_PROJECT_SS_ENGINE_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_SS_PART</Help>
 			<Cost>1500</Cost>
-			<Moves>2</Moves>
+			<Combat>80</Combat>
+			<Moves>1</Moves>
 			<Class>UNITCLASS_SS_ENGINE</Class>
+			<CombatClass>UNITCOMBAT_SPACESHIP</CombatClass>
 			<Domain>DOMAIN_LAND</Domain>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<CombatLimit>100</CombatLimit>
+			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_PARTICLE_PHYSICS</PrereqTech>
@@ -269325,9 +269488,15 @@
 			<Strategy>TXT_KEY_PROJECT_SS_COCKPIT_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_SS_PART</Help>
 			<Cost>1500</Cost>
-			<Moves>2</Moves>
+			<Combat>80</Combat>
+			<Moves>1</Moves>
 			<Class>UNITCLASS_SS_COCKPIT</Class>
+			<CombatClass>UNITCOMBAT_SPACESHIP</CombatClass>
 			<Domain>DOMAIN_LAND</Domain>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<CombatLimit>100</CombatLimit>
+			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_SATELLITES</PrereqTech>
@@ -269351,9 +269520,15 @@
 			<Strategy>TXT_KEY_PROJECT_SS_BOOSTER_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_SS_BOOSTER</Help>
 			<Cost>1500</Cost>
-			<Moves>2</Moves>
+			<Combat>80</Combat>
+			<Moves>1</Moves>
 			<Class>UNITCLASS_SS_BOOSTER</Class>
+			<CombatClass>UNITCOMBAT_SPACESHIP</CombatClass>
 			<Domain>DOMAIN_LAND</Domain>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<CombatLimit>100</CombatLimit>
+			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_ADVANCED_BALLISTICS</PrereqTech>
