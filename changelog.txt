@@ -1355,7 +1355,7 @@ Tags: religion
 - Added: Sacred Sites: adopting it gives a free Vihara in the capital
 - Added: Jesuit Education: Libraries, Universities, Observatories, Public Schools and Research Labs yield +2 Faith; Academies +10 Faith
 - Added: Work Ethic: Workers can be bought with Faith
-- Changed: Jesuit Education and Work Ethic: buildings and Workers cost 130% of their Production cost in Faith (e.g. Library 63 Faith at quick speed), unique replacements included
+- Changed: Jesuit Education and Work Ethic: buildings and Workers cost 130% of their Production cost in Faith, unique replacements included
 - Changed: Jesuit Education and Work Ethic: Great Prophets no longer appear from Faith (as in the Industrial Era)
 - DLL: Beliefs.NoProphetSpawn/FreeBuildingClassInCapital, Belief_UnitClassFaithPurchase (LEKMOD_CAPITAL_PANTHEON_EFFECTS)
 
