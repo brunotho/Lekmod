@@ -1449,6 +1449,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_AIRPORT_REBASE
 // Projects.FreeBuildingClass: the city that completes the project gets this building for free (Apollo Program)
 #define LEKMOD_PROJECT_FREE_BUILDING
+// Belief_HolyCityYieldChanges also for Food/Production/Gold/Science, added in the holy city when it follows the religion (Salat)
+#define LEKMOD_HOLY_CITY_YIELDS
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

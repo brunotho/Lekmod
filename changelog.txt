@@ -1271,3 +1271,28 @@ New national wonder.
 - DLL: Buildings.RevealResource uses the team's saved force-revealed resource list (building ID 271, class 178)
 - Dev: icon sources in art_sources/buildings/uranium_mapping_project (user art via the Notion page "ART FOR CLAUDE")
 
+REMOVED BELIEFS (BELIEF_SACRED_PATHS, BELIEF_GOD_SEA, BELIEF_WALLS, BELIEF_PROMISED_LAND, BELIEF_GOD_FESTIVALS)
+-------------------------------------------------------------------------------------------------------------
+Tags: religion
+- Removed: pantheons Spirit Trees, God of the Sea, Goddess of Protection and Goddess of Festivals
+- Removed: founder belief Promised Land
+- Note: Initiation Rites was already gone in v35.4 (only its text was left)
+
+BELIEF CHANGES (BELIEF_PEACE_GARDENZ, BELIEF_SACRED_WATERS, BELIEF_SALATT, BELIEF_DIVINE_JUDGEMENT, BELIEF_MYSTIC_RITUALS, BELIEF_WIND, BELIEF_UNITY_OF_PROPHETS, BELIEF_FORMAL_LITURGY, BELIEF_RITUAL_SACRIFICE, BELIEF_TEARS_OF_NOOBS, BELIEF_SEAFOOD, BELIEF_EARTH_MOTHER)
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Tags: religion
+- Changed: Peace Gardens: +2 Food and +2 Culture from Gardens (was +1 Happiness from Gardens, +2 Gold +1 Production from Water Mills)
+- Changed: Sacred Waters: +2 Faith and +2 Gold from Water Mills and Gardens (was +1 Happiness in river cities, +2 Faith +1 Food from Gardens)
+- Changed: Salat: +4 Production in the Holy City (was in the Palace city)
+- Changed: Divine Judgement: +2 Faith from Barracks only (no longer from Courthouses)
+- Changed: Mystic Rituals: Incense also gives +1 Food and +1 Culture
+- Changed: Goddess of the Fields: no longer on Sugar
+- Removed: Unity of the Prophets: Inquisitors and Prophets remove this religion fully again (no more "half")
+- Changed: Religious Idols: +2 Culture from Gold, Silver and Copper (was +1 Faith +1 Culture)
+- Changed: Ritual Sacrifice: +1 Gold, +1 Faith and +1 Culture from Ivory, Furs and Truffles (was +2 Culture +1 Gold)
+- Changed: Tears of the Gods: Pearls also give +1 Faith and +2 Gold
+- Changed: Seafood Rituals: +2 Culture from Fish (was +1 Food +1 Culture +1 Faith)
+- Changed: Earth Mother: +1 Faith from resources that can be mined, Iron +2 (was +1 Faith from all Mines, +1 from Iron); Mines without a resource give no Faith
+- Note: Earth Mother's Faith is on the resource, so it also counts before the mine is built
+- DLL: Belief_HolyCityYieldChanges now also works for Production/Food/Gold/Science in the holy city (LEKMOD_HOLY_CITY_YIELDS)
+

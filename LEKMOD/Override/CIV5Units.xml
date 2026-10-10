@@ -31546,6 +31546,262 @@
 			<InquisitorPressureRetention>50</InquisitorPressureRetention>
 		</Row>
 	</Beliefs>
+	<!-- LEKMOD: Phase 3 religion (removed beliefs, belief edits) -->
+	<Beliefs>
+		<Delete Type="BELIEF_SACRED_PATHS"/>
+		<Delete Type="BELIEF_GOD_SEA"/>
+		<Delete Type="BELIEF_WALLS"/>
+		<Delete Type="BELIEF_PROMISED_LAND"/>
+		<Delete Type="BELIEF_GOD_FESTIVALS"/>
+		<Update>
+			<Where Type="BELIEF_SACRED_WATERS"/>
+			<Set RiverHappiness="0"/>
+		</Update>
+		<Update>
+			<Where Type="BELIEF_UNITY_OF_PROPHETS"/>
+			<Set InquisitorPressureRetention="0"/>
+		</Update>
+	</Beliefs>
+	<Belief_BuildingClassHappiness>
+		<Delete BeliefType="BELIEF_PEACE_GARDENZ"/>
+	</Belief_BuildingClassHappiness>
+	<Belief_BuildingClassYieldChanges>
+		<Delete BeliefType="BELIEF_WALLS"/>
+		<Delete BeliefType="BELIEF_DIVINE_JUDGEMENT" BuildingClassType="BUILDINGCLASS_COURTHOUSE"/>
+		<Delete BeliefType="BELIEF_PEACE_GARDENZ"/>
+		<Row>
+			<BeliefType>BELIEF_PEACE_GARDENZ</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GARDEN</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_PEACE_GARDENZ</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GARDEN</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Delete BeliefType="BELIEF_SACRED_WATERS"/>
+		<Row>
+			<BeliefType>BELIEF_SACRED_WATERS</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GARDEN</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_WATERS</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_GARDEN</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_WATERS</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_WATERMILL</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_SACRED_WATERS</BeliefType>
+			<BuildingClassType>BUILDINGCLASS_WATERMILL</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Delete BeliefType="BELIEF_SALATT"/>
+	</Belief_BuildingClassYieldChanges>
+	<Belief_FeatureYieldChanges>
+		<Delete BeliefType="BELIEF_GOD_SEA"/>
+	</Belief_FeatureYieldChanges>
+	<Belief_HolyCityYieldChanges>
+		<Row>
+			<BeliefType>BELIEF_SALATT</BeliefType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>4</Yield>
+		</Row>
+	</Belief_HolyCityYieldChanges>
+	<Belief_ImprovementYieldChanges>
+		<Delete BeliefType="BELIEF_SACRED_PATHS"/>
+		<Delete BeliefType="BELIEF_EARTH_MOTHER"/>
+	</Belief_ImprovementYieldChanges>
+	<Belief_ResourceYieldChanges>
+		<Delete BeliefType="BELIEF_GOD_SEA"/>
+		<Delete BeliefType="BELIEF_GOD_FESTIVALS"/>
+		<Row>
+			<BeliefType>BELIEF_MYSTIC_RITUALS</BeliefType>
+			<ResourceType>RESOURCE_INCENSE</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_MYSTIC_RITUALS</BeliefType>
+			<ResourceType>RESOURCE_INCENSE</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Delete BeliefType="BELIEF_WIND" ResourceType="RESOURCE_SUGAR"/>
+		<Delete BeliefType="BELIEF_FORMAL_LITURGY"/>
+		<Row>
+			<BeliefType>BELIEF_FORMAL_LITURGY</BeliefType>
+			<ResourceType>RESOURCE_GOLD</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_FORMAL_LITURGY</BeliefType>
+			<ResourceType>RESOURCE_SILVER</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_FORMAL_LITURGY</BeliefType>
+			<ResourceType>RESOURCE_COPPER</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Delete BeliefType="BELIEF_RITUAL_SACRIFICE"/>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_IVORY</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_IVORY</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_IVORY</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_FUR</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_FUR</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_FUR</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_TRUFFLES</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_TRUFFLES</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_RITUAL_SACRIFICE</BeliefType>
+			<ResourceType>RESOURCE_TRUFFLES</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_TEARS_OF_NOOBS</BeliefType>
+			<ResourceType>RESOURCE_PEARLS</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_TEARS_OF_NOOBS</BeliefType>
+			<ResourceType>RESOURCE_PEARLS</ResourceType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Delete BeliefType="BELIEF_SEAFOOD"/>
+		<Row>
+			<BeliefType>BELIEF_SEAFOOD</BeliefType>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Update>
+			<Where BeliefType="BELIEF_EARTH_MOTHER" ResourceType="RESOURCE_IRON"/>
+			<Set Yield="2"/>
+		</Update>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_COAL</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_GEMS</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_GOLD</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_SILVER</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_COPPER</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_SALT</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_AMBER</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_JADE</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_EARTH_MOTHER</BeliefType>
+			<ResourceType>RESOURCE_LAPIS</ResourceType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Belief_ResourceYieldChanges>
 
 	<Table name="BuildFeatures">
 		<Column name="BuildType" type="text"  />

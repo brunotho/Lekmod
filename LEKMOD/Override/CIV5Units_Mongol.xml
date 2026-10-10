@@ -2642,7 +2642,7 @@
 			<Text>Sanctified Innovations</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_DIVINE_JUDGEMENT">
-			<Text>+2 [ICON_PEACE] Faith from [ICON_BUILDING_BARRACKS] Barracks and [ICON_BUILDING_COURTHOUSE] Courthouses. +3 [ICON_HAPPINESS_1] Happiness from the [ICON_BUILDING_PALACE] Palace</Text>
+			<Text>+2 [ICON_PEACE] Faith from [ICON_BUILDING_BARRACKS] Barracks.[NEWLINE]+3 [ICON_HAPPINESS_1] Happiness from the [ICON_BUILDING_PALACE] Palace.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_DIVINE_JUDGEMENT_SHORT">
 			<Text>Divine Judgement</Text>
@@ -16937,7 +16937,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_EARTH_MOTHER"> 
 			<Text>
-				+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Mines[ENDCOLOR]. +1 [ICON_PEACE] Faith from [ICON_RES_IRON] Iron
+				+1 [ICON_PEACE] Faith from resources that can be mined ([ICON_RES_IRON] Iron +2).[NEWLINE]Mines without a resource give no [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_EARTH_MOTHER_SHORT"> 
@@ -16997,7 +16997,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_FORMAL_LITURGY"> 
 			<Text>
-				+1 [ICON_PEACE] Faith and +1 [ICON_CULTURE] from [ICON_RES_COPPER] Copper, [ICON_RES_SILVER] Silver, and [ICON_RES_GOLD] Gold
+				+2 [ICON_CULTURE] Culture from [ICON_RES_COPPER] Copper, [ICON_RES_SILVER] Silver and [ICON_RES_GOLD] Gold.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_FORMAL_LITURGY_SHORT"> 
@@ -17427,7 +17427,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MYSTIC_RITUALS"> 
 			<Text>
-				+1 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture from [ICON_RES_SILK] Silk, [ICON_RES_DYE] Dyes, [ICON_RES_PERFUME] Perfume, and [ICON_RES_TOBACCO] Tobacco
+				+1 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture from [ICON_RES_SILK] Silk, [ICON_RES_DYE] Dyes, [ICON_RES_PERFUME] Perfume, [ICON_RES_TOBACCO] Tobacco and [ICON_RES_INCENSE] Incense.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_MYSTIC_RITUALS_SHORT"> 
@@ -17447,7 +17447,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SEAFOOD"> 
 			<Text>
-				+1 [ICON_FOOD] Food, +1 [ICON_CULTURE] Culture, and +1 [ICON_PEACE] Faith from [ICON_RES_FISH] Fish
+				+2 [ICON_CULTURE] Culture from [ICON_RES_FISH] Fish.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SEAFOOD_SHORT"> 
@@ -17537,7 +17537,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PEACE_GARDENZ"> 
 			<Text>
-				+1 [ICON_HAPPINESS_1] Happiness from [COLOR_POSITIVE_TEXT]Gardens[ENDCOLOR]. +2 [ICON_GOLD] Gold and +1 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Water Mills[ENDCOLOR]
+				+2 [ICON_FOOD] Food and +2 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]Gardens[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_PEACE_GARDENZ_SHORT"> 
@@ -17692,7 +17692,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RITUAL_SACRIFICE"> 
 			<Text>
-				+2 [ICON_CULTURE] Culture and +1 [ICON_GOLD] Gold from [ICON_RES_IVORY] Ivory, [ICON_RES_FUR] Furs, and [ICON_RES_TRUFFLES] Truffles
+				+1 [ICON_GOLD] Gold, +1 [ICON_PEACE] Faith and +1 [ICON_CULTURE] Culture from [ICON_RES_IVORY] Ivory, [ICON_RES_FUR] Furs and [ICON_RES_TRUFFLES] Truffles.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RITUAL_SACRIFICE_SHORT"> 
@@ -17747,7 +17747,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_WATERS"> 
 			<Text>
-				+1 [ICON_HAPPINESS_1] Happiness in cities on [COLOR_POSITIVE_TEXT]Rivers[ENDCOLOR]. +2 [ICON_PEACE] Faith and +1 [ICON_FOOD] Food from [COLOR_POSITIVE_TEXT]Gardens[ENDCOLOR]
+				+2 [ICON_PEACE] Faith and +2 [ICON_GOLD] Gold from [COLOR_POSITIVE_TEXT]Water Mills[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Gardens[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_WATERS_NWS"> 
@@ -17767,7 +17767,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SALATT"> 
 			<Text>
-				+4 [ICON_PRODUCTION] Production from the [COLOR_POSITIVE_TEXT]Palace[ENDCOLOR]
+				+4 [ICON_PRODUCTION] Production in the [COLOR_POSITIVE_TEXT]Holy City[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SALATT_SHORT"> 
@@ -17872,7 +17872,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_TEARS_OF_NOOBS"> 
 			<Text>
-				+1 [ICON_PEACE] Faith and +2 [ICON_GOLD] Gold from [ICON_RES_GEMS] Gems, [ICON_RES_AMBER] Amber, [ICON_RES_LAPIS] Lapis Lazuli and [ICON_RES_JADE] Jade
+				+1 [ICON_PEACE] Faith and +2 [ICON_GOLD] Gold from [ICON_RES_GEMS] Gems, [ICON_RES_AMBER] Amber, [ICON_RES_LAPIS] Lapis Lazuli, [ICON_RES_JADE] Jade and [ICON_RES_PEARLS] Pearls.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_TEARS_OF_NOOBS_SHORT"> 
@@ -17927,7 +17927,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_UNITY_OF_PROPHETS"> 
 			<Text>
-				+4 [ICON_PEACE] Faith and +2 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Holy Sites[ENDCOLOR]. [ICON_INQUISITOR] Inquisitors and [ICON_PROPHET] Great Prophets reduce this religion's presence by half (instead of eliminating it)
+				+4 [ICON_PEACE] Faith and +2 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Holy Sites[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_UNITY_OF_PROPHETS_SHORT"> 
@@ -17977,7 +17977,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WIND"> 
 			<Text>
-				+2 [ICON_PEACE] Faith from [ICON_RES_COTTON] Cotton, [ICON_RES_SUGAR] Sugar, [ICON_RES_TEA] Tea, and [ICON_RES_COFFEE] Coffee
+				+2 [ICON_PEACE] Faith from [ICON_RES_COTTON] Cotton, [ICON_RES_TEA] Tea and [ICON_RES_COFFEE] Coffee.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WIND_SHORT"> 

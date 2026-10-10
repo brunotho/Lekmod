@@ -8875,6 +8875,11 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 				int iFollowers = GetCityReligions()->GetNumFollowers(eNewMajority);
 
 				int iReligionYieldChange = pReligion->m_Beliefs.GetCityYieldChange(getPopulation(), (YieldTypes)iYield);
+#ifdef LEKMOD_HOLY_CITY_YIELDS
+				// Belief_HolyCityYieldChanges for yields other than Culture/Faith (those go to the player totals): Salat +4 Production
+				if (iYield != YIELD_CULTURE && iYield != YIELD_FAITH && GetCityReligions()->IsHolyCityForReligion(eNewMajority))
+					iReligionYieldChange += pReligion->m_Beliefs.GetHolyCityYieldChange((YieldTypes)iYield);
+#endif
 				BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
 				if (eSecondaryPantheon != NO_BELIEF && getPopulation() >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
 				{
