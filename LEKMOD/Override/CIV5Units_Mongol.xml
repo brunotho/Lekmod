@@ -19136,7 +19136,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FALU_GRUVA_STRATEGY"> 
 			<Text>
-				In addition to the normal +8 [ICON_PRODUCTION] Production of the Ironworks it replaces, Falu Gruva also provides +1 [ICON_PRODUCTION] Production for all hill tiles worked by the city. +6 [ICON_TOURISM] Tourism once Flight is discovered. Only Sweden may build it.
+				In addition to the normal +8 [ICON_PRODUCTION] Production of the Ironworks it replaces, Falu Gruva also provides +1 [ICON_PRODUCTION] Production for all hill tiles worked by the city.[NEWLINE]Like the Ironworks, it provides 8 [ICON_RES_IRON] Iron and +2 [ICON_PRODUCTION] Production on worked Mountains (not Natural Wonders).[NEWLINE] +6 [ICON_TOURISM] Tourism once Flight is discovered. Only Sweden may build it.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_FEITORIA"> 
@@ -19797,7 +19797,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_IRONWORKS_HELP"> 
 			<Text>
-				[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]Must have built a Workshop in all Cities. The cost goes up the more cities there are in the empire.
+				[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]Provides 8 [ICON_RES_IRON] Iron.[NEWLINE]Mountains worked by this City produce +2 [ICON_PRODUCTION] Production (not Natural Wonders).[NEWLINE][NEWLINE]Must have built a Workshop in all Cities. The cost goes up the more cities there are in the empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_IRONWORKS_PEDIA"> 
@@ -120348,6 +120348,12 @@ The ship has weather'd every rack; the prize we sought is won."
 				[ICON_HAPPINESS_1] Happiness: +{1_Num}
 			</Text>
 		</Replace>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
+			<Text>Apollo Program</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO_HELP">
+			<Text>+20% [ICON_RESEARCH] Science in the city that completed the Apollo Program.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILDING_CITY_HITPOINTS">
 			<Text>[ICON_STRENGTH] City Hit Points: {1_Num}</Text>
 		</Row>
@@ -120601,7 +120607,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROJECT_APOLLO_PROGRAM_HELP"> 
 			<Text>
-				Signals the start of the space race, allowing your Cities to build spaceship parts. When the spaceship is completed, you win a [COLOR_POSITIVE_TEXT]Science Victory[ENDCOLOR]!
+				Signals the start of the space race, allowing your Cities to build spaceship parts.[NEWLINE]When the spaceship is completed, you win a [COLOR_POSITIVE_TEXT]Science Victory[ENDCOLOR]![NEWLINE][NEWLINE]The city that completes it gets +20% [ICON_RESEARCH] Science.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROJECT_APOLLO_PROGRAM_PEDIA"> 

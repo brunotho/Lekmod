@@ -39,6 +39,9 @@ public:
 	int GetTechShare() const;
 	int GetEveryoneSpecialUnit() const;
 	int GetVictoryDelayPercent() const;
+#ifdef LEKMOD_PROJECT_FREE_BUILDING
+	int GetLekmodFreeBuildingClass() const { return m_iLekmodFreeBuildingClass; }
+#endif
 	int GetFlavorValue(int i) const;
 	bool IsSpaceship() const;
 	bool IsAllowsNukes() const;
@@ -72,6 +75,9 @@ protected:
 	int m_iTechShare;
 	int m_iEveryoneSpecialUnit;
 	int m_iVictoryDelayPercent;
+#ifdef LEKMOD_PROJECT_FREE_BUILDING
+	int m_iLekmodFreeBuildingClass;
+#endif
 
 	bool m_bSpaceship;
 	bool m_bAllowsNukes;

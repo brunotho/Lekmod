@@ -19,6 +19,9 @@ CvProjectEntry::CvProjectEntry(void):
 	m_piProjectsNeeded(NULL),
 	m_piFlavorValue(NULL)
 {
+#ifdef LEKMOD_PROJECT_FREE_BUILDING
+	m_iLekmodFreeBuildingClass = -1;
+#endif
 }
 //------------------------------------------------------------------------------
 CvProjectEntry::~CvProjectEntry(void)
@@ -56,6 +59,10 @@ bool CvProjectEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility
 
 	const char* szEveryoneSpecialUnit = kResults.GetText("EveryoneSpecialUnit");
 	m_iEveryoneSpecialUnit = GC.getInfoTypeForString(szEveryoneSpecialUnit, true);
+#ifdef LEKMOD_PROJECT_FREE_BUILDING
+	const char* szFreeBuildingClass = kResults.GetText("FreeBuildingClass");
+	m_iLekmodFreeBuildingClass = GC.getInfoTypeForString(szFreeBuildingClass, true);
+#endif
 
 	const char* szCreateSound = kResults.GetText("CreateSound");
 	SetCreateSound(szCreateSound);

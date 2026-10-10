@@ -1252,3 +1252,14 @@ Strategic resource buildings are stronger, rarer and more expensive.
 - Note: Brunei's refinery is unchanged until the Brunei civ rework
 - DLL: Buildings.NearRiver and NoMaintenanceOnRiver (LEKMOD_DEFENSE_BUILDINGS group)
 
+APOLLO PROGRAM (PROJECT_APOLLO_PROGRAM)
+--------------------------------------
+Tags: buildings
+- Added: the city that completes the Apollo Program gets +20% Science
+- DLL: Projects.FreeBuildingClass (LEKMOD_PROJECT_FREE_BUILDING) gives the hidden building BUILDING_LEKMOD_APOLLO (ID 270, class 177)
+
+IRONWORKS (BUILDING_IRONWORKS)
+------------------------------
+Tags: buildings
+- Added: Ironworks (and Sweden's Falu Gruva): provides 8 Iron, worked Mountains +2 Production (not natural wonders)
+

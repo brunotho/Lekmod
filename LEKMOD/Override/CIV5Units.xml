@@ -34339,6 +34339,15 @@
 			<NoLimit>false</NoLimit>
 			<Monument>false</Monument>
 		</Row>
+		<Row>
+			<ID>177</ID>
+			<Type>BUILDINGCLASS_LEKMOD_APOLLO</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_APOLLO</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_APOLLO</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+		</Row>
 	</BuildingClasses> 
 
 	<Table name="Building_AreaYieldModifiers">
@@ -47228,6 +47237,24 @@
 			<PortraitIndex>45</PortraitIndex>
 			<IconAtlas>BW_ATLAS_1</IconAtlas>
 		</Row>
+		<!-- LEKMOD: given by the Apollo Program to the city that completes it -->
+		<Row>
+			<ID>270</ID>
+			<Type>BUILDING_LEKMOD_APOLLO</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_APOLLO</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_APOLLO</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_APOLLO_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_APOLLO_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_APOLLO_HELP</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>13</PortraitIndex>
+			<IconAtlas>TECH_ATLAS_1</IconAtlas>
+		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
 	<Buildings>
@@ -47996,6 +48023,40 @@
 			<Modifier>30</Modifier>
 		</Row>
 	</Building_DomainProductionModifiers>
+	<!-- LEKMOD: Phase 3 national wonders (Apollo Program building, Ironworks) -->
+	<Building_YieldModifiers>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_APOLLO</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>20</Yield>
+		</Row>
+	</Building_YieldModifiers>
+	<Building_ResourceQuantity>
+		<Row>
+			<BuildingType>BUILDING_IRONWORKS</BuildingType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Quantity>8</Quantity>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_FALU_GRUVA</BuildingType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Quantity>8</Quantity>
+		</Row>
+	</Building_ResourceQuantity>
+	<Building_TerrainYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_IRONWORKS</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_FALU_GRUVA</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_TerrainYieldChanges>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -191610,6 +191671,7 @@
 		<Column name="AllowsNukes" type="boolean"  default="false"/>
 		<Column name="MovieDefineTag" type="text"  default="NULL"/>
 		<Column name="VictoryPrereq" type="text"  default="NULL"/>
+		<Column name="FreeBuildingClass" type="text" default="NULL"/> <!-- LEKMOD: the completing city gets this building for free -->
 		<Column name="TechPrereq" type="text"  default="NULL"/>
 		<Column name="EveryoneSpecialUnit" type="text"  default="NULL"/>
 		<Column name="CreateSound" type="text"  default="NULL"/>
@@ -191660,6 +191722,7 @@
 			<AllowsNukes>false</AllowsNukes> 
 			<VictoryPrereq>VICTORY_SPACE_RACE</VictoryPrereq> 
 			<TechPrereq>TECH_ROCKETRY</TechPrereq> 
+			<FreeBuildingClass>BUILDINGCLASS_LEKMOD_APOLLO</FreeBuildingClass>
 			<PortraitIndex>33</PortraitIndex> 
 			<IconAtlas>BW_ATLAS_2</IconAtlas> 
 		</Row>

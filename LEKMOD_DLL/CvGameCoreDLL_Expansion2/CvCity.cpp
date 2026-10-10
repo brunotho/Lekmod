@@ -17265,6 +17265,17 @@ bool CvCity::CreateProject(ProjectTypes eProjectType)
 	CvTeam& thisTeam = GET_TEAM(getTeam());
 	thisTeam.changeProjectCount(eProjectType, 1);
 
+#ifdef LEKMOD_PROJECT_FREE_BUILDING
+	// Projects.FreeBuildingClass: the completing city gets this building for free (Apollo Program: +20% Science)
+	CvProjectEntry* pkLekmodProject = GC.getProjectInfo(eProjectType);
+	if (pkLekmodProject && pkLekmodProject->GetLekmodFreeBuildingClass() != -1)
+	{
+		BuildingTypes eFreeBuilding = (BuildingTypes)thisPlayer.getCivilizationInfo().getCivilizationBuildings(pkLekmodProject->GetLekmodFreeBuildingClass());
+		if (eFreeBuilding != NO_BUILDING)
+			GetCityBuildings()->SetNumFreeBuilding(eFreeBuilding, 1);
+	}
+#endif
+
 	ProjectTypes ApolloProgram = (ProjectTypes) GC.getSPACE_RACE_TRIGGER_PROJECT();
 	ProjectTypes capsuleID = (ProjectTypes) GC.getSPACESHIP_CAPSULE();
 	ProjectTypes boosterID = (ProjectTypes) GC.getSPACESHIP_BOOSTER();
