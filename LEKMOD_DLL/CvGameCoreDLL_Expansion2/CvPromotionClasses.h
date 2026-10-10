@@ -157,6 +157,9 @@ public:
 #ifdef LEKMOD_NUKE_RESISTANCE
 	int GetNukeDamageFixed() const;
 #endif
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+	int GetAttackVsEmbarkedMod() const;
+#endif
 	int GetMovesNearGeneralChange() const;
 	int GetCapitalDefenseModifier() const;
 	int GetCapitalDefenseFalloff() const;
@@ -429,6 +432,9 @@ protected:
 	bool m_bExtraAttackVsFullHP;
 #ifdef LEKMOD_NUKE_RESISTANCE
 	int m_iNukeDamageFixed;
+#endif
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+	int m_iAttackVsEmbarkedMod;
 #endif
 	int m_iMovesNearGeneralChange;
 	int m_iCapitalDefenseModifier;

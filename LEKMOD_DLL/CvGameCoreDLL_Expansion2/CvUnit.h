@@ -718,6 +718,9 @@ public:
 #ifdef LEKMOD_NUKE_RESISTANCE
 	int GetLekmodNukeDamageFixed() const;
 #endif
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+	int GetLekmodAttackVsEmbarkedMod() const;
+#endif
 	int domainModifier(DomainTypes eDomain) const;
 #if defined(LEKMOD_DOMAIN_PROMO_ATTACK_DEFENSE)
 	int domainAttackModifier(DomainTypes eDomain) const;

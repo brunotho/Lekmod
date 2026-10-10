@@ -13932,6 +13932,13 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 			}
 		}
 #endif
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+		// Sitting Ducks: attacking an embarked unit
+		if (pOtherUnit != NULL && pOtherUnit->isEmbarked())
+		{
+			iModifier += GetLekmodAttackVsEmbarkedMod();
+		}
+#endif
 #ifdef AUI_UNIT_FIX_BAD_BONUS_STACKS
 		// Hills
 		if (pMyPlot && pMyPlot->isHills())
@@ -14546,6 +14553,18 @@ int CvUnit::GetMaxAttackStrength(const CvCombatInfo& kInfo, CvCombatModifierList
 		if (kModifierList && iTempModifier)
 		{
 			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_LEKMOD_ADJACENT_RANGED", iTempModifier);
+		}
+	}
+#endif
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+	// Sitting Ducks: attacking an embarked unit
+	if (pDefender != NULL && pDefender->isEmbarked())
+	{
+		iTempModifier = GetLekmodAttackVsEmbarkedMod();
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_LEKMOD_VS_EMBARKED", iTempModifier);
 		}
 	}
 #endif
@@ -17268,6 +17287,33 @@ bool CvUnit::IsLekmodNoAttackFromCity() const
 			return true;
 	}
 	return false;
+}
+#endif
+
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+//	--------------------------------------------------------------------------------
+/// Sitting Ducks: % combat strength when attacking an embarked unit (promotions with AttackVsEmbarkedMod, collected once)
+int CvUnit::GetLekmodAttackVsEmbarkedMod() const
+{
+	static std::vector<PromotionTypes> s_aPromotions;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		s_bInit = true;
+		for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
+		{
+			CvPromotionEntry* pkPromotion = GC.getPromotionInfo((PromotionTypes)iPromotion);
+			if (pkPromotion && pkPromotion->GetAttackVsEmbarkedMod() != 0)
+				s_aPromotions.push_back((PromotionTypes)iPromotion);
+		}
+	}
+	int iMod = 0;
+	for (uint i = 0; i < s_aPromotions.size(); i++)
+	{
+		if (isHasPromotion(s_aPromotions[i]))
+			iMod += GC.getPromotionInfo(s_aPromotions[i])->GetAttackVsEmbarkedMod();
+	}
+	return iMod;
 }
 #endif
 

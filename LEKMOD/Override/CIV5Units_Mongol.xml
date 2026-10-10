@@ -101633,6 +101633,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_PROMOTION_BROADSIDE_HELP">
 			<Text>+33% [ICON_STRENGTH] Combat Strength when attacking cities.[NEWLINE]Lost on upgrade.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SITTING_DUCKS">
+			<Text>Sitting Ducks</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_SITTING_DUCKS_HELP">
+			<Text>+33% [ICON_STRENGTH] Combat Strength when attacking Naval Melee units, Naval Ranged units and embarked units.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_COMBATMOD_LEKMOD_VS_EMBARKED">
+			<Text>Attacking an embarked unit</Text>
+		</Row>
 		<Row Tag="TXT_KEY_COMBATMOD_LEKMOD_ADJACENT_RANGED">
 			<Text>Attacking an adjacent target</Text>
 		</Row>

@@ -135772,6 +135772,11 @@
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>swift_transport_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>swift_transport_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 		<Row><Atlas>LEKMOD_SWIFT_TRANSPORT_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>swift_transport_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<!-- SITTING_DUCKS promotion -->
+		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>256</IconSize><Filename>sitting_ducks_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>64</IconSize><Filename>sitting_ducks_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>45</IconSize><Filename>sitting_ducks_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</Atlas><IconSize>32</IconSize><Filename>sitting_ducks_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
 	</IconTextureAtlases>
 
 	<Table name="Improvement_EraYieldChanges">
@@ -211237,6 +211242,7 @@
 		<Column name="HealWhileEmbarked" type="boolean" default="0"/>
 		<Column name="ExtraAttackVsFullHP" type="boolean" default="false"/>
 		<Column name="NukeDamageFixed" type="integer" default="0"/>
+		<Column name="AttackVsEmbarkedMod" type="integer" default="0"/>
 		<Column name="MovesNearGeneralChange" type="integer" default="0"/>
 		<Column name="CitySplashDamage" type="integer" default="0"/>
 		<Column name="CanCrossMountains" type="boolean" default="0"/>
@@ -253020,6 +253026,19 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_NUKE_RESISTANCE</PediaEntry>
 		</Row>
+		<Row>
+			<ID>374</ID>
+			<Type>PROMOTION_SITTING_DUCKS</Type>
+			<Description>TXT_KEY_PROMOTION_SITTING_DUCKS</Description>
+			<Help>TXT_KEY_PROMOTION_SITTING_DUCKS_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_SITTING_DUCKS_PROMOTION_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<AttackVsEmbarkedMod>33</AttackVsEmbarkedMod>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_SITTING_DUCKS</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -254904,6 +254923,18 @@
 			<Modifier>0</Modifier>
 			<Attack>66</Attack>
 			<Defense>33</Defense>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+			<Modifier>0</Modifier>
+			<Attack>33</Attack>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+			<Modifier>0</Modifier>
+			<Attack>33</Attack>
 		</Row>
 	</UnitPromotions_UnitCombatMods> 
 
@@ -265123,6 +265154,38 @@
 		<Row>
 			<UnitType>UNIT_HEAVY_CRUISER</UnitType>
 			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_WWI_BOMBER</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BOMBER</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AMERICAN_B17</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CANNON</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MUGHALS_CANNON</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ROCKET_CORPS</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ROCKET_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
 		</Row>
 	</Unit_FreePromotions> 
 

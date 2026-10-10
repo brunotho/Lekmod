@@ -1031,6 +1031,14 @@ The Giant Death Robot is weaker but gets a set of combat promotions, and nukes c
 - Added: starts with Fear Aura, Charge, Armor Plating I and Repair
 - DLL: UnitPromotions.NukeDamageFixed (LEKMOD_NUKE_RESISTANCE, CvUnitCombat nuke damage); promotion ID 373
 
+SITTING DUCKS (PROMOTION_SITTING_DUCKS)
+---------------------------------------
+Tags: promotions, units, combat, naval
+Bombers and artillery are good at hitting ships and embarked troops.
+- Added: Great War Bomber, Bomber, Cannon, Artillery, Rocket Artillery and their unique replacements start with Sitting Ducks: +33% Combat Strength when attacking Naval Melee units, Naval Ranged units and embarked units
+- DLL: UnitPromotions.AttackVsEmbarkedMod (LEKMOD_ATTACK_VS_EMBARKED, both ranged strength paths); naval part via UnitPromotions_UnitCombatMods.Attack; promotion ID 374
+- Note: the 256 px icon is upscaled from the 64 px art (no larger original)
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

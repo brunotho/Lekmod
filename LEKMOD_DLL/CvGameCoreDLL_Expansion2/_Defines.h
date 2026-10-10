@@ -1430,6 +1430,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_TRADE_COASTAL_ORIGIN_BONUS 50
 // UnitPromotions.NukeDamageFixed: nukes deal exactly this damage to the unit, wherever it stands (GDR Nuke Resistance 20)
 #define LEKMOD_NUKE_RESISTANCE
+// UnitPromotions.AttackVsEmbarkedMod: % strength when attacking embarked units (Sitting Ducks), ranged strength paths
+#define LEKMOD_ATTACK_VS_EMBARKED
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

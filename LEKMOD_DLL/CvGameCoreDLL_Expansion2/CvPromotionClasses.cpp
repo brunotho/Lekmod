@@ -124,6 +124,9 @@ CvPromotionEntry::CvPromotionEntry():
 #ifdef LEKMOD_NUKE_RESISTANCE
 	m_iNukeDamageFixed(0),
 #endif
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+	m_iAttackVsEmbarkedMod(0),
+#endif
 	m_iMovesNearGeneralChange(0),
 	m_iCapitalDefenseModifier(0),
 	m_iCapitalDefenseFalloff(0),
@@ -465,6 +468,9 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_bExtraAttackVsFullHP = kResults.GetBool("ExtraAttackVsFullHP");
 #ifdef LEKMOD_NUKE_RESISTANCE
 	m_iNukeDamageFixed = kResults.GetInt("NukeDamageFixed");
+#endif
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+	m_iAttackVsEmbarkedMod = kResults.GetInt("AttackVsEmbarkedMod");
 #endif
 	m_iMovesNearGeneralChange = kResults.GetInt("MovesNearGeneralChange");
 	m_iCapitalDefenseModifier = kResults.GetInt("CapitalDefenseModifier");
@@ -1631,6 +1637,14 @@ bool CvPromotionEntry::IsExtraAttackVsFullHP() const
 int CvPromotionEntry::GetNukeDamageFixed() const
 {
 	return m_iNukeDamageFixed;
+}
+#endif
+
+#ifdef LEKMOD_ATTACK_VS_EMBARKED
+/// Sitting Ducks: % combat strength when attacking an embarked unit
+int CvPromotionEntry::GetAttackVsEmbarkedMod() const
+{
+	return m_iAttackVsEmbarkedMod;
 }
 #endif
 
