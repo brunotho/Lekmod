@@ -733,7 +733,11 @@ int CvGameTrade::GetDomainModifierTimes100(DomainTypes eDomain) const
 int CvGameTrade::GetDomainModifierTimes100(DomainTypes eDomain)
 #endif
 {
-
+#ifdef LEKMOD_TRADE_COASTAL_ORIGIN_BONUS
+	// Sea routes no longer get a flat bonus; coastal origin cities do (CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100)
+	eDomain;
+	return 0;
+#else
 	if (eDomain == DOMAIN_SEA)
 	{
 		return 100;
@@ -742,6 +746,7 @@ int CvGameTrade::GetDomainModifierTimes100(DomainTypes eDomain)
 	{
 		return 0;
 	}
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -3426,6 +3431,24 @@ int CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100(const TradeConn
 #if !defined(LEKMOD_v34) // Moved Tunis Trait to CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100 and not CvGameTrade::GetDomainModifierTimes100
 	return GC.getGame().GetGameTrade()->GetDomainModifierTimes100(kTradeConnection.m_eDomain);
 #else
+#ifdef LEKMOD_TRADE_COASTAL_ORIGIN_BONUS
+	// Caravans and Cargo Ships are equal: +X% when the route starts in a coastal city (was +100% for every sea route)
+	int iCoastalBonus = 0;
+	CvPlot* pCoastalOriginPlot = GC.getMap().plot(kTradeConnection.m_iOriginX, kTradeConnection.m_iOriginY);
+	CvCity* pCoastalOriginCity = pCoastalOriginPlot ? pCoastalOriginPlot->getPlotCity() : NULL;
+	if (pCoastalOriginCity != NULL && pCoastalOriginCity->isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
+	{
+		iCoastalBonus = LEKMOD_TRADE_COASTAL_ORIGIN_BONUS;
+	}
+	if (kTradeConnection.m_eDomain == DOMAIN_LAND)
+	{
+		return iCoastalBonus + m_pPlayer->GetPlayerTraits()->GetLandTradeRouteYieldBonus();
+	}
+	else if (kTradeConnection.m_eDomain == DOMAIN_SEA)
+	{
+		return iCoastalBonus;
+	}
+#endif
 	if (kTradeConnection.m_eDomain == DOMAIN_LAND)
 	{
 		int iTraitBonus = m_pPlayer->GetPlayerTraits()->GetLandTradeRouteYieldBonus();
@@ -4543,6 +4566,10 @@ bool CvPlayerTrade::PlunderTradeRoute(int iTradeConnectionID)
 	}
 
 	int iPlunderGoldValue = 100;
+#ifdef LEKMOD_TRADE_COASTAL_ORIGIN_BONUS
+	// Plundering a Caravan or a Cargo Ship gives the same 100 Gold
+	iDomainModifier = 0;
+#endif
 	iPlunderGoldValue *= 100 + iDomainModifier;
 	iPlunderGoldValue /= 100;
 	m_pPlayer->GetTreasury()->ChangeGold(iPlunderGoldValue);

@@ -1010,6 +1010,17 @@ A Customs House on a strategic resource gives more of it.
 - Added: a Customs House built on a strategic resource gives 50% more of it (rounded down; e.g. 13 instead of 9 Iron)
 - DLL: Improvements.ResourceExtractionMod is now read for strategic resources (LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION); setImprovementType removes the old improvement's amount with that improvement's modifier
 
+CARAVAN AND CARGO SHIP (UNIT_CARAVAN, UNIT_CARGO_SHIP)
+-----------------------------------------------------
+Tags: units, naval, game mechanics
+Caravans and Cargo Ships are now equal; only where they travel differs.
+- Changed: Cargo Ship costs 50 Production like the Caravan (was 67); Venezuela's Cargo Ship 33 like its Caravan (was 45)
+- Changed: every trade route that starts in a coastal city yields 50% more Gold, Food or Production, whether by Caravan or Cargo Ship (sea routes used to yield 100% more, land routes nothing)
+- Changed: plundering a Cargo Ship gives 100 Gold like a Caravan (was 200)
+- Changed: the trade route tooltip shows this bonus as "Coastal city"
+- Note: they still unlock at different technologies (Animal Husbandry / Sailing), and buildings or traits that boost only land or only sea routes keep doing so
+- DLL: LEKMOD_TRADE_COASTAL_ORIGIN_BONUS 50 (CvPlayerTrade::GetTradeConnectionDomainValueModifierTimes100, plunder); Lua Player.GetTradeConnectionDomainValueModifier now reads the (origin, destination, type, yield, domain) arguments the UI passes (it read them shifted before)
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions

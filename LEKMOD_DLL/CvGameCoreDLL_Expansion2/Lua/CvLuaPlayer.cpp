@@ -4196,11 +4196,28 @@ int CvLuaPlayer::lGetTradeConnectionDomainValueModifier(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
 	CvPlayerTrade* pPlayerTrade = pkPlayer->GetTrade();
+#ifdef LEKMOD_TRADE_COASTAL_ORIGIN_BONUS
+	// The UI calls this with (originCity, destCity, connectionType, yield, domain); the modifier depends on the origin city
+	CvCity* pOriginCity = CvLuaCity::GetInstance(L, 2, true);
+	CvCity* pDestCity = CvLuaCity::GetInstance(L, 3, true);
+	TradeConnectionType eConnectionType = (TradeConnectionType)lua_tointeger(L, 4);
+	YieldTypes eYield = (YieldTypes)lua_tointeger(L, 5);
+	DomainTypes eDomain = (DomainTypes)lua_tointeger(L, 6);
+
+	TradeConnection kTradeConnection;
+	kTradeConnection.m_iOriginX = pOriginCity->getX();
+	kTradeConnection.m_iOriginY = pOriginCity->getY();
+	kTradeConnection.m_iDestX = pDestCity->getX();
+	kTradeConnection.m_iDestY = pDestCity->getY();
+	kTradeConnection.m_eOriginOwner = pOriginCity->getOwner();
+	kTradeConnection.m_eDestOwner = pDestCity->getOwner();
+#else
 	TradeConnectionType eConnectionType = (TradeConnectionType)lua_tointeger(L, 2);
 	YieldTypes eYield = (YieldTypes)lua_tointeger(L, 3);
 	DomainTypes eDomain = (DomainTypes)lua_tointeger(L, 4);
 
 	TradeConnection kTradeConnection;
+#endif
 	kTradeConnection.m_eDomain = eDomain;
 	kTradeConnection.m_eConnectionType = eConnectionType;
 

@@ -137682,7 +137682,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRADE_CARGO_HEADING2_BODY"> 
 			<Text>
-				Cargo Ship units become available after you have researched Sailing. They can be used to establish sea-based trade routes. Sea routes are able to travel twice as far as land routes, and generate more Gold. Cargo Ships cannot be moved out of cities and do not count against unit stacking limits. They will reveal the fog of war along the path they follow, but do not grant visibility.[NEWLINE][NEWLINE]To establish a Trade Route, select the Cargo Ship unit, click the "Establish Trade Route" button on the Unit panel, and then select a target city. Only cities within range are listed. Once selected, the Cargo Ship will travel back and forth for a set amount of turns, and will then return to the original city to await a new assignment.[NEWLINE][NEWLINE]Trade units are defenseless, so make sure to scout your potential Trade Route for threats.
+				Cargo Ship units become available after you have researched Sailing. They can be used to establish sea-based trade routes. Sea routes are able to travel twice as far as land routes.[NEWLINE]Caravans and Cargo Ships yield the same: every trade route that starts in a coastal city yields 50% more. Cargo Ships cannot be moved out of cities and do not count against unit stacking limits. They will reveal the fog of war along the path they follow, but do not grant visibility.[NEWLINE][NEWLINE]To establish a Trade Route, select the Cargo Ship unit, click the "Establish Trade Route" button on the Unit panel, and then select a target city. Only cities within range are listed. Once selected, the Cargo Ship will travel back and forth for a set amount of turns, and will then return to the original city to await a new assignment.[NEWLINE][NEWLINE]Trade units are defenseless, so make sure to scout your potential Trade Route for threats.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRADE_CARGO_HEADING2_TITLE"> 
@@ -140731,7 +140731,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CARAVAN"> 
 			<Text>
-				Establishes land-based Trade Routes between two civilizations that yields [ICON_GOLD] Gold. Can also be used to deliver [ICON_FOOD] Food or [ICON_PRODUCTION] Production within your own borders after building a Granary or a Workshop.
+				Establishes land-based Trade Routes between two civilizations that yields [ICON_GOLD] Gold.[NEWLINE]Can also be used to deliver [ICON_FOOD] Food or [ICON_PRODUCTION] Production within your own borders after building a Granary or a Workshop.[NEWLINE][NEWLINE]Routes from a coastal city yield 50% more.[NEWLINE]Plundering it gives 100 [ICON_GOLD] Gold.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CARAVEL"> 
@@ -140741,7 +140741,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CARGO_SHIP"> 
 			<Text>
-				Establishes sea-based Trade Routes between two civilizations that yields [ICON_GOLD] Gold. Can also be used to deliver [ICON_FOOD] Food or [ICON_PRODUCTION] Production within your own borders after building a Granary or a Workshop.
+				Establishes sea-based Trade Routes between two civilizations that yields [ICON_GOLD] Gold.[NEWLINE]Can also be used to deliver [ICON_FOOD] Food or [ICON_PRODUCTION] Production within your own borders after building a Granary or a Workshop.[NEWLINE][NEWLINE]Routes from a coastal city yield 50% more (the same as a Caravan's).[NEWLINE]Plundering it gives 100 [ICON_GOLD] Gold.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CARRIER"> 

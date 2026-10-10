@@ -272569,7 +272569,7 @@
 			<Civilopedia>TXT_KEY_CIV5_CARGO_SHIP_TEXT</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_CARGO_SHIP_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_CARGO_SHIP</Help>
-			<Cost>100</Cost>
+			<Cost>75</Cost>
 			<Moves>1</Moves>
 			<Immobile>true</Immobile>
 			<Class>UNITCLASS_CARGO_SHIP</Class>
@@ -274642,7 +274642,7 @@
 			<Civilopedia>TXT_KEY_CIV5_CARGO_SHIP_TEXT</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_CARGO_SHIP_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_CARGO_SHIP</Help>
-			<Cost>67</Cost>
+			<Cost>50</Cost>
 			<Moves>1</Moves>
 			<Immobile>true</Immobile>
 			<Class>UNITCLASS_CARGO_SHIP</Class>

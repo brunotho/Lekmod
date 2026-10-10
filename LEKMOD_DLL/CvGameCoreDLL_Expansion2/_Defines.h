@@ -1426,6 +1426,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_REPAIR_FLEET_HP 25
 // Improvements.ResourceExtractionMod (unused base column): % more of a strategic resource the improvement connects (Customs House 50)
 #define LEKMOD_IMPROVEMENT_STRATEGIC_EXTRACTION
+// Caravans and Cargo Ships yield the same: +50% when the route starts in a coastal city (was +100% for sea routes); plunder 100 Gold for both
+#define LEKMOD_TRADE_COASTAL_ORIGIN_BONUS 50
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5
