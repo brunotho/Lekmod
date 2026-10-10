@@ -101645,6 +101645,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_UNIT_NELAYAN_STRATEGY">
 			<Text>The Nelayan replaces the Skiff for Brunei, Polynesia, the Maori, Tonga, Indonesia and the Philippines.[NEWLINE]It explores the coast from the start of the game with 3 [ICON_MOVES] Movement, 2 sight and 3 [ICON_STRENGTH] Combat Strength, and gets the same promotions as the Scout.[NEWLINE]It cannot enter Ocean tiles.[NEWLINE][NEWLINE]Once you know Sailing it builds Fishing Boats over several turns, like a Worker, and is not used up.[NEWLINE]With Construction it can build a Pontoon Bridge at once; then it is used up.[NEWLINE][NEWLINE]It becomes obsolete with Education and cannot be gifted to City-States.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_UNIT_SELF_PROPELLED_ARTILLERY">
+			<Text>Self-Propelled Artillery</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_HELP_SELF_PROPELLED_ARTILLERY">
+			<Text>Mobile siege unit with a range of 3 that does not need to set up before firing.[NEWLINE]Can fire over obstacles.[NEWLINE]+200% [ICON_STRENGTH] Combat Strength against cities.[NEWLINE][NEWLINE]Cannot melee attack, gets no defensive terrain bonuses and has limited sight.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_SELF_PROPELLED_ARTILLERY_STRATEGY">
+			<Text>The Self-Propelled Artillery arrives with Ballistics and needs 1 Iron and 1 Oil.[NEWLINE]It has 30 [ICON_STRENGTH] Combat Strength, 40 [ICON_RANGE_STRENGTH] Ranged Combat Strength, 2 [ICON_MOVES] Movement and a range of 3.[NEWLINE][NEWLINE]Unlike the Artillery it does not need to set up before firing.[NEWLINE]It can fire over obstacles (Indirect Fire) and has +200% [ICON_STRENGTH] Combat Strength against cities.[NEWLINE]Sitting Ducks: +33% when attacking Naval Melee, Naval Ranged and embarked units.[NEWLINE][NEWLINE]It cannot melee attack, gets no defensive terrain bonuses and has limited sight, so protect it with other units.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_SITTING_DUCKS">
 			<Text>Sitting Ducks</Text>
 		</Row>

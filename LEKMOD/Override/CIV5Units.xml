@@ -210148,6 +210148,16 @@
 			<InstanceCostModifier>0</InstanceCostModifier>
 			<DefaultUnit>UNIT_SKIFF</DefaultUnit>
 		</Row>
+		<Row>
+			<ID>116</ID>
+			<Type>UNITCLASS_SELF_PROPELLED_ARTILLERY</Type>
+			<Description>TXT_KEY_UNIT_SELF_PROPELLED_ARTILLERY</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<InstanceCostModifier>0</InstanceCostModifier>
+			<DefaultUnit>UNIT_SELF_PROPELLED_ARTILLERY</DefaultUnit>
+		</Row>
 	</UnitClasses> 
 
 	<Table name="UnitCombatInfos">
@@ -259028,6 +259038,14 @@
 			<UnitType>UNIT_NELAYAN</UnitType>
 			<UnitAIType>UNITAI_WORKER_SEA</UnitAIType>
 		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<UnitAIType>UNITAI_CITY_BOMBARD</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<UnitAIType>UNITAI_RANGED</UnitAIType>
+		</Row>
 	</Unit_AITypes> 
 
 	<Table name="Unit_BuildingClassRequireds">
@@ -262710,6 +262728,21 @@
 			<FlavorType>FLAVOR_NAVAL_RECON</FlavorType>
 			<Flavor>3</Flavor>
 		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<FlavorType>FLAVOR_OFFENSE</FlavorType>
+			<Flavor>6</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<FlavorType>FLAVOR_DEFENSE</FlavorType>
+			<Flavor>6</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<FlavorType>FLAVOR_RANGED</FlavorType>
+			<Flavor>12</Flavor>
+		</Row>
 	</Unit_Flavors> 
 
 	<Table name="Unit_FreePromotions">
@@ -265287,6 +265320,30 @@
 			<UnitType>UNIT_NELAYAN</UnitType>
 			<PromotionType>PROMOTION_OCEAN_IMPASSABLE_UNTIL_ASTRONOMY</PromotionType>
 		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_INDIRECT_FIRE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_ONLY_DEFENSIVE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_CITY_SIEGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_SIGHT_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<PromotionType>PROMOTION_SITTING_DUCKS</PromotionType>
+		</Row>
 	</Unit_FreePromotions> 
 
 	<Table name="Unit_GreatPersons">
@@ -265865,6 +265922,16 @@
 		<Row>
 			<UnitType>UNIT_DREADNOUGHT</UnitType>
 			<ResourceType>RESOURCE_COAL</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
 			<Cost>1</Cost>
 		</Row>
 	</Unit_ResourceQuantityRequirements> 
@@ -276161,6 +276228,43 @@
 			<PortraitIndex>4</PortraitIndex>
 			<IconAtlas>TECH_ATLAS_DLC_03</IconAtlas>
 			<UnitFlagAtlas>KAMEHAMEHA_CIV_COLOR_ATLAS</UnitFlagAtlas>
+		</Row>
+		<!-- LEKMOD Self-Propelled Artillery (2026-10-10): Artillery art as a placeholder -->
+		<Row>
+			<ID>270</ID>
+			<Type>UNIT_SELF_PROPELLED_ARTILLERY</Type>
+			<Description>TXT_KEY_UNIT_SELF_PROPELLED_ARTILLERY</Description>
+			<Civilopedia>TXT_KEY_UNIT_SELF_PROPELLED_ARTILLERY_STRATEGY</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SELF_PROPELLED_ARTILLERY_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_HELP_SELF_PROPELLED_ARTILLERY</Help>
+			<Combat>30</Combat>
+			<RangedCombat>40</RangedCombat>
+			<Cost>336</Cost>
+			<Moves>2</Moves>
+			<Range>3</Range>
+			<BaseSightRange>2</BaseSightRange>
+			<Class>UNITCLASS_SELF_PROPELLED_ARTILLERY</Class>
+			<CombatClass>UNITCOMBAT_SIEGE</CombatClass>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_CITY_BOMBARD</DefaultUnitAI>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<Pillage>true</Pillage>
+			<Mechanized>true</Mechanized>
+			<PrereqTech>TECH_BALLISTICS</PrereqTech>
+			<AdvancedStartCost>40</AdvancedStartCost>
+			<MinAreaSize>-1</MinAreaSize>
+			<NukeDamageLevel>-1</NukeDamageLevel>
+			<CombatLimit>100</CombatLimit>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>3</XPValueDefense>
+			<UnitArtInfo>ART_DEF_UNIT_ARTILLERY</UnitArtInfo>
+			<ShowInPedia>true</ShowInPedia>
+			<MoveRate>ARTILLERY</MoveRate>
+			<UnitFlagIconOffset>56</UnitFlagIconOffset>
+			<PortraitIndex>12</PortraitIndex>
+			<IconAtlas>UNIT_ATLAS_2</IconAtlas>
+			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
 		</Row>
 	</Units>
 	<!-- LEKMOD naval rework (2026-10-09) -->
