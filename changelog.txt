@@ -529,8 +529,8 @@ Clearer icons for some tech effects.
 MAIN MENU BACKGROUND
 --------------------
 Tags: ui, art
-A new main menu background picture.
-- Changed: the main menu shows a new painting (the Great Wall and a palace city at sunset)
+New main menu background pictures, a different one each time.
+- Changed: the main menu shows one of 12 new paintings, picked at random each time it appears (the Great Wall at sunset, the Colosseum, a harbor at dusk, a desert caravan, an alpine steam train, the Terracotta Army, a Zulu charge and more)
 
 BARBARIAN KILL BONUSES
 ----------------------
