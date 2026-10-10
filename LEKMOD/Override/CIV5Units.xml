@@ -269431,14 +269431,13 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
-			<CombatLimit>100</CombatLimit>
 			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_NANOTECHNOLOGY</PrereqTech>
 			<HurryCostModifier>-1</HurryCostModifier>
 			<AdvancedStartCost>-1</AdvancedStartCost>
-			<CombatLimit>0</CombatLimit>
+			<CombatLimit>100</CombatLimit>
 			<UnitArtInfo>ART_DEF_UNIT_SS_STASIS_CHAMBER</UnitArtInfo>
 			<ProjectPrereq>PROJECT_APOLLO_PROGRAM</ProjectPrereq>
 			<SpaceshipProject>PROJECT_SS_STASIS_CHAMBER</SpaceshipProject>
@@ -269463,14 +269462,13 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
-			<CombatLimit>100</CombatLimit>
 			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_PARTICLE_PHYSICS</PrereqTech>
 			<HurryCostModifier>-1</HurryCostModifier>
 			<AdvancedStartCost>-1</AdvancedStartCost>
-			<CombatLimit>0</CombatLimit>
+			<CombatLimit>100</CombatLimit>
 			<UnitArtInfo>ART_DEF_UNIT_SS_ENGINE</UnitArtInfo>
 			<ProjectPrereq>PROJECT_APOLLO_PROGRAM</ProjectPrereq>
 			<SpaceshipProject>PROJECT_SS_ENGINE</SpaceshipProject>
@@ -269495,14 +269493,13 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
-			<CombatLimit>100</CombatLimit>
 			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_SATELLITES</PrereqTech>
 			<HurryCostModifier>-1</HurryCostModifier>
 			<AdvancedStartCost>-1</AdvancedStartCost>
-			<CombatLimit>0</CombatLimit>
+			<CombatLimit>100</CombatLimit>
 			<UnitArtInfo>ART_DEF_UNIT_SS_CAPSULE</UnitArtInfo>
 			<ProjectPrereq>PROJECT_APOLLO_PROGRAM</ProjectPrereq>
 			<SpaceshipProject>PROJECT_SS_COCKPIT</SpaceshipProject>
@@ -269527,14 +269524,13 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
-			<CombatLimit>100</CombatLimit>
 			<XPValueDefense>3</XPValueDefense>
 			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
 			<DefaultUnitAI>UNITAI_SPACESHIP_PART</DefaultUnitAI>
 			<PrereqTech>TECH_ADVANCED_BALLISTICS</PrereqTech>
 			<HurryCostModifier>-1</HurryCostModifier>
 			<AdvancedStartCost>-1</AdvancedStartCost>
-			<CombatLimit>0</CombatLimit>
+			<CombatLimit>100</CombatLimit>
 			<UnitArtInfo>ART_DEF_UNIT_SS_BOOSTER</UnitArtInfo>
 			<ProjectPrereq>PROJECT_APOLLO_PROGRAM</ProjectPrereq>
 			<SpaceshipProject>PROJECT_SS_BOOSTER</SpaceshipProject>
