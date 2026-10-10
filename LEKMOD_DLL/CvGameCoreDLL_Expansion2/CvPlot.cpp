@@ -8574,6 +8574,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 			iYield += iInland * pkBelief->GetCoastalCapitalYieldPerInlandCity(eYield);
 		}
 	}
+	// The Hungering Throne: the capital's tile gets yields per other city with the belief
+	if (pWorkingCity != NULL && pWorkingCity->plot() == this && pWorkingCity->isCapital())
+		iYield += pWorkingCity->LekmodCapitalYieldFromExpands(eYield);
 #endif
 	// GJS - this was moved after the Feature terrain yield replacement if statement (just above this) to allow yield changes from religion based on terrain with replacement features
 	// Extra yield for religion on this terrain

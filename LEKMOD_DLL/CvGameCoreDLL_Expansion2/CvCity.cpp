@@ -8876,22 +8876,6 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 
 	for(int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
 	{
-#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
-		{
-			int iFromExpands = LekmodCapitalYieldFromExpands((YieldTypes)iYield);
-			if (iFromExpands != 0)
-			{
-#if !defined(STANDARDIZE_YIELDS)
-				if (iYield == YIELD_CULTURE)
-					ChangeJONSCulturePerTurnFromReligion(iFromExpands);
-				else if (iYield == YIELD_FAITH)
-					ChangeFaithPerTurnFromReligion(iFromExpands);
-				else
-#endif
-					ChangeBaseYieldRateFromReligion((YieldTypes)iYield, iFromExpands);
-			}
-		}
-#endif
 		int iYieldPerReligion = GetYieldPerReligionTimes100((YieldTypes)iYield);
 		if (iYieldPerReligion > 0)
 		{
@@ -9134,12 +9118,9 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 	}
 
 #ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
-	// The Hungering Throne counts the other cities' religions: refresh the capital
+	// The Hungering Throne counts the other cities' religions: refresh the capital's tile
 	if (!isCapital() && GET_PLAYER(getOwner()).getCapitalCity() != NULL)
-	{
-		CvCity* pCapital = GET_PLAYER(getOwner()).getCapitalCity();
-		pCapital->UpdateReligion(pCapital->GetCityReligions()->GetReligiousMajority());
-	}
+		GET_PLAYER(getOwner()).getCapitalCity()->plot()->updateYield();
 #endif
 	GET_PLAYER(getOwner()).UpdateReligion();
 }

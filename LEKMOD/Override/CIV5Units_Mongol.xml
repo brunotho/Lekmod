@@ -2642,7 +2642,7 @@
 			<Text>Sanctified Innovations</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_DIVINE_JUDGEMENT">
-			<Text>+2 [ICON_PEACE] Faith from [ICON_BUILDING_BARRACKS] Barracks.[NEWLINE]+3 [ICON_HAPPINESS_1] Happiness from the [ICON_BUILDING_PALACE] Palace.</Text>
+			<Text>[ICON_BULLET]+2 [ICON_PEACE] Faith from [ICON_BUILDING_BARRACKS] Barracks[NEWLINE][ICON_BULLET]+3 [ICON_HAPPINESS_1] Happiness from the [ICON_BUILDING_PALACE] Palace</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_DIVINE_JUDGEMENT_SHORT">
 			<Text>Divine Judgement</Text>
@@ -16772,7 +16772,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CHORAL_MUSIQ"> 
 			<Text>
-				+3 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]Temples[ENDCOLOR].[NEWLINE][NEWLINE]Finishing the [COLOR_POSITIVE_TEXT]Grand Temple[ENDCOLOR] gives a free [ICON_GREAT_MUSICIAN] Great Musician.
+				[ICON_BULLET]+3 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]Temples[ENDCOLOR][NEWLINE][ICON_BULLET]Finishing the [COLOR_POSITIVE_TEXT]Grand Temple[ENDCOLOR] gives a free [ICON_GREAT_MUSICIAN] Great Musician
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_CHORAL_MUSIQ_SHORT"> 
@@ -16822,7 +16822,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_DANCE_AURORA"> 
 			<Text>
-				+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Tundra[ENDCOLOR] tiles.[NEWLINE]+1 [ICON_FOOD] Food from flat [COLOR_POSITIVE_TEXT]Tundra[ENDCOLOR] tiles without forest.
+				[ICON_BULLET]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Tundra[ENDCOLOR][NEWLINE][ICON_BULLET]+1 [ICON_FOOD] Food from flat [COLOR_POSITIVE_TEXT]Tundra[ENDCOLOR] without forest
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_DANCE_AURORA_NWS"> 
@@ -16937,7 +16937,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_EARTH_MOTHER"> 
 			<Text>
-				+2 [ICON_PEACE] Faith from [ICON_RES_IRON] Iron.[NEWLINE]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Mines[ENDCOLOR] on a resource (Iron and any other mined resource).
+				[ICON_BULLET]+2 [ICON_PEACE] Faith from [ICON_RES_IRON] Iron[NEWLINE][ICON_BULLET]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Mines[ENDCOLOR] on a resource
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_EARTH_MOTHER_SHORT"> 
@@ -17267,7 +17267,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JESUIT_EDUCATION"> 
 			<Text>
-				May build [COLOR_POSITIVE_TEXT]Libraries[ENDCOLOR], [COLOR_POSITIVE_TEXT]Universities[ENDCOLOR], [COLOR_POSITIVE_TEXT]Observatories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Public Schools[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Research Labs[ENDCOLOR] with [ICON_PEACE] Faith ([ICON_PEACE] Faith cost = 130% of the [ICON_PRODUCTION] Production cost).[NEWLINE]These buildings yield +2 [ICON_PEACE] Faith; [COLOR_POSITIVE_TEXT]Academies[ENDCOLOR] yield +10 [ICON_PEACE] Faith.[NEWLINE][NEWLINE]Great Prophets no longer appear from [ICON_PEACE] Faith.
+				[ICON_BULLET]May buy [COLOR_POSITIVE_TEXT]Libraries[ENDCOLOR], [COLOR_POSITIVE_TEXT]Universities[ENDCOLOR], [COLOR_POSITIVE_TEXT]Observatories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Public Schools[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Research Labs[ENDCOLOR] with [ICON_PEACE] Faith (130% of the [ICON_PRODUCTION] Production cost)[NEWLINE][ICON_BULLET]These buildings yield +2 [ICON_PEACE] Faith, [COLOR_POSITIVE_TEXT]Academies[ENDCOLOR] +10 [ICON_PEACE] Faith[NEWLINE][ICON_BULLET]Great Prophets no longer appear from [ICON_PEACE] Faith
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JESUIT_EDUCATION_SHORT"> 
@@ -17277,7 +17277,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JUST_WAR"> 
 			<Text>
-				+15% [ICON_STRENGTH] Combat Strength near enemy cities that follow this [COLOR_POSITIVE_TEXT]Religion[ENDCOLOR].[NEWLINE][NEWLINE][ICON_MISSIONARY] Missionaries spread this religion as strongly as [ICON_PROPHET] Great Prophets and have +1 [ICON_MOVES] Movement.
+				[ICON_BULLET]+15% [ICON_STRENGTH] Combat Strength near enemy cities that follow this religion[NEWLINE][ICON_BULLET][ICON_MISSIONARY] Missionaries spread it as strongly as [ICON_PROPHET] Great Prophets and have +1 [ICON_MOVES] Movement
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_JUST_WAR_SHORT"> 
@@ -17437,7 +17437,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_OCEANS_BOUNTY"> 
 			<Text>
-				+2 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Atolls[ENDCOLOR].[NEWLINE]+1 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Fishing Boats[ENDCOLOR] in cities with a [ICON_BUILDING_LIGHTHOUSE] Lighthouse.
+				[ICON_BULLET]+2 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Atolls[ENDCOLOR][NEWLINE][ICON_BULLET]+1 [ICON_PRODUCTION] Production from [COLOR_POSITIVE_TEXT]Fishing Boats[ENDCOLOR] in cities with a [ICON_BUILDING_LIGHTHOUSE] Lighthouse
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_OCEANS_BOUNTY_SHORT"> 
@@ -17602,7 +17602,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_CENTER"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Temples[ENDCOLOR] provide +1 [ICON_HAPPINESS_1] Happiness, +1 [ICON_GOLD] Gold and +1 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Finishing the [COLOR_POSITIVE_TEXT]Grand Temple[ENDCOLOR] gives 2 free Workers in the Holy City.
+				[ICON_BULLET][COLOR_POSITIVE_TEXT]Temples[ENDCOLOR] provide +1 [ICON_HAPPINESS_1] Happiness, +1 [ICON_GOLD] Gold and +1 [ICON_PRODUCTION] Production[NEWLINE][ICON_BULLET]Finishing the [COLOR_POSITIVE_TEXT]Grand Temple[ENDCOLOR] gives 2 free Workers
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_RELIGIOUS_CENTER_SHORT"> 
@@ -17737,7 +17737,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES"> 
 			<Text>
-				+3 [ICON_GOLD] Gold and +3 [ICON_PEACE] Faith from buildings unlocked by [COLOR_POSITIVE_TEXT]Religious Beliefs[ENDCOLOR] (Pagodas, Mosques, Cathedrals, Gurdwaras, Synagogues, Viharas, Mandirs).[NEWLINE][NEWLINE]Adopting it gives a free [COLOR_POSITIVE_TEXT]Vihara[ENDCOLOR] in your capital.
+				[ICON_BULLET]+3 [ICON_GOLD] Gold and +3 [ICON_PEACE] Faith from buildings unlocked by [COLOR_POSITIVE_TEXT]Religious Beliefs[ENDCOLOR][NEWLINE][ICON_BULLET]A free [COLOR_POSITIVE_TEXT]Vihara[ENDCOLOR] in your capital
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES_SHORT"> 
@@ -17987,7 +17987,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC"> 
 			<Text>
-				May purchase [COLOR_POSITIVE_TEXT]Workshops[ENDCOLOR], [COLOR_POSITIVE_TEXT]Windmills[ENDCOLOR], [COLOR_POSITIVE_TEXT]Factories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Hydro Plants[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Workers[ENDCOLOR] with [ICON_PEACE] Faith ([ICON_PEACE] Faith cost = 130% of the [ICON_PRODUCTION] Production cost).[NEWLINE][NEWLINE]Great Prophets no longer appear from [ICON_PEACE] Faith.
+				[ICON_BULLET]May buy [COLOR_POSITIVE_TEXT]Workshops[ENDCOLOR], [COLOR_POSITIVE_TEXT]Windmills[ENDCOLOR], [COLOR_POSITIVE_TEXT]Factories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Hydro Plants[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Workers[ENDCOLOR] with [ICON_PEACE] Faith (130% of the [ICON_PRODUCTION] Production cost)[NEWLINE][ICON_BULLET]Great Prophets no longer appear from [ICON_PEACE] Faith
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC_SHORT"> 
@@ -17997,7 +17997,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC"> 
 			<Text>
-				May purchase [COLOR_POSITIVE_TEXT]Workshops[ENDCOLOR], [COLOR_POSITIVE_TEXT]Windmills[ENDCOLOR], [COLOR_POSITIVE_TEXT]Factories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Hydro Plants[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Workers[ENDCOLOR] with [ICON_PEACE] Faith ([ICON_PEACE] Faith cost = 130% of the [ICON_PRODUCTION] Production cost).[NEWLINE][NEWLINE]Great Prophets no longer appear from [ICON_PEACE] Faith.
+				[ICON_BULLET]May buy [COLOR_POSITIVE_TEXT]Workshops[ENDCOLOR], [COLOR_POSITIVE_TEXT]Windmills[ENDCOLOR], [COLOR_POSITIVE_TEXT]Factories[ENDCOLOR], [COLOR_POSITIVE_TEXT]Hydro Plants[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Workers[ENDCOLOR] with [ICON_PEACE] Faith (130% of the [ICON_PRODUCTION] Production cost)[NEWLINE][ICON_BULLET]Great Prophets no longer appear from [ICON_PEACE] Faith
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_WORK_ETHIC_SHORT"> 
@@ -18027,7 +18027,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES"> 
 			<Text>
-				+3 [ICON_GOLD] Gold and +3 [ICON_PEACE] Faith from buildings unlocked by [COLOR_POSITIVE_TEXT]Religious Beliefs[ENDCOLOR] (Pagodas, Mosques, Cathedrals, Gurdwaras, Synagogues, Viharas, Mandirs).[NEWLINE][NEWLINE]Adopting it gives a free [COLOR_POSITIVE_TEXT]Vihara[ENDCOLOR] in your capital.
+				[ICON_BULLET]+3 [ICON_GOLD] Gold and +3 [ICON_PEACE] Faith from buildings unlocked by [COLOR_POSITIVE_TEXT]Religious Beliefs[ENDCOLOR][NEWLINE][ICON_BULLET]A free [COLOR_POSITIVE_TEXT]Vihara[ENDCOLOR] in your capital
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_SACRED_SITES_SHORT"> 
@@ -120385,13 +120385,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Harvest Confluence</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_SACRED_CRAFTWORK">
-			<Text>+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from [ICON_RES_HARDWOOD] Hardwood.[NEWLINE]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Forests[ENDCOLOR], [ICON_RES_CORAL] Coral and [ICON_RES_PEARLS] Pearls.</Text>
+			<Text>[ICON_BULLET]+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from [ICON_RES_HARDWOOD] Hardwood[NEWLINE][ICON_BULLET]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Forests[ENDCOLOR], [ICON_RES_CORAL] Coral and [ICON_RES_PEARLS] Pearls</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_SACRED_CRAFTWORK_SHORT">
 			<Text>Sacred Craftwork</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_OFFERING_PLENTY">
-			<Text>+1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith from [ICON_RES_FISH] Fish, [ICON_RES_WHEAT] Wheat, [ICON_BUILDING_GRANARY] Granaries and [ICON_BUILDING_LIGHTHOUSE] Lighthouses.[NEWLINE]Granaries and Lighthouses yield -1 [ICON_FOOD] Food.</Text>
+			<Text>[ICON_BULLET]+1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith from [ICON_RES_FISH] Fish, [ICON_RES_WHEAT] Wheat, [ICON_BUILDING_GRANARY] Granaries and [ICON_BUILDING_LIGHTHOUSE] Lighthouses[NEWLINE][ICON_BULLET]Granaries and Lighthouses -1 [ICON_FOOD] Food</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_OFFERING_PLENTY_SHORT">
 			<Text>Offering of Plenty</Text>
@@ -120409,19 +120409,19 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Pillars of Heaven</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_KIN_BLOOD">
-			<Text>Clearing a barbarian encampment gives +1 [ICON_CITIZEN] Population in the capital and 30 [ICON_PEACE] Faith.[NEWLINE][NEWLINE]New military units get the [COLOR_POSITIVE_TEXT]Zealot[ENDCOLOR] promotion while this pantheon is in your capital; units keep it afterwards.</Text>
+			<Text>[ICON_BULLET]Clearing a barbarian encampment: +1 [ICON_CITIZEN] Population in the capital and 30 [ICON_PEACE] Faith[NEWLINE][ICON_BULLET]New military units get [COLOR_POSITIVE_TEXT]Zealot[ENDCOLOR] while this pantheon is in your capital</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_KIN_BLOOD_SHORT">
 			<Text>Kin Forged in Blood</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_SALT_STARS">
-			<Text>+2 [ICON_PRODUCTION] Production from [ICON_RES_SALT] Salt.[NEWLINE]+1 [ICON_PEACE] Faith from [ICON_RES_FISH] Fish, [ICON_RES_WHALE] Whales, [ICON_RES_CORAL] Coral, [ICON_RES_PEARLS] Pearls and [ICON_RES_CRAB] Crabs.[NEWLINE][NEWLINE]New land units get +1 sight while embarked as long as this pantheon is in your capital; units keep it afterwards.</Text>
+			<Text>[ICON_BULLET]+2 [ICON_PRODUCTION] Production from [ICON_RES_SALT] Salt[NEWLINE][ICON_BULLET]+1 [ICON_PEACE] Faith from [ICON_RES_FISH] Fish, [ICON_RES_WHALE] Whales, [ICON_RES_CORAL] Coral, [ICON_RES_PEARLS] Pearls and [ICON_RES_CRAB] Crabs[NEWLINE][ICON_BULLET]New land units get +1 sight while embarked while this pantheon is in your capital</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_SALT_STARS_SHORT">
 			<Text>Salt and Stars</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_TIDES_CALLING">
-			<Text>A coastal capital gets +1 [ICON_PEACE] Faith and +1 [ICON_GOLD] Gold on its tile for each inland city.[NEWLINE]+1 [ICON_PEACE] Faith and +1 [ICON_GOLD] Gold from [ICON_RES_STONE] Stone and [ICON_RES_WHEAT] Wheat.[NEWLINE][NEWLINE]Founding this pantheon gives a free Skiff.</Text>
+			<Text>[ICON_BULLET]Coastal capital: +1 [ICON_PEACE] Faith and +1 [ICON_GOLD] Gold for each inland city[NEWLINE][ICON_BULLET]+1 [ICON_PEACE] Faith and +1 [ICON_GOLD] Gold from [ICON_RES_STONE] Stone and [ICON_RES_WHEAT] Wheat[NEWLINE][ICON_BULLET]A free Skiff</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_TIDES_CALLING_SHORT">
 			<Text>The Tide's Calling</Text>
@@ -120433,25 +120433,25 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>+1 sight while embarked.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_MANGROVE">
-			<Text>+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Forests[ENDCOLOR] and [ICON_RES_FISH] Fish.[NEWLINE][ICON_RES_CORAL] Coral, [ICON_RES_PEARLS] Pearls and [COLOR_POSITIVE_TEXT]Atolls[ENDCOLOR] next to a city and a Forest yield +1 [ICON_PRODUCTION] Production and +2 [ICON_RESEARCH] Science.</Text>
+			<Text>[ICON_BULLET]+1 [ICON_PEACE] Faith from [COLOR_POSITIVE_TEXT]Forests[ENDCOLOR] and [ICON_RES_FISH] Fish[NEWLINE][ICON_BULLET][ICON_RES_CORAL] Coral, [ICON_RES_PEARLS] Pearls and [COLOR_POSITIVE_TEXT]Atolls[ENDCOLOR] next to a city and a Forest: +1 [ICON_PRODUCTION] Production and +2 [ICON_RESEARCH] Science</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_MANGROVE_SHORT">
 			<Text>Mangrove Mysteries</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_HUNGERING_THRONE">
-			<Text>Cities other than the capital get -1 [ICON_FOOD] Food.[NEWLINE]The capital gets +1 [ICON_PRODUCTION] Production, +1 [ICON_RESEARCH] Science and +1 [ICON_PEACE] Faith for each other city with this pantheon.[NEWLINE][NEWLINE]Whenever such a city loses a citizen to starvation, the capital claims 2 tiles.</Text>
+			<Text>[ICON_BULLET]Cities other than the capital -1 [ICON_FOOD] Food[NEWLINE][ICON_BULLET]Capital: +1 [ICON_PRODUCTION] Production, +1 [ICON_RESEARCH] Science and +1 [ICON_PEACE] Faith for each such city[NEWLINE][ICON_BULLET]When such a city starves, the capital claims 2 tiles</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_HUNGERING_THRONE_SHORT">
 			<Text>The Hungering Throne</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_ASCETIC">
-			<Text>[ICON_BUILDING_SHRINE] Shrines yield -1 [ICON_FOOD] Food, -1 [ICON_GOLD] Gold and +2 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Whenever a city loses a citizen to starvation, gain 20 [ICON_PEACE] Faith.</Text>
+			<Text>[ICON_BULLET][ICON_BUILDING_SHRINE] Shrines: -1 [ICON_FOOD] Food, -1 [ICON_GOLD] Gold, +2 [ICON_PRODUCTION] Production[NEWLINE][ICON_BULLET]+20 [ICON_PEACE] Faith whenever a city starves</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_ASCETIC_SHORT">
 			<Text>Ascetic Discipline</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_FIRST_BORN">
-			<Text>When a city grows to 2 [ICON_CITIZEN] Citizens for the first time, it drops back to 1, you gain 20 [ICON_PEACE] Faith, and the city tile gets +1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture permanently (kept when the city is captured).</Text>
+			<Text>[ICON_BULLET]When a city first grows to 2 [ICON_CITIZEN] Citizens, it drops back to 1 and you gain 20 [ICON_PEACE] Faith[NEWLINE][ICON_BULLET]The city gets a [COLOR_POSITIVE_TEXT]Rite of the First-Born[ENDCOLOR] building: +1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture, kept on capture</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_FIRST_BORN_SHORT">
 			<Text>Rite of the First-Born</Text>
@@ -120460,7 +120460,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from the Rite of the First-Born.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_CHARTER">
-			<Text>When adopted: +150 [ICON_CULTURE] Culture, +150 [ICON_GOLD] Gold, and every city claims 2 tiles.</Text>
+			<Text>[ICON_BULLET]+150 [ICON_CULTURE] Culture and +150 [ICON_GOLD] Gold[NEWLINE][ICON_BULLET]Every city claims 2 tiles</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_CHARTER_SHORT">
 			<Text>Charter of Settlement</Text>

@@ -48543,9 +48543,9 @@
 			<Cost>-1</Cost>
 			<HurryCostModifier>-1</HurryCostModifier>
 			<ArtDefineTag>MONUMENT</ArtDefineTag>
-			<GreatWorkCount>-1</GreatWorkCount>
-			<PortraitIndex>13</PortraitIndex>
-			<IconAtlas>TECH_ATLAS_1</IconAtlas>
+			<GreatWorkCount>0</GreatWorkCount>
+			<PortraitIndex>9</PortraitIndex>
+			<IconAtlas>EXPANSION_BW_ATLAS_1</IconAtlas>
 		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
