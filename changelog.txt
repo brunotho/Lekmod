@@ -1066,7 +1066,8 @@ Tags: units, combat
 A new mobile siege unit that does not need to set up.
 - Added: Self-Propelled Artillery: Ballistics, 1 Iron and 1 Oil, 225 Production, 30 Strength, 40 Ranged Strength, range 3, 2 movement
 - Added: Indirect Fire, +200% vs cities, Sitting Ducks; cannot melee attack, no defensive terrain bonuses, limited sight; no set-up needed
-- Note: uses the Artillery's look as a placeholder (user decision); no upgrade path and no obsolete tech (the spec names none)
+- Changed: the Artillery (and the Rocket Corps) becomes obsolete with Ballistics and upgrades to the Self-Propelled Artillery; the Self-Propelled Artillery becomes obsolete with Rocketry and upgrades to the Rocket Artillery
+- Note: uses the Artillery's look as a placeholder (user decision)
 
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------

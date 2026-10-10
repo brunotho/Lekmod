@@ -259845,11 +259845,11 @@
 		</Row>
 		<Row> 
 			<UnitType>UNIT_ARTILLERY</UnitType> 
-			<UnitClassType>UNITCLASS_ROCKET_ARTILLERY</UnitClassType> 
+			<UnitClassType>UNITCLASS_SELF_PROPELLED_ARTILLERY</UnitClassType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_ROCKET_CORPS</UnitType> 
-			<UnitClassType>UNITCLASS_ROCKET_ARTILLERY</UnitClassType> 
+			<UnitClassType>UNITCLASS_SELF_PROPELLED_ARTILLERY</UnitClassType> 
 		</Row>
 		<Row> 
 			<UnitType>UNIT_TANK</UnitType> 
@@ -260339,6 +260339,10 @@
 		<Row>
 			<UnitType>UNIT_TRIREME</UnitType>
 			<UnitClassType>UNITCLASS_QUINQ</UnitClassType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SELF_PROPELLED_ARTILLERY</UnitType>
+			<UnitClassType>UNITCLASS_ROCKET_ARTILLERY</UnitClassType>
 		</Row>
 	</Unit_ClassUpgrades> 
 
@@ -276252,6 +276256,7 @@
 			<Pillage>true</Pillage>
 			<Mechanized>true</Mechanized>
 			<PrereqTech>TECH_BALLISTICS</PrereqTech>
+			<ObsoleteTech>TECH_ROCKETRY</ObsoleteTech>
 			<AdvancedStartCost>40</AdvancedStartCost>
 			<MinAreaSize>-1</MinAreaSize>
 			<NukeDamageLevel>-1</NukeDamageLevel>
@@ -276269,6 +276274,15 @@
 	</Units>
 	<!-- LEKMOD naval rework (2026-10-09) -->
 	<Units>
+		<!-- Self-Propelled Artillery (2026-10-10) replaces the Artillery at Ballistics -->
+		<Update>
+			<Where Type="UNIT_ARTILLERY"/>
+			<Set ObsoleteTech="TECH_BALLISTICS"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_ROCKET_CORPS"/>
+			<Set ObsoleteTech="TECH_BALLISTICS"/>
+		</Update>
 		<Update>
 			<Where Type="UNIT_CARAVEL"/>
 			<Set BaseSightRange="4" Combat="16" Cost="102" Moves="6"/>
