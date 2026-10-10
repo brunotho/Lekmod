@@ -18272,7 +18272,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_AIRPORT_HELP"> 
 			<Text>
-				Allows airlifts to or from this city. [COLOR_POSITIVE_TEXT]Increases air unit capacity of the city from 6 to 10.[ENDCOLOR] 50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city. [ICON_TOURISM] Tourism output from Great Works +50%.
+				Allows airlifts to or from this city.[NEWLINE][COLOR_POSITIVE_TEXT]Increases air unit capacity of the city from 6 to 10.[ENDCOLOR][NEWLINE]A plane that rebases from a city with an Airport to another city with an Airport can still act this turn (one such rebase per turn).[NEWLINE][NEWLINE]50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city.[NEWLINE][ICON_TOURISM] Tourism output from Great Works +50%.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_AIRPORT_STRATEGY"> 
@@ -19682,12 +19682,12 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HYDRO_PLANT_HELP"> 
 			<Text>
-				+1 [ICON_PRODUCTION] Production in every tile next to a River. Requires 1 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE][NEWLINE]City must be built next to a River.
+				+1 [ICON_PRODUCTION] Production in every tile next to a River.[NEWLINE]Requires 3 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE][NEWLINE]City must be on a River or next to a River tile.[NEWLINE]No [ICON_GOLD] Gold maintenance if the city is on a River (otherwise 10).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_HYDRO_PLANT_STRATEGY"> 
 			<Text>
-				The Hydro Plant is a mid-game building which can only be constructed in a city which is adjacent to a river. The Hydro Plant increases the [ICON_PRODUCTION] Production output of every tile the city works which is also adjacent to the river. Constructing the Hydro Plant consumes 1 [ICON_RES_ALUMINUM] Aluminum.
+				The Hydro Plant increases the [ICON_PRODUCTION] Production of every worked tile next to a river. It can be built in a city on a river or one tile away from one, and costs no maintenance in a city on a river. Constructing it consumes 3 [ICON_RES_ALUMINUM] Aluminum.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_IKANDA_DESC"> 
@@ -20416,12 +20416,12 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_NUCLEAR_PLANT_HELP"> 
 			<Text>
-				Requires 1 [ICON_RES_URANIUM] Uranium.  City must not contain a Solar Plant.
+				Requires 2 [ICON_RES_URANIUM] Uranium.[NEWLINE]City must not contain a Solar Plant.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_NUCLEAR_PLANT_STRATEGY"> 
 			<Text>
-				The Nuclear Plant significantly increases a city's productivity. A Nuclear Plant requires one [ICON_RES_URANIUM] Uranium resource to be constructed. The city must possess a Factory before it can be constructed.
+				The Nuclear Plant significantly increases a city's productivity. A Nuclear Plant requires two [ICON_RES_URANIUM] Uranium to be constructed. The city must possess a Factory before it can be constructed.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_OBSERVATORY"> 
@@ -20763,12 +20763,12 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_RECYCLING_CENTER_HELP"> 
 			<Text>
-				Provides 2 [ICON_RES_ALUMINUM] Aluminum. Maximum of 5 of these buildings in your empire.
+				Provides 10 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE]Each source of [ICON_RES_ALUMINUM] Aluminum worked by this City produces +5 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Maximum of 5 of these buildings in your empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_RECYCLING_CENTER_STRATEGY"> 
 			<Text>
-				Each Recycling Center provides 2 [ICON_RES_ALUMINUM] Aluminum. Maximum of 5 of these buildings in your empire.
+				Each Recycling Center provides 10 [ICON_RES_ALUMINUM] Aluminum and [ICON_PRODUCTION] Production. Maximum of 5 of these buildings in your empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_RED_FORT"> 
@@ -20814,7 +20814,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		
 		<Replace Tag="TXT_KEY_BUILDING_REFINERY_HELP"> 
 			<Text>
-				Requires an improved source of Oil. Provides +3 [ICON_PRODUCTION] and +3 [ICON_GOLD] from Oil.
+				Provides 6 [ICON_RES_OIL] Oil.[NEWLINE]Each source of [ICON_RES_OIL] Oil worked by this City produces +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Maximum of 5 of these buildings in your empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_RENAISSANCE_CONSULATE_DESC"> 
@@ -20965,12 +20965,12 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SPACESHIP_FACTORY_HELP"> 
 			<Text>
-				+100% [ICON_PRODUCTION] Production when building Spaceship Parts. Requires 1 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE][NEWLINE]City must have a Factory.
+				+90% [ICON_PRODUCTION] Production when building Spaceship Parts.[NEWLINE]+30% [ICON_PRODUCTION] Production when building Air units.[NEWLINE]Requires 10 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE][NEWLINE]Maximum of 2 of these buildings in your empire.[NEWLINE]City must have a Factory.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SPACESHIP_FACTORY_STRATEGY"> 
 			<Text>
-				The Spaceship Factory increases the speed at which a city constructs spaceship parts. The Spaceship Factory requires one [ICON_RES_ALUMINUM] Aluminum resource, and the city must possess a Factory before it can be constructed.
+				The Spaceship Factory speeds up spaceship parts and air units. It requires 10 [ICON_RES_ALUMINUM] Aluminum, the city must possess a Factory, and you can have at most 2.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_STAATSMUSEUM"> 

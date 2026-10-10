@@ -1149,6 +1149,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iHealWhileEmbarkedCount = 0;
 	m_iExtraAttackVsFullHPCount = 0;
 	m_bExtraAttackVsFullHPUsed = false;
+	m_bLekmodAirportRebased = false;
 	m_iMovesNearGeneralChange = 0;
 	m_iCanCrossMountainsCount = 0;
 	m_iCarpetBombingCount = 0;
@@ -8050,6 +8051,14 @@ bool CvUnit::canRebase(const CvPlot* /*pPlot*/) const
 		return false;
 	}
 
+#ifdef LEKMOD_AIRPORT_REBASE
+	// After an Airport-to-Airport rebase the plane may still act, but not rebase again this turn
+	if (IsLekmodAirportRebased())
+	{
+		return false;
+	}
+#endif
+
 	return true;
 }
 
@@ -8203,7 +8212,17 @@ bool CvUnit::rebase(int iX, int iY)
 	if(pTargetPlot == NULL)
 		return false;
 
+#ifdef LEKMOD_AIRPORT_REBASE
+	// Airport to Airport: the plane keeps its moves and can still act this turn (one such rebase per turn)
+	CvCity* pFromCity = oldPlot->getPlotCity();
+	CvCity* pToCity = pTargetPlot->getPlotCity();
+	if (pFromCity != NULL && pToCity != NULL && pFromCity->GetLekmodBuildingStat(6, true) > 0 && pToCity->GetLekmodBuildingStat(6, true) > 0)
+		SetLekmodAirportRebased(true);
+	else
+		finishMoves();
+#else
 	finishMoves();
+#endif
 
 	// Loses sight bonus for this turn
 	setReconPlot(NULL);
@@ -23942,6 +23961,7 @@ void CvUnit::read(FDataStream& kStream)
 	kStream >> m_iHealWhileEmbarkedCount;
 	kStream >> m_iExtraAttackVsFullHPCount;
 	kStream >> m_bExtraAttackVsFullHPUsed;
+	kStream >> m_bLekmodAirportRebased;
 	kStream >> m_iMovesNearGeneralChange;
 	kStream >> m_iCitySplashDamage;
 	kStream >> m_iCanCrossMountainsCount;
@@ -24141,6 +24161,7 @@ void CvUnit::write(FDataStream& kStream) const
 	kStream << m_iHealWhileEmbarkedCount;
 	kStream << m_iExtraAttackVsFullHPCount;
 	kStream << m_bExtraAttackVsFullHPUsed;
+	kStream << m_bLekmodAirportRebased;
 	kStream << m_iMovesNearGeneralChange;
 	kStream << m_iCitySplashDamage;
 	kStream << m_iCanCrossMountainsCount;

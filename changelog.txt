@@ -1232,3 +1232,23 @@ Redesigned: the Lighthouse no longer boosts every water tile.
 - Changed: Carthage's Cothon follows the same changes and keeps its +1 Food and +1 Production on the building
 - DLL: Building_TechTerrainYieldChanges (LEKMOD_BUILDING_TECH_TERRAIN_YIELDS); plot yields refresh when the tech arrives or the building is built
 
+AIRPORT (BUILDING_AIRPORT)
+--------------------------
+Tags: buildings, air
+Airports let planes move between them and still fight.
+- Added: a plane that rebases from a city with an Airport to another city with an Airport can still attack or act that turn; it can rebase only once per turn
+- Changed: cost 268 -> 321, 15 Gold maintenance (was 5)
+- DLL: Buildings.AirportRebase (LEKMOD_AIRPORT_REBASE); new saved unit field, old saves are incompatible
+
+INDUSTRIAL BUILDINGS (BUILDING_REFINERY, BUILDING_RECYCLING_CENTER, BUILDING_SPACESHIP_FACTORY, BUILDING_NUCLEAR_PLANT, BUILDING_HYDRO_PLANT)
+-------------------------------------------------------------------------------------------------------------------------------------
+Tags: buildings
+Strategic resource buildings are stronger, rarer and more expensive.
+- Changed: Oil Refinery: no longer needs improved Oil nearby; provides 6 Oil and +3 Production on the building; cost 134 -> 260, 12 Gold maintenance (was 0); at most 5 per player
+- Changed: Recycling Center: at Plastics (was Ecology); provides 10 Aluminum (was 2); +5 Production on the building and on Aluminum tiles; 20 Gold maintenance (was 3)
+- Changed: Spaceship Factory: cost 241 -> 289, needs 10 Aluminum (was 1), 20 Gold maintenance (was 3), no longer +3 Production on the building, +90% Production towards spaceship parts (was +100%), +30% towards air units; at most 2 per player
+- Changed: Nuclear Plant: needs 2 Uranium (was 1)
+- Changed: Hydro Plant: needs 3 Aluminum (was 1), cost 241 -> 280; can be built on a river or one tile away from one; no Gold maintenance in a city on a river, 10 otherwise (was 3)
+- Note: Brunei's refinery is unchanged until the Brunei civ rework
+- DLL: Buildings.NearRiver and NoMaintenanceOnRiver (LEKMOD_DEFENSE_BUILDINGS group)
+

@@ -1445,6 +1445,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_DEFENSE_BUILDINGS
 // Building_TechTerrainYieldChanges: terrain yields for worked tiles that need a tech (Lighthouse: Coast +1 Production with Construction); lakes excluded
 #define LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
+// Buildings.AirportRebase: a plane rebasing between two cities with an Airport keeps its moves and may act; no second rebase that turn (needs LEKMOD_DEFENSE_BUILDINGS for the building lookup; new saved unit field)
+#define LEKMOD_AIRPORT_REBASE
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

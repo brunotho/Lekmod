@@ -144,7 +144,11 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 		-- Maintenance
 		if (not bNoMaintenance) then
 			local iMaintenance = pBuildingInfo.GoldMaintenance;
-			if (iMaintenance ~= nil and iMaintenance ~= 0) then		
+			-- LEKMOD: Hydro Plant costs nothing in a city on a river
+			if (pBuildingInfo.NoMaintenanceOnRiver and pCity ~= nil and pCity:Plot():IsRiver()) then
+				iMaintenance = 0;
+			end
+			if (iMaintenance ~= nil and iMaintenance ~= 0) then	
 				table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_MAINTENANCE", iMaintenance));
 			end
 		end

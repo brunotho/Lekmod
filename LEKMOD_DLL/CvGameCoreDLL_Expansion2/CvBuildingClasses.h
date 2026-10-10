@@ -207,6 +207,9 @@ public:
 	int GetMountainCityStrength() const;
 	int GetCityAttackRangeChange() const;
 	int GetNukeUnitDamageFixed() const;
+	bool IsAirportRebase() const;
+	bool IsNearRiver() const;
+	bool IsNoMaintenanceOnRiver() const;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int GetTerritoryHealChange() const;
@@ -533,6 +536,9 @@ private:
 	int m_iMountainCityStrength;
 	int m_iCityAttackRangeChange;
 	int m_iNukeUnitDamageFixed;
+	bool m_bAirportRebase;
+	bool m_bNearRiver;
+	bool m_bNoMaintenanceOnRiver;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;

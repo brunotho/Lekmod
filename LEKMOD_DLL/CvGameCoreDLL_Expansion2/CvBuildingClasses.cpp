@@ -98,6 +98,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iMountainCityStrength(0),
 	m_iCityAttackRangeChange(0),
 	m_iNukeUnitDamageFixed(0),
+	m_bAirportRebase(false),
+	m_bNearRiver(false),
+	m_bNoMaintenanceOnRiver(false),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
@@ -486,6 +489,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iMountainCityStrength = kResults.GetInt("MountainCityStrength");
 	m_iCityAttackRangeChange = kResults.GetInt("CityAttackRangeChange");
 	m_iNukeUnitDamageFixed = kResults.GetInt("NukeUnitDamageFixed");
+	m_bAirportRebase = kResults.GetBool("AirportRebase");
+	m_bNearRiver = kResults.GetBool("NearRiver");
+	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
@@ -1826,6 +1832,24 @@ int CvBuildingEntry::GetCityAttackRangeChange() const
 int CvBuildingEntry::GetNukeUnitDamageFixed() const
 {
 	return m_iNukeUnitDamageFixed;
+}
+
+/// Planes rebasing between two cities with this building keep their moves (once per turn)
+bool CvBuildingEntry::IsAirportRebase() const
+{
+	return m_bAirportRebase;
+}
+
+/// The city must be on a river or next to a river tile (Hydro Plant)
+bool CvBuildingEntry::IsNearRiver() const
+{
+	return m_bNearRiver;
+}
+
+/// No Gold maintenance when the city is on a river (Hydro Plant)
+bool CvBuildingEntry::IsNoMaintenanceOnRiver() const
+{
+	return m_bNoMaintenanceOnRiver;
 }
 #endif
 
@@ -3689,6 +3713,9 @@ int CvCityBuildings::GetTotalBaseBuildingMaintenance() const
 		if(pkBuildingInfo)
 		{
 			if(GetNumBuilding(eBuilding))
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+				if (!(pkBuildingInfo->IsNoMaintenanceOnRiver() && m_pCity->plot()->isRiver()))
+#endif
 				iTotalCost += (pkBuildingInfo->GetGoldMaintenance() * GetNumBuilding(eBuilding));
 		}
 	}
@@ -3866,6 +3893,9 @@ void CvCityBuildings::SetNumRealBuildingTimed(BuildingTypes eIndex, int iNewValu
 
 		// Maintenance cost
 		if(buildingEntry->GetGoldMaintenance() != 0)
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+		if (!(buildingEntry->IsNoMaintenanceOnRiver() && m_pCity->plot()->isRiver()))
+#endif
 		{
 			pPlayer->GetTreasury()->ChangeBaseBuildingGoldMaintenance(buildingEntry->GetGoldMaintenance() * iChangeNumRealBuilding);
 		}

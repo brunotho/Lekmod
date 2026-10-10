@@ -41890,6 +41890,9 @@
 		<Column name="MountainCityStrength" type="integer" default="0" /> <!-- LEKMOD: extra city Defense (whole points) if the city is next to a Mountain -->
 		<Column name="CityAttackRangeChange" type="integer" default="0" /> <!-- LEKMOD: extra city ranged attack range -->
 		<Column name="NukeUnitDamageFixed" type="integer" default="0" /> <!-- LEKMOD: military units (and planes) in the city take exactly this damage from nukes -->
+		<Column name="AirportRebase" type="boolean" default="false" /> <!-- LEKMOD: planes rebasing between two cities with this building keep their moves (once per turn) -->
+		<Column name="NearRiver" type="boolean" default="false" /> <!-- LEKMOD: the city must be on a river or next to a river tile -->
+		<Column name="NoMaintenanceOnRiver" type="boolean" default="false" /> <!-- LEKMOD: no Gold maintenance when the city is on a river -->
 		<Column name="Happiness" type="integer" default="0" /> <!-- Changes the amount of local happiness the city has. -->
 		<Column name="UnmoddedHappiness" type="integer" default="0" /> <!-- Changes the amount of global happiness the city is adding to the empire -->
 		<Column name="UnhappinessModifier" type="integer" default="0" /> <!-- Changes the amount of unhappiness in the empire by a % value. -->
@@ -47904,6 +47907,95 @@
 			<Yield>1</Yield>
 		</Row>
 	</Building_TechTerrainYieldChanges>
+	<!-- LEKMOD: Phase 3 industrial buildings and Airport (costs are standard speed: quick = x0.67) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_REFINERY"/>
+			<Set Cost="389" GoldMaintenance="12"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_RECYCLING_CENTER"/>
+			<Set Cost="500" GoldMaintenance="20" PrereqTech="TECH_PLASTIC" HurryCostModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_SPACESHIP_FACTORY"/>
+			<Set Cost="432" GoldMaintenance="20" SpaceProductionModifier="90"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HYDRO_PLANT"/>
+			<Set Cost="418" FaithCost="418" GoldMaintenance="10" River="false" NearRiver="true" NoMaintenanceOnRiver="true"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_AIRPORT"/>
+			<Set Cost="480" GoldMaintenance="15" AirportRebase="true"/>
+		</Update>
+	</Buildings>
+	<BuildingClasses>
+		<Update>
+			<Where Type="BUILDINGCLASS_REFINERY"/>
+			<Set MaxPlayerInstances="5"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDINGCLASS_SPACESHIP_FACTORY"/>
+			<Set MaxPlayerInstances="2"/>
+		</Update>
+	</BuildingClasses>
+	<Building_LocalResourceOrs>
+		<Delete BuildingType="BUILDING_REFINERY"/>
+	</Building_LocalResourceOrs>
+	<Building_ResourceQuantity>
+		<Row>
+			<BuildingType>BUILDING_REFINERY</BuildingType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Quantity>6</Quantity>
+		</Row>
+		<Update>
+			<Where BuildingType="BUILDING_RECYCLING_CENTER" ResourceType="RESOURCE_ALUMINUM"/>
+			<Set Quantity="10"/>
+		</Update>
+	</Building_ResourceQuantity>
+	<Building_ResourceQuantityRequirements>
+		<Update>
+			<Where BuildingType="BUILDING_SPACESHIP_FACTORY" ResourceType="RESOURCE_ALUMINUM"/>
+			<Set Cost="10"/>
+		</Update>
+		<Update>
+			<Where BuildingType="BUILDING_NUCLEAR_PLANT" ResourceType="RESOURCE_URANIUM"/>
+			<Set Cost="2"/>
+		</Update>
+		<Update>
+			<Where BuildingType="BUILDING_HYDRO_PLANT" ResourceType="RESOURCE_ALUMINUM"/>
+			<Set Cost="3"/>
+		</Update>
+	</Building_ResourceQuantityRequirements>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_SPACESHIP_FACTORY"/>
+		<Row>
+			<BuildingType>BUILDING_REFINERY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_RECYCLING_CENTER</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>5</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_ResourceYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_RECYCLING_CENTER</BuildingType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>5</Yield>
+		</Row>
+	</Building_ResourceYieldChanges>
+	<Building_DomainProductionModifiers>
+		<Row>
+			<BuildingType>BUILDING_SPACESHIP_FACTORY</BuildingType>
+			<DomainType>DOMAIN_AIR</DomainType>
+			<Modifier>30</Modifier>
+		</Row>
+	</Building_DomainProductionModifiers>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />

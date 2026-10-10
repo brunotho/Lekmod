@@ -14517,6 +14517,7 @@ int CvCity::GetLekmodBuildingStat(int iStat, bool bMax) const
 		case 3: iValue = pkBuilding->GetMountainCityStrength(); break;
 		case 4: iValue = pkBuilding->GetCityAttackRangeChange(); break;
 		case 5: iValue = pkBuilding->GetNukeUnitDamageFixed(); break;
+		case 6: iValue = pkBuilding->IsAirportRebase() ? 1 : 0; break;
 		}
 		if (iValue == 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
 			continue;
@@ -19566,6 +19567,21 @@ bool CvCity::isValidBuildingLocation(BuildingTypes eBuilding) const
 		if(!(plot()->isRiver()))
 			return false;
 	}
+
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+	// Requires a river on the city tile or next to it
+	if (pkBuildingInfo->IsNearRiver() && !plot()->isRiver())
+	{
+		bool bNear = false;
+		for (int iDir = 0; iDir < NUM_DIRECTION_TYPES && !bNear; iDir++)
+		{
+			CvPlot* pAdjacent = plotDirection(getX(), getY(), (DirectionTypes)iDir);
+			bNear = pAdjacent != NULL && pAdjacent->isRiver();
+		}
+		if (!bNear)
+			return false;
+	}
+#endif
 
 	// Requires Fresh Water
 	if(pkBuildingInfo->IsFreshWater())

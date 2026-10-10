@@ -5979,6 +5979,7 @@ void CvPlayer::DoUnitReset()
 		pLoopUnit->SetIgnoreDangerWakeup(false);
 		pLoopUnit->setMadeAttack(false);
 		pLoopUnit->SetExtraAttackVsFullHPUsed(false);
+		pLoopUnit->SetLekmodAirportRebased(false);
 		pLoopUnit->setMadeInterception(false);
 #if defined(NQM_UNIT_FIX_NO_DOUBLE_INSTAHEAL_ON_SAME_TURN) || defined(NQM_UNIT_FIX_NO_INSTAHEAL_AFTER_PARADROP) || defined(NQM_UNIT_FIX_NO_INSTAHEAL_ON_CREATION_TURN)
 		pLoopUnit->setCanInstahealThisTurn(true);

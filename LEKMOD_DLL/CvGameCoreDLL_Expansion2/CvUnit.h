@@ -896,6 +896,8 @@ public:
 	void ChangeExtraAttackVsFullHPCount(int iChange);
 	bool IsExtraAttackVsFullHPUsed() const;
 	void SetExtraAttackVsFullHPUsed(bool bValue);
+	bool IsLekmodAirportRebased() const { return m_bLekmodAirportRebased; }
+	void SetLekmodAirportRebased(bool bValue) { m_bLekmodAirportRebased = bValue; }
 	void RefundAttack();
 	int GetMovesNearGeneralChange() const;
 	void ChangeMovesNearGeneralChange(int iChange);
@@ -1694,6 +1696,7 @@ protected:
 	int m_iHealWhileEmbarkedCount;
 	int m_iExtraAttackVsFullHPCount;
 	bool m_bExtraAttackVsFullHPUsed;
+	bool m_bLekmodAirportRebased;
 	int m_iMovesNearGeneralChange;
 	int m_iCanCrossMountainsCount;
 	int m_iCarpetBombingCount;
