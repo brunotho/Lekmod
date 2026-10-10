@@ -141284,10 +141284,8 @@ The ship has weather'd every rack; the prize we sought is won."
 				One of the Spaceship parts that must be built and sent to the capital to win a [COLOR_POSITIVE_TEXT]Science Victory[ENDCOLOR]. Unlike other parts, three SS Boosters are needed to complete the spaceship.
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_HELP_SS_PART"> 
-			<Text>
-				One of the Spaceship parts that must be built and sent to the capital to win a [COLOR_POSITIVE_TEXT]Science Victory[ENDCOLOR].
-			</Text>
+		<Replace Tag="TXT_KEY_UNIT_HELP_SS_PART">
+			<Text>One of the Spaceship parts that must be built and sent to the capital to win a [COLOR_POSITIVE_TEXT]Science Victory[ENDCOLOR].[NEWLINE][NEWLINE]A military unit with 80 [ICON_STRENGTH] Combat Strength and 1 [ICON_MOVES] Movement; needs 10 Aluminum.[NEWLINE]Cannot melee attack and has limited sight.[NEWLINE][NEWLINE]Can earn Mobility I-III and Armor Plating I-III; level III of either unlocks Repair and Nuke Resistance.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_STEALTH_BOMBER"> 
 			<Text>

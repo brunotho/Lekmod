@@ -1105,6 +1105,16 @@ The Conquistador becomes a sturdier colonist and a shared unique unit of the col
 - Note: like every city-founding unit it costs its own value plus a fixed amount (about 71 on quick); the user chose shown costs: the Conquistador shows about 71 (spec 70), the Vanguard Corps 290 (= Infantry)
 - DLL: Units.PolicyAlternateTech (LEKMOD_POLICY_ALTERNATE_TECH, CvPlayer::canTrain); shared copy is unit ID 272
 
+SPACESHIP PARTS (UNITCOMBAT_SPACESHIP)
+-------------------------------------
+Tags: units, promotions
+Spaceship parts are military units that can defend themselves on the way to the capital.
+- Changed: spaceship parts are military units: 80 Strength, 1 movement (was 2), limited sight, cannot melee attack, need 10 Aluminum (was 1)
+- Added: they can earn promotions: Mobility I, II and III (+1 movement each) and Armor Plating I, II and III; level III of either line unlocks Repair and Nuke Resistance
+- Added: Mobility II and III continue the Mobility line (only spaceship parts can take them for now); Mobility is now called Mobility I
+- Note: the spec's "may not move in the first 3 seconds of the turn" is left out (user, 2026-10-10: turn time is each computer's own clock, so it could desync)
+- Dev: marker promotion PROMOTION_SPACESHIP_PART (ID 377) lets parts take Mobility I as a first promotion; Mobility II/III IDs 375/376; Nuke Resistance can now be chosen (only spaceship parts have it in their list); unit combat ID 18
+
 SPEARMAN AND PIKEMAN (PROMOTION_ANTI_MOUNTED_SPEAR)
 ---------------------------------------------------
 Tags: units, combat, promotions
