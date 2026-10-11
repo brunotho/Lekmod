@@ -1605,3 +1605,19 @@ Tags: policies
 - Removed: finisher: +10% Science while the empire is happy
 - Changed: the tree is rearranged (Sovereignty and Humanism on top, Free Thought and Scientific Revolution below them)
 - DLL: Policy_BuildingClassPurchaseCostModifiers, Policy_BuildingClassHappinessUntilIdeology, Policy_BuildingClassGoldPerEarlierIdeology, Policy_ImprovementResourceExtractionMods, Policies.TempScienceModifier/TempScienceTurns; new saved player fields (old saves incompatible)
+
+PATRONAGE (POLICY_BRANCH_PATRONAGE)
+----------------------------------
+Tags: policies
+- Changed: Merchant Confederacy: +2 Influence per turn with every City-State you have a Trade Route with (was +1); Gold gifts give 25% more Influence
+- Removed: Merchant Confederacy: Food and Production from Trade Routes with City-States
+- Changed: Scholasticism: the tooltip shows this era's Science per allied and friendly City-State
+- Changed: Cultural Diplomacy is now Embassy Exchange: you see 3 tiles around the capital of every allied City-State; Influence decays 25% slower
+- Removed: Embassy Exchange: more gifted strategic resources and luxury Happiness
+- Changed: Philanthropy is now Treaty of Arms: any city can buy an allied Militaristic City-State's unique unit with Gold at 30% off (no other discounts); Militaristic City-States send 2 units per gift; allied ones send a gift right away when you adopt it
+- Removed: Treaty of Arms: the Gold gift and Influence decay bonuses (moved to Merchant Confederacy and Embassy Exchange)
+- Changed: Consulates is now Open Markets: Friendly and Allied City-States give 50% more Food, Culture, Faith and Happiness
+- Removed: Open Markets: its World Congress Delegates (moved to the finisher)
+- Changed: finisher: +1 World Congress Delegate; buy Great Engineers, Generals and Writers with Gold from the Industrial Era (1000, then 1500, 2500, 4000 ...; all types count together)
+- Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
+- DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI

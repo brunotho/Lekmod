@@ -1669,6 +1669,11 @@ void CvMinorCivAI::Reset()
 
 	m_eAlly = NO_PLAYER;
 	m_iTurnAllied = -1;
+#ifdef LEKMOD_POLICY_REWORK
+	m_iLekmodVisionTeam = -1;
+	m_iLekmodVisionPlot = -1;
+	m_iLekmodVisionRange = 0;
+#endif
 	m_eMajorBoughtOutBy = NO_PLAYER;
 	m_bDisableNotifications = false;
 
@@ -1786,6 +1791,11 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 	kStream >> m_eAlly;
 
 	kStream >> m_iTurnAllied;
+#ifdef LEKMOD_POLICY_REWORK
+	kStream >> m_iLekmodVisionTeam;
+	kStream >> m_iLekmodVisionPlot;
+	kStream >> m_iLekmodVisionRange;
+#endif
 
 	kStream >> m_eMajorBoughtOutBy;
 
@@ -1889,6 +1899,11 @@ void CvMinorCivAI::Write(FDataStream& kStream) const
 
 	kStream << m_eAlly;
 	kStream << m_iTurnAllied;
+#ifdef LEKMOD_POLICY_REWORK
+	kStream << m_iLekmodVisionTeam;
+	kStream << m_iLekmodVisionPlot;
+	kStream << m_iLekmodVisionRange;
+#endif
 
 	kStream << m_eMajorBoughtOutBy; // Version 16
 
@@ -2453,6 +2468,9 @@ void CvMinorCivAI::DoTurn()
 	AI_PERF_FORMAT("AI-perf.csv", ("CvMinorCivAI::DoTurn, Turn %03d, %s", GC.getGame().getElapsedGameTurns(), GetPlayer()->getCivilizationShortDescription()) );
 	if(GetPlayer()->isMinorCiv())
 	{
+#ifdef LEKMOD_POLICY_REWORK
+		LekmodUpdateAllyVision();
+#endif
 		DoTurnStatus();
 
 		DoElection();
@@ -6757,7 +6775,56 @@ void CvMinorCivAI::SetAlly(PlayerTypes eNewAlly)
 		bool bResult;
 		LuaSupport::CallHook(pkScriptSystem, "SetAlly", args.get(), bResult);
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	LekmodUpdateAllyVision();
+#endif
 }
+#ifdef LEKMOD_POLICY_REWORK
+//	--------------------------------------------------------------------------------
+/// The ally sees a radius around our capital if one of its policies says so (Embassy Exchange); keeps the added sight in step
+void CvMinorCivAI::LekmodUpdateAllyVision()
+{
+	int iTeam = -1;
+	int iPlot = -1;
+	int iRange = 0;
+	CvCity* pCapital = m_pPlayer->getCapitalCity();
+	if (m_pPlayer->isAlive() && m_eAlly != NO_PLAYER && pCapital != NULL)
+	{
+		iRange = GET_PLAYER(m_eAlly).GetLekmodAllyCSVisionRange();
+		if (iRange > 0)
+		{
+			iTeam = GET_PLAYER(m_eAlly).getTeam();
+			iPlot = pCapital->plot()->GetPlotIndex();
+		}
+		else
+		{
+			iRange = 0;
+		}
+	}
+	if (iTeam == m_iLekmodVisionTeam && iPlot == m_iLekmodVisionPlot && iRange == m_iLekmodVisionRange)
+		return;
+	bool bActiveTeam = false;
+	if (m_iLekmodVisionTeam >= 0 && m_iLekmodVisionPlot >= 0)
+	{
+		CvPlot* pOldPlot = GC.getMap().plotByIndex(m_iLekmodVisionPlot);
+		if (pOldPlot)
+			pOldPlot->changeAdjacentSight((TeamTypes)m_iLekmodVisionTeam, m_iLekmodVisionRange, false, NO_INVISIBLE, NO_DIRECTION, false);
+		bActiveTeam = bActiveTeam || (m_iLekmodVisionTeam == GC.getGame().getActiveTeam());
+	}
+	if (iTeam >= 0 && iPlot >= 0)
+	{
+		CvPlot* pNewPlot = GC.getMap().plotByIndex(iPlot);
+		if (pNewPlot)
+			pNewPlot->changeAdjacentSight((TeamTypes)iTeam, iRange, true, NO_INVISIBLE, NO_DIRECTION, false);
+		bActiveTeam = bActiveTeam || (iTeam == GC.getGame().getActiveTeam());
+	}
+	m_iLekmodVisionTeam = iTeam;
+	m_iLekmodVisionPlot = iPlot;
+	m_iLekmodVisionRange = iRange;
+	if (bActiveTeam)
+		GC.getMap().updateDeferredFog();
+}
+#endif
 
 /// How many turns has the alliance been active?
 int CvMinorCivAI::GetAlliedTurns() const
@@ -8173,7 +8240,11 @@ int CvMinorCivAI::GetCurrentHappinessFlatBonus(PlayerTypes ePlayer)
 	if(IsFriends(ePlayer))
 		iAmount += GetHappinessFlatFriendshipBonus(ePlayer);
 #ifdef LEKMOD_SIAM_TRAIT_HAPPINESS
+#ifdef LEKMOD_POLICY_REWORK
+	int iModifier = GET_PLAYER(ePlayer).GetCityStateBonusModifier(); // trait + policies (Open Markets)
+#else
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#endif
 	if (iModifier > 0)
 	{
 		iAmount *= (iModifier + 100);
@@ -8293,7 +8364,11 @@ int CvMinorCivAI::GetCurrentHappinessPerLuxuryBonus(PlayerTypes ePlayer)
 		iAmount += GetHappinessPerLuxuryFriendshipBonus(ePlayer);
 
 #ifdef LEKMOD_SIAM_TRAIT_HAPPINESS
+#ifdef LEKMOD_POLICY_REWORK
+	int iModifier = GET_PLAYER(ePlayer).GetCityStateBonusModifier(); // trait + policies (Open Markets)
+#else
 	int iModifier = GET_PLAYER(ePlayer).GetPlayerTraits()->GetCityStateBonusModifier();
+#endif
 	if (iModifier > 0)
 	{
 		iAmount *= (iModifier + 100);

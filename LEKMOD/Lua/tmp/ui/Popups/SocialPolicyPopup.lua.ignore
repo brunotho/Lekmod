@@ -5,6 +5,21 @@
 
 include( "IconSupport" );
 include( "InstanceManager" );
+
+-- LEKMOD: policies with era-based City-State yields (Scholasticism) show the numbers of the player's current era
+function LekmodPolicyEraTooltip(policyInfo, player)
+	local currentEra = Teams[player:GetTeam()]:GetCurrentEra();
+	local text = "";
+	for row in GameInfo.Policy_CityStateRelationshipYieldBonus{ PolicyType = policyInfo.Type } do
+		local era = GameInfo.Eras[row.EraType];
+		local yield = GameInfo.Yields[row.YieldType];
+		if era and yield and era.ID == currentEra then
+			text = text .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_POLICY_CS_YIELD_THIS_ERA", era.Description,
+				(row.AllyYieldBonusTimes100 or 0) / 100, (row.FriendYieldBonusTimes100 or 0) / 100, yield.IconString or "");
+		end
+	end
+	return text;
+end
 include( "CommonBehaviors" );
 
 local m_PopupInfo = nil;
@@ -462,7 +477,7 @@ function UpdateDisplay()
 			local thisPolicyIcon = policyIcons[i];
 			
 			-- Tooltip
-			local strTooltip = Locale.ConvertTextKey( policyInfo.Help );
+			local strTooltip = Locale.ConvertTextKey( policyInfo.Help ) .. LekmodPolicyEraTooltip( policyInfo, player );
 			
 			-- Player already has Policy
 			if player:HasPolicy( i ) then

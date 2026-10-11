@@ -1395,6 +1395,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iLekmodTempScienceMod = 0;
 	m_iLekmodTempScienceEndTurn = -1;
 	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
+	m_iLekmodGoldGreatPeoplePurchased = 0;
 #endif
 	m_iLekmodGoodyForcedRoll = -1;
 	m_iLekmodGoodyPay = -1;
@@ -28231,6 +28232,86 @@ int CvPlayer::GetLekmodEarlierIdeologyCount() const
 	}
 	return iCount;
 }
+/// Vision radius around allied City-State capitals (Embassy Exchange), 0 = none
+int CvPlayer::GetLekmodAllyCSVisionRange() const
+{
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue = std::max(iValue, pkPolicy->GetAllyCityStateVisionRange());
+	}
+	return iValue;
+}
+/// % purchase cost of allied Militaristic City-States' unique units (Treaty of Arms), 0 = can't buy them
+int CvPlayer::GetLekmodAllyUUPurchaseMod() const
+{
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue += pkPolicy->GetAllyMilitaristicUUPurchaseMod();
+	}
+	return iValue;
+}
+/// Is this the unique unit of an allied Militaristic City-State that we may buy (Treaty of Arms)?
+bool CvPlayer::LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const
+{
+	if (eUnit == NO_UNIT || GetLekmodAllyUUPurchaseMod() == 0)
+		return false;
+	CvUnitEntry* pkUnit = GC.getUnitInfo(eUnit);
+	if (pkUnit == NULL)
+		return false;
+	const CvTeamTechs* pkTechs = GET_TEAM(getTeam()).GetTeamTechs();
+	if (pkUnit->GetPrereqAndTech() != NO_TECH && !pkTechs->HasTech((TechTypes)pkUnit->GetPrereqAndTech()))
+		return false;
+	if (pkUnit->GetObsoleteTech() != NO_TECH && pkTechs->HasTech((TechTypes)pkUnit->GetObsoleteTech()))
+		return false;
+	for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
+	{
+		CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);
+		if (!kMinor.isAlive() || !kMinor.isMinorCiv())
+			continue;
+		CvMinorCivAI* pMinorAI = kMinor.GetMinorCivAI();
+		if (pMinorAI->GetTrait() == MINOR_CIV_TRAIT_MILITARISTIC && pMinorAI->IsAllies(GetID()) && pMinorAI->GetUniqueUnit() == eUnit)
+			return true;
+	}
+	return false;
+}
+/// May we buy this Great Person with Gold (Patronage finisher: Policy_GoldPurchaseUnitClasses)?
+bool CvPlayer::LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const
+{
+	CvUnitEntry* pkUnit = (eUnit != NO_UNIT) ? GC.getUnitInfo(eUnit) : NULL;
+	if (pkUnit == NULL)
+		return false;
+	const int iClass = pkUnit->GetUnitClassType();
+	if ((UnitTypes)getCivilizationInfo().getCivilizationUnits(iClass) != eUnit)
+		return false;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const int iEra = pkPolicy->GetGoldPurchaseUnitClassEra(iClass);
+		if (iEra >= 0 && GetCurrentEra() >= iEra)
+			return true;
+	}
+	return false;
+}
+/// Gold cost of the next Great Person bought with Gold: 1000, 1500, 2500, 4000, ... (all types share the count)
+int CvPlayer::GetLekmodGreatPersonGoldCost() const
+{
+	const int iBought = m_iLekmodGoldGreatPeoplePurchased;
+	return LEKMOD_GOLD_GREAT_PERSON_BASE_COST + LEKMOD_GOLD_GREAT_PERSON_COST_STEP * iBought * (iBought + 1) / 2;
+}
+void CvPlayer::ChangeLekmodGoldGreatPeoplePurchased(int iChange)
+{
+	m_iLekmodGoldGreatPeoplePurchased += iChange;
+}
 /// Temporary % Science from a policy (Scientific Revolution), 0 once it ran out
 int CvPlayer::GetLekmodTempScienceModifier() const
 {
@@ -28275,6 +28356,16 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			}
 		}
 		LekmodApplyPolicyExtraction(ePolicy);
+		for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
+		{
+			CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);
+			if (!kMinor.isAlive() || !kMinor.isMinorCiv())
+				continue;
+			if (pPolicy->GetAllyCityStateVisionRange() != 0)
+				kMinor.GetMinorCivAI()->LekmodUpdateAllyVision();
+			if (pPolicy->IsImmediateMilitaristicGift() && kMinor.GetMinorCivAI()->GetTrait() == MINOR_CIV_TRAIT_MILITARISTIC && kMinor.GetMinorCivAI()->IsAllies(GetID()))
+				kMinor.GetMinorCivAI()->DoSpawnUnit(GetID());
+		}
 	}
 #endif
 
@@ -30293,6 +30384,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iLekmodEarlierIdeologyPolicyTurn;
 	kStream >> m_iLekmodTempScienceMod;
 	kStream >> m_iLekmodTempScienceEndTurn;
+	kStream >> m_iLekmodGoldGreatPeoplePurchased;
 	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
 #endif
 #endif
@@ -30873,6 +30965,7 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iLekmodEarlierIdeologyPolicyTurn;
 	kStream << m_iLekmodTempScienceMod;
 	kStream << m_iLekmodTempScienceEndTurn;
+	kStream << m_iLekmodGoldGreatPeoplePurchased;
 #endif
 #endif
 }

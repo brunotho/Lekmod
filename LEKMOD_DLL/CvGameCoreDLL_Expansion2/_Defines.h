@@ -1495,6 +1495,12 @@ Diversify Spain and Australia's NW Discovery bonus
 // Policy_BuildingClassPurchaseCostModifiers, Policy_BuildingClassHappinessUntilIdeology, Policy_BuildingClassGoldPerEarlierIdeology (per other civ that
 // adopted an ideology after the policy and before you), Policy_ImprovementResourceExtractionMods, Policies.TempScienceModifier/TempScienceTurns.
 // New saved CvPlayer fields: ideology turn, earlier-ideology policy turn, temporary science modifier and end turn.
+// Patronage: Policies.AllyCityStateVisionRange (allies see this radius around the City-State capital; saved in CvMinorCivAI),
+// AllyMilitaristicUUPurchaseMod (buy allied Militaristic City-States' unique units in any city at this % cost, no other purchase modifiers),
+// ImmediateMilitaristicGift (allied Militaristic City-States send a gift on adoption), Policy_GoldPurchaseUnitClasses (Great People for Gold
+// from an era, escalating shared cost; saved count). Mercantile Happiness uses the player's CityStateBonusModifier (policies too).
+#define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
+#define LEKMOD_GOLD_GREAT_PERSON_COST_STEP 500
 #define LEKMOD_POLICY_REWORK
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT

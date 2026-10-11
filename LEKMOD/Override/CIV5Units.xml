@@ -187729,6 +187729,9 @@
 		<Column name="NumCitiesFreeWalls" type="integer" default="0"/> <!-- LEKMOD: free walls in the first N cities without walls (maintenance-free) -->
 		<Column name="NonCapitalSettlerProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward Settlers in cities other than the capital -->
 		<Column name="CampClearGold" type="integer" default="0"/> <!-- LEKMOD: extra Gold (standard speed) for clearing a barbarian camp -->
+		<Column name="AllyCityStateVisionRange" type="integer" default="0"/> <!-- LEKMOD: allies see this radius around the City-State capital -->
+		<Column name="AllyMilitaristicUUPurchaseMod" type="integer" default="0"/> <!-- LEKMOD: buy allied Militaristic City-States' unique units at this % cost (nonzero enables) -->
+		<Column name="ImmediateMilitaristicGift" type="boolean" default="false"/> <!-- LEKMOD: allied Militaristic City-States send a gift on adoption -->
 		<Column name="TempScienceModifier" type="integer" default="0"/> <!-- LEKMOD: % Science in every city for TempScienceTurns turns after adopting -->
 		<Column name="TempScienceTurns" type="integer" default="0"/>
 		<Column name="FreeTilesExistingCities" type="integer" default="0"/> <!-- LEKMOD: on adoption every owned city claims N tiles -->
@@ -281008,4 +281011,52 @@
 			<Count>1</Count>
 		</Row>
 	</Policy_FreeUnitClasses>
+	<!-- Patronage: Merchant Confederacy (+2 Influence per connected City-State, gold gifts +25%), Embassy Exchange (was Cultural Diplomacy), Treaty of Arms (was Philanthropy), Open Markets (was Consulates), finisher -->
+	<Table name="Policy_GoldPurchaseUnitClasses"> <!-- LEKMOD: unit classes (Great People) that can be bought with Gold from EraType on; escalating shared cost -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="UnitClassType" type="text" reference="UnitClasses(Type)" />
+		<Column name="EraType" type="text" reference="Eras(Type)" />
+	</Table>
+	<Policies>
+		<Update>
+			<Where Type="POLICY_MERCHANT_CONFEDERACY"/>
+			<Set ProtectedMinorPerTurnInfluence="200" MinorGoldFriendshipMod="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_CULTURAL_DIPLOMACY"/>
+			<Set MinorResourceBonus="false" MinorFriendshipDecayMod="-25" AllyCityStateVisionRange="3"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_PHILANTHROPY"/>
+			<Set MinorGoldFriendshipMod="0" MinorFriendshipDecayMod="0" AllyMilitaristicUUPurchaseMod="-30" MinorMilitaryNumExtraUnitsToGift="1" ImmediateMilitaristicGift="true"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_CONSULATES"/>
+			<Set NumExtraLeagueVotes="0" CityStateBonusModifier="50"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_PATRONAGE_FINISHER"/>
+			<Set MinorGreatPeopleAllies="false" MinorMilitaryNumExtraUnitsToGift="0" CityStateBonusModifier="0" NumExtraLeagueVotes="1"/>
+		</Update>
+	</Policies>
+	<Policy_TradeRouteYieldChanges>
+		<Delete PolicyType="POLICY_MERCHANT_CONFEDERACY"/>
+	</Policy_TradeRouteYieldChanges>
+	<Policy_GoldPurchaseUnitClasses>
+		<Row>
+			<PolicyType>POLICY_PATRONAGE_FINISHER</PolicyType>
+			<UnitClassType>UNITCLASS_ENGINEER</UnitClassType>
+			<EraType>ERA_INDUSTRIAL</EraType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PATRONAGE_FINISHER</PolicyType>
+			<UnitClassType>UNITCLASS_GREAT_GENERAL</UnitClassType>
+			<EraType>ERA_INDUSTRIAL</EraType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PATRONAGE_FINISHER</PolicyType>
+			<UnitClassType>UNITCLASS_WRITER</UnitClassType>
+			<EraType>ERA_INDUSTRIAL</EraType>
+		</Row>
+	</Policy_GoldPurchaseUnitClasses>
 </GameData>

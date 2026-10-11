@@ -275,6 +275,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_paiImprovementResourceExtractionMod(NULL),
 	m_iTempScienceModifier(0),
 	m_iTempScienceTurns(0),
+	m_iAllyCityStateVisionRange(0),
+	m_iAllyMilitaristicUUPurchaseMod(0),
+	m_bImmediateMilitaristicGift(false),
 #endif
 	m_piCoastalCityYieldChange(NULL),
 	m_piCapitalYieldChange(NULL),
@@ -782,6 +785,26 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iFreeTilesExistingCities = kResults.GetInt("FreeTilesExistingCities");
 	m_iTempScienceModifier = kResults.GetInt("TempScienceModifier");
 	m_iTempScienceTurns = kResults.GetInt("TempScienceTurns");
+	m_iAllyCityStateVisionRange = kResults.GetInt("AllyCityStateVisionRange");
+	m_iAllyMilitaristicUUPurchaseMod = kResults.GetInt("AllyMilitaristicUUPurchaseMod");
+	m_bImmediateMilitaristicGift = kResults.GetBool("ImmediateMilitaristicGift");
+	{
+		m_aiGoldPurchaseUnitClassEra.assign(GC.getNumUnitClassInfos(), -1);
+		std::string strKey("Policy_GoldPurchaseUnitClasses");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "select UnitClasses.ID, Eras.ID from Policy_GoldPurchaseUnitClasses inner join UnitClasses on UnitClasses.Type = UnitClassType inner join Eras on Eras.Type = EraType where PolicyType = ?");
+		}
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			const int iClass = pResults->GetInt(0);
+			if (iClass >= 0 && iClass < (int)m_aiGoldPurchaseUnitClassEra.size())
+				m_aiGoldPurchaseUnitClassEra[iClass] = pResults->GetInt(1);
+		}
+		pResults->Reset();
+	}
 	kUtility.PopulateArrayByValue(m_paiBuildingClassPurchaseCostModifier, "BuildingClasses", "Policy_BuildingClassPurchaseCostModifiers", "BuildingClassType", "PolicyType", szPolicyType, "PurchaseCostModifier");
 	kUtility.PopulateArrayByValue(m_paiBuildingClassHappinessUntilIdeology, "BuildingClasses", "Policy_BuildingClassHappinessUntilIdeology", "BuildingClassType", "PolicyType", szPolicyType, "Happiness");
 	kUtility.PopulateArrayByValue(m_paiBuildingClassGoldPerEarlierIdeology, "BuildingClasses", "Policy_BuildingClassGoldPerEarlierIdeology", "BuildingClassType", "PolicyType", szPolicyType, "Gold");
@@ -2744,6 +2767,26 @@ int CvPolicyEntry::GetTempScienceModifier() const
 int CvPolicyEntry::GetTempScienceTurns() const
 {
 	return m_iTempScienceTurns;
+}
+/// Allies see this radius around the City-State's capital
+int CvPolicyEntry::GetAllyCityStateVisionRange() const
+{
+	return m_iAllyCityStateVisionRange;
+}
+/// % purchase cost of allied Militaristic City-States' unique units; nonzero allows buying them
+int CvPolicyEntry::GetAllyMilitaristicUUPurchaseMod() const
+{
+	return m_iAllyMilitaristicUUPurchaseMod;
+}
+/// Allied Militaristic City-States send a unit gift when the policy is adopted
+bool CvPolicyEntry::IsImmediateMilitaristicGift() const
+{
+	return m_bImmediateMilitaristicGift;
+}
+/// Era from which this unit class can be bought with Gold (-1 = not allowed)
+int CvPolicyEntry::GetGoldPurchaseUnitClassEra(int iUnitClass) const
+{
+	return (iUnitClass >= 0 && iUnitClass < (int)m_aiGoldPurchaseUnitClassEra.size()) ? m_aiGoldPurchaseUnitClassEra[iUnitClass] : -1;
 }
 #endif
 

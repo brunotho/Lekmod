@@ -6030,6 +6030,24 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 		return 0;
 	}
 
+#ifdef LEKMOD_POLICY_REWORK
+	// Great People bought with Gold: escalating shared cost (Patronage finisher)
+	if (GET_PLAYER(getOwner()).LekmodCanGoldPurchaseGreatPerson(eUnit))
+	{
+		return GET_PLAYER(getOwner()).GetLekmodGreatPersonGoldCost();
+	}
+	// Allied Militaristic City-States' unique units: fixed % of the normal price, no other purchase modifiers (Treaty of Arms)
+	if (GET_PLAYER(getOwner()).LekmodIsAllyMilitaristicUU(eUnit))
+	{
+		int iUUCost = GetPurchaseCostFromProduction(getProductionNeeded(eUnit));
+		iUUCost *= (100 + GET_PLAYER(getOwner()).GetLekmodAllyUUPurchaseMod());
+		iUUCost /= 100;
+		const int iUUDivisor = GC.getGOLD_PURCHASE_VISIBLE_DIVISOR();
+		iUUCost /= iUUDivisor;
+		iUUCost *= iUUDivisor;
+		return iUUCost;
+	}
+#endif
 	int iModifier = pkUnitInfo->GetHurryCostModifier();
 
 	bool bIsSpaceshipPart = pkUnitInfo->GetSpaceshipProject() != NO_PROJECT;
@@ -18094,7 +18112,13 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 		// Unit
 		if(eUnitType != NO_UNIT)
 		{
+#ifdef LEKMOD_POLICY_REWORK
+			// policy-granted Gold purchases skip the normal training rules (allied City-State unique units, Great People)
+			const bool bLekmodSpecialPurchase = GET_PLAYER(getOwner()).LekmodIsAllyMilitaristicUU(eUnitType) || GET_PLAYER(getOwner()).LekmodCanGoldPurchaseGreatPerson(eUnitType);
+			if(!bLekmodSpecialPurchase && !canTrain(eUnitType, false, !bTestTrainable, false /*bIgnoreCost*/, true /*bWillPurchase*/))
+#else
 			if(!canTrain(eUnitType, false, !bTestTrainable, false /*bIgnoreCost*/, true /*bWillPurchase*/))
+#endif
 				return false;
 
 			iGoldCost = GetPurchaseCost(eUnitType);
@@ -18517,6 +18541,10 @@ void CvCity::Purchase(UnitTypes eUnitType, BuildingTypes eBuildingType, ProjectT
 		bool bResult = false;
 		if(eUnitType >= 0)
 		{
+#ifdef LEKMOD_POLICY_REWORK
+			if (ePurchaseYield == YIELD_GOLD && kPlayer.LekmodCanGoldPurchaseGreatPerson(eUnitType))
+				kPlayer.ChangeLekmodGoldGreatPeoplePurchased(1);
+#endif
 			int iResult = CreateUnit(eUnitType);
 			CvAssertMsg(iResult != FFreeList::INVALID_INDEX, "Unable to create unit");
 			if (iResult != FFreeList::INVALID_INDEX)

@@ -299,6 +299,10 @@ public:
 	int GetImprovementResourceExtractionMod(int i) const;
 	int GetTempScienceModifier() const;
 	int GetTempScienceTurns() const;
+	int GetAllyCityStateVisionRange() const;
+	int GetAllyMilitaristicUUPurchaseMod() const;
+	bool IsImmediateMilitaristicGift() const;
+	int GetGoldPurchaseUnitClassEra(int iUnitClass) const;
 #endif
 	int* GetCityYieldChangeArray() const;
 	int GetCoastalCityYieldChange(int i) const;
@@ -644,6 +648,10 @@ private:
 	int* m_paiImprovementResourceExtractionMod;
 	int m_iTempScienceModifier;
 	int m_iTempScienceTurns;
+	int m_iAllyCityStateVisionRange;
+	int m_iAllyMilitaristicUUPurchaseMod;
+	bool m_bImmediateMilitaristicGift;
+	std::vector<int> m_aiGoldPurchaseUnitClassEra;
 #endif
 	int* m_piCoastalCityYieldChange;
 	int* m_piCapitalYieldChange;

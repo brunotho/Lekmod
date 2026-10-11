@@ -116324,7 +116324,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_PATRONAGE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Patronage[ENDCOLOR] enhances the benefits of City-State friendship.[NEWLINE][NEWLINE]Adopting Patronage:[NEWLINE][ICON_BULLET]The resting point for [ICON_INFLUENCE] Influence with all City-States is 20 higher[NEWLINE][ICON_BULLET]Unlocks building the [ICON_WONDER_FORBIDDEN_PALACE] Forbidden Palace[NEWLINE][NEWLINE]Completing the Patronage tree:[NEWLINE][ICON_BULLET][COLOR_POSITIVE_TEXT]Allied[ENDCOLOR] City-States occasionally gift you [ICON_GREAT_PEOPLE] Great People[NEWLINE][ICON_BULLET]Friendly and Allied City-States give 50% more [ICON_FOOD] Food, [ICON_CULTURE] Culture and [ICON_PEACE] Faith[NEWLINE][ICON_BULLET][COLOR_POSITIVE_TEXT]Militaristic[ENDCOLOR] City-States send two units per gift
+				[COLOR_POSITIVE_TEXT]Patronage[ENDCOLOR] enhances the benefits of City-State friendship.[NEWLINE][NEWLINE]Adopting Patronage:[NEWLINE][ICON_BULLET]The resting point for [ICON_INFLUENCE] Influence with all City-States is 20 higher[NEWLINE][ICON_BULLET]Unlocks building the [ICON_WONDER_FORBIDDEN_PALACE] Forbidden Palace[NEWLINE][NEWLINE]Completing the Patronage tree:[NEWLINE][ICON_BULLET]+1 [COLOR_POSITIVE_TEXT]Delegate[ENDCOLOR] in the World Congress[NEWLINE][ICON_BULLET]Buy [ICON_GREAT_ENGINEER] Great Engineers, [ICON_GREAT_GENERAL] Great Generals and [ICON_GREAT_WRITER] Great Writers with [ICON_GOLD] Gold from the [COLOR_CYAN]Industrial Era[ENDCOLOR] on[NEWLINE][ICON_BULLET]The first costs 1000 [ICON_GOLD] Gold, then 1500, 2500, 4000 and so on (all three types count together)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_PIETY"> 
@@ -116534,12 +116534,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CONSULATES"> 
 			<Text>
-				Consulates
+				Open Markets
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CONSULATES_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Consulates[ENDCOLOR][NEWLINE]Gain 1 additional [COLOR_POSITIVE_TEXT]Delegate[ENDCOLOR] in the [COLOR_POSITIVE_TEXT]World Congress[ENDCOLOR], and 1 additional [COLOR_POSITIVE_TEXT]Delegate[ENDCOLOR] for each [COLOR_CYAN]Era[ENDCOLOR] you advance past the [COLOR_CYAN]Renaissance[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Open Markets[ENDCOLOR][NEWLINE]Friendly and Allied City-States give 50% more [ICON_FOOD] Food, [ICON_CULTURE] Culture, [ICON_PEACE] Faith and [ICON_HAPPINESS_1] Happiness.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CONSULATES_TEXT"> 
@@ -116614,12 +116614,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULTURAL_DIPLOMACY"> 
 			<Text>
-				Cultural Diplomacy
+				Embassy Exchange
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULTURAL_DIPLOMACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Cultural Diplomacy[ENDCOLOR][NEWLINE]Quantity of [COLOR_POSITIVE_TEXT]Strategic[ENDCOLOR] Resources gifted by City-States increased by 100%. [ICON_HAPPINESS_1] Happiness from gifted [COLOR_POSITIVE_TEXT]Luxury[ENDCOLOR] Resources increased by 50%.
+				[COLOR_POSITIVE_TEXT]Embassy Exchange[ENDCOLOR][NEWLINE]You see 3 tiles around the capital of every City-State you are allied with.[NEWLINE][ICON_INFLUENCE] Influence with City-States decays 25% slower.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULTURAL_REVOLUTION"> 
@@ -117209,7 +117209,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MERCHANT_CONFEDERACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Merchant Confederacy[ENDCOLOR][NEWLINE]+2 [ICON_FOOD] Food, +2 [ICON_PRODUCTION] Production and +1 [ICON_INFLUENCE] Influence per turn for [ICON_INTERNATIONAL_TRADE] Trade Routes with City-States.
+				[COLOR_POSITIVE_TEXT]Merchant Confederacy[ENDCOLOR][NEWLINE]+2 [ICON_INFLUENCE] Influence per turn with every City-State you have a [ICON_INTERNATIONAL_TRADE] Trade Route with.[NEWLINE][ICON_GOLD] Gold gifts to City-States give 25% more [ICON_INFLUENCE] Influence.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MERCHANT_CONFEDERACY_NWS_HELP"> 
@@ -117525,12 +117525,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PHILANTHROPY"> 
 			<Text>
-				Philanthropy
+				Treaty of Arms
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PHILANTHROPY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Philanthropy[ENDCOLOR][NEWLINE][ICON_GOLD] Gold gifts to City-States produce 25% more [ICON_INFLUENCE] Influence. [ICON_INFLUENCE] Influence with City-States decays 25% slower.
+				[COLOR_POSITIVE_TEXT]Treaty of Arms[ENDCOLOR][NEWLINE]Any of your cities can buy the unique unit of an allied [COLOR_POSITIVE_TEXT]Militaristic[ENDCOLOR] City-State with [ICON_GOLD] Gold once you know its technology.[NEWLINE]It costs 30% less than the normal price; other purchase discounts don't apply.[NEWLINE]It can't be built with [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Militaristic City-States send 2 units per gift (allied ones about every 9 to 13 turns).[NEWLINE]When you adopt this policy, every allied Militaristic City-State sends a gift right away.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PHILANTHROPY_TEXT"> 
@@ -120565,6 +120565,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_POLYNESIAN_MAORI_WARRIOR">
 			<Text>Maori</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_POLICY_CS_YIELD_THIS_ERA">
+			<Text>This era ({1_Era:textkey}): +{2_Num} {4_Icon} per allied City-State, +{3_Num} {4_Icon} per friendly City-State</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>

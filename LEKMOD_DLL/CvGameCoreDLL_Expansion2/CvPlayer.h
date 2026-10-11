@@ -253,6 +253,12 @@ public:
 	int GetLekmodEarlierIdeologyCount() const;
 	int GetLekmodTempScienceModifier() const;
 	int GetLekmodIdeologyTurn() const { return m_iLekmodIdeologyTurn; }
+	int GetLekmodAllyCSVisionRange() const;
+	int GetLekmodAllyUUPurchaseMod() const;
+	bool LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const;
+	bool LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const;
+	int GetLekmodGreatPersonGoldCost() const;
+	void ChangeLekmodGoldGreatPeoplePurchased(int iChange);
 	void SetLekmodIdeologyTurn(int iTurn) { m_iLekmodIdeologyTurn = iTurn; }
 #endif
 #endif
@@ -2397,6 +2403,7 @@ protected:
 	int m_iLekmodTempScienceMod;
 	int m_iLekmodTempScienceEndTurn; // the temporary Science applies while the game turn is lower
 	PolicyTypes m_eLekmodExtractionIgnorePolicy; // not saved: only set inside LekmodApplyPolicyExtraction
+	int m_iLekmodGoldGreatPeoplePurchased; // Great People bought with Gold (Policy_GoldPurchaseUnitClasses)
 #endif
 	std::vector<int> m_aiGreatWorkYieldChange;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)

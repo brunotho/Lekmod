@@ -367,6 +367,9 @@ public:
 	int GetMostFriendshipWithAnyMajor(PlayerTypes& eBestPlayer);
 	PlayerTypes GetAlly() const;
 	void SetAlly(PlayerTypes eNewAlly);
+#ifdef LEKMOD_POLICY_REWORK
+	void LekmodUpdateAllyVision();
+#endif
 	int GetAlliedTurns() const;
 
 	bool IsAllies(PlayerTypes ePlayer) const;
@@ -644,6 +647,11 @@ private:
 
 	PlayerTypes m_eAlly;
 	int m_iTurnAllied;
+#ifdef LEKMOD_POLICY_REWORK
+	int m_iLekmodVisionTeam; // team that sees around our capital from the ally's policy (-1 = none)
+	int m_iLekmodVisionPlot;
+	int m_iLekmodVisionRange;
+#endif
 	PlayerTypes m_eMajorBoughtOutBy;
 
 #ifdef ENHANCED_GRAPHS
