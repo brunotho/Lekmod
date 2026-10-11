@@ -1508,6 +1508,11 @@ Diversify Spain and Australia's NW Discovery bonus
 // Resources from policies (Policy_ResourceQuantity) only count once the team knows the resource's reveal tech (oil needs its tech);
 // they are added in CvTeam::processTech when the tech arrives later.
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
+// A human player with a pending policy pick (enough Culture, a free policy or tenet, or an ideology to choose) is never forced
+// to pick, but while the pick is pending at turn processing the empire's yields freeze: no positive Food (starvation still
+// happens), no Production, no Science, no Culture, no Faith, no Gold income (upkeep is still paid). Replaces the forced pick
+// and the random pick of PENALTY_FOR_DELAYING_POLICIES. CvPlayer::m_bLekmodYieldsFrozen is set only during doTurnPostDiplomacy.
+#define LEKMOD_POLICY_PICK_FREEZE
 #define LEKMOD_GOLD_GREAT_PERSON_COST_STEP 500
 #define LEKMOD_POLICY_REWORK
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.

@@ -1457,6 +1457,10 @@ local function UpdateTopPanelNow()
 
 		Controls.CultureTurns:SetText(turnsRemaining)
 		Controls.CultureString:SetText( S("[COLOR_MAGENTA]+%i[ENDCOLOR][ICON_CULTURE]", culturePerTurn ) )
+		-- LEKMOD: a pending policy pick freezes the empire's yields at turn end
+		if g_activePlayer.LekmodIsPolicyPickPending and g_activePlayer:LekmodIsPolicyPickPending() then
+			Controls.CultureString:SetText( S("[COLOR_MAGENTA]+%i[ENDCOLOR][ICON_CULTURE] ", culturePerTurn ) .. L"TXT_KEY_LEKMOD_TOPPANEL_POLICY_PENDING" )
+		end
 	end
 
 	Controls.TopPanelInfoStack:CalculateSize()
@@ -2745,6 +2749,10 @@ g_toolTipHandler.CultureString = function()-- control )
 
 		if bnw_mode and g_activePlayer:IsAnarchy() then
 			tips:insert( L("TXT_KEY_TP_ANARCHY", g_activePlayer:GetAnarchyNumTurns()) )
+			tips:insert( "" )
+		end
+		if g_activePlayer.LekmodIsPolicyPickPending and g_activePlayer:LekmodIsPolicyPickPending() then
+			tips:insert( L"TXT_KEY_LEKMOD_TOPPANEL_POLICY_PENDING_TT" )
 			tips:insert( "" )
 		end
 

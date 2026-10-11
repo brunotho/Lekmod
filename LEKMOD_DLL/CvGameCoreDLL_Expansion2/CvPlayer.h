@@ -1868,6 +1868,10 @@ public:
 
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	bool IsDelayedPolicy() const;
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	bool IsLekmodPolicyPickPending();
+	bool IsLekmodYieldsFrozen() const;
+#endif
 	void setIsDelayedPolicy(bool bValue);
 #endif
 
@@ -2628,6 +2632,9 @@ protected:
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	bool m_bIsDelayedPolicy;
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	bool m_bLekmodYieldsFrozen;
+#endif
 #endif
 };
 

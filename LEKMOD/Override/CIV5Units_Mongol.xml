@@ -110391,12 +110391,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_NOTIFICATION_ENOUGH_CULTURE_FOR_POLICY"> 
 			<Text>
-				You have accumulated enough Culture to adopt a new Social Policy!
+				You have accumulated enough Culture to adopt a new Social Policy![NEWLINE][NEWLINE]Until you pick one, your empire's yields freeze at the end of each turn.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_NOTIFICATION_ENOUGH_CULTURE_FOR_POLICY_DISMISS"> 
 			<Text>
-				You have accumulated enough Culture to adopt a new Social Policy![NEWLINE][NEWLINE]Right-Click to dismiss without choosing.
+				You have accumulated enough Culture to adopt a new Social Policy![NEWLINE][NEWLINE]Until you pick one, your empire's yields freeze at the end of each turn.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_NOTIFICATION_ENOUGH_FAITH_FOR_MISSIONARY"> 
@@ -120577,6 +120577,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_EARLY_BUILDING">
 			<Text>[NEWLINE][ICON_BULLET]Colonial Infrastructure: {1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_TOPPANEL_POLICY_PENDING">
+			<Text>[COLOR_NEGATIVE_TEXT]Pick a policy![ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_TOPPANEL_POLICY_PENDING_TT">
+			<Text>[COLOR_NEGATIVE_TEXT]A policy pick is waiting.[ENDCOLOR][NEWLINE]Until you pick, your empire gets no [ICON_FOOD] growth, [ICON_PRODUCTION] Production, [ICON_RESEARCH] Science, [ICON_GOLD] Gold income, [ICON_CULTURE] Culture or [ICON_PEACE] Faith at the end of each turn.[NEWLINE]Upkeep is still paid, and cities working too little Food still starve.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>

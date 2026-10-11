@@ -1555,8 +1555,9 @@ Tags: policies
 
 COMMERCE (POLICY_BRANCH_COMMERCE)
 --------------------------------
-Tags: policies
+Tags: policies, art
 - Removed: finisher: no more +1 Food from unique improvements (Scottish Caer); Trading Posts keep it
+- Changed: new branch picture
 
 HONOR (POLICY_BRANCH_HONOR)
 --------------------------
@@ -1626,6 +1627,14 @@ Tags: policies
 - Changed: finisher: +1 World Congress Delegate; buy Great Engineers, Generals and Writers with Gold from the Industrial Era (1000, then 1500, 2500, 4000 ...; all types count together)
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
+
+PENDING POLICY PICK (game mechanics)
+------------------------------------
+Tags: game mechanics, policies, ui
+- Changed: you are never forced to pick a policy, ideology or free tenet before ending the turn, and nothing is picked for you at random
+- Added: while a pick is waiting at the end of a turn, your empire's yields freeze: no growth, Production, Science, Gold income, Culture or Faith (upkeep is still paid, and cities working too little Food still starve); Golden Age progress, Great Person points and Tourism keep running
+- Added: the top panel shows "Pick a policy!" in red while a pick is waiting, with an explanation in its tooltip
+- DLL: LEKMOD_POLICY_PICK_FREEZE (human players only); Lua Player:LekmodIsPolicyPickPending()
 
 POLICY RESOURCES (Policy_ResourceQuantity)
 ------------------------------------------

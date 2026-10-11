@@ -102,6 +102,11 @@ void CvTreasury::DoGold()
 
 	iGoldChange = m_pPlayer->calculateGoldRateTimes100();
 #endif
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	// pending policy pick: no income, upkeep is still paid
+	if (m_pPlayer->IsLekmodYieldsFrozen())
+		iGoldChange = std::min(0, iGoldChange - CalculateGrossGoldTimes100());
+#endif
 
 	int iGoldAfterThisTurn = iGoldChange + GetGoldTimes100();
 	if(iGoldAfterThisTurn < 0)

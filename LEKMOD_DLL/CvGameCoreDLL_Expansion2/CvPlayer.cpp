@@ -539,6 +539,9 @@ CvPlayer::CvPlayer() :
 #endif
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	, m_bIsDelayedPolicy(false)
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	, m_bLekmodYieldsFrozen(false)
+#endif
 #endif
 
 // CMP
@@ -1263,6 +1266,9 @@ void CvPlayer::uninit()
 	m_iLastSliceMoved = 0;
 #ifdef PENALTY_FOR_DELAYING_POLICIES
 	m_bIsDelayedPolicy = false;
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	m_bLekmodYieldsFrozen = false;
+#endif
 #endif
 
 #ifdef NQ_CHEAT_FIRST_ROYAL_LIBRARY_COMES_WITH_GREAT_WORK
@@ -5311,7 +5317,11 @@ void CvPlayer::doTurnPostDiplomacy()
 	CvGame& kGame = GC.getGame();
 
 #ifdef PENALTY_FOR_DELAYING_POLICIES
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	while (false)
+#else
 	while (IsDelayedPolicy() && GC.getGame().isOption("GAMEOPTION_NO_MP_POLICY_SAVING"))
+#endif
 	{
 		FStaticVector<PolicyTypes, 64, true, c_eCiv5GameplayDLL, 0> adoptablePolicies;
 		FStaticVector<PolicyBranchTypes, 16, true, c_eCiv5GameplayDLL, 0> adoptablePolicyBranches;
@@ -5481,6 +5491,9 @@ void CvPlayer::doTurnPostDiplomacy()
 	}
 #endif
 
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	m_bLekmodYieldsFrozen = IsLekmodPolicyPickPending();
+#endif
 	// Do turn for all Cities
 	{
 		AI_PERF_FORMAT("AI-perf.csv", ("Do City Turns, Turn %03d, %s", GC.getGame().getElapsedGameTurns(), getCivilizationShortDescription()) );
@@ -5515,7 +5528,11 @@ void CvPlayer::doTurnPostDiplomacy()
 	// Prevent exploits in turn timed MP games - no accumulation of culture if player hasn't picked yet
 	GetCulture()->SetLastTurnLifetimeCulture(GetJONSCultureEverGenerated());
 #ifdef NQM_PRUNING
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	if (!m_bLekmodYieldsFrozen && (!kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) || (getJONSCulture() < getNextPolicyCost())))
+#else
 	if (!kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED) || (getJONSCulture() < getNextPolicyCost()))
+#endif
 	{
 #else
 	if(kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
@@ -5643,6 +5660,9 @@ void CvPlayer::doTurnPostDiplomacy()
 	// Faith
 	CvGameReligions* pGameReligions = kGame.GetGameReligions();
 	pGameReligions->DoPlayerTurn(*this);
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	m_bLekmodYieldsFrozen = false;
+#endif
 #endif
 
 	// Leagues
@@ -26743,6 +26763,10 @@ void CvPlayer::doResearch()
 	{
 		return;
 	}
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	if (m_bLekmodYieldsFrozen)
+		return;
+#endif
 
 	AI_PERF_FORMAT("AI-perf.csv", ("CvPlayer::doResearch, Turn %03d, %s", GC.getGame().getElapsedGameTurns(), getCivilizationShortDescription()) );
 	bool bForceResearchChoice;
@@ -28331,6 +28355,23 @@ int CvPlayer::GetLekmodPolicyGreatWorkYieldModifier() const
 	}
 	return iValue;
 }
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+/// Could this player adopt a policy, a free policy or tenet, or choose an ideology right now?
+bool CvPlayer::IsLekmodPolicyPickPending()
+{
+	if (!isAlive() || !isHuman() || isMinorCiv() || isBarbarian() || getNumCities() == 0)
+		return false;
+	if (GetPlayerPolicies()->IsTimeToChooseIdeology() && GetPlayerPolicies()->GetLateGamePolicyTree() == NO_POLICY_BRANCH_TYPE)
+		return true;
+	if (getJONSCulture() >= getNextPolicyCost() || GetNumFreePolicies() > 0 || GetNumFreeTenets() > 0)
+		return GetPlayerPolicies()->GetNumPoliciesCanBeAdopted() > 0;
+	return false;
+}
+bool CvPlayer::IsLekmodYieldsFrozen() const
+{
+	return m_bLekmodYieldsFrozen;
+}
+#endif
 /// Most negative resistance time modifier of adopted policies (several "half as long" policies don't stack)
 int CvPlayer::GetLekmodResistanceTimeModifier() const
 {

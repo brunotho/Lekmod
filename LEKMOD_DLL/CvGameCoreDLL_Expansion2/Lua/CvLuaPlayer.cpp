@@ -1027,6 +1027,7 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetPotentialInternationalTradeRouteDestinations);
 #ifdef LEKMOD_CANAL_RULES
 	Method(LekmodGetTradeRangePreview);
+	Method(LekmodIsPolicyPickPending);
 #endif
 #if !defined(TRADE_REFACTOR)
 	Method(GetInternationalTradeRouteBaseBonus);
@@ -3470,6 +3471,17 @@ int CvLuaPlayer::lGetNumInternationalTradeRoutesAvailable(lua_State* L)
 //------------------------------------------------------------------------------
 // Destinations the unit's origin city could reach only with a range building it doesn't have yet.
 // Returns { {X, Y, BuildingType}, ... } (one entry per city and building).
+/// LEKMOD: is a policy pick pending (yields freeze at turn end until it is made)?
+int CvLuaPlayer::lLekmodIsPolicyPickPending(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	lua_pushboolean(L, pkPlayer->IsLekmodPolicyPickPending());
+#else
+	lua_pushboolean(L, false);
+#endif
+	return 1;
+}
 int CvLuaPlayer::lLekmodGetTradeRangePreview(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);

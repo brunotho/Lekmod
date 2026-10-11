@@ -655,12 +655,18 @@ bool CvNotifications::GetEndTurnBlockedType(EndTurnBlockingTypes& eBlockingType,
 				break;
 
 			case NOTIFICATION_POLICY:
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+				break;
+#endif
 				eBlockingType = ENDTURN_BLOCKING_POLICY;
 				iNotificationIndex = m_aNotifications[iIndex].m_iLookupIndex;
 				return true;
 				break;
 
 			case NOTIFICATION_FREE_POLICY:
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+				break;
+#endif
 				eBlockingType = ENDTURN_BLOCKING_FREE_POLICY;
 				iNotificationIndex = m_aNotifications[iIndex].m_iLookupIndex;
 				return true;
@@ -745,6 +751,9 @@ bool CvNotifications::GetEndTurnBlockedType(EndTurnBlockingTypes& eBlockingType,
 				break;
 
 			case NOTIFICATION_CHOOSE_IDEOLOGY:
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+				break;
+#endif
 				eBlockingType = ENDTURN_BLOCKING_CHOOSE_IDEOLOGY;
 				iNotificationIndex = m_aNotifications[iIndex].m_iLookupIndex;
 				return true;

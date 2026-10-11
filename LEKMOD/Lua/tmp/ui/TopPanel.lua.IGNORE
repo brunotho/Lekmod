@@ -155,6 +155,10 @@ function UpdateData()
 				end
 			
 				strCultureStr = "[ICON_CULTURE][COLOR:255:0:255:255]" .. strCultureStr .. "[/COLOR]";
+				-- LEKMOD: a pending policy pick freezes the empire's yields at turn end
+				if pPlayer.LekmodIsPolicyPickPending and pPlayer:LekmodIsPolicyPickPending() then
+					strCultureStr = strCultureStr .. " " .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_TOPPANEL_POLICY_PENDING");
+				end
 			end
 			
 			Controls.CultureString:SetText(strCultureStr);
@@ -845,6 +849,9 @@ function CultureTipHandler( control )
 	    
 	    if (pPlayer:IsAnarchy()) then
 			strText = strText .. Locale.ConvertTextKey("TXT_KEY_TP_ANARCHY", pPlayer:GetAnarchyNumTurns());
+		end
+		if pPlayer.LekmodIsPolicyPickPending and pPlayer:LekmodIsPolicyPickPending() then
+			strText = strText .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_TOPPANEL_POLICY_PENDING_TT") .. "[NEWLINE][NEWLINE]";
 		end
 	    
 		strText = strText .. Locale.ConvertTextKey("TXT_KEY_NEXT_POLICY_TURN_LABEL", iTurns);

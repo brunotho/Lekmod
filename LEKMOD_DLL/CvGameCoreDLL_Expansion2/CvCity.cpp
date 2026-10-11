@@ -2340,7 +2340,11 @@ void CvCity::doTurn()
 			ChangeJONSCultureStored(getCachedCultureT100ForThisTurn());
 #endif
 #elif defined(AUI_PLAYER_FIX_JONS_CULTURE_IS_T100)
-		if (getJONSCulturePerTurnTimes100() > 0)
+		if (getJONSCulturePerTurnTimes100() > 0
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+			&& !GET_PLAYER(getOwner()).IsLekmodYieldsFrozen()
+#endif
+			)
 		{
 			ChangeJONSCultureStoredTimes100(getJONSCulturePerTurnTimes100());
 #else
@@ -18994,6 +18998,11 @@ void CvCity::doGrowth()
 #else
 	int iDiff = foodDifferenceTimes100();
 #endif
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	// pending policy pick: no growth (starvation still happens)
+	if (iDiff > 0 && GET_PLAYER(getOwner()).IsLekmodYieldsFrozen())
+		iDiff = 0;
+#endif
 
 	if(iDiff < 0)
 	{
@@ -19447,6 +19456,9 @@ void CvCity::doProduction(bool bAllowNoProduction)
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
 		changeProductionTimes100(getCachedProductionT100ForThisTurn());
 #else
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+		if (!GET_PLAYER(getOwner()).IsLekmodYieldsFrozen())
+#endif
 		changeProductionTimes100(getCurrentProductionDifferenceTimes100(false, true));
 #endif
 
@@ -19511,6 +19523,9 @@ void CvCity::doProduction(bool bAllowNoProduction)
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
 		changeOverflowProductionTimes100(getCachedProductionT100ForThisTurn());
 #else
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+		if (!GET_PLAYER(getOwner()).IsLekmodYieldsFrozen())
+#endif
 		changeOverflowProductionTimes100(getCurrentProductionDifferenceTimes100(false, false));
 #endif
 	}

@@ -402,6 +402,10 @@ void CvGameReligions::DoPlayerTurn(CvPlayer& kPlayer)
 
 #ifndef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
 	int iFaithPerTurn = kPlayer.GetTotalFaithPerTurn();
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	if (kPlayer.IsLekmodYieldsFrozen())
+		iFaithPerTurn = 0;
+#endif
 	if(iFaithPerTurn > 0)
 	{
 		kPlayer.ChangeFaith(iFaithPerTurn);

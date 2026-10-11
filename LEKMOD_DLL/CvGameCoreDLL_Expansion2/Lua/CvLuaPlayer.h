@@ -1030,6 +1030,7 @@ protected:
 	static int lGetPotentialInternationalTradeRouteDestinations(lua_State* L);
 #ifdef LEKMOD_CANAL_RULES
 	static int lLekmodGetTradeRangePreview(lua_State* L);
+	static int lLekmodIsPolicyPickPending(lua_State* L);
 #endif
 #if !defined(TRADE_REFACTOR)
 	static int lGetInternationalTradeRouteBaseBonus(lua_State* L);
