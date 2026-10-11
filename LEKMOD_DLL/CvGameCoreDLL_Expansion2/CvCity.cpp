@@ -6834,6 +6834,14 @@ int CvCity::getProductionModifier(UnitTypes eUnit, CvString* toolTipSink) const
 		iMultiplier += iTempMod;
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_CAPITAL_SETTLER_PLAYER", iTempMod);
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	if (!isCapital() && pkUnitInfo->IsFound())
+	{
+		iTempMod = GetLekmodNonCapitalSettlerModifier();
+		iMultiplier += iTempMod;
+		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_NONCAPITAL_SETTLER", iTempMod);
+	}
+#endif
 
 	// Domain bonus
 	iTempMod = getDomainProductionModifier((DomainTypes)(pkUnitInfo->GetDomainType()));
@@ -13510,11 +13518,57 @@ int CvCity::GetBaseYieldRateFromGarrison(YieldTypes eIndex) const
 			else if (eIndex == YIELD_PRODUCTION)
 				iValue += pkPolicy->GetProductionFromGarrison();
 		}
+#ifdef LEKMOD_POLICY_REWORK
+		iValue += GetLekmodPolicyGarrisonYield(eIndex);
+#endif
 		return iValue;
 	}
 #endif
+#ifdef LEKMOD_POLICY_REWORK
+	return ((GetGarrisonedUnit() != NULL) ? GetGarrisonYieldBonus(eIndex) : 0) + GetLekmodPolicyGarrisonYield(eIndex);
+#else
 	return (GetGarrisonedUnit() != NULL) ? GetGarrisonYieldBonus(eIndex) : 0;
+#endif
 }
+#ifdef LEKMOD_POLICY_REWORK
+//	--------------------------------------------------------------------------------
+/// Policy_GarrisonYieldChanges: needs a non-recon garrison (any city from the garrison attach turn)
+int CvCity::GetLekmodPolicyGarrisonYield(YieldTypes eIndex) const
+{
+	const CvUnit* pGarrison = GetGarrisonedUnit();
+	const UnitCombatTypes eRecon = (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_RECON", true);
+	bool bCounts = (pGarrison != NULL && pGarrison->getUnitCombatType() != eRecon);
+#if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
+	bCounts = bCounts || IsPolicyGarrisonAttached();
+#endif
+	if (!bCounts)
+		return 0;
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue += pkPolicy->GetGarrisonYieldChange(eIndex);
+	}
+	return iValue;
+}
+/// Policies.NonCapitalSettlerProductionModifier of the owner's adopted policies
+int CvCity::GetLekmodNonCapitalSettlerModifier() const
+{
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue += pkPolicy->GetNonCapitalSettlerProductionModifier();
+	}
+	return iValue;
+}
+#endif
 #if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
 //	--------------------------------------------------------------------------------
 /// From the attach turn on, policy garrison effects count for every city

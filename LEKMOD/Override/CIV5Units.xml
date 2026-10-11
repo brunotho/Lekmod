@@ -187726,6 +187726,10 @@
 		<Column name="GlobalMoveChangeEnemy" type="integer" default="0"/>
 		<Column name="MinorBullyInfluenceReward" type="integer" default="0"/>
 		<Column name="MinorBullyNoPenalty" type="boolean" default="false"/>
+		<Column name="NumCitiesFreeWalls" type="integer" default="0"/> <!-- LEKMOD: free walls in the first N cities without walls (maintenance-free) -->
+		<Column name="NonCapitalSettlerProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward Settlers in cities other than the capital -->
+		<Column name="CampClearGold" type="integer" default="0"/> <!-- LEKMOD: extra Gold (standard speed) for clearing a barbarian camp -->
+		<Column name="FreeTilesExistingCities" type="integer" default="0"/> <!-- LEKMOD: on adoption every owned city claims N tiles -->
 	</Table> 
 	<Policies>
 		<Delete />
@@ -280477,4 +280481,403 @@
 			<BuildType>BUILD_CANAL</BuildType>
 		</Row>
 	</Unit_Builds>
+	<!-- LEKMOD: Phase 5 policies (relative to LEKMOD 34.11; 35.x differences reverted where the spec touches them) -->
+	<Table name="Policy_GarrisonYieldChanges"> <!-- LEKMOD: yields in a city with a non-recon garrison; every city from turn 70 -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" notnull="true" />
+	</Table>
+	<!-- Tradition: opener border growth 20%; Oligarchy (from scratch-ish): free walls in 2 cities, 5 units maintenance free, garrison 1 Gold 1 Culture -->
+	<!-- Liberty: opener +10% Settlers in non-capital cities. Commerce finisher: no Food for unique improvements -->
+	<Policies>
+		<Update>
+			<Where Type="POLICY_TRADITION"/>
+			<Set PlotCultureExponentModifier="-20"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_OLIGARCHY"/>
+			<Set GarrisonedCityRangeStrikeModifier="0" GarrisonFreeMaintenance="false" NumCitiesFreeWalls="2" BaseFreeUnits="5"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LIBERTY"/>
+			<Set NonCapitalSettlerProductionModifier="10"/>
+		</Update>
+	</Policies>
+	<Policy_GarrisonYieldChanges>
+		<Row>
+			<PolicyType>POLICY_OLIGARCHY</PolicyType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_OLIGARCHY</PolicyType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Policy_GarrisonYieldChanges>
+	<Policy_ImprovementYieldChanges>
+		<Delete PolicyType="POLICY_COMMERCE_FINISHER" ImprovementType="IMPROVEMENT_MC_SCOTTISH_CLAN_CASTLE"/>
+	</Policy_ImprovementYieldChanges>
+	<!-- Honor: kill yields capped at 40; Warrior Code 10 free units; Professional Army (from scratch); Hero Cult (was Discipline); Military Tradition; finisher -->
+	<!-- Piety: opener back to +100% Shrines/Temples (34.11); Sacred Duty (was Theocracy); Mandate of Heaven; Reformation -->
+	<Policies>
+		<Update>
+			<Where Type="POLICY_HONOR"/>
+			<Set CultureFromKills="0"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_WARRIOR_CODE"/>
+			<Set GoldFromKills="0" BaseFreeUnits="10"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_PROFESSIONAL_ARMY"/>
+			<Set GridX="4"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_DISCIPLINE"/>
+			<Set ExpModifier="0"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_MILITARY_TRADITION"/>
+			<Set UnitUpgradeCostMod="-10"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_HONOR_FINISHER"/>
+			<Set ScienceFromKills="0"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_THEOCRACY"/>
+			<Set BaseFreeUnits="5" CampClearGold="30"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_MANDATE_OF_HEAVEN"/>
+			<Set FaithCostModifier="0" FreeTilesExistingCities="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_REFORMATION"/>
+			<Set FaithCostModifier="-20" PlotCultureExponentModifier="0"/>
+		</Update>
+	</Policies>
+	<Policy_YieldFromKills>
+		<Row>
+			<PolicyType>POLICY_HONOR</PolicyType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>100</Yield>
+			<Max>40</Max>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_WARRIOR_CODE</PolicyType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>100</Yield>
+			<Max>40</Max>
+		</Row>
+	</Policy_YieldFromKills>
+	<Policy_PrereqPolicies>
+		<Delete PolicyType="POLICY_DISCIPLINE"/>
+		<Row>
+			<PolicyType>POLICY_DISCIPLINE</PolicyType>
+			<PrereqPolicy>POLICY_PROFESSIONAL_ARMY</PrereqPolicy>
+		</Row>
+	</Policy_PrereqPolicies>
+	<Policy_BuildingClassProductionModifiers>
+		<Delete PolicyType="POLICY_PROFESSIONAL_ARMY"/>
+		<Delete PolicyType="POLICY_DISCIPLINE"/>
+		<Delete PolicyType="POLICY_MILITARY_TRADITION"/>
+		<Delete PolicyType="POLICY_PIETY"/>
+		<Row>
+			<PolicyType>POLICY_PROFESSIONAL_ARMY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PROFESSIONAL_ARMY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COLOSSEUM</BuildingClassType>
+			<ProductionModifier>30</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_DISCIPLINE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_HEROIC_EPIC</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_DISCIPLINE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_CIRCUS_MAXIMUS</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MILITARY_TRADITION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_ARMORY</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MILITARY_TRADITION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<ProductionModifier>30</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PIETY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_SHRINE</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PIETY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_TEMPLE</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+	</Policy_BuildingClassProductionModifiers>
+	<Policy_BuildingClassYieldChanges>
+		<Delete PolicyType="POLICY_PROFESSIONAL_ARMY"/>
+		<Delete PolicyType="POLICY_DISCIPLINE"/>
+		<Delete PolicyType="POLICY_MILITARY_TRADITION" BuildingClassType="BUILDINGCLASS_COURTHOUSE" YieldType="YIELD_GOLD"/>
+		<Delete PolicyType="POLICY_HONOR_FINISHER"/>
+		<Delete PolicyType="POLICY_THEOCRACY" BuildingClassType="BUILDINGCLASS_SHRINE"/>
+		<Delete PolicyType="POLICY_THEOCRACY" BuildingClassType="BUILDINGCLASS_TEMPLE"/>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_PALACE"/>
+		<Row>
+			<PolicyType>POLICY_PROFESSIONAL_ARMY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PROFESSIONAL_ARMY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PROFESSIONAL_ARMY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COLOSSEUM</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_DISCIPLINE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_HEROIC_EPIC</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_DISCIPLINE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_CIRCUS_MAXIMUS</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_THEOCRACY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_TEMPLE</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MANDATE_OF_HEAVEN</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_PALACE</BuildingClassType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>2</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COLOSSEUM</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_HEROIC_EPIC</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_NATIONAL_EPIC</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_CIRCUS_MAXIMUS</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_NATIONAL_TREASURY</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_NATIONAL_COLLEGE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_IRONWORKS</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_HERMITAGE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_INTELLIGENCE_AGENCY</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_GRAND_TEMPLE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_TOURIST_CENTER</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_OXFORD_UNIVERSITY</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_URANIUM_MAPPING_PROJECT</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_LEKMOD_APOLLO</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_PANAMA</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+	</Policy_BuildingClassYieldChanges>
+	<Policy_BuildingClassHappiness>
+		<Delete PolicyType="POLICY_DISCIPLINE"/>
+		<Row>
+			<PolicyType>POLICY_DISCIPLINE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_HEROIC_EPIC</BuildingClassType>
+			<Happiness>3</Happiness>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_DISCIPLINE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_CIRCUS_MAXIMUS</BuildingClassType>
+			<Happiness>3</Happiness>
+		</Row>
+	</Policy_BuildingClassHappiness>
+	<Policy_ImprovementYieldChanges>
+		<Delete PolicyType="POLICY_MILITARY_TRADITION"/>
+	</Policy_ImprovementYieldChanges>
+	<Policy_CityYieldChanges>
+		<Delete PolicyType="POLICY_HONOR_FINISHER"/>
+	</Policy_CityYieldChanges>
+	<Policy_FreePromotionUnitCombats>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+		</Row>
+	</Policy_FreePromotionUnitCombats>
+	<Policy_GarrisonYieldChanges>
+		<Row>
+			<PolicyType>POLICY_THEOCRACY</PolicyType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_THEOCRACY</PolicyType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Policy_GarrisonYieldChanges>
 </GameData>

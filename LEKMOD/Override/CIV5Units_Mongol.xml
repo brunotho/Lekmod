@@ -116227,7 +116227,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_COMMERCE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Commerce[ENDCOLOR] provides bonuses to empires focused on [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Adopting Commerce allows you to earn [ICON_GREAT_MERCHANT] Great Merchants 33% faster. Unlocks building [ICON_WONDER_BIG_BEN] Big Ben.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Commerce tree will grant you 2 free [ICON_GREAT_MERCHANT] Great Merchants and double [ICON_GOLD] Gold from [ICON_GREAT_MERCHANT] Great Merchant [COLOR_POSITIVE_TEXT]Trade Missions[ENDCOLOR]. It also provides +1 [ICON_FOOD] Food from [COLOR_POSITIVE_TEXT]Trading Posts[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Caers[ENDCOLOR] and allows the purchase of [ICON_GREAT_MERCHANT]Great Merchants with [ICON_PEACE] Faith starting in the [COLOR_CYAN]Industrial Era[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Commerce[ENDCOLOR] provides bonuses to empires focused on [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Adopting Commerce allows you to earn [ICON_GREAT_MERCHANT] Great Merchants 33% faster. Unlocks building [ICON_WONDER_BIG_BEN] Big Ben.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Commerce tree will grant you 2 free [ICON_GREAT_MERCHANT] Great Merchants and double [ICON_GOLD] Gold from [ICON_GREAT_MERCHANT] Great Merchant [COLOR_POSITIVE_TEXT]Trade Missions[ENDCOLOR]. It also provides +1 [ICON_FOOD] Food from [COLOR_POSITIVE_TEXT]Trading Posts[ENDCOLOR] and allows the purchase of [ICON_GREAT_MERCHANT]Great Merchants with [ICON_PEACE] Faith starting in the [COLOR_CYAN]Industrial Era[ENDCOLOR].
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_EUROPEAN"> 
@@ -116277,7 +116277,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_HONOR_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Honor[ENDCOLOR] improves the effectiveness of one's army in a variety of ways.[NEWLINE][NEWLINE]Adopting Honor gives a +33% combat bonus VS [COLOR_POSITIVE_TEXT]Barbarians[ENDCOLOR]. Gain [ICON_CULTURE] Culture for the empire for each enemy unit killed (barbarian kills stop counting from turn 70). Unlocks building the [ICON_WONDER_STATUE_ZEUS] Statue of Zeus.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Honor tree will grant [ICON_RESEARCH] Science for each enemy unit killed, +1 [ICON_FOOD] Food in each City, and +1 [ICON_FOOD] Food from [ICON_BUILDING_BARRACKS] Barracks and [ICON_BUILDING_ARMORY] Armories. [ICON_GREAT_GENERAL] Great Generals can be purchased with [ICON_PEACE] Faith starting in the [COLOR_CYAN]Industrial Era[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Honor[ENDCOLOR] improves the effectiveness of one's army in a variety of ways.[NEWLINE][NEWLINE]Adopting Honor gives +33% [ICON_STRENGTH] Combat Strength against [COLOR_POSITIVE_TEXT]Barbarians[ENDCOLOR].[NEWLINE]Gain [ICON_CULTURE] Culture for each enemy unit killed (at most 40 per kill; barbarian kills stop counting from turn 70).[NEWLINE]Unlocks building the [ICON_WONDER_STATUE_ZEUS] Statue of Zeus.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Honor tree gives all non-air military units the Discipline promotion (+50% Experience).[NEWLINE]+1 [ICON_FOOD] Food from [ICON_BUILDING_BARRACKS] Barracks, [ICON_BUILDING_COLOSSEUM] Colosseums and [COLOR_POSITIVE_TEXT]National Wonders[ENDCOLOR].[NEWLINE][ICON_GREAT_GENERAL] Great Generals can be purchased with [ICON_PEACE] Faith from the [COLOR_CYAN]Industrial Era[ENDCOLOR] on.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_LIBERTY"> 
@@ -116292,7 +116292,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_LIBERTY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Liberty[ENDCOLOR] is best for civilizations which desire rapid expansion.[NEWLINE][NEWLINE]Adopting Liberty will provide 1 [ICON_CULTURE] Culture per city. Unlocks building the [ICON_WONDER_PYRAMID] Pyramids.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Liberty tree will grant a free [ICON_GREAT_PEOPLE] Great Person of your choice near the [ICON_CAPITAL] Capital. All cities gain +33% [ICON_PRODUCTION] Production towards [COLOR_POSITIVE_TEXT]National Wonders[ENDCOLOR] and +15% [ICON_PRODUCTION] Production towards any building required for a [COLOR_POSITIVE_TEXT]National Wonder[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Liberty[ENDCOLOR] is best for civilizations which desire rapid expansion.[NEWLINE][NEWLINE]Adopting Liberty provides +1 [ICON_CULTURE] Culture in every city.[NEWLINE]+10% [ICON_PRODUCTION] Production toward [ICON_UNIT_SETTLER] Settlers in cities other than the [ICON_CAPITAL] Capital.[NEWLINE]Unlocks building the [ICON_WONDER_PYRAMID] Pyramids.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Liberty tree grants a free [ICON_GREAT_PEOPLE] Great Person of your choice near the [ICON_CAPITAL] Capital.[NEWLINE]All cities gain +33% [ICON_PRODUCTION] Production toward [COLOR_POSITIVE_TEXT]National Wonders[ENDCOLOR] and +15% toward any building a [COLOR_POSITIVE_TEXT]National Wonder[ENDCOLOR] requires.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_ORDER"> 
@@ -116337,7 +116337,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_PIETY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Piety[ENDCOLOR] increases the [ICON_PEACE] Faith of empires.[NEWLINE][NEWLINE]Adopting Piety provides you with +1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith from the [ICON_BUILDING_PALACE] [COLOR_YELLOW]Palace[ENDCOLOR]. +50% [ICON_PRODUCTION] Production towards [ICON_BUILDING_SHRINE] Shrines and [ICON_BUILDING_TEMPLE] Temples. Unlocks building the [ICON_WONDER_MOSQUE_OF_DJENNE] Great Mosque of Djenne.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Piety tree causes a [ICON_PROPHET] Great Prophet to appear. [COLOR_POSITIVE_TEXT]Holy Sites[ENDCOLOR] provide +1 [ICON_FOOD] Food and +3 [ICON_CULTURE] Culture. Provides a free [ICON_BUILDING_GARDEN] Garden in your first 4 cities and allows [ICON_PEACE] Faith purchasing of 1 [ICON_GREAT_PEOPLE] Great Person of every kind with exception to a [ICON_GREAT_SCIENTIST] Great Scientist starting in the [COLOR_CYAN]Industrial Era[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Piety[ENDCOLOR] increases the [ICON_PEACE] Faith of empires.[NEWLINE][NEWLINE]Adopting Piety provides +1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith from the [ICON_BUILDING_PALACE] Palace.[NEWLINE]+100% [ICON_PRODUCTION] Production toward [ICON_BUILDING_SHRINE] Shrines and [ICON_BUILDING_TEMPLE] Temples.[NEWLINE]Unlocks building the [ICON_WONDER_MOSQUE_OF_DJENNE] Great Mosque of Djenne.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Piety tree causes a [ICON_PROPHET] Great Prophet to appear.[NEWLINE][COLOR_POSITIVE_TEXT]Holy Sites[ENDCOLOR] provide +1 [ICON_FOOD] Food and +3 [ICON_CULTURE] Culture.[NEWLINE]A free [ICON_BUILDING_GARDEN] Garden in your first 4 cities.[NEWLINE]Allows buying 1 [ICON_GREAT_PEOPLE] Great Person of every kind except the [ICON_GREAT_SCIENTIST] Great Scientist with [ICON_PEACE] Faith from the [COLOR_CYAN]Industrial Era[ENDCOLOR] on.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_RATIONALISM"> 
@@ -116367,7 +116367,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Tradition[ENDCOLOR] is best for small empires.[NEWLINE][NEWLINE]Adopting Tradition greatly increases the rate of border expansion in cities and also grants +3 [ICON_CULTURE] Culture from the [ICON_BUILDING_PALACE] [COLOR_YELLOW]Palace[ENDCOLOR]. Unlocks building the [ICON_WONDER_HANGING_GARDEN] Hanging Gardens.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Tradition tree will grant +15% [ICON_FOOD] Growth and a free [ICON_BUILDING_AQUEDUCT] Aqueduct in your first 4 cities. It also allows the purchase of [ICON_GREAT_ENGINEER] Great Engineers with [ICON_PEACE] Faith starting in the [COLOR_CYAN]Industrial Era[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Tradition[ENDCOLOR] is best for small empires.[NEWLINE][NEWLINE]Adopting Tradition makes cities expand their borders faster: the [ICON_CULTURE] Culture cost of new tiles rises 20% slower.[NEWLINE]+3 [ICON_CULTURE] Culture from the [ICON_BUILDING_PALACE] Palace.[NEWLINE]Unlocks building the [ICON_WONDER_HANGING_GARDEN] Hanging Gardens.[NEWLINE][NEWLINE]Adopting all [COLOR_POSITIVE_TEXT]Policies[ENDCOLOR] in the Tradition tree grants +15% [ICON_FOOD] Growth and a free [ICON_BUILDING_AQUEDUCT] Aqueduct in your first 4 cities.[NEWLINE]It also allows buying [ICON_GREAT_ENGINEER] Great Engineers with [ICON_PEACE] Faith from the [COLOR_CYAN]Industrial Era[ENDCOLOR] on.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_UNLOCK_SPEND"> 
@@ -116687,12 +116687,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DISCIPLINE"> 
 			<Text>
-				Discipline
+				Hero Cult
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DISCIPLINE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Discipline[ENDCOLOR][NEWLINE]+100% [ICON_PRODUCTION] Production towards the [ICON_WONDER_HEROIC_EPIC] Heroic Epic and it provides +4 [ICON_HAPPINESS_1] Happiness, +4 [ICON_FOOD] Food, +4 [ICON_PRODUCTION] Production, +4 [ICON_GOLD] Gold and +4 [ICON_CULTURE] Culture. Non-Airplane [COLOR_POSITIVE_TEXT]Military[ENDCOLOR] units gain 50% more [COLOR_POSITIVE_TEXT]Experience[ENDCOLOR] from combat.
+				[COLOR_POSITIVE_TEXT]Hero Cult[ENDCOLOR][NEWLINE]+100% [ICON_PRODUCTION] Production toward the [ICON_WONDER_HEROIC_EPIC] Heroic Epic and the Circus Maximus.[NEWLINE][NEWLINE]The Heroic Epic provides +3 [ICON_PRODUCTION] Production and +3 [ICON_HAPPINESS_1] Happiness.[NEWLINE]The Circus Maximus provides +3 [ICON_PRODUCTION] Production and +3 [ICON_HAPPINESS_1] Happiness.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DISCIPLINE_TEXT"> 
@@ -117147,7 +117147,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MANDATE_OF_HEAVEN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Mandate of Heaven[ENDCOLOR][NEWLINE]+1 [ICON_PRODUCTION] Production and +1 [ICON_PEACE] Faith from the [ICON_BUILDING_PALACE] [COLOR_YELLOW]Palace[ENDCOLOR]. +1 [ICON_HAPPINESS_1] Happiness from each [ICON_BUILDING_TEMPLE] Temple. 20% discount on all purchases of [COLOR_POSITIVE_TEXT]Religious Units[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Buildings[ENDCOLOR] with [ICON_PEACE] Faith.
+				[COLOR_POSITIVE_TEXT]Mandate of Heaven[ENDCOLOR][NEWLINE]+2 [ICON_PEACE] Faith from the [ICON_BUILDING_PALACE] Palace.[NEWLINE]+1 [ICON_HAPPINESS_1] Happiness from each [ICON_BUILDING_TEMPLE] Temple.[NEWLINE]+25% [ICON_PRODUCTION] Production toward religious buildings (Cathedrals, Mosques, Pagodas and the like).[NEWLINE][NEWLINE]Every city you own now claims 2 extra tiles at once.[NEWLINE]Cities founded later don't get this, and the cost of later border growth is not raised.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MARITIME_INFRASTRUCTURE"> 
@@ -117282,7 +117282,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MILITARY_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]+50% [ICON_PRODUCTION] Production towards [ICON_BUILDING_COURTHOUSE] Courthouses and they provide +3 [ICON_FOOD] Food, +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold. [COLOR_POSITIVE_TEXT]Citadels[ENDCOLOR] provide +2 [ICON_RESEARCH] Science, +2 [ICON_CULTURE] Culture and +1 [ICON_FOOD] Food.
+				[COLOR_POSITIVE_TEXT]Military Tradition[ENDCOLOR][NEWLINE]Upgrading units costs 10% less [ICON_GOLD] Gold.[NEWLINE][NEWLINE]+100% [ICON_PRODUCTION] Production toward [ICON_BUILDING_ARMORY] Armories.[NEWLINE]+30% [ICON_PRODUCTION] Production toward [ICON_BUILDING_COURTHOUSE] Courthouses.[NEWLINE]Courthouses provide +3 [ICON_PRODUCTION] Production and +3 [ICON_FOOD] Food.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_MOBILIZATION"> 
@@ -117408,7 +117408,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_OLIGARCHY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Oligarchy[ENDCOLOR][NEWLINE][COLOR_POSITIVE_TEXT]Garrisoned[ENDCOLOR] units cost no maintenance and cities with a [COLOR_POSITIVE_TEXT]Garrison[ENDCOLOR] gain +50% [ICON_RANGE_STRENGTH] Ranged Combat Strength.
+				[COLOR_POSITIVE_TEXT]Oligarchy[ENDCOLOR][NEWLINE]Free Walls in your first 2 cities that don't have Walls.[NEWLINE]5 units cost no [ICON_GOLD] Gold maintenance.[NEWLINE][NEWLINE]Cities with a garrisoned unit (not Recon) get +1 [ICON_GOLD] Gold and +1 [ICON_CULTURE] Culture.[NEWLINE]From turn 70 on, every city gets this, with or without a garrison.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_OLIGARCHY_TEXT"> 
@@ -117623,7 +117623,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PROFESSIONAL_ARMY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Professional Army[ENDCOLOR][NEWLINE]+100% [ICON_PRODUCTION] Production towards [ICON_BUILDING_BARRACKS] Barracks, [ICON_BUILDING_ARMORY] Armories, and [ICON_BUILDING_MILITARY_ACADEMY] Military Academies. They each provide +1 [ICON_PRODUCTION] Production, +1 [ICON_CULTURE] Culture, and +1 [ICON_GOLD] Gold.
+				[COLOR_POSITIVE_TEXT]Professional Army[ENDCOLOR][NEWLINE]+100% [ICON_PRODUCTION] Production toward [ICON_BUILDING_BARRACKS] Barracks.[NEWLINE]Barracks provide +1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]+30% [ICON_PRODUCTION] Production toward [ICON_BUILDING_COLOSSEUM] Colosseums.[NEWLINE]Colosseums provide +1 [ICON_FOOD] Food.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PROTECTIONISM"> 
@@ -117708,7 +117708,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_REFORMATION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Reformation[ENDCOLOR][NEWLINE]If you have founded a [ICON_RELIGION] Religion, gain a bonus [COLOR_POSITIVE_TEXT]Reformation[ENDCOLOR] belief. +15% [ICON_CULTURE] Border Growth.
+				[COLOR_POSITIVE_TEXT]Reformation[ENDCOLOR][NEWLINE]If you have founded a [ICON_RELIGION] Religion, gain a bonus [COLOR_POSITIVE_TEXT]Reformation[ENDCOLOR] belief.[NEWLINE][NEWLINE]20% discount on all purchases of [COLOR_POSITIVE_TEXT]Religious Units[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Buildings[ENDCOLOR] with [ICON_PEACE] Faith.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_REFORMATION_TEXT"> 
@@ -117933,12 +117933,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THEOCRACY"> 
 			<Text>
-				Theocracy
+				Sacred Duty
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THEOCRACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Theocracy[ENDCOLOR][NEWLINE]+1 [ICON_GOLD] Gold from each [ICON_BUILDING_SHRINE] Shrine and [ICON_BUILDING_TEMPLE] Temple.[NEWLINE][COLOR_POSITIVE_TEXT]Holy Sites[ENDCOLOR] provide +3 [ICON_GOLD] Gold.[NEWLINE]The [ICON_BUILDING_GRAND_TEMPLE] Grand Temple boosts [ICON_GOLD] Gold output in its city by 33%.
+				[COLOR_POSITIVE_TEXT]Sacred Duty[ENDCOLOR][NEWLINE]+2 [ICON_GOLD] Gold from each [ICON_BUILDING_TEMPLE] Temple.[NEWLINE][COLOR_POSITIVE_TEXT]Holy Sites[ENDCOLOR] provide +3 [ICON_GOLD] Gold.[NEWLINE]The [ICON_BUILDING_GRAND_TEMPLE] Grand Temple boosts [ICON_GOLD] Gold in its city by 33%.[NEWLINE][NEWLINE]5 units cost no [ICON_GOLD] Gold maintenance.[NEWLINE]Cities with a garrisoned unit (not Recon) get +1 [ICON_PEACE] Faith and +1 [ICON_CULTURE] Culture.[NEWLINE]From turn 70 on, every city gets this, with or without a garrison.[NEWLINE][NEWLINE]Clearing a [COLOR_POSITIVE_TEXT]Barbarian Encampment[ENDCOLOR] gives +20 [ICON_GOLD] Gold.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THEOCRACY_TEXT"> 
@@ -118148,7 +118148,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_WARRIOR_CODE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Warrior Code[ENDCOLOR][NEWLINE]4 units are maintenance free, and receive 2 [ICON_UNIT_WARRIOR] [COLOR_YELLOW]Warriors[ENDCOLOR] immediately. Gain [ICON_GOLD] Gold for each enemy unit killed.
+				[COLOR_POSITIVE_TEXT]Warrior Code[ENDCOLOR][NEWLINE]10 units cost no [ICON_GOLD] Gold maintenance.[NEWLINE]2 [ICON_UNIT_WARRIOR] Warriors appear immediately.[NEWLINE][NEWLINE]Gain [ICON_GOLD] Gold for each enemy unit killed (at most 40 per kill).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_WORKERS_FACULTIES"> 
@@ -120563,6 +120563,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_POLYNESIAN_MAORI_WARRIOR">
 			<Text>Maori</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_NONCAPITAL_SETTLER">
+			<Text>[NEWLINE][ICON_BULLET]Settlers outside the capital: {1_Num}%</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_CS_CULTURED_CAPTURE_GREAT_WORK">
 			<Text>[ICON_GREAT_WORK] Capturing this City-State in the Medieval Era or later gives you 1 Great Work (if you have a free Great Work slot).</Text>

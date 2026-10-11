@@ -9586,7 +9586,16 @@ void CvPlayer::AwardFreeBuildings(CvCity* pCity)
 		BuildingTypes eWalls = pCity->ChooseFreeWallsBuilding(); //(BuildingTypes)GC.getInfoTypeForString("BUILDING_WALLS", true);
 		if (eWalls != NO_BUILDING)
 		{
+#ifdef LEKMOD_POLICY_REWORK
+			pCity->GetCityBuildings()->SetNumFreeBuilding(eWalls, 1);
+			if (GC.IsGraphicsInitialized())
+			{
+				auto_ptr<ICvPlot1> pDllPlot(new CvDllPlot(pCity->plot()));
+				gDLL->GameplayWallCreated(pDllPlot.get());
+			}
+#else
 			pCity->GetCityBuildings()->SetNumRealBuilding(eWalls, 1);
+#endif
 		}
 		ChangeNumCitiesFreeWalls(-1);
 	}
@@ -28519,6 +28528,35 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		}
 		
 		// NQMP GJS - New Oligarchy add support for NumCitiesFreeWalls
+#ifdef LEKMOD_POLICY_REWORK
+		// one-shot: every city owned when the policy is adopted claims extra tiles
+		if (iChange > 0)
+		{
+			for (int iTile = 0; iTile < pPolicy->GetFreeTilesExistingCities(); iTile++)
+			{
+				CvPlot* pFreePlot = pLoopCity->GetNextBuyablePlot();
+				if (pFreePlot != NULL)
+					pLoopCity->DoAcquirePlot(pFreePlot->getX(), pFreePlot->getY());
+			}
+		}
+		// free walls go to the first cities that don't have walls yet
+		if (iNumCitiesFreeWalls > 0 && pLoopCity->ChooseFreeWallsBuilding() != NO_BUILDING && pLoopCity->GetCityBuildings()->GetNumBuilding(pLoopCity->ChooseFreeWallsBuilding()) == 0)
+		{
+			BuildingTypes eWalls = pLoopCity->ChooseFreeWallsBuilding();
+			pLoopCity->GetCityBuildings()->SetNumFreeBuilding(eWalls, 1);
+			if (GC.IsGraphicsInitialized())
+			{
+				auto_ptr<ICvPlot1> pDllPlot(new CvDllPlot(pLoopCity->plot()));
+				gDLL->GameplayWallCreated(pDllPlot.get());
+			}
+			if (pLoopCity->getFirstBuildingOrder(eWalls) == 0)
+			{
+				pLoopCity->clearOrderQueue();
+				pLoopCity->chooseProduction();
+			}
+			iNumCitiesFreeWalls--;
+		}
+#else
 		if (iNumCitiesFreeWalls > 0)
 		{
 			BuildingTypes eWalls = pLoopCity->ChooseFreeWallsBuilding(); //(BuildingTypes)GC.getInfoTypeForString("BUILDING_WALLS", true);//
@@ -28533,6 +28571,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			}
 			iNumCitiesFreeWalls--;
 		}
+#endif
 
 		if(iNumCitiesFreeCultureBuilding > 0)
 		{

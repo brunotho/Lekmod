@@ -264,6 +264,12 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_piPolicyDisables(NULL),
 	m_piYieldModifier(NULL),
 	m_piCityYieldChange(NULL),
+#ifdef LEKMOD_POLICY_REWORK
+	m_piGarrisonYieldChange(NULL),
+	m_iNonCapitalSettlerProductionModifier(0),
+	m_iCampClearGold(0),
+	m_iFreeTilesExistingCities(0),
+#endif
 	m_piCoastalCityYieldChange(NULL),
 	m_piCapitalYieldChange(NULL),
 	m_piCapitalYieldPerPopChange(NULL),
@@ -376,6 +382,9 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	SAFE_DELETE_ARRAY(m_piPolicyDisables);
 	SAFE_DELETE_ARRAY(m_piYieldModifier);
 	SAFE_DELETE_ARRAY(m_piCityYieldChange);
+#ifdef LEKMOD_POLICY_REWORK
+	SAFE_DELETE_ARRAY(m_piGarrisonYieldChange);
+#endif
 	SAFE_DELETE_ARRAY(m_piCoastalCityYieldChange);
 	SAFE_DELETE_ARRAY(m_piCapitalYieldChange);
 	SAFE_DELETE_ARRAY(m_piCapitalYieldPerPopChange);
@@ -756,6 +765,12 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	const char* szPolicyType = GetType();
 	kUtility.SetYields(m_piYieldModifier, "Policy_YieldModifiers", "PolicyType", szPolicyType);
 	kUtility.SetYields(m_piCityYieldChange, "Policy_CityYieldChanges", "PolicyType", szPolicyType);
+#ifdef LEKMOD_POLICY_REWORK
+	kUtility.SetYields(m_piGarrisonYieldChange, "Policy_GarrisonYieldChanges", "PolicyType", szPolicyType);
+	m_iNonCapitalSettlerProductionModifier = kResults.GetInt("NonCapitalSettlerProductionModifier");
+	m_iCampClearGold = kResults.GetInt("CampClearGold");
+	m_iFreeTilesExistingCities = kResults.GetInt("FreeTilesExistingCities");
+#endif
 	kUtility.SetYields(m_piCoastalCityYieldChange, "Policy_CoastalCityYieldChanges", "PolicyType", szPolicyType);
 	kUtility.SetYields(m_piCapitalYieldChange, "Policy_CapitalYieldChanges", "PolicyType", szPolicyType);
 	kUtility.SetYields(m_piCapitalYieldPerPopChange, "Policy_CapitalYieldPerPopChanges", "PolicyType", szPolicyType);
@@ -2661,6 +2676,30 @@ int* CvPolicyEntry::GetCityYieldChangeArray() const
 {
 	return m_piCityYieldChange;
 }
+#ifdef LEKMOD_POLICY_REWORK
+/// Yield in a city with a non-recon garrison (in every city from the garrison attach turn)
+int CvPolicyEntry::GetGarrisonYieldChange(int i) const
+{
+	CvAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piGarrisonYieldChange ? m_piGarrisonYieldChange[i] : 0;
+}
+/// % Production toward Settlers (founding units) in cities other than the capital
+int CvPolicyEntry::GetNonCapitalSettlerProductionModifier() const
+{
+	return m_iNonCapitalSettlerProductionModifier;
+}
+/// Extra Gold (before game speed scaling) for clearing a barbarian encampment
+int CvPolicyEntry::GetCampClearGold() const
+{
+	return m_iCampClearGold;
+}
+/// When adopted, every city you own claims this many tiles (no effect on later cities or border growth costs)
+int CvPolicyEntry::GetFreeTilesExistingCities() const
+{
+	return m_iFreeTilesExistingCities;
+}
+#endif
 
 /// Change to yield in coastal Cities by type
 int CvPolicyEntry::GetCoastalCityYieldChange(int i) const

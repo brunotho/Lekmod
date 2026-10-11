@@ -288,6 +288,12 @@ public:
 	int GetYieldModifier(int i) const;
 	int* GetYieldModifierArray() const;
 	int GetCityYieldChange(int i) const;
+#ifdef LEKMOD_POLICY_REWORK
+	int GetGarrisonYieldChange(int i) const;
+	int GetNonCapitalSettlerProductionModifier() const;
+	int GetCampClearGold() const;
+	int GetFreeTilesExistingCities() const;
+#endif
 	int* GetCityYieldChangeArray() const;
 	int GetCoastalCityYieldChange(int i) const;
 	int* GetCoastalCityYieldChangeArray() const;
@@ -621,6 +627,12 @@ private:
 	int* m_piPolicyDisables;
 	int* m_piYieldModifier;
 	int* m_piCityYieldChange;
+#ifdef LEKMOD_POLICY_REWORK
+	int* m_piGarrisonYieldChange;
+	int m_iNonCapitalSettlerProductionModifier;
+	int m_iCampClearGold;
+	int m_iFreeTilesExistingCities;
+#endif
 	int* m_piCoastalCityYieldChange;
 	int* m_piCapitalYieldChange;
 	int* m_piCapitalYieldPerPopChange;

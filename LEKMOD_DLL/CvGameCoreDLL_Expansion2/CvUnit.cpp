@@ -18420,6 +18420,14 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 					{
 						int iNumGold = GC.getGame().getHandicapInfo().getBarbCampGold();
 						iNumGold *= (100 + kPlayer.GetPlayerTraits()->GetPlunderModifier()) / 100;
+#ifdef LEKMOD_POLICY_REWORK
+						for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+						{
+							CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+							if (pkPolicy != NULL && pkPolicy->GetCampClearGold() != 0 && kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) && !kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+								iNumGold += pkPolicy->GetCampClearGold();
+						}
+#endif
 
 						// Game Speed Mod
 						iNumGold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType())->getGoldPercent();

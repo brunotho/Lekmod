@@ -730,6 +730,10 @@ public:
 	// END Base Yield
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 	int GetBaseYieldRateFromGarrison(YieldTypes eIndex) const;
+#ifdef LEKMOD_POLICY_REWORK
+	int GetLekmodPolicyGarrisonYield(YieldTypes eIndex) const;
+	int GetLekmodNonCapitalSettlerModifier() const;
+#endif
 #if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
 	bool IsPolicyGarrisonAttached() const;
 #endif

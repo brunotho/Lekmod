@@ -1538,3 +1538,49 @@ Tags: game mechanics
 - Added: capturing a Cultured City-State in the Medieval Era or later gives you 1 Great Work (if you have a free slot), the first time you take the city
 - Added: the City-State tooltip, the City-State screen (Great Work icon next to its type) and its Civilopedia page say so
 - DLL: LEKMOD_CULTURED_CS_CAPTURE_GREAT_WORK (reuses DoGreatWorkFromCityConquer)
+
+TRADITION (POLICY_BRANCH_TRADITION)
+----------------------------------
+Tags: policies
+- Changed: opener: border growth bonus 25% -> 20% (the Culture cost of new tiles rises 20% slower)
+- Changed: Oligarchy: free Walls in your first 2 cities without Walls; 5 units cost no maintenance; cities with a garrison (not Recon) get +1 Gold and +1 Culture (every city from turn 70)
+- Removed: Oligarchy: garrisoned units no longer cost no maintenance; no +50% ranged strength for garrisoned cities
+- DLL: Policy_GarrisonYieldChanges, NumCitiesFreeWalls only counts cities without walls and gives maintenance-free walls (LEKMOD_POLICY_REWORK)
+
+LIBERTY (POLICY_BRANCH_LIBERTY)
+------------------------------
+Tags: policies
+- Added: opener: +10% Production toward Settlers in cities other than the capital
+- DLL: Policies.NonCapitalSettlerProductionModifier
+
+COMMERCE (POLICY_BRANCH_COMMERCE)
+--------------------------------
+Tags: policies
+- Removed: finisher: no more +1 Food from unique improvements (Scottish Caer); Trading Posts keep it
+
+HONOR (POLICY_BRANCH_HONOR)
+--------------------------
+Tags: policies, combat
+- Changed: opener: Culture from kills is capped at 40 per kill (was 30)
+- Changed: Warrior Code: 10 units cost no maintenance (was 4); Gold from kills capped at 40 per kill (was 30)
+- Changed: Professional Army (rebuilt): +100% Production toward Barracks, Barracks +1 Production +1 Culture; +30% toward Colosseums, Colosseums +1 Food
+- Removed: Professional Army: Armory and Military Academy bonuses, Gold from Barracks
+- Changed: Discipline is now Hero Cult: requires Professional Army instead of Warrior Code; +100% Production toward the Heroic Epic and the Circus Maximus; each gives +3 Production and +3 Happiness
+- Removed: Hero Cult: +50% Experience; Heroic Epic Food, Gold and Culture
+- Changed: Military Tradition: unit upgrades 10% cheaper; +100% Production toward Armories; +30% toward Courthouses (was 50%); Courthouses +3 Production +3 Food
+- Removed: Military Tradition: Citadel yields; Courthouse Gold
+- Changed: finisher: all non-air military units get the Discipline promotion (+50% Experience); +1 Food from Barracks, Colosseums and National Wonders
+- Removed: finisher: Science from kills; +1 Food in every city; Armory Food
+- Note: National Wonders for the finisher Food are the Legalism list plus the Uranium Mapping Project, Apollo Program building and Canal Project
+- DLL: Policies.CampClearGold, Policies.FreeTilesExistingCities (LEKMOD_POLICY_REWORK); kill caps use Policy_YieldFromKills.Max
+
+PIETY (POLICY_BRANCH_PIETY)
+--------------------------
+Tags: policies, religion
+- Changed: opener: +100% Production toward Shrines and Temples (was 50%)
+- Changed: Theocracy is now Sacred Duty: Temples +2 Gold (was +1); 5 units cost no maintenance; cities with a garrison (not Recon) get +1 Faith and +1 Culture (every city from turn 70); clearing a Barbarian Encampment gives +20 Gold
+- Removed: Sacred Duty: Shrine Gold
+- Changed: Mandate of Heaven: Palace +2 Faith (was +1); every city you own claims 2 extra tiles when you adopt it
+- Removed: Mandate of Heaven: Palace Production; the Faith purchase discount (moved to Reformation)
+- Changed: Reformation: 20% discount on Faith purchases of religious units and buildings
+- Removed: Reformation: border growth bonus
