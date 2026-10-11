@@ -22,6 +22,20 @@ class CvPolicyAI;
 //!  - Populated from XML\GameInfo\CIV5PolicyInfos.xml
 //!  - Array of these contained in CvPolicyXMLEntries class
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifdef LEKMOD_POLICY_REWORK
+struct LekmodPolicyBuildingTerrainYield
+{
+	int iBuildingClass;
+	int iTerrain;
+	int iYield;
+	int iValue;
+	bool bNoResource;
+	bool bAdjacentCity;
+	bool bAdjacentMountain;
+	bool bExcludeLakes;
+};
+#endif
+
 class CvPolicyEntry: public CvBaseInfo
 {
 public:
@@ -303,6 +317,18 @@ public:
 	int GetAllyMilitaristicUUPurchaseMod() const;
 	bool IsImmediateMilitaristicGift() const;
 	int GetGoldPurchaseUnitClassEra(int iUnitClass) const;
+	int GetResistanceTimeModifier() const;
+	int GetConquestFreeUnitClass() const;
+	int GetNewCityFreeBuildingClass() const;
+	int GetNewCityFreeUnitClass() const;
+	int GetFreeTilesNewCities() const;
+	int GetEarlyBuildingProductionModifier() const;
+	int GetEarlyBuildingEra() const;
+	int GetFreeUnitClassNearWater() const;
+	int GetFreeUnitClassOnWater() const;
+	const std::vector<int>& GetCityYieldIfBuildingClass() const;
+	const std::vector<int>& GetCityHappinessIfBuildingClass() const;
+	const std::vector<LekmodPolicyBuildingTerrainYield>& GetBuildingTerrainYields() const;
 #endif
 	int* GetCityYieldChangeArray() const;
 	int GetCoastalCityYieldChange(int i) const;
@@ -652,6 +678,18 @@ private:
 	int m_iAllyMilitaristicUUPurchaseMod;
 	bool m_bImmediateMilitaristicGift;
 	std::vector<int> m_aiGoldPurchaseUnitClassEra;
+	int m_iResistanceTimeModifier;
+	int m_iConquestFreeUnitClass;
+	int m_iNewCityFreeBuildingClass;
+	int m_iNewCityFreeUnitClass;
+	int m_iFreeTilesNewCities;
+	int m_iEarlyBuildingProductionModifier;
+	int m_iEarlyBuildingEra;
+	int m_iFreeUnitClassNearWater;
+	int m_iFreeUnitClassOnWater;
+	std::vector<int> m_aiCityYieldIfBuildingClass;
+	std::vector<int> m_aiCityHappinessIfBuildingClass;
+	std::vector<LekmodPolicyBuildingTerrainYield> m_aLekmodBuildingTerrainYields;
 #endif
 	int* m_piCoastalCityYieldChange;
 	int* m_piCapitalYieldChange;

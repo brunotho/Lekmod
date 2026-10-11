@@ -9457,6 +9457,10 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 
 			}
 		}
+#ifdef LEKMOD_POLICY_REWORK
+		if (pWorkingCity != NULL && (!bDisplay || pWorkingCity->isRevealed(GC.getGame().getActiveTeam(), false)))
+			iYield += pWorkingCity->GetLekmodPolicyBuildingTerrainYield(this, eYield);
+#endif
 #if defined(LEKMOD_BUGANDA_LAKE)
 		// Real lakes already received this in the water block. Lake Victoria is impassable, so that block skips it.
 		if (isPseudoLake() && !bAddedLakePlotYield)

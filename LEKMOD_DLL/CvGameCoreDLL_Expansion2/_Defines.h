@@ -1499,6 +1499,10 @@ Diversify Spain and Australia's NW Discovery bonus
 // AllyMilitaristicUUPurchaseMod (buy allied Militaristic City-States' unique units in any city at this % cost, no other purchase modifiers),
 // ImmediateMilitaristicGift (allied Militaristic City-States send a gift on adoption), Policy_GoldPurchaseUnitClasses (Great People for Gold
 // from an era, escalating shared cost; saved count). Mercantile Happiness uses the player's CityStateBonusModifier (policies too).
+// Expansionism: Policies.ResistanceTimeModifier, ConquestFreeUnitClass, NewCityFreeBuildingClass, NewCityFreeUnitClass, FreeTilesNewCities,
+// EarlyBuildingProductionModifier/EarlyBuildingEraType, FreeUnitClassNearWater/FreeUnitClassOnWater (on adoption); tables
+// Policy_CityYieldIfBuildingClass and Policy_CityHappinessIfBuildingClass (largest value counts, so Honor and Expansionism don't stack),
+// Policy_BuildingTerrainYieldChanges (tile yields when the city has a building; NoResource/AdjacentCity/AdjacentMountain/ExcludeLakes).
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
 #define LEKMOD_GOLD_GREAT_PERSON_COST_STEP 500
 #define LEKMOD_POLICY_REWORK

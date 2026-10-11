@@ -3532,6 +3532,22 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift, bool bP
 		if(pNewCity->getOriginalOwner() != GetID())
 		{
 			pNewCity->SetOccupied(true);
+#ifdef LEKMOD_POLICY_REWORK
+			// policies: a free unit in every captured city (Colonial Administration: Worker)
+			for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+			{
+				CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+				if (pkPolicy == NULL || pkPolicy->GetConquestFreeUnitClass() == NO_UNITCLASS || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+					continue;
+				const UnitTypes eFreeUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(pkPolicy->GetConquestFreeUnitClass());
+				if (eFreeUnit != NO_UNIT)
+				{
+					CvUnit* pFreeUnit = initUnit(eFreeUnit, pNewCity->getX(), pNewCity->getY());
+					if (pFreeUnit && !pFreeUnit->jumpToNearestValidPlot())
+						pFreeUnit->kill(false);
+				}
+			}
+#endif
 
 			int iInfluenceReduction = GetCulture()->GetInfluenceCityConquestReduction(eOldOwner);
 
@@ -3544,6 +3560,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift, bool bP
 				if (iResistanceTurns % 20000 != 0)
 					iResistanceTurns += 20000; // acts as ceil(), but without any weird int <-> float conversions
 				iResistanceTurns /= 20000;
+#ifdef LEKMOD_POLICY_REWORK
+				// policies that shorten resistance (rounded up)
+				if (GetLekmodResistanceTimeModifier() != 0 && iResistanceTurns > 0)
+					iResistanceTurns = (iResistanceTurns * (100 + GetLekmodResistanceTimeModifier()) + 99) / 100;
+#endif
 #ifdef LEKMOD_RESISTANCE_TURNS_MIN_ONE
 				// Reductions (tourism influence; later: policies that halve resistance, applied above this line)
 				// never remove resistance completely
@@ -9710,6 +9731,9 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 		}
 	}
 
+#ifdef LEKMOD_POLICY_REWORK
+	LekmodDoPolicyNewCityEffects(pCity);
+#endif
 #ifdef LEKMOD_FOUNDING_UNIT_EFFECTS
 	// Effects of the unit that founded the city (Vanguard Corps, Conquistador): population, tiles, free buildings and units
 	CvUnitEntry* pkFoundingUnit = (eSettlerUnit != NO_UNIT) ? GC.getUnitInfo(eSettlerUnit) : NULL;
@@ -28245,6 +28269,143 @@ int CvPlayer::GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eC
 	}
 	return iValue;
 }
+/// Does any adopted policy give tile yields that depend on a building (Treasure Fleets)?
+bool CvPlayer::LekmodHasPolicyBuildingTerrainYields() const
+{
+	const CvPlayer& kPlayer = *this;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		if (!pkPolicy->GetBuildingTerrainYields().empty())
+			return true;
+	}
+	return false;
+}
+/// Policy effects for a newly founded city: free building, free unit, extra tiles (Expansionism)
+void CvPlayer::LekmodDoPolicyNewCityEffects(CvCity* pCity)
+{
+	if (pCity == NULL)
+		return;
+	const CvPlayer& kPlayer = *this;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		if (pkPolicy->GetNewCityFreeBuildingClass() != NO_BUILDINGCLASS)
+		{
+			const BuildingTypes eBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(pkPolicy->GetNewCityFreeBuildingClass());
+			if (eBuilding != NO_BUILDING && pCity->GetCityBuildings()->GetNumBuilding(eBuilding) == 0)
+				pCity->GetCityBuildings()->SetNumFreeBuilding(eBuilding, 1);
+		}
+		if (pkPolicy->GetNewCityFreeUnitClass() != NO_UNITCLASS)
+		{
+			const UnitTypes eUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(pkPolicy->GetNewCityFreeUnitClass());
+			if (eUnit != NO_UNIT)
+			{
+				CvUnit* pUnit = initUnit(eUnit, pCity->getX(), pCity->getY());
+				if (pUnit && !pUnit->jumpToNearestValidPlot())
+					pUnit->kill(false);
+			}
+		}
+		for (int iTile = 0; iTile < pkPolicy->GetFreeTilesNewCities(); iTile++)
+		{
+			CvPlot* pFreePlot = pCity->GetNextBuyablePlot();
+			if (pFreePlot != NULL)
+				pCity->DoAcquirePlot(pFreePlot->getX(), pFreePlot->getY());
+		}
+	}
+}
+/// Most negative resistance time modifier of adopted policies (several "half as long" policies don't stack)
+int CvPlayer::GetLekmodResistanceTimeModifier() const
+{
+	int iValue = 0;
+	const CvPlayer& kPlayer = *this;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue = std::min(iValue, pkPolicy->GetResistanceTimeModifier());
+	}
+	return iValue;
+}
+/// On adoption: free units near or on water (Expansionism opener: Conquistador, Galleass)
+void CvPlayer::LekmodDoPolicyWaterUnits(PolicyTypes ePolicy)
+{
+	CvPolicyEntry* pkPolicy = GC.getPolicyInfo(ePolicy);
+	if (pkPolicy == NULL)
+		return;
+	const int iSearch = 6;
+	// the city closest to any water tile (city order breaks ties)
+	if (pkPolicy->GetFreeUnitClassNearWater() != NO_UNITCLASS)
+	{
+		const UnitTypes eUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(pkPolicy->GetFreeUnitClassNearWater());
+		CvCity* pBestCity = NULL;
+		int iBestDist = MAX_INT;
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			for (int iDX = -iSearch; iDX <= iSearch; iDX++)
+			{
+				for (int iDY = -iSearch; iDY <= iSearch; iDY++)
+				{
+					CvPlot* pLoopPlot = plotXYWithRangeCheck(pLoopCity->getX(), pLoopCity->getY(), iDX, iDY, iSearch);
+					if (pLoopPlot == NULL || !pLoopPlot->isWater())
+						continue;
+					const int iDist = plotDistance(pLoopCity->getX(), pLoopCity->getY(), pLoopPlot->getX(), pLoopPlot->getY());
+					if (iDist < iBestDist)
+					{
+						iBestDist = iDist;
+						pBestCity = pLoopCity;
+					}
+				}
+			}
+		}
+		if (pBestCity == NULL)
+			pBestCity = getCapitalCity();
+		if (eUnit != NO_UNIT && pBestCity != NULL)
+		{
+			CvUnit* pUnit = initUnit(eUnit, pBestCity->getX(), pBestCity->getY());
+			if (pUnit && !pUnit->jumpToNearestValidPlot())
+				pUnit->kill(false);
+		}
+	}
+	// the water tile closest to one of our cities (city order breaks ties)
+	if (pkPolicy->GetFreeUnitClassOnWater() != NO_UNITCLASS)
+	{
+		const UnitTypes eUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(pkPolicy->GetFreeUnitClassOnWater());
+		CvPlot* pBestPlot = NULL;
+		int iBestDist = MAX_INT;
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			for (int iDX = -iSearch; iDX <= iSearch; iDX++)
+			{
+				for (int iDY = -iSearch; iDY <= iSearch; iDY++)
+				{
+					CvPlot* pLoopPlot = plotXYWithRangeCheck(pLoopCity->getX(), pLoopCity->getY(), iDX, iDY, iSearch);
+					if (pLoopPlot == NULL || !pLoopPlot->isWater() || pLoopPlot->isLake() || pLoopPlot->isImpassable())
+						continue;
+					const int iDist = plotDistance(pLoopCity->getX(), pLoopCity->getY(), pLoopPlot->getX(), pLoopPlot->getY());
+					if (iDist < iBestDist)
+					{
+						iBestDist = iDist;
+						pBestPlot = pLoopPlot;
+					}
+				}
+			}
+		}
+		if (eUnit != NO_UNIT && pBestPlot != NULL)
+		{
+			CvUnit* pUnit = initUnit(eUnit, pBestPlot->getX(), pBestPlot->getY());
+			if (pUnit && !pUnit->jumpToNearestValidPlot())
+				pUnit->kill(false);
+		}
+	}
+}
 /// Vision radius around allied City-State capitals (Embassy Exchange), 0 = none
 int CvPlayer::GetLekmodAllyCSVisionRange() const
 {
@@ -28369,6 +28530,13 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			}
 		}
 		LekmodApplyPolicyExtraction(ePolicy);
+		LekmodDoPolicyWaterUnits(ePolicy);
+		if (!pPolicy->GetBuildingTerrainYields().empty())
+		{
+			int iCityLoop;
+			for (CvCity* pLoopCity = firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = nextCity(&iCityLoop))
+				pLoopCity->updateYield();
+		}
 		for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
 		{
 			CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);

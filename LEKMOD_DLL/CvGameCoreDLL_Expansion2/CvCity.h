@@ -734,6 +734,9 @@ public:
 	int GetLekmodPolicyGarrisonYield(YieldTypes eIndex) const;
 	int GetLekmodNonCapitalSettlerModifier() const;
 	int GetLekmodEarlierIdeologyGold() const;
+	int GetLekmodPolicyBuildingCityYield(YieldTypes eYield) const;
+	int GetLekmodPolicyBuildingCityHappiness() const;
+	int GetLekmodPolicyBuildingTerrainYield(const CvPlot* pPlot, YieldTypes eYield) const;
 #endif
 #if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
 	bool IsPolicyGarrisonAttached() const;

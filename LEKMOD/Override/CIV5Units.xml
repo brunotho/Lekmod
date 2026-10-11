@@ -35697,6 +35697,15 @@
 			<MaxTeamInstances>-1</MaxTeamInstances>
 			<MaxPlayerInstances>-1</MaxPlayerInstances>
 		</Row>
+		<Row>
+			<ID>182</ID>
+			<Type>BUILDINGCLASS_LEKMOD_CROWN_OFFICE</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_CROWN_OFFICE</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_CROWN_OFFICE</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+		</Row>
 	</BuildingClasses> 
 
 	<Table name="Building_AreaYieldModifiers">
@@ -48684,6 +48693,24 @@
 			<ArtDefineTag>TEMPLE</ArtDefineTag>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>LEKMOD_STUPA_ATLAS</IconAtlas>
+		</Row>
+		<!-- LEKMOD: Crown Office (Expansionism): free in captured and newly founded cities; counts like a Courthouse for the Expansionism policies -->
+		<Row>
+			<ID>275</ID>
+			<Type>BUILDING_LEKMOD_CROWN_OFFICE</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_CROWN_OFFICE</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_CROWN_OFFICE</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_CROWN_OFFICE_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_CROWN_OFFICE_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_CROWN_OFFICE_HELP</Help>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ConquestProb>0</ConquestProb>
+			<NukeImmune>true</NukeImmune>
+			<ArtDefineTag>COURTHOUSE</ArtDefineTag>
+			<GreatWorkCount>0</GreatWorkCount>
+			<PortraitIndex>63</PortraitIndex>
+			<IconAtlas>BW_ATLAS_1</IconAtlas>
 		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
@@ -187735,6 +187762,15 @@
 		<Column name="TempScienceModifier" type="integer" default="0"/> <!-- LEKMOD: % Science in every city for TempScienceTurns turns after adopting -->
 		<Column name="TempScienceTurns" type="integer" default="0"/>
 		<Column name="FreeTilesExistingCities" type="integer" default="0"/> <!-- LEKMOD: on adoption every owned city claims N tiles -->
+		<Column name="FreeTilesNewCities" type="integer" default="0"/> <!-- LEKMOD: every newly founded city claims N extra tiles -->
+		<Column name="ResistanceTimeModifier" type="integer" default="0"/> <!-- LEKMOD: % resistance time of captured cities (strongest counts) -->
+		<Column name="ConquestFreeUnitClass" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: unit that appears in every captured city -->
+		<Column name="NewCityFreeBuildingClass" type="text" reference="BuildingClasses(Type)" default="NULL"/> <!-- LEKMOD: free building in every newly founded city -->
+		<Column name="NewCityFreeUnitClass" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: unit that appears in every newly founded city -->
+		<Column name="EarlyBuildingProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward buildings (not wonders) whose tech is before EarlyBuildingEraType -->
+		<Column name="EarlyBuildingEraType" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="FreeUnitClassNearWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears in the city closest to water -->
+		<Column name="FreeUnitClassOnWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears on the water tile closest to a city -->
 	</Table> 
 	<Policies>
 		<Delete />
@@ -281059,6 +281095,244 @@
 		<Row>
 			<PolicyType>POLICY_PATRONAGE_FINISHER</PolicyType>
 			<UnitClassType>UNITCLASS_WRITER</UnitClassType>
+			<EraType>ERA_INDUSTRIAL</EraType>
+		</Row>
+	</Policy_GoldPurchaseUnitClasses>
+	<!-- Expansionism (was Exploration, from scratch): opener (+1 sight, Conquistador and Galleass, +1 tile per city), Colonial Administration (was Maritime Infrastructure),
+	     Colonial Infrastructure (was Merchant Navy), Naval Tradition, Treasure Fleets, Navigation School, finisher. Crown Office = BUILDING_LEKMOD_CROWN_OFFICE.
+	     Military Tradition's Courthouse 3 Food/3 Production and Military Caste's Courthouse +2 Happiness moved to the non-stacking tables. -->
+	<Table name="Policy_CityYieldIfBuildingClass"> <!-- LEKMOD: city yield if the city has the building; per yield the largest value counts -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Table name="Policy_CityHappinessIfBuildingClass"> <!-- LEKMOD: city happiness if the city has the building; the largest value counts -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="Happiness" type="integer" default="0" />
+	</Table>
+	<Table name="Policy_BuildingTerrainYieldChanges"> <!-- LEKMOD: tile yield in cities that have the building -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="TerrainType" type="text" reference="Terrains(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+		<Column name="NoResource" type="boolean" default="false" />
+		<Column name="AdjacentCity" type="boolean" default="false" />
+		<Column name="AdjacentMountain" type="boolean" default="false" />
+		<Column name="ExcludeLakes" type="boolean" default="false" />
+	</Table>
+	<Policies>
+		<Update>
+			<Where Type="POLICY_EXPLORATION"/>
+			<Set FreeTilesExistingCities="1" FreeTilesNewCities="1" FreeUnitClassNearWater="UNITCLASS_CONQUISTADOR" FreeUnitClassOnWater="UNITCLASS_GALLEASS"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_MARITIME_INFRASTRUCTURE"/>
+			<Set GridX="1" GridY="1" ResistanceTimeModifier="-50" ConquestFreeUnitClass="UNITCLASS_WORKER" FreeBuildingOnConquest="BUILDING_LEKMOD_CROWN_OFFICE"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_MERCHANT_NAVY"/>
+			<Set GridX="2" GridY="1" NewCityExtraPopulation="0" ExtraTerritoryClaim="0" EarlyBuildingProductionModifier="20" EarlyBuildingEraType="ERA_RENAISSANCE" NewCityFreeBuildingClass="BUILDINGCLASS_LEKMOD_CROWN_OFFICE" NewCityFreeUnitClass="UNITCLASS_SKIFF"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_NAVAL_TRADITION"/>
+			<Set GridX="4" GridY="1"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_TREASURE_FLEETS"/>
+			<Set GridX="3" GridY="2" IncludesOneShotFreeUnits="true"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_NAVIGATION_SCHOOL"/>
+			<Set GridX="5" GridY="2" IncludesOneShotFreeUnits="true"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_EXPLORATION_FINISHER"/>
+			<Set GreatAdmiralRateModifier="0" IncludesOneShotFreeUnits="false"/>
+		</Update>
+	</Policies>
+	<Policy_FreePromotions>
+		<Delete PolicyType="POLICY_EXPLORATION"/>
+		<Row>
+			<PolicyType>POLICY_EXPLORATION</PolicyType>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+		</Row>
+	</Policy_FreePromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_NAVIGATION_SCHOOL"/>
+			<Set MovesChange="1"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions_UnitCombats>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+		</Row>
+	</UnitPromotions_UnitCombats>
+	<Policy_BuildingClassProductionModifiers>
+		<Delete PolicyType="POLICY_MARITIME_INFRASTRUCTURE"/>
+	</Policy_BuildingClassProductionModifiers>
+	<Policy_CityYieldChanges>
+		<Delete PolicyType="POLICY_MARITIME_INFRASTRUCTURE"/>
+		<Delete PolicyType="POLICY_NAVIGATION_SCHOOL"/>
+	</Policy_CityYieldChanges>
+	<Policy_BuildingClassYieldChanges>
+		<Delete PolicyType="POLICY_NAVAL_TRADITION"/>
+		<Delete PolicyType="POLICY_MILITARY_TRADITION" BuildingClassType="BUILDINGCLASS_COURTHOUSE"/>
+	</Policy_BuildingClassYieldChanges>
+	<Policy_BuildingClassHappiness>
+		<Delete PolicyType="POLICY_NAVAL_TRADITION" BuildingClassType="BUILDINGCLASS_SEAPORT"/>
+		<Delete PolicyType="POLICY_MILITARY_CASTE" BuildingClassType="BUILDINGCLASS_COURTHOUSE"/>
+	</Policy_BuildingClassHappiness>
+	<Policy_TerrainYieldChanges>
+		<Delete PolicyType="POLICY_TREASURE_FLEETS"/>
+		<Delete PolicyType="POLICY_EXPLORATION_FINISHER"/>
+	</Policy_TerrainYieldChanges>
+	<Policy_CityYieldIfBuildingClass>
+		<Row>
+			<PolicyType>POLICY_MILITARY_TRADITION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MILITARY_TRADITION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MARITIME_INFRASTRUCTURE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MARITIME_INFRASTRUCTURE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MARITIME_INFRASTRUCTURE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_LEKMOD_CROWN_OFFICE</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MARITIME_INFRASTRUCTURE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_LEKMOD_CROWN_OFFICE</BuildingClassType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Policy_CityYieldIfBuildingClass>
+	<Policy_CityHappinessIfBuildingClass>
+		<Row>
+			<PolicyType>POLICY_MILITARY_CASTE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<Happiness>2</Happiness>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MERCHANT_NAVY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<Happiness>2</Happiness>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_MERCHANT_NAVY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_LEKMOD_CROWN_OFFICE</BuildingClassType>
+			<Happiness>2</Happiness>
+		</Row>
+	</Policy_CityHappinessIfBuildingClass>
+	<Policy_BuildingTerrainYieldChanges>
+		<Row>
+			<PolicyType>POLICY_TREASURE_FLEETS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_LIGHTHOUSE</BuildingClassType>
+			<TerrainType>TERRAIN_COAST</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+			<NoResource>true</NoResource>
+			<ExcludeLakes>true</ExcludeLakes>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_TREASURE_FLEETS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_HARBOR</BuildingClassType>
+			<TerrainType>TERRAIN_COAST</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+			<AdjacentCity>true</AdjacentCity>
+			<ExcludeLakes>true</ExcludeLakes>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_TREASURE_FLEETS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_SEAPORT</BuildingClassType>
+			<TerrainType>TERRAIN_COAST</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+			<AdjacentCity>true</AdjacentCity>
+			<AdjacentMountain>true</AdjacentMountain>
+			<ExcludeLakes>true</ExcludeLakes>
+		</Row>
+	</Policy_BuildingTerrainYieldChanges>
+	<Policy_ImprovementYieldChanges>
+		<Row>
+			<PolicyType>POLICY_NAVAL_TRADITION</PolicyType>
+			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>4</Yield>
+		</Row>
+	</Policy_ImprovementYieldChanges>
+	<Policy_FreeUnitClasses>
+		<Delete PolicyType="POLICY_EXPLORATION_FINISHER"/>
+		<Row>
+			<PolicyType>POLICY_TREASURE_FLEETS</PolicyType>
+			<UnitClassType>UNITCLASS_GREAT_ADMIRAL</UnitClassType>
+			<Count>1</Count>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_NAVIGATION_SCHOOL</PolicyType>
+			<UnitClassType>UNITCLASS_GREAT_ADMIRAL</UnitClassType>
+			<Count>1</Count>
+		</Row>
+	</Policy_FreeUnitClasses>
+	<Policy_PrereqPolicies>
+		<Delete PolicyType="POLICY_NAVIGATION_SCHOOL"/>
+		<Delete PolicyType="POLICY_TREASURE_FLEETS"/>
+		<Row>
+			<PolicyType>POLICY_NAVIGATION_SCHOOL</PolicyType>
+			<PrereqPolicy>POLICY_NAVAL_TRADITION</PrereqPolicy>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_TREASURE_FLEETS</PolicyType>
+			<PrereqPolicy>POLICY_NAVAL_TRADITION</PrereqPolicy>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_TREASURE_FLEETS</PolicyType>
+			<PrereqPolicy>POLICY_MERCHANT_NAVY</PrereqPolicy>
+		</Row>
+	</Policy_PrereqPolicies>
+	<Policy_GoldPurchaseUnitClasses>
+		<Row>
+			<PolicyType>POLICY_EXPLORATION_FINISHER</PolicyType>
+			<UnitClassType>UNITCLASS_GREAT_ADMIRAL</UnitClassType>
 			<EraType>ERA_INDUSTRIAL</EraType>
 		</Row>
 	</Policy_GoldPurchaseUnitClasses>

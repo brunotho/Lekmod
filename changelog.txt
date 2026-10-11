@@ -1567,7 +1567,8 @@ Tags: policies, combat
 - Removed: Professional Army: Armory and Military Academy bonuses, Gold from Barracks
 - Changed: Discipline is now Hero Cult: requires Professional Army instead of Warrior Code; +100% Production toward the Heroic Epic and the Circus Maximus; each gives +3 Production and +3 Happiness
 - Removed: Hero Cult: +50% Experience; Heroic Epic Food, Gold and Culture
-- Changed: Military Tradition: unit upgrades 10% cheaper; +100% Production toward Armories; +30% toward Courthouses (was 50%); Courthouses +3 Production +3 Food
+- Changed: Military Tradition: unit upgrades 10% cheaper; +100% Production toward Armories; +30% toward Courthouses (was 50%); cities with a Courthouse get +3 Production +3 Food (doesn't stack with Expansionism's Colonial Administration)
+- Changed: Military Caste: the Courthouse +2 Happiness doesn't stack with Expansionism's Colonial Infrastructure
 - Removed: Military Tradition: Citadel yields; Courthouse Gold
 - Changed: finisher: all non-air military units get the Discipline promotion (+50% Experience); +1 Food from Barracks, Colosseums and National Wonders
 - Removed: finisher: Science from kills; +1 Food in every city; Armory Food
@@ -1624,3 +1625,25 @@ Tags: policies
 - Changed: finisher: +1 World Congress Delegate; buy Great Engineers, Generals and Writers with Gold from the Industrial Era (1000, then 1500, 2500, 4000 ...; all types count together)
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
+
+EXPANSIONISM (POLICY_BRANCH_EXPLORATION)
+---------------------------------------
+Tags: policies, naval, units, buildings
+- Changed: Exploration is now Expansionism (rebuilt from scratch), still from the Medieval Era
+- Changed: opener: +1 Sight for melee, gunpowder, mounted, naval melee and naval ranged units; allows Conquistadors; a free Conquistador appears in your city closest to water and a free Galleass on the water tile closest to your cities; every city claims 1 extra tile, including cities founded later; unlocks the Tower of Belem
+- Removed: opener: +1 Movement and +1 Sight for naval units
+- Changed: Maritime Infrastructure is now Colonial Administration: resistance in captured cities lasts half as long; captured cities get a free Crown Office and a free Worker; cities with a Courthouse or Crown Office get +3 Food +3 Production (doesn't stack with Military Tradition)
+- Removed: Colonial Administration: +2 Production in every city; faster Lighthouses, Harbors and Seaports
+- Changed: Merchant Navy is now Colonial Infrastructure: +20% Production toward buildings from before the Renaissance (not wonders); newly founded cities get a free Crown Office and a free Rowboat; cities with a Courthouse or Crown Office get +2 Happiness (doesn't stack with Military Caste)
+- Removed: Colonial Infrastructure: +2 Population, free Worker and 6 extra tiles for new cities
+- Changed: Naval Tradition: +1 Happiness from Lighthouses and Harbors; Drydocks +4 Culture
+- Removed: Naval Tradition: Seaport Happiness; Culture from Lighthouses, Harbors and Seaports
+- Changed: Treasure Fleets: requires Naval Tradition and Colonial Infrastructure; with a Lighthouse +1 Production on Coast tiles without a resource; with a Harbor +1 Gold on Coast tiles next to the city; with a Seaport +3 Production on Coast tiles next to the city and a Mountain (lakes excluded); a free Great Admiral
+- Removed: Treasure Fleets: Food and Production on unimproved Coast, Ocean and Lake tiles
+- Changed: Navigation School: requires only Naval Tradition; naval units +10% Combat Strength and +1 Movement; a free Great Admiral
+- Removed: Navigation School: +2 Science in every city
+- Changed: finisher: +1 Happiness from each Luxury; buy Great Admirals with Gold from the Industrial Era (shared rising cost with the Patronage Great People)
+- Removed: finisher: Great Admirals twice as fast, free Great Admiral, Gold on Coast and Ocean tiles
+- Added: Crown Office building (free only; counts like a Courthouse for Colonial Administration and Colonial Infrastructure)
+- Note: the branch uses the Commerce branch picture until new Commerce art arrives
+- DLL: Policies.ResistanceTimeModifier, ConquestFreeUnitClass, NewCityFreeBuildingClass, NewCityFreeUnitClass, FreeTilesNewCities, EarlyBuildingProductionModifier/EarlyBuildingEraType, FreeUnitClassNearWater/FreeUnitClassOnWater; tables Policy_CityYieldIfBuildingClass, Policy_CityHappinessIfBuildingClass (largest value counts; Military Tradition and Military Caste moved there), Policy_BuildingTerrainYieldChanges (LEKMOD_POLICY_REWORK)

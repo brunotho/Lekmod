@@ -278,6 +278,15 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iAllyCityStateVisionRange(0),
 	m_iAllyMilitaristicUUPurchaseMod(0),
 	m_bImmediateMilitaristicGift(false),
+	m_iResistanceTimeModifier(0),
+	m_iConquestFreeUnitClass(NO_UNITCLASS),
+	m_iNewCityFreeBuildingClass(NO_BUILDINGCLASS),
+	m_iNewCityFreeUnitClass(NO_UNITCLASS),
+	m_iFreeTilesNewCities(0),
+	m_iEarlyBuildingProductionModifier(0),
+	m_iEarlyBuildingEra(NO_ERA),
+	m_iFreeUnitClassNearWater(NO_UNITCLASS),
+	m_iFreeUnitClassOnWater(NO_UNITCLASS),
 #endif
 	m_piCoastalCityYieldChange(NULL),
 	m_piCapitalYieldChange(NULL),
@@ -788,6 +797,63 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iAllyCityStateVisionRange = kResults.GetInt("AllyCityStateVisionRange");
 	m_iAllyMilitaristicUUPurchaseMod = kResults.GetInt("AllyMilitaristicUUPurchaseMod");
 	m_bImmediateMilitaristicGift = kResults.GetBool("ImmediateMilitaristicGift");
+	m_iResistanceTimeModifier = kResults.GetInt("ResistanceTimeModifier");
+	m_iConquestFreeUnitClass = GC.getInfoTypeForString(kResults.GetText("ConquestFreeUnitClass"), true);
+	m_iNewCityFreeBuildingClass = GC.getInfoTypeForString(kResults.GetText("NewCityFreeBuildingClass"), true);
+	m_iNewCityFreeUnitClass = GC.getInfoTypeForString(kResults.GetText("NewCityFreeUnitClass"), true);
+	m_iFreeTilesNewCities = kResults.GetInt("FreeTilesNewCities");
+	m_iEarlyBuildingProductionModifier = kResults.GetInt("EarlyBuildingProductionModifier");
+	m_iEarlyBuildingEra = GC.getInfoTypeForString(kResults.GetText("EarlyBuildingEraType"), true);
+	m_iFreeUnitClassNearWater = GC.getInfoTypeForString(kResults.GetText("FreeUnitClassNearWater"), true);
+	m_iFreeUnitClassOnWater = GC.getInfoTypeForString(kResults.GetText("FreeUnitClassOnWater"), true);
+	{
+		std::string strKey("Policy_CityYieldIfBuildingClass");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Yields.ID, Yield from Policy_CityYieldIfBuildingClass inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Yields on Yields.Type = YieldType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiCityYieldIfBuildingClass.push_back(pResults->GetInt(0));
+			m_aiCityYieldIfBuildingClass.push_back(pResults->GetInt(1));
+			m_aiCityYieldIfBuildingClass.push_back(pResults->GetInt(2));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_CityHappinessIfBuildingClass");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Happiness from Policy_CityHappinessIfBuildingClass inner join BuildingClasses on BuildingClasses.Type = BuildingClassType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiCityHappinessIfBuildingClass.push_back(pResults->GetInt(0));
+			m_aiCityHappinessIfBuildingClass.push_back(pResults->GetInt(1));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_BuildingTerrainYieldChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Terrains.ID, Yields.ID, Yield, NoResource, AdjacentCity, AdjacentMountain, ExcludeLakes from Policy_BuildingTerrainYieldChanges inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Terrains on Terrains.Type = TerrainType inner join Yields on Yields.Type = YieldType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			LekmodPolicyBuildingTerrainYield kEntry;
+			kEntry.iBuildingClass = pResults->GetInt(0);
+			kEntry.iTerrain = pResults->GetInt(1);
+			kEntry.iYield = pResults->GetInt(2);
+			kEntry.iValue = pResults->GetInt(3);
+			kEntry.bNoResource = pResults->GetBool(4);
+			kEntry.bAdjacentCity = pResults->GetBool(5);
+			kEntry.bAdjacentMountain = pResults->GetBool(6);
+			kEntry.bExcludeLakes = pResults->GetBool(7);
+			m_aLekmodBuildingTerrainYields.push_back(kEntry);
+		}
+		pResults->Reset();
+	}
 	{
 		m_aiGoldPurchaseUnitClassEra.assign(GC.getNumUnitClassInfos(), -1);
 		std::string strKey("Policy_GoldPurchaseUnitClasses");
@@ -2782,6 +2848,64 @@ int CvPolicyEntry::GetAllyMilitaristicUUPurchaseMod() const
 bool CvPolicyEntry::IsImmediateMilitaristicGift() const
 {
 	return m_bImmediateMilitaristicGift;
+}
+/// % resistance time of cities you capture (Colonial Administration: -50)
+int CvPolicyEntry::GetResistanceTimeModifier() const
+{
+	return m_iResistanceTimeModifier;
+}
+/// Unit class that appears in a city you capture
+int CvPolicyEntry::GetConquestFreeUnitClass() const
+{
+	return m_iConquestFreeUnitClass;
+}
+/// Building class every newly founded city gets for free
+int CvPolicyEntry::GetNewCityFreeBuildingClass() const
+{
+	return m_iNewCityFreeBuildingClass;
+}
+/// Unit class that appears in every newly founded city
+int CvPolicyEntry::GetNewCityFreeUnitClass() const
+{
+	return m_iNewCityFreeUnitClass;
+}
+/// Tiles every newly founded city claims
+int CvPolicyEntry::GetFreeTilesNewCities() const
+{
+	return m_iFreeTilesNewCities;
+}
+/// % Production toward buildings whose tech is from an era before EarlyBuildingEraType
+int CvPolicyEntry::GetEarlyBuildingProductionModifier() const
+{
+	return m_iEarlyBuildingProductionModifier;
+}
+int CvPolicyEntry::GetEarlyBuildingEra() const
+{
+	return m_iEarlyBuildingEra;
+}
+/// On adoption: this unit class appears in the city closest to water
+int CvPolicyEntry::GetFreeUnitClassNearWater() const
+{
+	return m_iFreeUnitClassNearWater;
+}
+/// On adoption: this (naval) unit class appears on the water tile closest to one of your cities
+int CvPolicyEntry::GetFreeUnitClassOnWater() const
+{
+	return m_iFreeUnitClassOnWater;
+}
+/// (building class, yield, value) triples: city yield if the city has the building (largest value per yield counts)
+const std::vector<int>& CvPolicyEntry::GetCityYieldIfBuildingClass() const
+{
+	return m_aiCityYieldIfBuildingClass;
+}
+/// (building class, happiness) pairs: city happiness if the city has the building (largest value counts)
+const std::vector<int>& CvPolicyEntry::GetCityHappinessIfBuildingClass() const
+{
+	return m_aiCityHappinessIfBuildingClass;
+}
+const std::vector<LekmodPolicyBuildingTerrainYield>& CvPolicyEntry::GetBuildingTerrainYields() const
+{
+	return m_aLekmodBuildingTerrainYields;
 }
 /// Era from which this unit class can be bought with Gold (-1 = not allowed)
 int CvPolicyEntry::GetGoldPurchaseUnitClassEra(int iUnitClass) const

@@ -71,3 +71,11 @@ Each PNG is scaled to cover 1920x1200 (centre crop), then BC1 (no alpha) with on
 Files `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background_01..11.dds` follow the alphabetical order of the PNGs here;
 `lekmod_menu_background.dds` is the original Great Wall painting. `FrontEnd.lua` picks one at random
 (`LEKMOD_MENU_BACKGROUND_COUNT`).
+
+## Policy branch pictures
+- The policy screen loads one 192x292 picture per branch by file name (`PolicyBranch_<Branch>.dds` in
+  Expansion2's `SocialPolicyPopup.xml`); a file of the same name under `LEKMOD/Art/` replaces it.
+- `policy_branches/extracted/`: the base-game branch pictures, pulled out of
+  `Assets/DLC/Expansion2/Resource/DX9/UITextures.fpk` with `python tools/fpk_extract.py <pack> <out_dir> socialpolicies`.
+- Expansionism (`PolicyBranch_Exploration.dds`, 2026-10-12) = the Commerce picture (`socialpoliciescommerce.dds`), copied
+  unchanged (user decision); Commerce gets new art from the user later.

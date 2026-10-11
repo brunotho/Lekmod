@@ -6992,6 +6992,28 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 
 	int iTempMod;
 
+#ifdef LEKMOD_POLICY_REWORK
+	// policies: % Production toward early buildings (Colonial Infrastructure: buildings from before the Renaissance; not wonders)
+	if (!::isWorldWonderClass(kBuildingClassInfo) && !::isTeamWonderClass(kBuildingClassInfo) && !::isNationalWonderClass(kBuildingClassInfo))
+	{
+		const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+		const TechTypes eBuildingTech = (TechTypes)thisBuildingEntry->GetPrereqAndTech();
+		const int iBuildingEra = (eBuildingTech != NO_TECH && GC.getTechInfo(eBuildingTech)) ? GC.getTechInfo(eBuildingTech)->GetEra() : 0;
+		iTempMod = 0;
+		for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+		{
+			CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+			if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+				continue;
+			if (pkPolicy->GetEarlyBuildingProductionModifier() != 0 && pkPolicy->GetEarlyBuildingEra() != NO_ERA && iBuildingEra < pkPolicy->GetEarlyBuildingEra())
+				iTempMod += pkPolicy->GetEarlyBuildingProductionModifier();
+		}
+		iMultiplier += iTempMod;
+		if (toolTipSink && iTempMod)
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_EARLY_BUILDING", iTempMod);
+	}
+#endif
+
 	// Wonder bonus
 	if(::isWorldWonderClass(kBuildingClassInfo) ||
 	        ::isTeamWonderClass(kBuildingClassInfo) ||
@@ -8718,6 +8740,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 			if (eYield == 0 && !pBuildingInfo->GetLekmodTechTerrainYields().empty())
+				updateYield();
+#endif
+#ifdef LEKMOD_POLICY_REWORK
+			if (eYield == 0 && GET_PLAYER(getOwner()).LekmodHasPolicyBuildingTerrainYields())
 				updateYield();
 #endif
 
@@ -12081,6 +12107,9 @@ int CvCity::GetLocalHappiness() const
 #endif // TRAITIFY
 		}
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	iPolicyBuildingHappiness += GetLekmodPolicyBuildingCityHappiness();
+#endif
 	iLocalHappiness += iPolicyBuildingHappiness;
 #if defined(TRAITIFY)
 	iLocalHappiness += iTraitBuildingHappiness;
@@ -13208,13 +13237,101 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 #ifdef LEKMOD_POLICY_REWORK
 	if (eIndex == YIELD_GOLD)
 	{
-		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodEarlierIdeologyGold();
+		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodEarlierIdeologyGold() + GetLekmodPolicyBuildingCityYield(eIndex);
 	}
+	return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodPolicyBuildingCityYield(eIndex);
 #endif
 	return m_aiBaseYieldRateFromBuildings[eIndex];
 }
 #ifdef LEKMOD_POLICY_REWORK
 //	--------------------------------------------------------------------------------
+//	--------------------------------------------------------------------------------
+/// Policy_CityYieldIfBuildingClass: per yield the largest value among the rows whose building the city has (Colonial Administration and Military Tradition don't stack)
+int CvCity::GetLekmodPolicyBuildingCityYield(YieldTypes eYield) const
+{
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iBest = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const std::vector<int>& aiRows = pkPolicy->GetCityYieldIfBuildingClass();
+		for (uint i = 0; i + 2 < aiRows.size(); i += 3)
+		{
+			if (aiRows[i + 1] != eYield || aiRows[i + 2] <= iBest)
+				continue;
+			const BuildingTypes eBuilding = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(aiRows[i]);
+			if (eBuilding != NO_BUILDING && m_pCityBuildings->GetNumBuilding(eBuilding) > 0)
+				iBest = aiRows[i + 2];
+		}
+	}
+	return iBest;
+}
+/// Policy_CityHappinessIfBuildingClass: the largest value among the rows whose building the city has
+int CvCity::GetLekmodPolicyBuildingCityHappiness() const
+{
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iBest = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const std::vector<int>& aiRows = pkPolicy->GetCityHappinessIfBuildingClass();
+		for (uint i = 0; i + 1 < aiRows.size(); i += 2)
+		{
+			if (aiRows[i + 1] <= iBest)
+				continue;
+			const BuildingTypes eBuilding = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(aiRows[i]);
+			if (eBuilding != NO_BUILDING && m_pCityBuildings->GetNumBuilding(eBuilding) > 0)
+				iBest = aiRows[i + 1];
+		}
+	}
+	return iBest;
+}
+/// Policy_BuildingTerrainYieldChanges: tile yield from adopted policies when this city has the building (Treasure Fleets)
+int CvCity::GetLekmodPolicyBuildingTerrainYield(const CvPlot* pPlot, YieldTypes eYield) const
+{
+	if (pPlot == NULL)
+		return 0;
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const std::vector<LekmodPolicyBuildingTerrainYield>& aRows = pkPolicy->GetBuildingTerrainYields();
+		for (uint i = 0; i < aRows.size(); i++)
+		{
+			const LekmodPolicyBuildingTerrainYield& kRow = aRows[i];
+			if (kRow.iYield != eYield || kRow.iTerrain != pPlot->getTerrainType())
+				continue;
+			if (kRow.bExcludeLakes && pPlot->isLake())
+				continue;
+			if (kRow.bNoResource && pPlot->getResourceType(getTeam()) != NO_RESOURCE)
+				continue;
+			if (kRow.bAdjacentCity && pPlot->GetAdjacentCity() == NULL)
+				continue;
+			if (kRow.bAdjacentMountain)
+			{
+				bool bMountain = false;
+				for (int iDir = 0; iDir < NUM_DIRECTION_TYPES && !bMountain; iDir++)
+				{
+					CvPlot* pAdjacent = plotDirection(pPlot->getX(), pPlot->getY(), (DirectionTypes)iDir);
+					bMountain = (pAdjacent != NULL && pAdjacent->isMountain());
+				}
+				if (!bMountain)
+					continue;
+			}
+			const BuildingTypes eBuilding = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(kRow.iBuildingClass);
+			if (eBuilding != NO_BUILDING && m_pCityBuildings->GetNumBuilding(eBuilding) > 0)
+				iValue += kRow.iValue;
+		}
+	}
+	return iValue;
+}
 /// Policy_BuildingClassGoldPerEarlierIdeology: Gold from buildings per other civ that adopted an ideology before us (Sovereignty: Banks)
 int CvCity::GetLekmodEarlierIdeologyGold() const
 {

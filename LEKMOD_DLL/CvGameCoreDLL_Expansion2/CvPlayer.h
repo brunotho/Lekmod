@@ -254,6 +254,10 @@ public:
 	int GetLekmodTempScienceModifier() const;
 	int GetLekmodIdeologyTurn() const { return m_iLekmodIdeologyTurn; }
 	int GetLekmodAllyCSVisionRange() const;
+	bool LekmodHasPolicyBuildingTerrainYields() const;
+	void LekmodDoPolicyNewCityEffects(CvCity* pCity);
+	int GetLekmodResistanceTimeModifier() const;
+	void LekmodDoPolicyWaterUnits(PolicyTypes ePolicy);
 	int GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const;
 	int GetLekmodAllyUUPurchaseMod() const;
 	bool LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const;

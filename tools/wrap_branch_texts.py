@@ -34,7 +34,7 @@ def wrap(text):
     return '[NEWLINE]'.join(out)
 
 t = open(T, 'rb').read().decode('utf-8')
-for b in ['TRADITION', 'LIBERTY', 'HONOR', 'PIETY', 'PATRONAGE', 'AESTHETICS', 'COMMERCE', 'RATIONALISM']:
+for b in ['TRADITION', 'LIBERTY', 'HONOR', 'PIETY', 'PATRONAGE', 'AESTHETICS', 'COMMERCE', 'RATIONALISM', 'EXPLORATION']:
     tag = 'TXT_KEY_POLICY_BRANCH_%s_HELP' % b
     assert t.count('Tag="%s"' % tag) == 1, tag
     i = t.index('Tag="%s"' % tag)
