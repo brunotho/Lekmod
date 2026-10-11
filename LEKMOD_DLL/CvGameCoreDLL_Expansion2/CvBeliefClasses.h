@@ -116,6 +116,9 @@ public:
 	int GetFirstGrowthBuildingClass() const { return m_iLekmodFirstGrowthBuildingClass; }
 	int GetFirstGrowthFaith() const { return m_iLekmodFirstGrowthFaith; }
 	bool IsNoProphetSpawn() const { return m_bLekmodNoProphetSpawn; }
+	int GetExtraSpyEra() const { return m_iLekmodExtraSpyEra; }
+	bool IsInvisibleMissionaries() const { return m_bLekmodInvisibleMissionaries; }
+	int GetYieldPerMinorityCity(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiLekmodYieldPerMinorityCity[i] : 0; }
 	int GetFreeBuildingClassInCapital() const { return m_iLekmodFreeBuildingClassInCapital; }
 	int GetOnAdoptCulture() const { return m_iLekmodOnAdoptCulture; }
 	int GetOnAdoptGold() const { return m_iLekmodOnAdoptGold; }
@@ -363,6 +366,9 @@ protected:
 	int m_iLekmodFirstGrowthBuildingClass;
 	int m_iLekmodFirstGrowthFaith;
 	bool m_bLekmodNoProphetSpawn;
+	int m_iLekmodExtraSpyEra;
+	bool m_bLekmodInvisibleMissionaries;
+	int m_aiLekmodYieldPerMinorityCity[NUM_YIELD_TYPES];
 	int m_iLekmodFreeBuildingClassInCapital;
 	int m_iLekmodOnAdoptCulture;
 	int m_iLekmodOnAdoptGold;

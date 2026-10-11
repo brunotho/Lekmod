@@ -533,10 +533,37 @@ function ChangeReligionName()
 	Controls.ChangeNamePopup:SetHide(false);
 end
 
+
+-- LEKMOD: search box above the belief list; filters by name and effect text while typing
+function LekmodBeliefMatches(belief, text)
+	if (text == nil or text == "") then
+		return true;
+	end
+	local hay = string.lower((belief.Name or "") .. " " .. (belief.Description or ""));
+	return string.find(hay, string.lower(text), 1, true) ~= nil;
+end
+local g_LekmodBeliefs = nil;
+local g_LekmodSelectFn = nil;
 function SelectFromBeliefs(beliefs, selectFn)
+	g_LekmodBeliefs = beliefs;
+	g_LekmodSelectFn = selectFn;
+	Controls.LekmodBeliefSearch:SetText("");
+	LekmodBuildBeliefList();
+end
+Controls.LekmodBeliefSearch:RegisterCallback(function()
+	if (g_LekmodBeliefs ~= nil) then
+		LekmodBuildBeliefList();
+	end
+end);
+
+function LekmodBuildBeliefList()
+	local beliefs = g_LekmodBeliefs;
+	local selectFn = g_LekmodSelectFn;
+	local text = Controls.LekmodBeliefSearch:GetText();
 	g_BeliefItemManager:ResetInstances();
-	
+
 	for i,v in ipairs(beliefs) do
+		if (LekmodBeliefMatches(v, text)) then
 		local itemInstance = g_BeliefItemManager:GetInstance();
 		itemInstance.Name:SetText(v.Name);
 		itemInstance.Description:SetText(v.Description);
@@ -551,10 +578,11 @@ function SelectFromBeliefs(beliefs, selectFn)
 		itemInstance.Button:SetSizeVal(bw, newHeight);
 		itemInstance.AnimGrid:SetSizeVal(gw, newHeight + 5);
 		
-		itemInstance.Button:RegisterCallback(Mouse.eLClick, function() 
+		itemInstance.Button:RegisterCallback(Mouse.eLClick, function()
 			selectFn(v);
 			ToggleBeliefContext(nil);
 		end);
+		end
 	end
 	
 	Controls.BeliefStack:CalculateSize();

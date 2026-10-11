@@ -1373,6 +1373,7 @@ The screen for founding and enhancing a religion fits long beliefs.
 - Changed: chosen beliefs show their full text and their rows grow to fit (they were cut to one line)
 - Changed: the Bonus belief row only shows for civs that can pick one (Byzantium)
 - Changed: belief texts put separate effects on separate lines
+- Added: a search box above the belief lists (pantheon choice and religion screen) filters by name and effect while you type
 - Dev: ChooseReligionPopup.lua/.xml are now Lekmod overrides (Lua/tmp/ui/Religion, copied by ui_check.bat for both UIs)
 
 SANCTUARIES, STUPAS (BELIEF_LEKMOD_SANCTUARY, BELIEF_LEKMOD_STUPA)
@@ -1393,4 +1394,14 @@ The three houses got new yields; Culture now depends on how many a city has.
 - Changed: Writing Auditorium: +2 Science, +1 Happiness, 4 Gold maintenance (was +2 Culture, +1 Science)
 - Changed: Vocal Chamber: +2 Food, -4 Faith (was +3 Culture, +1 Happiness); keeps its Great Musician slot
 - DLL: Buildings.WorshipHouse, Culture added in CvCity::processBuilding (LEKMOD_DEFENSE_BUILDINGS group)
+
+UNDERGROUND SECT (BELIEF_UNDERGROUND_SECT)
+-----------------------------------------
+Tags: religion
+Rebuilt from scratch.
+- Changed: +2 Science and +2 Gold for your empire for every city (anyone's) with followers of your religion where it is not the main religion (was +1 Science per 4 followers)
+- Added: your Missionaries are hidden until a unit is next to them (like submarines)
+- Added: one extra Spy when you reach the Renaissance Era (right away if you adopt it later)
+- Note: ships that can see submarines also see these Missionaries within their sight
+- DLL: Beliefs.ExtraSpyEra/InvisibleMissionaries, Belief_YieldPerMinorityCity (LEKMOD_CAPITAL_PANTHEON_EFFECTS)
 

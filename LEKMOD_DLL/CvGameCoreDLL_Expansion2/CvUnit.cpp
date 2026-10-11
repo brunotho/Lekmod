@@ -22394,6 +22394,26 @@ void CvUnit::setLeaderUnitType(UnitTypes leaderUnitType)
 const InvisibleTypes CvUnit::getInvisibleType() const
 {
 	VALIDATE_OBJECT
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+	// Beliefs.InvisibleMissionaries: missionaries of such a religion are hidden like submarines (seen from adjacent tiles)
+	if (m_eInvisibleType == NO_INVISIBLE && !IsGreatPerson() && m_pUnitInfo->GetReligionSpreads() > 0 && GetReligionData()->GetReligion() > RELIGION_PANTHEON)
+	{
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(GetReligionData()->GetReligion(), getOwner());
+		if (pReligion != NULL)
+		{
+			CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+			for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+			{
+				CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+				if (pkBelief != NULL && pkBelief->IsInvisibleMissionaries() && pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+				{
+					static InvisibleTypes s_eSubmarine = (InvisibleTypes)GC.getInfoTypeForString("INVISIBLE_SUBMARINE");
+					return s_eSubmarine;
+				}
+			}
+		}
+	}
+#endif
 	return m_eInvisibleType;
 }
 

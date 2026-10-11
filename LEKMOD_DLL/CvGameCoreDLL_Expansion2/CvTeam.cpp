@@ -7734,6 +7734,26 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 				}
 			}
 
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+			// Beliefs.ExtraSpyEra: one more spy when the team reaches that era (Underground Sect: Renaissance)
+			for (int iLekmodPlayer = 0; iLekmodPlayer < MAX_CIV_PLAYERS; iLekmodPlayer++)
+			{
+				CvPlayerAI& kLekmodPlayer = GET_PLAYER((PlayerTypes)iLekmodPlayer);
+				if (!kLekmodPlayer.isAlive() || kLekmodPlayer.getTeam() != GetID() || kLekmodPlayer.isMinorCiv())
+					continue;
+				ReligionTypes eLekmodReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(kLekmodPlayer.GetID());
+				const CvReligion* pLekmodReligion = (eLekmodReligion > RELIGION_PANTHEON) ? GC.getGame().GetGameReligions()->GetReligion(eLekmodReligion, kLekmodPlayer.GetID()) : NULL;
+				if (pLekmodReligion == NULL)
+					continue;
+				CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+				for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+				{
+					CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+					if (pkBelief != NULL && pkBelief->GetExtraSpyEra() == eNewValue && pLekmodReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+						kLekmodPlayer.GetEspionage()->CreateSpy();
+				}
+			}
+#endif
 			CvEraInfo* pEraInfo = GC.getEraInfo(eNewValue);
 			if(pEraInfo->getSpiesGrantedForPlayer() > 0)
 			{

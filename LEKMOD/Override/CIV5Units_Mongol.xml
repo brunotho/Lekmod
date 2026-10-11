@@ -17917,7 +17917,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_UNDERGROUND_SECT"> 
 			<Text>
-				+1 [ICON_RESEARCH] Science for every 4 followers of this [ICON_RELIGION] Religion
+				+2 [ICON_RESEARCH] Science and +2 [ICON_GOLD] Gold for every city with followers of this religion where it is not the main religion[NEWLINE][ICON_MISSIONARY] Missionaries are hidden until a unit is next to them[NEWLINE]One extra [ICON_SPY] Spy in the Renaissance Era
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BELIEF_UNDERGROUND_SECT_SHORT"> 
@@ -120497,6 +120497,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORSHIP_HOUSE_HELP">
 			<Text>House of Worship: the first one in a city gives +4 [ICON_CULTURE] Culture, the second +2, the third none.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BELIEF_SEARCH">
+			<Text>Search:</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>

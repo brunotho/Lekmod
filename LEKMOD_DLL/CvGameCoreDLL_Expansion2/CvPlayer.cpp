@@ -23290,6 +23290,36 @@ int CvPlayer::getYieldFromReligionTimes100(YieldTypes eYield, int iPrevTotal) co
 					rtnValue += (iFollowers / iTemp);
 				}
 			}
+#ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
+			// Belief_YieldPerMinorityCity: empire yields for every city (anyone's) with followers of this religion where it is not the majority (Underground Sect)
+			{
+				CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+				int iPerCity = 0;
+				for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+				{
+					CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+					if (pkBelief != NULL && pkBelief->GetYieldPerMinorityCity(eYield) != 0 && pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+						iPerCity += pkBelief->GetYieldPerMinorityCity(eYield);
+				}
+				if (iPerCity != 0)
+				{
+					int iMinorityCities = 0;
+					for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+					{
+						CvPlayer& kLoop = GET_PLAYER((PlayerTypes)iPlayer);
+						if (!kLoop.isAlive())
+							continue;
+						int iCityLoop;
+						for (const CvCity* pLoopCity = kLoop.firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = kLoop.nextCity(&iCityLoop))
+						{
+							if (pLoopCity->GetCityReligions()->GetNumFollowers(eFoundedReligion) > 0 && pLoopCity->GetCityReligions()->GetReligiousMajority() != eFoundedReligion)
+								iMinorityCities++;
+						}
+					}
+					rtnValue += iPerCity * iMinorityCities;
+				}
+			}
+#endif
 			rtnValue *= 100;
 			bool bAtPeace = GET_TEAM(getTeam()).getAtWarCount(false) == 0;
 #if !defined(LEKMOD_BELIEF_YIELDIFY)

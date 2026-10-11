@@ -1390,6 +1390,9 @@ void CvGameReligions::LekmodOnBeliefAdopted(PlayerTypes ePlayer, BeliefTypes eBe
 			}
 		}
 	}
+	// adopted after its spy era: the spy comes now (Underground Sect)
+	if (pkBelief->GetExtraSpyEra() != -1 && GET_TEAM(kPlayer.getTeam()).GetCurrentEra() >= pkBelief->GetExtraSpyEra())
+		kPlayer.GetEspionage()->CreateSpy();
 	if (pkBelief->GetFreeBuildingClassInCapital() != -1 && kPlayer.getCapitalCity() != NULL)
 	{
 		BuildingTypes eFree = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(pkBelief->GetFreeBuildingClassInCapital());

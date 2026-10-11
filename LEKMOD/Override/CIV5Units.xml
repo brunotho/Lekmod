@@ -30869,6 +30869,8 @@
 		<Column name="FirstGrowthBuildingClass" type="text" default="NULL"/> <!-- LEKMOD: a city reaching 2 citizens drops back to 1 and gets this building (once) -->
 		<Column name="FirstGrowthFaith" type="integer" default="0"/> <!-- LEKMOD: Faith for that -->
 		<Column name="NoProphetSpawn" type="boolean" default="false"/> <!-- LEKMOD: Great Prophets no longer spawn from Faith -->
+		<Column name="ExtraSpyEra" type="text" default="NULL"/> <!-- LEKMOD: one more spy when the founder reaches this era -->
+		<Column name="InvisibleMissionaries" type="boolean" default="false"/> <!-- LEKMOD: missionaries hidden like submarines -->
 		<Column name="FreeBuildingClassInCapital" type="text" default="NULL"/> <!-- LEKMOD: adopting the belief gives this building in the capital -->
 		<Column name="OnAdoptCulture" type="integer" default="0"/> <!-- LEKMOD: one-time Culture when adopted -->
 		<Column name="OnAdoptGold" type="integer" default="0"/> <!-- LEKMOD: one-time Gold when adopted -->
@@ -32106,6 +32108,33 @@
 			<BuildingClassType>BUILDINGCLASS_LEKMOD_STUPA</BuildingClassType>
 		</Row>
 	</Belief_BuildingClassFaithPurchase>
+	<!-- LEKMOD: Underground Sect (from scratch) -->
+	<Table name="Belief_YieldPerMinorityCity"> <!-- LEKMOD: empire yields per city with followers where the religion is not the majority -->
+		<Column name="BeliefType" type="text" reference="Beliefs(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Beliefs>
+		<Update>
+			<Where Type="BELIEF_UNDERGROUND_SECT"/>
+			<Set ExtraSpyEra="ERA_RENAISSANCE" InvisibleMissionaries="true"/>
+		</Update>
+	</Beliefs>
+	<Belief_YieldChangePerXFollowers>
+		<Delete BeliefType="BELIEF_UNDERGROUND_SECT"/>
+	</Belief_YieldChangePerXFollowers>
+	<Belief_YieldPerMinorityCity>
+		<Row>
+			<BeliefType>BELIEF_UNDERGROUND_SECT</BeliefType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BeliefType>BELIEF_UNDERGROUND_SECT</BeliefType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Belief_YieldPerMinorityCity>
 	<!-- LEKMOD: Phase 3 new pantheons (data only) -->
 	<Beliefs>
 		<Row>
