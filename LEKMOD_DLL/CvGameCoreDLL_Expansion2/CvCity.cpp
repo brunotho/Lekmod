@@ -7762,17 +7762,28 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				if (eMinor != NO_PLAYER)
 					GET_PLAYER(eMinor).GetMinorCivAI()->ChangeFriendshipWithMajor(getOwner(), pBuildingInfo->GetClosestCoastalMinorInfluence());
 			}
-			// Buildings.ClosestCoastalMinorTradeQuest: that city-state asks us for a trade route right away (Great Lighthouse)
+			// Buildings.ClosestCoastalMinorTradeQuest: the closest coastal city-state that could give us a trade route quest
+			// (base quest rules: met, at peace, not bullied recently, not connected yet, reachable by a land or sea route) asks for one right away (Great Lighthouse)
 			if (pBuildingInfo->IsClosestCoastalMinorTradeQuest() && getOwner() < MAX_MAJOR_CIVS)
 			{
-				PlayerTypes eMinor = LekmodGetClosestCoastalMinor();
-				if (eMinor != NO_PLAYER)
+				PlayerTypes eBest = NO_PLAYER;
+				int iBestDistance = MAX_INT;
+				for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
 				{
-					CvMinorCivAI* pMinorAI = GET_PLAYER(eMinor).GetMinorCivAI();
-					if (!pMinorAI->IsActiveQuestForPlayer(getOwner(), MINOR_CIV_QUEST_TRADE_ROUTE)
-						&& !GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(getOwner(), eMinor))
-						pMinorAI->AddQuestForPlayer(getOwner(), MINOR_CIV_QUEST_TRADE_ROUTE, GC.getGame().getGameTurn());
+					CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);
+					if (!kMinor.isAlive() || !kMinor.isMinorCiv() || kMinor.getCapitalCity() == NULL || !kMinor.getCapitalCity()->isCoastal())
+						continue;
+					if (!kMinor.GetMinorCivAI()->IsValidQuestForPlayer(getOwner(), MINOR_CIV_QUEST_TRADE_ROUTE))
+						continue;
+					int iDistance = plotDistance(getX(), getY(), kMinor.getCapitalCity()->getX(), kMinor.getCapitalCity()->getY());
+					if (iDistance < iBestDistance)
+					{
+						iBestDistance = iDistance;
+						eBest = (PlayerTypes)iMinor;
+					}
 				}
+				if (eBest != NO_PLAYER)
+					GET_PLAYER(eBest).GetMinorCivAI()->AddQuestForPlayer(getOwner(), MINOR_CIV_QUEST_TRADE_ROUTE, GC.getGame().getGameTurn());
 			}
 #endif
 #ifdef LEKMOD_DEFENSE_BUILDINGS

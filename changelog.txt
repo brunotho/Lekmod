@@ -1482,7 +1482,7 @@ WORLD WONDERS (BUILDING_HUBBLE, BUILDING_GREAT_LIGHTHOUSE, BUILDING_ANGKOR_WAT, 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 Tags: buildings
 - Changed: Hubble Space Telescope: costs 1050 (was 837); 5 Scientist points (was 3); no Science and no free Recycling Center; keeps +100% Production toward Spaceship Parts
-- Changed: Great Lighthouse: naval units trained in the city start with +15 XP; when built, the closest coastal city-state you are at peace with asks you for a trade route. Removed: +1 movement and +1 sight for naval units, the free Quinquereme. Keeps the free Lighthouse and +1 Gold on water tiles
+- Changed: Great Lighthouse: naval units trained in the city start with +15 XP; when built, the closest coastal city-state that could give you a trade route quest (met, at peace, reachable by a trade route, not yet connected) asks you for one. Removed: +1 movement and +1 sight for naval units, the free Quinquereme. Keeps the free Lighthouse and +1 Gold on water tiles
 - Changed: Angkor Wat (rebuilt): 1 Culture, 1 Engineer point, a free Garden, farms with fresh water worked by the city yield +1 Faith, 2 Great Work slots that come filled. Removed: the free University, 5 Culture and 5 Science, the Scientist point
 - Changed: Chichen Itza: its city loses 1 Population whenever you enter a Golden Age; 1 Scientist point instead of 1 Engineer point. Removed: its 4 Happiness
 - Changed: Althing: its +1 Production and +1 Culture also apply to snow tiles

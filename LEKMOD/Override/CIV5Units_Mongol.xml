@@ -144454,7 +144454,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_GREAT_LIGHTHOUSE_HELP"> 
 			<Text>
-				Provides a free Lighthouse in the city.[NEWLINE]+1 [ICON_GOLD] Gold from all water tiles worked by this city.[NEWLINE]Naval units trained in this city start with +15 XP.[NEWLINE]When built, the closest coastal city-state you are at peace with asks you for a trade route.[NEWLINE][NEWLINE]City must be built on the coast.
+				Provides a free Lighthouse in the city.[NEWLINE]+1 [ICON_GOLD] Gold from all water tiles worked by this city.[NEWLINE]Naval units trained in this city start with +15 XP.[NEWLINE]When built, the closest coastal city-state your trade units can reach asks you for a trade route.[NEWLINE][NEWLINE]City must be built on the coast.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_GREAT_WALL_HELP"> 
