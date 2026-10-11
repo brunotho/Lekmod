@@ -14275,13 +14275,22 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 	}
 
 	// Reverse Great General nearby
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	CvString strAuraSource;
+	iTempModifier = GetReverseGreatGeneralModifier(&strAuraSource);
+#else
 	iTempModifier = GetReverseGreatGeneralModifier();
+#endif
 	if (iTempModifier != 0)
 	{
 		iModifier += iTempModifier;
 		if (kModifierList && iTempModifier)
 		{
-
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+			if (!strAuraSource.empty())
+				GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_FEAR_AURA_SOURCE", iTempModifier, strAuraSource.c_str());
+			else
+#endif
 			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_NEAR_REVERSE_GREAT_GENERAL", iTempModifier);
 		}
 		/* doesnt exist, maybe consider?
@@ -20983,9 +20992,28 @@ int CvUnit::GetLandUnitStackMovement() const
 #endif
 
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+/// Short name of a Fear Aura source for the combat preview: TXT_KEY_LEKMOD_AURA_SOURCE_<TYPE> if defined, else the description
+static CvString LekmodAuraSourceName(const char* szType, const char* szDescriptionKey)
+{
+	CvString strKey = CvString::format("TXT_KEY_LEKMOD_AURA_SOURCE_%s", szType);
+	CvString strText = Localization::Lookup(strKey.c_str()).toUTF8();
+	if (strText.empty() || strText == strKey)
+		strText = Localization::Lookup(szDescriptionKey).toUTF8();
+	return strText;
+}
+
+/// Enemy auras (Fear Aura promotions, Statue of Zeus): the strongest one counts; pSource gets its short name
+int CvUnit::GetReverseGreatGeneralModifier(CvString* pSource)const
+#else
 int CvUnit::GetReverseGreatGeneralModifier()const
+#endif
 {
 	VALIDATE_OBJECT
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	int iBest = 0;
+	UnitTypes eBestUnit = NO_UNIT;
+#endif
 
 	int iGreatGeneralRange = /*2*/ GC.getGREAT_GENERAL_RANGE();
 
@@ -21024,8 +21052,13 @@ int CvUnit::GetReverseGreatGeneralModifier()const
 									if(plotDistance(getX(), getY(), pLoopPlot->getX(), pLoopPlot->getY()) <= iRange)
 									{
 #ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
-										// same aura as the Statue of Zeus: only the strongest one counts
-										return std::min(iMod, CvCity::LekmodNearbyEnemyCombatModifier(getOwner(), plot()));
+										// only the strongest aura counts
+										if (iMod < iBest)
+										{
+											iBest = iMod;
+											eBestUnit = pLoopUnit->getUnitType();
+										}
+										continue;
 #endif
 										return iMod;
 									}
@@ -21041,7 +21074,25 @@ int CvUnit::GetReverseGreatGeneralModifier()const
 
 #ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
 	// Statue of Zeus: the same aura from an enemy city (Fear Aura and the wonder don't stack)
-	return CvCity::LekmodNearbyEnemyCombatModifier(getOwner(), plot());
+	BuildingTypes eBestBuilding = NO_BUILDING;
+	int iCityMod = CvCity::LekmodNearbyEnemyCombatModifier(getOwner(), plot(), &eBestBuilding);
+	if (iCityMod < iBest)
+	{
+		iBest = iCityMod;
+		eBestUnit = NO_UNIT;
+	}
+	else
+	{
+		eBestBuilding = NO_BUILDING;
+	}
+	if (pSource != NULL)
+	{
+		if (eBestUnit != NO_UNIT)
+			*pSource = LekmodAuraSourceName(GC.getUnitInfo(eBestUnit)->GetType(), GC.getUnitInfo(eBestUnit)->GetDescriptionKey());
+		else if (eBestBuilding != NO_BUILDING)
+			*pSource = LekmodAuraSourceName(GC.getBuildingInfo(eBestBuilding)->GetType(), GC.getBuildingInfo(eBestBuilding)->GetDescriptionKey());
+	}
+	return iBest;
 #endif
 	return 0;
 }

@@ -1463,7 +1463,8 @@ Many wonders get Great Work slots, some come with Great Works already inside, an
 - Changed: Eiffel Tower: +15 Tourism and +3 Happiness in the Modern Era, +30 and +6 in the Atomic Era, +60 and +12 in the Information Era (was 12 Tourism and 5 Happiness); no Merchant points
 - Changed: Cristo Redentor: 3 slots; all filled: +40 Faith
 - Changed: Sistine Chapel: +20% Culture in all cities (was 25%); Great Works in it yield double
-- Changed: the combat preview calls every enemy aura "Fear Aura" (was "Nearby Reverse Great General"); auras don't stack, the strongest counts
+- Changed: the combat preview calls every enemy aura "Fear Aura" with its source in brackets, e.g. "Fear Aura (Zeus)" (was "Nearby Reverse Great General"); auras don't stack, only the strongest counts
+- Added: in the Great Works screen, hovering a building or wonder icon shows what Great Works inside it do
 - Note: Petra had no Tourism to remove. Colossus trade texts were already right (+2 Gold to you, +1 to the route owner)
 - Dev: the GDR's Fear Aura never applied (the promotion had no domain); fixed
 - DLL: Building_GreatWorkFilledYields, Building_EraHappiness, Buildings.GreatWorkFilledNearbyTourismMod/Range, NearbyMinorRestingInfluence/Range, NearbyEnemyCombatMod/Range, ClosestCoastalMinorInfluence (LEKMOD_GREAT_WORK_WONDER_EFFECTS); "comes filled" = FreeGreatWorkCount (random Great Works of Art)

@@ -1040,7 +1040,11 @@ public:
 #ifdef LEKMOD_LONGSHIP_ALL_PROMO
 	int GetLandUnitStackMovement() const;
 #endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	int GetReverseGreatGeneralModifier(CvString* pSource = NULL) const;
+#else
 	int GetReverseGreatGeneralModifier() const;
+#endif
 	int GetNearbyImprovementModifier(ImprovementTypes* pImprovement = NULL) const;
 
 	bool IsGreatGeneral() const;

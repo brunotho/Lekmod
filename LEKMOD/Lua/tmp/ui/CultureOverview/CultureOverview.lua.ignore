@@ -558,6 +558,64 @@ g_ColumnSizes = {
 };
 -- Kyte End
 
+-- LEKMOD: what Great Works in this building do (column header and wonder icon tooltips), read from the building data
+local function LekmodIsTrue(v)
+	return v == true or v == 1;
+end
+local function LekmodYieldList(rows)
+	local parts = {};
+	for _, r in ipairs(rows) do
+		local yield = GameInfo.Yields[r.YieldType];
+		local s = "+" .. r.Value .. " " .. (yield and yield.IconString or "") .. " " .. (yield and Locale.ConvertTextKey(yield.Description) or "");
+		if (r.PerEra) then
+			s = s .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_PER_ERA");
+		end
+		table.insert(parts, s);
+	end
+	return table.concat(parts, ", ");
+end
+function LekmodGreatWorkEffectText(building)
+	local lines = {};
+	local cityRows, holdRows = {}, {};
+	for row in GameInfo.Building_GreatWorkYieldChanges{BuildingType = building.Type} do
+		if ((row.YieldChange or 0) ~= 0) then table.insert(cityRows, {YieldType = row.YieldType, Value = row.YieldChange}); end
+		if ((row.HoldingYield or 0) ~= 0) then table.insert(holdRows, {YieldType = row.YieldType, Value = row.HoldingYield}); end
+	end
+	if (#cityRows > 0) then table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_CITY", LekmodYieldList(cityRows))); end
+	if (#holdRows > 0) then table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_HOLDING", LekmodYieldList(holdRows))); end
+	local mod = building.GreatWorkYieldModifier or 0;
+	if (mod == 100) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_DOUBLE"));
+	elseif (mod ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_MOD", mod));
+	end
+	if ((building.GreatWorkHappiness or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_HAPPINESS", building.GreatWorkHappiness));
+	end
+	if ((building.GreatWorkMilitaryProductionModifier or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_MILITARY", building.GreatWorkMilitaryProductionModifier));
+	end
+	local perSlot, allFilled = {}, {};
+	for row in GameInfo.Building_GreatWorkFilledYields{BuildingType = building.Type} do
+		local r = {YieldType = row.YieldType, Value = row.Yield, PerEra = LekmodIsTrue(row.PerEra)};
+		if (LekmodIsTrue(row.PerSlot)) then table.insert(perSlot, r); else table.insert(allFilled, r); end
+	end
+	if (#perSlot > 0) then table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_PER_SLOT", LekmodYieldList(perSlot))); end
+	local count = building.GreatWorkCount or 0;
+	if (#allFilled > 0) then table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_ALL", count, LekmodYieldList(allFilled))); end
+	if ((building.GreatWorkFilledGPRateModifier or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_GP", count, building.GreatWorkFilledGPRateModifier));
+	end
+	if ((building.GreatWorkFilledNearbyTourismMod or 0) ~= 0) then
+		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_GWFX_NEARBY_TOURISM", count, building.GreatWorkFilledNearbyTourismMod, building.GreatWorkFilledNearbyTourismRange or 0));
+	end
+	local text = Locale.ConvertTextKey(building.Description);
+	if (#lines > 0) then
+		text = text .. "[NEWLINE][NEWLINE]" .. table.concat(lines, "[NEWLINE]");
+	end
+	return text;
+end
+
 function RefreshYourCulture()
 	g_YourCulture = nil;
 	-- LEKMOD: keep the selected great work; the screen refreshes whenever any player's great works change (SortAndDisplayYourCulture restores it)
@@ -628,7 +686,7 @@ function RefreshYourCulture()
 		}
 		
 		IconHookup(building.PortraitIndex, g_IconSize, building.IconAtlas, data.ColumnImageControl);
-		data.ColumnImageControl:LocalizeAndSetToolTip(building.Description);
+		data.ColumnImageControl:SetToolTipString(LekmodGreatWorkEffectText(building));
   
 		return entry;
     end
@@ -744,6 +802,7 @@ function RefreshYourCulture()
 				PortraitIndex = building.PortraitIndex,
 				IconAtlas = building.IconAtlas,
 				Description = building.Description,
+				LekmodToolTip = LekmodGreatWorkEffectText(building),
 				GreatWorkSlotType = building.GreatWorkSlotType,
 				GreatWorkSlotIcons = greatWorkSlotIcons[building.GreatWorkSlotType],
 			});
@@ -845,6 +904,7 @@ function RefreshYourCulture()
 					PortraitIndex = wonder.PortraitIndex,
 					IconAtlas = wonder.IconAtlas,
 					Description = wonder.Description,
+					LekmodToolTip = wonder.LekmodToolTip,
 					GreatWorkSlotType = wonder.GreatWorkSlotType,
 					GreatWorkSlotIcons = wonder.GreatWorkSlotIcons,
 					CityID = city:GetID(),
@@ -1091,7 +1151,7 @@ function SortAndDisplayYourCulture()
 			ContextPtr:BuildInstanceForControl( "WonderInstance", wonderInstance, Controls.MainStack );
 		
 			IconHookup(wonder.PortraitIndex, g_IconSize, wonder.IconAtlas, wonderInstance.WonderImage);
-			wonderInstance.WonderImage:LocalizeAndSetToolTip(wonder.Description);
+			wonderInstance.WonderImage:SetToolTipString(wonder.LekmodToolTip);
 					
 			local icons = wonder.GreatWorkSlotIcons;
 			

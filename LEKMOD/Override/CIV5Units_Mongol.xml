@@ -120513,6 +120513,57 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_CO_PLAYER_TOURISM_NEARBY_WONDER">
 			<Text>+{1_Num}% for their territory near your CN Tower[NEWLINE]</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_PER_ERA">
+			<Text> per era</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_CITY">
+			<Text>[ICON_GREAT_WORK] Great Works in this city: {1_Yields}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_HOLDING">
+			<Text>[ICON_GREAT_WORK] Great Works in this building: {1_Yields}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_DOUBLE">
+			<Text>[ICON_GREAT_WORK] Great Works in this building yield double</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_MOD">
+			<Text>[ICON_GREAT_WORK] Great Works in this building yield +{1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_HAPPINESS">
+			<Text>+{1_Num} [ICON_HAPPINESS_1] Happiness for each Great Work here</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_MILITARY">
+			<Text>+{1_Num}% [ICON_PRODUCTION] Production toward military units for each Great Work here</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_PER_SLOT">
+			<Text>[ICON_GREAT_WORK] Each Great Work here: {1_Yields}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_ALL">
+			<Text>[ICON_GREAT_WORK] All {1_Num} slots filled: {2_Yields}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_GP">
+			<Text>[ICON_GREAT_WORK] All {1_Num} slots filled: +{2_Num}% [ICON_GREAT_PEOPLE] Great People in this city</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_GWFX_NEARBY_TOURISM">
+			<Text>[ICON_GREAT_WORK] All {1_Num} slots filled: +{2_Num}% [ICON_TOURISM] Tourism toward civs with territory within {3_Num} tiles</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_FEAR_AURA_SOURCE">
+			<Text>Fear Aura ({1_Source})</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_MECH">
+			<Text>GDR</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_BUILDING_STATUE_ZEUS">
+			<Text>Zeus</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_CARTHAGINIAN_FOREST_ELEPHANT">
+			<Text>Elephant</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_KHMER_WARELEPHANT">
+			<Text>Elephant</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_POLYNESIAN_MAORI_WARRIOR">
+			<Text>Maori</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILDING_HAPPINESS_NEGATIVE">
 			<Text>[ICON_HAPPINESS_4] Happiness: {1_Num}</Text>
 		</Row>

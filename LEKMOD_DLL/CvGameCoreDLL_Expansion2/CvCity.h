@@ -864,7 +864,7 @@ public:
 	int GetLekmodEraHappiness() const;
 	PlayerTypes LekmodGetClosestCoastalMinor() const;
 	static int LekmodNearbyMinorRestingInfluence(PlayerTypes eMajor, const CvCity* pMinorCapital);
-	static int LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot* pPlot);
+	static int LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot* pPlot, BuildingTypes* peSource = NULL);
 	static int LekmodNearbyBordersTourismModifier(PlayerTypes eFrom, PlayerTypes eTo);
 #endif
 	int GetLekmodAttackRange() const;

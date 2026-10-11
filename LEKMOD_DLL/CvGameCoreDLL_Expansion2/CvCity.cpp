@@ -14742,8 +14742,10 @@ int CvCity::LekmodNearbyMinorRestingInfluence(PlayerTypes eMajor, const CvCity* 
 
 /// Buildings.NearbyEnemyCombatMod: units within range of a city with the building whose owner is at war with them fight weaker (Statue of Zeus);
 /// the strongest penalty counts, combined with unit auras in CvUnit::GetReverseGreatGeneralModifier
-int CvCity::LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot* pPlot)
+int CvCity::LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot* pPlot, BuildingTypes* peSource)
 {
+	if (peSource != NULL)
+		*peSource = NO_BUILDING;
 	if (pPlot == NULL || eUnitOwner == NO_PLAYER)
 		return 0;
 	int iTotal = 0;
@@ -14766,7 +14768,12 @@ int CvCity::LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot
 				if (pLoopCity->GetCityBuildings()->GetNumBuilding(aBuildings[i]) > 0
 					&& plotDistance(pLoopCity->getX(), pLoopCity->getY(), pPlot->getX(), pPlot->getY()) <= pkInfo->GetNearbyEnemyCombatRange())
 				{
-					iTotal = std::min(iTotal, pkInfo->GetNearbyEnemyCombatMod());
+					if (pkInfo->GetNearbyEnemyCombatMod() < iTotal)
+					{
+						iTotal = pkInfo->GetNearbyEnemyCombatMod();
+						if (peSource != NULL)
+							*peSource = aBuildings[i];
+					}
 					bFound = true;
 					break;
 				}
