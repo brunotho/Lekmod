@@ -1413,7 +1413,7 @@ All great works fit in all slots, theming is gone, and great works give Culture 
 - Changed: Great Works of Writing, Art, Music and Artifacts all go into the same kind of slot; every great work slot accepts any of them
 - Removed: theming bonuses
 - Changed: a great work gives 2 Culture and no Tourism (was 2 Culture and 2 Tourism); Tourism now comes from buildings and policies
-- Fixed: a city captured with a destroyed great work building already moved its great works into free slots of the new owner; with one slot type they now always find a slot if one is free
+- Note: when a captured city's great work building is destroyed, its great works already moved to free slots of the new owner (base game); with one slot type they find any free slot
 - DLL: LEKMOD_GENERIC_GREAT_WORKS (AI no longer rearranges great works; the Royal Library's free work uses its own slot type)
 
 TOURISM AND INFLUENCE (LEKMOD_NO_PUBLIC_OPINION)
