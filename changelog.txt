@@ -1591,3 +1591,15 @@ Tags: policies, ui
 - Changed: every policy tree tooltip lists the opener and the finisher effects as bullet points
 - Changed: Warrior Code and Zealot texts say that barbarian kills stop giving yields from turn 70 (this already applied to all kill yields)
 - Fixed: a few unit and building texts showed a gap where an icon did not exist (Czech Legion, Arabia's building, Huns' building, Serai, a Courthouse replacement)
+
+RATIONALISM (POLICY_BRANCH_RATIONALISM)
+--------------------------------------
+Tags: policies
+- Changed: Humanism: Science buildings (Library, University, Observatory, Public School, Research Lab) cost 20% less Gold to buy
+- Added: Sovereignty: +1 Happiness from Universities until you adopt an Ideology; Banks +1 Gold for each other civ that adopts an Ideology after you take Sovereignty and before you adopt yours (same-turn adoptions don't count)
+- Changed: Free Thought: requires Sovereignty; Manufactories +4 Science
+- Changed: Scientific Revolution: requires Sovereignty and Humanism; +20% Science in every city for 5 turns
+- Removed: Scientific Revolution: the free Great Scientist (moved to the finisher)
+- Added: finisher: a free Great Scientist; Academies on strategic resources provide double the resource
+- Changed: the tree is rearranged (Sovereignty and Humanism on top, Free Thought and Scientific Revolution below them)
+- DLL: Policy_BuildingClassPurchaseCostModifiers, Policy_BuildingClassHappinessUntilIdeology, Policy_BuildingClassGoldPerEarlierIdeology, Policy_ImprovementResourceExtractionMods, Policies.TempScienceModifier/TempScienceTurns; new saved player fields (old saves incompatible)

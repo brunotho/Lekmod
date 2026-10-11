@@ -187729,6 +187729,8 @@
 		<Column name="NumCitiesFreeWalls" type="integer" default="0"/> <!-- LEKMOD: free walls in the first N cities without walls (maintenance-free) -->
 		<Column name="NonCapitalSettlerProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward Settlers in cities other than the capital -->
 		<Column name="CampClearGold" type="integer" default="0"/> <!-- LEKMOD: extra Gold (standard speed) for clearing a barbarian camp -->
+		<Column name="TempScienceModifier" type="integer" default="0"/> <!-- LEKMOD: % Science in every city for TempScienceTurns turns after adopting -->
+		<Column name="TempScienceTurns" type="integer" default="0"/>
 		<Column name="FreeTilesExistingCities" type="integer" default="0"/> <!-- LEKMOD: on adoption every owned city claims N tiles -->
 	</Table> 
 	<Policies>
@@ -280880,4 +280882,127 @@
 			<Yield>1</Yield>
 		</Row>
 	</Policy_GarrisonYieldChanges>
+	<!-- Rationalism: Humanism purchase discount, Sovereignty (University Happiness until an ideology, Bank Gold per earlier ideology), Free Thought, Scientific Revolution (+20% Science 5 turns), finisher (Great Scientist, Academies double strategic resources) -->
+	<Table name="Policy_BuildingClassPurchaseCostModifiers"> <!-- LEKMOD: % Gold purchase cost of a building class -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="PurchaseCostModifier" type="integer" notnull="true" />
+	</Table>
+	<Table name="Policy_BuildingClassHappinessUntilIdeology"> <!-- LEKMOD: Happiness from a building class while the player has no ideology -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="Happiness" type="integer" notnull="true" />
+	</Table>
+	<Table name="Policy_BuildingClassGoldPerEarlierIdeology"> <!-- LEKMOD: Gold from a building class per other civ that adopted an ideology after this policy and before the player -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="Gold" type="integer" notnull="true" />
+	</Table>
+	<Table name="Policy_ImprovementResourceExtractionMods"> <!-- LEKMOD: % more of a strategic resource connected by an improvement -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
+		<Column name="Modifier" type="integer" notnull="true" />
+	</Table>
+	<Policies>
+		<Update>
+			<Where Type="POLICY_SOVEREIGNTY"/>
+			<Set GridX="2" GridY="1"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_HUMANISM"/>
+			<Set GridX="4" GridY="1"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_FREE_THOUGHT"/>
+			<Set GridX="1" GridY="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_SCIENTIFIC_REVOLUTION"/>
+			<Set IncludesOneShotFreeUnits="false" TempScienceModifier="20" TempScienceTurns="5"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_RATIONALISM_FINISHER"/>
+			<Set IncludesOneShotFreeUnits="true"/>
+		</Update>
+	</Policies>
+	<Policy_BuildingClassPurchaseCostModifiers>
+		<Row>
+			<PolicyType>POLICY_HUMANISM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_LIBRARY</BuildingClassType>
+			<PurchaseCostModifier>-20</PurchaseCostModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HUMANISM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_UNIVERSITY</BuildingClassType>
+			<PurchaseCostModifier>-20</PurchaseCostModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HUMANISM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_OBSERVATORY</BuildingClassType>
+			<PurchaseCostModifier>-20</PurchaseCostModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HUMANISM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_PUBLIC_SCHOOL</BuildingClassType>
+			<PurchaseCostModifier>-20</PurchaseCostModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HUMANISM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_LABORATORY</BuildingClassType>
+			<PurchaseCostModifier>-20</PurchaseCostModifier>
+		</Row>
+	</Policy_BuildingClassPurchaseCostModifiers>
+	<Policy_BuildingClassHappinessUntilIdeology>
+		<Row>
+			<PolicyType>POLICY_SOVEREIGNTY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_UNIVERSITY</BuildingClassType>
+			<Happiness>1</Happiness>
+		</Row>
+	</Policy_BuildingClassHappinessUntilIdeology>
+	<Policy_BuildingClassGoldPerEarlierIdeology>
+		<Row>
+			<PolicyType>POLICY_SOVEREIGNTY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BANK</BuildingClassType>
+			<Gold>1</Gold>
+		</Row>
+	</Policy_BuildingClassGoldPerEarlierIdeology>
+	<Policy_ImprovementResourceExtractionMods>
+		<Row>
+			<PolicyType>POLICY_RATIONALISM_FINISHER</PolicyType>
+			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType>
+			<Modifier>100</Modifier>
+		</Row>
+	</Policy_ImprovementResourceExtractionMods>
+	<Policy_PrereqPolicies>
+		<Delete PolicyType="POLICY_FREE_THOUGHT"/>
+		<Delete PolicyType="POLICY_SCIENTIFIC_REVOLUTION"/>
+		<Row>
+			<PolicyType>POLICY_FREE_THOUGHT</PolicyType>
+			<PrereqPolicy>POLICY_SOVEREIGNTY</PrereqPolicy>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_SCIENTIFIC_REVOLUTION</PolicyType>
+			<PrereqPolicy>POLICY_SOVEREIGNTY</PrereqPolicy>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_SCIENTIFIC_REVOLUTION</PolicyType>
+			<PrereqPolicy>POLICY_HUMANISM</PrereqPolicy>
+		</Row>
+	</Policy_PrereqPolicies>
+	<Policy_ImprovementYieldChanges>
+		<Row>
+			<PolicyType>POLICY_FREE_THOUGHT</PolicyType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>4</Yield>
+		</Row>
+	</Policy_ImprovementYieldChanges>
+	<Policy_FreeUnitClasses>
+		<Delete PolicyType="POLICY_SCIENTIFIC_REVOLUTION"/>
+		<Row>
+			<PolicyType>POLICY_RATIONALISM_FINISHER</PolicyType>
+			<UnitClassType>UNITCLASS_SCIENTIST</UnitClassType>
+			<Count>1</Count>
+		</Row>
+	</Policy_FreeUnitClasses>
 </GameData>

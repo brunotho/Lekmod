@@ -733,6 +733,7 @@ public:
 #ifdef LEKMOD_POLICY_REWORK
 	int GetLekmodPolicyGarrisonYield(YieldTypes eIndex) const;
 	int GetLekmodNonCapitalSettlerModifier() const;
+	int GetLekmodEarlierIdeologyGold() const;
 #endif
 #if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
 	bool IsPolicyGarrisonAttached() const;

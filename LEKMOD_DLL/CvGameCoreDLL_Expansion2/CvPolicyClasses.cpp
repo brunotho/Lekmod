@@ -269,6 +269,12 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iNonCapitalSettlerProductionModifier(0),
 	m_iCampClearGold(0),
 	m_iFreeTilesExistingCities(0),
+	m_paiBuildingClassPurchaseCostModifier(NULL),
+	m_paiBuildingClassHappinessUntilIdeology(NULL),
+	m_paiBuildingClassGoldPerEarlierIdeology(NULL),
+	m_paiImprovementResourceExtractionMod(NULL),
+	m_iTempScienceModifier(0),
+	m_iTempScienceTurns(0),
 #endif
 	m_piCoastalCityYieldChange(NULL),
 	m_piCapitalYieldChange(NULL),
@@ -384,6 +390,10 @@ CvPolicyEntry::~CvPolicyEntry(void)
 	SAFE_DELETE_ARRAY(m_piCityYieldChange);
 #ifdef LEKMOD_POLICY_REWORK
 	SAFE_DELETE_ARRAY(m_piGarrisonYieldChange);
+	SAFE_DELETE_ARRAY(m_paiBuildingClassPurchaseCostModifier);
+	SAFE_DELETE_ARRAY(m_paiBuildingClassHappinessUntilIdeology);
+	SAFE_DELETE_ARRAY(m_paiBuildingClassGoldPerEarlierIdeology);
+	SAFE_DELETE_ARRAY(m_paiImprovementResourceExtractionMod);
 #endif
 	SAFE_DELETE_ARRAY(m_piCoastalCityYieldChange);
 	SAFE_DELETE_ARRAY(m_piCapitalYieldChange);
@@ -770,6 +780,12 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iNonCapitalSettlerProductionModifier = kResults.GetInt("NonCapitalSettlerProductionModifier");
 	m_iCampClearGold = kResults.GetInt("CampClearGold");
 	m_iFreeTilesExistingCities = kResults.GetInt("FreeTilesExistingCities");
+	m_iTempScienceModifier = kResults.GetInt("TempScienceModifier");
+	m_iTempScienceTurns = kResults.GetInt("TempScienceTurns");
+	kUtility.PopulateArrayByValue(m_paiBuildingClassPurchaseCostModifier, "BuildingClasses", "Policy_BuildingClassPurchaseCostModifiers", "BuildingClassType", "PolicyType", szPolicyType, "PurchaseCostModifier");
+	kUtility.PopulateArrayByValue(m_paiBuildingClassHappinessUntilIdeology, "BuildingClasses", "Policy_BuildingClassHappinessUntilIdeology", "BuildingClassType", "PolicyType", szPolicyType, "Happiness");
+	kUtility.PopulateArrayByValue(m_paiBuildingClassGoldPerEarlierIdeology, "BuildingClasses", "Policy_BuildingClassGoldPerEarlierIdeology", "BuildingClassType", "PolicyType", szPolicyType, "Gold");
+	kUtility.PopulateArrayByValue(m_paiImprovementResourceExtractionMod, "Improvements", "Policy_ImprovementResourceExtractionMods", "ImprovementType", "PolicyType", szPolicyType, "Modifier");
 #endif
 	kUtility.SetYields(m_piCoastalCityYieldChange, "Policy_CoastalCityYieldChanges", "PolicyType", szPolicyType);
 	kUtility.SetYields(m_piCapitalYieldChange, "Policy_CapitalYieldChanges", "PolicyType", szPolicyType);
@@ -2698,6 +2714,36 @@ int CvPolicyEntry::GetCampClearGold() const
 int CvPolicyEntry::GetFreeTilesExistingCities() const
 {
 	return m_iFreeTilesExistingCities;
+}
+/// % purchase cost change for this building class
+int CvPolicyEntry::GetBuildingClassPurchaseCostModifier(int i) const
+{
+	return m_paiBuildingClassPurchaseCostModifier ? m_paiBuildingClassPurchaseCostModifier[i] : 0;
+}
+/// Happiness from this building class while you have no ideology
+int CvPolicyEntry::GetBuildingClassHappinessUntilIdeology(int i) const
+{
+	return m_paiBuildingClassHappinessUntilIdeology ? m_paiBuildingClassHappinessUntilIdeology[i] : 0;
+}
+/// Gold from this building class per other civ that adopted an ideology after this policy and before you
+int CvPolicyEntry::GetBuildingClassGoldPerEarlierIdeology(int i) const
+{
+	return m_paiBuildingClassGoldPerEarlierIdeology ? m_paiBuildingClassGoldPerEarlierIdeology[i] : 0;
+}
+/// % more of a strategic resource connected by this improvement
+int CvPolicyEntry::GetImprovementResourceExtractionMod(int i) const
+{
+	return m_paiImprovementResourceExtractionMod ? m_paiImprovementResourceExtractionMod[i] : 0;
+}
+/// Temporary % Science in every city when adopted
+int CvPolicyEntry::GetTempScienceModifier() const
+{
+	return m_iTempScienceModifier;
+}
+/// How many turns the temporary Science lasts
+int CvPolicyEntry::GetTempScienceTurns() const
+{
+	return m_iTempScienceTurns;
 }
 #endif
 
@@ -5262,6 +5308,12 @@ void CvPlayerPolicies::SetPolicyBranchUnlocked(PolicyBranchTypes eBranchType, bo
 				if (pkPolicyBranchInfo->IsPurchaseByLevel())
 				{
 					m_pPlayer->ChangeNumFreeTenets(iFreePolicies, !bRevolution);
+#ifdef LEKMOD_POLICY_REWORK
+					if (m_pPlayer->GetLekmodIdeologyTurn() < 0)
+					{
+						m_pPlayer->SetLekmodIdeologyTurn(GC.getGame().getGameTurn());
+					}
+#endif
 
 					for(int iNotifyLoop = 0; iNotifyLoop < MAX_MAJOR_CIVS; ++iNotifyLoop){
 						PlayerTypes eNotifyPlayer = (PlayerTypes) iNotifyLoop;

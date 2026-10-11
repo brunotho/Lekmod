@@ -6370,6 +6370,10 @@ int CvCity::GetPurchaseCost(BuildingTypes eBuilding)
 	// Cost of purchasing buildings modified?
 	iCost *= (100 + GET_PLAYER(getOwner()).GetPlayerPolicies()->GetNumericModifier(POLICYMOD_BUILDING_PURCHASE_COST_MODIFIER));
 	iCost /= 100;
+#ifdef LEKMOD_POLICY_REWORK
+	iCost *= (100 + GET_PLAYER(getOwner()).GetLekmodBuildingClassPurchaseMod((BuildingClassTypes)pkBuildingInfo->GetBuildingClassType()));
+	iCost /= 100;
+#endif
 #if defined(LEKMOD_BUILDING_FIRST_PURCHASE_DISCOUNT)
 	if (GetNumThingsPurchasedThisTurn() == 0)
 	{
@@ -11991,6 +11995,13 @@ int CvCity::GetLocalHappiness() const
 						{
 							iSpecialPolicyBuildingHappiness += pkPolicyInfo->GetBuildingClassHappiness(eBuildingClass);
 						}
+#ifdef LEKMOD_POLICY_REWORK
+						// only until the player adopts an ideology (Sovereignty)
+						if (pkPolicyInfo->GetBuildingClassHappinessUntilIdeology(eBuildingClass) != 0 && kPlayer.GetPlayerPolicies()->GetLateGamePolicyTree() == NO_POLICY_BRANCH_TYPE)
+						{
+							iSpecialPolicyBuildingHappiness += pkPolicyInfo->GetBuildingClassHappinessUntilIdeology(eBuildingClass);
+						}
+#endif
 					}
 				}
 			}
@@ -12722,6 +12733,16 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	iModifier += iTempMod;
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_RESOURCES", iTempMod);
+#ifdef LEKMOD_POLICY_REWORK
+	// Temporary Science from a policy (Scientific Revolution)
+	if (eIndex == YIELD_SCIENCE)
+	{
+		iTempMod = kPlayer.GetLekmodTempScienceModifier();
+		iModifier += iTempMod;
+		if (toolTipSink && iTempMod != 0)
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE", iTempMod);
+	}
+#endif
 
 	// Happiness Yield Rate Modifier
 	iTempMod = getHappinessModifier(eIndex);
@@ -13168,8 +13189,42 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
 
+#ifdef LEKMOD_POLICY_REWORK
+	if (eIndex == YIELD_GOLD)
+	{
+		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodEarlierIdeologyGold();
+	}
+#endif
 	return m_aiBaseYieldRateFromBuildings[eIndex];
 }
+#ifdef LEKMOD_POLICY_REWORK
+//	--------------------------------------------------------------------------------
+/// Policy_BuildingClassGoldPerEarlierIdeology: Gold from buildings per other civ that adopted an ideology before us (Sovereignty: Banks)
+int CvCity::GetLekmodEarlierIdeologyGold() const
+{
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	const int iCount = kPlayer.GetLekmodEarlierIdeologyCount();
+	if (iCount <= 0)
+		return 0;
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		for (int iClass = 0; iClass < GC.getNumBuildingClassInfos(); iClass++)
+		{
+			const int iGold = pkPolicy->GetBuildingClassGoldPerEarlierIdeology(iClass);
+			if (iGold == 0)
+				continue;
+			const BuildingTypes eBuilding = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(iClass);
+			if (eBuilding != NO_BUILDING && m_pCityBuildings->GetNumBuilding(eBuilding) > 0)
+				iValue += iGold * iCount;
+		}
+	}
+	return iValue;
+}
+#endif
 
 //	--------------------------------------------------------------------------------
 /// Base yield rate from Buildings

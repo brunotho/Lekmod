@@ -1389,6 +1389,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 #if defined(LEKMOD_RUIN_CHOICE)
 	m_aiLekmodPendingRuins.clear();
 	m_iLekmodLastRuinGoody = -1;
+#ifdef LEKMOD_POLICY_REWORK
+	m_iLekmodIdeologyTurn = -1;
+	m_iLekmodEarlierIdeologyPolicyTurn = -1;
+	m_iLekmodTempScienceMod = 0;
+	m_iLekmodTempScienceEndTurn = -1;
+	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
+#endif
 	m_iLekmodGoodyForcedRoll = -1;
 	m_iLekmodGoodyPay = -1;
 	m_iLekmodGoodyGain = -1;
@@ -28150,6 +28157,87 @@ void CvPlayer::doWarnings()
 	}
 }
 
+#ifdef LEKMOD_POLICY_REWORK
+//	--------------------------------------------------------------------------------
+/// % purchase cost change for a building class from adopted policies (Humanism)
+int CvPlayer::GetLekmodBuildingClassPurchaseMod(BuildingClassTypes eClass) const
+{
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue += pkPolicy->GetBuildingClassPurchaseCostModifier(eClass);
+	}
+	return iValue;
+}
+/// % more strategic resource from an improvement, from adopted policies (Rationalism finisher: Academies)
+int CvPlayer::GetLekmodImprovementExtractionMod(ImprovementTypes eImprovement) const
+{
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		if ((PolicyTypes)iPolicy == m_eLekmodExtractionIgnorePolicy)
+			continue;
+		iValue += pkPolicy->GetImprovementResourceExtractionMod(eImprovement);
+	}
+	return iValue;
+}
+/// When a policy with ImprovementResourceExtractionMods is adopted, add the extra resources of improvements already built
+void CvPlayer::LekmodApplyPolicyExtraction(PolicyTypes ePolicy)
+{
+	CvPolicyEntry* pkPolicy = GC.getPolicyInfo(ePolicy);
+	if (pkPolicy == NULL)
+		return;
+	for (int iPlot = 0; iPlot < GC.getMap().numPlots(); iPlot++)
+	{
+		CvPlot* pPlot = GC.getMap().plotByIndexUnchecked(iPlot);
+		if (pPlot == NULL || pPlot->getOwner() != GetID() || pPlot->IsImprovementPillaged())
+			continue;
+		const ImprovementTypes eImprovement = pPlot->getImprovementType();
+		if (eImprovement == NO_IMPROVEMENT || pkPolicy->GetImprovementResourceExtractionMod(eImprovement) == 0)
+			continue;
+		const ResourceTypes eResource = pPlot->getResourceType(getTeam());
+		CvResourceInfo* pkResource = (eResource != NO_RESOURCE) ? GC.getResourceInfo(eResource) : NULL;
+		if (pkResource == NULL || pkResource->getResourceUsage() != RESOURCEUSAGE_STRATEGIC)
+			continue;
+		if (!GC.getImprovementInfo(eImprovement)->IsImprovementResourceTrade(eResource) || !GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)pkResource->getTechCityTrade()))
+			continue;
+		m_eLekmodExtractionIgnorePolicy = ePolicy;
+		const int iOld = pPlot->getNumResourceForPlayer(GetID());
+		m_eLekmodExtractionIgnorePolicy = NO_POLICY;
+		const int iNew = pPlot->getNumResourceForPlayer(GetID());
+		if (iNew != iOld)
+			changeNumResourceTotal(eResource, iNew - iOld);
+	}
+}
+/// How many other civs adopted an ideology after we took the policy (Sovereignty) and before we adopted ours
+int CvPlayer::GetLekmodEarlierIdeologyCount() const
+{
+	if (m_iLekmodEarlierIdeologyPolicyTurn < 0)
+		return 0;
+	int iCount = 0;
+	for (int iOther = 0; iOther < MAX_MAJOR_CIVS; iOther++)
+	{
+		const CvPlayer& kOther = GET_PLAYER((PlayerTypes)iOther);
+		if (iOther == GetID() || !kOther.isAlive() || kOther.GetLekmodIdeologyTurn() < 0)
+			continue;
+		if (kOther.GetLekmodIdeologyTurn() > m_iLekmodEarlierIdeologyPolicyTurn && (m_iLekmodIdeologyTurn < 0 || kOther.GetLekmodIdeologyTurn() < m_iLekmodIdeologyTurn))
+			iCount++;
+	}
+	return iCount;
+}
+/// Temporary % Science from a policy (Scientific Revolution), 0 once it ran out
+int CvPlayer::GetLekmodTempScienceModifier() const
+{
+	return (GC.getGame().getGameTurn() < m_iLekmodTempScienceEndTurn) ? m_iLekmodTempScienceMod : 0;
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 {
@@ -28165,6 +28253,30 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		return;
 
 	const CvPolicyEntry& kPolicy = (*pPolicy);
+
+#ifdef LEKMOD_POLICY_REWORK
+	if (iChange > 0)
+	{
+		const int iTurn = GC.getGame().getGameTurn();
+		if (pPolicy->GetTempScienceModifier() != 0)
+		{
+			m_iLekmodTempScienceMod = pPolicy->GetTempScienceModifier();
+			m_iLekmodTempScienceEndTurn = iTurn + pPolicy->GetTempScienceTurns();
+		}
+		if (m_iLekmodEarlierIdeologyPolicyTurn < 0)
+		{
+			for (int iClass = 0; iClass < GC.getNumBuildingClassInfos(); iClass++)
+			{
+				if (pPolicy->GetBuildingClassGoldPerEarlierIdeology(iClass) != 0)
+				{
+					m_iLekmodEarlierIdeologyPolicyTurn = iTurn;
+					break;
+				}
+			}
+		}
+		LekmodApplyPolicyExtraction(ePolicy);
+	}
+#endif
 
 	ChangeCulturePerWonder(pPolicy->GetCulturePerWonder() * iChange);
 	ChangeCultureWonderMultiplier(pPolicy->GetCultureWonderMultiplier() * iChange);
@@ -30176,6 +30288,13 @@ void CvPlayer::Read(FDataStream& kStream)
 #if defined(LEKMOD_RUIN_CHOICE)
 	kStream >> m_aiLekmodPendingRuins;
 	kStream >> m_iLekmodLastRuinGoody;
+#ifdef LEKMOD_POLICY_REWORK
+	kStream >> m_iLekmodIdeologyTurn;
+	kStream >> m_iLekmodEarlierIdeologyPolicyTurn;
+	kStream >> m_iLekmodTempScienceMod;
+	kStream >> m_iLekmodTempScienceEndTurn;
+	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
+#endif
 #endif
 
 }
@@ -30749,6 +30868,12 @@ void CvPlayer::Write(FDataStream& kStream) const
 #if defined(LEKMOD_RUIN_CHOICE)
 	kStream << m_aiLekmodPendingRuins;
 	kStream << m_iLekmodLastRuinGoody;
+#ifdef LEKMOD_POLICY_REWORK
+	kStream << m_iLekmodIdeologyTurn;
+	kStream << m_iLekmodEarlierIdeologyPolicyTurn;
+	kStream << m_iLekmodTempScienceMod;
+	kStream << m_iLekmodTempScienceEndTurn;
+#endif
 #endif
 }
 

@@ -246,6 +246,15 @@ public:
 	void doGoody(CvPlot* pPlot, CvUnit* pUnit);
 #if defined(LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN)
 	bool LekmodNoBarbarianKillYields() const;
+#ifdef LEKMOD_POLICY_REWORK
+	int GetLekmodBuildingClassPurchaseMod(BuildingClassTypes eClass) const;
+	int GetLekmodImprovementExtractionMod(ImprovementTypes eImprovement) const;
+	void LekmodApplyPolicyExtraction(PolicyTypes ePolicy);
+	int GetLekmodEarlierIdeologyCount() const;
+	int GetLekmodTempScienceModifier() const;
+	int GetLekmodIdeologyTurn() const { return m_iLekmodIdeologyTurn; }
+	void SetLekmodIdeologyTurn(int iTurn) { m_iLekmodIdeologyTurn = iTurn; }
+#endif
 #endif
 #if defined(LEKMOD_RUIN_CHOICE)
 	int LekmodGoodyRand(int iRange, const char* szLog);
@@ -2381,6 +2390,13 @@ protected:
 	int m_iLekmodGoodyForcedRoll; // only set while an offer is applied
 	int m_iLekmodGoodyPay;
 	int m_iLekmodGoodyGain;
+#endif
+#ifdef LEKMOD_POLICY_REWORK
+	int m_iLekmodIdeologyTurn; // first turn an ideology was adopted, -1 = none
+	int m_iLekmodEarlierIdeologyPolicyTurn; // turn a policy with Policy_BuildingClassGoldPerEarlierIdeology was adopted, -1 = none
+	int m_iLekmodTempScienceMod;
+	int m_iLekmodTempScienceEndTurn; // the temporary Science applies while the game turn is lower
+	PolicyTypes m_eLekmodExtractionIgnorePolicy; // not saved: only set inside LekmodApplyPolicyExtraction
 #endif
 	std::vector<int> m_aiGreatWorkYieldChange;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)

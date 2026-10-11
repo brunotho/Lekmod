@@ -1491,7 +1491,10 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_CULTURED_CS_CAPTURE_GREAT_WORK
 // Policy rework (Phase 5): Policy_GarrisonYieldChanges (yields per city with a non-recon garrison; from the garrison attach turn in every city),
 // Policies.NonCapitalSettlerProductionModifier, free walls (NumCitiesFreeWalls) only count cities without walls and are maintenance-free,
-// Policies.CampClearGold (extra Gold for clearing a barbarian camp, speed-scaled), Policies.FreeTilesExistingCities (on adoption every owned city claims N tiles)
+// Policies.CampClearGold (extra Gold for clearing a barbarian camp, speed-scaled), Policies.FreeTilesExistingCities (on adoption every owned city claims N tiles),
+// Policy_BuildingClassPurchaseCostModifiers, Policy_BuildingClassHappinessUntilIdeology, Policy_BuildingClassGoldPerEarlierIdeology (per other civ that
+// adopted an ideology after the policy and before you), Policy_ImprovementResourceExtractionMods, Policies.TempScienceModifier/TempScienceTurns.
+// New saved CvPlayer fields: ideology turn, earlier-ideology policy turn, temporary science modifier and end turn.
 #define LEKMOD_POLICY_REWORK
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT

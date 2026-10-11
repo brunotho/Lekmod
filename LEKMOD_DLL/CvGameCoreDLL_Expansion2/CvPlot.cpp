@@ -6990,6 +6990,18 @@ int CvPlot::getNumResourceForPlayer(PlayerTypes ePlayer) const
 						iRtnValue /= 100;
 					}
 #endif
+#ifdef LEKMOD_POLICY_REWORK
+					// Policy_ImprovementResourceExtractionMods (Rationalism finisher: Academies)
+					if (eImprovement != NO_IMPROVEMENT && ePlayer != NO_PLAYER)
+					{
+						const int iPolicyExtraction = GET_PLAYER(ePlayer).GetLekmodImprovementExtractionMod(eImprovement);
+						if (iPolicyExtraction != 0)
+						{
+							iRtnValue *= 100 + iPolicyExtraction;
+							iRtnValue /= 100;
+						}
+					}
+#endif
 				}
 
 				else if(pkResource->getResourceUsage() == RESOURCEUSAGE_LUXURY)

@@ -293,6 +293,12 @@ public:
 	int GetNonCapitalSettlerProductionModifier() const;
 	int GetCampClearGold() const;
 	int GetFreeTilesExistingCities() const;
+	int GetBuildingClassPurchaseCostModifier(int i) const;
+	int GetBuildingClassHappinessUntilIdeology(int i) const;
+	int GetBuildingClassGoldPerEarlierIdeology(int i) const;
+	int GetImprovementResourceExtractionMod(int i) const;
+	int GetTempScienceModifier() const;
+	int GetTempScienceTurns() const;
 #endif
 	int* GetCityYieldChangeArray() const;
 	int GetCoastalCityYieldChange(int i) const;
@@ -632,6 +638,12 @@ private:
 	int m_iNonCapitalSettlerProductionModifier;
 	int m_iCampClearGold;
 	int m_iFreeTilesExistingCities;
+	int* m_paiBuildingClassPurchaseCostModifier;
+	int* m_paiBuildingClassHappinessUntilIdeology;
+	int* m_paiBuildingClassGoldPerEarlierIdeology;
+	int* m_paiImprovementResourceExtractionMod;
+	int m_iTempScienceModifier;
+	int m_iTempScienceTurns;
 #endif
 	int* m_piCoastalCityYieldChange;
 	int* m_piCapitalYieldChange;
