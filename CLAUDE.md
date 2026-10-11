@@ -283,7 +283,7 @@ Read `art_sources/README.md` before touching any icon, portrait, flag or menu ba
 
 ## 9. Status (update as things change)
 ### Current state (2026-10-11, end of session: handoff snapshot)
-- `dev` = v35.4 (`201df6c5`) + 285 of our commits. **Not pushed** (the user hasn't asked). HEAD `db36480a`; the installed DLL is that build (md5 `06326a29...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
+- `dev` = v35.4 (`201df6c5`) + 285 of our commits. **Not pushed** (the user hasn't asked). the installed DLL is the build committed in `db36480a` (later commits are docs only) (md5 `06326a29...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
 - **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start.
 - **Phases 1–3 done** (except: Cyrillic and 6/7/8-player lobby, both waiting/postponed; Police Station Blocked on Diplomat/Spy; "NEW founder/follower/enhancer: Charter of Settlement, Sanctuary, Stupa, Mandate of God, Xian" is Ready but only Mandate of God is left, waiting for the World Congress).
