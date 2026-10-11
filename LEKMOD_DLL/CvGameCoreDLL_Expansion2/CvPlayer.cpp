@@ -28318,6 +28318,19 @@ void CvPlayer::LekmodDoPolicyNewCityEffects(CvCity* pCity)
 		}
 	}
 }
+/// Sum of the adopted policies' great work yield modifiers (Fine Arts +50%)
+int CvPlayer::GetLekmodPolicyGreatWorkYieldModifier() const
+{
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || pkPolicy->GetGreatWorkYieldModifier() == 0 || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue += pkPolicy->GetGreatWorkYieldModifier();
+	}
+	return iValue;
+}
 /// Most negative resistance time modifier of adopted policies (several "half as long" policies don't stack)
 int CvPlayer::GetLekmodResistanceTimeModifier() const
 {
@@ -28531,6 +28544,13 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		}
 		LekmodApplyPolicyExtraction(ePolicy);
 		LekmodDoPolicyWaterUnits(ePolicy);
+		if (pPolicy->GetGreatWorkYieldModifier() != 0)
+		{
+			int iCityLoop;
+			for (CvCity* pLoopCity = firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = nextCity(&iCityLoop))
+				for (int iClass = 0; iClass < GC.getNumGreatWorkClassInfos(); iClass++)
+					pLoopCity->GetCityBuildings()->rebuildGreatWorkYields((GreatWorkClass)iClass);
+		}
 		if (!pPolicy->GetBuildingTerrainYields().empty())
 		{
 			int iCityLoop;
@@ -29540,7 +29560,7 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		eResource = pLoopPlot->getResourceType();
 		if(eResource != NO_RESOURCE)
 		{
-			if(GC.getResourceInfo(eResource)->getPolicyReveal() == (int)ePolicy)
+			if(GC.getResourceInfo(eResource)->getPolicyReveal() == (int)ePolicy || GC.getResourceInfo(eResource)->getPolicyRevealOr() == (int)ePolicy)
 			{
 				pLoopPlot->updateYield();
 				if (pLoopPlot->isRevealed(getTeam()))

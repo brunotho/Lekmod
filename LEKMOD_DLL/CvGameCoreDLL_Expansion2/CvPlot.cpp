@@ -6834,6 +6834,11 @@ ResourceTypes CvPlot::getResourceType(TeamTypes eTeam) const
 				}
 			}
 
+#ifdef LEKMOD_POLICY_REWORK
+			const int iPolicyRevealOr = GC.getResourceInfo((ResourceTypes)m_eResourceType)->getPolicyRevealOr();
+			if (!bDebug && iPolicyRevealOr != NO_POLICY && GET_TEAM(eTeam).HavePolicyInTeam((PolicyTypes)iPolicyRevealOr))
+				return (ResourceTypes)m_eResourceType;
+#endif
 			if(!bDebug && !GET_TEAM(eTeam).GetTeamTechs()->HasTech((TechTypes)(GC.getResourceInfo((ResourceTypes)m_eResourceType)->getTechReveal())) &&
 			        !GET_TEAM(eTeam).isForceRevealedResource((ResourceTypes)m_eResourceType) &&
 			        !IsResourceForceReveal(eTeam))

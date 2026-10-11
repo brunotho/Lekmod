@@ -1503,6 +1503,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // EarlyBuildingProductionModifier/EarlyBuildingEraType, FreeUnitClassNearWater/FreeUnitClassOnWater (on adoption); tables
 // Policy_CityYieldIfBuildingClass and Policy_CityHappinessIfBuildingClass (largest value counts, so Honor and Expansionism don't stack),
 // Policy_BuildingTerrainYieldChanges (tile yields when the city has a building; NoResource/AdjacentCity/AdjacentMountain/ExcludeLakes).
+// Aesthetics: Policies.GreatWorkYieldModifier (% on the yields of great works, not their Happiness); Resources.PolicyRevealOr
+// (the resource is also visible without its tech to teams with this policy: Aesthetics finisher reveals Antiquity Sites).
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
 #define LEKMOD_GOLD_GREAT_PERSON_COST_STEP 500
 #define LEKMOD_POLICY_REWORK

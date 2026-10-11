@@ -1627,6 +1627,19 @@ Tags: policies
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
 
+AESTHETICS (POLICY_BRANCH_AESTHETICS)
+-------------------------------------
+Tags: policies
+- Changed: Flourishing of the Arts: now right below Cultural Centers (requires only Cultural Centers); +1 Culture and +1 Tourism from every Great Work and World Wonder; starts a 6-turn Golden Age (was 8)
+- Changed: Artistic Genius: Great Works +2 Science +2 Culture (was +3 Science); Amphitheaters, Opera Houses, Museums and Broadcast Towers +1 Culture on top of their +1 Science
+- Changed: Cultural Exchange is now Literary Tradition: requires Flourishing of the Arts; a free Great Writer; +1 Culture from Trading Posts
+- Removed: Literary Tradition: Culture from Great Person improvements, Landmarks, Moai, Brazilwood Camps, Chateaus, Caers and Citadels
+- Changed: Fine Arts: requires only Artistic Genius; free Scriptorium, Gallery and Conservatory in your first 5 cities (was all cities); +50% yields from Great Works (not their Happiness)
+- Removed: Fine Arts: +20% Tourism from culture buildings (moved to the finisher)
+- Changed: finisher: 3 free Archaeologists; +50% Production toward Archaeologists (was 100%); Antiquity Sites are revealed even before Archaeology; +20% Tourism in cities with a Monument, Amphitheater, Opera House, Museum or Broadcast Tower (each)
+- Note: Flourishing of the Arts' World Wonder Culture and Tourism were 34.11 effects missing in 35.x (its tooltip already promised them)
+- DLL: Policies.GreatWorkYieldModifier, Resources.PolicyRevealOr (LEKMOD_POLICY_REWORK)
+
 EXPANSIONISM (POLICY_BRANCH_EXPLORATION)
 ---------------------------------------
 Tags: policies, naval, units, buildings

@@ -287,6 +287,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iEarlyBuildingEra(NO_ERA),
 	m_iFreeUnitClassNearWater(NO_UNITCLASS),
 	m_iFreeUnitClassOnWater(NO_UNITCLASS),
+	m_iGreatWorkYieldModifier(0),
 #endif
 	m_piCoastalCityYieldChange(NULL),
 	m_piCapitalYieldChange(NULL),
@@ -806,6 +807,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iEarlyBuildingEra = GC.getInfoTypeForString(kResults.GetText("EarlyBuildingEraType"), true);
 	m_iFreeUnitClassNearWater = GC.getInfoTypeForString(kResults.GetText("FreeUnitClassNearWater"), true);
 	m_iFreeUnitClassOnWater = GC.getInfoTypeForString(kResults.GetText("FreeUnitClassOnWater"), true);
+	m_iGreatWorkYieldModifier = kResults.GetInt("GreatWorkYieldModifier");
 	{
 		std::string strKey("Policy_CityYieldIfBuildingClass");
 		Database::Results* pResults = kUtility.GetResults(strKey);
@@ -2892,6 +2894,11 @@ int CvPolicyEntry::GetFreeUnitClassNearWater() const
 int CvPolicyEntry::GetFreeUnitClassOnWater() const
 {
 	return m_iFreeUnitClassOnWater;
+}
+/// % on the yields of great works (Fine Arts); Happiness from great works is not affected
+int CvPolicyEntry::GetGreatWorkYieldModifier() const
+{
+	return m_iGreatWorkYieldModifier;
 }
 /// (building class, yield, value) triples: city yield if the city has the building (largest value per yield counts)
 const std::vector<int>& CvPolicyEntry::GetCityYieldIfBuildingClass() const

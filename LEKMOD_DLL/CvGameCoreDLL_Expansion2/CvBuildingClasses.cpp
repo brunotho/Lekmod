@@ -4835,7 +4835,11 @@ void CvCityBuildings::rebuildGreatWorkYields(GreatWorkClass eClass)
 					workYield += GetCityGreatWorkClassYieldChanges(work->m_eClassType, eYield);
 #ifdef LEKMOD_GREAT_WORK_YIELD_MODIFIER
 					// hundredths, with the holding building's modifier (Museum +50%)
-					workYield *= 100 + pkBuildingInfo->GetGreatWorkYieldModifier();
+					workYield *= 100 + pkBuildingInfo->GetGreatWorkYieldModifier()
+#ifdef LEKMOD_POLICY_REWORK
+						+ GET_PLAYER(m_pCity->getOwner()).GetLekmodPolicyGreatWorkYieldModifier()
+#endif
+						;
 #endif
 					work->m_viYield[eYield] = workYield;
 				}

@@ -257,6 +257,7 @@ public:
 	bool LekmodHasPolicyBuildingTerrainYields() const;
 	void LekmodDoPolicyNewCityEffects(CvCity* pCity);
 	int GetLekmodResistanceTimeModifier() const;
+	int GetLekmodPolicyGreatWorkYieldModifier() const;
 	void LekmodDoPolicyWaterUnits(PolicyTypes ePolicy);
 	int GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const;
 	int GetLekmodAllyUUPurchaseMod() const;

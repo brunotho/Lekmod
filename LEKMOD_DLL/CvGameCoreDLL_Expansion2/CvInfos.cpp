@@ -4710,6 +4710,7 @@ CvResourceInfo::CvResourceInfo() :
 	m_iChar(0),
 	m_iTechReveal(0),
 	m_iPolicyReveal(NO_POLICY),
+	m_iPolicyRevealOr(NO_POLICY),
 	m_iTechCityTrade(0),
 	m_iTechObsolete(0),
 	m_iAIStopTradingEra(-1),
@@ -4816,6 +4817,11 @@ int CvResourceInfo::getTechReveal() const
 int CvResourceInfo::getPolicyReveal() const
 {
 	return m_iPolicyReveal;
+}
+/// LEKMOD: teams with this policy see the resource without its reveal tech
+int CvResourceInfo::getPolicyRevealOr() const
+{
+	return m_iPolicyRevealOr;
 }
 //------------------------------------------------------------------------------
 int CvResourceInfo::getTechCityTrade() const
@@ -5351,6 +5357,7 @@ bool CvResourceInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility
 
 	const char* szPolicyReveal = kResults.GetText("PolicyReveal");
 	m_iPolicyReveal = GC.getInfoTypeForString(szPolicyReveal, true);
+	m_iPolicyRevealOr = GC.getInfoTypeForString(kResults.GetText("PolicyRevealOr"), true);
 
 	const char* szTechCityTrade = kResults.GetText("TechCityTrade");
 	m_iTechCityTrade = GC.getInfoTypeForString(szTechCityTrade, true);

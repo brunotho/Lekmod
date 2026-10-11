@@ -326,6 +326,7 @@ public:
 	int GetEarlyBuildingEra() const;
 	int GetFreeUnitClassNearWater() const;
 	int GetFreeUnitClassOnWater() const;
+	int GetGreatWorkYieldModifier() const;
 	const std::vector<int>& GetCityYieldIfBuildingClass() const;
 	const std::vector<int>& GetCityHappinessIfBuildingClass() const;
 	const std::vector<LekmodPolicyBuildingTerrainYield>& GetBuildingTerrainYields() const;
@@ -687,6 +688,7 @@ private:
 	int m_iEarlyBuildingEra;
 	int m_iFreeUnitClassNearWater;
 	int m_iFreeUnitClassOnWater;
+	int m_iGreatWorkYieldModifier;
 	std::vector<int> m_aiCityYieldIfBuildingClass;
 	std::vector<int> m_aiCityHappinessIfBuildingClass;
 	std::vector<LekmodPolicyBuildingTerrainYield> m_aLekmodBuildingTerrainYields;

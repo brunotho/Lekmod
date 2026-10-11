@@ -187770,6 +187770,7 @@
 		<Column name="EarlyBuildingProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward buildings (not wonders) whose tech is before EarlyBuildingEraType -->
 		<Column name="EarlyBuildingEraType" type="text" reference="Eras(Type)" default="NULL"/>
 		<Column name="FreeUnitClassNearWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears in the city closest to water -->
+		<Column name="GreatWorkYieldModifier" type="integer" default="0"/> <!-- LEKMOD: % on great work yields (not their Happiness) -->
 		<Column name="FreeUnitClassOnWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears on the water tile closest to a city -->
 	</Table> 
 	<Policies>
@@ -196757,6 +196758,7 @@
 		<Column name="AltArtDefineTagHeavy" type="text"  />
 		<Column name="TechReveal" type="text"  default="NULL"/>
 		<Column name="PolicyReveal" type="text"  default="NULL"/>
+		<Column name="PolicyRevealOr" type="text" default="NULL"/> <!-- LEKMOD: teams with this policy see the resource without its reveal tech -->
 		<Column name="TechCityTrade" type="text"  default="NULL"/>
 		<Column name="TechObsolete" type="text"  default="NULL"/>
 		<Column name="AIStopTradingEra" type="text"  default="NULL"/>
@@ -199190,6 +199192,11 @@
 		<Update>
 			<Where Type="RESOURCE_OBSIDIAN"/>
 			<Set LocalProductionMod="10" CityCenterProductionMod="20" ProductionModUnitCombat="UNITCOMBAT_MELEE"/>
+		</Update>
+		<!-- Aesthetics finisher: Antiquity Sites visible without Archaeology -->
+		<Update>
+			<Where Type="RESOURCE_ARTIFACTS"/>
+			<Set PolicyRevealOr="POLICY_AESTHETICS_FINISHER"/>
 		</Update>
 	</Resources>
 
@@ -281364,4 +281371,138 @@
 			<EraType>ERA_INDUSTRIAL</EraType>
 		</Row>
 	</Policy_GoldPurchaseUnitClasses>
+	<!-- Aesthetics: Flourishing of the Arts (tier 2 left; 34.11 Culture/Tourism per World Wonder restored, 6-turn Golden Age on quick),
+	     Artistic Genius (2 Science 2 Culture per Great Work, +1 Culture from culture buildings), Cultural Exchange is now Literary Tradition
+	     (tier 3 left; Culture from Trading Posts only), Fine Arts (school buildings in the first 5 cities, +50% great work yields),
+	     finisher (3 Archaeologists, +50% toward them, Antiquity Sites revealed, +20% Tourism from culture buildings and Monuments) -->
+	<Policies>
+		<Update>
+			<Where Type="POLICY_FLOURISHING_OF_ARTS"/>
+			<Set GridX="2" GridY="2" GoldenAgeTurns="8" CulturePerWonder="1" TourismPerWonder="1"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_ETHICS"/>
+			<Set GridX="2" GridY="3"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_FINE_ARTS"/>
+			<Set NumCitiesFreeAestheticsSchools="5" GreatWorkYieldModifier="50"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_AESTHETICS_FINISHER"/>
+			<Set IncludesOneShotFreeUnits="true" ThemingBonusMultiplier="0"/>
+		</Update>
+	</Policies>
+	<Policy_PrereqPolicies>
+		<Delete PolicyType="POLICY_FINE_ARTS"/>
+		<Delete PolicyType="POLICY_FLOURISHING_OF_ARTS"/>
+		<Delete PolicyType="POLICY_ETHICS"/>
+		<Row>
+			<PolicyType>POLICY_FLOURISHING_OF_ARTS</PolicyType>
+			<PrereqPolicy>POLICY_CULTURAL_CENTERS</PrereqPolicy>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_ETHICS</PolicyType>
+			<PrereqPolicy>POLICY_FLOURISHING_OF_ARTS</PrereqPolicy>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_FINE_ARTS</PolicyType>
+			<PrereqPolicy>POLICY_ARTISTIC_GENIUS</PrereqPolicy>
+		</Row>
+	</Policy_PrereqPolicies>
+	<Policy_GreatWorkYieldChanges>
+		<Delete PolicyType="POLICY_ARTISTIC_GENIUS"/>
+		<Row>
+			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Policy_GreatWorkYieldChanges>
+	<Policy_BuildingClassYieldChanges>
+		<Row>
+			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_AMPHITHEATER</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_OPERA_HOUSE</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_MUSEUM</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BROADCAST_TOWER</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+	</Policy_BuildingClassYieldChanges>
+	<Policy_ImprovementCultureChanges>
+		<Delete PolicyType="POLICY_ETHICS"/>
+		<Row>
+			<PolicyType>POLICY_ETHICS</PolicyType>
+			<ImprovementType>IMPROVEMENT_TRADING_POST</ImprovementType>
+			<CultureChange>1</CultureChange>
+		</Row>
+	</Policy_ImprovementCultureChanges>
+	<Policy_BuildingClassYieldModifiers>
+		<Delete PolicyType="POLICY_FINE_ARTS"/>
+		<Row>
+			<PolicyType>POLICY_AESTHETICS_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_MONUMENT</BuildingClassType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldMod>20</YieldMod>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_AESTHETICS_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_AMPHITHEATER</BuildingClassType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldMod>20</YieldMod>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_AESTHETICS_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_OPERA_HOUSE</BuildingClassType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldMod>20</YieldMod>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_AESTHETICS_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_MUSEUM</BuildingClassType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldMod>20</YieldMod>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_AESTHETICS_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BROADCAST_TOWER</BuildingClassType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldMod>20</YieldMod>
+		</Row>
+	</Policy_BuildingClassYieldModifiers>
+	<Policy_UnitCombatProductionModifiers>
+		<Delete PolicyType="POLICY_AESTHETICS_FINISHER"/>
+		<Row>
+			<PolicyType>POLICY_AESTHETICS_FINISHER</PolicyType>
+			<UnitCombatType>UNITCOMBAT_ARCHAEOLOGIST</UnitCombatType>
+			<ProductionModifier>50</ProductionModifier>
+		</Row>
+	</Policy_UnitCombatProductionModifiers>
+	<Policy_FreeUnitClasses>
+		<Row>
+			<PolicyType>POLICY_AESTHETICS_FINISHER</PolicyType>
+			<UnitClassType>UNITCLASS_ARCHAEOLOGIST</UnitClassType>
+			<Count>3</Count>
+		</Row>
+	</Policy_FreeUnitClasses>
 </GameData>

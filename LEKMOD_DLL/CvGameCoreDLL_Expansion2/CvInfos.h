@@ -1465,6 +1465,7 @@ public:
 	void setChar(int i);
 	int getTechReveal() const;
 	int getPolicyReveal() const;
+	int getPolicyRevealOr() const;
 	int getTechCityTrade() const;
 	int getTechObsolete() const;
 	int getAIStopTradingEra() const;
@@ -1561,6 +1562,7 @@ protected:
 	int m_iChar;
 	int m_iTechReveal;
 	int m_iPolicyReveal;
+	int m_iPolicyRevealOr;
 	int m_iTechCityTrade;
 	int m_iTechObsolete;
 	int m_iAIStopTradingEra;
