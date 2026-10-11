@@ -28232,6 +28232,19 @@ int CvPlayer::GetLekmodEarlierIdeologyCount() const
 	}
 	return iCount;
 }
+/// Happiness from a building class while we have no ideology, from adopted policies (Sovereignty)
+int CvPlayer::GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const
+{
+	int iValue = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iValue += pkPolicy->GetBuildingClassHappinessUntilIdeology(eClass);
+	}
+	return iValue;
+}
 /// Vision radius around allied City-State capitals (Embassy Exchange), 0 = none
 int CvPlayer::GetLekmodAllyCSVisionRange() const
 {

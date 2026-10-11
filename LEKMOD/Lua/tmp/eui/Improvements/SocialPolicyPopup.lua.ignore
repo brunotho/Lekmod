@@ -9,6 +9,46 @@ local GameInfo = EUI and EUI.GameInfoCache or GameInfo
 
 include( "InstanceManager" );
 
+-- LEKMOD: wrap long [ICON_BULLET] lines ourselves so the wrapped part starts under the text, not under the bullet
+local LEKMOD_BULLET_LINE_CHARS = 46;	-- visible characters per tooltip line (icons count as 3)
+local LEKMOD_BULLET_INDENT = "    ";	-- about the width of the bullet icon
+local function LekmodVisibleLength(s)
+	s = string.gsub(s, "%[COLOR_[%w_]+%]", "");
+	s = string.gsub(s, "%[ENDCOLOR%]", "");
+	s = string.gsub(s, "%[ICON_[%w_]+%]", "xxx");
+	return string.len(s);
+end
+function LekmodHangingIndent(text)
+	if text == nil or string.find(text, "[ICON_BULLET]", 1, true) == nil then
+		return text;
+	end
+	local out = {};
+	local rest = text .. "[NEWLINE]";
+	while true do
+		local i = string.find(rest, "[NEWLINE]", 1, true);
+		if i == nil then break; end
+		local line = string.sub(rest, 1, i - 1);
+		rest = string.sub(rest, i + 9);
+		if string.find(line, "[ICON_BULLET]", 1, true) == 1 and LekmodVisibleLength(line) > LEKMOD_BULLET_LINE_CHARS then
+			local current = "";
+			for word in string.gmatch(line, "%S+") do
+				local candidate = (current == "") and word or (current .. " " .. word);
+				local limit = LEKMOD_BULLET_LINE_CHARS;
+				if current ~= "" and LekmodVisibleLength(candidate) > limit then
+					table.insert(out, current);
+					current = LEKMOD_BULLET_INDENT .. word;
+				else
+					current = candidate;
+				end
+			end
+			table.insert(out, current);
+		else
+			table.insert(out, line);
+		end
+	end
+	return table.concat(out, "[NEWLINE]");
+end
+
 -- LEKMOD: policies with era-based City-State yields (Scholasticism) show the numbers of the player's current era
 function LekmodPolicyEraTooltip(policyInfo, player)
 	local currentEra = Teams[player:GetTeam()]:GetCurrentEra();
@@ -411,7 +451,7 @@ function UpdateDisplay()
 		end
 
 		-- Update tooltips
-		thisButton:SetToolTipString(strToolTip);
+		thisButton:SetToolTipString(LekmodHangingIndent(strToolTip));
 
 		-- If the player doesn't have the era prereq, then dim out the branch
 		if bEraLock then
@@ -516,7 +556,7 @@ function UpdateDisplay()
 				end
 			end
 
-			thisPolicyIcon.PolicyIcon:SetToolTipString( strTooltip );
+			thisPolicyIcon.PolicyIcon:SetToolTipString( LekmodHangingIndent(strTooltip) );
 		end
 
 		policyID = policyID + 1;

@@ -280917,7 +280917,7 @@
 		</Update>
 		<Update>
 			<Where Type="POLICY_FREE_THOUGHT"/>
-			<Set GridX="1" GridY="2"/>
+			<Set GridX="5" GridY="2"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_SCIENTIFIC_REVOLUTION"/>
@@ -280984,7 +280984,7 @@
 		<Delete PolicyType="POLICY_SCIENTIFIC_REVOLUTION"/>
 		<Row>
 			<PolicyType>POLICY_FREE_THOUGHT</PolicyType>
-			<PrereqPolicy>POLICY_SOVEREIGNTY</PrereqPolicy>
+			<PrereqPolicy>POLICY_HUMANISM</PrereqPolicy>
 		</Row>
 		<Row>
 			<PolicyType>POLICY_SCIENTIFIC_REVOLUTION</PolicyType>
@@ -280996,6 +280996,9 @@
 		</Row>
 	</Policy_PrereqPolicies>
 	<Policy_ImprovementYieldChanges>
+		<Delete PolicyType="POLICY_FREE_THOUGHT" ImprovementType="IMPROVEMENT_CHATEAU"/>
+		<Delete PolicyType="POLICY_FREE_THOUGHT" ImprovementType="IMPROVEMENT_MC_SCOTTISH_CLAN_CASTLE"/>
+		<Delete PolicyType="POLICY_FREE_THOUGHT" ImprovementType="IMPROVEMENT_BRAZILWOOD_CAMP"/>
 		<Row>
 			<PolicyType>POLICY_FREE_THOUGHT</PolicyType>
 			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>

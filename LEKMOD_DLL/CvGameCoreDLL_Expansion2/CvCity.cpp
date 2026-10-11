@@ -12013,13 +12013,6 @@ int CvCity::GetLocalHappiness() const
 						{
 							iSpecialPolicyBuildingHappiness += pkPolicyInfo->GetBuildingClassHappiness(eBuildingClass);
 						}
-#ifdef LEKMOD_POLICY_REWORK
-						// only until the player adopts an ideology (Sovereignty)
-						if (pkPolicyInfo->GetBuildingClassHappinessUntilIdeology(eBuildingClass) != 0 && kPlayer.GetPlayerPolicies()->GetLateGamePolicyTree() == NO_POLICY_BRANCH_TYPE)
-						{
-							iSpecialPolicyBuildingHappiness += pkPolicyInfo->GetBuildingClassHappinessUntilIdeology(eBuildingClass);
-						}
-#endif
 					}
 				}
 			}
@@ -12078,6 +12071,11 @@ int CvCity::GetLocalHappiness() const
 		if (GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
 		{
 			iPolicyBuildingHappiness += kPlayer.GetPlayerPolicies()->GetBuildingClassHappiness(eBuildingClass);
+#ifdef LEKMOD_POLICY_REWORK
+			// only until the player adopts an ideology (Sovereignty)
+			if (kPlayer.GetPlayerPolicies()->GetLateGamePolicyTree() == NO_POLICY_BRANCH_TYPE)
+				iPolicyBuildingHappiness += kPlayer.GetLekmodBuildingClassHappinessUntilIdeology(eBuildingClass);
+#endif
 #if defined(TRAITIFY)
 			iTraitBuildingHappiness += kPlayer.GetPlayerTraits()->GetBuildingClassHappiness(eBuildingClass);
 #endif // TRAITIFY

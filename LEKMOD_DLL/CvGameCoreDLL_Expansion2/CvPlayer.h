@@ -254,6 +254,7 @@ public:
 	int GetLekmodTempScienceModifier() const;
 	int GetLekmodIdeologyTurn() const { return m_iLekmodIdeologyTurn; }
 	int GetLekmodAllyCSVisionRange() const;
+	int GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const;
 	int GetLekmodAllyUUPurchaseMod() const;
 	bool LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const;
 	bool LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const;
