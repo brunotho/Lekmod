@@ -1584,3 +1584,10 @@ Tags: policies, religion
 - Removed: Mandate of Heaven: Palace Production; the Faith purchase discount (moved to Reformation)
 - Changed: Reformation: 20% discount on Faith purchases of religious units and buildings
 - Removed: Reformation: border growth bonus
+
+POLICY TEXTS (POLICY_BRANCH_*)
+-----------------------------
+Tags: policies, ui
+- Changed: every policy tree tooltip lists the opener and the finisher effects as bullet points
+- Changed: Warrior Code and Zealot texts say that barbarian kills stop giving yields from turn 70 (this already applied to all kill yields)
+- Fixed: a few unit and building texts showed a gap where an icon did not exist (Czech Legion, Arabia's building, Huns' building, Serai, a Courthouse replacement)
