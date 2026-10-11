@@ -7749,6 +7749,15 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				}
 			}
 #endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+			// Buildings.ClosestCoastalMinorInfluence: one-time influence with the closest coastal city-state we are at peace with (Colossus)
+			if (pBuildingInfo->GetClosestCoastalMinorInfluence() != 0)
+			{
+				PlayerTypes eMinor = LekmodGetClosestCoastalMinor();
+				if (eMinor != NO_PLAYER)
+					GET_PLAYER(eMinor).GetMinorCivAI()->ChangeFriendshipWithMajor(getOwner(), pBuildingInfo->GetClosestCoastalMinorInfluence());
+			}
+#endif
 #ifdef LEKMOD_DEFENSE_BUILDINGS
 			// Buildings.RevealResource: the team sees this resource from now on (saved team list, also used by the base game)
 			if (pBuildingInfo->GetRevealResource() != -1)
@@ -10138,6 +10147,9 @@ void CvCity::changeBaseGreatPeopleRate(int iChange)
 int CvCity::getGreatPeopleRateModifier() const
 {
 	VALIDATE_OBJECT
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	return m_iGreatPeopleRateModifier + GetLekmodFilledGPRateModifier();
+#endif
 	return m_iGreatPeopleRateModifier;
 }
 
@@ -12046,6 +12058,9 @@ void CvCity::ChangeBaseHappinessFromBuildings(int iChange)
 //	--------------------------------------------------------------------------------
 int CvCity::GetUnmoddedHappinessFromBuildings() const
 {
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	return m_iUnmoddedHappinessFromBuildings + GetLekmodEraHappiness();
+#endif
 	return m_iUnmoddedHappinessFromBuildings;
 }
 
@@ -13065,6 +13080,9 @@ int CvCity::GetBaseYieldRateFromGreatWorks(YieldTypes eIndex) const
 	VALIDATE_OBJECT
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	return GetCityBuildings()->GetYieldFromGreatWorks(eIndex) + GetLekmodFilledGreatWorkYield(eIndex);
+#endif
 	return GetCityBuildings()->GetYieldFromGreatWorks(eIndex);
 }
 
@@ -14573,6 +14591,227 @@ void CvCity::RecomputeFreeTerrainYieldChanges()
 }
 #endif
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+//	--------------------------------------------------------------------------------
+/// Buildings with Lekmod wonder effects (great work slot effects, era happiness, nearby auras); looked up once
+static const std::vector<BuildingTypes>& LekmodWonderEffectBuildings()
+{
+	static std::vector<BuildingTypes> s_aBuildings;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		s_bInit = true;
+		for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+		{
+			CvBuildingEntry* pkInfo = GC.getBuildingInfo((BuildingTypes)i);
+			if (pkInfo && pkInfo->HasLekmodWonderEffects())
+				s_aBuildings.push_back((BuildingTypes)i);
+		}
+	}
+	return s_aBuildings;
+}
+
+/// Filled great work slots of this building in the city (-1 if the city doesn't have the building)
+int CvCity::GetLekmodGreatWorksInBuilding(BuildingTypes eBuilding) const
+{
+	CvBuildingEntry* pkInfo = GC.getBuildingInfo(eBuilding);
+	if (pkInfo == NULL || m_pCityBuildings->GetNumBuilding(eBuilding) <= 0)
+		return -1;
+	return (int)m_pCityBuildings->GetNumGreatWorksInBuilding((BuildingClassTypes)pkInfo->GetBuildingClassType());
+}
+
+bool CvCity::IsLekmodGreatWorkSlotsFilled(BuildingTypes eBuilding) const
+{
+	CvBuildingEntry* pkInfo = GC.getBuildingInfo(eBuilding);
+	if (pkInfo == NULL || (int)pkInfo->GetGreatWorkCount() <= 0)
+		return false;
+	return GetLekmodGreatWorksInBuilding(eBuilding) >= (int)pkInfo->GetGreatWorkCount();
+}
+
+/// Building_GreatWorkFilledYields: yields once all slots are filled, or per filled slot; PerEra multiplies by (era + 1)
+int CvCity::GetLekmodFilledGreatWorkYield(YieldTypes eYield) const
+{
+	int iTotal = 0;
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		CvBuildingEntry* pkInfo = GC.getBuildingInfo(aBuildings[i]);
+		const std::vector<LekmodGreatWorkFilledYield>& aRows = pkInfo->GetLekmodGreatWorkFilledYields();
+		if (aRows.empty())
+			continue;
+		int iFilled = GetLekmodGreatWorksInBuilding(aBuildings[i]);
+		if (iFilled <= 0)
+			continue;
+		const bool bAll = iFilled >= (int)pkInfo->GetGreatWorkCount();
+		for (uint j = 0; j < aRows.size(); j++)
+		{
+			if (aRows[j].m_eYield != eYield)
+				continue;
+			int iValue = aRows[j].m_bPerSlot ? aRows[j].m_iYield * iFilled : (bAll ? aRows[j].m_iYield : 0);
+			if (aRows[j].m_bPerEra)
+				iValue *= (int)GET_PLAYER(getOwner()).GetCurrentEra() + 1;
+			iTotal += iValue;
+		}
+	}
+	return iTotal;
+}
+
+/// Buildings.GreatWorkFilledGPRateModifier: more Great People in the city while all slots of the building are filled (National Epic)
+int CvCity::GetLekmodFilledGPRateModifier() const
+{
+	int iTotal = 0;
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		CvBuildingEntry* pkInfo = GC.getBuildingInfo(aBuildings[i]);
+		if (pkInfo->GetGreatWorkFilledGPRateModifier() != 0 && IsLekmodGreatWorkSlotsFilled(aBuildings[i]))
+			iTotal += pkInfo->GetGreatWorkFilledGPRateModifier();
+	}
+	return iTotal;
+}
+
+/// Building_EraHappiness: happiness rows of every era up to the owner's current era (Eiffel Tower)
+int CvCity::GetLekmodEraHappiness() const
+{
+	int iTotal = 0;
+	const int iEra = (int)GET_PLAYER(getOwner()).GetCurrentEra();
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		if (m_pCityBuildings->GetNumBuilding(aBuildings[i]) <= 0)
+			continue;
+		const std::vector<std::pair<int, int> >& aRows = GC.getBuildingInfo(aBuildings[i])->GetLekmodEraHappiness();
+		for (uint j = 0; j < aRows.size(); j++)
+		{
+			if (aRows[j].first <= iEra)
+				iTotal += aRows[j].second;
+		}
+	}
+	return iTotal;
+}
+
+/// The closest city-state with a coastal capital that we are at peace with (Colossus)
+PlayerTypes CvCity::LekmodGetClosestCoastalMinor() const
+{
+	PlayerTypes eBest = NO_PLAYER;
+	int iBestDistance = MAX_INT;
+	for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
+	{
+		CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);
+		if (!kMinor.isAlive() || !kMinor.isMinorCiv() || GET_TEAM(getTeam()).isAtWar(kMinor.getTeam()))
+			continue;
+		CvCity* pCapital = kMinor.getCapitalCity();
+		if (pCapital == NULL || !pCapital->isCoastal())
+			continue;
+		int iDistance = plotDistance(getX(), getY(), pCapital->getX(), pCapital->getY());
+		if (iDistance < iBestDistance)
+		{
+			iBestDistance = iDistance;
+			eBest = (PlayerTypes)iMinor;
+		}
+	}
+	return eBest;
+}
+
+/// Buildings.NearbyMinorRestingInfluence: higher resting influence with city-states whose capital is in range of the major's city with the building (Statue of Zeus)
+int CvCity::LekmodNearbyMinorRestingInfluence(PlayerTypes eMajor, const CvCity* pMinorCapital)
+{
+	if (pMinorCapital == NULL || eMajor < 0 || eMajor >= MAX_MAJOR_CIVS)
+		return 0;
+	int iTotal = 0;
+	CvPlayer& kMajor = GET_PLAYER(eMajor);
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		CvBuildingEntry* pkInfo = GC.getBuildingInfo(aBuildings[i]);
+		if (pkInfo->GetNearbyMinorRestingInfluence() == 0)
+			continue;
+		int iLoop;
+		for (const CvCity* pLoopCity = kMajor.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kMajor.nextCity(&iLoop))
+		{
+			if (pLoopCity->GetCityBuildings()->GetNumBuilding(aBuildings[i]) > 0
+				&& plotDistance(pLoopCity->getX(), pLoopCity->getY(), pMinorCapital->getX(), pMinorCapital->getY()) <= pkInfo->GetNearbyMinorRange())
+			{
+				iTotal += pkInfo->GetNearbyMinorRestingInfluence();
+				break;
+			}
+		}
+	}
+	return iTotal;
+}
+
+/// Buildings.NearbyEnemyCombatMod: units within range of a city with the building whose owner is at war with them fight weaker (Statue of Zeus);
+/// the strongest penalty counts, combined with unit auras in CvUnit::GetReverseGreatGeneralModifier
+int CvCity::LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot* pPlot)
+{
+	if (pPlot == NULL || eUnitOwner == NO_PLAYER)
+		return 0;
+	int iTotal = 0;
+	CvTeam& kUnitTeam = GET_TEAM(GET_PLAYER(eUnitOwner).getTeam());
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		CvBuildingEntry* pkInfo = GC.getBuildingInfo(aBuildings[i]);
+		if (pkInfo->GetNearbyEnemyCombatMod() == 0)
+			continue;
+		bool bFound = false;
+		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS && !bFound; iPlayer++)
+		{
+			CvPlayer& kOwner = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kOwner.isAlive() || !kUnitTeam.isAtWar(kOwner.getTeam()))
+				continue;
+			int iLoop;
+			for (const CvCity* pLoopCity = kOwner.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kOwner.nextCity(&iLoop))
+			{
+				if (pLoopCity->GetCityBuildings()->GetNumBuilding(aBuildings[i]) > 0
+					&& plotDistance(pLoopCity->getX(), pLoopCity->getY(), pPlot->getX(), pPlot->getY()) <= pkInfo->GetNearbyEnemyCombatRange())
+				{
+					iTotal = std::min(iTotal, pkInfo->GetNearbyEnemyCombatMod());
+					bFound = true;
+					break;
+				}
+			}
+		}
+	}
+	return iTotal;
+}
+
+/// Buildings.GreatWorkFilledNearbyTourismMod: more Tourism toward players owning a tile in range of our city whose building has all slots filled (CN Tower)
+int CvCity::LekmodNearbyBordersTourismModifier(PlayerTypes eFrom, PlayerTypes eTo)
+{
+	if (eFrom == NO_PLAYER || eTo == NO_PLAYER || eFrom == eTo)
+		return 0;
+	int iTotal = 0;
+	CvPlayer& kFrom = GET_PLAYER(eFrom);
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		CvBuildingEntry* pkInfo = GC.getBuildingInfo(aBuildings[i]);
+		if (pkInfo->GetGreatWorkFilledNearbyTourismMod() == 0)
+			continue;
+		const int iRange = pkInfo->GetGreatWorkFilledNearbyTourismRange();
+		bool bFound = false;
+		int iLoop;
+		for (const CvCity* pLoopCity = kFrom.firstCity(&iLoop); pLoopCity != NULL && !bFound; pLoopCity = kFrom.nextCity(&iLoop))
+		{
+			if (!pLoopCity->IsLekmodGreatWorkSlotsFilled(aBuildings[i]))
+				continue;
+			for (int iDX = -iRange; iDX <= iRange && !bFound; iDX++)
+			{
+				for (int iDY = -iRange; iDY <= iRange && !bFound; iDY++)
+				{
+					CvPlot* pLoopPlot = plotXYWithRangeCheck(pLoopCity->getX(), pLoopCity->getY(), iDX, iDY, iRange);
+					if (pLoopPlot != NULL && pLoopPlot->getOwner() == eTo)
+						bFound = true;
+				}
+			}
+		}
+		if (bFound)
+			iTotal += pkInfo->GetGreatWorkFilledNearbyTourismMod();
+	}
+	return iTotal;
+}
+#endif
 #ifdef LEKMOD_DEFENSE_BUILDINGS
 //	--------------------------------------------------------------------------------
 int CvCity::GetLekmodBuildingStat(int iStat, bool bMax) const

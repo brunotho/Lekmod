@@ -21023,6 +21023,10 @@ int CvUnit::GetReverseGreatGeneralModifier()const
 									int iRange = pLoopUnit->getNearbyEnemyCombatRange();
 									if(plotDistance(getX(), getY(), pLoopPlot->getX(), pLoopPlot->getY()) <= iRange)
 									{
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+										// same aura as the Statue of Zeus: only the strongest one counts
+										return std::min(iMod, CvCity::LekmodNearbyEnemyCombatModifier(getOwner(), plot()));
+#endif
 										return iMod;
 									}
 								}
@@ -21035,6 +21039,10 @@ int CvUnit::GetReverseGreatGeneralModifier()const
 		}
 	}
 
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	// Statue of Zeus: the same aura from an enemy city (Fear Aura and the wonder don't stack)
+	return CvCity::LekmodNearbyEnemyCombatModifier(getOwner(), plot());
+#endif
 	return 0;
 }
 

@@ -2275,6 +2275,20 @@
 		<Column name="YieldChange" type="integer" default="0" />
 		<Column name="HoldingYield" type="integer" default="0" />
 	</Table>
+	<!-- LEKMOD: city yields once all great work slots of the building are filled, or per filled slot (PerSlot); PerEra multiplies by (era + 1) -->
+	<Table name="Building_GreatWorkFilledYields">
+		<Column name="BuildingType" type="text" reference="Buildings(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+		<Column name="PerSlot" type="boolean" default="false" />
+		<Column name="PerEra" type="boolean" default="false" />
+	</Table>
+	<!-- LEKMOD: global happiness (like Notre Dame) from this building for every era up to the owner's current era (cumulative) -->
+	<Table name="Building_EraHappiness">
+		<Column name="BuildingType" type="text" reference="Buildings(Type)" />
+		<Column name="EraType" type="text" reference="Eras(Type)" />
+		<Column name="Happiness" type="integer" default="0" />
+	</Table>
 	<!-- Can do 3 things,
 	1) Change the yield of all the works in a city, 
 	2) Change the yield of all the works of a specific class in a city (EX Great Works of Art only), or
@@ -43230,6 +43244,14 @@
 		<Column name="AirportRebase" type="boolean" default="false" /> <!-- LEKMOD: planes rebasing between two cities with this building keep their moves (once per turn) -->
 		<Column name="NearRiver" type="boolean" default="false" /> <!-- LEKMOD: the city must be on a river or next to a river tile -->
 		<Column name="NoMaintenanceOnRiver" type="boolean" default="false" /> <!-- LEKMOD: no Gold maintenance when the city is on a river -->
+		<Column name="GreatWorkFilledGPRateModifier" type="integer" default="0" /> <!-- LEKMOD: % Great People in the city while all great work slots of this building are filled -->
+		<Column name="GreatWorkFilledNearbyTourismMod" type="integer" default="0" /> <!-- LEKMOD: % Tourism toward civs owning a tile within GreatWorkFilledNearbyTourismRange, while all slots are filled -->
+		<Column name="GreatWorkFilledNearbyTourismRange" type="integer" default="0" />
+		<Column name="NearbyMinorRestingInfluence" type="integer" default="0" /> <!-- LEKMOD: resting influence with city-states whose capital is within NearbyMinorRange -->
+		<Column name="NearbyMinorRange" type="integer" default="0" />
+		<Column name="NearbyEnemyCombatMod" type="integer" default="0" /> <!-- LEKMOD: Fear Aura of a city: enemy units within NearbyEnemyCombatRange (doesn't stack with unit auras) -->
+		<Column name="NearbyEnemyCombatRange" type="integer" default="0" />
+		<Column name="ClosestCoastalMinorInfluence" type="integer" default="0" /> <!-- LEKMOD: one-time influence with the closest coastal city-state at peace, when built -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0" /> <!-- LEKMOD: % more yield from great works held in this building (Museum) -->
 		<Column name="WorshipHouse" type="boolean" default="false" /> <!-- LEKMOD: Houses of Worship: 4 Culture for the first in a city, 2 for the second, 0 after -->
 		<Column name="RevealResource" type="text" default="NULL" /> <!-- LEKMOD: building it reveals this resource for the team (like its reveal tech) -->
@@ -46876,10 +46898,8 @@
 			<HurryCostModifier>-1</HurryCostModifier>
 			<ConquestProb>100</ConquestProb> 
 			<MaxStartEra>ERA_CLASSICAL</MaxStartEra> 
-			<FreePromotion>PROMOTION_STATUE_ZEUS</FreePromotion> 
 			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
 			<PolicyBranchType>POLICY_BRANCH_HONOR</PolicyBranchType> 
-			<SpecialistType>SPECIALIST_ENGINEER</SpecialistType> 
 			<GreatPeopleRateChange>1</GreatPeopleRateChange> 
 			<ArtDefineTag>STATUE ZEUS</ArtDefineTag> 
 			<DisplayPosition>4</DisplayPosition> 
@@ -47125,7 +47145,6 @@
 			<HurryCostModifier>-1</HurryCostModifier>
 			<ConquestProb>100</ConquestProb> 
 			<MaxStartEra>ERA_RENAISSANCE</MaxStartEra> 
-			<FreeBuildingThisCity>BUILDINGCLASS_TEMPLE</FreeBuildingThisCity> 
 			<PrereqTech>TECH_THEOLOGY</PrereqTech> 
 			<ArtDefineTag>HAGIA SOPHIA</ArtDefineTag> 
 			<DisplayPosition>2</DisplayPosition> 
@@ -49719,6 +49738,227 @@
 			<YieldChange>1</YieldChange>
 		</Row>
 	</Building_GreatWorkYieldChanges>
+	<!-- LEKMOD: Phase 4 tourism wonders and National Epic: great work slots (Free = prefilled), effects when filled -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_GREAT_LIBRARY"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="2" FreeGreatWorkCount="0" Help="TXT_KEY_WONDER_GREAT_LIBRARY_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_MOSQUE_OF_DJENNE"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="1" Happiness="2" FreeBuildingThisCity="BUILDINGCLASS_MOSQUE"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HAGIA_SOPHIA"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="1"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_STATUE_ZEUS"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="1" FreeGreatWorkCount="1" MilitaryProductionMod="0" GreatPeopleRateChange="0" NearbyMinorRestingInfluence="10" NearbyMinorRange="8" NearbyEnemyCombatMod="-10" NearbyEnemyCombatRange="5"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_COLOSSUS"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="1" FreeGreatWorkCount="0" Cost="250" ClosestCoastalMinorInfluence="30"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HANGING_GARDEN"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="2" FreeGreatWorkCount="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_PARTHENON"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="2" FreeGreatWorkCount="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_NOTRE_DAME"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="2" FreeGreatWorkCount="1" GreatPeopleRateChange="0" Help="TXT_KEY_LEKMOD_WONDER_NOTRE_DAME_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_GLOBE_THEATER"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="2" FreeGreatWorkCount="1" GreatPeopleRateChange="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BROADWAY"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="1"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_RED_FORT"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_CN_TOWER"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="0" GreatWorkFilledNearbyTourismMod="50" GreatWorkFilledNearbyTourismRange="10"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_EIFFEL_TOWER"/>
+			<Set UnmoddedHappiness="0" GreatPeopleRateChange="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_CRISTO_REDENTOR"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="0"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_SISTINE_CHAPEL"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="2" FreeGreatWorkCount="0" GreatWorkYieldModifier="100"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_NATIONAL_EPIC"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="2" GreatPeopleRateModifier="0" GoldMaintenance="4" GreatWorkFilledGPRateModifier="25"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ASKUM_NATIONAL_EPIC"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="3" FreeGreatWorkCount="2" GreatPeopleRateModifier="0" GoldMaintenance="4" GreatWorkFilledGPRateModifier="25"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_GREAT_LIBRARY" YieldType="YIELD_SCIENCE"/>
+		<Delete BuildingType="BUILDING_MOSQUE_OF_DJENNE"/>
+		<Delete BuildingType="BUILDING_HAGIA_SOPHIA"/>
+		<Delete BuildingType="BUILDING_STATUE_ZEUS"/>
+		<Delete BuildingType="BUILDING_NOTRE_DAME" YieldType="YIELD_FAITH"/>
+		<Delete BuildingType="BUILDING_GLOBE_THEATER"/>
+		<Delete BuildingType="BUILDING_BROADWAY"/>
+		<Delete BuildingType="BUILDING_EIFFEL_TOWER" YieldType="YIELD_TOURISM"/>
+		<Delete BuildingType="BUILDING_NATIONAL_EPIC" YieldType="YIELD_CULTURE"/>
+	</Building_YieldChanges>
+	<Building_TechEnhancedYieldChanges>
+		<Delete BuildingType="BUILDING_RED_FORT"/>
+	</Building_TechEnhancedYieldChanges>
+	<Building_GlobalYieldModifiers>
+		<Update>
+			<Where BuildingType="BUILDING_SISTINE_CHAPEL" YieldType="YIELD_CULTURE"/>
+			<Set Yield="20"/>
+		</Update>
+	</Building_GlobalYieldModifiers>
+	<Building_GreatWorkFilledYields>
+		<Row>
+			<BuildingType>BUILDING_GREAT_LIBRARY</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>3</Yield>
+			<PerSlot>true</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_GREAT_LIBRARY</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>3</Yield>
+			<PerSlot>true</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MOSQUE_OF_DJENNE</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>10</Yield>
+			<PerSlot>false</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HAGIA_SOPHIA</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>10</Yield>
+			<PerSlot>false</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_COLOSSUS</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>4</Yield>
+			<PerSlot>false</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HANGING_GARDEN</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+			<PerSlot>false</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_PARTHENON</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+			<PerSlot>false</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_NOTRE_DAME</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>4</Yield>
+			<PerSlot>false</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_GLOBE_THEATER</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<PerSlot>true</PerSlot>
+			<PerEra>true</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_GLOBE_THEATER</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>1</Yield>
+			<PerSlot>true</PerSlot>
+			<PerEra>true</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BROADWAY</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>3</Yield>
+			<PerSlot>true</PerSlot>
+			<PerEra>true</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_RED_FORT</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>6</Yield>
+			<PerSlot>true</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_CRISTO_REDENTOR</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>40</Yield>
+			<PerSlot>false</PerSlot>
+			<PerEra>false</PerEra>
+		</Row>
+	</Building_GreatWorkFilledYields>
+	<Building_EraEnhancedYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_EIFFEL_TOWER</BuildingType>
+			<EraType>ERA_MODERN</EraType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>15</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_EIFFEL_TOWER</BuildingType>
+			<EraType>ERA_POSTMODERN</EraType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>15</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_EIFFEL_TOWER</BuildingType>
+			<EraType>ERA_FUTURE</EraType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>30</Yield>
+		</Row>
+	</Building_EraEnhancedYieldChanges>
+	<Building_EraHappiness>
+		<Row>
+			<BuildingType>BUILDING_EIFFEL_TOWER</BuildingType>
+			<EraType>ERA_MODERN</EraType>
+			<Happiness>3</Happiness>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_EIFFEL_TOWER</BuildingType>
+			<EraType>ERA_POSTMODERN</EraType>
+			<Happiness>3</Happiness>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_EIFFEL_TOWER</BuildingType>
+			<EraType>ERA_FUTURE</EraType>
+			<Happiness>6</Happiness>
+		</Row>
+	</Building_EraHappiness>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -255417,6 +255657,7 @@
 			<IconAtlas>LEKMOD_FEAR_AURA_PROMOTION_ATLAS</IconAtlas>
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_FEAR_AURA</PediaEntry>
+			<GiveDomain>DOMAIN_LAND</GiveDomain> <!-- LEKMOD: the aura only works with a domain -->
 		</Row>
 		<Row>
 			<ID>358</ID>

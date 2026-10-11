@@ -1443,3 +1443,36 @@ GREAT WRITER, ARTIST AND MUSICIAN (UNIT_WRITER, UNIT_ARTIST, UNIT_MUSICIAN)
 Tags: units
 - Changed: Great Writers, Artists and Musicians create a Great Work that fits in any empty Great Work slot (was: only slots of their own kind)
 - Note: comes from the shared slot type (GREAT WORKS above); this item updates the mission and unit texts
+
+TOURISM WONDERS (BUILDING_GREAT_LIBRARY, BUILDING_MOSQUE_OF_DJENNE, BUILDING_HAGIA_SOPHIA, BUILDING_STATUE_ZEUS, BUILDING_COLOSSUS, BUILDING_HANGING_GARDEN, BUILDING_PARTHENON, BUILDING_NOTRE_DAME, BUILDING_GLOBE_THEATER, BUILDING_BROADWAY, BUILDING_RED_FORT, BUILDING_CN_TOWER, BUILDING_EIFFEL_TOWER, BUILDING_CRISTO_REDENTOR, BUILDING_SISTINE_CHAPEL)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Tags: buildings
+Many wonders get Great Work slots, some come with Great Works already inside, and filling the slots unlocks bonuses.
+- Changed: Great Library: no Science of its own; each Great Work in it gives +3 Science and +3 Tourism (2 slots)
+- Changed: Great Mosque of Djenne: no Culture or Faith; 2 Happiness (was 3); a free Mosque in the city; 3 slots, 1 comes filled; all filled: +10 Tourism
+- Changed: Hagia Sophia: no free Temple and no Faith; 3 slots, 1 comes filled; all filled: +10 Faith
+- Changed: Statue of Zeus (rebuilt): +10 resting Influence with city-states within 8 tiles; enemy units within 5 tiles of the city have -10% Combat Strength (Fear Aura); 1 slot that comes filled. Removed: its yields, Engineer points, +10% military production and the +15% against cities for all units
+- Changed: Colossus: costs 250 (like the Oracle, was 185); 1 slot, filled: +4 Gold; when built, +30 Influence with the closest coastal city-state you are at peace with
+- Changed: Hanging Gardens: 2 slots, both filled: +2 Food
+- Changed: Parthenon: 2 slots (the Frieze in one), both filled: +3 Culture
+- Changed: Notre Dame: no Faith and no Artist points; 2 slots, 1 comes filled; both filled: +4 Faith
+- Changed: Globe Theater: no Culture and no Writer points; 2 slots, 1 comes filled; each Great Work in it gives +1 Culture and +1 Tourism per era (Renaissance Era 4)
+- Changed: Broadway (rebuilt): a free Great Musician; 3 slots, 1 comes filled; each Great Work in it gives +3 Tourism per era (Modern Era 18). Removed: its Culture
+- Changed: Red Fort: no Tourism from Flight; 3 slots, each Great Work in it gives +6 Tourism
+- Changed: CN Tower: 3 slots; all filled: +50% Tourism toward civs with territory within 10 tiles of the city
+- Changed: Eiffel Tower: +15 Tourism and +3 Happiness in the Modern Era, +30 and +6 in the Atomic Era, +60 and +12 in the Information Era (was 12 Tourism and 5 Happiness); no Merchant points
+- Changed: Cristo Redentor: 3 slots; all filled: +40 Faith
+- Changed: Sistine Chapel: +20% Culture in all cities (was 25%); Great Works in it yield double
+- Changed: the combat preview calls every enemy aura "Fear Aura" (was "Nearby Reverse Great General"); auras don't stack, the strongest counts
+- Note: Petra had no Tourism to remove. Colossus trade texts were already right (+2 Gold to you, +1 to the route owner)
+- Dev: the GDR's Fear Aura never applied (the promotion had no domain); fixed
+- DLL: Building_GreatWorkFilledYields, Building_EraHappiness, Buildings.GreatWorkFilledNearbyTourismMod/Range, NearbyMinorRestingInfluence/Range, NearbyEnemyCombatMod/Range, ClosestCoastalMinorInfluence (LEKMOD_GREAT_WORK_WONDER_EFFECTS); "comes filled" = FreeGreatWorkCount (random Great Works of Art)
+
+NATIONAL EPIC (BUILDING_NATIONAL_EPIC)
+-------------------------------------
+Tags: buildings
+- Changed: 3 Great Work slots, 2 come filled; with all 3 filled, +25% Great People in the city (was always +25%)
+- Removed: its Culture
+- Changed: 4 Gold maintenance (was 0)
+- Changed: Aksum's version gets the same slots, Great People rule and maintenance, and keeps its Culture and Faith
+- DLL: Buildings.GreatWorkFilledGPRateModifier

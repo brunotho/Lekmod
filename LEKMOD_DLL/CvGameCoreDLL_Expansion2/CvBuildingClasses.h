@@ -43,6 +43,17 @@ struct LekmodBuildingTechTerrainYield
 	int m_iYield;
 };
 #endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+// Building_GreatWorkFilledYields: city yields once all great work slots of the building are filled (or per filled slot), optionally x (era + 1)
+struct LekmodGreatWorkFilledYield
+{
+	LekmodGreatWorkFilledYield() : m_eYield(NO_YIELD), m_iYield(0), m_bPerSlot(false), m_bPerEra(false) {};
+	YieldTypes m_eYield;
+	int m_iYield;
+	bool m_bPerSlot;
+	bool m_bPerEra;
+};
+#endif
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //  class : CvThemingBonusInfo
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -213,6 +224,23 @@ public:
 	int GetRevealResource() const;
 	bool IsWorshipHouse() const { return m_bLekmodWorshipHouse; }
 	int GetGreatWorkYieldModifier() const { return m_iLekmodGreatWorkYieldModifier; }
+#endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	const std::vector<LekmodGreatWorkFilledYield>& GetLekmodGreatWorkFilledYields() const { return m_aLekmodGreatWorkFilledYields; }
+	const std::vector<std::pair<int, int> >& GetLekmodEraHappiness() const { return m_aLekmodEraHappiness; }
+	int GetGreatWorkFilledGPRateModifier() const { return m_iLekmodGreatWorkFilledGPRateModifier; }
+	int GetGreatWorkFilledNearbyTourismMod() const { return m_iLekmodGreatWorkFilledNearbyTourismMod; }
+	int GetGreatWorkFilledNearbyTourismRange() const { return m_iLekmodGreatWorkFilledNearbyTourismRange; }
+	int GetNearbyMinorRestingInfluence() const { return m_iLekmodNearbyMinorRestingInfluence; }
+	int GetNearbyMinorRange() const { return m_iLekmodNearbyMinorRange; }
+	int GetNearbyEnemyCombatMod() const { return m_iLekmodNearbyEnemyCombatMod; }
+	int GetNearbyEnemyCombatRange() const { return m_iLekmodNearbyEnemyCombatRange; }
+	int GetClosestCoastalMinorInfluence() const { return m_iLekmodClosestCoastalMinorInfluence; }
+	bool HasLekmodWonderEffects() const
+	{
+		return !m_aLekmodGreatWorkFilledYields.empty() || !m_aLekmodEraHappiness.empty() || m_iLekmodGreatWorkFilledGPRateModifier != 0
+			|| m_iLekmodGreatWorkFilledNearbyTourismMod != 0 || m_iLekmodNearbyMinorRestingInfluence != 0 || m_iLekmodNearbyEnemyCombatMod != 0;
+	}
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int GetTerritoryHealChange() const;
@@ -545,6 +573,18 @@ private:
 	int m_iRevealResource;
 	bool m_bLekmodWorshipHouse;
 	int m_iLekmodGreatWorkYieldModifier;
+#endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	std::vector<LekmodGreatWorkFilledYield> m_aLekmodGreatWorkFilledYields;
+	std::vector<std::pair<int, int> > m_aLekmodEraHappiness;
+	int m_iLekmodGreatWorkFilledGPRateModifier;
+	int m_iLekmodGreatWorkFilledNearbyTourismMod;
+	int m_iLekmodGreatWorkFilledNearbyTourismRange;
+	int m_iLekmodNearbyMinorRestingInfluence;
+	int m_iLekmodNearbyMinorRange;
+	int m_iLekmodNearbyEnemyCombatMod;
+	int m_iLekmodNearbyEnemyCombatRange;
+	int m_iLekmodClosestCoastalMinorInfluence;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;

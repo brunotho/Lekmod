@@ -105,6 +105,16 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_bLekmodWorshipHouse(false),
 	m_iLekmodGreatWorkYieldModifier(0),
 #endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	m_iLekmodGreatWorkFilledGPRateModifier(0),
+	m_iLekmodGreatWorkFilledNearbyTourismMod(0),
+	m_iLekmodGreatWorkFilledNearbyTourismRange(0),
+	m_iLekmodNearbyMinorRestingInfluence(0),
+	m_iLekmodNearbyMinorRange(0),
+	m_iLekmodNearbyEnemyCombatMod(0),
+	m_iLekmodNearbyEnemyCombatRange(0),
+	m_iLekmodClosestCoastalMinorInfluence(0),
+#endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
 #endif
@@ -498,6 +508,16 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iRevealResource = GC.getInfoTypeForString(kResults.GetText("RevealResource"), true);
 	m_bLekmodWorshipHouse = kResults.GetBool("WorshipHouse");
 	m_iLekmodGreatWorkYieldModifier = kResults.GetInt("GreatWorkYieldModifier");
+#endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	m_iLekmodGreatWorkFilledGPRateModifier = kResults.GetInt("GreatWorkFilledGPRateModifier");
+	m_iLekmodGreatWorkFilledNearbyTourismMod = kResults.GetInt("GreatWorkFilledNearbyTourismMod");
+	m_iLekmodGreatWorkFilledNearbyTourismRange = kResults.GetInt("GreatWorkFilledNearbyTourismRange");
+	m_iLekmodNearbyMinorRestingInfluence = kResults.GetInt("NearbyMinorRestingInfluence");
+	m_iLekmodNearbyMinorRange = kResults.GetInt("NearbyMinorRange");
+	m_iLekmodNearbyEnemyCombatMod = kResults.GetInt("NearbyEnemyCombatMod");
+	m_iLekmodNearbyEnemyCombatRange = kResults.GetInt("NearbyEnemyCombatRange");
+	m_iLekmodClosestCoastalMinorInfluence = kResults.GetInt("ClosestCoastalMinorInfluence");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
@@ -1143,6 +1163,47 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 			kEntry.m_eYield = (YieldTypes)pResults->GetInt(2);
 			kEntry.m_iYield = pResults->GetInt(3);
 			m_aLekmodTechTerrainYields.push_back(kEntry);
+		}
+	}
+#endif
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	{
+		m_aLekmodGreatWorkFilledYields.clear();
+		std::string strKey("Building_GreatWorkFilledYields");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select Yields.ID, Yield, PerSlot, PerEra from Building_GreatWorkFilledYields "
+				"inner join Yields on Yields.Type = YieldType "
+				"where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+		{
+			LekmodGreatWorkFilledYield kEntry;
+			kEntry.m_eYield = (YieldTypes)pResults->GetInt(0);
+			kEntry.m_iYield = pResults->GetInt(1);
+			kEntry.m_bPerSlot = pResults->GetBool(2);
+			kEntry.m_bPerEra = pResults->GetBool(3);
+			m_aLekmodGreatWorkFilledYields.push_back(kEntry);
+		}
+	}
+	{
+		m_aLekmodEraHappiness.clear();
+		std::string strKey("Building_EraHappiness");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select Eras.ID, Happiness from Building_EraHappiness "
+				"inner join Eras on Eras.Type = EraType "
+				"where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+		{
+			m_aLekmodEraHappiness.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
 		}
 	}
 #endif

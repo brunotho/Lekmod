@@ -3190,6 +3190,11 @@ int CvPlayerCulture::GetTourismModifierWith(PlayerTypes ePlayer) const
 		iMultiplier += GetTourismModifierSharedReligion();
 	}
 
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	// CN Tower: toward civs with territory near the wonder
+	iMultiplier += CvCity::LekmodNearbyBordersTourismModifier(m_pPlayer->GetID(), ePlayer);
+#endif
+
 	return iMultiplier;
 }
 
@@ -3302,6 +3307,14 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	{
 		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_CARNIVAL", m_pPlayer->GetPlayerTraits()->GetGoldenAgeTourismModifier()) + "[ENDCOLOR]";
 	}
+
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	int iNearbyMod = CvCity::LekmodNearbyBordersTourismModifier(m_pPlayer->GetID(), ePlayer);
+	if (iNearbyMod != 0)
+	{
+		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_LEKMOD_CO_PLAYER_TOURISM_NEARBY_WONDER", iNearbyMod) + "[ENDCOLOR]";
+	}
+#endif
 
 	// NEUTRAL MODIFIERS
 	if (!kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()) && GetTourismModifierOpenBorders() != 0)

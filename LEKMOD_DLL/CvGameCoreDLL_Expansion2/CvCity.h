@@ -856,6 +856,17 @@ public:
 #ifdef LEKMOD_DEFENSE_BUILDINGS
 	// sum (or highest) of a defense-building column over the city's buildings: 0 heal, 1 adjacent damage, 2 hill, 3 mountain, 4 range
 	int GetLekmodBuildingStat(int iStat, bool bMax) const;
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	int GetLekmodGreatWorksInBuilding(BuildingTypes eBuilding) const;
+	bool IsLekmodGreatWorkSlotsFilled(BuildingTypes eBuilding) const;
+	int GetLekmodFilledGreatWorkYield(YieldTypes eYield) const;
+	int GetLekmodFilledGPRateModifier() const;
+	int GetLekmodEraHappiness() const;
+	PlayerTypes LekmodGetClosestCoastalMinor() const;
+	static int LekmodNearbyMinorRestingInfluence(PlayerTypes eMajor, const CvCity* pMinorCapital);
+	static int LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot* pPlot);
+	static int LekmodNearbyBordersTourismModifier(PlayerTypes eFrom, PlayerTypes eTo);
+#endif
 	int GetLekmodAttackRange() const;
 	int GetLekmodHealPerTurn() const;
 #endif

@@ -6410,6 +6410,11 @@ int CvMinorCivAI::GetFriendshipAnchorWithMajor(PlayerTypes eMajor)
 	// Social Policies
 	iAnchor += pMajor->GetMinorFriendshipAnchorMod();
 
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	// Statue of Zeus: higher resting point with city-states near the wonder
+	iAnchor += CvCity::LekmodNearbyMinorRestingInfluence(eMajor, GetPlayer()->getCapitalCity());
+#endif
+
 	// Religion
 	CvPlayerReligions* pMajorReligions = pMajor->GetReligions();
 	CvAssertMsg(pMajorReligions, "MINOR CIV AI: pMajorReligions not expected to be NULL.  Please send Anton your save file and version.");

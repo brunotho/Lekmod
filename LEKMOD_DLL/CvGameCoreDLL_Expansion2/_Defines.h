@@ -1470,6 +1470,10 @@ Diversify Spain and Australia's NW Discovery bonus
 // Buildings.GreatWorkYieldModifier: % more yield from great works held in the building (Museum); great work yields are kept in hundredths
 // (CvGreatWork::m_viYield is Times100) and truncated once per city. Also fixes Building_GreatWorkYieldChanges rows without a class being dropped.
 #define LEKMOD_GREAT_WORK_YIELD_MODIFIER
+// Wonder effects for the great work rework: Building_GreatWorkFilledYields (yields when all slots are filled or per filled slot, optionally per era),
+// Buildings.GreatWorkFilledGPRateModifier (National Epic), GreatWorkFilledNearbyTourismMod/Range (CN Tower), NearbyMinorRestingInfluence/Range and
+// NearbyEnemyCombatMod/Range (Statue of Zeus), ClosestCoastalMinorInfluence (Colossus, once), Building_EraHappiness (Eiffel Tower, cumulative)
+#define LEKMOD_GREAT_WORK_WONDER_EFFECTS
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5
