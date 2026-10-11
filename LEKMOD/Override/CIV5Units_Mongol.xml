@@ -21903,7 +21903,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_CANAL_HELP"> 
 			<Text>
-				Requires the Canal Project. Uses up the Great Engineer.[NEWLINE]Flat land in your territory, next to water.[NEWLINE]It must connect two separate bodies of water. A city next to the tile counts as part of the water it touches.[NEWLINE][NEWLINE]The tile yields exactly 15 [ICON_GOLD] Gold and nothing else.[NEWLINE][NEWLINE]Naval units can enter the tile. Entering it costs them 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Units on the tile have [COLOR_NEGATIVE_TEXT]-70%[ENDCOLOR] [ICON_STRENGTH] Defense and cannot attack.
+				Uses up the Great Engineer.[NEWLINE][NEWLINE]The tile yields exactly 15 [ICON_GOLD] Gold and nothing else.[NEWLINE][NEWLINE]Naval units can enter the tile. Entering it costs them 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Units on the tile have [COLOR_NEGATIVE_TEXT]-70%[ENDCOLOR] [ICON_STRENGTH] Defense and cannot attack.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_FORT_REC"> 
