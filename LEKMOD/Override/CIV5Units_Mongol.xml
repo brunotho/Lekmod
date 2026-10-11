@@ -102204,12 +102204,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_MISSION_CREATE_GREAT_WORK_DISABLED_HELP"> 
 			<Text>
-				Unit must be in or adjacent to one of your cities and there must be a Great Work slot of the appropriate type available somewhere in your empire.
+				Unit must be in or adjacent to one of your cities, and there must be an empty Great Work slot somewhere in your empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MISSION_CREATE_GREAT_WORK_HELP"> 
 			<Text>
-				This order will consume the Great Person and create a new Great Work in the nearest city with a Great Work slot of the appropriate type.
+				This order will consume the Great Person and create a new Great Work in the nearest city with an empty Great Work slot.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_MISSION_CREATE_GREAT_WORK_RESULT"> 
@@ -140744,7 +140744,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREAT_ARTIST_STRATEGY"> 
 			<Text>
-				A Great Artist can create a Great Work of Art (generates both [ICON_CULTURE] Culture and [ICON_TOURISM] Tourism) that is placed in the nearest city that has an appropriate building with an empty slot (like the Palace, a Museum, or a Cathedral). A Great Artist can also create a Golden Age. Great Artists are expended when used either of these ways.
+				A Great Artist creates a Great Work (+2 [ICON_CULTURE] Culture) that is placed in the nearest city with an empty Great Work slot. Every Great Work fits in every slot.[NEWLINE]A Great Artist can also start a Golden Age.[NEWLINE]Great Artists are expended when used either of these ways.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREAT_ENGINEER"> 
@@ -140784,7 +140784,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREAT_MUSICIAN_STRATEGY"> 
 			<Text>
-				A Great Musician can create a Great Work of Music (generates both [ICON_CULTURE] Culture and [ICON_TOURISM] Tourism) that is placed in the nearest city that has an appropriate building with an empty slot (like an Opera House or Broadcast Tower). A Great Musician can also travel to another civilization and perform a Concert Tour, which will give you a one-time boost in [ICON_TOURISM] Tourism in that territory. Great Musicians are expended when used either of these ways.
+				A Great Musician creates a Great Work (+2 [ICON_CULTURE] Culture) that is placed in the nearest city with an empty Great Work slot. Every Great Work fits in every slot.[NEWLINE]A Great Musician can also perform a Concert Tour in another civilization's territory for a one-time boost in [ICON_TOURISM] Tourism there, or build a Festival (+1 [ICON_CULTURE] Culture and +1 [ICON_GOLD] Gold per era).[NEWLINE]Great Musicians are expended when used in any of these ways.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREAT_PROPHET"> 
@@ -140824,7 +140824,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREAT_WRITER_STRATEGY"> 
 			<Text>
-				A Great Writer can create a Great Work of Writing (generates both [ICON_CULTURE] Culture and [ICON_TOURISM] Tourism) that is placed in the nearest city that has an appropriate building with an empty slot (like an Amphitheater, National Epic, Heroic Epic, or Royal Library). A Great Writer can also write a Political Treatise, which grants the player a large amount of Culture. Great Writers are expended when used either of these ways.
+				A Great Writer creates a Great Work (+2 [ICON_CULTURE] Culture) that is placed in the nearest city with an empty Great Work slot. Every Great Work fits in every slot.[NEWLINE]A Great Writer can also write a Political Treatise, which grants the player a large amount of [ICON_CULTURE] Culture.[NEWLINE]Great Writers are expended when used either of these ways.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_GREEK_COMPANIONCAVALRY"> 

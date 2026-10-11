@@ -1437,3 +1437,9 @@ The culture buildings no longer need each other, and two of them are the source 
 - Fixed: Cuba's Dance Hall now really gives +4 Culture when its Great Work slot is filled (the bonus was described but never applied)
 - Changed: great work yields keep fractions until they are added up for the city (e.g. two works at 1.5 Tourism give 3)
 - DLL: Buildings.GreatWorkYieldModifier, great work yields in hundredths, Building_GreatWorkYieldChanges rows without a GreatWorkClassType load now (LEKMOD_GREAT_WORK_YIELD_MODIFIER)
+
+GREAT WRITER, ARTIST AND MUSICIAN (UNIT_WRITER, UNIT_ARTIST, UNIT_MUSICIAN)
+--------------------------------------------------------------------------
+Tags: units
+- Changed: Great Writers, Artists and Musicians create a Great Work that fits in any empty Great Work slot (was: only slots of their own kind)
+- Note: comes from the shared slot type (GREAT WORKS above); this item updates the mission and unit texts
