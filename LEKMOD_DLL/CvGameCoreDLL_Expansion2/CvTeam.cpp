@@ -6759,6 +6759,24 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 		SetHasTechForWorldCongress(true);
 	}
 
+#ifdef LEKMOD_POLICY_REWORK
+	// resources from adopted policies that waited for this tech (oil)
+	for (int iResource = 0; iResource < GC.getNumResourceInfos(); iResource++)
+	{
+		CvResourceInfo* pkResource = GC.getResourceInfo((ResourceTypes)iResource);
+		if (pkResource == NULL || pkResource->getTechReveal() != eTech)
+			continue;
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive() || kPlayer.getTeam() != GetID())
+				continue;
+			const int iQuantity = kPlayer.GetPlayerPolicies()->GetPolicyResourceQuantity((ResourceTypes)iResource);
+			if (iQuantity != 0)
+				kPlayer.changeNumResourceTotal((ResourceTypes)iResource, iQuantity * iChange);
+		}
+	}
+#endif
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 	// building terrain yields that need this tech: refresh the cached plot yields
 	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)

@@ -1627,6 +1627,12 @@ Tags: policies
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
 
+POLICY RESOURCES (Policy_ResourceQuantity)
+------------------------------------------
+Tags: policies, game mechanics
+- Changed: strategic resources granted by policies (e.g. Oil) only count once you know the technology that reveals them; they are added when you research it
+- DLL: CvPlayer::processPolicies skips them before the tech, CvTeam::processTech adds them (LEKMOD_POLICY_REWORK)
+
 AESTHETICS (POLICY_BRANCH_AESTHETICS)
 -------------------------------------
 Tags: policies

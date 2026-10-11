@@ -28746,6 +28746,12 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	for (int i = 0; i < GC.getNumResourceInfos(); ++i)
 	{
 		int iAmount = pPolicy->GetPolicyResourceQuantity(i);
+#ifdef LEKMOD_POLICY_REWORK
+		// not before the resource's tech; CvTeam::processTech adds it then
+		const TechTypes eRevealTech = (TechTypes)GC.getResourceInfo((ResourceTypes)i)->getTechReveal();
+		if (eRevealTech != NO_TECH && !GET_TEAM(getTeam()).GetTeamTechs()->HasTech(eRevealTech))
+			iAmount = 0;
+#endif
 		if (iAmount != 0)
 		{
 			changeNumResourceTotal((ResourceTypes)i, iAmount * iChange);

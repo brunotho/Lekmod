@@ -1505,6 +1505,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // Policy_BuildingTerrainYieldChanges (tile yields when the city has a building; NoResource/AdjacentCity/AdjacentMountain/ExcludeLakes).
 // Aesthetics: Policies.GreatWorkYieldModifier (% on the yields of great works, not their Happiness); Resources.PolicyRevealOr
 // (the resource is also visible without its tech to teams with this policy: Aesthetics finisher reveals Antiquity Sites).
+// Resources from policies (Policy_ResourceQuantity) only count once the team knows the resource's reveal tech (oil needs its tech);
+// they are added in CvTeam::processTech when the tech arrives later.
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
 #define LEKMOD_GOLD_GREAT_PERSON_COST_STEP 500
 #define LEKMOD_POLICY_REWORK
