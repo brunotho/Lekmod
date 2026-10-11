@@ -43,7 +43,8 @@ This file records what has been **verified** about how this mod works, and how t
    - Items **already implemented**: the user doesn't edit the spec in place, but adds a "CHANGE (date): …" note under the item (or tells Claude). Look for these notes.
    - Don't edit the user's spec pages unless asked. Claude's own pages (tracker, "Specs to refine", "Multiplayer test sessions") are sub-pages of the checklist.
    - **Ticks (✓, [x], DONE) on the spec pages mean "done on an old branch". They do not mean "in the game".** Status lives only in the tracker.
-   - Sub-page "POST EVERYTHING adjustments" (the user's): tweaks meant for after all specs are done. Don't implement from it unless asked.
+   - Sub-page "POST EVERYTHING ELSE adjustments" (the user's scribble page for late specs): items meant for after all other specs are done. Since 2026-10-11 each item has a tracker row ("POST: ...", Phase 10); when the user adds items there, add rows. Implement them only after Phases 1-9, or when asked.
+   - "Specs to refine" starts with an **"Answer now"** line naming the questions that block the next phase (user, 2026-10-11: be forceful about blocking questions). Keep it current.
 7. **Underspecified specs** (agreed 2026-10-08):
    - Tracker items with Status = Needs spec are listed on the Notion page **"Specs to refine"** (a sub-page of the checklist). The user writes answers there and says in chat when they are done.
    - Keep that page in sync with the tracker. Don't implement those items before the user is done.
@@ -64,6 +65,7 @@ This file records what has been **verified** about how this mod works, and how t
      5. Policies, Diplomat/Spy, World Congress
      6. Civs
      9. Final interface tuning.
+     10. "POST EVERYTHING ELSE" items (user's late specs).
      Map rows (Lekmap) and Website have no phase.
    - **Old code** lists commits on old branches (`dev-bruno`, `civ-changes-bruno`) for implementation ideas only. Never merge them. **These branches are only in `civ-tools\lekbuild`** (its remote `origin` = ashwintrisal/Lekmod), not in `lek`: read them with `git -C ../lekbuild show <hash>`. kubugaming and Ashwin code is excluded (§1).
    - **Workflow per item:** read the spec page (and any "CHANGE" notes or comment threads), implement, add the changelog entry, commit, then set the row to `Implemented` with the commit hash. When the user reports a playtest, set `Playtested`. Record deviations from the spec and spec conflicts in Notes, and ask the user about them.
