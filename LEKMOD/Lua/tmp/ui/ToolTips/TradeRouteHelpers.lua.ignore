@@ -423,7 +423,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 			lines[#lines + 1] = cityName .. "'s Buildings:" .. yourBuildingText
 
 			for _, entry in pairs(potentialYourBuildings) do
-				lines[#lines + 1] = "  [ICON_BULLET][COLOR_YELLOW]" .. Locale.Lookup(entry.BuildingInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
+				lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.BuildingInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
 			end
 		end
 
@@ -431,7 +431,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 			lines[#lines + 1] = pTargetCity:GetName() .. "'s Buildings:" .. theirBuildingText
 
 			for _, entry in pairs(potentialTheirBuildings) do
-				lines[#lines + 1] = "  [ICON_BULLET][COLOR_YELLOW]" .. Locale.Lookup(entry.BuildingInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
+				lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.BuildingInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
 			end
 		end
 
@@ -449,7 +449,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 			lines[#lines + 1] = "Policies:" .. policyText
 
 			for _, entry in pairs(potentialPolicies) do
-				lines[#lines + 1] = "  [ICON_BULLET][COLOR_YELLOW]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
+				lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
 			end
 		end
 
@@ -460,7 +460,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 
 			for _, entry in pairs(potentialBeliefs) do
 				local description = entry.BeliefInfo.ShortDescription or entry.BeliefInfo.Description
-				lines[#lines + 1] = "  [ICON_BULLET][COLOR_YELLOW]" .. Locale.Lookup(description) .. "[ENDCOLOR]:" .. entry.Text
+				lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(description) .. "[ENDCOLOR]:" .. entry.Text
 			end
 		end
 	end
@@ -478,7 +478,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 		if originBuildingModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Canal Project[ENDCOLOR]:" .. originBuildingModifierText end
 
 		for _, entry in pairs(potentialPolicyModifiers) do
-			lines[#lines + 1] = "  [ICON_BULLET][COLOR_YELLOW]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
+			lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
 		end
 	end
 

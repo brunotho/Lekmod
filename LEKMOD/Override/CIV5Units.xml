@@ -83381,6 +83381,15 @@
 			<Blue>0.447</Blue>
 			<Alpha>1</Alpha>
 		</Row>
+		<!-- LEKMOD: dull text for effects that are possible but not active (trade route tooltips) -->
+		<Row>
+			<ID>382</ID>
+			<Type>COLOR_LEKMOD_INACTIVE</Type>
+			<Red>0.6</Red>
+			<Green>0.6</Green>
+			<Blue>0.6</Blue>
+			<Alpha>1</Alpha>
+		</Row>
 	</Colors> 
 
 	<Table name="Commands">
@@ -141838,6 +141847,8 @@
 		<Column name="ActsAsRailroadTech" type="text" reference="Technologies(Type)" />
 		<Column name="StackedDomainDefensePenalty" type="integer" default="0" />
 		<Column name="AllowsSailLand" type="boolean" default="false" />
+		<Column name="OverridesTileYields" type="boolean" default="false" /> <!-- LEKMOD: the tile yields exactly its Improvement_Yields, nothing else (Canal) -->
+		<Column name="RequiresTwoWaterBodies" type="boolean" default="false" /> <!-- LEKMOD: must be next to water tiles of two different water bodies (Canal) -->
 		<Column name="CultureAdjacentSameType" type="integer" default="0" />
 		<Column name="TilesPerGoody" type="integer" default="0" />
 		<Column name="GoodyRange" type="integer" default="0" />
@@ -280433,13 +280444,21 @@
 			<Description>TXT_KEY_MP_NO_PROPOSAL</Description> 
 		</Row>
 	</MPProposals>
-	<!-- LEKMOD: Phase 4 Great Engineer canal (needs the Canal Project): flat land next to a city and the coast, naval units may enter (4 moves), -70% defense, no attacks from the tile -->
+	<!-- LEKMOD: Phase 4 Great Engineer canal (needs the Canal Project): flat land next to two separate water bodies, yields exactly 15 Gold, naval units may enter (4 moves), -70% defense, no attacks from the tile -->
 	<Improvements>
 		<Update>
 			<Where Type="IMPROVEMENT_CANAL"/>
-			<Set WaterAdjacencyMakesValid="false" Coastal="true" AdjacentCityMakesValid="true" DefenseModifierGlobal="-70"/>
+			<Set WaterAdjacencyMakesValid="false" RequiresTwoWaterBodies="true" OverridesTileYields="true" DefenseModifierGlobal="-70"/>
 		</Update>
 	</Improvements>
+	<Improvement_Yields>
+		<Delete ImprovementType="IMPROVEMENT_CANAL"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_CANAL</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>15</Yield>
+		</Row>
+	</Improvement_Yields>
 	<Builds>
 		<Update>
 			<Where Type="BUILD_CANAL"/>

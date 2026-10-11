@@ -113,6 +113,10 @@ public:
 	bool IsAdjacentLuxury() const;
 	bool IsAllowsWalkWater() const;
 	bool IsAllowsSailLand() const;
+#ifdef LEKMOD_CANAL_RULES
+	bool IsOverridesTileYields() const;
+	bool IsRequiresTwoWaterBodies() const;
+#endif
 	bool IsCreatedByGreatPerson() const;
 	bool IsSpecificCivRequired() const;
 
@@ -255,6 +259,10 @@ protected:
     bool m_bAdjacentLuxury;
 	bool m_bAllowsWalkWater;
 	bool m_bAllowsSailLand;
+#ifdef LEKMOD_CANAL_RULES
+	bool m_bOverridesTileYields;
+	bool m_bRequiresTwoWaterBodies;
+#endif
 	bool m_bCreatedByGreatPerson;
 	bool m_bSpecificCivRequired;
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)

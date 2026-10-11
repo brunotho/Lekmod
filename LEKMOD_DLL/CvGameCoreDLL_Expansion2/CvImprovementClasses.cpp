@@ -116,6 +116,10 @@ CvImprovementEntry::CvImprovementEntry(void):
 	m_bAdjacentLuxury(false),
 	m_bAllowsWalkWater(false),
 	m_bAllowsSailLand(false),
+#ifdef LEKMOD_CANAL_RULES
+	m_bOverridesTileYields(false),
+	m_bRequiresTwoWaterBodies(false),
+#endif
 	m_bCreatedByGreatPerson(false),
 	m_bSpecificCivRequired(false),
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
@@ -316,6 +320,10 @@ bool CvImprovementEntry::CacheResults(Database::Results& kResults, CvDatabaseUti
 	m_bAdjacentLuxury = kResults.GetBool("AdjacentLuxury");
 	m_bAllowsWalkWater = kResults.GetBool("AllowsWalkWater");
 	m_bAllowsSailLand = kResults.GetBool("AllowsSailLand"); // from Izy
+#ifdef LEKMOD_CANAL_RULES
+	m_bOverridesTileYields = kResults.GetBool("OverridesTileYields");
+	m_bRequiresTwoWaterBodies = kResults.GetBool("RequiresTwoWaterBodies");
+#endif
 	m_bCreatedByGreatPerson = kResults.GetBool("CreatedByGreatPerson");
 	m_bSpecificCivRequired = kResults.GetBool("SpecificCivRequired");
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
@@ -1045,6 +1053,18 @@ bool CvImprovementEntry::IsAllowsSailLand() const // from Izy
 {
     return m_bAllowsSailLand;
 }
+#ifdef LEKMOD_CANAL_RULES
+/// The tile yields exactly this improvement's Improvement_Yields (terrain, features, resources and all bonuses are ignored)
+bool CvImprovementEntry::IsOverridesTileYields() const
+{
+	return m_bOverridesTileYields;
+}
+/// Must be next to water tiles of two different water bodies (Canal)
+bool CvImprovementEntry::IsRequiresTwoWaterBodies() const
+{
+	return m_bRequiresTwoWaterBodies;
+}
+#endif
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
 bool CvImprovementEntry::IsActsAsRoute() const
 {

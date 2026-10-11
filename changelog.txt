@@ -1517,7 +1517,15 @@ The Panama Canal is now the Canal Project, a national wonder. Its Great Engineer
 - Added: +33% to all yields you get from trade routes that start in its city (internal and external)
 - Changed: 2 Engineer points (was 2 Merchant points)
 - Removed: +8 Gold from external sea trade routes, the free Great Merchant, its Culture and Gold
-- Added: Great Engineers can build a Canal (uses up the Great Engineer): flat land next to one of your cities and the sea
-- Added: Canal tiles: naval units can enter them (4 movement); all units on a Canal have -70% defense and cannot attack
+- Added: Great Engineers can build a Canal (uses up the Great Engineer): flat land in your territory next to two separate bodies of water (two seas, or a sea and a lake)
+- Added: once you have the Canal Project, the Canal button shows for every Great Engineer; where it can't be built it is greyed out and says why
+- Added: Canal tiles yield exactly 15 Gold and nothing else; naval units can enter them (4 movement); all units on a Canal have -70% defense and cannot attack
 - Note: the Canal improvement existed in the data but no unit could build it
-- DLL: Buildings.TradeRouteOriginYieldModifier, Builds.PrereqBuildingClass, canal move cost and no attacks from canal tiles (LEKMOD_CANAL_PROJECT); Lua Player:GetTradeConnectionOriginBuildingValueModifier (trade route tooltip line)
+- DLL: Buildings.TradeRouteOriginYieldModifier, Builds.PrereqBuildingClass, canal move cost and no attacks from canal tiles (LEKMOD_CANAL_PROJECT); Improvements.OverridesTileYields, RequiresTwoWaterBodies, visible-everywhere builds (LEKMOD_CANAL_RULES); Lua Player:GetTradeConnectionOriginBuildingValueModifier (trade route tooltip line)
+
+TRADE ROUTE SCREEN (ChooseInternationalTradeRoutePopup)
+------------------------------------------------------
+Tags: ui
+- Changed: in trade route tooltips, effects that exist but don't apply to this route are shown in dull gray instead of yellow, so the active (green) ones stand out
+- Added: the destination list also shows cities that would be in range if this city had a range building it lacks (e.g. Harbor, Caravansary); they are grayed out, can't be picked, and name the building
+- DLL: Lua Player:LekmodGetTradeRangePreview(unit) (LEKMOD_CANAL_RULES); Colors row COLOR_LEKMOD_INACTIVE

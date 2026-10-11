@@ -218,6 +218,48 @@ function RefreshData()
 		
 		table.insert(g_Model, tradeRoute);
 	end
+
+	-- LEKMOD: cities that would be in range with a range building this city doesn't have yet (greyed, not selectable)
+	if pPlayer.LekmodGetTradeRangePreview then
+		local previewByPlot = {};
+		for _, v in ipairs(pPlayer:LekmodGetTradeRangePreview(pUnit)) do
+			local key = v.X .. ":" .. v.Y;
+			local buildingInfo = GameInfo.Buildings[v.BuildingType];
+			local entry = previewByPlot[key];
+			if entry == nil then
+				local pPreviewCity = map.GetPlot(v.X, v.Y):GetPlotCity();
+				local iPreviewOwner = pPreviewCity:GetOwner();
+				entry = {
+					PlotX = v.X,
+					PlotY = v.Y,
+					CityName = pPreviewCity:GetName(),
+					CivName = Players[iPreviewOwner]:GetCivilizationDescription(),
+					TargetPlayerId = iPreviewOwner,
+					Gold = -1000000, GoldDelta = -1000000, Science = -1000000, ScienceDelta = -1000000,
+					PrevRoute = "",
+					Preview = true,
+					BuildingNames = {},
+				};
+				if iPreviewOwner == iActivePlayer then
+					entry.Category = 1;
+				elseif iPreviewOwner < GameDefines.MAX_MAJOR_CIVS then
+					entry.Category = 2;
+				else
+					entry.Category = 3;
+				end
+				previewByPlot[key] = entry;
+				table.insert(g_Model, entry);
+			end
+			if buildingInfo then
+				table.insert(entry.BuildingNames, Locale.ConvertTextKey(buildingInfo.Description));
+			end
+		end
+		for _, entry in pairs(previewByPlot) do
+			local text = Locale.ConvertTextKey("TXT_KEY_LEKMOD_TRADE_ROUTE_IN_RANGE_WITH", table.concat(entry.BuildingNames, ", "));
+			entry.Bonuses = "[COLOR_LEKMOD_INACTIVE]" .. text .. "[ENDCOLOR]";
+			entry.ToolTip = text;
+		end
+	end
 end
 
 function SortByCityName(a, b)
@@ -319,12 +361,17 @@ function DisplayData()
 		
 		local itemInstance = g_ItemManagers[tradeRoute.Category]:GetInstance();
 		
-		itemInstance.CityName:SetText(tradeRoute.CityName);		
+		if tradeRoute.Preview then
+			itemInstance.CityName:SetText("[COLOR_LEKMOD_INACTIVE]" .. tradeRoute.CityName .. "[ENDCOLOR]");
+		else
+			itemInstance.CityName:SetText(tradeRoute.CityName);
+		end
 		itemInstance.Bonuses:SetText(tradeRoute.Bonuses);
 		itemInstance.PrevRoute:SetText(tradeRoute.PrevRoute);
 
 		CivIconHookup(tradeRoute.TargetPlayerId, 64, itemInstance.CivIcon, itemInstance.CivIconBG, itemInstance.CivIconShadow, false, true );
-		itemInstance.Button:RegisterCallback(Mouse.eLClick, function() SelectTradeDestinationChoice(tradeRoute.PlotX, tradeRoute.PlotY, tradeRoute.TradeConnectionType); end);
+		itemInstance.Button:SetDisabled(tradeRoute.Preview == true);
+		itemInstance.Button:RegisterCallback(Mouse.eLClick, function() if not tradeRoute.Preview then SelectTradeDestinationChoice(tradeRoute.PlotX, tradeRoute.PlotY, tradeRoute.TradeConnectionType); end end);
 		itemInstance.Button:SetToolTipString(tradeRoute.ToolTip);
 		itemInstance.Box:SetColorVal(unpack(ltBlue));
 		local buttonWidth, buttonHeight = itemInstance.Button:GetSizeVal();
@@ -343,8 +390,13 @@ function DisplayData()
 			UI.LookAt(plot, 0);  
 		end);
 		
-		itemInstance.Button:RegisterCallback(Mouse.eMouseEnter, function() Game.SelectedUnit_SpeculativePopupTradeRoute_Display(tradeRoute.PlotX, tradeRoute.PlotY, tradeRoute.TradeConnectionType, tradeRoute.eDomain); end);
-		itemInstance.Button:RegisterCallback(Mouse.eMouseExit, function() Game.SelectedUnit_SpeculativePopupTradeRoute_Hide(tradeRoute.PlotX, tradeRoute.PlotY, tradeRoute.TradeConnectionType); end);
+		if tradeRoute.Preview then
+			itemInstance.Button:RegisterCallback(Mouse.eMouseEnter, function() end);
+			itemInstance.Button:RegisterCallback(Mouse.eMouseExit, function() end);
+		else
+			itemInstance.Button:RegisterCallback(Mouse.eMouseEnter, function() Game.SelectedUnit_SpeculativePopupTradeRoute_Display(tradeRoute.PlotX, tradeRoute.PlotY, tradeRoute.TradeConnectionType, tradeRoute.eDomain); end);
+			itemInstance.Button:RegisterCallback(Mouse.eMouseExit, function() Game.SelectedUnit_SpeculativePopupTradeRoute_Hide(tradeRoute.PlotX, tradeRoute.PlotY, tradeRoute.TradeConnectionType); end);
+		end
 	end
 
 	Controls.YourCitiesStack:CalculateSize();

@@ -406,6 +406,13 @@ public:
 	TradeConnectionWasPlunderedList m_aTradeConnectionWasPlundered;
 
 	CvPlayer* m_pPlayer;
+#ifdef LEKMOD_CANAL_RULES
+public:
+	// extra range % used only while the UI asks what a not-yet-built building would add (not saved)
+	void SetLekmodRangePreviewModifier(int iValue) { m_iLekmodRangePreviewModifier = iValue; }
+protected:
+	int m_iLekmodRangePreviewModifier;
+#endif
 };
 
 FDataStream& operator>>(FDataStream&, CvPlayerTrade&);

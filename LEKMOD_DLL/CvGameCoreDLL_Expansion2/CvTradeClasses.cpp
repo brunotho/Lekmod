@@ -2292,6 +2292,9 @@ void CvPlayerTrade::Uninit(void)
 void CvPlayerTrade::Reset(void)
 {
 	m_pPlayer = NULL;
+#ifdef LEKMOD_CANAL_RULES
+	m_iLekmodRangePreviewModifier = 0;
+#endif
 	m_aRecentlyExpiredConnections.clear();
 	m_aTradeConnectionWasPlundered.clear();
 }
@@ -4803,6 +4806,9 @@ int CvPlayerTrade::GetTradeRouteRange (DomainTypes eDomain, CvCity* pOriginCity)
 	}
 	
 	int iRangeModifier = 0;
+#ifdef LEKMOD_CANAL_RULES
+	iRangeModifier += m_iLekmodRangePreviewModifier;
+#endif
 #ifdef AUI_WARNING_FIXES
 	for (uint iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 #else

@@ -1658,6 +1658,17 @@ function TipHandler( control )
 				strDisabledString = strDisabledString .. "[NEWLINE]";
 				strDisabledString = strDisabledString .. Locale.ConvertTextKey("TXT_KEY_BUILD_BLOCKED_BY_FEATURE", pFeatureTech.Description, pFeature.Description);
 			end
+
+			-- LEKMOD: where a Canal can be built
+			if (pImprovement and pImprovement.RequiresTwoWaterBodies) then
+				if (bFirstEntry) then
+					bFirstEntry = false;
+				elseif (not bFirstEntry) then
+					strDisabledString = strDisabledString .. "[NEWLINE]";
+				end
+				strDisabledString = strDisabledString .. "[NEWLINE]";
+				strDisabledString = strDisabledString .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILD_BLOCKED_CANAL");
+			end
 			
 		-- Not a Worker build, use normal disabled help from XML
 		else

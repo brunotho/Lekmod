@@ -2237,6 +2237,33 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	{
 		return false;
 	}
+#ifdef LEKMOD_CANAL_RULES
+	if (pkImprovementInfo->IsRequiresTwoWaterBodies())
+	{
+		int iFirstWaterArea = -1;
+		bool bTwoWaterBodies = false;
+		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && !bTwoWaterBodies; ++iDirection)
+		{
+			CvPlot* pAdjacentWater = plotDirection(getX(), getY(), ((DirectionTypes)iDirection));
+			if (pAdjacentWater == NULL || !pAdjacentWater->isWater())
+			{
+				continue;
+			}
+			if (iFirstWaterArea == -1)
+			{
+				iFirstWaterArea = pAdjacentWater->getArea();
+			}
+			else if (pAdjacentWater->getArea() != iFirstWaterArea)
+			{
+				bTwoWaterBodies = true;
+			}
+		}
+		if (!bTwoWaterBodies)
+		{
+			return false;
+		}
+	}
+#endif
 
 	if(pkImprovementInfo->IsHillsMakesValid() && isHills())
 	{
@@ -9257,6 +9284,17 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 		eRoute = getRouteType();
 	}
 
+#ifdef LEKMOD_CANAL_RULES
+	if (eImprovement != NO_IMPROVEMENT && !IsImprovementPillaged())
+	{
+		CvImprovementEntry* pkFixedYieldImprovement = GC.getImprovementInfo(eImprovement);
+		if (pkFixedYieldImprovement && pkFixedYieldImprovement->IsOverridesTileYields())
+		{
+			return pkFixedYieldImprovement->GetYieldChange(eYield);
+		}
+	}
+#endif
+
 	iYield = calculateNatureYield(eYield, ((ePlayer != NO_PLAYER) ? GET_PLAYER(ePlayer).getTeam() : NO_TEAM));
 
 	if(eImprovement != NO_IMPROVEMENT && !IsImprovementPillaged())
@@ -12432,6 +12470,12 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 #endif
 
 	ImprovementTypes eImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild)->getImprovement();
+#ifdef LEKMOD_CANAL_RULES
+	if (eImprovement != NO_IMPROVEMENT && GC.getImprovementInfo(eImprovement) && GC.getImprovementInfo(eImprovement)->IsOverridesTileYields())
+	{
+		return GC.getImprovementInfo(eImprovement)->GetYieldChange(eYield);
+	}
+#endif
 
 	// If we're not changing the improvement that's here, use the improvement that's here already
 	if(eImprovement == NO_IMPROVEMENT)

@@ -1845,6 +1845,11 @@ function ActionToolTipHandler( control )
 
 			end
 
+			-- LEKMOD: where a Canal can be built
+			if improvement and improvement.RequiresTwoWaterBodies then
+				disabledTip:insertLocalized( "TXT_KEY_LEKMOD_BUILD_BLOCKED_CANAL" )
+			end
+
 		-- Not a Worker build, use normal disabled help from XML
 		else
 

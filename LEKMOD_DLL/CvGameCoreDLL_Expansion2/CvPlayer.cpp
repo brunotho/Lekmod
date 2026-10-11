@@ -11927,6 +11927,13 @@ int CvPlayer::GetBuildingClassYieldChange(BuildingClassTypes eBuildingClass, Yie
 /// Can we eBuild on pPlot?
 bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, bool bTestVisible, bool bTestGold, bool bTestPlotOwner) const
 {
+#ifdef LEKMOD_CANAL_RULES
+	// Builds that need a building (Great Engineer canal) show on every tile once the building exists; invalid tiles grey the button out
+	if (bTestVisible && GC.getBuildInfo(eBuild) && GC.getBuildInfo(eBuild)->getPrereqBuildingClass() != NO_BUILDINGCLASS)
+	{
+		return getBuildingClassCount((BuildingClassTypes)GC.getBuildInfo(eBuild)->getPrereqBuildingClass()) > 0;
+	}
+#endif
 	if(!(pPlot->canBuild(eBuild, GetID(), bTestVisible, bTestPlotOwner)))
 	{
 		return false;

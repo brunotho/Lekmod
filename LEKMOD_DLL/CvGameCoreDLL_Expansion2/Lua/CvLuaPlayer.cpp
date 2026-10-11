@@ -1025,6 +1025,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetNumInternationalTradeRoutesUsed);
 	Method(GetNumInternationalTradeRoutesAvailable);
 	Method(GetPotentialInternationalTradeRouteDestinations);
+#ifdef LEKMOD_CANAL_RULES
+	Method(LekmodGetTradeRangePreview);
+#endif
 #if !defined(TRADE_REFACTOR)
 	Method(GetInternationalTradeRouteBaseBonus);
 	Method(GetInternationalTradeRouteGPTBonus);
@@ -3463,6 +3466,86 @@ int CvLuaPlayer::lGetNumInternationalTradeRoutesAvailable(lua_State* L)
 }
 
 //------------------------------------------------------------------------------
+#ifdef LEKMOD_CANAL_RULES
+//------------------------------------------------------------------------------
+// Destinations the unit's origin city could reach only with a range building it doesn't have yet.
+// Returns { {X, Y, BuildingType}, ... } (one entry per city and building).
+int CvLuaPlayer::lLekmodGetTradeRangePreview(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	CvUnit* pkUnit = CvLuaUnit::GetInstance(L, 2, false);
+	lua_createtable(L, 0, 0);
+	if (pkUnit == NULL)
+		return 1;
+	CvPlot* pkUnitPlot = pkUnit->plot();
+	CvCity* pOriginCity = pkUnitPlot ? pkUnitPlot->getPlotCity() : NULL;
+	if (pOriginCity == NULL || !pkUnit->canMakeTradeRoute(pkUnitPlot))
+		return 1;
+
+	CvPlayerTrade* pPlayerTrade = pkPlayer->GetTrade();
+	const DomainTypes eDomain = pkUnit->getDomainType();
+	int index = 1;
+	for (int iClass = 0; iClass < GC.getNumBuildingClassInfos(); iClass++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)pkPlayer->getCivilizationInfo().getCivilizationBuildings(iClass);
+		CvBuildingEntry* pkBuilding = (eBuilding != NO_BUILDING) ? GC.getBuildingInfo(eBuilding) : NULL;
+		if (pkBuilding == NULL || pOriginCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0)
+			continue;
+		int iModifier = 0;
+		if (eDomain == DOMAIN_SEA)
+			iModifier = pkBuilding->GetTradeRouteSeaDistanceModifier();
+		else if (eDomain == DOMAIN_LAND)
+			iModifier = pkBuilding->GetTradeRouteLandDistanceModifier();
+		if (iModifier <= 0)
+			continue;
+
+		pPlayerTrade->SetLekmodRangePreviewModifier(iModifier);
+		const int iPreviewRange = pPlayerTrade->GetTradeRouteRange(eDomain, pOriginCity);
+		pPlayerTrade->SetLekmodRangePreviewModifier(0);
+
+		for (int iLoopPlayer = 0; iLoopPlayer < MAX_CIV_PLAYERS; iLoopPlayer++)
+		{
+			CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iLoopPlayer);
+			if (!kLoopPlayer.isAlive() || kLoopPlayer.isBarbarian())
+				continue;
+			int iCityLoop;
+			for (CvCity* pLoopCity = kLoopPlayer.firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = kLoopPlayer.nextCity(&iCityLoop))
+			{
+				// each path tile costs at least 1 range
+				if (pLoopCity == pOriginCity || plotDistance(pOriginCity->getX(), pOriginCity->getY(), pLoopCity->getX(), pLoopCity->getY()) > iPreviewRange)
+					continue;
+				bool bNow = false;
+				bool bWithBuilding = false;
+				for (int iType = 0; iType < NUM_TRADE_CONNECTION_TYPES && !bNow; iType++)
+				{
+					bNow = pkUnit->canMakeTradeRouteAt(pkUnitPlot, pLoopCity->getX(), pLoopCity->getY(), (TradeConnectionType)iType);
+				}
+				if (bNow)
+					continue;
+				pPlayerTrade->SetLekmodRangePreviewModifier(iModifier);
+				for (int iType = 0; iType < NUM_TRADE_CONNECTION_TYPES && !bWithBuilding; iType++)
+				{
+					bWithBuilding = pkUnit->canMakeTradeRouteAt(pkUnitPlot, pLoopCity->getX(), pLoopCity->getY(), (TradeConnectionType)iType);
+				}
+				pPlayerTrade->SetLekmodRangePreviewModifier(0);
+				if (!bWithBuilding)
+					continue;
+
+				lua_createtable(L, 0, 0);
+				const int t = lua_gettop(L);
+				lua_pushinteger(L, pLoopCity->getX());
+				lua_setfield(L, t, "X");
+				lua_pushinteger(L, pLoopCity->getY());
+				lua_setfield(L, t, "Y");
+				lua_pushinteger(L, eBuilding);
+				lua_setfield(L, t, "BuildingType");
+				lua_rawseti(L, -2, index++);
+			}
+		}
+	}
+	return 1;
+}
+#endif
 int CvLuaPlayer::lGetPotentialInternationalTradeRouteDestinations(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
