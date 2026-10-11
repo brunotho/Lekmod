@@ -2284,6 +2284,13 @@
 		<Column name="PerEra" type="boolean" default="false" />
 	</Table>
 	<!-- LEKMOD: global happiness (like Notre Dame) from this building for every era up to the owner's current era (cumulative) -->
+	<!-- LEKMOD: improved tiles with fresh water worked by the city yield more -->
+	<Table name="Building_FreshWaterImprovementYieldChanges">
+		<Column name="BuildingType" type="text" reference="Buildings(Type)" />
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
 	<Table name="Building_EraHappiness">
 		<Column name="BuildingType" type="text" reference="Buildings(Type)" />
 		<Column name="EraType" type="text" reference="Eras(Type)" />
@@ -43251,7 +43258,9 @@
 		<Column name="NearbyMinorRange" type="integer" default="0" />
 		<Column name="NearbyEnemyCombatMod" type="integer" default="0" /> <!-- LEKMOD: Fear Aura of a city: enemy units within NearbyEnemyCombatRange (doesn't stack with unit auras) -->
 		<Column name="NearbyEnemyCombatRange" type="integer" default="0" />
-		<Column name="ClosestCoastalMinorInfluence" type="integer" default="0" /> <!-- LEKMOD: one-time influence with the closest coastal city-state at peace, when built -->
+		<Column name="ClosestCoastalMinorInfluence" type="integer" default="0" />
+		<Column name="ClosestCoastalMinorTradeQuest" type="boolean" default="false" /> <!-- LEKMOD: when built, the closest coastal city-state at peace asks for a trade route -->
+		<Column name="GoldenAgePopulationChange" type="integer" default="0" /> <!-- LEKMOD: city population change when the owner starts a golden age (never below 1) --> <!-- LEKMOD: one-time influence with the closest coastal city-state at peace, when built -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0" /> <!-- LEKMOD: % more yield from great works held in this building (Museum) -->
 		<Column name="WorshipHouse" type="boolean" default="false" /> <!-- LEKMOD: Houses of Worship: 4 Culture for the first in a city, 2 for the second, 0 after -->
 		<Column name="RevealResource" type="text" default="NULL" /> <!-- LEKMOD: building it reveals this resource for the team (like its reveal tech) -->
@@ -46924,7 +46933,6 @@
 			<ConquestProb>100</ConquestProb> 
 			<MaxStartEra>ERA_MEDIEVAL</MaxStartEra> 
 			<FreeBuildingThisCity>BUILDINGCLASS_LIGHTHOUSE</FreeBuildingThisCity> 
-			<FreePromotion>PROMOTION_GREAT_LIGHTHOUSE</FreePromotion> 
 			<PrereqTech>TECH_OPTICS</PrereqTech> 
 			<SpecialistType>SPECIALIST_MERCHANT</SpecialistType> 
 			<GreatPeopleRateChange>1</GreatPeopleRateChange> 
@@ -47312,7 +47320,6 @@
 			<HurryCostModifier>-1</HurryCostModifier>
 			<ConquestProb>100</ConquestProb> 
 			<MaxStartEra>ERA_RENAISSANCE</MaxStartEra> 
-			<FreeBuildingThisCity>BUILDINGCLASS_UNIVERSITY</FreeBuildingThisCity> 
 			<PrereqTech>TECH_EDUCATION</PrereqTech> 
 			<SpecialistType>SPECIALIST_SCIENTIST</SpecialistType> 
 			<GreatPeopleRateChange>1</GreatPeopleRateChange> 
@@ -47508,7 +47515,6 @@
 			<Defense>500</Defense> 
 			<ExtraCityHitPoints>25</ExtraCityHitPoints>
 			<MaxStartEra>ERA_MODERN</MaxStartEra> 
-			<PrereqTech>TECH_NAVIGATION</PrereqTech>
             <SpecialistType>SPECIALIST_ENGINEER</SpecialistType> 
 			<GreatPeopleRateChange>2</GreatPeopleRateChange>  
 			<ArtDefineTag>THE COLOSSUS</ArtDefineTag> 
@@ -47983,7 +47989,6 @@
 			<HurryCostModifier>-1</HurryCostModifier>
 			<ConquestProb>100</ConquestProb> 
 			<GlobalSpaceProductionModifier>100</GlobalSpaceProductionModifier>
-			<FreeBuildingThisCity>BUILDINGCLASS_RECYCLING_CENTER</FreeBuildingThisCity> 
 			<PrereqTech>TECH_SATELLITES</PrereqTech> 
 			<SpecialistType>SPECIALIST_SCIENTIST</SpecialistType> 
 			<GreatPeopleRateChange>3</GreatPeopleRateChange>  
@@ -49959,6 +49964,70 @@
 			<Happiness>6</Happiness>
 		</Row>
 	</Building_EraHappiness>
+	<!-- LEKMOD: Phase 4 world wonders: Hubble, Great Lighthouse, Angkor Wat, Chichen Itza, Althing; Arsenal of Venice removed (unbuildable, hidden in the pedia) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_HUBBLE"/>
+			<Set Cost="1568" GreatPeopleRateChange="5"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_GREAT_LIGHTHOUSE"/>
+			<Set ClosestCoastalMinorTradeQuest="true"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ANGKOR_WAT"/>
+			<Set FreeBuildingThisCity="BUILDINGCLASS_GARDEN" SpecialistType="SPECIALIST_ENGINEER" GreatPeopleRateChange="1" GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT" GreatWorkCount="2" FreeGreatWorkCount="2"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_CHICHEN_ITZA"/>
+			<Set Happiness="0" SpecialistType="SPECIALIST_SCIENTIST" GreatPeopleRateChange="1" GoldenAgePopulationChange="-1" Help="TXT_KEY_LEKMOD_WONDER_CHICHEN_ITZA_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_ARSENAL_OF_VENICE"/>
+			<Set Cost="-1"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_HUBBLE" YieldType="YIELD_SCIENCE"/>
+		<Delete BuildingType="BUILDING_ANGKOR_WAT"/>
+		<Row>
+			<BuildingType>BUILDING_ANGKOR_WAT</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_FreeUnits>
+		<Delete BuildingType="BUILDING_GREAT_LIGHTHOUSE"/>
+	</Building_FreeUnits>
+	<Building_DomainFreeExperiences>
+		<Row>
+			<BuildingType>BUILDING_GREAT_LIGHTHOUSE</BuildingType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<Experience>15</Experience>
+		</Row>
+	</Building_DomainFreeExperiences>
+	<Building_FreshWaterImprovementYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_ANGKOR_WAT</BuildingType>
+			<ImprovementType>IMPROVEMENT_FARM</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_FreshWaterImprovementYieldChanges>
+	<Building_TerrainYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_ALTHING</BuildingType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_ALTHING</BuildingType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_TerrainYieldChanges>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />

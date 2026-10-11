@@ -114,6 +114,8 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iLekmodNearbyEnemyCombatMod(0),
 	m_iLekmodNearbyEnemyCombatRange(0),
 	m_iLekmodClosestCoastalMinorInfluence(0),
+	m_bLekmodClosestCoastalMinorTradeQuest(false),
+	m_iLekmodGoldenAgePopulationChange(0),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
@@ -518,6 +520,8 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iLekmodNearbyEnemyCombatMod = kResults.GetInt("NearbyEnemyCombatMod");
 	m_iLekmodNearbyEnemyCombatRange = kResults.GetInt("NearbyEnemyCombatRange");
 	m_iLekmodClosestCoastalMinorInfluence = kResults.GetInt("ClosestCoastalMinorInfluence");
+	m_bLekmodClosestCoastalMinorTradeQuest = kResults.GetBool("ClosestCoastalMinorTradeQuest");
+	m_iLekmodGoldenAgePopulationChange = kResults.GetInt("GoldenAgePopulationChange");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
@@ -1204,6 +1208,28 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 		while(pResults->Step())
 		{
 			m_aLekmodEraHappiness.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
+		}
+	}
+	{
+		m_aLekmodFreshWaterImprovementYields.clear();
+		std::string strKey("Building_FreshWaterImprovementYieldChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select Improvements.ID, Yields.ID, Yield from Building_FreshWaterImprovementYieldChanges "
+				"inner join Improvements on Improvements.Type = ImprovementType "
+				"inner join Yields on Yields.Type = YieldType "
+				"where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+		{
+			LekmodFreshWaterImprovementYield kEntry;
+			kEntry.m_eImprovement = (ImprovementTypes)pResults->GetInt(0);
+			kEntry.m_eYield = (YieldTypes)pResults->GetInt(1);
+			kEntry.m_iYield = pResults->GetInt(2);
+			m_aLekmodFreshWaterImprovementYields.push_back(kEntry);
 		}
 	}
 #endif

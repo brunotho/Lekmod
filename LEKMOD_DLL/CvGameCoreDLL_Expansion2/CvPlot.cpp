@@ -9440,6 +9440,10 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 				CvPlayer &kPlayer = GET_PLAYER(ePlayer);
 				iYield += pWorkingCity->GetImprovementExtraYield(eImprovement, eYield);
 				iYield += kPlayer.GetImprovementExtraYield(eImprovement, eYield);
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+				if (isFreshWater())
+					iYield += pWorkingCity->GetLekmodFreshWaterImprovementYield(eImprovement, eYield);
+#endif
 			}
 		}
 		// Extra yield for terrain

@@ -787,7 +787,8 @@ CivilopediaCategory[CategoryWonders].PopulateList = function()
 	for building in GameInfo.Buildings() do	
 		-- exclude wonders etc.				
 		local thisBuildingClass = GameInfo.BuildingClasses[building.BuildingClass];
-		if thisBuildingClass.MaxGlobalInstances > 0  then
+		-- LEKMOD: removed wonders stay in the data (unbuildable) but get no pedia page
+		if thisBuildingClass.MaxGlobalInstances > 0 and building.Type ~= "BUILDING_ARSENAL_OF_VENICE" then
 			local article = {};
 			local name = Locale.ConvertTextKey( building.Description )
 			article.entryName = name;

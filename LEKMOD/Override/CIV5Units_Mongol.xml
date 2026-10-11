@@ -120564,6 +120564,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_POLYNESIAN_MAORI_WARRIOR">
 			<Text>Maori</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_WONDER_CHICHEN_ITZA_HELP">
+			<Text>Length of [ICON_GOLDEN_AGE] Golden Ages increased by 50%.[NEWLINE]This city loses 1 [ICON_CITIZEN] Population whenever your empire enters a Golden Age.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILDING_HAPPINESS_NEGATIVE">
 			<Text>[ICON_HAPPINESS_4] Happiness: {1_Num}</Text>
 		</Row>
@@ -144196,7 +144199,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_ALTHING_HELP"> 
 			<Text>
-				+1 [ICON_PRODUCTION] Production, +1 [ICON_CULTURE] Culture from all tundra tiles worked by this city. City must be built on or next to tundra.
+				+1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture from all tundra and snow tiles worked by this city.[NEWLINE]City must be built on or next to tundra.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_ANGKORWAT_DESC"> 
@@ -144216,7 +144219,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_ANGKOR_WAT_HELP"> 
 			<Text>
-				Provides a free University in the city in which it is built.
+				Provides a free Garden in the city.[NEWLINE]Farms with fresh water worked by this city yield +1 [ICON_PEACE] Faith.[NEWLINE][NEWLINE][ICON_GREAT_WORK] Comes with 2 Great Works.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_BIGBEN_DESC"> 
@@ -144451,7 +144454,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_GREAT_LIGHTHOUSE_HELP"> 
 			<Text>
-				All military naval units receive +1 [ICON_MOVES] movement and +1 sight, and +1 [ICON_GOLD] from all water tiles worked by this city. Provides a free [ICON_BUILDING_LIGHTHOUSE] [COLOR_YELLOW]Lighthouse[ENDCOLOR] and a [ICON_UNIT_CARTHAGINIAN_QUINQUEREME] [COLOR_YELLOW]Quinquereme[ENDCOLOR] in the city the wonder was built.[NEWLINE][NEWLINE]City must be built on the coast.
+				Provides a free Lighthouse in the city.[NEWLINE]+1 [ICON_GOLD] Gold from all water tiles worked by this city.[NEWLINE]Naval units trained in this city start with +15 XP.[NEWLINE]When built, the closest coastal city-state you are at peace with asks you for a trade route.[NEWLINE][NEWLINE]City must be built on the coast.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_GREAT_WALL_HELP"> 
@@ -144526,7 +144529,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_HUBBLE_HELP"> 
 			<Text>
-				Provides a free Recycling Center in the city in which it is built. +100% [ICON_PRODUCTION] Production when building Spaceship Parts.
+				+100% [ICON_PRODUCTION] Production when building Spaceship Parts.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_HUBBLE_QUOTE"> 

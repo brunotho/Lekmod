@@ -18332,6 +18332,13 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 			if(isGoldenAge())
 			{
 				ChangeNumGoldenAges(1);
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+				{
+					int iLoop;
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+						pLoopCity->LekmodOnGoldenAgeStart();
+				}
+#endif
 
 				locString = Localization::Lookup("TXT_KEY_NOTIFICATION_GOLDEN_AGE_BEGUN");
 				locString << getCivilizationAdjectiveKey();

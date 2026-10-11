@@ -863,6 +863,8 @@ public:
 	int GetLekmodFilledGPRateModifier() const;
 	int GetLekmodEraHappiness() const;
 	PlayerTypes LekmodGetClosestCoastalMinor() const;
+	int GetLekmodFreshWaterImprovementYield(ImprovementTypes eImprovement, YieldTypes eYield) const;
+	void LekmodOnGoldenAgeStart();
 	static int LekmodNearbyMinorRestingInfluence(PlayerTypes eMajor, const CvCity* pMinorCapital);
 	static int LekmodNearbyEnemyCombatModifier(PlayerTypes eUnitOwner, const CvPlot* pPlot, BuildingTypes* peSource = NULL);
 	static int LekmodNearbyBordersTourismModifier(PlayerTypes eFrom, PlayerTypes eTo);

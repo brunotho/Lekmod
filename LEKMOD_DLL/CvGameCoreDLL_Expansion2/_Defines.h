@@ -1472,7 +1472,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_GREAT_WORK_YIELD_MODIFIER
 // Wonder effects for the great work rework: Building_GreatWorkFilledYields (yields when all slots are filled or per filled slot, optionally per era),
 // Buildings.GreatWorkFilledGPRateModifier (National Epic), GreatWorkFilledNearbyTourismMod/Range (CN Tower), NearbyMinorRestingInfluence/Range and
-// NearbyEnemyCombatMod/Range (Statue of Zeus), ClosestCoastalMinorInfluence (Colossus, once), Building_EraHappiness (Eiffel Tower, cumulative)
+// NearbyEnemyCombatMod/Range (Statue of Zeus), ClosestCoastalMinorInfluence (Colossus, once), Building_EraHappiness (Eiffel Tower, cumulative),
+// ClosestCoastalMinorTradeQuest (Great Lighthouse), GoldenAgePopulationChange (Chichen Itza), Building_FreshWaterImprovementYieldChanges (Angkor Wat)
 #define LEKMOD_GREAT_WORK_WONDER_EFFECTS
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT

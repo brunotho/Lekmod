@@ -7708,6 +7708,11 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 
 	CvPlayer& owningPlayer = GET_PLAYER(getOwner());
 	CvTeam& owningTeam = GET_TEAM(getTeam());
+#ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
+	// fresh water improvement yields are read by the plots: refresh them
+	if (!pBuildingInfo->GetLekmodFreshWaterImprovementYields().empty())
+		updateYield();
+#endif
 #if defined(STANDARDIZE_YIELDS) // move policy and trait pointers moved to the top of processBuilding
 	CvPlayerPolicies* pPolicies = GET_PLAYER(getOwner()).GetPlayerPolicies();
 	CvPlayerTraits* pTraits = GET_PLAYER(getOwner()).GetPlayerTraits();
@@ -7756,6 +7761,18 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				PlayerTypes eMinor = LekmodGetClosestCoastalMinor();
 				if (eMinor != NO_PLAYER)
 					GET_PLAYER(eMinor).GetMinorCivAI()->ChangeFriendshipWithMajor(getOwner(), pBuildingInfo->GetClosestCoastalMinorInfluence());
+			}
+			// Buildings.ClosestCoastalMinorTradeQuest: that city-state asks us for a trade route right away (Great Lighthouse)
+			if (pBuildingInfo->IsClosestCoastalMinorTradeQuest() && getOwner() < MAX_MAJOR_CIVS)
+			{
+				PlayerTypes eMinor = LekmodGetClosestCoastalMinor();
+				if (eMinor != NO_PLAYER)
+				{
+					CvMinorCivAI* pMinorAI = GET_PLAYER(eMinor).GetMinorCivAI();
+					if (!pMinorAI->IsActiveQuestForPlayer(getOwner(), MINOR_CIV_QUEST_TRADE_ROUTE)
+						&& !GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(getOwner(), eMinor))
+						pMinorAI->AddQuestForPlayer(getOwner(), MINOR_CIV_QUEST_TRADE_ROUTE, GC.getGame().getGameTurn());
+				}
 			}
 #endif
 #ifdef LEKMOD_DEFENSE_BUILDINGS
@@ -14690,7 +14707,42 @@ int CvCity::GetLekmodEraHappiness() const
 	return iTotal;
 }
 
-/// The closest city-state with a coastal capital that we are at peace with (Colossus)
+/// Building_FreshWaterImprovementYieldChanges of this city's buildings (Angkor Wat)
+int CvCity::GetLekmodFreshWaterImprovementYield(ImprovementTypes eImprovement, YieldTypes eYield) const
+{
+	int iTotal = 0;
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		const std::vector<LekmodFreshWaterImprovementYield>& aRows = GC.getBuildingInfo(aBuildings[i])->GetLekmodFreshWaterImprovementYields();
+		if (aRows.empty() || m_pCityBuildings->GetNumBuilding(aBuildings[i]) <= 0)
+			continue;
+		for (uint j = 0; j < aRows.size(); j++)
+		{
+			if (aRows[j].m_eImprovement == eImprovement && aRows[j].m_eYield == eYield)
+				iTotal += aRows[j].m_iYield;
+		}
+	}
+	return iTotal;
+}
+
+/// Buildings.GoldenAgePopulationChange: the city gains/loses population when the owner's golden age starts (Chichen Itza: -1, never below 1)
+void CvCity::LekmodOnGoldenAgeStart()
+{
+	int iChange = 0;
+	const std::vector<BuildingTypes>& aBuildings = LekmodWonderEffectBuildings();
+	for (uint i = 0; i < aBuildings.size(); i++)
+	{
+		if (m_pCityBuildings->GetNumBuilding(aBuildings[i]) > 0)
+			iChange += GC.getBuildingInfo(aBuildings[i])->GetGoldenAgePopulationChange();
+	}
+	if (iChange < 0)
+		iChange = std::max(iChange, 1 - getPopulation());
+	if (iChange != 0)
+		changePopulation(iChange);
+}
+
+/// The closest city-state (met, at peace) with a coastal capital (Colossus, Great Lighthouse)
 PlayerTypes CvCity::LekmodGetClosestCoastalMinor() const
 {
 	PlayerTypes eBest = NO_PLAYER;
@@ -14698,7 +14750,7 @@ PlayerTypes CvCity::LekmodGetClosestCoastalMinor() const
 	for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
 	{
 		CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);
-		if (!kMinor.isAlive() || !kMinor.isMinorCiv() || GET_TEAM(getTeam()).isAtWar(kMinor.getTeam()))
+		if (!kMinor.isAlive() || !kMinor.isMinorCiv() || GET_TEAM(getTeam()).isAtWar(kMinor.getTeam()) || !GET_TEAM(getTeam()).isHasMet(kMinor.getTeam()))
 			continue;
 		CvCity* pCapital = kMinor.getCapitalCity();
 		if (pCapital == NULL || !pCapital->isCoastal())

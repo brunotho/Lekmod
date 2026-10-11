@@ -53,6 +53,14 @@ struct LekmodGreatWorkFilledYield
 	bool m_bPerSlot;
 	bool m_bPerEra;
 };
+// Building_FreshWaterImprovementYieldChanges: improved tiles with fresh water worked by the city yield more (Angkor Wat: farms +1 Faith)
+struct LekmodFreshWaterImprovementYield
+{
+	LekmodFreshWaterImprovementYield() : m_eImprovement(NO_IMPROVEMENT), m_eYield(NO_YIELD), m_iYield(0) {};
+	ImprovementTypes m_eImprovement;
+	YieldTypes m_eYield;
+	int m_iYield;
+};
 #endif
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //  class : CvThemingBonusInfo
@@ -236,9 +244,13 @@ public:
 	int GetNearbyEnemyCombatMod() const { return m_iLekmodNearbyEnemyCombatMod; }
 	int GetNearbyEnemyCombatRange() const { return m_iLekmodNearbyEnemyCombatRange; }
 	int GetClosestCoastalMinorInfluence() const { return m_iLekmodClosestCoastalMinorInfluence; }
+	bool IsClosestCoastalMinorTradeQuest() const { return m_bLekmodClosestCoastalMinorTradeQuest; }
+	int GetGoldenAgePopulationChange() const { return m_iLekmodGoldenAgePopulationChange; }
+	const std::vector<LekmodFreshWaterImprovementYield>& GetLekmodFreshWaterImprovementYields() const { return m_aLekmodFreshWaterImprovementYields; }
 	bool HasLekmodWonderEffects() const
 	{
 		return !m_aLekmodGreatWorkFilledYields.empty() || !m_aLekmodEraHappiness.empty() || m_iLekmodGreatWorkFilledGPRateModifier != 0
+			|| m_iLekmodGoldenAgePopulationChange != 0 || !m_aLekmodFreshWaterImprovementYields.empty()
 			|| m_iLekmodGreatWorkFilledNearbyTourismMod != 0 || m_iLekmodNearbyMinorRestingInfluence != 0 || m_iLekmodNearbyEnemyCombatMod != 0;
 	}
 #endif
@@ -585,6 +597,9 @@ private:
 	int m_iLekmodNearbyEnemyCombatMod;
 	int m_iLekmodNearbyEnemyCombatRange;
 	int m_iLekmodClosestCoastalMinorInfluence;
+	bool m_bLekmodClosestCoastalMinorTradeQuest;
+	int m_iLekmodGoldenAgePopulationChange;
+	std::vector<LekmodFreshWaterImprovementYield> m_aLekmodFreshWaterImprovementYields;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;
