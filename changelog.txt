@@ -1637,7 +1637,8 @@ AESTHETICS (POLICY_BRANCH_AESTHETICS)
 -------------------------------------
 Tags: policies
 - Changed: Flourishing of the Arts: now right below Cultural Centers (requires only Cultural Centers); +1 Culture and +1 Tourism from every Great Work and World Wonder; starts a 6-turn Golden Age (was 8)
-- Changed: Artistic Genius: Great Works +2 Science +2 Culture (was +3 Science); Amphitheaters, Opera Houses, Museums and Broadcast Towers +1 Culture on top of their +1 Science
+- Changed: Artistic Genius: Great Works +1 Science +1 Culture (was +3 Science); Amphitheaters, Opera Houses, Museums and Broadcast Towers +1 Culture on top of their +1 Science
+- Changed: Aesthetics tooltips say "culture buildings" (Monument, Amphitheater, Opera House, Museum, Broadcast Tower) instead of listing them
 - Changed: Cultural Exchange is now Literary Tradition: requires Flourishing of the Arts; a free Great Writer; +1 Culture from Trading Posts
 - Removed: Literary Tradition: Culture from Great Person improvements, Landmarks, Moai, Brazilwood Camps, Chateaus, Caers and Citadels
 - Changed: Fine Arts: requires only Artistic Genius; free Scriptorium, Gallery and Conservatory in your first 5 cities (was all cities); +50% yields from Great Works (not their Happiness)

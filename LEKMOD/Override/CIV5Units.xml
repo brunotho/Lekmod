@@ -281415,12 +281415,12 @@
 		<Row>
 			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
 			<YieldType>YIELD_SCIENCE</YieldType>
-			<Yield>2</Yield>
+			<Yield>1</Yield>
 		</Row>
 		<Row>
 			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
 			<YieldType>YIELD_CULTURE</YieldType>
-			<Yield>2</Yield>
+			<Yield>1</Yield>
 		</Row>
 	</Policy_GreatWorkYieldChanges>
 	<Policy_BuildingClassYieldChanges>
