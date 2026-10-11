@@ -50028,6 +50028,44 @@
 			<Yield>1</Yield>
 		</Row>
 	</Building_TerrainYieldChanges>
+	<!-- LEKMOD: Phase 4 Tower of Belem (from scratch): coastal, Notre Dame cost, 1 Merchant point, +5 city strength, spawns ships and settlers -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_TOWER_OF_BELEM"/>
+			<Set Cost="400" Water="true" SpecialistType="SPECIALIST_MERCHANT" GreatPeopleRateChange="1" Defense="500"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_TOWER_OF_BELEM"/>
+	</Building_YieldChanges>
+	<Building_SameLandMassYieldChanges>
+		<Delete BuildingType="BUILDING_TOWER_OF_BELEM"/>
+	</Building_SameLandMassYieldChanges>
+	<Building_DifferentLandMassYieldChanges>
+		<Delete BuildingType="BUILDING_TOWER_OF_BELEM"/>
+	</Building_DifferentLandMassYieldChanges>
+	<Building_FreeUnits>
+		<Row>
+			<BuildingType>BUILDING_TOWER_OF_BELEM</BuildingType>
+			<UnitType>UNIT_GREAT_ADMIRAL</UnitType>
+			<NumUnits>1</NumUnits>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TOWER_OF_BELEM</BuildingType>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<NumUnits>2</NumUnits>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TOWER_OF_BELEM</BuildingType>
+			<UnitType>UNIT_GALLEASS</UnitType>
+			<NumUnits>2</NumUnits>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TOWER_OF_BELEM</BuildingType>
+			<UnitType>UNIT_SKIFF</UnitType>
+			<NumUnits>4</NumUnits>
+		</Row>
+	</Building_FreeUnits>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />

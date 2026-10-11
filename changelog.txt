@@ -1489,3 +1489,11 @@ Tags: buildings
 - Removed: Arsenal of Venice (can no longer be built)
 - Note: Althing had no Tourism to remove
 - DLL: Buildings.ClosestCoastalMinorTradeQuest, GoldenAgePopulationChange, Building_FreshWaterImprovementYieldChanges (LEKMOD_GREAT_WORK_WONDER_EFFECTS)
+
+TOWER OF BELEM (BUILDING_TOWER_OF_BELEM)
+---------------------------------------
+Tags: buildings, naval
+Rebuilt as a launch pad for overseas settling.
+- Changed: costs 400 (was 300); must be built on the coast; 1 Merchant point; +5 City Strength
+- Added: a Great Admiral, 2 Conquistadors, 2 Galleasses and 4 Skiffs appear when it is built
+- Removed: its Culture, Golden Age points and the yields for cities on the same or other landmasses
