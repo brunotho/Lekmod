@@ -79,3 +79,8 @@ Files `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background_01..11.dds` follow the 
   `Assets/DLC/Expansion2/Resource/DX9/UITextures.fpk` with `python tools/fpk_extract.py <pack> <out_dir> socialpolicies`.
 - Expansionism (`PolicyBranch_Exploration.dds`, 2026-10-12) = the Commerce picture (`socialpoliciescommerce.dds`), copied
   unchanged (user decision); Commerce gets new art from the user later.
+- The base branches use `SocialPolicies<Branch>.dds` (Commerce, Honor, Piety, Patronage, Rationalism, Order, Freedom,
+  Autocracy...), BNW's newer ones `PolicyBranch_<Branch>.dds` (Aesthetics, Exploration). All are 192x292 DXT1, one mip.
+- Commerce (2026-10-12): the user's `policy_branches/commerce/commerce_background.png` (1024x1536), scaled to cover
+  192x292 (centre crop) into `SocialPoliciesCommerce.png`, then
+  `texconv -f BC1_UNORM -m 1` to `LEKMOD/Art/Lekmod (v 1)/Art/PolicyBranches/SocialPoliciesCommerce.dds`.
