@@ -116119,7 +116119,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ARTISTIC_GENIUS_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Artistic Genius[ENDCOLOR][NEWLINE][ICON_BULLET]A [ICON_GREAT_ARTIST] Great Artist appears[NEWLINE][ICON_BULLET]+1 [ICON_RESEARCH] Science and +1 [ICON_CULTURE] Culture from Great Works and culture buildings (except Monuments)[NEWLINE][ICON_BULLET]+2 [ICON_RESEARCH] Science from every [COLOR_POSITIVE_TEXT]Festival[ENDCOLOR]
+				[COLOR_POSITIVE_TEXT]Artistic Genius[ENDCOLOR][NEWLINE][ICON_BULLET]A [ICON_GREAT_ARTIST] Great Artist appears[NEWLINE][ICON_BULLET]+1 [ICON_RESEARCH] Science and +1 [ICON_CULTURE] Culture from Great Works and culture buildings[NEWLINE][ICON_BULLET]+2 [ICON_RESEARCH] Science from every [COLOR_POSITIVE_TEXT]Festival[ENDCOLOR]
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ARTISTIC_GENIUS_TEXT"> 
