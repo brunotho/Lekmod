@@ -280922,9 +280922,12 @@
 		</Update>
 		<Update>
 			<Where Type="POLICY_RATIONALISM_FINISHER"/>
-			<Set IncludesOneShotFreeUnits="true"/>
+			<Set IncludesOneShotFreeUnits="true" HappinessToScience="0"/>
 		</Update>
 	</Policies>
+	<Policy_BuildingClassYieldChanges>
+		<Delete PolicyType="POLICY_SOVEREIGNTY"/>
+	</Policy_BuildingClassYieldChanges>
 	<Policy_BuildingClassPurchaseCostModifiers>
 		<Row>
 			<PolicyType>POLICY_HUMANISM</PolicyType>

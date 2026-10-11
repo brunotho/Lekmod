@@ -116354,7 +116354,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_RATIONALISM_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Rationalism[ENDCOLOR] improves the ability to use and generate [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]Adopting Rationalism:[NEWLINE][ICON_BULLET]Earn [ICON_GREAT_SCIENTIST] Great Scientists 20% faster[NEWLINE][ICON_BULLET]Unlocks building the [ICON_WONDER_PORCELAIN_TOWER] Porcelain Tower[NEWLINE][NEWLINE]Completing the Rationalism tree:[NEWLINE][ICON_BULLET]A free [ICON_GREAT_SCIENTIST] Great Scientist[NEWLINE][ICON_BULLET][COLOR_POSITIVE_TEXT]Academies[ENDCOLOR] on strategic resources provide double the resource[NEWLINE][ICON_BULLET]+10% [ICON_RESEARCH] Science while the empire is [ICON_HAPPINESS_1] Happy
+				[COLOR_POSITIVE_TEXT]Rationalism[ENDCOLOR] improves the ability to use and generate [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]Adopting Rationalism:[NEWLINE][ICON_BULLET]Earn [ICON_GREAT_SCIENTIST] Great Scientists 20% faster[NEWLINE][ICON_BULLET]Unlocks building the [ICON_WONDER_PORCELAIN_TOWER] Porcelain Tower[NEWLINE][NEWLINE]Completing the Rationalism tree:[NEWLINE][ICON_BULLET]A free [ICON_GREAT_SCIENTIST] Great Scientist[NEWLINE][ICON_BULLET][COLOR_POSITIVE_TEXT]Academies[ENDCOLOR] on strategic resources provide double the resource
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_TRADITION"> 
@@ -117865,7 +117865,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SOVEREIGNTY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Sovereignty[ENDCOLOR][NEWLINE]+1 [ICON_GOLD] Gold from Science buildings.[NEWLINE][NEWLINE]+1 [ICON_HAPPINESS_1] Happiness from [ICON_BUILDING_UNIVERSITY] Universities until you adopt an Ideology.[NEWLINE][NEWLINE][ICON_BUILDING_BANK] Banks give +1 [ICON_GOLD] Gold for each other civilization that adopts an Ideology after you take this policy and before you adopt yours (civilizations adopting on the same turn don't count).
+				[COLOR_POSITIVE_TEXT]Sovereignty[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Happiness from [ICON_BUILDING_UNIVERSITY] Universities until you adopt an Ideology.[NEWLINE][NEWLINE][ICON_BUILDING_BANK] Banks give +1 [ICON_GOLD] Gold for each other civilization that adopts an Ideology after you take this policy and before you adopt yours (civilizations adopting on the same turn don't count).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_SOVEREIGNTY_TEXT"> 

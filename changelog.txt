@@ -1601,5 +1601,7 @@ Tags: policies
 - Changed: Scientific Revolution: requires Sovereignty and Humanism; +20% Science in every city for 5 turns
 - Removed: Scientific Revolution: the free Great Scientist (moved to the finisher)
 - Added: finisher: a free Great Scientist; Academies on strategic resources provide double the resource
+- Removed: Sovereignty: +1 Gold from Science buildings
+- Removed: finisher: +10% Science while the empire is happy
 - Changed: the tree is rearranged (Sovereignty and Humanism on top, Free Thought and Scientific Revolution below them)
 - DLL: Policy_BuildingClassPurchaseCostModifiers, Policy_BuildingClassHappinessUntilIdeology, Policy_BuildingClassGoldPerEarlierIdeology, Policy_ImprovementResourceExtractionMods, Policies.TempScienceModifier/TempScienceTurns; new saved player fields (old saves incompatible)
