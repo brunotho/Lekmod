@@ -101617,7 +101617,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Cannot attack while inside a city.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_IMPROVEMENT_DOCK_TEXT">
-			<Text>Built by a Great Admiral on a coast tile next to land, inside your territory or directly next to it (the Great Admiral is consumed).[NEWLINE]Its tile and all tiles around it join your territory (claiming another civilization's tiles angers it).[NEWLINE][NEWLINE]Yields 4 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]Units in the Drydock get +25% defense.</Text>
+			<Text>Built by a Great Admiral on a coast tile next to land, inside your territory or directly next to it (the Great Admiral is consumed).[NEWLINE]Its tile and all tiles around it join your territory (claiming another civilization's tiles angers it).[NEWLINE][NEWLINE]Yields 3 [ICON_PRODUCTION] Production (+3 with Penicillin).[NEWLINE][NEWLINE]Units in the Drydock get +25% defense.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_NUKE_RESISTANCE">
 			<Text>Nuke Resistance</Text>
@@ -117355,7 +117355,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NAVAL_TRADITION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Naval Tradition[ENDCOLOR][NEWLINE][ICON_BULLET]+1 [ICON_HAPPINESS_1] Happiness from each [ICON_BUILDING_LIGHTHOUSE] Lighthouse and [ICON_BUILDING_HARBOR] Harbor[NEWLINE][ICON_BULLET]Drydocks provide +4 [ICON_CULTURE] Culture
+				[COLOR_POSITIVE_TEXT]Naval Tradition[ENDCOLOR][NEWLINE][ICON_BULLET]+1 [ICON_HAPPINESS_1] Happiness from each [ICON_BUILDING_LIGHTHOUSE] Lighthouse and [ICON_BUILDING_HARBOR] Harbor[NEWLINE][ICON_BULLET]Drydocks provide +5 [ICON_CULTURE] Culture
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NAVIGATION_SCHOOL"> 

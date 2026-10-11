@@ -141790,7 +141790,7 @@
 		<Row> 
 			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType> 
 			<YieldType>YIELD_PRODUCTION</YieldType> 
-			<Yield>4</Yield> 
+			<Yield>3</Yield> 
 		</Row>
 		<Row>
 			<ImprovementType>IMPROVEMENT_MC_SCOTTISH_CLAN_CASTLE</ImprovementType>
@@ -281332,7 +281332,7 @@
 			<PolicyType>POLICY_NAVAL_TRADITION</PolicyType>
 			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType>
 			<YieldType>YIELD_CULTURE</YieldType>
-			<Yield>4</Yield>
+			<Yield>5</Yield>
 		</Row>
 	</Policy_ImprovementYieldChanges>
 	<Policy_FreeUnitClasses>

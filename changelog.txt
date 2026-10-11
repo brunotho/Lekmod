@@ -1009,7 +1009,7 @@ Drydocks work like naval Citadels; Repair Fleet heals less.
 - Added: Drydocks claim all surrounding tiles, like Citadels
 - Added: Drydocks can be built directly next to your territory, not only inside it
 - Added: units in a Drydock get +25% defense
-- Changed: Drydock: 4 Production (was 5)
+- Changed: Drydock: 3 Production (was 5)
 - Changed: Repair Fleet heals 25 HP (was a full heal)
 - Changed: Chile: only Fishing Boats claim the surrounding tiles in its unique ability (Drydocks now do this for everyone)
 - Fixed: the Drydock's Civilopedia page showed the Manufactory's text
@@ -1650,7 +1650,7 @@ Tags: policies, naval, units, buildings
 - Removed: Colonial Administration: +2 Production in every city; faster Lighthouses, Harbors and Seaports
 - Changed: Merchant Navy is now Colonial Infrastructure: +20% Production toward buildings from before the Renaissance (wonders excluded); newly founded cities get a free Crown Office and a free Rowboat; cities with a Courthouse or Crown Office get +2 Happiness (doesn't stack with Military Caste)
 - Removed: Colonial Infrastructure: +2 Population, free Worker and 6 extra tiles for new cities
-- Changed: Naval Tradition: +1 Happiness from Lighthouses and Harbors; Drydocks +4 Culture
+- Changed: Naval Tradition: +1 Happiness from Lighthouses and Harbors; Drydocks +5 Culture
 - Removed: Naval Tradition: Seaport Happiness; Culture from Lighthouses, Harbors and Seaports
 - Changed: Treasure Fleets: requires Naval Tradition and Colonial Infrastructure; with a Lighthouse +1 Production on Coast tiles without a resource; with a Harbor +1 Gold on Coast tiles next to the city; with a Seaport +3 Production on Coast tiles next to the city and a Mountain (lakes excluded); a free Great Admiral
 - Removed: Treasure Fleets: Food and Production on unimproved Coast, Ocean and Lake tiles
