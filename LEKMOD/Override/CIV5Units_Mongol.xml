@@ -2993,7 +2993,7 @@
 		Yugoslav president Josip Broz Tito commissioned several memorial sites and monuments in the 1960s and 1970s dedicated to World War II battles, and Nazi concentration camp sites. They were designed by notable sculptors, including Dušan Džamonja, Vojin Bakić, Miodrag Živković, Jordan and Iskra Grabul, and architects, including Bogdan Bogdanović and Gradimir Medaković. After Tito's death, a small number were built, and the monuments were popular visitor attractions in the 1980s as patriotic sites, and since the Yugoslav Wars and the dissolution of Yugoslavia, the sites are mostly abandoned.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_YUGO_SPOMENIK_HELP">			
-		<Text>Unique building for Yugoslavia. Replaces the Museum.[NEWLINE]Also provides +20% [ICON_RESEARCH] Science in the City, but costs more to construct.[NEWLINE][NEWLINE]Great Works in this building yield +50%.</Text>
+		<Text>Unique building for Yugoslavia. Replaces the Museum.[NEWLINE]Also provides +20% [ICON_RESEARCH] Science in the City, but costs more to construct.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_YUGO_SPOMENIK_STRATEGY">			
 		<Text>The Spomenik is an incredible late-game boon for research but is tempered by its availability at Archaeology, making it unwise to rush toward (lest you find yourself at the wrong end of an Artillery attack). Pick it up on your way to strike [ICON_RES_OIL] Oil after finishing more essential Industrial technologies. </Text>
@@ -18501,7 +18501,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BASIL_HELP"> 
-			<Text>+15% [ICON_CULTURE] Culture in this City.[NEWLINE]+20% [ICON_GREAT_PEOPLE] Great Person generation in this City.[NEWLINE][NEWLINE]Great Works in this building yield +50%.[NEWLINE][NEWLINE]Unique Building for Italy, replaces the Museum.[NEWLINE]Unlocked by Industrialization instead of Archaeology.[NEWLINE]Cheaper.[NEWLINE]+15% [ICON_CULTURE] Culture instead of +10%.[NEWLINE]Adds +20% [ICON_GREAT_PEOPLE] Great Person generation, 2 Great Artist specialist slots and +2 Great Artist points.</Text>
+			<Text>+15% [ICON_CULTURE] Culture in this City.[NEWLINE]+20% [ICON_GREAT_PEOPLE] Great Person generation in this City.[NEWLINE][NEWLINE]Unique Building for Italy, replaces the Museum.[NEWLINE]Unlocked by Industrialization instead of Archaeology.[NEWLINE]Cheaper.[NEWLINE]+15% [ICON_CULTURE] Culture instead of +10%.[NEWLINE]Adds +20% [ICON_GREAT_PEOPLE] Great Person generation, 2 Great Artist specialist slots and +2 Great Artist points.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BAZAAR_DESC"> 
 			<Text>
@@ -20289,11 +20289,11 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSEUM_HELP"> 
 			<Text>
-				+10% [ICON_CULTURE] Culture in this City.[NEWLINE][NEWLINE]Great Works in this building yield +50%.
+				+10% [ICON_CULTURE] Culture in this City.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSEUM_STRATEGY"> 
-			<Text>+2 [ICON_CULTURE] Culture and +10% [ICON_CULTURE] Culture in this City.[NEWLINE]1 Great Work slot; the Great Work in it yields +50%.</Text>
+			<Text>+2 [ICON_CULTURE] Culture and +10% [ICON_CULTURE] Culture in this City.[NEWLINE]1 Great Work slot.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSICIANS_GUILD"> 
 			<Text>

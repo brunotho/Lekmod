@@ -49655,19 +49655,19 @@
 	<Building_ThemingBonuses>
 		<Delete />
 	</Building_ThemingBonuses>
-	<!-- LEKMOD: Phase 4 great work buildings: Amphitheater/Opera House +1 Tourism to great works in the city, Museum 1 slot +50%, no building prerequisites -->
+	<!-- LEKMOD: Phase 4 great work buildings: Amphitheater/Opera House +1 Tourism to great works in the city, Museum 1 slot, no building prerequisites -->
 	<Buildings>
 		<Update>
 			<Where Type="BUILDING_MUSEUM"/>
-			<Set GreatWorkCount="1" GoldMaintenance="4" GreatWorkYieldModifier="50"/>
+			<Set GreatWorkCount="1" GoldMaintenance="4"/>
 		</Update>
 		<Update>
 			<Where Type="BUILDING_BASIL"/>
-			<Set GreatWorkCount="1" GoldMaintenance="4" GreatWorkYieldModifier="50"/>
+			<Set GreatWorkCount="1" GoldMaintenance="4"/>
 		</Update>
 		<Update>
 			<Where Type="BUILDING_YUGO_SPOMENIK"/>
-			<Set GreatWorkCount="1" GoldMaintenance="4" GreatWorkYieldModifier="50"/>
+			<Set GreatWorkCount="1" GoldMaintenance="4"/>
 		</Update>
 		<Update>
 			<Where Type="BUILDING_AMPHITHEATER"/>
