@@ -3702,6 +3702,9 @@ CvBuildInfo::CvBuildInfo() :
 	m_iCost(0),
 	m_iCostIncreasePerImprovement(0),
 	m_iTechPrereq(NO_TECH),
+#ifdef LEKMOD_CANAL_PROJECT
+	m_iPrereqBuildingClass(NO_BUILDINGCLASS),
+#endif
 	m_iImprovement(NO_IMPROVEMENT),
 	m_iRoute(NO_ROUTE),
 	m_iEntityEvent(ENTITY_EVENT_NONE),
@@ -3762,6 +3765,14 @@ int CvBuildInfo::getTechPrereq() const
 {
 	return m_iTechPrereq;
 }
+#ifdef LEKMOD_CANAL_PROJECT
+//------------------------------------------------------------------------------
+/// The player must own a building of this class (Canal Project for the Great Engineer canal)
+int CvBuildInfo::getPrereqBuildingClass() const
+{
+	return m_iPrereqBuildingClass;
+}
+#endif
 //------------------------------------------------------------------------------
 int CvBuildInfo::getImprovement() const
 {
@@ -3912,6 +3923,10 @@ bool CvBuildInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 
 	const char* szPrereqTech = kResults.GetText("PrereqTech");
 	m_iTechPrereq = GC.getInfoTypeForString(szPrereqTech, true);
+#ifdef LEKMOD_CANAL_PROJECT
+	const char* szPrereqBuildingClass = kResults.GetText("PrereqBuildingClass");
+	m_iPrereqBuildingClass = GC.getInfoTypeForString(szPrereqBuildingClass, true);
+#endif
 
 	const char* szImprovementType = kResults.GetText("ImprovementType");
 	m_iImprovement = GC.getInfoTypeForString(szImprovementType, true);

@@ -43249,6 +43249,7 @@
 		<Column name="CityAttackRangeChange" type="integer" default="0" /> <!-- LEKMOD: extra city ranged attack range -->
 		<Column name="NukeUnitDamageFixed" type="integer" default="0" /> <!-- LEKMOD: military units (and planes) in the city take exactly this damage from nukes -->
 		<Column name="AirportRebase" type="boolean" default="false" /> <!-- LEKMOD: planes rebasing between two cities with this building keep their moves (once per turn) -->
+		<Column name="TradeRouteOriginYieldModifier" type="integer" default="0" /> <!-- LEKMOD: % more of every yield the owner gets from trade routes starting in this city (Canal Project) -->
 		<Column name="NearRiver" type="boolean" default="false" /> <!-- LEKMOD: the city must be on a river or next to a river tile -->
 		<Column name="NoMaintenanceOnRiver" type="boolean" default="false" /> <!-- LEKMOD: no Gold maintenance when the city is on a river -->
 		<Column name="GreatWorkFilledGPRateModifier" type="integer" default="0" /> <!-- LEKMOD: % Great People in the city while all great work slots of this building are filled -->
@@ -50066,6 +50067,28 @@
 			<NumUnits>4</NumUnits>
 		</Row>
 	</Building_FreeUnits>
+	<!-- LEKMOD: Phase 4 Canal Project (was the Panama Canal; keeps its art): national wonder, Electronics, Cristo Redentor cost, 2 Engineer points, +33% to all trade route yields from the city; Great Engineers can build a Canal -->
+	<BuildingClasses>
+		<Update>
+			<Where Type="BUILDINGCLASS_PANAMA"/>
+			<Set MaxGlobalInstances="-1" MaxPlayerInstances="1"/>
+		</Update>
+	</BuildingClasses>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_PANAMA"/>
+			<Set Water="false" Cost="1203" PrereqTech="TECH_ELECTRONICS" SpecialistType="SPECIALIST_ENGINEER" GreatPeopleRateChange="2" TradeRouteOriginYieldModifier="33" NeverCapture="true" ConquestProb="0"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_PANAMA"/>
+	</Building_YieldChanges>
+	<Building_FreeUnits>
+		<Delete BuildingType="BUILDING_PANAMA"/>
+	</Building_FreeUnits>
+	<Building_TradeConnectionOriginYieldChanges>
+		<Delete BuildingType="BUILDING_PANAMA"/>
+	</Building_TradeConnectionOriginYieldChanges>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -50103,6 +50126,7 @@
 		<Column name="SpecificCivRequired" type="boolean" default="false" />
 		<Column name="CivilizationType" type="text" default="NULL" />
 		<Column name="RemoveWaterCrossing" type="boolean" default="false" />
+		<Column name="PrereqBuildingClass" type="text" default="NULL" /> <!-- LEKMOD: the player must own a building of this class (Great Engineer canal: Canal Project) -->
 	</Table>
 	<Builds>
 		<Delete />
@@ -280409,4 +280433,29 @@
 			<Description>TXT_KEY_MP_NO_PROPOSAL</Description> 
 		</Row>
 	</MPProposals>
+	<!-- LEKMOD: Phase 4 Great Engineer canal (needs the Canal Project): flat land next to a city and the coast, naval units may enter (4 moves), -70% defense, no attacks from the tile -->
+	<Improvements>
+		<Update>
+			<Where Type="IMPROVEMENT_CANAL"/>
+			<Set WaterAdjacencyMakesValid="false" Coastal="true" AdjacentCityMakesValid="true" DefenseModifierGlobal="-70"/>
+		</Update>
+	</Improvements>
+	<Builds>
+		<Update>
+			<Where Type="BUILD_CANAL"/>
+			<Set Kill="true" Time="0" PrereqTech="TECH_ELECTRONICS" PrereqBuildingClass="BUILDINGCLASS_PANAMA" ShowInPedia="true"/>
+		</Update>
+	</Builds>
+	<BuildFeatures>
+		<Update>
+			<Where BuildType="BUILD_CANAL"/>
+			<Set Time="0"/>
+		</Update>
+	</BuildFeatures>
+	<Unit_Builds>
+		<Row>
+			<UnitType>UNIT_ENGINEER</UnitType>
+			<BuildType>BUILD_CANAL</BuildType>
+		</Row>
+	</Unit_Builds>
 </GameData>

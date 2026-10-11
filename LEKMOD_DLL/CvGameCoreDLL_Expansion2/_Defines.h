@@ -1478,6 +1478,11 @@ Diversify Spain and Australia's NW Discovery bonus
 // Capital control and influence stand in for each other: holding a civ's original capital replaces being influential over it (culture victory),
 // being influential over a living civ replaces holding its capital (domination). If both victories hold, the larger count decides (tie: domination).
 #define LEKMOD_CAPITAL_INFLUENCE_VICTORY
+// Canal Project (national wonder, was the Panama Canal): Buildings.TradeRouteOriginYieldModifier (% more of every yield the owner gets from routes
+// starting in the city; needs LEKMOD_DEFENSE_BUILDINGS for the building lookup), Builds.PrereqBuildingClass (the Great Engineer canal needs the
+// Canal Project). Canal tiles (Improvements.AllowsSailLand): naval units pay LEKMOD_CANAL_NAVAL_MOVE_COST moves, no unit can attack from the tile.
+#define LEKMOD_CANAL_PROJECT
+#define LEKMOD_CANAL_NAVAL_MOVE_COST 4
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

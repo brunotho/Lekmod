@@ -1508,3 +1508,16 @@ Holding a civ's capital and being culturally Influential over it now stand in fo
 - Changed: in team games, influence from any teammate counts, and teammates no longer need to be influenced
 - Changed: Civilopedia pages for both victories describe the current rules
 - DLL: LEKMOD_CAPITAL_INFLUENCE_VICTORY (CvGame::LekmodGetCapitalInfluenceVictory, used by testVictory and DoTestConquestVictory)
+
+CANAL PROJECT (BUILDING_PANAMA)
+------------------------------
+Tags: buildings, naval
+The Panama Canal is now the Canal Project, a national wonder. Its Great Engineers dig canals that ships can sail through.
+- Changed: national wonder (was a world wonder); requires Electronics (was Railroad); costs the same as Cristo Redentor; no longer has to be on the coast
+- Added: +33% to all yields you get from trade routes that start in its city (internal and external)
+- Changed: 2 Engineer points (was 2 Merchant points)
+- Removed: +8 Gold from external sea trade routes, the free Great Merchant, its Culture and Gold
+- Added: Great Engineers can build a Canal (uses up the Great Engineer): flat land next to one of your cities and the sea
+- Added: Canal tiles: naval units can enter them (4 movement); all units on a Canal have -70% defense and cannot attack
+- Note: the Canal improvement existed in the data but no unit could build it
+- DLL: Buildings.TradeRouteOriginYieldModifier, Builds.PrereqBuildingClass, canal move cost and no attacks from canal tiles (LEKMOD_CANAL_PROJECT); Lua Player:GetTradeConnectionOriginBuildingValueModifier (trade route tooltip line)

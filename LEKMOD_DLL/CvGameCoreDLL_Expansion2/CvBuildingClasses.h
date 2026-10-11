@@ -227,6 +227,9 @@ public:
 	int GetCityAttackRangeChange() const;
 	int GetNukeUnitDamageFixed() const;
 	bool IsAirportRebase() const;
+#ifdef LEKMOD_CANAL_PROJECT
+	int GetTradeRouteOriginYieldModifier() const;
+#endif
 	bool IsNearRiver() const;
 	bool IsNoMaintenanceOnRiver() const;
 	int GetRevealResource() const;
@@ -580,6 +583,9 @@ private:
 	int m_iCityAttackRangeChange;
 	int m_iNukeUnitDamageFixed;
 	bool m_bAirportRebase;
+#ifdef LEKMOD_CANAL_PROJECT
+	int m_iTradeRouteOriginYieldModifier;
+#endif
 	bool m_bNearRiver;
 	bool m_bNoMaintenanceOnRiver;
 	int m_iRevealResource;

@@ -5646,11 +5646,11 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 		</Row>
 	<!-- v28 Panama Wonder -->
 		<Row Tag="TXT_KEY_BUILDING_PANAMA1">
-			<Text>Panama Canal</Text>
+			<Text>Canal Project</Text>
 		</Row>
 		<!-- Help tags -->
 		<Row Tag="TXT_KEY_WONDER_PANAMA_HELP1">
-			<Text>+8 [ICON_GOLD] Gold from External Sea [ICON_INTERNATIONAL_TRADE] Trade Routes. Receive a Free [ICON_GREAT_MERCHANT] Great Merchant.[NEWLINE][NEWLINE]City must be built on the coast. </Text>
+			<Text>+33% to all yields from [ICON_INTERNATIONAL_TRADE] Trade Routes that start in this city (internal and external).[NEWLINE][NEWLINE]Your [ICON_GREAT_ENGINEER] Great Engineers can build a Canal.</Text>
 		</Row>
 		<!-- Quote tags -->
 		<Row Tag="TXT_KEY_WONDER_PANAMA_QUOTE1">
@@ -5660,7 +5660,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 		</Row>
 		<!-- Pedia tags -->
 		<Row Tag="TXT_KEY_WONDER_PANAMA_PEDIA1">
-			<Text>The Panama Canal is a manmade shipping lane located on the Panama Isthmus seperating the Pacific Ocean and Carribean Sea. The idea of a canal in the location was first proposed int he sixteenth century by Charles V, Holy Roman Emperor, who asked for a link to shorten the journey between Spain and their colony of Peru. In 1698 the Kingdom of Scotland launched a project to create an overland trade route in the area, which was abandoned due to inhospitiable conditions a year later. It was not until 1855 that a link was first established, the Panama Canal Railway, as a result of the 1849 discovery of Gold in the American state of California. This railway was used extensively in the American construction of the canal from 1904 to 1914. As opposed to the French plan of constructing a flat water canal, much like that of the Suez Canal, the American design featured a series of ship locks to rise the ships over a range that caused problems for the French design. The American design proved sucessful, and was opened on August 15, 1914. Railway cars had been used to transport approximately 152,910,972 cubic metres of excevations through the construction, while it had cost 27,500 lives across the whole project.  </Text>
+			<Text>National wonder. Requires Electronics.[NEWLINE][NEWLINE]+33% to all yields from Trade Routes that start in this city. This covers internal routes (Food and Production for your other city) and external routes (your share of Gold and Science).[NEWLINE]+2 Great Engineer points per turn in this city.[NEWLINE][NEWLINE]Your Great Engineers can build a Canal (the Great Engineer is used up).</Text>
 		</Row>
 	<!-- v28 Cuba -->
 		<Row Tag="TXT_KEY_CIV_CL_UC_CUBA_DESC">
@@ -21903,7 +21903,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_CANAL_HELP"> 
 			<Text>
-				[COLOR_WARNING_TEXT]-75%[ENDCOLOR][ICON_STRENGTH] Strength and +2 Movement cost for any Naval Unit stationed in this Tile. Naval units may pass trough this tile as if it were a Water Tile.
+				Requires the Canal Project. Uses up the Great Engineer.[NEWLINE]Flat land next to a city and next to the sea.[NEWLINE][NEWLINE]Naval units can enter the tile. Entering it costs them 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Units on the tile have [COLOR_NEGATIVE_TEXT]-70%[ENDCOLOR] [ICON_STRENGTH] Defense and cannot attack.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_FORT_REC"> 
@@ -45032,7 +45032,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 			<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_CANAL_TEXT"> 
 			<Text>
-				A Canal is a special improvement that doesn't increase a hex's productivity or provide access to a resource. Instead, a canal allows passage of Naval units on the tile it is built. However, it costs 2 more movement points to move on the tile and all units stationed on a canal receive a -75% defense penalty.
+				Built by a Great Engineer (used up) once you have the Canal Project.[NEWLINE]Must be on flat land, next to a city and next to the sea.[NEWLINE][NEWLINE]Naval units can enter a Canal tile; this costs them 4 Movement. Land units move onto it at normal cost.[NEWLINE][NEWLINE]All units on a Canal have -70% Defense and cannot attack (melee or ranged).[NEWLINE][NEWLINE]A Canal yields nothing. It cannot be pillaged while a naval unit stands on it.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_FORT_TITLE1"> 

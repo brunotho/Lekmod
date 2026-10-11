@@ -11956,6 +11956,14 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 		}
 	}
 
+#ifdef LEKMOD_CANAL_PROJECT
+	const BuildingClassTypes ePrereqBuildingClass = (BuildingClassTypes)GC.getBuildInfo(eBuild)->getPrereqBuildingClass();
+	if (ePrereqBuildingClass != NO_BUILDINGCLASS && getBuildingClassCount(ePrereqBuildingClass) <= 0)
+	{
+		return false;
+	}
+#endif
+
 	// Is this an improvement that is only useable by a specific civ?
 	ImprovementTypes eImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild)->getImprovement();
 	if(eImprovement != NO_IMPROVEMENT)

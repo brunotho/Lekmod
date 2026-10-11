@@ -144,7 +144,11 @@ void CvUnitMovement::GetCostsForMove(const CvUnit* pUnit, const CvPlot* pFromPlo
 
 	if(pUnit->getDomainType() == DOMAIN_SEA && pToPlot->IsAllowsSailLand())
 	{ // from Izy
+#ifdef LEKMOD_CANAL_PROJECT
+			iRegularCost = iMoveDenominator * LEKMOD_CANAL_NAVAL_MOVE_COST;
+#else
 			iRegularCost = iMoveDenominator*3;
+#endif
 			iRouteCost = iRegularCost;
 			iRouteFlatCost = iRegularCost;
 	}

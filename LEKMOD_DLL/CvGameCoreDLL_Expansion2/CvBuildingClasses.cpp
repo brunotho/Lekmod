@@ -99,6 +99,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iCityAttackRangeChange(0),
 	m_iNukeUnitDamageFixed(0),
 	m_bAirportRebase(false),
+#ifdef LEKMOD_CANAL_PROJECT
+	m_iTradeRouteOriginYieldModifier(0),
+#endif
 	m_bNearRiver(false),
 	m_bNoMaintenanceOnRiver(false),
 	m_iRevealResource(-1),
@@ -505,6 +508,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iCityAttackRangeChange = kResults.GetInt("CityAttackRangeChange");
 	m_iNukeUnitDamageFixed = kResults.GetInt("NukeUnitDamageFixed");
 	m_bAirportRebase = kResults.GetBool("AirportRebase");
+#ifdef LEKMOD_CANAL_PROJECT
+	m_iTradeRouteOriginYieldModifier = kResults.GetInt("TradeRouteOriginYieldModifier");
+#endif
 	m_bNearRiver = kResults.GetBool("NearRiver");
 	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
 	m_iRevealResource = GC.getInfoTypeForString(kResults.GetText("RevealResource"), true);
@@ -1942,6 +1948,14 @@ bool CvBuildingEntry::IsAirportRebase() const
 {
 	return m_bAirportRebase;
 }
+#ifdef LEKMOD_CANAL_PROJECT
+
+/// % more of every yield the owner gets from trade routes starting in this city (Canal Project)
+int CvBuildingEntry::GetTradeRouteOriginYieldModifier() const
+{
+	return m_iTradeRouteOriginYieldModifier;
+}
+#endif
 
 /// The city must be on a river or next to a river tile (Hydro Plant)
 bool CvBuildingEntry::IsNearRiver() const

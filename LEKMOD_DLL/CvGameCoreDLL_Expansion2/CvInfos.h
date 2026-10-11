@@ -1114,6 +1114,9 @@ public:
 	int getCost() const;
 	int getCostIncreasePerImprovement() const;
 	int getTechPrereq() const;
+#ifdef LEKMOD_CANAL_PROJECT
+	int getPrereqBuildingClass() const;
+#endif
 	int getImprovement() const;
 	int getRoute() const;
 	int getEntityEvent() const;
@@ -1157,6 +1160,9 @@ protected:
 	int m_iCost;
 	int m_iCostIncreasePerImprovement;
 	int m_iTechPrereq;
+#ifdef LEKMOD_CANAL_PROJECT
+	int m_iPrereqBuildingClass;
+#endif
 	int m_iImprovement;
 	int m_iRoute;
 	int m_iEntityEvent;

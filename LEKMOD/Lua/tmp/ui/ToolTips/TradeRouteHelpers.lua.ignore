@@ -84,7 +84,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 	local resourceText, exclusiveText = "", ""
 	local policyText, traitText, religionText = "", "", ""
 	local policyModifierText, traitModifierText = "", ""
-	local riverModifierText, domainModifierText = "", ""
+	local riverModifierText, domainModifierText, originBuildingModifierText = "", "", ""
 	local sumText, totalText = "", ""
 	local anyBase, hasModifiers = false, false
 
@@ -306,6 +306,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 			local traitModifier = pPlayer:GetTradeConnectionTraitValueModifier(pOriginCity, pTargetCity, eConnectionType, bAsOrigin, yieldID, eDomain) or 0
 			local riverModifier = pPlayer:GetTradeConnectionRiverValueModifier(pOriginCity, pTargetCity, eConnectionType, bAsOrigin, yieldID, eDomain) or 0
 			local domainModifier = pPlayer:GetTradeConnectionDomainValueModifier(pOriginCity, pTargetCity, eConnectionType, yieldID, eDomain) or 0
+			local originBuildingModifier = pPlayer.GetTradeConnectionOriginBuildingValueModifier and pPlayer:GetTradeConnectionOriginBuildingValueModifier(pOriginCity, pTargetCity, eConnectionType, bAsOrigin, yieldID, eDomain) or 0
 
 			if policyModifier ~= 0 then
 				local bonus = sumValue * policyModifier / 100
@@ -325,6 +326,11 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 			if domainModifier ~= 0 then
 				local bonus = sumValue * domainModifier / 100
 				domainModifierText = string.format("%s %+d%%%s (%+g%s)", domainModifierText, domainModifier, yieldIcon, bonus, yieldIcon)
+				hasModifiers = true
+			end
+			if originBuildingModifier ~= 0 then
+				local bonus = sumValue * originBuildingModifier / 100
+				originBuildingModifierText = string.format("%s %+d%%%s (%+g%s)", originBuildingModifierText, originBuildingModifier, yieldIcon, bonus, yieldIcon)
 				hasModifiers = true
 			end
 
@@ -469,6 +475,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 		if traitModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Traits[ENDCOLOR]:" .. traitModifierText end
 		if riverModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]River[ENDCOLOR]:" .. riverModifierText end
 		if domainModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Coastal city[ENDCOLOR]:" .. domainModifierText end
+		if originBuildingModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Canal Project[ENDCOLOR]:" .. originBuildingModifierText end
 
 		for _, entry in pairs(potentialPolicyModifiers) do
 			lines[#lines + 1] = "  [ICON_BULLET][COLOR_YELLOW]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text

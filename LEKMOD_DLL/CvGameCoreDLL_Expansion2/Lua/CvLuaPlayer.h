@@ -1058,6 +1058,9 @@ protected:
 	static int lGetTradeConnectionTraitValueModifier(lua_State* L);
 	static int lGetTradeConnectionDomainValueModifier(lua_State* L);
 	static int lGetTradeConnectionRiverValueModifier(lua_State* L);
+#ifdef LEKMOD_CANAL_PROJECT
+	static int lGetTradeConnectionOriginBuildingValueModifier(lua_State* L);
+#endif
 	// Sum of All
 	static int lGetTradeConnectionTotalValue(lua_State* L);
 #endif

@@ -3163,6 +3163,13 @@ bool CvUnit::canMoveInto(const CvPlot& plot, byte bMoveFlags) const
 		{
 			return false;
 		}
+#ifdef LEKMOD_CANAL_PROJECT
+		// No attacks out of a canal tile
+		if (this->plot() != NULL && this->plot()->IsAllowsSailLand())
+		{
+			return false;
+		}
+#endif
 
 		// Does unit only attack cities?
 		if(IsCityAttackOnly() && !plot.isEnemyCity(*this) && plot.getBestDefender(NO_PLAYER))
@@ -3563,6 +3570,13 @@ bool CvUnit::canMoveOrAttackIntoAttackOnly(const CvPlot& plot, byte bMoveFlags) 
 		{
 			return false;
 		}
+#ifdef LEKMOD_CANAL_PROJECT
+		// No attacks out of a canal tile
+		if (this->plot() != NULL && this->plot()->IsAllowsSailLand())
+		{
+			return false;
+		}
+#endif
 
 		// Does unit only attack cities?
 		if (IsCityAttackOnly() && !plot.isEnemyCity(*this) && plot.getBestDefender(NO_PLAYER))
@@ -24469,6 +24483,13 @@ bool CvUnit::canRangeStrike() const
 	// Hide ranged attack UI when stacked land+naval on walk-water (cannot fire)
 	CvPlot* pPlot = plot();
 	if (pPlot && pPlot->IsAllowsWalkWater() && pPlot->HasStackedLandAndNavalUnits())
+	{
+		return false;
+	}
+#endif
+#ifdef LEKMOD_CANAL_PROJECT
+	// No attacks out of a canal tile
+	if (plot() != NULL && plot()->IsAllowsSailLand())
 	{
 		return false;
 	}

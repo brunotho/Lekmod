@@ -271,6 +271,9 @@ public:
 	int GetTradeConnectionTraitValueModifierTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield, bool bAsOriginPlayer);
 	int GetTradeConnectionDomainValueModifierTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield);
 	int GetTradeConnectionRiverValueModifierTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield, bool bAsOriginPlayer);
+#ifdef LEKMOD_CANAL_PROJECT
+	int GetTradeConnectionOriginBuildingValueModifierTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield, bool bAsOriginPlayer);
+#endif
 	// Sum of All
 	int GetTradeConnectionValueTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield, bool bAsOriginPlayer, bool bIncludeModifiers = true);
 #else

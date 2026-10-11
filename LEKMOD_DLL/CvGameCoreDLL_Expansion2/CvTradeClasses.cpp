@@ -2946,6 +2946,18 @@ int CvPlayerTrade::GetTradeConnectionRiverValueModifierTimes100(const TradeConne
 
 	return iModifier;
 }
+#ifdef LEKMOD_CANAL_PROJECT
+/// Buildings in the origin city that raise every yield of routes starting there (Canal Project); only the origin city owner's share
+int CvPlayerTrade::GetTradeConnectionOriginBuildingValueModifierTimes100(const TradeConnection& kTradeConnection, YieldTypes, bool bAsOriginPlayer)
+{
+	if (!bAsOriginPlayer && GC.getGame().GetGameTrade()->IsConnectionInternational(kTradeConnection))
+	{
+		return 0;
+	}
+	CvCity* pOriginCity = CvGameTrade::GetOriginCity(kTradeConnection);
+	return pOriginCity ? pOriginCity->GetLekmodBuildingStat(7, false) : 0;
+}
+#endif
 int CvPlayerTrade::GetTradeConnectionValueTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield, bool bAsOriginPlayer, bool bIncludeModifiers)
 {
 	// If you put yield cases in this function, I will bite you. Put them in the Helpers or make a better yield grabber.
@@ -2985,6 +2997,9 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100(const TradeConnection& kTrade
 		iModifier += iTraitModifier;
 		iModifier += iDomainModifier;
 		iModifier += iRiverMod;
+#ifdef LEKMOD_CANAL_PROJECT
+		iModifier += GetTradeConnectionOriginBuildingValueModifierTimes100(kTradeConnection, eYield, bAsOriginPlayer);
+#endif
 
 		iTotalValue *= iModifier;
 		iTotalValue /= 100;
