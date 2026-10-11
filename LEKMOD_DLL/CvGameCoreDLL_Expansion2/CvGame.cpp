@@ -9942,6 +9942,12 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 					bValid = false;
 				}
 			}
+#ifdef LEKMOD_CAPITAL_INFLUENCE_VICTORY
+			if (!bValid && LekmodGetCapitalInfluenceVictory(eTeam) == 1)
+			{
+				bValid = true;
+			}
+#endif
 		}
 	}
 
@@ -9970,6 +9976,9 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 	{
 		if(pkVictoryInfo->isInfluential())
 		{
+#ifdef LEKMOD_CAPITAL_INFLUENCE_VICTORY
+			bValid = (LekmodGetCapitalInfluenceVictory(eTeam) == 2);
+#else
 			// See if all players on this team have influential culture with all other players (still alive)
 			bValid = false;
 			for(int iPlayerLoop = 0; iPlayerLoop < MAX_PLAYERS; iPlayerLoop++)
@@ -9988,6 +9997,7 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 					}
 				}
 			}		
+#endif
 		}
 	}
 
@@ -12025,6 +12035,108 @@ int CvGame::GetResearchAgreementCost(PlayerTypes ePlayer1, PlayerTypes ePlayer2)
 }
 
 
+#ifdef LEKMOD_CAPITAL_INFLUENCE_VICTORY
+//	--------------------------------------------------------------------------------
+/// Capital control and cultural influence stand in for each other.
+/// Domination: every other civ's original capital is held by eTeam, or eTeam is influential over that (living) civ; eTeam holds its own original capitals.
+/// Culture: eTeam is influential over every other living civ, or holds that civ's original capital.
+/// If both hold, the larger count decides (capitals held vs civs influenced); a tie counts as domination.
+/// Returns 1 = domination, 2 = culture, 0 = neither.
+int CvGame::LekmodGetCapitalInfluenceVictory(TeamTypes eTeam) const
+{
+	// Team holding each major civ's original capital (NO_TEAM: none exists)
+	TeamTypes aeCapitalHolder[MAX_MAJOR_CIVS];
+	for (int iPlayerLoop = 0; iPlayerLoop < MAX_MAJOR_CIVS; iPlayerLoop++)
+	{
+		aeCapitalHolder[iPlayerLoop] = NO_TEAM;
+	}
+	for (int iPlayerLoop = 0; iPlayerLoop < MAX_MAJOR_CIVS; iPlayerLoop++)
+	{
+		CvPlayer& kHolder = GET_PLAYER((PlayerTypes)iPlayerLoop);
+		if (!kHolder.isAlive())
+		{
+			continue;
+		}
+		int iCityLoop;
+		for (CvCity* pLoopCity = kHolder.firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = kHolder.nextCity(&iCityLoop))
+		{
+			PlayerTypes eOriginalOwner = pLoopCity->getOriginalOwner();
+			if (pLoopCity->IsOriginalCapital() && eOriginalOwner >= 0 && eOriginalOwner < MAX_MAJOR_CIVS)
+			{
+				aeCapitalHolder[eOriginalOwner] = kHolder.getTeam();
+			}
+		}
+	}
+
+	bool bDomination = true;
+	bool bCulture = true;
+	int iCapitalsHeld = 0;
+	int iCivsInfluenced = 0;
+	for (int iPlayerLoop = 0; iPlayerLoop < MAX_MAJOR_CIVS; iPlayerLoop++)
+	{
+		CvPlayer& kOther = GET_PLAYER((PlayerTypes)iPlayerLoop);
+		if (!kOther.isEverAlive())
+		{
+			continue;
+		}
+		const bool bHasCapital = (aeCapitalHolder[iPlayerLoop] != NO_TEAM);
+		if (kOther.getTeam() == eTeam)
+		{
+			if (bHasCapital && aeCapitalHolder[iPlayerLoop] != eTeam)
+			{
+				bDomination = false;
+			}
+			continue;
+		}
+
+		const bool bHeld = bHasCapital && aeCapitalHolder[iPlayerLoop] == eTeam;
+		bool bInfluenced = false;
+		if (kOther.isAlive())
+		{
+			for (int iMember = 0; iMember < MAX_MAJOR_CIVS && !bInfluenced; iMember++)
+			{
+				CvPlayer& kMember = GET_PLAYER((PlayerTypes)iMember);
+				if (kMember.isAlive() && kMember.getTeam() == eTeam && kMember.GetCulture()->GetInfluenceLevel(kOther.GetID()) >= INFLUENCE_LEVEL_INFLUENTIAL)
+				{
+					bInfluenced = true;
+				}
+			}
+		}
+
+		if (bHeld)
+		{
+			iCapitalsHeld++;
+		}
+		if (bInfluenced)
+		{
+			iCivsInfluenced++;
+		}
+		if (bHasCapital && !bHeld && !bInfluenced)
+		{
+			bDomination = false;
+		}
+		if (kOther.isAlive() && !bHeld && !bInfluenced)
+		{
+			bCulture = false;
+		}
+	}
+
+	if (bDomination && bCulture)
+	{
+		return (iCapitalsHeld >= iCivsInfluenced) ? 1 : 2;
+	}
+	if (bDomination)
+	{
+		return 1;
+	}
+	if (bCulture)
+	{
+		return 2;
+	}
+	return 0;
+}
+#endif
+
 //	--------------------------------------------------------------------------------
 /// See if someone has won a conquest Victory
 /// slewis, 10.1.12 - changing conquest so that a player has to hold all capitals
@@ -12087,6 +12199,18 @@ void CvGame::DoTestConquestVictory()
 			}
 		}
 	}
+
+#ifdef LEKMOD_CAPITAL_INFLUENCE_VICTORY
+	// Influence over a living civ replaces holding its capital
+	for (int iTeamLoop = 0; iTeamLoop < MAX_CIV_TEAMS && eTeamWhoWon == NO_TEAM; iTeamLoop++)
+	{
+		CvTeam& kTeam = GET_TEAM((TeamTypes)iTeamLoop);
+		if (kTeam.isAlive() && !kTeam.isMinorCiv() && LekmodGetCapitalInfluenceVictory((TeamTypes)iTeamLoop) == 1)
+		{
+			eTeamWhoWon = (TeamTypes)iTeamLoop;
+		}
+	}
+#endif
 
 	// If we got here then only one player remains alive!
 	if (eTeamWhoWon != NO_TEAM)

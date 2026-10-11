@@ -1475,6 +1475,9 @@ Diversify Spain and Australia's NW Discovery bonus
 // NearbyEnemyCombatMod/Range (Statue of Zeus), ClosestCoastalMinorInfluence (Colossus, once), Building_EraHappiness (Eiffel Tower, cumulative),
 // ClosestCoastalMinorTradeQuest (Great Lighthouse), GoldenAgePopulationChange (Chichen Itza), Building_FreshWaterImprovementYieldChanges (Angkor Wat)
 #define LEKMOD_GREAT_WORK_WONDER_EFFECTS
+// Capital control and influence stand in for each other: holding a civ's original capital replaces being influential over it (culture victory),
+// being influential over a living civ replaces holding its capital (domination). If both victories hold, the larger count decides (tie: domination).
+#define LEKMOD_CAPITAL_INFLUENCE_VICTORY
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

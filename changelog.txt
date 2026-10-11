@@ -1497,3 +1497,14 @@ Rebuilt as a launch pad for overseas settling.
 - Changed: costs 400 (was 300); must be built on the coast; 1 Merchant point; +5 City Strength
 - Added: a Great Admiral, 2 Conquistadors, 2 Galleasses and 4 Skiffs appear when it is built
 - Removed: its Culture, Golden Age points and the yields for cities on the same or other landmasses
+
+VICTORY: CAPITALS AND INFLUENCE (VICTORY_DOMINATION, VICTORY_CULTURAL)
+---------------------------------------------------------------------
+Tags: game mechanics
+Holding a civ's capital and being culturally Influential over it now stand in for each other.
+- Changed: Cultural Victory: holding a civ's original capital counts as being Influential over it
+- Changed: Domination Victory: being Influential over a living civ counts as holding its original capital (you still need your own)
+- Added: if you meet both victories at once, the higher count decides (capitals held vs civs you are Influential over); a tie counts as Domination
+- Changed: in team games, influence from any teammate counts, and teammates no longer need to be influenced
+- Changed: Civilopedia pages for both victories describe the current rules
+- DLL: LEKMOD_CAPITAL_INFLUENCE_VICTORY (CvGame::LekmodGetCapitalInfluenceVictory, used by testVictory and DoTestConquestVictory)

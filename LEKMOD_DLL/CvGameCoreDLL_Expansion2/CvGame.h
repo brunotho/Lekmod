@@ -591,6 +591,9 @@ public:
 
 	// Victory Stuff
 	void DoTestConquestVictory();
+#ifdef LEKMOD_CAPITAL_INFLUENCE_VICTORY
+	int LekmodGetCapitalInfluenceVictory(TeamTypes eTeam) const;
+#endif
 
 	PlayerTypes GetBestWondersPlayer();
 	void SetBestWondersPlayer(PlayerTypes ePlayer, int iWonderCount);
