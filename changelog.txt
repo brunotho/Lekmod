@@ -504,7 +504,7 @@ Hovering an unimproved resource shows what improving it would give.
 - Changed: the tile info box sits 16 px from the right screen edge (like the End Turn button), grows to the left, and wraps long lines at a wider width instead of running off the screen
 - Dev: on tiles outside anyone's borders, the improved yields left out the resource's own yields (e.g. Lapis showed no Gold), because the game's yield preview counted the resource only for the tile owner's team; fixed in the DLL (LEKMOD_YIELD_WITH_BUILD_VIEWER_TEAM)
 - Dev: the build turns were one too high (the first turn's work counts right away, as on the build button); fixed
-- Added: Fishing Boats show the time for a Worker or Nelayan and the instant alternative, e.g. "4 turns to improve, 1 with a Skiff"
+- Added: Fishing Boats show the time for a Worker or Nelayan and the instant alternative, e.g. "4 turns to improve, 1 with a Rowboat"
 - Note: standard UI only (EUI uses its own tile tooltip)
 
 LUXURY YIELDS
@@ -1053,13 +1053,14 @@ Bombers and artillery are good at hitting ships and embarked troops.
 - DLL: UnitPromotions.AttackVsEmbarkedMod (LEKMOD_ATTACK_VS_EMBARKED, both ranged strength paths); naval part via UnitPromotions_UnitCombatMods.Attack; promotion ID 374
 - Note: the 256 px icon is upscaled from the 64 px art (no larger original)
 
-SKIFF (UNIT_SKIFF)
-------------------
+ROWBOAT (UNIT_SKIFF)
+--------------------
 Tags: units, naval
 A new early scouting boat that can also place Fishing Boats and Pontoon Bridges.
-- Added: Skiff: available from the start (Agriculture), never obsolete, 21 Production, 3 Combat Strength, 3 movement, 2 sight
+- Note: renamed from Skiff to Rowboat on 2026-10-11 (display name only; the type key stays UNIT_SKIFF)
+- Added: Rowboat: available from the start (Agriculture), never obsolete, 21 Production, 3 Combat Strength, 3 movement, 2 sight
 - Added: it gets the same promotions as the Scout and cannot be gifted to City-States
-- Added: with Sailing it can build Fishing Boats, with Construction a Pontoon Bridge; the improvement is finished at once and the Skiff is used up
+- Added: with Sailing it can build Fishing Boats, with Construction a Pontoon Bridge; the improvement is finished at once and the Rowboat is used up
 - Added: it cannot enter Ocean tiles before Astronomy (like the Work Boat)
 - Note: it uses the Work Boat's look; the user chose Fishing Boats only with Sailing, as for the Work Boat
 - DLL: LEKMOD_SKIFF (gift check, both gift functions)
@@ -1067,9 +1068,9 @@ A new early scouting boat that can also place Fishing Boats and Pontoon Bridges.
 NELAYAN (UNIT_NELAYAN)
 ----------------------
 Tags: units, naval, civs
-The Nelayan returns as a shared unique Skiff for seafaring civilizations.
-- Added: Nelayan replaces the Skiff for Brunei, Polynesia, the Maori, Tonga, Indonesia and the Philippines
-- Added: unlike the Skiff it builds Fishing Boats over several turns like a Worker and is not used up; a Pontoon Bridge still uses it up at once
+The Nelayan returns as a shared unique Rowboat for seafaring civilizations.
+- Added: Nelayan replaces the Rowboat for Brunei, Polynesia, the Maori, Tonga, Indonesia and the Philippines
+- Added: unlike the Rowboat it builds Fishing Boats over several turns like a Worker and is not used up; a Pontoon Bridge still uses it up at once
 - Note: art as Lekmod's original Nelayan (Polynesian war canoe model, removed in v31); the user checks the look in game
 
 SELF-PROPELLED ARTILLERY (UNIT_SELF_PROPELLED_ARTILLERY)
@@ -1334,7 +1335,7 @@ Tags: religion
 Three new pantheons.
 - Added: Kin Forged in Blood: clearing a barbarian encampment gives +1 Population in the capital and 30 Faith (shown over the camp); new military units get Zealot while the pantheon is in your capital (units keep it afterwards)
 - Added: Salt and Stars: +2 Production from Salt; +1 Faith from Fish, Whales, Coral, Pearls and Crabs; new land units get +1 sight while embarked while the pantheon is in your capital (units keep it afterwards)
-- Added: The Tide's Calling: a coastal capital gets +1 Faith and +1 Gold on its tile per inland city; +1 Faith and +1 Gold from Stone and Wheat; founding it gives a free Skiff (Brunei: Nelayan)
+- Added: The Tide's Calling: a coastal capital gets +1 Faith and +1 Gold on its tile per inland city; +1 Faith and +1 Gold from Stone and Wheat; founding it gives a free Rowboat (Brunei: Nelayan)
 - Note: "in your capital" means the capital follows a religion with this pantheon, or has it as its own pantheon
 - DLL: Beliefs.NewUnitPromotion/NewUnitPromotionAllLand/CampClearCapitalPopulation/CampClearFaith/FoundFreeUnitClass, Belief_CoastalCapitalYieldPerInlandCity (LEKMOD_CAPITAL_PANTHEON_EFFECTS); belief IDs 102-104; promotion 378 PROMOTION_LEKMOD_SALT_STARS
 
@@ -1495,7 +1496,7 @@ TOWER OF BELEM (BUILDING_TOWER_OF_BELEM)
 Tags: buildings, naval
 Rebuilt as a launch pad for overseas settling.
 - Changed: costs 400 (was 300); must be built on the coast; 1 Merchant point; +5 City Strength
-- Added: a Great Admiral, 2 Conquistadors, 2 Galleasses and 4 Skiffs appear when it is built
+- Added: a Great Admiral, 2 Conquistadors, 2 Galleasses and 4 Rowboats appear when it is built
 - Removed: its Culture, Golden Age points and the yields for cities on the same or other landmasses
 
 VICTORY: CAPITALS AND INFLUENCE (VICTORY_DOMINATION, VICTORY_CULTURAL)
