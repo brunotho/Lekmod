@@ -10,12 +10,12 @@ local GameInfo = EUI and EUI.GameInfoCache or GameInfo
 include( "InstanceManager" );
 
 -- LEKMOD: wrap long [ICON_BULLET] lines ourselves so the wrapped part starts under the text, not under the bullet
-local LEKMOD_BULLET_LINE_CHARS = 46;	-- visible characters per tooltip line (icons count as 3)
+local LEKMOD_BULLET_LINE_CHARS = 32;	-- visible characters per tooltip line (icons count as 4); must stay below the game's own wrap width
 local LEKMOD_BULLET_INDENT = "    ";	-- about the width of the bullet icon
 local function LekmodVisibleLength(s)
 	s = string.gsub(s, "%[COLOR_[%w_]+%]", "");
 	s = string.gsub(s, "%[ENDCOLOR%]", "");
-	s = string.gsub(s, "%[ICON_[%w_]+%]", "xxx");
+	s = string.gsub(s, "%[ICON_[%w_]+%]", "xxxx");
 	return string.len(s);
 end
 function LekmodHangingIndent(text)

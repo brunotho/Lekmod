@@ -198,7 +198,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
     - Each sentence goes on its own line (`[NEWLINE]`).
     - Distinct topics or effects are separated by an empty line (`[NEWLINE][NEWLINE]`), e.g. bonus vs. penalty, or combat vs. movement.
     - This applies to all new and changed tooltips. Older tooltips will be retrofitted later (user's intention).
-  - **Policy tooltips (user, 2026-10-11):** every non-ideology policy is `Name` + `[ICON_BULLET]` lines. `SocialPolicyPopup` (both UIs) wraps long bullet lines itself (`LekmodHangingIndent`, 46 visible chars, 4-space indent) so wrapped text lines up under the first line; tune those two numbers if playtests show misalignment.
+  - **Policy tooltips (user, 2026-10-11):** every non-ideology policy is `Name` + `[ICON_BULLET]` lines. `SocialPolicyPopup` (both UIs) wraps long bullet lines itself (`LekmodHangingIndent`, 32 visible chars with icons counted as 4, 4-space indent) so wrapped text lines up under the first line. Our lines must stay shorter than the game's own tooltip wrap (~38 chars): at 46 the game wrapped first and the overflow started at the left edge (user playtest 2026-10-11).
   - **Policy tree tooltips (user, 2026-10-11):** opener and finisher effects as `[ICON_BULLET]` lists ("Adopting X:" / "Completing the X tree:"), one effect per bullet, no chains of "and" between distinct effects.
   - **Beliefs (user, 2026-10-11):** one line per effect/sentence (`[NEWLINE]`), no bullets, no empty lines. Bullets with a hanging-indent pantheon popup were tried and dropped (rows overlapped).
   - **Exception:** list or menu rows with fixed height, like the Shoshone ruin choice (`ChooseDescription`), must be short, matter-of-fact one-liners.
