@@ -212,6 +212,7 @@ public:
 	bool IsNoMaintenanceOnRiver() const;
 	int GetRevealResource() const;
 	bool IsWorshipHouse() const { return m_bLekmodWorshipHouse; }
+	int GetGreatWorkYieldModifier() const { return m_iLekmodGreatWorkYieldModifier; }
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int GetTerritoryHealChange() const;
@@ -543,6 +544,7 @@ private:
 	bool m_bNoMaintenanceOnRiver;
 	int m_iRevealResource;
 	bool m_bLekmodWorshipHouse;
+	int m_iLekmodGreatWorkYieldModifier;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;

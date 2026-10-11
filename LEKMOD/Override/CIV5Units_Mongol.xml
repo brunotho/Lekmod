@@ -2993,7 +2993,7 @@
 		Yugoslav president Josip Broz Tito commissioned several memorial sites and monuments in the 1960s and 1970s dedicated to World War II battles, and Nazi concentration camp sites. They were designed by notable sculptors, including Dušan Džamonja, Vojin Bakić, Miodrag Živković, Jordan and Iskra Grabul, and architects, including Bogdan Bogdanović and Gradimir Medaković. After Tito's death, a small number were built, and the monuments were popular visitor attractions in the 1980s as patriotic sites, and since the Yugoslav Wars and the dissolution of Yugoslavia, the sites are mostly abandoned.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_YUGO_SPOMENIK_HELP">			
-		<Text>Unique building for Yugoslavia. Replaces the Museum. In addition to the typical perks, provides +20% [ICON_RESEARCH] Science in the City, but costs more to construct.</Text>
+		<Text>Unique building for Yugoslavia. Replaces the Museum.[NEWLINE]Also provides +20% [ICON_RESEARCH] Science in the City, but costs more to construct.[NEWLINE][NEWLINE]Great Works in this building yield +50%.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_YUGO_SPOMENIK_STRATEGY">			
 		<Text>The Spomenik is an incredible late-game boon for research but is tempered by its availability at Archaeology, making it unwise to rush toward (lest you find yourself at the wrong end of an Artillery attack). Pick it up on your way to strike [ICON_RES_OIL] Oil after finishing more essential Industrial technologies. </Text>
@@ -3398,7 +3398,7 @@
 		In the 1950s the theatre was cleared from the sand and subsequently underwent restoration works.[8] The theatre hosted folk music performances for the annual Palmyra festival.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_PALMYRA_FORUM_HELP">			
-		<Text>Unique building for Palmyra. Replaces the Amphitheater. In addition to the typical perks, provides +1 [ICON_PRODUCTION] Production, [ICON_CULTURE] Culture and [ICON_GOLD] to Oasis tiles and +1 [ICON_PRODUCTION] Production from Lake tiles. Costs no [ICON_GOLD] Gold maintenance.</Text>
+		<Text>Unique building for Palmyra. Replaces the Amphitheater.[NEWLINE]+1 [ICON_PRODUCTION] Production, [ICON_CULTURE] Culture and [ICON_GOLD] Gold on Oasis tiles, +1 [ICON_PRODUCTION] Production on Lake tiles.[NEWLINE]Costs no [ICON_GOLD] Gold maintenance.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
 	</Row>
 	<Row Tag="TXT_KEY_BUILDING_PALMYRA_FORUM_STRATEGY">			
 		<Text>Build this in cities with lakes and oases to get extra yields.</Text>
@@ -5899,7 +5899,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Unique building for Cuba. Replaces the Opera House. It is Cheaper. When a Great Work of Music slot is filled, this building yields an additional +1 [ICON_HAPPINESS_1] Happiness, +4 [ICON_CULTURE] Culture and +15% [ICON_PRODUCTION] Military Production.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_CL_UC_DANCE_HALL_HELP">
-			<Text>Unique building for Cuba. Replaces the Opera House. It is Cheaper. When a Great Work of Music slot is filled, this building yields an additional +1 [ICON_HAPPINESS_1] Happiness, +4 [ICON_CULTURE] Culture and +15% [ICON_PRODUCTION] Military Production.</Text>
+			<Text>Unique building for Cuba. Replaces the Opera House. It is cheaper.[NEWLINE]When its Great Work slot is filled, this building yields an additional +1 [ICON_HAPPINESS_1] Happiness, +4 [ICON_CULTURE] Culture and +15% [ICON_PRODUCTION] Military Production.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_DAWN_OF_MAN_CL_UC_CUBA">
 			<Text>
@@ -18321,7 +18321,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_AMPHITHEATER_STRATEGY"> 
 			<Text>
-				The Amphitheater increases the [ICON_CULTURE] Culture of a city, speeding the growth of the city's territory and the civilization's acquisition of Social Policies. The city must contain a Monument (or a Stele) before the Amphitheater can be constructed.  Contains 1 slot for a Great Work of Writing.
+				The Amphitheater increases the [ICON_CULTURE] Culture of a city.[NEWLINE]It has 1 Great Work slot.[NEWLINE]Great Works in its city yield +1 [ICON_TOURISM] Tourism.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ANALYTICAL_ENGINE"> 
@@ -18501,7 +18501,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BASIL_HELP"> 
-			<Text>+15% [ICON_CULTURE] Culture in this City.[NEWLINE]+20% [ICON_GREAT_PEOPLE] Great Person generation in this City.[NEWLINE][NEWLINE]Unique Building for Italy, replaces the Museum:[NEWLINE]Unlocked by Industrialization instead of Archaeology.[NEWLINE]Cheaper, and does not need an Amphitheater.[NEWLINE]+15% [ICON_CULTURE] Culture instead of +10%.[NEWLINE]Adds +20% [ICON_GREAT_PEOPLE] Great Person generation, 2 Great Artist specialist slots and +2 Great Artist points.</Text>
+			<Text>+15% [ICON_CULTURE] Culture in this City.[NEWLINE]+20% [ICON_GREAT_PEOPLE] Great Person generation in this City.[NEWLINE][NEWLINE]Great Works in this building yield +50%.[NEWLINE][NEWLINE]Unique Building for Italy, replaces the Museum.[NEWLINE]Unlocked by Industrialization instead of Archaeology.[NEWLINE]Cheaper.[NEWLINE]+15% [ICON_CULTURE] Culture instead of +10%.[NEWLINE]Adds +20% [ICON_GREAT_PEOPLE] Great Person generation, 2 Great Artist specialist slots and +2 Great Artist points.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BAZAAR_DESC"> 
 			<Text>
@@ -18629,12 +18629,12 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BROADCAST_TOWER_HELP"> 
 			<Text>
-				+15% [ICON_CULTURE] Culture in this City.[NEWLINE][NEWLINE]City must have an Opera House.
+				+15% [ICON_CULTURE] Culture in this City.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BROADCAST_TOWER_STRATEGY"> 
 			<Text>
-				A Broadcast Tower is a late-game building which increases [ICON_CULTURE] Culture output of the city by 33%. The city must possess a Museum before it can construct a Broadcast Tower.
+				A Broadcast Tower is a late-game building which increases the [ICON_CULTURE] Culture of the city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BROADWAY"> 
@@ -18765,7 +18765,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CEILIDH_HALL_HELP"> 
 			<Text>
-				Replaces the Opera House. In addition to providing more [ICON_CULTURE] Culture, it also gives +3 [ICON_HAPPINESS_1]Hapiness.[NEWLINE][NEWLINE]City must have an amphitheater.
+				Replaces the Opera House.[NEWLINE]Provides more [ICON_CULTURE] Culture and +3 [ICON_HAPPINESS_1] Happiness.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CEILIDH_HALL_STRATEGY"> 
@@ -20289,11 +20289,11 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSEUM_HELP"> 
 			<Text>
-				+10% [ICON_CULTURE] Culture in this City.[NEWLINE][NEWLINE]City must have an Amphitheater.
+				+10% [ICON_CULTURE] Culture in this City.[NEWLINE][NEWLINE]Great Works in this building yield +50%.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSEUM_STRATEGY"> 
-			<Text>+2 [ICON_CULTURE] Culture and +10% [ICON_CULTURE] Culture in this City.[NEWLINE]2 slots for Great Works of Art or Artifacts.[NEWLINE][NEWLINE]The city must have an Amphitheater.</Text>
+			<Text>+2 [ICON_CULTURE] Culture and +10% [ICON_CULTURE] Culture in this City.[NEWLINE]1 Great Work slot; the Great Work in it yields +50%.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_MUSICIANS_GUILD"> 
 			<Text>
@@ -20449,7 +20449,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ODEON_HELP"> 
 			<Text>
-				Replaces the Amphitheater. Available much earlier, at [ICON_TECH_WRITING] [COLOR_CYAN]Writing[ENDCOLOR], and Provides +4 [ICON_CULTURE] Culture, +1 [ICON_GOLD] Gold, and +1 [ICON_CITIZEN_MAGENTA] [ICON_GREAT_WRITER] Writer Specialist. [NEWLINE][NEWLINE]City must have a [ICON_BUILDING_MONUMENT] [COLOR_YELLOW]Moument[ENDCOLOR]
+				Replaces the Amphitheater.[NEWLINE]Available much earlier, at [ICON_TECH_WRITING] [COLOR_CYAN]Writing[ENDCOLOR].[NEWLINE]Provides +4 [ICON_CULTURE] Culture, +1 [ICON_GOLD] Gold and 1 [ICON_GREAT_WRITER] Writer Specialist slot.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_OPERA_HOUSE"> 
@@ -20462,7 +20462,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_OPERA_HOUSE_STRATEGY"> 
 			<Text>
-				The Opera House is a Renaissance-era building which increases a city's [ICON_CULTURE] Culture. The city needs to have an Amphitheater in order to construct the Opera House. Contains 1 slot for a Great Work of Music.
+				The Opera House increases the [ICON_CULTURE] Culture of a city.[NEWLINE]It has 1 Great Work slot.[NEWLINE]Great Works in its city yield +1 [ICON_TOURISM] Tourism.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ORACLE"> 
@@ -20985,7 +20985,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_STAATSMUSEUM_HELP"> 
 			<Text>
-				Replaces the Opera House. Recieves a [ICON_GREAT_PEOPLE] Great Artist Specialist slot.
+				Replaces the Opera House.[NEWLINE]Has a [ICON_GREAT_PEOPLE] Great Artist Specialist slot.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_STAATSMUSEUM_STRATEGY"> 
@@ -120500,6 +120500,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BELIEF_SEARCH">
 			<Text>Search:</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_AMPHITHEATER_HELP">
+			<Text>Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILDING_OPERA_HOUSE_HELP">
+			<Text>Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILDING_HAPPINESS_NEGATIVE">
 			<Text>[ICON_HAPPINESS_4] Happiness: {1_Num}</Text>

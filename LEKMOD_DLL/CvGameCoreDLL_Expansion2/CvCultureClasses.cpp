@@ -230,7 +230,16 @@ CvString CvGameCulture::GetGreatWorkTooltip(int iIndex, PlayerTypes eOwner) cons
 		if (iYield == 0)
 			continue;
 		CvString strYieldIcon = GC.getYieldInfo(eYield)->getIconString();
+#ifdef LEKMOD_GREAT_WORK_YIELD_MODIFIER
+		if (iYield % 100 == 0)
+			cultureString += CvString::format("+%d %s ", iYield / 100, strYieldIcon.c_str());
+		else if (iYield % 10 == 0)
+			cultureString += CvString::format("+%d.%d %s ", iYield / 100, (iYield % 100) / 10, strYieldIcon.c_str());
+		else
+			cultureString += CvString::format("+%d.%02d %s ", iYield / 100, iYield % 100, strYieldIcon.c_str());
+#else
 		cultureString += CvString::format("+%d %s ", iYield, strYieldIcon.c_str());
+#endif
 	}
 #endif
 #if !defined(LEK_YIELD_TOURISM)

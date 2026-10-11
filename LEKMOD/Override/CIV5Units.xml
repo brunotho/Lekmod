@@ -43230,6 +43230,7 @@
 		<Column name="AirportRebase" type="boolean" default="false" /> <!-- LEKMOD: planes rebasing between two cities with this building keep their moves (once per turn) -->
 		<Column name="NearRiver" type="boolean" default="false" /> <!-- LEKMOD: the city must be on a river or next to a river tile -->
 		<Column name="NoMaintenanceOnRiver" type="boolean" default="false" /> <!-- LEKMOD: no Gold maintenance when the city is on a river -->
+		<Column name="GreatWorkYieldModifier" type="integer" default="0" /> <!-- LEKMOD: % more yield from great works held in this building (Museum) -->
 		<Column name="WorshipHouse" type="boolean" default="false" /> <!-- LEKMOD: Houses of Worship: 4 Culture for the first in a city, 2 for the second, 0 after -->
 		<Column name="RevealResource" type="text" default="NULL" /> <!-- LEKMOD: building it reveals this resource for the team (like its reveal tech) -->
 		<Column name="Happiness" type="integer" default="0" /> <!-- Changes the amount of local happiness the city has. -->
@@ -49635,6 +49636,89 @@
 	<Building_ThemingBonuses>
 		<Delete />
 	</Building_ThemingBonuses>
+	<!-- LEKMOD: Phase 4 great work buildings: Amphitheater/Opera House +1 Tourism to great works in the city, Museum 1 slot +50%, no building prerequisites -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_MUSEUM"/>
+			<Set GreatWorkCount="1" GoldMaintenance="4" GreatWorkYieldModifier="50"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BASIL"/>
+			<Set GreatWorkCount="1" GoldMaintenance="4" GreatWorkYieldModifier="50"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_YUGO_SPOMENIK"/>
+			<Set GreatWorkCount="1" GoldMaintenance="4" GreatWorkYieldModifier="50"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_AMPHITHEATER"/>
+			<Set Help="TXT_KEY_LEKMOD_BUILDING_AMPHITHEATER_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_HIPPODROME"/>
+			<Set Help="TXT_KEY_LEKMOD_BUILDING_AMPHITHEATER_HELP"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_OPERA_HOUSE"/>
+			<Set Help="TXT_KEY_LEKMOD_BUILDING_OPERA_HOUSE_HELP"/>
+		</Update>
+	</Buildings>
+	<Building_ClassesNeededInCity>
+		<Delete BuildingType="BUILDING_AMPHITHEATER"/>
+		<Delete BuildingType="BUILDING_HIPPODROME"/>
+		<Delete BuildingType="BUILDING_ODEON"/>
+		<Delete BuildingType="BUILDING_PALMYRA_FORUM"/>
+		<Delete BuildingType="BUILDING_OPERA_HOUSE"/>
+		<Delete BuildingType="BUILDING_CEILIDH_HALL"/>
+		<Delete BuildingType="BUILDING_BOERS_OPERA_HOUSE"/>
+		<Delete BuildingType="BUILDING_DANCE_HALL"/>
+		<Delete BuildingType="BUILDING_MUSEUM"/>
+		<Delete BuildingType="BUILDING_BASIL"/>
+		<Delete BuildingType="BUILDING_YUGO_SPOMENIK"/>
+		<Delete BuildingType="BUILDING_BROADCAST_TOWER"/>
+	</Building_ClassesNeededInCity>
+	<Building_GreatWorkYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_AMPHITHEATER</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HIPPODROME</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_ODEON</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_PALMYRA_FORUM</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_OPERA_HOUSE</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_CEILIDH_HALL</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BOERS_OPERA_HOUSE</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_DANCE_HALL</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+	</Building_GreatWorkYieldChanges>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />

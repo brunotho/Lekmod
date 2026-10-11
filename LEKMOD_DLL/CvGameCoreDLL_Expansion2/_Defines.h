@@ -1467,6 +1467,9 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_INFLUENCE_COMBAT_BONUS
 // Tourism toward other players keeps hundredths until after the player modifier (one truncation at the end)
 #define LEKMOD_TOURISM_DECIMALS
+// Buildings.GreatWorkYieldModifier: % more yield from great works held in the building (Museum); great work yields are kept in hundredths
+// (CvGreatWork::m_viYield is Times100) and truncated once per city. Also fixes Building_GreatWorkYieldChanges rows without a class being dropped.
+#define LEKMOD_GREAT_WORK_YIELD_MODIFIER
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

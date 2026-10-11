@@ -103,6 +103,7 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_bNoMaintenanceOnRiver(false),
 	m_iRevealResource(-1),
 	m_bLekmodWorshipHouse(false),
+	m_iLekmodGreatWorkYieldModifier(0),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
@@ -496,6 +497,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
 	m_iRevealResource = GC.getInfoTypeForString(kResults.GetText("RevealResource"), true);
 	m_bLekmodWorshipHouse = kResults.GetBool("WorshipHouse");
+	m_iLekmodGreatWorkYieldModifier = kResults.GetInt("GreatWorkYieldModifier");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
@@ -771,7 +773,11 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 				"SELECT Yields.ID as YieldID, COALESCE(GreatWorkClasses.ID, -1) as GreatWorkClassID, YieldChange, HoldingYield "
 				"FROM Building_GreatWorkYieldChanges "
 				"INNER JOIN Yields on Yields.Type = YieldType "
+#ifdef LEKMOD_GREAT_WORK_YIELD_MODIFIER
+				"LEFT JOIN GreatWorkClasses on GreatWorkClasses.Type = GreatWorkClassType "
+#else
 				"INNER JOIN GreatWorkClasses on GreatWorkClasses.Type = GreatWorkClassType "
+#endif
 				"WHERE BuildingType = ?";
 			pResults = kUtility.PrepareResults(strKey, szSQL);
 		}
@@ -782,8 +788,14 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 			const int GreatWorkClassID = pResults->GetInt(1);
 			const int YieldChange = pResults->GetInt(2);
 			const int HoldingYield = pResults->GetInt(3);
+#ifdef LEKMOD_GREAT_WORK_YIELD_MODIFIER
+			m_piBuildingGreatWorkYieldChange[YieldID] += HoldingYield;
+			if (GreatWorkClassID == NO_GREAT_WORK_CLASS)
+				m_piCityGreatWorkYieldChange[YieldID] += YieldChange;
+#else
 			m_piBuildingGreatWorkYieldChange[YieldID] = HoldingYield;
 			m_piCityGreatWorkYieldChange[YieldID] = YieldChange;
+#endif
 			if (GreatWorkClassID != NO_GREAT_WORK_CLASS) 
 			{
 				m_ppiCityGreatWorkClassYieldChange[GreatWorkClassID][YieldID] = YieldChange;
@@ -4633,7 +4645,12 @@ int CvCityBuildings::GetYieldFromGreatWorks(YieldTypes eIndex) const
 			iTotalYield += thisWork;
 		}
 	}
+#ifdef LEKMOD_GREAT_WORK_YIELD_MODIFIER
+	// the works' yields are hundredths: truncate once for the whole city
+	return iTotalYield / 100;
+#else
 	return iTotalYield;
+#endif
 }
 int CvCityBuildings::GetNumGreatWorks(GreatWorkClass eGreatWorkClass) const
 {
@@ -4715,6 +4732,10 @@ void CvCityBuildings::rebuildGreatWorkYields(GreatWorkClass eClass)
 					workYield += GET_PLAYER(m_pCity->getOwner()).GetGreatWorkClassYieldChange(work->m_eClassType, eYield);
 					workYield += pkBuildingInfo->GetBuildingGreatWorkYieldChange(eYield);
 					workYield += GetCityGreatWorkClassYieldChanges(work->m_eClassType, eYield);
+#ifdef LEKMOD_GREAT_WORK_YIELD_MODIFIER
+					// hundredths, with the holding building's modifier (Museum +50%)
+					workYield *= 100 + pkBuildingInfo->GetGreatWorkYieldModifier();
+#endif
 					work->m_viYield[eYield] = workYield;
 				}
 			}

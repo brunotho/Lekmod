@@ -1426,3 +1426,14 @@ Tags: game mechanics, combat
 - Changed: Tourism toward other civs keeps fractions until the end, so small amounts and modifiers no longer get rounded away
 - DLL: LEKMOD_NO_PUBLIC_OPINION, LEKMOD_INFLUENCE_COMBAT_BONUS, LEKMOD_TOURISM_DECIMALS
 
+
+GREAT WORK BUILDINGS (BUILDING_AMPHITHEATER, BUILDING_OPERA_HOUSE, BUILDING_MUSEUM, BUILDING_BROADCAST_TOWER)
+----------------------------------------------------------------------------------------------------------
+Tags: buildings
+The culture buildings no longer need each other, and two of them are the source of great work Tourism.
+- Added: Amphitheater and Opera House (and their unique replacements): Great Works in their city yield +1 Tourism each (+2 with both)
+- Changed: Museum (and its unique replacements): 1 Great Work slot (was 2); the Great Work in it yields +50%; 4 Gold maintenance (was 1)
+- Removed: building requirements of the Amphitheater (Monument), Opera House (Amphitheater), Museum (Amphitheater) and Broadcast Tower (Opera House), including their unique replacements
+- Fixed: Cuba's Dance Hall now really gives +4 Culture when its Great Work slot is filled (the bonus was described but never applied)
+- Changed: great work yields keep fractions until they are added up for the city (e.g. two works at 1.5 Tourism give 3)
+- DLL: Buildings.GreatWorkYieldModifier, great work yields in hundredths, Building_GreatWorkYieldChanges rows without a GreatWorkClassType load now (LEKMOD_GREAT_WORK_YIELD_MODIFIER)
