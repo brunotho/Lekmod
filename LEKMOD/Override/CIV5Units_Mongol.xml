@@ -76405,12 +76405,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_GREAT_WORK_SLOT_ART_ARTIFACT_EMPTY_TOOLTIP"> 
 			<Text>
-				Empty Great Work of Art or Artifact Slot
+				Empty Great Work slot (any Great Work or Artifact fits)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GREAT_WORK_SLOT_ART_ARTIFACT_SLOTS_TOOLTIP"> 
 			<Text>
-				[ICON_GREAT_WORK] Great Work of Art or Artifact slots: {1_NumSlots}
+				[ICON_GREAT_WORK] Great Work slots: {1_NumSlots}
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_GREAT_WORK_SLOT_LITERATURE_EMPTY_TOOLTIP"> 
@@ -120503,6 +120503,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILDING_HAPPINESS_NEGATIVE">
 			<Text>[ICON_HAPPINESS_4] Happiness: {1_Num}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_INFLUENCE">
+			<Text>Cultural influence</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_APOLLO">
 			<Text>Apollo Program</Text>

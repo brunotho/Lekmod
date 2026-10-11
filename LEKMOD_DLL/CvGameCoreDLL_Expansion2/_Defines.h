@@ -1459,6 +1459,14 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_BELIEF_EXTRA_TABLES
 // Beliefs.NewUnitPromotion/NewUnitPromotionAllLand and CampClearCapitalPopulation/CampClearFaith, active while the capital has the belief (Kin Forged in Blood, Salt and Stars)
 #define LEKMOD_CAPITAL_PANTHEON_EFFECTS
+// Generic great work slots (one slot type for all works, data); no AI theming swaps; Royal Library free work uses its own slot type
+#define LEKMOD_GENERIC_GREAT_WORKS
+// No public opinion (no dissidents, no ideology switch from influence); open borders and trade routes add no Tourism
+#define LEKMOD_NO_PUBLIC_OPINION
+// +5% combat strength per influence level over the other major player (both combat paths, shown in the preview)
+#define LEKMOD_INFLUENCE_COMBAT_BONUS
+// Tourism toward other players keeps hundredths until after the player modifier (one truncation at the end)
+#define LEKMOD_TOURISM_DECIMALS
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

@@ -897,6 +897,9 @@ public:
 	bool IsExtraAttackVsFullHPUsed() const;
 	void SetExtraAttackVsFullHPUsed(bool bValue);
 	bool IsLekmodAirportRebased() const { return m_bLekmodAirportRebased; }
+#ifdef LEKMOD_INFLUENCE_COMBAT_BONUS
+	int GetLekmodInfluenceCombatModifier(PlayerTypes eOtherPlayer) const;
+#endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
 	// missionary effects from its religion's beliefs (Just War): 0 = prophet-strength spread, 1 = extra moves
 	int GetLekmodMissionaryBeliefValue(int iWhich) const;

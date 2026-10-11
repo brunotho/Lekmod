@@ -49621,6 +49621,20 @@
 			<Set FaithCost="156"/>
 		</Update>
 	</Buildings>
+	<!-- LEKMOD: Phase 4 great work rework: all great work slots are generic (one slot type), no theming bonuses -->
+	<Buildings>
+		<Update>
+			<Where GreatWorkSlotType="GREAT_WORK_SLOT_LITERATURE"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT"/>
+		</Update>
+		<Update>
+			<Where GreatWorkSlotType="GREAT_WORK_SLOT_MUSIC"/>
+			<Set GreatWorkSlotType="GREAT_WORK_SLOT_ART_ARTIFACT"/>
+		</Update>
+	</Buildings>
+	<Building_ThemingBonuses>
+		<Delete />
+	</Building_ThemingBonuses>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -97049,7 +97063,7 @@
 		</Row>
 		<Row> 
 			<Name>BASE_TOURISM_PER_GREAT_WORK</Name> 
-			<Value>2</Value> 
+			<Value>0</Value> 
 		</Row>
 		<Row> 
 			<Name>TOURISM_MODIFIER_SHARED_RELIGION</Name> 
@@ -97069,7 +97083,7 @@
 		</Row>
 		<Row> 
 			<Name>TOURISM_MODIFIER_DIPLOMAT</Name> 
-			<Value>25</Value> 
+			<Value>0</Value> 
 		</Row>
 		<Row> 
 			<Name>MINIUMUM_TOURISM_BLAST_STRENGTH</Name> 
@@ -111724,12 +111738,12 @@
 		<Row> 
 			<ID>2</ID> 
 			<Type>GREAT_WORK_LITERATURE</Type> 
-			<SlotType>GREAT_WORK_SLOT_LITERATURE</SlotType> 
+			<SlotType>GREAT_WORK_SLOT_ART_ARTIFACT</SlotType> <!-- LEKMOD: one generic slot type for all great works -->
 		</Row>
 		<Row> 
 			<ID>3</ID> 
 			<Type>GREAT_WORK_MUSIC</Type> 
-			<SlotType>GREAT_WORK_SLOT_MUSIC</SlotType> 
+			<SlotType>GREAT_WORK_SLOT_ART_ARTIFACT</SlotType> <!-- LEKMOD: one generic slot type for all great works -->
 		</Row>
 	</GreatWorkClasses> 
 	<Table name="GreatWorkClasses_Yields">
@@ -111745,18 +111759,8 @@
 			<Yield>2</Yield> 
 		</Row>
 		<Row> 
-			<GreatWorkClassType>GREAT_WORK_ART</GreatWorkClassType> 
-			<YieldType>YIELD_TOURISM</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
 			<GreatWorkClassType>GREAT_WORK_ARTIFACT</GreatWorkClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<GreatWorkClassType>GREAT_WORK_ARTIFACT</GreatWorkClassType> 
-			<YieldType>YIELD_TOURISM</YieldType> 
 			<Yield>2</Yield> 
 		</Row>
 		<Row> 
@@ -111765,18 +111769,8 @@
 			<Yield>2</Yield> 
 		</Row>
 		<Row> 
-			<GreatWorkClassType>GREAT_WORK_LITERATURE</GreatWorkClassType> 
-			<YieldType>YIELD_TOURISM</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
 			<GreatWorkClassType>GREAT_WORK_MUSIC</GreatWorkClassType> 
 			<YieldType>YIELD_CULTURE</YieldType> 
-			<Yield>2</Yield> 
-		</Row>
-		<Row> 
-			<GreatWorkClassType>GREAT_WORK_MUSIC</GreatWorkClassType> 
-			<YieldType>YIELD_TOURISM</YieldType> 
 			<Yield>2</Yield> 
 		</Row>
 	</GreatWorkClasses_Yields>

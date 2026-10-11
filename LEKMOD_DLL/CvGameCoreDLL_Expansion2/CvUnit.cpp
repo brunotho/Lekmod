@@ -12965,6 +12965,7 @@ int CvUnit::GetBaseCombatStrengthConsideringDamage() const
 #if !defined(LEKMOD_COMBAT_PREDICTOR_IMPROVEMENTS)
 //	--------------------------------------------------------------------------------
 /// What are the generic strength modifiers for this Unit?
+//	--------------------------------------------------------------------------------
 int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot* pBattlePlot, bool bIgnoreUnitAdjacency) const
 {
 	VALIDATE_OBJECT
@@ -12979,6 +12980,11 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvUnit* pOtherUnit, const CvPlot
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwner());
 	CvGameReligions* pReligions = GC.getGame().GetGameReligions();
 	ReligionTypes eFoundedReligion = pReligions->GetFounderBenefitsReligion(kPlayer.GetID());
+
+#ifdef LEKMOD_INFLUENCE_COMBAT_BONUS
+	if (pOtherUnit != NULL)
+		iModifier += GetLekmodInfluenceCombatModifier(pOtherUnit->getOwner());
+#endif
 
 	// If the empire is unhappy, then Units get a combat penalty
 	if(kPlayer.IsEmpireUnhappy())
@@ -14143,6 +14149,21 @@ int CvUnit::GetMaxRangedCombatStrength(const CvUnit* pOtherUnit, const CvCity* p
 #else
 //	--------------------------------------------------------------------------------
 /// What are the generic strength modifiers for this Unit?
+#ifdef LEKMOD_INFLUENCE_COMBAT_BONUS
+//	--------------------------------------------------------------------------------
+/// +5% combat strength per influence level (Exotic 5% ... Dominant 25%) over the other (major) player; works both ways
+int CvUnit::GetLekmodInfluenceCombatModifier(PlayerTypes eOtherPlayer) const
+{
+	if (eOtherPlayer == NO_PLAYER || eOtherPlayer == getOwner() || isBarbarian())
+		return 0;
+	CvPlayer& kOther = GET_PLAYER(eOtherPlayer);
+	if (kOther.isMinorCiv() || kOther.isBarbarian() || GET_PLAYER(getOwner()).isMinorCiv())
+		return 0;
+	int iLevel = (int)GET_PLAYER(getOwner()).GetCulture()->GetInfluenceLevel(eOtherPlayer);
+	return std::max(0, iLevel) * 5;
+}
+#endif
+
 int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatModifierList* kModifierList) const
 {
 	VALIDATE_OBJECT
@@ -14185,6 +14206,16 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 	{
 		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_COMBATMOD_GENERIC", iTempModifier);
 	}
+
+#ifdef LEKMOD_INFLUENCE_COMBAT_BONUS
+	// +5% per level of our cultural influence over the other player
+	iTempModifier = GetLekmodInfluenceCombatModifier(eOtherPlayer);
+	iModifier += iTempModifier;
+	if (kModifierList && iTempModifier)
+	{
+		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_INFLUENCE", iTempModifier);
+	}
+#endif
 
 #ifdef LEKMOD_FUTURE_TECH_BONUS
 	// Future Tech: +X% combat strength per Future Tech researched

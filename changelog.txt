@@ -1406,3 +1406,23 @@ Rebuilt from scratch.
 - Note: ships that can see submarines also see these Missionaries within their sight
 - DLL: Beliefs.ExtraSpyEra/InvisibleMissionaries, Belief_YieldPerMinorityCity (LEKMOD_CAPITAL_PANTHEON_EFFECTS)
 
+GREAT WORKS (GREAT_WORK_SLOT_ART_ARTIFACT)
+-----------------------------------------
+Tags: game mechanics
+All great works fit in all slots, theming is gone, and great works give Culture only by default.
+- Changed: Great Works of Writing, Art, Music and Artifacts all go into the same kind of slot; every great work slot accepts any of them
+- Removed: theming bonuses
+- Changed: a great work gives 2 Culture and no Tourism (was 2 Culture and 2 Tourism); Tourism now comes from buildings and policies
+- Fixed: a city captured with a destroyed great work building already moved its great works into free slots of the new owner; with one slot type they now always find a slot if one is free
+- DLL: LEKMOD_GENERIC_GREAT_WORKS (AI no longer rearranges great works; the Royal Library's free work uses its own slot type)
+
+TOURISM AND INFLUENCE (LEKMOD_NO_PUBLIC_OPINION)
+-----------------------------------------------
+Tags: game mechanics, combat
+- Removed: dissidents (no public opinion unhappiness from ideologies)
+- Removed: other civs' influence no longer pushes you to switch ideology; only the World Ideology proposal can change it
+- Removed: open borders, trade routes and diplomats no longer raise Tourism (were +25% each)
+- Added: +5% combat strength against a civ for each level of your cultural influence over it (Exotic 5% ... Dominant 25%); works both ways and is shown in the combat preview
+- Changed: Tourism toward other civs keeps fractions until the end, so small amounts and modifiers no longer get rounded away
+- DLL: LEKMOD_NO_PUBLIC_OPINION, LEKMOD_INFLUENCE_COMBAT_BONUS, LEKMOD_TOURISM_DECIMALS
+

@@ -1031,6 +1031,11 @@ bool CvPlayerCulture::GetGreatWorkLocation(int iSearchIndex, int &iReturnCityID,
 /// AI routine to decide what Great Work swapping should take place (including placing Great Works up for swap from another player)
 void CvPlayerCulture::DoSwapGreatWorks()
 {
+#ifdef LEKMOD_GENERIC_GREAT_WORKS
+	// all slots are generic and there are no theming bonuses: the AI has nothing to gain from rearranging,
+	// and this routine only tracks works by their old slot type (it could displace writing/music works)
+	return;
+#endif
 	GreatWorkClass eWritingClass = (GreatWorkClass)GC.getInfoTypeForString("GREAT_WORK_LITERATURE");
 	GreatWorkClass eArtClass = (GreatWorkClass)GC.getInfoTypeForString("GREAT_WORK_ART");
 	GreatWorkClass eArtifactsClass = (GreatWorkClass)GC.getInfoTypeForString("GREAT_WORK_ARTIFACT");
@@ -2632,6 +2637,15 @@ int CvPlayerCulture::GetInfluencePerTurn(PlayerTypes ePlayer) const
 		}
 #else
 		iModifier = m_pPlayer->getCapitalCity()->GetCityCulture()->GetTourismMultiplier(kOtherPlayer.GetID(), false, false, false, false, false);
+#ifdef LEKMOD_TOURISM_DECIMALS
+		// keep the hundredths until the modifier is applied: truncate once, at the very end
+		int iTimes100;
+		if (bPlayerHasInternet && bTargetHasGreatFirewall)
+			iTimes100 = m_pPlayer->getYieldTimes100(YIELD_TOURISM, false) - m_pPlayer->getYieldFromCitiesTimes100(YIELD_TOURISM, false);
+		else
+			iTimes100 = m_pPlayer->getYieldTimes100(YIELD_TOURISM, false);
+		iRtnValue = iTimes100 * (100 + iModifier) / 10000;
+#else
 		if (bPlayerHasInternet && bTargetHasGreatFirewall)
 		{
 			iRtnValue = (m_pPlayer->getYieldTimes100(YIELD_TOURISM, false) - m_pPlayer->getYieldFromCitiesTimes100(YIELD_TOURISM, false)) / 100;
@@ -2641,7 +2655,10 @@ int CvPlayerCulture::GetInfluencePerTurn(PlayerTypes ePlayer) const
 			iRtnValue = m_pPlayer->getYieldTimes100(YIELD_TOURISM, false) / 100;
 		}
 #endif
+#endif
+#if !(defined(LEKMOD_TOURISM_DECIMALS) && (defined(LEK_YIELD_TOURISM) || defined(STANDARDIZE_YIELDS)))
 		iRtnValue = iRtnValue * (100 + iModifier) / 100;
+#endif
 	}
 
 	return iRtnValue;
@@ -3179,13 +3196,13 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	// POSITIVE MODIFIERS
 
 	// Open borders with this player
-	if (kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()))
+	if (kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()) && GetTourismModifierOpenBorders() != 0)
 	{
 		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_OPEN_BORDERS", GetTourismModifierOpenBorders()) + "[ENDCOLOR]";
 	}
 
 	// Trade route to one of this player's cities from here
-	if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pPlayer->GetID(), ePlayer))
+	if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pPlayer->GetID(), ePlayer) && GetTourismModifierTradeRoute() != 0)
 	{
 		szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_TRADE_ROUTE", GetTourismModifierTradeRoute()) + "[ENDCOLOR]";
 	}
@@ -3198,7 +3215,7 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 
 	if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
 	{
-		if (m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
+		if (m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer) && GC.getTOURISM_MODIFIER_DIPLOMAT() != 0)
 		{
 			szRtnValue += "[COLOR_POSITIVE_TEXT]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_PROPAGANDA", GC.getTOURISM_MODIFIER_DIPLOMAT()) + "[ENDCOLOR]";
 		}
@@ -3278,11 +3295,11 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	}
 
 	// NEUTRAL MODIFIERS
-	if (!kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()))
+	if (!kTeam.IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()) && GetTourismModifierOpenBorders() != 0)
 	{
 		szRtnValue += "[COLOR_GREY]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_OPEN_BORDERS", 0) + "[ENDCOLOR]";		
 	}
-	if (!GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pPlayer->GetID(), ePlayer))
+	if (!GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pPlayer->GetID(), ePlayer) && GetTourismModifierTradeRoute() != 0)
 	{
 		szRtnValue += "[COLOR_GREY]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_TRADE_ROUTE", 0) + "[ENDCOLOR]";		
 	}
@@ -3292,7 +3309,7 @@ CvString CvPlayerCulture::GetTourismModifierWithTooltip(PlayerTypes ePlayer) con
 	}
 	if (eMyIdeology != NO_POLICY_BRANCH_TYPE && eTheirIdeology != NO_POLICY_BRANCH_TYPE && eMyIdeology != eTheirIdeology)
 	{
-		if (!m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer))
+		if (!m_pPlayer->GetEspionage()->IsMyDiplomatVisitingThem(ePlayer) && GC.getTOURISM_MODIFIER_DIPLOMAT() != 0)
 		{
 			szRtnValue += "[COLOR_GREY]" + GetLocalizedText("TXT_KEY_CO_PLAYER_TOURISM_PROPAGANDA", 0) + "[ENDCOLOR]";
 		}
@@ -3316,12 +3333,18 @@ int CvPlayerCulture::GetTourismModifierSharedReligion() const
 /// Tourism modifier (base plus policy boost) - trade route
 int CvPlayerCulture::GetTourismModifierTradeRoute() const
 {
+#ifdef LEKMOD_NO_PUBLIC_OPINION
+	return 0; // trade routes no longer raise Tourism
+#endif
 	return GC.getTOURISM_MODIFIER_SHARED_RELIGION() + m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_TRADE_ROUTE_TOURISM_MODIFIER);
 }
 
 /// Tourism modifier (base plus policy boost) - open borders
 int CvPlayerCulture::GetTourismModifierOpenBorders() const
 {
+#ifdef LEKMOD_NO_PUBLIC_OPINION
+	return 0; // open borders no longer raise Tourism
+#endif
 	return GC.getTOURISM_MODIFIER_SHARED_RELIGION() + m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_OPEN_BORDERS_TOURISM_MODIFIER);
 }
 
@@ -3409,6 +3432,12 @@ void CvPlayerCulture::DoPublicOpinion()
 	m_strOpinionTooltip = "";
 	m_strOpinionUnhappinessTooltip = "";
 	m_eOpinionBiggestInfluence = NO_PLAYER;
+#ifdef LEKMOD_NO_PUBLIC_OPINION
+	// no dissidents, and influence never pushes an ideology switch (only the World Ideology proposal changes it)
+	if (m_pPlayer->GetPlayerPolicies()->GetLateGamePolicyTree() != NO_POLICY_BRANCH_TYPE)
+		m_eOpinion = PUBLIC_OPINION_CONTENT;
+	return;
+#endif
 
 	PolicyBranchTypes eFreedomBranch = (PolicyBranchTypes)GC.getPOLICY_BRANCH_FREEDOM();
 	PolicyBranchTypes eAutocracyBranch = (PolicyBranchTypes)GC.getPOLICY_BRANCH_AUTOCRACY();
@@ -5019,7 +5048,7 @@ CvString CvCityCulture::GetTourismTooltip()
 
 				// Open borders with this player
 				CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-				if (kTeam.IsAllowsOpenBordersToTeam(eTeam))
+				if (kTeam.IsAllowsOpenBordersToTeam(eTeam) && GET_PLAYER(m_pCity->getOwner()).GetCulture()->GetTourismModifierOpenBorders() != 0)
 				{
 					if (openBordersCivs.length() > 0)
 					{
@@ -5029,7 +5058,7 @@ CvString CvCityCulture::GetTourismTooltip()
 				}
 
 				// Trade route with this player
-				if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pCity->getOwner(), (PlayerTypes)iLoopPlayer))
+				if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pCity->getOwner(), (PlayerTypes)iLoopPlayer) && GET_PLAYER(m_pCity->getOwner()).GetCulture()->GetTourismModifierTradeRoute() != 0)
 				{
 					if (tradeRouteCivs.length() > 0)
 					{
@@ -5470,7 +5499,7 @@ CvString CvCityCulture::GetTourismTooltip()
 
 				// Open borders with this player
 				CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-				if (kTeam.IsAllowsOpenBordersToTeam(eTeam))
+				if (kTeam.IsAllowsOpenBordersToTeam(eTeam) && GET_PLAYER(m_pCity->getOwner()).GetCulture()->GetTourismModifierOpenBorders() != 0)
 				{
 					if (openBordersCivs.length() > 0)
 					{
@@ -5480,7 +5509,7 @@ CvString CvCityCulture::GetTourismTooltip()
 				}
 
 				// Trade route with this player
-				if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pCity->getOwner(), (PlayerTypes)iLoopPlayer))
+				if (GC.getGame().GetGameTrade()->IsPlayerConnectedToPlayer(m_pCity->getOwner(), (PlayerTypes)iLoopPlayer) && GET_PLAYER(m_pCity->getOwner()).GetCulture()->GetTourismModifierTradeRoute() != 0)
 				{
 					if (tradeRouteCivs.length() > 0)
 					{
