@@ -1948,7 +1948,11 @@ int CvLuaGame::lGetNumResourceRequiredForUnit(lua_State* L)
 		return 0;
 	}
 
+#ifdef LEKMOD_POLICY_REWORK
+	const int iNumNeeded = (GC.getGame().getActivePlayer() != NO_PLAYER) ? GET_PLAYER(GC.getGame().getActivePlayer()).GetLekmodUnitResourceRequirement(eUnit, eResource) : pkUnitInfo->GetResourceQuantityRequirement(eResource);
+#else
 	const int iNumNeeded = pkUnitInfo->GetResourceQuantityRequirement(eResource);
+#endif
 
 	lua_pushinteger(L, iNumNeeded);
 
@@ -1966,7 +1970,11 @@ int CvLuaGame::lGetNumResourceRequiredForBuilding(lua_State* L)
 	int iNumNeeded = 0;
 	if(pkBuildingInfo && pkResourceInfo)
 	{
+#ifdef LEKMOD_POLICY_REWORK
+		iNumNeeded = (GC.getGame().getActivePlayer() != NO_PLAYER) ? GET_PLAYER(GC.getGame().getActivePlayer()).GetLekmodBuildingResourceRequirement(eBuilding, eResource) : pkBuildingInfo->GetResourceQuantityRequirement(eResource);
+#else
 		iNumNeeded = pkBuildingInfo->GetResourceQuantityRequirement(eResource);
+#endif
 	}
 
 	lua_pushinteger(L, iNumNeeded);

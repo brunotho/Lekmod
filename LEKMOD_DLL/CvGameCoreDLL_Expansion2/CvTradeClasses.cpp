@@ -1182,6 +1182,26 @@ void CvGameTrade::ClearAllCityTradeRoutes (CvPlot* pPlot)
 
 //	--------------------------------------------------------------------------------
 //  Reset all Civ to Civ trade routes involving ePlayer.  Trade routes involving city-states are not reset.
+/// LEKMOD (Iron Curtain): end every route from or to this player, internal ones too; the trade units return to their origin city
+void CvGameTrade::LekmodCancelAllRoutesOfPlayer(PlayerTypes ePlayer)
+{
+	for (uint ui = 0; ui < m_aTradeConnections.size(); ui++)
+	{
+		if (IsTradeRouteIndexEmpty(ui))
+			continue;
+		if (m_aTradeConnections[ui].m_eOriginOwner != ePlayer && m_aTradeConnections[ui].m_eDestOwner != ePlayer)
+			continue;
+		CvPlayer& kOrigin = GET_PLAYER(m_aTradeConnections[ui].m_eOriginOwner);
+		if (kOrigin.isAlive())
+		{
+			UnitTypes eUnitType = kOrigin.GetTrade()->GetTradeUnit(m_aTradeConnections[ui].m_eDomain);
+			if (eUnitType != NO_UNIT)
+				kOrigin.initUnit(eUnitType, m_aTradeConnections[ui].m_iOriginX, m_aTradeConnections[ui].m_iOriginY, UNITAI_TRADE_UNIT);
+		}
+		EmptyTradeRoute(ui);
+	}
+}
+
 void CvGameTrade::ClearAllCivTradeRoutes (PlayerTypes ePlayer)
 {
 	for (uint ui = 0; ui < m_aTradeConnections.size(); ui++)
@@ -3951,6 +3971,13 @@ bool CvPlayerTrade::CanCreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, 
 	{
 		return false;
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	// Iron Curtain: no routes to or from other civilizations and City-States
+	if (pDestCity->getOwner() != pOriginCity->getOwner() && (GET_PLAYER(pOriginCity->getOwner()).IsLekmodNoExternalTrade() || GET_PLAYER(pDestCity->getOwner()).IsLekmodNoExternalTrade()))
+	{
+		return false;
+	}
+#endif
 
 	if (pTrade->CanCreateTradeRoute(pOriginCity, pDestCity, eDomain, eConnectionType, bIgnoreExisting, bCheckPath))
 	{

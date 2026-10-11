@@ -327,6 +327,12 @@ public:
 	int GetFreeUnitClassNearWater() const;
 	int GetFreeUnitClassOnWater() const;
 	int GetGreatWorkYieldModifier() const;
+	int GetTourismModPerAlliedCS() const;
+	bool IsNoExternalTradeRoutes() const;
+	const std::vector<int>& GetUnitClassResourceRequirementChanges() const;
+	const std::vector<int>& GetBuildingClassResourceRequirementChanges() const;
+	const std::vector<int>& GetUnitCombatPromotionsIfBuilding() const;
+	const std::vector<int>& GetImprovementYieldModifiers() const;
 	const std::vector<int>& GetCityYieldIfBuildingClass() const;
 	const std::vector<int>& GetCityHappinessIfBuildingClass() const;
 	const std::vector<LekmodPolicyBuildingTerrainYield>& GetBuildingTerrainYields() const;
@@ -689,6 +695,12 @@ private:
 	int m_iFreeUnitClassNearWater;
 	int m_iFreeUnitClassOnWater;
 	int m_iGreatWorkYieldModifier;
+	int m_iTourismModPerAlliedCS;
+	bool m_bNoExternalTradeRoutes;
+	std::vector<int> m_aiUnitClassResourceRequirementChanges;
+	std::vector<int> m_aiBuildingClassResourceRequirementChanges;
+	std::vector<int> m_aiUnitCombatPromotionsIfBuilding;
+	std::vector<int> m_aiImprovementYieldModifiers;
 	std::vector<int> m_aiCityYieldIfBuildingClass;
 	std::vector<int> m_aiCityHappinessIfBuildingClass;
 	std::vector<LekmodPolicyBuildingTerrainYield> m_aLekmodBuildingTerrainYields;

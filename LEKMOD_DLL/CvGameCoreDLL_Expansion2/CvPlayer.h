@@ -258,6 +258,15 @@ public:
 	void LekmodDoPolicyNewCityEffects(CvCity* pCity);
 	int GetLekmodResistanceTimeModifier() const;
 	int GetLekmodPolicyGreatWorkYieldModifier() const;
+	void LekmodRebuildPolicyCache() const;
+	void LekmodSetPolicyCacheDirty();
+	int GetLekmodResourceRequirementChange(bool bUnit, int iClass, ResourceTypes eResource) const;
+	int GetLekmodUnitResourceRequirement(UnitTypes eUnit, ResourceTypes eResource) const;
+	int GetLekmodBuildingResourceRequirement(BuildingTypes eBuilding, ResourceTypes eResource) const;
+	int GetLekmodResourceRequirementRefund(ResourceTypes eResource) const;
+	int GetLekmodImprovementYieldModifier(ImprovementTypes eImprovement) const;
+	int GetLekmodTourismModFromAlliedCS() const;
+	bool IsLekmodNoExternalTrade() const;
 	void LekmodDoPolicyWaterUnits(PolicyTypes ePolicy);
 	int GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const;
 	int GetLekmodAllyUUPurchaseMod() const;
@@ -2634,6 +2643,13 @@ protected:
 	bool m_bIsDelayedPolicy;
 #ifdef LEKMOD_POLICY_PICK_FREEZE
 	bool m_bLekmodYieldsFrozen;
+#endif
+#ifdef LEKMOD_POLICY_REWORK
+	mutable bool m_bLekmodPolicyCacheDirty;
+	mutable std::vector<int> m_aiLekmodResReqRows;
+	mutable std::vector<int> m_aiLekmodImprovementYieldMods;
+	mutable int m_iLekmodTourismModPerAlliedCS;
+	mutable bool m_bLekmodNoExternalTrade;
 #endif
 #endif
 };

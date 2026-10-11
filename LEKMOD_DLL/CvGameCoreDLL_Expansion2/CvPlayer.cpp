@@ -542,6 +542,11 @@ CvPlayer::CvPlayer() :
 #ifdef LEKMOD_POLICY_PICK_FREEZE
 	, m_bLekmodYieldsFrozen(false)
 #endif
+#ifdef LEKMOD_POLICY_REWORK
+	, m_bLekmodPolicyCacheDirty(true)
+	, m_iLekmodTourismModPerAlliedCS(0)
+	, m_bLekmodNoExternalTrade(false)
+#endif
 #endif
 
 // CMP
@@ -1268,6 +1273,9 @@ void CvPlayer::uninit()
 	m_bIsDelayedPolicy = false;
 #ifdef LEKMOD_POLICY_PICK_FREEZE
 	m_bLekmodYieldsFrozen = false;
+#endif
+#ifdef LEKMOD_POLICY_REWORK
+	m_bLekmodPolicyCacheDirty = true;
 #endif
 #endif
 
@@ -10187,7 +10195,11 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 			CvResourceInfo* pkResourceInfo = GC.getResourceInfo(eResource);
 			if(pkResourceInfo)
 			{
+#ifdef LEKMOD_POLICY_REWORK
+				const int iNumResource = GetLekmodUnitResourceRequirement(eUnit, eResource);
+#else
 				const int iNumResource = pUnitInfo.GetResourceQuantityRequirement(eResource);
+#endif
 
 				if(iNumResource > 0)
 				{
@@ -10526,7 +10538,11 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 			CvResourceInfo* pkResource = GC.getResourceInfo(eResource);
 			if(pkResource)
 			{
+#ifdef LEKMOD_POLICY_REWORK
+				int iNumResource = GetLekmodBuildingResourceRequirement(eBuilding, eResource);
+#else
 				int iNumResource = pBuildingInfo.GetResourceQuantityRequirement(eResource);
+#endif
 				if(iNumResource > 0)
 				{
 					if(bContinue)
@@ -24467,7 +24483,11 @@ int CvPlayer::getNumResourceUsed(ResourceTypes eIndex) const
 {
 	CvAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	CvAssertMsg(eIndex < GC.getNumResourceInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+#ifdef LEKMOD_POLICY_REWORK
+	return std::max(0, m_paiNumResourceUsed[eIndex] - GetLekmodResourceRequirementRefund(eIndex));
+#else
 	return m_paiNumResourceUsed[eIndex];
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -28342,6 +28362,146 @@ void CvPlayer::LekmodDoPolicyNewCityEffects(CvCity* pCity)
 		}
 	}
 }
+/// Rebuild the cached policy rows used in frequently called functions (not saved; rebuilt after load and policy changes)
+void CvPlayer::LekmodRebuildPolicyCache() const
+{
+	m_aiLekmodResReqRows.clear();
+	m_aiLekmodImprovementYieldMods.clear();
+	m_iLekmodTourismModPerAlliedCS = 0;
+	m_bLekmodNoExternalTrade = false;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const std::vector<int>& aiUnit = pkPolicy->GetUnitClassResourceRequirementChanges();
+		for (uint i = 0; i + 2 < aiUnit.size(); i += 3)
+		{
+			m_aiLekmodResReqRows.push_back(1);
+			m_aiLekmodResReqRows.push_back(aiUnit[i]);
+			m_aiLekmodResReqRows.push_back(aiUnit[i + 1]);
+			m_aiLekmodResReqRows.push_back(aiUnit[i + 2]);
+		}
+		const std::vector<int>& aiBuilding = pkPolicy->GetBuildingClassResourceRequirementChanges();
+		for (uint i = 0; i + 2 < aiBuilding.size(); i += 3)
+		{
+			m_aiLekmodResReqRows.push_back(0);
+			m_aiLekmodResReqRows.push_back(aiBuilding[i]);
+			m_aiLekmodResReqRows.push_back(aiBuilding[i + 1]);
+			m_aiLekmodResReqRows.push_back(aiBuilding[i + 2]);
+		}
+		const std::vector<int>& aiImp = pkPolicy->GetImprovementYieldModifiers();
+		for (uint i = 0; i + 1 < aiImp.size(); i += 2)
+		{
+			m_aiLekmodImprovementYieldMods.push_back(aiImp[i]);
+			m_aiLekmodImprovementYieldMods.push_back(aiImp[i + 1]);
+		}
+		m_iLekmodTourismModPerAlliedCS += pkPolicy->GetTourismModPerAlliedCS();
+		if (pkPolicy->IsNoExternalTradeRoutes())
+			m_bLekmodNoExternalTrade = true;
+	}
+	m_bLekmodPolicyCacheDirty = false;
+}
+void CvPlayer::LekmodSetPolicyCacheDirty()
+{
+	m_bLekmodPolicyCacheDirty = true;
+}
+/// Policy change to a unit class's or building class's requirement of a resource (sum of adopted policies)
+int CvPlayer::GetLekmodResourceRequirementChange(bool bUnit, int iClass, ResourceTypes eResource) const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	int iChange = 0;
+	for (uint i = 0; i + 3 < m_aiLekmodResReqRows.size(); i += 4)
+		if ((m_aiLekmodResReqRows[i] == 1) == bUnit && m_aiLekmodResReqRows[i + 1] == iClass && m_aiLekmodResReqRows[i + 2] == eResource)
+			iChange += m_aiLekmodResReqRows[i + 3];
+	return iChange;
+}
+/// Resources this unit needs for this player (never below 0; policies don't create new requirements)
+int CvPlayer::GetLekmodUnitResourceRequirement(UnitTypes eUnit, ResourceTypes eResource) const
+{
+	CvUnitEntry* pkUnit = GC.getUnitInfo(eUnit);
+	if (pkUnit == NULL)
+		return 0;
+	const int iBase = pkUnit->GetResourceQuantityRequirement(eResource);
+	if (iBase <= 0)
+		return iBase;
+	return std::max(0, iBase + GetLekmodResourceRequirementChange(true, pkUnit->GetUnitClassType(), eResource));
+}
+int CvPlayer::GetLekmodBuildingResourceRequirement(BuildingTypes eBuilding, ResourceTypes eResource) const
+{
+	CvBuildingEntry* pkBuilding = GC.getBuildingInfo(eBuilding);
+	if (pkBuilding == NULL)
+		return 0;
+	const int iBase = pkBuilding->GetResourceQuantityRequirement(eResource);
+	if (iBase <= 0)
+		return iBase;
+	return std::max(0, iBase + GetLekmodResourceRequirementChange(false, pkBuilding->GetBuildingClassType(), eResource));
+}
+/// Resources that existing (and in-production) units and buildings don't need thanks to policies. Usage is still counted at the
+/// base requirement when they are created and removed; this refund is subtracted on read, so adopting or losing a policy never
+/// unbalances the bookkeeping.
+int CvPlayer::GetLekmodResourceRequirementRefund(ResourceTypes eResource) const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	int iRefund = 0;
+	for (uint i = 0; i + 3 < m_aiLekmodResReqRows.size(); i += 4)
+	{
+		if (m_aiLekmodResReqRows[i + 2] != eResource)
+			continue;
+		const int iClass = m_aiLekmodResReqRows[i + 1];
+		if (m_aiLekmodResReqRows[i] == 1)
+		{
+			const UnitTypes eUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(iClass);
+			if (eUnit == NO_UNIT)
+				continue;
+			const int iSaved = GC.getUnitInfo(eUnit)->GetResourceQuantityRequirement(eResource) - GetLekmodUnitResourceRequirement(eUnit, eResource);
+			iRefund += iSaved * (getUnitClassCount((UnitClassTypes)iClass) + getUnitClassMaking((UnitClassTypes)iClass));
+		}
+		else
+		{
+			const BuildingTypes eBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(iClass);
+			if (eBuilding == NO_BUILDING)
+				continue;
+			const int iSaved = GC.getBuildingInfo(eBuilding)->GetResourceQuantityRequirement(eResource) - GetLekmodBuildingResourceRequirement(eBuilding, eResource);
+			iRefund += iSaved * (getBuildingClassCount((BuildingClassTypes)iClass) + getBuildingClassMaking((BuildingClassTypes)iClass));
+		}
+	}
+	return iRefund;
+}
+int CvPlayer::GetLekmodImprovementYieldModifier(ImprovementTypes eImprovement) const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	int iMod = 0;
+	for (uint i = 0; i + 1 < m_aiLekmodImprovementYieldMods.size(); i += 2)
+		if (m_aiLekmodImprovementYieldMods[i] == eImprovement)
+			iMod += m_aiLekmodImprovementYieldMods[i + 1];
+	return iMod;
+}
+/// % Tourism in every city from allied City-States (Socialist Heritage)
+int CvPlayer::GetLekmodTourismModFromAlliedCS() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	if (m_iLekmodTourismModPerAlliedCS == 0)
+		return 0;
+	int iAllies = 0;
+	for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
+	{
+		const PlayerTypes eMinor = (PlayerTypes)iMinor;
+		if (GET_PLAYER(eMinor).isAlive() && GET_PLAYER(eMinor).GetMinorCivAI()->GetAlly() == GetID())
+			iAllies++;
+	}
+	return iAllies * m_iLekmodTourismModPerAlliedCS;
+}
+bool CvPlayer::IsLekmodNoExternalTrade() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_bLekmodNoExternalTrade;
+}
 /// Sum of the adopted policies' great work yield modifiers (Fine Arts +50%)
 int CvPlayer::GetLekmodPolicyGreatWorkYieldModifier() const
 {
@@ -28584,6 +28744,8 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			}
 		}
 		LekmodApplyPolicyExtraction(ePolicy);
+		if (pPolicy->IsNoExternalTradeRoutes())
+			GC.getGame().GetGameTrade()->LekmodCancelAllRoutesOfPlayer(GetID());
 		LekmodDoPolicyWaterUnits(ePolicy);
 		if (pPolicy->GetGreatWorkYieldModifier() != 0)
 		{
@@ -28783,6 +28945,10 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 			ChangeWorldWonderYieldChanges(eYield, iMod);
 #endif
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	LekmodSetPolicyCacheDirty();
+	GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
+#endif
 #if defined(LEKMOD_v34) // Grant free resources from this policy
 	for (int i = 0; i < GC.getNumResourceInfos(); ++i)
 	{

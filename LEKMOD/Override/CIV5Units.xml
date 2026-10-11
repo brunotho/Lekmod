@@ -187770,6 +187770,8 @@
 		<Column name="EarlyBuildingProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward buildings (not wonders) whose tech is before EarlyBuildingEraType -->
 		<Column name="EarlyBuildingEraType" type="text" reference="Eras(Type)" default="NULL"/>
 		<Column name="FreeUnitClassNearWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears in the city closest to water -->
+		<Column name="TourismModPerAlliedCS" type="integer" default="0"/> <!-- LEKMOD: % Tourism in every city per allied City-State -->
+		<Column name="NoExternalTradeRoutes" type="boolean" default="false"/> <!-- LEKMOD: no routes with other civs/City-States; adopting ends all routes -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0"/> <!-- LEKMOD: % on great work yields (not their Happiness) -->
 		<Column name="FreeUnitClassOnWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears on the water tile closest to a city -->
 	</Table> 
@@ -188969,7 +188971,6 @@
 			<Description>TXT_KEY_POLICY_DOUBLE_AGENTS</Description>
 			<Civilopedia>TXT_KEY_POLICY_DOUBLE_AGENTS_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_DOUBLE_AGENTS_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>1</Level>
@@ -188998,7 +188999,6 @@
 			<Description>TXT_KEY_POLICY_ACADEMY_SCIENCES</Description>
 			<Civilopedia>TXT_KEY_POLICY_ACADEMY_SCIENCES_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_ACADEMY_SCIENCES_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>2</Level>
@@ -189042,7 +189042,6 @@
 			<Description>TXT_KEY_POLICY_CULTURAL_REVOLUTION</Description>
 			<Civilopedia>TXT_KEY_POLICY_CULTURAL_REVOLUTION_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_CULTURAL_REVOLUTION_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>2</Level>
@@ -189370,7 +189369,6 @@
 			<Description>TXT_KEY_POLICY_PEOPLE_ARMY</Description>
 			<Civilopedia>TXT_KEY_POLICY_NATIONALISM_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_PEOPLE_ARMY_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>2</Level>
@@ -281517,4 +281515,273 @@
 			<Count>3</Count>
 		</Row>
 	</Policy_FreeUnitClasses>
+	<!-- Order: Double Agents, Cultural Revolution, Academy of Sciences, People's Army removed (no branch); Patriotic War (tier 1, from scratch:
+	     full strength when damaged); Party Leadership tier 2 with its 34.11 yields; NEW Monuments of the People, Socialist Heritage (tier 1),
+	     Re-Education, Atomic Program, Five Year Offensive (tier 2); Command Economy (from scratch; scientist decay open); Iron Curtain -->
+	<Table name="Policy_UnitClassResourceRequirementChanges">
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="UnitClassType" type="text" reference="UnitClasses(Type)" />
+		<Column name="ResourceType" type="text" reference="Resources(Type)" />
+		<Column name="Change" type="integer" default="0" />
+	</Table>
+	<Table name="Policy_BuildingClassResourceRequirementChanges">
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="ResourceType" type="text" reference="Resources(Type)" />
+		<Column name="Change" type="integer" default="0" />
+	</Table>
+	<Table name="Policy_UnitCombatPromotionsIfBuilding">
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="UnitCombatType" type="text" reference="UnitCombatInfos(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="PromotionType" type="text" reference="UnitPromotions(Type)" />
+	</Table>
+	<Table name="Policy_ImprovementYieldModifiers">
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
+		<Column name="Modifier" type="integer" default="0" />
+	</Table>
+	<Policies>
+		<Row>
+			<ID>136</ID>
+			<Type>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+		</Row>
+		<Row>
+			<ID>137</ID>
+			<Type>POLICY_LEKMOD_SOCIALIST_HERITAGE</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<TourismModPerAlliedCS>10</TourismModPerAlliedCS>
+		</Row>
+		<Row>
+			<ID>138</ID>
+			<Type>POLICY_LEKMOD_RE_EDUCATION</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_RE_EDUCATION</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_RE_EDUCATION_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_RE_EDUCATION_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
+			<Level>2</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<ResistanceTimeModifier>-50</ResistanceTimeModifier>
+		</Row>
+		<Row>
+			<ID>139</ID>
+			<Type>POLICY_LEKMOD_ATOMIC_PROGRAM</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
+			<Level>2</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+		</Row>
+		<Row>
+			<ID>140</ID>
+			<Type>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
+			<Level>2</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+		</Row>
+		<Update>
+			<Where Type="POLICY_PATRIOTIC_WAR"/>
+			<Set Level="1" GlobalMoveChangeFriendly="0" WoundedUnitDamageMod="-33"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_PARTY_LEADERSHIP"/>
+			<Set Level="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_DICTATORSHIP_PROLETARIAT"/>
+			<Set MilitaryProductionModifier="30"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_IRON_CURTAIN"/>
+			<Set NoExternalTradeRoutes="true" StealTechSlowerModifier="50"/>
+		</Update>
+	</Policies>
+	<Policy_FreePromotions>
+		<Delete PolicyType="POLICY_PATRIOTIC_WAR"/>
+	</Policy_FreePromotions>
+	<Policy_CityYieldChanges>
+		<Delete PolicyType="POLICY_PARTY_LEADERSHIP"/>
+		<Row>
+			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PARTY_LEADERSHIP</PolicyType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Policy_CityYieldChanges>
+	<Policy_ImprovementYieldChanges>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</PolicyType>
+			<ImprovementType>IMPROVEMENT_LANDMARK</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</PolicyType>
+			<ImprovementType>IMPROVEMENT_LANDMARK</ImprovementType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</PolicyType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</PolicyType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</PolicyType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</PolicyType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>5</Yield>
+		</Row>
+	</Policy_ImprovementYieldChanges>
+	<Policy_ImprovementYieldModifiers>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_SOCIALIST_HERITAGE</PolicyType>
+			<ImprovementType>IMPROVEMENT_LANDMARK</ImprovementType>
+			<Modifier>100</Modifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_SOCIALIST_HERITAGE</PolicyType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<Modifier>100</Modifier>
+		</Row>
+	</Policy_ImprovementYieldModifiers>
+	<Policy_BuildingClassHappiness>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_RE_EDUCATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_CONSTABLE</BuildingClassType>
+			<Happiness>2</Happiness>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_RE_EDUCATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<Happiness>2</Happiness>
+		</Row>
+	</Policy_BuildingClassHappiness>
+	<Policy_ResourceQuantity>
+		<Delete PolicyType="POLICY_DICTATORSHIP_PROLETARIAT"/>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_ATOMIC_PROGRAM</PolicyType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Quantity>4</Quantity>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</PolicyType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Quantity>15</Quantity>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</PolicyType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Quantity>15</Quantity>
+		</Row>
+	</Policy_ResourceQuantity>
+	<Policy_ResourceYieldChanges>
+		<Delete PolicyType="POLICY_DICTATORSHIP_PROLETARIAT"/>
+	</Policy_ResourceYieldChanges>
+	<Policy_YieldModifiers>
+		<Row>
+			<PolicyType>POLICY_DICTATORSHIP_PROLETARIAT</PolicyType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>-10</Yield>
+		</Row>
+	</Policy_YieldModifiers>
+	<Policy_UnitClassResourceRequirementChanges>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_ATOMIC_PROGRAM</PolicyType>
+			<UnitClassType>UNITCLASS_NUCLEAR_MISSILE</UnitClassType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+	</Policy_UnitClassResourceRequirementChanges>
+	<Policy_BuildingClassResourceRequirementChanges>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_ATOMIC_PROGRAM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_NUCLEAR_PLANT</BuildingClassType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+	</Policy_BuildingClassResourceRequirementChanges>
+	<Policy_BuildingClassProductionModifiers>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_ATOMIC_PROGRAM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_NUCLEAR_PLANT</BuildingClassType>
+			<ProductionModifier>20</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_REFINERY</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_RECYCLING_CENTER</BuildingClassType>
+			<ProductionModifier>100</ProductionModifier>
+		</Row>
+	</Policy_BuildingClassProductionModifiers>
+	<Policy_UnitCombatPromotionsIfBuilding>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</PolicyType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<BuildingClassType>BUILDINGCLASS_REFINERY</BuildingClassType>
+			<PromotionType>PROMOTION_BOMBARDMENT_1</PromotionType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</PolicyType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<BuildingClassType>BUILDINGCLASS_REFINERY</BuildingClassType>
+			<PromotionType>PROMOTION_COVER_1</PromotionType>
+		</Row>
+	</Policy_UnitCombatPromotionsIfBuilding>
 </GameData>

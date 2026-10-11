@@ -1507,6 +1507,9 @@ Diversify Spain and Australia's NW Discovery bonus
 // (the resource is also visible without its tech to teams with this policy: Aesthetics finisher reveals Antiquity Sites).
 // Resources from policies (Policy_ResourceQuantity) only count once the team knows the resource's reveal tech (oil needs its tech);
 // they are added in CvTeam::processTech when the tech arrives later.
+// Order: Policies.TourismModPerAlliedCS, NoExternalTradeRoutes; tables Policy_UnitClassResourceRequirementChanges and
+// Policy_BuildingClassResourceRequirementChanges (refund subtracted in getNumResourceUsed), Policy_UnitCombatPromotionsIfBuilding,
+// Policy_ImprovementYieldModifiers. CvPlayer caches the adopted rows (LekmodRebuildPolicyCache, dirty after processPolicies and load).
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
 // A human player with a pending policy pick (enough Culture, a free policy or tenet, or an ideology to choose) is never forced
 // to pick, but while the pick is pending at turn processing the empire's yields freeze: no positive Food (starvation still

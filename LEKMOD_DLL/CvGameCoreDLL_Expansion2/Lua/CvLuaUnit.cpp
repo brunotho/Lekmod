@@ -1577,7 +1577,11 @@ int CvLuaUnit::lGetNumResourceNeededToUpgrade(lua_State* L)
 		return 0;
 	}
 
+#ifdef LEKMOD_POLICY_REWORK
+	const int iResult = GET_PLAYER(pkUnit->getOwner()).GetLekmodUnitResourceRequirement(eUpgradeUnitType, eResource);
+#else
 	const int iResult = pkUnitInfo->GetResourceQuantityRequirement(eResource);
+#endif
 
 	lua_pushinteger(L, iResult);
 	return 1;

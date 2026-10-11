@@ -12858,6 +12858,15 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_WORLD_RELIGION", iTempMod);
 
+#ifdef LEKMOD_POLICY_REWORK
+	if (YIELD_TOURISM == eIndex)
+	{
+		iTempMod = kPlayer.GetLekmodTourismModFromAlliedCS();
+		iModifier += iTempMod;
+		if (toolTipSink && iTempMod)
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_ALLIED_CS_TOURISM", iTempMod);
+	}
+#endif
 	if (kPlayer.GetTourismBonusTurns() > 0 && YIELD_TOURISM == eIndex) // International Games
 	{
 		iTempMod = GC.getTEMPORARY_TOURISM_BOOST_MOD();
@@ -17866,6 +17875,24 @@ int CvCity::CreateUnit(UnitTypes eUnitType, UnitAITypes eAIType, bool bUseToSati
 	}
 
 	addProductionExperience(pUnit);
+#ifdef LEKMOD_POLICY_REWORK
+	// policies: promotions for units of a combat class trained in a city with a building (Five Year Offensive: siege + Refinery)
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || pkPolicy->GetUnitCombatPromotionsIfBuilding().empty() || !thisPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || thisPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const std::vector<int>& aiRows = pkPolicy->GetUnitCombatPromotionsIfBuilding();
+		for (uint i = 0; i + 2 < aiRows.size(); i += 3)
+		{
+			if (pUnit->getUnitCombatType() != aiRows[i])
+				continue;
+			const BuildingTypes eNeeded = (BuildingTypes)thisPlayer.getCivilizationInfo().getCivilizationBuildings(aiRows[i + 1]);
+			if (eNeeded != NO_BUILDING && GetCityBuildings()->GetNumBuilding(eNeeded) > 0)
+				pUnit->setHasPromotion((PromotionTypes)aiRows[i + 2], true);
+		}
+	}
+#endif
 
 	CvPlot* pRallyPlot = getRallyPlot();
 	if(pRallyPlot != NULL)

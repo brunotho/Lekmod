@@ -288,6 +288,8 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iFreeUnitClassNearWater(NO_UNITCLASS),
 	m_iFreeUnitClassOnWater(NO_UNITCLASS),
 	m_iGreatWorkYieldModifier(0),
+	m_iTourismModPerAlliedCS(0),
+	m_bNoExternalTradeRoutes(false),
 #endif
 	m_piCoastalCityYieldChange(NULL),
 	m_piCapitalYieldChange(NULL),
@@ -808,6 +810,63 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iFreeUnitClassNearWater = GC.getInfoTypeForString(kResults.GetText("FreeUnitClassNearWater"), true);
 	m_iFreeUnitClassOnWater = GC.getInfoTypeForString(kResults.GetText("FreeUnitClassOnWater"), true);
 	m_iGreatWorkYieldModifier = kResults.GetInt("GreatWorkYieldModifier");
+	m_iTourismModPerAlliedCS = kResults.GetInt("TourismModPerAlliedCS");
+	m_bNoExternalTradeRoutes = kResults.GetBool("NoExternalTradeRoutes");
+	{
+		std::string strKey("Policy_UnitClassResourceRequirementChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select UnitClasses.ID, Resources.ID, Change from Policy_UnitClassResourceRequirementChanges inner join UnitClasses on UnitClasses.Type = UnitClassType inner join Resources on Resources.Type = ResourceType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiUnitClassResourceRequirementChanges.push_back(pResults->GetInt(0));
+			m_aiUnitClassResourceRequirementChanges.push_back(pResults->GetInt(1));
+			m_aiUnitClassResourceRequirementChanges.push_back(pResults->GetInt(2));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_BuildingClassResourceRequirementChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Resources.ID, Change from Policy_BuildingClassResourceRequirementChanges inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Resources on Resources.Type = ResourceType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiBuildingClassResourceRequirementChanges.push_back(pResults->GetInt(0));
+			m_aiBuildingClassResourceRequirementChanges.push_back(pResults->GetInt(1));
+			m_aiBuildingClassResourceRequirementChanges.push_back(pResults->GetInt(2));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_UnitCombatPromotionsIfBuilding");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select UnitCombatInfos.ID, BuildingClasses.ID, UnitPromotions.ID from Policy_UnitCombatPromotionsIfBuilding inner join UnitCombatInfos on UnitCombatInfos.Type = UnitCombatType inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join UnitPromotions on UnitPromotions.Type = PromotionType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiUnitCombatPromotionsIfBuilding.push_back(pResults->GetInt(0));
+			m_aiUnitCombatPromotionsIfBuilding.push_back(pResults->GetInt(1));
+			m_aiUnitCombatPromotionsIfBuilding.push_back(pResults->GetInt(2));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_ImprovementYieldModifiers");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select Improvements.ID, Modifier from Policy_ImprovementYieldModifiers inner join Improvements on Improvements.Type = ImprovementType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiImprovementYieldModifiers.push_back(pResults->GetInt(0));
+			m_aiImprovementYieldModifiers.push_back(pResults->GetInt(1));
+		}
+		pResults->Reset();
+	}
 	{
 		std::string strKey("Policy_CityYieldIfBuildingClass");
 		Database::Results* pResults = kUtility.GetResults(strKey);
@@ -2899,6 +2958,35 @@ int CvPolicyEntry::GetFreeUnitClassOnWater() const
 int CvPolicyEntry::GetGreatWorkYieldModifier() const
 {
 	return m_iGreatWorkYieldModifier;
+}
+/// % Tourism in every city per allied City-State (Socialist Heritage)
+int CvPolicyEntry::GetTourismModPerAlliedCS() const
+{
+	return m_iTourismModPerAlliedCS;
+}
+/// No trade routes with other civilizations or City-States; adopting it ends all running routes (Iron Curtain)
+bool CvPolicyEntry::IsNoExternalTradeRoutes() const
+{
+	return m_bNoExternalTradeRoutes;
+}
+/// (unit class, resource, change) triples (Atomic Program: Nuclear Missiles need 1 fewer Uranium)
+const std::vector<int>& CvPolicyEntry::GetUnitClassResourceRequirementChanges() const
+{
+	return m_aiUnitClassResourceRequirementChanges;
+}
+const std::vector<int>& CvPolicyEntry::GetBuildingClassResourceRequirementChanges() const
+{
+	return m_aiBuildingClassResourceRequirementChanges;
+}
+/// (unit combat, building class, promotion) triples: units of the combat trained in a city with the building get the promotion
+const std::vector<int>& CvPolicyEntry::GetUnitCombatPromotionsIfBuilding() const
+{
+	return m_aiUnitCombatPromotionsIfBuilding;
+}
+/// (improvement, % modifier) pairs on the improvement's yields (Socialist Heritage)
+const std::vector<int>& CvPolicyEntry::GetImprovementYieldModifiers() const
+{
+	return m_aiImprovementYieldModifiers;
 }
 /// (building class, yield, value) triples: city yield if the city has the building (largest value per yield counts)
 const std::vector<int>& CvPolicyEntry::GetCityYieldIfBuildingClass() const

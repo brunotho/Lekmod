@@ -11768,14 +11768,22 @@ bool CvUnit::CanUpgradeRightNow(bool bOnlyTestVisible) const
 #endif
 		{
 			eResource = (ResourceTypes) iResourceLoop;
+#ifdef LEKMOD_POLICY_REWORK
+			iNumResourceNeeded = kPlayer.GetLekmodUnitResourceRequirement(eUpgradeUnitType, eResource);
+#else
 			iNumResourceNeeded = pUpgradeUnitInfo->GetResourceQuantityRequirement(eResource);
+#endif
 
 			if(iNumResourceNeeded > 0)
 			{
 				// Amount we have lying around
 				iNumOfThisResourceAvailable = kPlayer.getNumResourceAvailable(eResource);
 				// Amount this old unit is using
+#ifdef LEKMOD_POLICY_REWORK
+				iNumOfThisResourceAvailable += kPlayer.GetLekmodUnitResourceRequirement(getUnitType(), eResource);
+#else
 				iNumOfThisResourceAvailable += m_pUnitInfo->GetResourceQuantityRequirement(eResource);
+#endif
 
 				if(iNumOfThisResourceAvailable <= 0 || iNumOfThisResourceAvailable < iNumResourceNeeded)
 					return false;

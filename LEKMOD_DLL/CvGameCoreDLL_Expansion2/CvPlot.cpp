@@ -9168,6 +9168,15 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 		}
 	}
 
+#ifdef LEKMOD_POLICY_REWORK
+	// policies: % on this improvement's yields (Socialist Heritage: Landmarks and Festivals)
+	if (ePlayer != NO_PLAYER && iYield > 0)
+	{
+		const int iMod = GET_PLAYER(ePlayer).GetLekmodImprovementYieldModifier(eImprovement);
+		if (iMod != 0)
+			iYield = iYield * (100 + iMod) / 100;
+	}
+#endif
 	return iYield;
 }
 

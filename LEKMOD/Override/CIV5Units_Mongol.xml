@@ -116679,7 +116679,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DICTATORSHIP_PROLETARIAT_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Command Economy[ENDCOLOR][NEWLINE]+3 [ICON_PRODUCTION] Production, +3 [ICON_RESEARCH] Science, and +1 [ICON_GOLD] Gold from [ICON_RES_ALUMINUM] Aluminum, [ICON_RES_COAL] Coal, [ICON_RES_IRON] Iron, [ICON_RES_OIL] Oil, and [ICON_RES_URANIUM] Uranium. Provides 4 [ICON_RES_ALUMINUM] Aluminum, [ICON_RES_COAL] Coal, [ICON_RES_IRON] Iron, [ICON_RES_OIL] Oil, [ICON_RES_HORSE] Horses and 2 [ICON_RES_URANIUM] Uranium resources for the Empire.
+				[COLOR_POSITIVE_TEXT]Command Economy[ENDCOLOR][NEWLINE]+30% [ICON_PRODUCTION] Production toward military units in every city.[NEWLINE]-10% [ICON_RESEARCH] Science in every city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DICTATORSHIP_PROLETARIAT_TEXT"> 
@@ -117074,7 +117074,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_IRON_CURTAIN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Iron Curtain[ENDCOLOR][NEWLINE]Internal [ICON_INTERNATIONAL_TRADE] Trade Routes provide +10 [ICON_FOOD] Food or [ICON_PRODUCTION] Production and an additional +1 extra per [COLOR_CYAN]Era[ENDCOLOR] after the [COLOR_CYAN]Industrial Era[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Iron Curtain[ENDCOLOR][NEWLINE]All your running [ICON_INTERNATIONAL_TRADE] Trade Routes end when you adopt it (the trade units return home).[NEWLINE]No more Trade Routes with other civilizations or City-States.[NEWLINE]Internal Trade Routes provide triple [ICON_FOOD] Food and [ICON_PRODUCTION] Production.[NEWLINE]Enemy [ICON_SPY] Spies steal technologies 50% slower in your cities.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_IRON_CURTAIN_TEXT"> 
@@ -117485,7 +117485,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PARTY_LEADERSHIP_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Party Leadership[ENDCOLOR][NEWLINE]+1 [ICON_FOOD] Food, +1 [ICON_PRODUCTION] Production, +1 [ICON_RESEARCH] Science, +1 [ICON_CULTURE] Culture, and +1 [ICON_GOLD] Gold per city.
+				[COLOR_POSITIVE_TEXT]Party Leadership[ENDCOLOR][NEWLINE]+2 [ICON_FOOD] Food, +2 [ICON_PRODUCTION] Production, +2 [ICON_RESEARCH] Science and +2 [ICON_GOLD] Gold in every city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PARTY_LEADERSHIP_TEXT"> 
@@ -117500,7 +117500,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PATRIOTIC_WAR_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Patriotic War[ENDCOLOR][NEWLINE]All units gain an additional +1 [ICON_MOVES] Movemement and +10% [ICON_STRENGTH] Combat strength in [COLOR_POSITIVE_TEXT]Friendly territory[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Patriotic War[ENDCOLOR][NEWLINE]Your units fight at full strength even when damaged.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_PATRIOTIC_WAR_TEXT"> 
@@ -120583,6 +120583,39 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_TOPPANEL_POLICY_PENDING_TT">
 			<Text>[COLOR_NEGATIVE_TEXT]A policy pick is waiting.[ENDCOLOR][NEWLINE]Until you pick, your empire gets no [ICON_FOOD] growth, [ICON_PRODUCTION] Production, [ICON_RESEARCH] Science, [ICON_GOLD] Gold income, [ICON_CULTURE] Culture or [ICON_PEACE] Faith at the end of each turn.[NEWLINE]Upkeep is still paid, and cities working too little Food still starve.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE">
+			<Text>Monuments of the People</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Monuments of the People[ENDCOLOR][NEWLINE]Landmarks, Citadels and Manufactories provide +5 [ICON_CULTURE] Culture and +5 [ICON_TOURISM] Tourism.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE">
+			<Text>Socialist Heritage</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Socialist Heritage[ENDCOLOR][NEWLINE]+10% [ICON_TOURISM] Tourism in every city for each allied City-State.[NEWLINE]Landmarks and Festivals provide double yields.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_RE_EDUCATION">
+			<Text>Re-Education</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_RE_EDUCATION_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Re-Education[ENDCOLOR][NEWLINE]+2 [ICON_HAPPINESS_1] Happiness from each Constabulary and Courthouse.[NEWLINE]Resistance in cities you capture lasts half as long.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM">
+			<Text>Atomic Program</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Atomic Program[ENDCOLOR][NEWLINE]Provides 4 [ICON_RES_URANIUM] Uranium.[NEWLINE]Nuclear Missiles and Nuclear Plants need 1 less [ICON_RES_URANIUM] Uranium.[NEWLINE]+20% [ICON_PRODUCTION] Production toward Nuclear Plants.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE">
+			<Text>Five Year Offensive</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Five Year Offensive[ENDCOLOR][NEWLINE]Provides 15 [ICON_RES_OIL] Oil and 15 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE]+100% [ICON_PRODUCTION] Production toward Refineries and Recycling Centers.[NEWLINE]Siege units trained in a city with a Refinery start with Bombardment I and Cover I.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_ALLIED_CS_TOURISM">
+			<Text>[NEWLINE][ICON_BULLET]Allied City-States: {1_Num}%</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>

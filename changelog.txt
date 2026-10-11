@@ -1628,6 +1628,24 @@ Tags: policies
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
 
+ORDER (POLICY_BRANCH_ORDER)
+---------------------------
+Tags: policies
+- Removed: Double Agents, Cultural Revolution, Academy of Sciences, People's Army
+- Changed: Patriotic War (rebuilt, now tier 1): your units fight at full strength even when damaged
+- Removed: Patriotic War: +1 Movement and +10% Combat Strength in friendly territory
+- Added: Monuments of the People (tier 1): Landmarks, Citadels and Manufactories +5 Culture +5 Tourism
+- Added: Socialist Heritage (tier 1): +10% Tourism in every city per allied City-State; Landmarks and Festivals give double yields
+- Changed: Party Leadership: now tier 2; +2 Food, Production, Science and Gold in every city (was +1 each and +1 Culture)
+- Added: Re-Education (tier 2): +2 Happiness from each Constabulary and Courthouse; resistance in captured cities lasts half as long
+- Added: Atomic Program (tier 2): 4 Uranium; Nuclear Missiles and Nuclear Plants need 1 less Uranium; +20% Production toward Nuclear Plants
+- Added: Five Year Offensive (tier 2): 15 Oil and 15 Aluminum; +100% Production toward Refineries and Recycling Centers; Siege units trained in a city with a Refinery start with Bombardment I and Cover I
+- Changed: Command Economy (rebuilt): +30% Production toward military units; -10% Science in every city
+- Removed: Command Economy: strategic resources and their yields
+- Changed: Iron Curtain: ends all your Trade Routes when adopted (units return home); no Trade Routes with other civilizations or City-States; enemy Spies steal 50% slower
+- Note: Command Economy's Great Scientist decay and Iron Curtain's "internal routes no longer cost Gold" wait for answers
+- DLL: Policies.TourismModPerAlliedCS, NoExternalTradeRoutes; Policy_UnitClassResourceRequirementChanges, Policy_BuildingClassResourceRequirementChanges, Policy_UnitCombatPromotionsIfBuilding, Policy_ImprovementYieldModifiers (LEKMOD_POLICY_REWORK)
+
 PENDING POLICY PICK (game mechanics)
 ------------------------------------
 Tags: game mechanics, policies, ui

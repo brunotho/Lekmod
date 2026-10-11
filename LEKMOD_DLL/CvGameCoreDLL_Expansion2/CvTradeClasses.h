@@ -147,6 +147,7 @@ public:
 
 	void ClearAllCityTradeRoutes (CvPlot* pPlot); // called when a city is captured or traded
 	void ClearAllCivTradeRoutes (PlayerTypes ePlayer); // called from world congress code
+	void LekmodCancelAllRoutesOfPlayer(PlayerTypes ePlayer);
 	void ClearAllCityStateTradeRoutes (void); // called from world congress code
 #ifdef NQM_TEAM_TRADE_ROUTES_CANCELLED_NOT_DESTROYED_FOR_WAR_DEFENDER_ON_DOW
 	void CancelTradeBetweenTeams(TeamTypes eTeam1, TeamTypes eTeam2, bool bReturnUnits = false);
