@@ -56,6 +56,13 @@ from the sources, so it can be run any number of times (nothing gets shifted or 
 - **Portrait** (unit panel, Civilopedia): the square source is resized to a 173 px circle at (41,42) in a 256 px cell (the layout of all Lekmod unit portraits), then 256/128/80/64/45/32 px, BC3. Built by a one-off script on 2026-10-10 (see the session notes in CLAUDE.md §7); the source is in `units/vanguard_corps/`.
 - **Map flag**: a white silhouette on transparency, scaled to 18 px tall, placed at x = centre + 2 px, y = 4 px in a 32 px canvas (it must stay inside the tapering flag shape), BC3 with one mip. The game tints it in the player's colours.
 
+## Building icons
+- Sources: `buildings/<name>/<name>_<size>.dds` as delivered by the user (OneDrive art inbox, see CLAUDE.md section 7).
+- Building icons are shown as circles in the production list and city screen. Square art is masked to a circle with
+  `python art_sources/tools/round_building_icon.py <name>` (anti-aliased edge; missing sizes scaled from the largest;
+  writes 32/45/64/80/128/256 to `LEKMOD/Art/Lekmod (v 1)/Art/Buildings/`). Used for Sanctuary and Stupa (2026-10-11).
+- Art that is already round (Uranium Mapping Project) is copied as it is. Atlases: one 1x1 atlas per icon.
+
 ## Main menu backgrounds
 Each PNG is scaled to cover 1920x1200 (centre crop), then BC1 (no alpha) with one mip: about 1.2 MB each.
 Files `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background_01..11.dds` follow the alphabetical order of the PNGs here;

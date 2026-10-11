@@ -170,7 +170,12 @@ function GetHelpTextForBuilding(iBuildingID, bExcludeName, bExcludeHeader, bNoMa
 		iHappinessTotal = iHappinessTotal + pCity:GetReligionBuildingClassHappiness(buildingClassID) + pActivePlayer:GetPlayerBuildingClassHappiness(buildingClassID);
 	end
 	if (iHappinessTotal ~= 0) then
-		table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_HAPPINESS", iHappinessTotal));
+		if (iHappinessTotal < 0) then
+			-- LEKMOD: negative building Happiness (Art Hall) without the "+" sign
+			table.insert(lines, Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILDING_HAPPINESS_NEGATIVE", iHappinessTotal));
+		else
+			table.insert(lines, Locale.ConvertTextKey("TXT_KEY_PRODUCTION_BUILDING_HAPPINESS", iHappinessTotal));
+		end
 	end
 	
 	-- Defense

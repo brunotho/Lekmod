@@ -48563,7 +48563,7 @@
 			<Happiness>4</Happiness>
 			<TerritoryHealChange>5</TerritoryHealChange>
 			<ArtDefineTag>MONUMENT</ArtDefineTag>
-			<GreatWorkCount>-1</GreatWorkCount>
+			<GreatWorkCount>0</GreatWorkCount>
 			<PortraitIndex>45</PortraitIndex>
 			<IconAtlas>BW_ATLAS_1</IconAtlas>
 		</Row>
@@ -49490,7 +49490,7 @@
 		</Update>
 		<Update>
 			<Where Type="BUILDING_MUSIC_HOUSE"/>
-			<Set Help="TXT_KEY_LEKMOD_WORSHIP_HOUSE_HELP" WorshipHouse="true" FaithCost="188" Happiness="0" GoldMaintenance="0"/>
+			<Set SpecialistCount="0" Help="TXT_KEY_LEKMOD_WORSHIP_HOUSE_HELP" WorshipHouse="true" FaithCost="188" Happiness="0" GoldMaintenance="0"/>
 		</Update>
 	</Buildings>
 	<Building_YieldChanges>

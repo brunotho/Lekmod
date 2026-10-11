@@ -1087,7 +1087,7 @@ Tags: units, game mechanics
 A late-game settler that founds ready-made frontier cities.
 - Added: Vanguard Corps: Railroad, 290 Production, 3 movement, founds cities; building it does not stop the city's growth
 - Added: a city it founds starts with 4 more Population, claims 6 extra tiles, gets a free Worker and free Walls, Castle, Barracks, Workshop and Field Hospital
-- Added: Field Hospital: +4 Happiness in the city; your non-air units on the city's tiles heal 5 more HP per turn
+- Added: Field Hospital: +4 Happiness in the city; your non-air units on the city's tiles heal 5 more HP per turn; listed in the city screen
 - Added: embarking and disembarking cost only 1 movement (Amphibious I and II)
 - Changed: Settlers (and their unique replacements) become obsolete with Railroad and upgrade to the Vanguard Corps
 - Note: unit art from the user (portrait and map flag) and the late Great General model
@@ -1382,7 +1382,7 @@ Tags: religion, buildings
 Two new follower beliefs with their own buildings.
 - Added: Sanctuaries: buy Sanctuaries with 220 Faith (+2 Happiness, +2 Culture)
 - Added: Stupas: buy Stupas with 100 Faith (+2 Food, +1 Happiness)
-- Note: belief IDs 111-112, buildings 273-274 (classes 180-181); icons from the user (art_sources/buildings), 32 and 80 px sizes scaled from 256
+- Note: belief IDs 111-112, buildings 273-274 (classes 180-181); icons from the user, masked round like the base building icons (art_sources/tools/round_building_icon.py)
 
 HOUSES OF WORSHIP (BELIEF_HOUSES_OF_WORSHIP)
 -------------------------------------------
@@ -1392,7 +1392,8 @@ The three houses got new yields; Culture now depends on how many a city has.
 - Changed: the first house in a city gives +4 Culture, the second +2, the third none
 - Changed: Art Hall: +2 Production, -1 Happiness (was +1 Culture, +4 Faith, +3 Tourism)
 - Changed: Writing Auditorium: +2 Science, +1 Happiness, 4 Gold maintenance (was +2 Culture, +1 Science)
-- Changed: Vocal Chamber: +2 Food, -4 Faith (was +3 Culture, +1 Happiness); keeps its Great Musician slot
+- Changed: Vocal Chamber: +2 Food, -4 Faith (was +3 Culture, +1 Happiness, Great Musician slot)
+- Fixed: buildings with negative Happiness now actually reduce Happiness, and their tooltip shows "-1" instead of "+-1"
 - DLL: Buildings.WorshipHouse, Culture added in CvCity::processBuilding (LEKMOD_DEFENSE_BUILDINGS group)
 
 UNDERGROUND SECT (BELIEF_UNDERGROUND_SECT)

@@ -23,13 +23,13 @@
     <Box Color="0,0,0,0" Offset="42,38" Size="290,600">
 
       <!-- LEKMOD: search box; filters the pantheons by name and effect text while typing -->
-      <Label Anchor="L,T" Offset="20,8" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_LEKMOD_BELIEF_SEARCH"/>
-      <Grid Anchor="L,T" Offset="80,4" Size="330,28" Padding="0,0" Style="GridBlackIndent8">
+      <Label Anchor="L,T" Offset="20,18" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" String="TXT_KEY_LEKMOD_BELIEF_SEARCH"/>
+      <Grid Anchor="L,T" Offset="80,14" Size="330,28" Padding="0,0" Style="GridBlackIndent8">
         <EditBox ID="LekmodBeliefSearch" Anchor="L,C" Offset="8,0" Size="314,22" Font="TwCenMT18" FontStyle="Shadow" Color0="Beige" Color1="0.0.0.160" MaxLength="40" CallOnChar="1"/>
       </Grid>
-      <ScrollPanel Anchor="L,T" Offset="0,40" Size="418,787" Vertical="1" ID="ItemScrollPanel" >
+      <ScrollPanel Anchor="L,T" Offset="0,50" Size="418,777" Vertical="1" ID="ItemScrollPanel" >
         <!-- Scroll Controls -->
-        <ScrollBar Style="VertSlider" Length="751" Offset="0,18" Anchor="L,T" AnchorSide="I,I" />
+        <ScrollBar Style="VertSlider" Length="741" Offset="0,18" Anchor="L,T" AnchorSide="I,I" />
         <UpButton  Offset="0,0"  Style="ScrollBarUp"  Anchor="L,T" AnchorSide="I,I" />
         <DownButton Offset="0,0" Style="ScrollBarDown"  Anchor="L,B" AnchorSide="I,I" />
 

@@ -8312,7 +8312,12 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 
 		ChangeNoOccupiedUnhappinessCount(pBuildingInfo->IsNoOccupiedUnhappiness() * iChange);
 
+#ifdef LEKMOD_DEFENSE_BUILDINGS
+		// negative building Happiness counts too (Art Hall -1)
+		if(pBuildingInfo->GetHappiness() != 0)
+#else
 		if(pBuildingInfo->GetHappiness() > 0)
+#endif
 		{
 			ChangeBaseHappinessFromBuildings(pBuildingInfo->GetHappiness() * iChange);
 		}
