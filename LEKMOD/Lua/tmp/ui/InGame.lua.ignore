@@ -1272,9 +1272,8 @@ end
 -- Lekmod: Load LUA files
 -----------------------------------------------------------------------------------------
 
--- From NQ
-ContextPtr:LoadNewContext("Exploration1_Colonialism")
-ContextPtr:LoadNewContext("Exploration5_TreasureFleets")
+-- From NQ: Exploration1_Colonialism (Governor's Mansion in new cities) and Exploration5_TreasureFleets (all commented out)
+-- are no longer loaded since Expansionism replaced the tree (2026-10-12).
 
 -- General Lekmod files
 ContextPtr:LoadNewContext("prophetreplace")

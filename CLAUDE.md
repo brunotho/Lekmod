@@ -154,6 +154,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
      - NQM `.sql` `ALTER TABLE` scripts leave no trace.
      - Practically both models agree: anything in a table that `CIV5Units.xml` re-creates or wipes must be edited there.
      - If you ever see an `Art/` file take effect, document it here.
+   - **Lua under `Art\` and `Lua\` IS live when `InGame.lua` loads it by name** (`ContextPtr:LoadNewContext("Lekmod_policies")` etc., template `Lua/tmp/ui/InGame.lua.ignore`; the context is found by file name anywhere in the package). 2026-10-12: the NQM `Exploration1_Colonialism.lua` still gave the Governor's Mansion, and `Lua/Lekmod_policies.lua` still gave Consulates era votes. When reworking a policy, unit or building, grep these Lua files for its type name too.
 
 **A feature that needs new C++ only works when ALL of these hold** (names must match exactly):
 - the column is defined in `CIV5Units.xml` (`<Table name="X"><Column .../>`), and values are set in `CIV5Units.xml`

@@ -1621,7 +1621,8 @@ Tags: policies
 - Changed: Philanthropy is now Treaty of Arms: any city can buy an allied Militaristic City-State's unique unit with Gold at 30% off (no other discounts); Militaristic City-States send 2 units per gift; allied ones send a gift right away when you adopt it
 - Removed: Treaty of Arms: the Gold gift and Influence decay bonuses (moved to Merchant Confederacy and Embassy Exchange)
 - Changed: Consulates is now Open Markets: Friendly and Allied City-States give 50% more Food, Culture, Faith and Happiness
-- Removed: Open Markets: its World Congress Delegates (moved to the finisher)
+- Removed: Open Markets: its World Congress Delegates (moved to the finisher), including the extra Delegate per era from the Industrial Era on
+- Dev: a leftover script still gave Consulates/Open Markets a Delegate per era from the Industrial Era; removed
 - Changed: finisher: +1 World Congress Delegate; buy Great Engineers, Generals and Writers with Gold from the Industrial Era (1000, then 1500, 2500, 4000 ...; all types count together)
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
@@ -1630,11 +1631,11 @@ EXPANSIONISM (POLICY_BRANCH_EXPLORATION)
 ---------------------------------------
 Tags: policies, naval, units, buildings
 - Changed: Exploration is now Expansionism (rebuilt from scratch), still from the Medieval Era
-- Changed: opener: +1 Sight for melee, gunpowder, mounted, naval melee and naval ranged units; allows Conquistadors; a free Conquistador appears in your city closest to water and a free Galleass on the water tile closest to your cities; every city claims 1 extra tile, including cities founded later; unlocks the Tower of Belem
+- Changed: opener: +1 Sight for all land military units and for naval melee and ranged units; allows Conquistadors; a free Conquistador appears in your city closest to water and a free Galleass on the water tile closest to your cities; every city claims 1 extra tile, including cities founded later; unlocks the Tower of Belem
 - Removed: opener: +1 Movement and +1 Sight for naval units
 - Changed: Maritime Infrastructure is now Colonial Administration: resistance in captured cities lasts half as long; captured cities get a free Crown Office and a free Worker; cities with a Courthouse or Crown Office get +3 Food +3 Production (doesn't stack with Military Tradition)
 - Removed: Colonial Administration: +2 Production in every city; faster Lighthouses, Harbors and Seaports
-- Changed: Merchant Navy is now Colonial Infrastructure: +20% Production toward buildings from before the Renaissance (not wonders); newly founded cities get a free Crown Office and a free Rowboat; cities with a Courthouse or Crown Office get +2 Happiness (doesn't stack with Military Caste)
+- Changed: Merchant Navy is now Colonial Infrastructure: +20% Production toward buildings from before the Renaissance (wonders excluded); newly founded cities get a free Crown Office and a free Rowboat; cities with a Courthouse or Crown Office get +2 Happiness (doesn't stack with Military Caste)
 - Removed: Colonial Infrastructure: +2 Population, free Worker and 6 extra tiles for new cities
 - Changed: Naval Tradition: +1 Happiness from Lighthouses and Harbors; Drydocks +4 Culture
 - Removed: Naval Tradition: Seaport Happiness; Culture from Lighthouses, Harbors and Seaports
@@ -1646,4 +1647,7 @@ Tags: policies, naval, units, buildings
 - Removed: finisher: Great Admirals twice as fast, free Great Admiral, Gold on Coast and Ocean tiles
 - Added: Crown Office building (free only; counts like a Courthouse for Colonial Administration and Colonial Infrastructure)
 - Note: the branch uses the Commerce branch picture until new Commerce art arrives
+- Changed: tree layout: Naval Tradition, Colonial Infrastructure, Colonial Administration on top; Navigation School bottom left, Treasure Fleets in the middle
+- Removed: the Colonialism Governor's Mansion in newly founded cities
+- Dev: the No Quitters script that granted it was still loaded by InGame.lua; no longer loaded
 - DLL: Policies.ResistanceTimeModifier, ConquestFreeUnitClass, NewCityFreeBuildingClass, NewCityFreeUnitClass, FreeTilesNewCities, EarlyBuildingProductionModifier/EarlyBuildingEraType, FreeUnitClassNearWater/FreeUnitClassOnWater; tables Policy_CityYieldIfBuildingClass, Policy_CityHappinessIfBuildingClass (largest value counts; Military Tradition and Military Caste moved there), Policy_BuildingTerrainYieldChanges (LEKMOD_POLICY_REWORK)

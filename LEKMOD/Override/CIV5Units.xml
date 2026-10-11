@@ -281130,15 +281130,15 @@
 		</Update>
 		<Update>
 			<Where Type="POLICY_MARITIME_INFRASTRUCTURE"/>
-			<Set GridX="1" GridY="1" ResistanceTimeModifier="-50" ConquestFreeUnitClass="UNITCLASS_WORKER" FreeBuildingOnConquest="BUILDING_LEKMOD_CROWN_OFFICE"/>
+			<Set GridX="5" GridY="1" ResistanceTimeModifier="-50" ConquestFreeUnitClass="UNITCLASS_WORKER" FreeBuildingOnConquest="BUILDING_LEKMOD_CROWN_OFFICE"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_MERCHANT_NAVY"/>
-			<Set GridX="2" GridY="1" NewCityExtraPopulation="0" ExtraTerritoryClaim="0" EarlyBuildingProductionModifier="20" EarlyBuildingEraType="ERA_RENAISSANCE" NewCityFreeBuildingClass="BUILDINGCLASS_LEKMOD_CROWN_OFFICE" NewCityFreeUnitClass="UNITCLASS_SKIFF"/>
+			<Set GridX="3" GridY="1" NewCityExtraPopulation="0" ExtraTerritoryClaim="0" EarlyBuildingProductionModifier="20" EarlyBuildingEraType="ERA_RENAISSANCE" NewCityFreeBuildingClass="BUILDINGCLASS_LEKMOD_CROWN_OFFICE" NewCityFreeUnitClass="UNITCLASS_SKIFF"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_NAVAL_TRADITION"/>
-			<Set GridX="4" GridY="1"/>
+			<Set GridX="1" GridY="1"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_TREASURE_FLEETS"/>
@@ -281146,7 +281146,7 @@
 		</Update>
 		<Update>
 			<Where Type="POLICY_NAVIGATION_SCHOOL"/>
-			<Set GridX="5" GridY="2" IncludesOneShotFreeUnits="true"/>
+			<Set GridX="1" GridY="2" IncludesOneShotFreeUnits="true"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_EXPLORATION_FINISHER"/>
@@ -281186,6 +281186,34 @@
 		<Row>
 			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
 			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_ONE_GOOD_EYE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
 		</Row>
 	</UnitPromotions_UnitCombats>
 	<Policy_BuildingClassProductionModifiers>
