@@ -3164,8 +3164,8 @@ bool CvUnit::canMoveInto(const CvPlot& plot, byte bMoveFlags) const
 			return false;
 		}
 #ifdef LEKMOD_CANAL_PROJECT
-		// No attacks out of a canal tile
-		if (this->plot() != NULL && this->plot()->IsAllowsSailLand())
+		// No attacks out of a canal tile (also when pillaged)
+		if (this->plot() != NULL && this->plot()->IsLekmodCanalTile())
 		{
 			return false;
 		}
@@ -3571,8 +3571,8 @@ bool CvUnit::canMoveOrAttackIntoAttackOnly(const CvPlot& plot, byte bMoveFlags) 
 			return false;
 		}
 #ifdef LEKMOD_CANAL_PROJECT
-		// No attacks out of a canal tile
-		if (this->plot() != NULL && this->plot()->IsAllowsSailLand())
+		// No attacks out of a canal tile (also when pillaged)
+		if (this->plot() != NULL && this->plot()->IsLekmodCanalTile())
 		{
 			return false;
 		}
@@ -24488,8 +24488,8 @@ bool CvUnit::canRangeStrike() const
 	}
 #endif
 #ifdef LEKMOD_CANAL_PROJECT
-	// No attacks out of a canal tile
-	if (plot() != NULL && plot()->IsAllowsSailLand())
+	// No attacks out of a canal tile (also when pillaged)
+	if (plot() != NULL && plot()->IsLekmodCanalTile())
 	{
 		return false;
 	}

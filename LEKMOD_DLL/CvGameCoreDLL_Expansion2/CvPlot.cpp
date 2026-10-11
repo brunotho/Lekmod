@@ -3388,6 +3388,13 @@ int CvPlot::defenseModifier(TeamTypes eDefender, bool, bool bHelp) const
 			iImprovementGlobal = pkImprovement->GetDefenseModifierGlobal();
 		}
 	}
+#ifdef LEKMOD_CANAL_RULES
+	// a pillaged canal keeps its defense penalty
+	else if (eImprovement != NO_IMPROVEMENT && GC.getImprovementInfo(eImprovement) && GC.getImprovementInfo(eImprovement)->IsAllowsSailLand())
+	{
+		iImprovementGlobal = GC.getImprovementInfo(eImprovement)->GetDefenseModifierGlobal();
+	}
+#endif
 
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
 	{
@@ -3515,6 +3522,11 @@ bool CvPlot::IsAllowsWalkWater() const
 bool CvPlot::IsAllowsSailLand() const
 {
     ImprovementTypes eImprovement = getImprovementType();
+#ifdef LEKMOD_CANAL_RULES
+    // a pillaged canal no longer lets ships through
+    if (IsImprovementPillaged())
+        return false;
+#endif
     if (eImprovement != NO_IMPROVEMENT)
     {
         CvImprovementEntry *pkEntry = GC.getImprovementInfo(eImprovement);
@@ -3523,6 +3535,18 @@ bool CvPlot::IsAllowsSailLand() const
     }
     return false;
 }
+#ifdef LEKMOD_CANAL_RULES
+// --------------------------------------------------------------------------------
+/// Canal tile, pillaged or not (defense penalty and no attacks apply either way)
+bool CvPlot::IsLekmodCanalTile() const
+{
+	ImprovementTypes eImprovement = getImprovementType();
+	if (eImprovement == NO_IMPROVEMENT)
+		return false;
+	CvImprovementEntry* pkEntry = GC.getImprovementInfo(eImprovement);
+	return pkEntry != NULL && pkEntry->IsAllowsSailLand();
+}
+#endif
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
 //	--------------------------------------------------------------------------------
 RouteTypes CvPlot::GetImprovementActsAsRouteType(TeamTypes eTeam) const

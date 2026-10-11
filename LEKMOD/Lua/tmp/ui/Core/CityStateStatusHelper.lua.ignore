@@ -426,7 +426,12 @@ function GetCityStateStatusToolTip(iMajor, iMinor, bFullInfo)
 			end
 		end
 	end
-	
+
+	-- LEKMOD: capturing a cultural city-state from the Medieval Era on gives a great work
+	if (pMinor ~= nil and pMinor:GetMinorCivTrait() == MinorCivTraitTypes.MINOR_CIV_TRAIT_CULTURED) then
+		strStatusTT = strStatusTT .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_CULTURED_CAPTURE_GREAT_WORK");
+	end
+
 	return strStatusTT;
 end
 
@@ -747,7 +752,7 @@ function GetCityStateTraitToolTip(iMinor)
 	if (pMinor ~= nil) then
 		local iTrait = pMinor:GetMinorCivTrait();
 		if (iTrait == MinorCivTraitTypes.MINOR_CIV_TRAIT_CULTURED) then
-			strTraitTT = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_CULTURED_TT");
+			strTraitTT = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_CULTURED_TT") .. "[NEWLINE][NEWLINE]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_CS_CULTURED_CAPTURE_GREAT_WORK");
 		elseif (iTrait == MinorCivTraitTypes.MINOR_CIV_TRAIT_MILITARISTIC) then
 			strTraitTT = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_MILITARISTIC_NO_UU_TT");
 			if (pMinor:IsMinorCivHasUniqueUnit()) then

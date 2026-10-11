@@ -461,6 +461,9 @@ public:
 	bool IsAllowsWalkWater() const;
 
 	bool IsAllowsSailLand() const;
+#ifdef LEKMOD_CANAL_RULES
+	bool IsLekmodCanalTile() const;
+#endif
 
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
 	/// Effective route from ActsAsRoute improvement (road/rail by team tech), else NO_ROUTE

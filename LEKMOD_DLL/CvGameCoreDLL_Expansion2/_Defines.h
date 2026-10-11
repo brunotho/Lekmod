@@ -1487,6 +1487,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // different water areas, counting the water around adjacent cities); Builds with PrereqBuildingClass show on every tile (greyed where invalid); Lua Player:LekmodGetTradeRangePreview(unit)
 // (destinations a not-yet-built range building would add)
 #define LEKMOD_CANAL_RULES
+// Capturing a cultural city-state's city (capturer in the Medieval Era or later, first time owning it) gives one great work (DoGreatWorkFromCityConquer)
+#define LEKMOD_CULTURED_CS_CAPTURE_GREAT_WORK
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

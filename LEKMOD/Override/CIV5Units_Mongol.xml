@@ -23686,7 +23686,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_CULTURED_HEADING3_BODY"> 
-			<Text>A Cultured City-State gives [ICON_CULTURE] Culture per turn to its Friends and its Ally.[NEWLINE]The amount depends on your current era.[NEWLINE][NEWLINE]As Allies:[NEWLINE]Ancient: 4 (Friends: 2)[NEWLINE]Classical: 8 (Friends: 4)[NEWLINE]Medieval: 12 (Friends: 6)[NEWLINE]Renaissance: 16 (Friends: 8)[NEWLINE]Industrial: 20 (Friends: 10)[NEWLINE]Modern: 24 (Friends: 12)[NEWLINE]Atomic: 28 (Friends: 14)[NEWLINE]Information: 32 (Friends: 16)</Text>
+			<Text>A Cultured City-State gives [ICON_CULTURE] Culture per turn to its Friends and its Ally.[NEWLINE]The amount depends on your current era.[NEWLINE][NEWLINE]As Allies:[NEWLINE]Ancient: 4 (Friends: 2)[NEWLINE]Classical: 8 (Friends: 4)[NEWLINE]Medieval: 12 (Friends: 6)[NEWLINE]Renaissance: 16 (Friends: 8)[NEWLINE]Industrial: 20 (Friends: 10)[NEWLINE]Modern: 24 (Friends: 12)[NEWLINE]Atomic: 28 (Friends: 14)[NEWLINE]Information: 32 (Friends: 16)[NEWLINE][NEWLINE]Capturing a Cultured City-State in the Medieval Era or later gives you 1 [ICON_GREAT_WORK] Great Work, if you have a free Great Work slot. This happens only the first time you take the city.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CITYSTATE_CULTURED_HEADING3_TITLE"> 
 			<Text>
@@ -45032,7 +45032,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 			<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_CANAL_TEXT"> 
 			<Text>
-				Built by a Great Engineer (used up) once you have the Canal Project.[NEWLINE]Must be on flat land in your territory, next to water.[NEWLINE]It must connect two separate bodies of water (two seas, or a sea and a lake). Two tiles of the same sea do not count.[NEWLINE]A city next to the Canal counts as part of the water it touches, so water - city - Canal - water also works.[NEWLINE][NEWLINE]A worked Canal tile yields exactly 15 Gold. Terrain, resources and all other bonuses are ignored.[NEWLINE][NEWLINE]Naval units can enter a Canal tile; this costs them 4 Movement. Land units move onto it at normal cost.[NEWLINE][NEWLINE]All units on a Canal have -70% Defense and cannot attack (melee or ranged).[NEWLINE][NEWLINE]It cannot be pillaged while a naval unit stands on it.
+				Built by a Great Engineer (used up) once you have the Canal Project.[NEWLINE]Must be on flat land in your territory, next to water.[NEWLINE]It must connect two separate bodies of water (two seas, or a sea and a lake). Two tiles of the same sea do not count.[NEWLINE]A city next to the Canal counts as part of the water it touches, so water - city - Canal - water also works.[NEWLINE][NEWLINE]A worked Canal tile yields exactly 15 Gold. Terrain, resources and all other bonuses are ignored.[NEWLINE][NEWLINE]Naval units can enter a Canal tile; this costs them 4 Movement. Land units move onto it at normal cost.[NEWLINE][NEWLINE]All units on a Canal have -70% Defense and cannot attack (melee or ranged).[NEWLINE][NEWLINE]It cannot be pillaged while a naval unit stands on it.[NEWLINE]A pillaged Canal no longer lets ships through and yields like the land under it. The -70% Defense and the no-attack rule stay.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_FORT_TITLE1"> 
@@ -120563,6 +120563,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_AURA_SOURCE_UNIT_POLYNESIAN_MAORI_WARRIOR">
 			<Text>Maori</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_CS_CULTURED_CAPTURE_GREAT_WORK">
+			<Text>[ICON_GREAT_WORK] Capturing this City-State in the Medieval Era or later gives you 1 Great Work (if you have a free Great Work slot).</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILD_BLOCKED_CANAL">
 			<Text>A Canal needs flat land in your territory, next to water, connecting two separate bodies of water (two seas, or a sea and a lake). A city next to the tile counts as part of the water it touches.</Text>
