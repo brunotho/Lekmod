@@ -9,14 +9,27 @@ local GameInfo = EUI and EUI.GameInfoCache or GameInfo
 
 include( "InstanceManager" );
 
--- LEKMOD: wrap long [ICON_BULLET] lines ourselves so the wrapped part starts under the text, not under the bullet
-local LEKMOD_BULLET_LINE_CHARS = 32;	-- visible characters per tooltip line (icons count as 4); must stay below the game's own wrap width
-local LEKMOD_BULLET_INDENT = "    ";	-- about the width of the bullet icon
+-- LEKMOD: wrap long [ICON_BULLET] lines ourselves so the wrapped part starts under the text, not under the bullet.
+-- Widths are estimated in pixels of the tooltip font (measured from a screenshot, 2026-10-11); the game's own wrap is about 300 px,
+-- our lines stay below it so the game never wraps first (its wrapped part would start at the left edge).
+local LEKMOD_BULLET_LINE_PIXELS = 275;
+local LEKMOD_BULLET_INDENT = "     ";	-- 5 spaces = about the bullet icon plus its gap (22 px)
+local LEKMOD_CHAR_PIXELS = { [" "] = 4, ["i"] = 3, ["l"] = 3, ["j"] = 3, ["."] = 3, [","] = 3, [";"] = 3, [":"] = 3, ["'"] = 3, ["!"] = 3, ["|"] = 3,
+	["f"] = 4, ["t"] = 4, ["r"] = 4, ["("] = 4, [")"] = 4, ["I"] = 4, ["m"] = 10, ["w"] = 9, ["M"] = 11, ["W"] = 11, ["%"] = 9 };
 local function LekmodVisibleLength(s)
 	s = string.gsub(s, "%[COLOR_[%w_]+%]", "");
 	s = string.gsub(s, "%[ENDCOLOR%]", "");
-	s = string.gsub(s, "%[ICON_[%w_]+%]", "xxxx");
-	return string.len(s);
+	local iWidth = 0;
+	s = string.gsub(s, "%[ICON_[%w_]+%]", function() iWidth = iWidth + 22; return ""; end);
+	for i = 1, string.len(s) do
+		local c = string.sub(s, i, i);
+		local w = LEKMOD_CHAR_PIXELS[c];
+		if w == nil then
+			w = (string.find(c, "%u") ~= nil) and 8 or 6.5;
+		end
+		iWidth = iWidth + w;
+	end
+	return iWidth * 1.18;	-- calibrated: the table alone came out about 15% short of the screenshot
 end
 function LekmodHangingIndent(text)
 	if text == nil or string.find(text, "[ICON_BULLET]", 1, true) == nil then
@@ -29,11 +42,11 @@ function LekmodHangingIndent(text)
 		if i == nil then break; end
 		local line = string.sub(rest, 1, i - 1);
 		rest = string.sub(rest, i + 9);
-		if string.find(line, "[ICON_BULLET]", 1, true) == 1 and LekmodVisibleLength(line) > LEKMOD_BULLET_LINE_CHARS then
+		if string.find(line, "[ICON_BULLET]", 1, true) == 1 and LekmodVisibleLength(line) > LEKMOD_BULLET_LINE_PIXELS then
 			local current = "";
 			for word in string.gmatch(line, "%S+") do
 				local candidate = (current == "") and word or (current .. " " .. word);
-				local limit = LEKMOD_BULLET_LINE_CHARS;
+				local limit = LEKMOD_BULLET_LINE_PIXELS;
 				if current ~= "" and LekmodVisibleLength(candidate) > limit then
 					table.insert(out, current);
 					current = LEKMOD_BULLET_INDENT .. word;
