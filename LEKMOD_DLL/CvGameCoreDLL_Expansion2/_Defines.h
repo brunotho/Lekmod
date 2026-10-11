@@ -1483,8 +1483,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // Canal Project). Canal tiles (Improvements.AllowsSailLand): naval units pay LEKMOD_CANAL_NAVAL_MOVE_COST moves, no unit can attack from the tile.
 #define LEKMOD_CANAL_PROJECT
 #define LEKMOD_CANAL_NAVAL_MOVE_COST 4
-// Improvements.OverridesTileYields (the tile yields exactly its Improvement_Yields), Improvements.RequiresTwoWaterBodies (adjacent water of two
-// different areas); Builds with PrereqBuildingClass show on every tile (greyed where invalid); Lua Player:LekmodGetTradeRangePreview(unit)
+// Improvements.OverridesTileYields (the tile yields exactly its Improvement_Yields), Improvements.RequiresTwoWaterBodies (touches water and two
+// different water areas, counting the water around adjacent cities); Builds with PrereqBuildingClass show on every tile (greyed where invalid); Lua Player:LekmodGetTradeRangePreview(unit)
 // (destinations a not-yet-built range building would add)
 #define LEKMOD_CANAL_RULES
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.

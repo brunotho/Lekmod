@@ -1517,7 +1517,7 @@ The Panama Canal is now the Canal Project, a national wonder. Its Great Engineer
 - Added: +33% to all yields you get from trade routes that start in its city (internal and external)
 - Changed: 2 Engineer points (was 2 Merchant points)
 - Removed: +8 Gold from external sea trade routes, the free Great Merchant, its Culture and Gold
-- Added: Great Engineers can build a Canal (uses up the Great Engineer): flat land in your territory next to two separate bodies of water (two seas, or a sea and a lake)
+- Added: Great Engineers can build a Canal (uses up the Great Engineer): flat land in your territory next to water, connecting two separate bodies of water (two seas, or a sea and a lake); a city next to the tile counts as part of the water it touches
 - Added: once you have the Canal Project, the Canal button shows for every Great Engineer; where it can't be built it is greyed out and says why
 - Added: Canal tiles yield exactly 15 Gold and nothing else; naval units can enter them (4 movement); all units on a Canal have -70% defense and cannot attack
 - Note: the Canal improvement existed in the data but no unit could build it

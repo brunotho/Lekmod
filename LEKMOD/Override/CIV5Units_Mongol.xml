@@ -21903,7 +21903,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_CANAL_HELP"> 
 			<Text>
-				Requires the Canal Project. Uses up the Great Engineer.[NEWLINE]Flat land in your territory, next to two separate bodies of water.[NEWLINE][NEWLINE]The tile yields exactly 15 [ICON_GOLD] Gold and nothing else.[NEWLINE][NEWLINE]Naval units can enter the tile. Entering it costs them 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Units on the tile have [COLOR_NEGATIVE_TEXT]-70%[ENDCOLOR] [ICON_STRENGTH] Defense and cannot attack.
+				Requires the Canal Project. Uses up the Great Engineer.[NEWLINE]Flat land in your territory, next to water.[NEWLINE]It must connect two separate bodies of water. A city next to the tile counts as part of the water it touches.[NEWLINE][NEWLINE]The tile yields exactly 15 [ICON_GOLD] Gold and nothing else.[NEWLINE][NEWLINE]Naval units can enter the tile. Entering it costs them 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Units on the tile have [COLOR_NEGATIVE_TEXT]-70%[ENDCOLOR] [ICON_STRENGTH] Defense and cannot attack.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_FORT_REC"> 
@@ -45032,7 +45032,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 			<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_CANAL_TEXT"> 
 			<Text>
-				Built by a Great Engineer (used up) once you have the Canal Project.[NEWLINE]Must be on flat land in your territory, next to two separate bodies of water (two seas, or a sea and a lake). Two tiles of the same sea do not count.[NEWLINE][NEWLINE]A worked Canal tile yields exactly 15 Gold. Terrain, resources and all other bonuses are ignored.[NEWLINE][NEWLINE]Naval units can enter a Canal tile; this costs them 4 Movement. Land units move onto it at normal cost.[NEWLINE][NEWLINE]All units on a Canal have -70% Defense and cannot attack (melee or ranged).[NEWLINE][NEWLINE]It cannot be pillaged while a naval unit stands on it.
+				Built by a Great Engineer (used up) once you have the Canal Project.[NEWLINE]Must be on flat land in your territory, next to water.[NEWLINE]It must connect two separate bodies of water (two seas, or a sea and a lake). Two tiles of the same sea do not count.[NEWLINE]A city next to the Canal counts as part of the water it touches, so water - city - Canal - water also works.[NEWLINE][NEWLINE]A worked Canal tile yields exactly 15 Gold. Terrain, resources and all other bonuses are ignored.[NEWLINE][NEWLINE]Naval units can enter a Canal tile; this costs them 4 Movement. Land units move onto it at normal cost.[NEWLINE][NEWLINE]All units on a Canal have -70% Defense and cannot attack (melee or ranged).[NEWLINE][NEWLINE]It cannot be pillaged while a naval unit stands on it.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_FORT_TITLE1"> 
@@ -120565,7 +120565,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Maori</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILD_BLOCKED_CANAL">
-			<Text>A Canal needs flat land in your territory, next to two separate bodies of water (two seas, or a sea and a lake).</Text>
+			<Text>A Canal needs flat land in your territory, next to water, connecting two separate bodies of water (two seas, or a sea and a lake). A city next to the tile counts as part of the water it touches.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_TRADE_ROUTE_IN_RANGE_WITH">
 			<Text>In range if this city had: {1_Buildings}</Text>

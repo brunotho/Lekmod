@@ -2240,25 +2240,48 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 #ifdef LEKMOD_CANAL_RULES
 	if (pkImprovementInfo->IsRequiresTwoWaterBodies())
 	{
+		// The tile must touch water itself; an adjacent city extends the water bodies it touches (water-city-canal-water)
+		bool bTouchesWater = false;
 		int iFirstWaterArea = -1;
 		bool bTwoWaterBodies = false;
-		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && !bTwoWaterBodies; ++iDirection)
+		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
 		{
-			CvPlot* pAdjacentWater = plotDirection(getX(), getY(), ((DirectionTypes)iDirection));
-			if (pAdjacentWater == NULL || !pAdjacentWater->isWater())
+			CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), ((DirectionTypes)iDirection));
+			if (pAdjacentPlot == NULL)
 			{
 				continue;
 			}
-			if (iFirstWaterArea == -1)
+			for (int iInner = -1; iInner < NUM_DIRECTION_TYPES; ++iInner)
 			{
-				iFirstWaterArea = pAdjacentWater->getArea();
-			}
-			else if (pAdjacentWater->getArea() != iFirstWaterArea)
-			{
-				bTwoWaterBodies = true;
+				// iInner -1: the adjacent plot itself; otherwise the plots around an adjacent city
+				CvPlot* pWater = NULL;
+				if (iInner == -1)
+				{
+					pWater = pAdjacentPlot;
+				}
+				else if (pAdjacentPlot->isCity())
+				{
+					pWater = plotDirection(pAdjacentPlot->getX(), pAdjacentPlot->getY(), ((DirectionTypes)iInner));
+				}
+				if (pWater == NULL || !pWater->isWater())
+				{
+					continue;
+				}
+				if (iInner == -1)
+				{
+					bTouchesWater = true;
+				}
+				if (iFirstWaterArea == -1)
+				{
+					iFirstWaterArea = pWater->getArea();
+				}
+				else if (pWater->getArea() != iFirstWaterArea)
+				{
+					bTwoWaterBodies = true;
+				}
 			}
 		}
-		if (!bTwoWaterBodies)
+		if (!bTouchesWater || !bTwoWaterBodies)
 		{
 			return false;
 		}
