@@ -1,7 +1,8 @@
 """Pre-wrap the [ICON_BULLET] lines of the policy branch help texts (their tooltip on the branch picture comes straight from XML,
 so the Lua hanging indent can't reach it). Same width estimate as LekmodHangingIndent in SocialPolicyPopup.lua."""
 import re
-T = r'C:\Users\bbruno\civ-tools\lek\LEKMOD\Override\CIV5Units_Mongol.xml'
+import os
+T = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'LEKMOD', 'Override', 'CIV5Units_Mongol.xml')
 LIMIT = 250          # the branch picture tooltip wraps at about 275 px
 INDENT = '     '
 NARROW = {' ': 4, 'i': 3, 'l': 3, 'j': 3, '.': 3, ',': 3, ';': 3, ':': 3, "'": 3, '!': 3, '|': 3,
