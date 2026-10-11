@@ -1382,7 +1382,7 @@ Tags: religion, buildings
 Two new follower beliefs with their own buildings.
 - Added: Sanctuaries: buy Sanctuaries with 220 Faith (+2 Happiness, +2 Culture)
 - Added: Stupas: buy Stupas with 100 Faith (+2 Food, +1 Happiness)
-- Note: belief IDs 111-112, buildings 273-274 (classes 180-181); icons from the user, masked round like the base building icons (art_sources/tools/round_building_icon.py)
+- Note: belief IDs 111-112, buildings 273-274 (classes 180-181); icons from the user, fitted to the base building icon layout (circle 171/256 of the cell at 43,42; art_sources/tools/round_building_icon.py)
 
 HOUSES OF WORSHIP (BELIEF_HOUSES_OF_WORSHIP)
 -------------------------------------------

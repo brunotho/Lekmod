@@ -58,10 +58,13 @@ from the sources, so it can be run any number of times (nothing gets shifted or 
 
 ## Building icons
 - Sources: `buildings/<name>/<name>_<size>.dds` as delivered by the user (OneDrive art inbox, see CLAUDE.md section 7).
-- Building icons are shown as circles in the production list and city screen. Square art is masked to a circle with
-  `python art_sources/tools/round_building_icon.py <name>` (anti-aliased edge; missing sizes scaled from the largest;
-  writes 32/45/64/80/128/256 to `LEKMOD/Art/Lekmod (v 1)/Art/Buildings/`). Used for Sanctuary and Stupa (2026-10-11).
-- Art that is already round (Uranium Mapping Project) is copied as it is. Atlases: one 1x1 atlas per icon.
+- Base-game layout (measured on `BuildingPortraits3_*_Exp2Patch.dds`): a circle 171 px wide at (43,42) in a 256 px cell
+  (128: 22..107, 64: 11..54, 45: 8..38), transparent around it, no frame. The city screen draws its bronze ring
+  (`IconFrame64.dds`) around that circle; the production list shows the bare circle.
+- `python art_sources/tools/round_building_icon.py <name>`: trims 5% of the source's dark border, scales it into that
+  circle, masks it (anti-aliased) and writes 32/45/64/80/128/214/256 to `LEKMOD/Art/Lekmod (v 1)/Art/Buildings/`.
+  Used for Sanctuary, Stupa and the Uranium Mapping Project (2026-10-11).
+- Atlases: one 1x1 atlas per icon.
 
 ## Main menu backgrounds
 Each PNG is scaled to cover 1920x1200 (centre crop), then BC1 (no alpha) with one mip: about 1.2 MB each.
