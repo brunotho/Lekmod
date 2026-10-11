@@ -185,6 +185,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
 - **Valid text icons:** `[ICON_PEACE]` = Faith (`[ICON_FAITH]` does **not** exist). `[ICON_EXPERIENCE]` and `[ICON_HEALING]` do **not** exist.
   - The authority is the loaded `IconFontMapping` table in `Civ5DebugDatabase.db` (884 icons).
   - Don't judge by whether a tag appears in any text: `[ICON_STAR]` is valid but appears in no text.
+  - Being in the table is not enough: `[ICON_WONDER_HEROIC_EPIC]` is listed but renders as a gap (user, 2026-10-11). Prefer icons already used in visible texts; wonder icons are unreliable.
 - Text keys must be unique. Check `CIV5Units_Mongol.xml` before adding a key; existing keys may already be used by other content (e.g. `TXT_KEY_PROMOTION_DISCIPLINE`).
 - Numeric text placeholders: `{1_Num}`. A text that expects a number but gets none renders **blank**.
 - **Game speed: always assume QUICK.** The user only plays quick speed, and their specs state quick-speed numbers.
@@ -195,6 +196,7 @@ The folder is a **DLC package** (`MPModsPack.Civ5Pkg`), not a ModBuddy mod:
     - Each sentence goes on its own line (`[NEWLINE]`).
     - Distinct topics or effects are separated by an empty line (`[NEWLINE][NEWLINE]`), e.g. bonus vs. penalty, or combat vs. movement.
     - This applies to all new and changed tooltips. Older tooltips will be retrofitted later (user's intention).
+  - **Policy tree tooltips (user, 2026-10-11):** opener and finisher effects as `[ICON_BULLET]` lists ("Adopting X:" / "Completing the X tree:"), one effect per bullet, no chains of "and" between distinct effects.
   - **Beliefs (user, 2026-10-11):** one line per effect/sentence (`[NEWLINE]`), no bullets, no empty lines. Bullets with a hanging-indent pantheon popup were tried and dropped (rows overlapped).
   - **Exception:** list or menu rows with fixed height, like the Shoshone ruin choice (`ChooseDescription`), must be short, matter-of-fact one-liners.
   - No spec or implementation notes ("Eligible: naval melee", "Requires Bombardment II", "policy-granted"); the UI shows those itself.
