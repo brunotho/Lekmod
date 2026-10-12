@@ -266,6 +266,7 @@ public:
 	int GetLekmodResourceRequirementRefund(ResourceTypes eResource) const;
 	int GetLekmodImprovementYieldModifier(ImprovementTypes eImprovement) const;
 	int GetLekmodTourismModFromAlliedCS() const;
+	int GetLekmodGreatScientistDecayModifier() const;
 	bool IsLekmodNoExternalTrade() const;
 	void LekmodDoPolicyWaterUnits(PolicyTypes ePolicy);
 	int GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const;

@@ -187770,6 +187770,9 @@
 		<Column name="EarlyBuildingProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward buildings (not wonders) whose tech is before EarlyBuildingEraType -->
 		<Column name="EarlyBuildingEraType" type="text" reference="Eras(Type)" default="NULL"/>
 		<Column name="FreeUnitClassNearWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears in the city closest to water -->
+		<Column name="GreatScientistDecayModifier" type="integer" default="0"/> <!-- LEKMOD: % on how fast held Great Scientists lose bulb turns -->
+		<Column name="TradeYieldPerEraTimes100" type="integer" default="0"/> <!-- LEKMOD: + per era after TradeYieldEraType on this policy's flat trade route yields -->
+		<Column name="TradeYieldEraType" type="text" reference="Eras(Type)" default="NULL"/>
 		<Column name="TourismModPerAlliedCS" type="integer" default="0"/> <!-- LEKMOD: % Tourism in every city per allied City-State -->
 		<Column name="NoExternalTradeRoutes" type="boolean" default="false"/> <!-- LEKMOD: no routes with other civs/City-States; adopting ends all routes -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0"/> <!-- LEKMOD: % on great work yields (not their Happiness) -->
@@ -281607,11 +281610,11 @@
 		</Update>
 		<Update>
 			<Where Type="POLICY_DICTATORSHIP_PROLETARIAT"/>
-			<Set MilitaryProductionModifier="30"/>
+			<Set MilitaryProductionModifier="30" GreatScientistDecayModifier="-66"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_IRON_CURTAIN"/>
-			<Set NoExternalTradeRoutes="true" StealTechSlowerModifier="50"/>
+			<Set NoExternalTradeRoutes="true" StealTechSlowerModifier="50" TradeYieldPerEraTimes100="100" TradeYieldEraType="ERA_INDUSTRIAL"/>
 		</Update>
 	</Policies>
 	<Policy_FreePromotions>
@@ -281763,6 +281766,40 @@
 			<ProductionModifier>100</ProductionModifier>
 		</Row>
 	</Policy_BuildingClassProductionModifiers>
+	<!-- Iron Curtain: the 34.11 text: +10 Food or Production on internal routes, +1 per era after the Industrial (was +200%) -->
+	<Policy_TradeRouteYieldModifiers>
+		<Delete PolicyType="POLICY_IRON_CURTAIN"/>
+	</Policy_TradeRouteYieldModifiers>
+	<Policy_TradeRouteYieldChanges>
+		<Row>
+			<PolicyType>POLICY_IRON_CURTAIN</PolicyType>
+			<TradeConnectionType>TRADE_CONNECTION_FOOD</TradeConnectionType>
+			<DomainType>DOMAIN_LAND</DomainType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldTimes100>1000</YieldTimes100>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_CURTAIN</PolicyType>
+			<TradeConnectionType>TRADE_CONNECTION_FOOD</TradeConnectionType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldTimes100>1000</YieldTimes100>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_CURTAIN</PolicyType>
+			<TradeConnectionType>TRADE_CONNECTION_PRODUCTION</TradeConnectionType>
+			<DomainType>DOMAIN_LAND</DomainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<YieldTimes100>1000</YieldTimes100>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_CURTAIN</PolicyType>
+			<TradeConnectionType>TRADE_CONNECTION_PRODUCTION</TradeConnectionType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<YieldTimes100>1000</YieldTimes100>
+		</Row>
+	</Policy_TradeRouteYieldChanges>
 	<Policy_UnitCombatPromotionsIfBuilding>
 		<Row>
 			<PolicyType>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</PolicyType>

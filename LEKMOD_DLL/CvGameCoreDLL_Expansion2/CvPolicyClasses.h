@@ -328,6 +328,9 @@ public:
 	int GetFreeUnitClassOnWater() const;
 	int GetGreatWorkYieldModifier() const;
 	int GetTourismModPerAlliedCS() const;
+	int GetGreatScientistDecayModifier() const;
+	int GetTradeYieldPerEraTimes100() const;
+	int GetTradeYieldEra() const;
 	bool IsNoExternalTradeRoutes() const;
 	const std::vector<int>& GetUnitClassResourceRequirementChanges() const;
 	const std::vector<int>& GetBuildingClassResourceRequirementChanges() const;
@@ -696,6 +699,9 @@ private:
 	int m_iFreeUnitClassOnWater;
 	int m_iGreatWorkYieldModifier;
 	int m_iTourismModPerAlliedCS;
+	int m_iGreatScientistDecayModifier;
+	int m_iTradeYieldPerEraTimes100;
+	int m_iTradeYieldEra;
 	bool m_bNoExternalTradeRoutes;
 	std::vector<int> m_aiUnitClassResourceRequirementChanges;
 	std::vector<int> m_aiBuildingClassResourceRequirementChanges;

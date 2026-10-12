@@ -289,6 +289,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iFreeUnitClassOnWater(NO_UNITCLASS),
 	m_iGreatWorkYieldModifier(0),
 	m_iTourismModPerAlliedCS(0),
+	m_iGreatScientistDecayModifier(0),
+	m_iTradeYieldPerEraTimes100(0),
+	m_iTradeYieldEra(NO_ERA),
 	m_bNoExternalTradeRoutes(false),
 #endif
 	m_piCoastalCityYieldChange(NULL),
@@ -811,6 +814,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iFreeUnitClassOnWater = GC.getInfoTypeForString(kResults.GetText("FreeUnitClassOnWater"), true);
 	m_iGreatWorkYieldModifier = kResults.GetInt("GreatWorkYieldModifier");
 	m_iTourismModPerAlliedCS = kResults.GetInt("TourismModPerAlliedCS");
+	m_iGreatScientistDecayModifier = kResults.GetInt("GreatScientistDecayModifier");
+	m_iTradeYieldPerEraTimes100 = kResults.GetInt("TradeYieldPerEraTimes100");
+	m_iTradeYieldEra = GC.getInfoTypeForString(kResults.GetText("TradeYieldEraType"), true);
 	m_bNoExternalTradeRoutes = kResults.GetBool("NoExternalTradeRoutes");
 	{
 		std::string strKey("Policy_UnitClassResourceRequirementChanges");
@@ -2960,6 +2966,20 @@ int CvPolicyEntry::GetGreatWorkYieldModifier() const
 	return m_iGreatWorkYieldModifier;
 }
 /// % Tourism in every city per allied City-State (Socialist Heritage)
+/// % on how fast a held Great Scientist loses bulb turns (Command Economy -66: one turn every three turns)
+int CvPolicyEntry::GetGreatScientistDecayModifier() const
+{
+	return m_iGreatScientistDecayModifier;
+}
+/// Extra flat trade route yield (hundredths) per era after GetTradeYieldEra, on this policy's Policy_TradeRouteYieldChanges (Iron Curtain)
+int CvPolicyEntry::GetTradeYieldPerEraTimes100() const
+{
+	return m_iTradeYieldPerEraTimes100;
+}
+int CvPolicyEntry::GetTradeYieldEra() const
+{
+	return m_iTradeYieldEra;
+}
 int CvPolicyEntry::GetTourismModPerAlliedCS() const
 {
 	return m_iTourismModPerAlliedCS;
@@ -4963,6 +4983,10 @@ int CvPlayerPolicies::GetTradeConnectionLandYieldChanges(TradeConnectionType eTr
 			if (pPolicy->GetTradeConnectionLandYieldChanges(eTradeConnection, eYield) > 0)
 			{
 				iYield += pPolicy->GetTradeConnectionLandYieldChanges(eTradeConnection, eYield);
+#ifdef LEKMOD_POLICY_REWORK
+				if (pPolicy->GetTradeYieldPerEraTimes100() != 0 && pPolicy->GetTradeYieldEra() != NO_ERA)
+					iYield += pPolicy->GetTradeYieldPerEraTimes100() * std::max(0, (int)m_pPlayer->GetCurrentEra() - pPolicy->GetTradeYieldEra());
+#endif
 			}
 		}
 	}
@@ -4981,6 +5005,10 @@ int CvPlayerPolicies::GetTradeConnectionSeaYieldChanges(TradeConnectionType eTra
 			if (pPolicy->GetTradeConnectionSeaYieldChanges(eTradeConnection, eYield) > 0)
 			{
 				iYield += pPolicy->GetTradeConnectionSeaYieldChanges(eTradeConnection, eYield);
+#ifdef LEKMOD_POLICY_REWORK
+				if (pPolicy->GetTradeYieldPerEraTimes100() != 0 && pPolicy->GetTradeYieldEra() != NO_ERA)
+					iYield += pPolicy->GetTradeYieldPerEraTimes100() * std::max(0, (int)m_pPlayer->GetCurrentEra() - pPolicy->GetTradeYieldEra());
+#endif
 			}
 		}
 	}

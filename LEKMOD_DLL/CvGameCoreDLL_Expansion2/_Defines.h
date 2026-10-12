@@ -1510,6 +1510,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // Order: Policies.TourismModPerAlliedCS, NoExternalTradeRoutes; tables Policy_UnitClassResourceRequirementChanges and
 // Policy_BuildingClassResourceRequirementChanges (refund subtracted in getNumResourceUsed), Policy_UnitCombatPromotionsIfBuilding,
 // Policy_ImprovementYieldModifiers. CvPlayer caches the adopted rows (LekmodRebuildPolicyCache, dirty after processPolicies and load).
+// Command Economy: Policies.GreatScientistDecayModifier (% on how fast a held Great Scientist loses bulb turns; -66 = a third).
+// Iron Curtain: Policies.TradeYieldPerEraTimes100 / TradeYieldEraType add to its flat Policy_TradeRouteYieldChanges per era after that era.
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
 // A human player with a pending policy pick (enough Culture, a free policy or tenet, or an ideology to choose) is never forced
 // to pick, but while the pick is pending at turn processing the empire's yields freeze: no positive Food (starvation still

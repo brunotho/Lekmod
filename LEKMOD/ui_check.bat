@@ -268,6 +268,7 @@ powershell -NoProfile -Command "$p=$env:LEKMOD_FRONTEND; if([IO.File]::Exists($p
 REM --------------------------------------------------------------------------------------------------
 IF NOT EXIST "%euifolder%\Improvements\SocialPolicyPopup.lua" (
   copy /y "%patchfolder%\Lua\tmp\ui\Popups\SocialPolicyPopup.lua.ignore" "%patchfolder%\Lua\UI\SocialPolicyPopup.lua" > nul
+  copy /y "%patchfolder%\Lua\tmp\ui\Popups\SocialPolicyPopup.xml.ignore" "%patchfolder%\Lua\UI\SocialPolicyPopup.xml" > nul
 ) ELSE (
   copy /y "%patchfolder%\Lua\tmp\eui\Improvements\SocialPolicyPopup.lua.ignore" "%patchfolder%\Lua\UI\SocialPolicyPopup.lua" > nul
 )

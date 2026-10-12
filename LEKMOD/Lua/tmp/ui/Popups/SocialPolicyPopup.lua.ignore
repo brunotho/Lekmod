@@ -878,6 +878,9 @@ function TenetSelect(ideologyButtonNumber)
 				
 				entry.TenetButton:SetSizeVal(tbW, newHeight);
 				entry.Box:SetSizeVal(tbW, newHeight);
+				-- LEKMOD: the mouse-over glow covers the whole entry, not only the first 63 px
+				if entry.BounceAnim then entry.BounceAnim:SetSizeVal(tbW, newHeight + 4); end
+				if entry.BounceGrid then entry.BounceGrid:SetSizeVal(tbW, newHeight + 4); end
 				
 				entry.TenetButton:ReprocessAnchoring();
 				
@@ -885,6 +888,14 @@ function TenetSelect(ideologyButtonNumber)
 					ChooseTenet(v, tenet.Description);
 				end);
 			end
+		end
+		-- LEKMOD: scrollable tenet list (SocialPolicyPopup.xml override)
+		if Controls.TenetScrollPanel then
+			Controls.TenetStack:CalculateSize();
+			Controls.TenetStack:ReprocessAnchoring();
+			Controls.TenetScrollPanel:CalculateInternalSize();
+			Controls.TenetScrollPanel:SetScrollValue(0);
+			Controls.TenetScrollPanel:ReprocessAnchoring();
 		end
     end
 end

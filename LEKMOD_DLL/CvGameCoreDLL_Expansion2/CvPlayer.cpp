@@ -28480,6 +28480,19 @@ int CvPlayer::GetLekmodImprovementYieldModifier(ImprovementTypes eImprovement) c
 			iMod += m_aiLekmodImprovementYieldMods[i + 1];
 	return iMod;
 }
+/// % on how fast held Great Scientists lose bulb turns (sum of adopted policies, at least -100)
+int CvPlayer::GetLekmodGreatScientistDecayModifier() const
+{
+	int iMod = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || pkPolicy->GetGreatScientistDecayModifier() == 0 || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		iMod += pkPolicy->GetGreatScientistDecayModifier();
+	}
+	return std::max(-100, iMod);
+}
 /// % Tourism in every city from allied City-States (Socialist Heritage)
 int CvPlayer::GetLekmodTourismModFromAlliedCS() const
 {

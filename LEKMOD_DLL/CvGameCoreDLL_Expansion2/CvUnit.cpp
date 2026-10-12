@@ -9529,7 +9529,14 @@ int CvUnit::getDiscoverAmount()
 #ifdef DECREASE_BULB_AMOUNT_OVER_TIME
 			if (GC.getGame().isOption("GAMEOPTION_NO_SCIENTIST_SAVING"))
 			{
+#ifdef LEKMOD_POLICY_REWORK
+				// each turn held drops the oldest counted turn; policies slow this down (Command Economy: one turn every three turns)
+				const int iTurnsHeld = std::max(GC.getGame().getGameTurn() - GetScientistBirthTurn() - 1, 0);
+				const int iTurnsLost = iTurnsHeld * (100 + pPlayer->GetLekmodGreatScientistDecayModifier()) / 100;
+				int iPreviousTurnsToCount = std::max(m_pUnitInfo->GetBaseBeakersTurnsToCount() - iTurnsLost, 0);
+#else
 				int iPreviousTurnsToCount = std::max(m_pUnitInfo->GetBaseBeakersTurnsToCount() - std::max(GC.getGame().getGameTurn() - GetScientistBirthTurn() - 1, 0), 0);
+#endif
 				iValue = pPlayer->GetScienceYieldFromPreviousTurns(GetScientistBirthTurn(), iPreviousTurnsToCount);
 			}
 			else

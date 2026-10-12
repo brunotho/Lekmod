@@ -1103,6 +1103,9 @@ if bnw_mode then
 
 					entry.TenetButton:SetSizeY( newHeight );
 					entry.Box:SetSizeY( newHeight );
+					-- LEKMOD: the mouse-over glow covers the whole entry
+					if entry.BounceAnim then entry.BounceAnim:SetSizeY( newHeight + 4 ) end
+					if entry.BounceGrid then entry.BounceGrid:SetSizeY( newHeight + 4 ) end
 
 					entry.TenetButton:ReprocessAnchoring();
 

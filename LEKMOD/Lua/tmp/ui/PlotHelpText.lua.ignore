@@ -5,7 +5,7 @@
 include( "PlotMouseoverInclude" );
 
 -- LEKMOD: the label has no wrap width in the base layout, so long lines ran off the right screen edge.
--- PlotHelpText.xml anchors the box 16 px from the right edge and lets it grow to the left;
+-- PlotHelpText.xml anchors the box 100 px from the right edge (left of the notifications) and lets it grow to the left;
 -- text wraps at 380 px (box at most 396 px wide with the 8 px padding on each side).
 Controls.Text:SetWrapWidth(380);
 

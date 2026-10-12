@@ -347,7 +347,7 @@ function LekmodResourceImprovementString(plot, pResource)
 			for pYield in GameInfo.Yields() do
 				local iYield = plot:GetYieldWithBuild(pBuild.ID, pYield.ID, false, iActivePlayer);
 				if (iYield > 0) then
-					strYields = strYields .. ((strYields ~= "") and " " or "") .. iYield .. pYield.IconString;
+					strYields = strYields .. pYield.IconString .. " " .. iYield .. " ";	-- same layout as GetYieldString (icon, space, number)
 				end
 			end
 			local strHeader;

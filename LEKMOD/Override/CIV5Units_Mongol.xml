@@ -116679,7 +116679,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DICTATORSHIP_PROLETARIAT_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Command Economy[ENDCOLOR][NEWLINE]+30% [ICON_PRODUCTION] Production toward military units in every city.[NEWLINE]-10% [ICON_RESEARCH] Science in every city.
+				[COLOR_POSITIVE_TEXT]Command Economy[ENDCOLOR][NEWLINE]+30% [ICON_PRODUCTION] Production toward military units in every city.[NEWLINE]-10% [ICON_RESEARCH] Science in every city.[NEWLINE][ICON_GREAT_SCIENTIST] Great Scientists you keep lose their [ICON_RESEARCH] Science bonus three times slower.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_DICTATORSHIP_PROLETARIAT_TEXT"> 
@@ -117074,7 +117074,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_IRON_CURTAIN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Iron Curtain[ENDCOLOR][NEWLINE]All your running [ICON_INTERNATIONAL_TRADE] Trade Routes end when you adopt it (the trade units return home).[NEWLINE]No more Trade Routes with other civilizations or City-States.[NEWLINE]Internal Trade Routes provide triple [ICON_FOOD] Food and [ICON_PRODUCTION] Production.[NEWLINE]Enemy [ICON_SPY] Spies steal technologies 50% slower in your cities.
+				[COLOR_POSITIVE_TEXT]Iron Curtain[ENDCOLOR][NEWLINE]All your running [ICON_INTERNATIONAL_TRADE] Trade Routes end when you adopt it (the trade units return home).[NEWLINE]No more Trade Routes with other civilizations or City-States.[NEWLINE]Internal Trade Routes provide +10 [ICON_FOOD] Food or [ICON_PRODUCTION] Production, +1 more for each era after the Industrial Era.[NEWLINE]Enemy [ICON_SPY] Spies steal technologies 50% slower in your cities.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_IRON_CURTAIN_TEXT"> 

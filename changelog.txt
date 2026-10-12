@@ -1629,6 +1629,13 @@ Tags: policies
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
 
+TENET CHOICE AND TILE BOX (ui)
+------------------------------
+Tags: ui
+- Fixed: the ideology tenet list scrolls when it is longer than the window (standard UI)
+- Changed: the mouse-over highlight of a tenet covers its whole entry
+- Changed: the tile box at the bottom right sits left of the notifications again; base and improved yields use the same layout (icon, then number)
+
 TRADE SCREEN TEXTS (ui)
 -----------------------
 Tags: ui
@@ -1659,11 +1666,10 @@ Tags: policies
 - Added: Re-Education (tier 2): +2 Happiness from each Constabulary and Courthouse; resistance in captured cities lasts half as long
 - Added: Atomic Program (tier 2): 4 Uranium; Nuclear Missiles and Nuclear Plants need 1 less Uranium; +20% Production toward Nuclear Plants
 - Added: Five Year Offensive (tier 2): 15 Oil and 15 Aluminum; +100% Production toward Refineries and Recycling Centers; Siege units trained in a city with a Refinery start with Bombardment I and Cover I
-- Changed: Command Economy (rebuilt): +30% Production toward military units; -10% Science in every city
+- Changed: Command Economy (rebuilt): +30% Production toward military units; -10% Science in every city; a Great Scientist you keep loses its Science bonus three times slower (one counted turn every three turns instead of every turn)
 - Removed: Command Economy: strategic resources and their yields
-- Changed: Iron Curtain: ends all your Trade Routes when adopted (units return home); no Trade Routes with other civilizations or City-States; enemy Spies steal 50% slower
-- Note: Command Economy's Great Scientist decay and Iron Curtain's "internal routes no longer cost Gold" wait for answers
-- DLL: Policies.TourismModPerAlliedCS, NoExternalTradeRoutes; Policy_UnitClassResourceRequirementChanges, Policy_BuildingClassResourceRequirementChanges, Policy_UnitCombatPromotionsIfBuilding, Policy_ImprovementYieldModifiers (LEKMOD_POLICY_REWORK)
+- Changed: Iron Curtain: ends all your Trade Routes when adopted (units return home); no Trade Routes with other civilizations or City-States; enemy Spies steal 50% slower; internal routes +10 Food or Production, +1 per era after the Industrial Era (was +200%)
+- DLL: Policies.TourismModPerAlliedCS, NoExternalTradeRoutes, GreatScientistDecayModifier, TradeYieldPerEraTimes100/TradeYieldEraType; Policy_UnitClassResourceRequirementChanges, Policy_BuildingClassResourceRequirementChanges, Policy_UnitCombatPromotionsIfBuilding, Policy_ImprovementYieldModifiers (LEKMOD_POLICY_REWORK)
 
 PENDING POLICY PICK (game mechanics)
 ------------------------------------
