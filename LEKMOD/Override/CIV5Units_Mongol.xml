@@ -120617,6 +120617,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_ALLIED_CS_TOURISM">
 			<Text>[NEWLINE][ICON_BULLET]Allied City-States: {1_Num}%</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILD_TOURISM_STRING">
+			<Text>{1_Num}[ENDCOLOR] [ICON_TOURISM] Tourism</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>
 		</Row>

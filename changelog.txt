@@ -1628,6 +1628,12 @@ Tags: policies
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
 
+TOURISM ON TILES (ui)
+---------------------
+Tags: ui, art
+- Fixed: the improvement build tooltip showed a lone "+" for Tourism; it now shows the Tourism change
+- Changed: tiles with 5 or more Tourism show a large suitcase instead of a camera
+
 ORDER (POLICY_BRANCH_ORDER)
 ---------------------------
 Tags: policies

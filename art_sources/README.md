@@ -85,3 +85,10 @@ Files `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background_01..11.dds` follow the 
   `texconv -f BC1_UNORM -m 1`, written to `LEKMOD/Art/Lekmod (v 1)/Art/PolicyBranches/`).
 - Commerce: `policy_branches/commerce/commerce_merchant_ledger_v2.png` (user, 2026-10-12, 1024x1536; v1 kept for reference)
   -> `SocialPoliciesCommerce.dds`.
+
+## Tile yield icons (map)
+- `YieldIconManager.lua` draws tile yields from 128 px atlases; cells 1-4 show 1-4 icons, the cell at y 512 is the "5+" icon
+  with the number drawn on top by the game.
+- Tourism (`YieldAtlas_128_Tourism.dds`, upstream Lekmod 2026-08-08) had a camera in the 5+ cell. Since 2026-10-12
+  `python art_sources/tools/tourism_yield_atlas.py` rebuilds it from `yield_icons/tourism_yield_atlas_upstream.dds`
+  with the single suitcase scaled x2 in that cell (user: players know Tourism as the suitcase).

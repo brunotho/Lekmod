@@ -1768,6 +1768,13 @@ function TipHandler( control )
 					strBuildYieldString = strBuildYieldString .. Locale.ConvertTextKey("TXT_KEY_BUILD_CULTURE_STRING", iYieldChange);
 				elseif (iYield == YieldTypes.YIELD_FAITH) then
 					strBuildYieldString = strBuildYieldString .. Locale.ConvertTextKey("TXT_KEY_BUILD_FAITH_STRING", iYieldChange);
+				elseif (YieldTypes.YIELD_TOURISM ~= nil and iYield == YieldTypes.YIELD_TOURISM) then
+					strBuildYieldString = strBuildYieldString .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILD_TOURISM_STRING", iYieldChange);
+				else
+					local pYieldInfo = GameInfo.Yields[iYield];
+					if pYieldInfo then
+						strBuildYieldString = strBuildYieldString .. iYieldChange .. "[ENDCOLOR] " .. pYieldInfo.IconString .. " " .. Locale.ConvertTextKey(pYieldInfo.Description);
+					end
 				end
 				
 				bFirstYield = false;
