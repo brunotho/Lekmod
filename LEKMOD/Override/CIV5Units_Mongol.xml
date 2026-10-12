@@ -120627,7 +120627,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Liberated Arts</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS_HELP">
-			<Text>[COLOR_POSITIVE_TEXT]Liberated Arts[ENDCOLOR][NEWLINE]+2 [ICON_TOURISM] Tourism and +1 [ICON_HAPPINESS_1] Happiness from each Great Work.[NEWLINE]Each Courthouse (also the ones you already have) creates 2 Great Works in your empty Great Work slots.</Text>
+			<Text>[COLOR_POSITIVE_TEXT]Liberated Arts[ENDCOLOR][NEWLINE]+2 [ICON_TOURISM] Tourism and +1 [ICON_HAPPINESS_1] Happiness from each Great Work.[NEWLINE]Each Courthouse you build creates 2 Great Works in your empty Great Work slots.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY">
 			<Text>Fruits of Liberty</Text>

@@ -28891,20 +28891,6 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		if (pPolicy->IsNoExternalTradeRoutes())
 			GC.getGame().GetGameTrade()->LekmodCancelAllRoutesOfPlayer(GetID());
 		LekmodDoPolicyWaterUnits(ePolicy);
-		if (!pPolicy->GetBuildingClassGreatWorks().empty())
-		{
-			const std::vector<int>& aiGWRows = pPolicy->GetBuildingClassGreatWorks();
-			int iGWCityLoop;
-			for (CvCity* pGWCity = firstCity(&iGWCityLoop); pGWCity != NULL; pGWCity = nextCity(&iGWCityLoop))
-			{
-				for (uint i = 0; i + 1 < aiGWRows.size(); i += 2)
-				{
-					const BuildingTypes eGWBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(aiGWRows[i]);
-					if (eGWBuilding != NO_BUILDING && pGWCity->GetCityBuildings()->GetNumBuilding(eGWBuilding) > 0)
-						LekmodGrantGreatWorks(pGWCity, aiGWRows[i + 1]);
-				}
-			}
-		}
 		if (pPolicy->GetGreatWorkYieldModifier() != 0)
 		{
 			int iCityLoop;

@@ -1662,7 +1662,7 @@ Tags: policies
 - Removed: Covert Action, Volunteer Army, Creative Expression, Universal Healthcare, Free Mind, New Deal, Media Culture
 - Changed: Capitalism: +1 Gold from Banks and Stock Exchanges (on top of their Happiness)
 - Removed: Capitalism: Happiness from Markets
-- Added: Liberated Arts (tier 1): +2 Tourism and +1 Happiness from each Great Work; each Courthouse (existing ones when you adopt it, and every new one) creates 2 Great Works in your empty slots
+- Added: Liberated Arts (tier 1): +2 Tourism and +1 Happiness from each Great Work; each Courthouse built after adopting it creates 2 Great Works in your empty slots (none if no slot is free)
 - Added: Fruits of Liberty (tier 1): +1 Gold, Culture and Science from each Great Work and each Great Person improvement (not Holy Sites)
 - Added: Republic of Letters (tier 1): Great Person improvements get +1 Production per adjacent Manufactory, +1 Science per adjacent Academy, +1 Culture per adjacent Festival
 - Changed: Arsenal of Democracy (rebuilt): air units and Helicopters start with 20 Experience; +25% City Strength
