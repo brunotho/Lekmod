@@ -8146,6 +8146,11 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 				}
 			}
 
+#ifdef LEKMOD_POLICY_REWORK
+			// policies: Great Works in empty slots for each new building of a class (Liberated Arts: Courthouses)
+			if (owningPlayer.GetLekmodBuildingClassGreatWorks(eBuildingClass) > 0)
+				owningPlayer.LekmodGrantGreatWorks(this, owningPlayer.GetLekmodBuildingClassGreatWorks(eBuildingClass));
+#endif
 			// Free building
 			BuildingClassTypes eFreeBuildingClassThisCity = (BuildingClassTypes)pBuildingInfo->GetFreeBuildingThisCity();
 			if(eFreeBuildingClassThisCity != NO_BUILDINGCLASS)

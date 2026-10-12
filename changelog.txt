@@ -1662,7 +1662,7 @@ Tags: policies
 - Removed: Covert Action, Volunteer Army, Creative Expression, Universal Healthcare, Free Mind, New Deal, Media Culture
 - Changed: Capitalism: +1 Gold from Banks and Stock Exchanges (on top of their Happiness)
 - Removed: Capitalism: Happiness from Markets
-- Added: Liberated Arts (tier 1): +2 Tourism and +1 Happiness from each Great Work; Courthouses have 2 Great Work slots
+- Added: Liberated Arts (tier 1): +2 Tourism and +1 Happiness from each Great Work; each Courthouse (existing ones when you adopt it, and every new one) creates 2 Great Works in your empty slots
 - Added: Fruits of Liberty (tier 1): +1 Gold, Culture and Science from each Great Work and each Great Person improvement (not Holy Sites)
 - Added: Republic of Letters (tier 1): Great Person improvements get +1 Production per adjacent Manufactory, +1 Science per adjacent Academy, +1 Culture per adjacent Festival
 - Changed: Arsenal of Democracy (rebuilt): air units and Helicopters start with 20 Experience; +25% City Strength
@@ -1673,8 +1673,7 @@ Tags: policies
 - Added: Broadcast Hegemony (tier 3): +50% Culture, Tourism and Gold in the capital; -10% Production in every city; -3 Happiness per city
 - Added: Eminence (tier 3): a free Great Artist, Writer, Musician, Engineer, Merchant and General
 - Added: Free World (tier 3): +1 World Congress vote per two allied City-States (rounded up)
-- Note: Modern Armor needs no Aluminum, so Technocratic Efficiency changes nothing for it (asked)
-- DLL: Policies.GreatWorkHappiness, CultureFromUnitDeathPercent, GreatMusicianBlastModifier, VotesPerTwoAlliedCS; Policy_BuildingClassFreeBuildings with Buildings.LekmodPolicyGranted (Courthouse Gallery, building 276, class 183), Policy_GPImprovementAdjacentYields, Policy_ImprovementYieldPerEra (LEKMOD_POLICY_REWORK)
+- DLL: Policies.GreatWorkHappiness, CultureFromUnitDeathPercent, GreatMusicianBlastModifier, VotesPerTwoAlliedCS; Policy_BuildingClassGreatWorks, Policy_BuildingClassFreeBuildings with Buildings.LekmodPolicyGranted (no rows yet), Policy_GPImprovementAdjacentYields, Policy_ImprovementYieldPerEra (LEKMOD_POLICY_REWORK)
 
 ORDER (POLICY_BRANCH_ORDER)
 ---------------------------

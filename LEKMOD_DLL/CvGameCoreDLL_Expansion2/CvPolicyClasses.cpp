@@ -824,6 +824,19 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iGreatMusicianBlastModifier = kResults.GetInt("GreatMusicianBlastModifier");
 	m_bVotesPerTwoAlliedCS = kResults.GetBool("VotesPerTwoAlliedCS");
 	{
+		std::string strKey("Policy_BuildingClassGreatWorks");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Count from Policy_BuildingClassGreatWorks inner join BuildingClasses on BuildingClasses.Type = BuildingClassType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiBuildingClassGreatWorks.push_back(pResults->GetInt(0));
+			m_aiBuildingClassGreatWorks.push_back(pResults->GetInt(1));
+		}
+		pResults->Reset();
+	}
+	{
 		std::string strKey("Policy_BuildingClassFreeBuildings");
 		Database::Results* pResults = kUtility.GetResults(strKey);
 		if (pResults == NULL)
@@ -3043,6 +3056,11 @@ const std::vector<int>& CvPolicyEntry::GetBuildingClassFreeBuildings() const
 const std::vector<int>& CvPolicyEntry::GetGPImprovementAdjacentYields() const
 {
 	return m_aiGPImprovementAdjacentYields;
+}
+/// (building class, count): each such building creates that many Great Works in empty slots (Liberated Arts: Courthouses)
+const std::vector<int>& CvPolicyEntry::GetBuildingClassGreatWorks() const
+{
+	return m_aiBuildingClassGreatWorks;
 }
 /// (improvement, yield, value): value x (owner's era + 1) (Soft Power: Festivals)
 const std::vector<int>& CvPolicyEntry::GetImprovementYieldPerEra() const

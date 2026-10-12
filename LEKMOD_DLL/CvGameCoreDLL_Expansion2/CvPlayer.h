@@ -637,6 +637,11 @@ public:
 #endif
 #ifdef NQ_GREAT_WORK_ON_UNIQUE_CONQUEST
 	void DoGreatWorkFromCityConquer(CvCity* pConqueredCity);
+#ifdef LEKMOD_POLICY_REWORK
+	void LekmodGrantGreatWorks(CvCity* pNearCity, int iCount);
+	int GetLekmodBuildingClassGreatWorks(BuildingClassTypes eClass) const;
+	bool m_bLekmodGreatWorkFromPolicy;
+#endif
 #endif
 	void DoTechFromCityConquer(CvCity* pConqueredCity);
 

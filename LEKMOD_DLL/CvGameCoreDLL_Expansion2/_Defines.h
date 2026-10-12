@@ -1514,7 +1514,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // Iron Curtain: Policies.TradeYieldPerEraTimes100 / TradeYieldEraType add to its flat Policy_TradeRouteYieldChanges per era after that era.
 // Freedom: Policies.GreatWorkHappiness, CultureFromUnitDeathPercent, GreatMusicianBlastModifier, VotesPerTwoAlliedCS; tables
 // Policy_BuildingClassFreeBuildings (Buildings.LekmodPolicyGranted buildings, kept in sync by CvCity::LekmodUpdatePolicyFreeBuildings),
-// Policy_GPImprovementAdjacentYields, Policy_ImprovementYieldPerEra.
+// Policy_GPImprovementAdjacentYields, Policy_ImprovementYieldPerEra; Policy_BuildingClassGreatWorks (Liberated Arts: each Courthouse creates
+// 2 Great Works in empty slots, via DoGreatWorkFromCityConquer; existing Courthouses count when the tenet is adopted).
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
 // A human player with a pending policy pick (enough Culture, a free policy or tenet, or an ideology to choose) is never forced
 // to pick, but while the pick is pending at turn processing the empire's yields freeze: no positive Food (starvation still

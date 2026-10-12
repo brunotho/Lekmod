@@ -35706,15 +35706,6 @@
 			<MaxTeamInstances>-1</MaxTeamInstances>
 			<MaxPlayerInstances>-1</MaxPlayerInstances>
 		</Row>
-		<Row>
-			<ID>183</ID>
-			<Type>BUILDINGCLASS_LEKMOD_COURTHOUSE_GALLERY</Type>
-			<Description>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY</Description>
-			<DefaultBuilding>BUILDING_LEKMOD_COURTHOUSE_GALLERY</DefaultBuilding>
-			<MaxGlobalInstances>-1</MaxGlobalInstances>
-			<MaxTeamInstances>-1</MaxTeamInstances>
-			<MaxPlayerInstances>-1</MaxPlayerInstances>
-		</Row>
 	</BuildingClasses> 
 
 	<Table name="Building_AreaYieldModifiers">
@@ -48703,26 +48694,6 @@
 			<ArtDefineTag>TEMPLE</ArtDefineTag>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>LEKMOD_STUPA_ATLAS</IconAtlas>
-		</Row>
-		<!-- LEKMOD: Courthouse Gallery: two Great Work slots that policies give to cities with a Courthouse (Liberated Arts) -->
-		<Row>
-			<ID>276</ID>
-			<Type>BUILDING_LEKMOD_COURTHOUSE_GALLERY</Type>
-			<BuildingClass>BUILDINGCLASS_LEKMOD_COURTHOUSE_GALLERY</BuildingClass>
-			<Description>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY</Description>
-			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY_HELP</Civilopedia>
-			<Strategy>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY_HELP</Strategy>
-			<Help>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY_HELP</Help>
-			<Cost>-1</Cost>
-			<HurryCostModifier>-1</HurryCostModifier>
-			<ConquestProb>0</ConquestProb>
-			<NukeImmune>true</NukeImmune>
-			<LekmodPolicyGranted>true</LekmodPolicyGranted>
-			<GreatWorkSlotType>GREAT_WORK_SLOT_ART_ARTIFACT</GreatWorkSlotType>
-			<GreatWorkCount>2</GreatWorkCount>
-			<ArtDefineTag>COURTHOUSE</ArtDefineTag>
-			<PortraitIndex>63</PortraitIndex>
-			<IconAtlas>BW_ATLAS_1</IconAtlas>
 		</Row>
 		<!-- LEKMOD: Crown Office (Expansionism): free in captured and newly founded cities; counts like a Courthouse for the Expansionism policies -->
 		<Row>
@@ -282085,13 +282056,18 @@
 			<Yield>2</Yield>
 		</Row>
 	</Policy_GreatWorkYieldChanges>
-	<Policy_BuildingClassFreeBuildings>
+	<Table name="Policy_BuildingClassGreatWorks"> <!-- LEKMOD: each building of the class creates Count Great Works in empty slots -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="Count" type="integer" default="0" />
+	</Table>
+	<Policy_BuildingClassGreatWorks>
 		<Row>
 			<PolicyType>POLICY_LEKMOD_LIBERATED_ARTS</PolicyType>
 			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
-			<BuildingType>BUILDING_LEKMOD_COURTHOUSE_GALLERY</BuildingType>
+			<Count>2</Count>
 		</Row>
-	</Policy_BuildingClassFreeBuildings>
+	</Policy_BuildingClassGreatWorks>
 	<Policy_ImprovementYieldChanges>
 		<Row>
 			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
@@ -282304,12 +282280,6 @@
 		<Row>
 			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
 			<UnitClassType>UNITCLASS_MISSILE_CRUISER</UnitClassType>
-			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
-			<Change>-1</Change>
-		</Row>
-		<Row>
-			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
-			<UnitClassType>UNITCLASS_MODERN_ARMOR</UnitClassType>
 			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
 			<Change>-1</Change>
 		</Row>

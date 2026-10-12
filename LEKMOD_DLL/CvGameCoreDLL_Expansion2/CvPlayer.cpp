@@ -546,6 +546,7 @@ CvPlayer::CvPlayer() :
 	, m_bLekmodPolicyCacheDirty(true)
 	, m_iLekmodTourismModPerAlliedCS(0)
 	, m_bLekmodNoExternalTrade(false)
+	, m_bLekmodGreatWorkFromPolicy(false)
 	, m_iLekmodGreatWorkHappiness(0)
 	, m_iLekmodUnitDeathCulture(0)
 	, m_iLekmodMusicianBlastMod(0)
@@ -15247,6 +15248,33 @@ void CvPlayer::DoReligionOneShots(ReligionTypes eReligion)
 #ifdef NQ_GREAT_WORK_ON_UNIQUE_CONQUEST
 //	--------------------------------------------------------------------------------
 /// Each a great work from conquering a city
+#ifdef LEKMOD_POLICY_REWORK
+/// Policies: Great Works created in empty slots, closest to this city first (a random Writer, Artist or Musician work, like conquest)
+void CvPlayer::LekmodGrantGreatWorks(CvCity* pNearCity, int iCount)
+{
+	if (pNearCity == NULL)
+		return;
+	m_bLekmodGreatWorkFromPolicy = true;
+	for (int i = 0; i < iCount; i++)
+		DoGreatWorkFromCityConquer(pNearCity);
+	m_bLekmodGreatWorkFromPolicy = false;
+}
+int CvPlayer::GetLekmodBuildingClassGreatWorks(BuildingClassTypes eClass) const
+{
+	int iCount = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || pkPolicy->GetBuildingClassGreatWorks().empty() || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const std::vector<int>& aiRows = pkPolicy->GetBuildingClassGreatWorks();
+		for (uint i = 0; i + 1 < aiRows.size(); i += 2)
+			if (aiRows[i] == eClass)
+				iCount += aiRows[i + 1];
+	}
+	return iCount;
+}
+#endif
 void CvPlayer::DoGreatWorkFromCityConquer(CvCity* pConqueredCity)
 {
 	CvGameCulture *pCulture = GC.getGame().GetGameCulture();
@@ -15330,7 +15358,11 @@ void CvPlayer::DoGreatWorkFromCityConquer(CvCity* pConqueredCity)
 				CvNotifications* pNotifications = this->GetNotifications();
 				if(pNotifications)
 				{
+#ifdef LEKMOD_POLICY_REWORK
+					localizedText = Localization::Lookup(m_bLekmodGreatWorkFromPolicy ? "TXT_KEY_LEKMOD_GREAT_WORK_FROM_POLICY" : "TXT_KEY_GREAT_WORK_FROM_CONQUEST");
+#else
 					localizedText = Localization::Lookup("TXT_KEY_GREAT_WORK_FROM_CONQUEST");
+#endif
 					localizedText << this->getNameKey() << pCulture->GetGreatWorkName(iGWindex);
 					pNotifications->Add(NOTIFICATION_GREAT_WORK_COMPLETED_ACTIVE_PLAYER, localizedText.toUTF8(), localizedText.toUTF8(), pConqueredCity->getX(), pConqueredCity->getY(), iGWindex, this->GetID());
 				}
@@ -28859,6 +28891,20 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		if (pPolicy->IsNoExternalTradeRoutes())
 			GC.getGame().GetGameTrade()->LekmodCancelAllRoutesOfPlayer(GetID());
 		LekmodDoPolicyWaterUnits(ePolicy);
+		if (!pPolicy->GetBuildingClassGreatWorks().empty())
+		{
+			const std::vector<int>& aiGWRows = pPolicy->GetBuildingClassGreatWorks();
+			int iGWCityLoop;
+			for (CvCity* pGWCity = firstCity(&iGWCityLoop); pGWCity != NULL; pGWCity = nextCity(&iGWCityLoop))
+			{
+				for (uint i = 0; i + 1 < aiGWRows.size(); i += 2)
+				{
+					const BuildingTypes eGWBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(aiGWRows[i]);
+					if (eGWBuilding != NO_BUILDING && pGWCity->GetCityBuildings()->GetNumBuilding(eGWBuilding) > 0)
+						LekmodGrantGreatWorks(pGWCity, aiGWRows[i + 1]);
+				}
+			}
+		}
 		if (pPolicy->GetGreatWorkYieldModifier() != 0)
 		{
 			int iCityLoop;

@@ -336,6 +336,7 @@ public:
 	const std::vector<int>& GetBuildingClassFreeBuildings() const;
 	const std::vector<int>& GetGPImprovementAdjacentYields() const;
 	const std::vector<int>& GetImprovementYieldPerEra() const;
+	const std::vector<int>& GetBuildingClassGreatWorks() const;
 	int GetTradeYieldPerEraTimes100() const;
 	int GetTradeYieldEra() const;
 	bool IsNoExternalTradeRoutes() const;
@@ -714,6 +715,7 @@ private:
 	std::vector<int> m_aiBuildingClassFreeBuildings;
 	std::vector<int> m_aiGPImprovementAdjacentYields;
 	std::vector<int> m_aiImprovementYieldPerEra;
+	std::vector<int> m_aiBuildingClassGreatWorks;
 	int m_iTradeYieldPerEraTimes100;
 	int m_iTradeYieldEra;
 	bool m_bNoExternalTradeRoutes;
