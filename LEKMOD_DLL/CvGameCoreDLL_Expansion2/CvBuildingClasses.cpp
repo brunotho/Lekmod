@@ -4878,6 +4878,10 @@ void CvCityBuildings::calculateHappinessFromGreatWorks()
 			}
 		}
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	// policies: % on great works, Happiness included (Fine Arts +50%); rounded down for the whole city
+	iTotalHappiness = iTotalHappiness * (100 + GET_PLAYER(m_pCity->getOwner()).GetLekmodPolicyGreatWorkYieldModifier()) / 100;
+#endif
 	m_iHappinessFromGreatWorks = iTotalHappiness;
 	GET_PLAYER(m_pCity->getOwner()).DoUpdateHappiness();
 }

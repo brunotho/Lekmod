@@ -28764,8 +28764,11 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 		{
 			int iCityLoop;
 			for (CvCity* pLoopCity = firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = nextCity(&iCityLoop))
+			{
 				for (int iClass = 0; iClass < GC.getNumGreatWorkClassInfos(); iClass++)
 					pLoopCity->GetCityBuildings()->rebuildGreatWorkYields((GreatWorkClass)iClass);
+				pLoopCity->GetCityBuildings()->calculateHappinessFromGreatWorks();
+			}
 		}
 		if (!pPolicy->GetBuildingTerrainYields().empty())
 		{

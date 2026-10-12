@@ -528,7 +528,7 @@ function BuildTradeRouteToolTipString(pPlayer, pOriginCity, pTargetCity, eConnec
 
 	-- LEKMOD: each side gets its own share of the route; say clearly which block is the sender's and which the receiver's
 	local intro = "Both cities' owners get their own share of this route."
-	local header1 = string.format("=== Sender: %s (%s) ===", pOriginCity:GetName(), Locale.Lookup(GameInfo.Civilizations[pOriginOwner:GetCivilizationType()].Description) )
+	local header1 = string.format("=== Sender: %s ===", pOriginCity:GetName())
 	local header2 = string.format("=== Receiver: %s (%s) ===", pTargetCity:GetName(), Locale.Lookup(GameInfo.Civilizations[pDestOwner:GetCivilizationType()].Description) )
 
 	local originBlock = BuildSingleSide(pOriginOwner, pOriginCity, pTargetCity, eConnectionType, eDomain, true)

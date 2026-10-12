@@ -1503,7 +1503,7 @@ Diversify Spain and Australia's NW Discovery bonus
 // EarlyBuildingProductionModifier/EarlyBuildingEraType, FreeUnitClassNearWater/FreeUnitClassOnWater (on adoption); tables
 // Policy_CityYieldIfBuildingClass and Policy_CityHappinessIfBuildingClass (largest value counts, so Honor and Expansionism don't stack),
 // Policy_BuildingTerrainYieldChanges (tile yields when the city has a building; NoResource/AdjacentCity/AdjacentMountain/ExcludeLakes).
-// Aesthetics: Policies.GreatWorkYieldModifier (% on the yields of great works, not their Happiness); Resources.PolicyRevealOr
+// Aesthetics: Policies.GreatWorkYieldModifier (% on the yields and the Happiness of great works); Resources.PolicyRevealOr
 // (the resource is also visible without its tech to teams with this policy: Aesthetics finisher reveals Antiquity Sites).
 // Resources from policies (Policy_ResourceQuantity) only count once the team knows the resource's reveal tech (oil needs its tech);
 // they are added in CvTeam::processTech when the tech arrives later.
