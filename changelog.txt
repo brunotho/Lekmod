@@ -1844,6 +1844,7 @@ Fourteen new proposals.
 - Added: Climate Change Reparations (every civilization in the Modern Era): 200 Gold per Factory paid once (not below 0); +1 Happiness per Factory; +30% Production toward Hydro, Nuclear and Solar Plants
 - Added: Charter of Civil Liberties (Modern Era): public opinion returns while it is active; a civilization under other ideologies' cultural pressure gets Unhappiness = dissatisfaction (1-5) / 2 per city + population / (20 - 2 x dissatisfaction); influence still never forces an ideology switch; the five levels are named Dissidents, Unrest, Civil Resistance, Revolutionary Wave and System Collapse
 - Note: the spy parts of Diplomatic Transparency and Blackout come with the Diplomat/Spy rework
+- Dev: proposals with only Lekmod effects (Blackout, Import Tariffs, the new Non-Proliferation, ...) were dropped right after passing because the base game keeps only resolutions with base-game effects; fixed
 - DLL: Resolutions.Lekmod* columns (LekmodResolutionColumn, read at runtime), Resolution_LekmodBuildingClassProductionModifiers, timed resolutions end in CvLeague::LekmodDoExpiry; Lua Game.LekmodIsBlackout (Demographics)
 
 WORLD CONGRESS SCREEN (ui)

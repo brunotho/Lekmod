@@ -7328,7 +7328,24 @@ void CvLeague::DoEnactResolution(CvEnactProposal* pProposal)
 #endif
 	
 	// Active Resolutions with only one-time effects immediately expire
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Lekmod proposals keep their effects through their Resolutions.Lekmod* values, which the base game check doesn't know
+	bool bLekmodOngoing = false;
+	CvResolutionEntry* pLekmodInfo = GC.getResolutionInfo(pProposal->GetType());
+	if (pLekmodInfo != NULL)
+	{
+		if (pLekmodInfo->GetLekmodNukeProductionModifier() != 0)
+			bLekmodOngoing = true;
+		for (int iCol = 0; iCol < NUM_LEKMOD_RESOLUTION_COLUMNS; iCol++)
+		{
+			if (iCol != LRC_DEVELOPMENT_FUND && iCol != LRC_CLIMATE && iCol != LRC_DURATION && pLekmodInfo->GetLekmodInt(iCol) != 0)
+				bLekmodOngoing = true;
+		}
+	}
+	if (resolution.HasOngoingEffects() || bLekmodOngoing)
+#else
 	if (resolution.HasOngoingEffects())
+#endif
 	{
 		m_vActiveResolutions.push_back(resolution);
 	}
