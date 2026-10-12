@@ -64569,7 +64569,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_DIPLO_NEED_DOF_TT_ONE_LINE"> 
 			<Text>
-				Gold cannot be traded. Trade Gold Per Turn instead.
+				Gold cannot be traded.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_DIPLO_NEED_WRITING_TT"> 
@@ -116249,7 +116249,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_EXPLORATION_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Expansionism[ENDCOLOR] helps you settle and conquer new lands, especially across the seas.[NEWLINE][NEWLINE]Adopting Expansionism:[NEWLINE][ICON_BULLET]+1 Sight for land units and for[NEWLINE]     naval melee and ranged units[NEWLINE][ICON_BULLET]Allows training [ICON_UNIT_SPANISH_CONQUISTADOR] Conquistadors[NEWLINE][ICON_BULLET]A free Conquistador appears in[NEWLINE]     your city closest to water[NEWLINE][ICON_BULLET]A free [ICON_UNIT_GALLEASS] Galleass appears on[NEWLINE]     the water tile closest to your cities[NEWLINE][ICON_BULLET]Every city claims 1 extra tile,[NEWLINE]     including cities you found later[NEWLINE][ICON_BULLET]Unlocks building the Tower of[NEWLINE]     Belem[NEWLINE][NEWLINE]Completing the Expansionism tree:[NEWLINE][ICON_BULLET]+1 [ICON_HAPPINESS_1] Happiness from each[NEWLINE]     Luxury resource[NEWLINE][ICON_BULLET]Buy [ICON_GREAT_ADMIRAL] Great Admirals with [ICON_GOLD][NEWLINE]     Gold from the [COLOR_CYAN]Industrial Era[ENDCOLOR] on[NEWLINE]     (same rising cost as other Great[NEWLINE]     People bought with Gold)
+				[COLOR_POSITIVE_TEXT]Expansionism[ENDCOLOR] helps you settle and conquer new lands, especially across the seas.[NEWLINE][NEWLINE]Adopting Expansionism:[NEWLINE][ICON_BULLET]+1 Sight for land units and for[NEWLINE]     naval melee and ranged units[NEWLINE][ICON_BULLET]Allows training [ICON_UNIT_SPANISH_CONQUISTADOR] Conquistadors[NEWLINE][ICON_BULLET]A free Conquistador appears in[NEWLINE]     your city closest to water[NEWLINE][ICON_BULLET]A free [ICON_UNIT_GALLEASS] Galleass appears on[NEWLINE]     the water tile closest to your cities[NEWLINE][ICON_BULLET]Every city claims 1 extra tile,[NEWLINE]     including cities you found later[NEWLINE][ICON_BULLET]Unlocks building the Tower of[NEWLINE]     Belem[NEWLINE][NEWLINE]Completing the Expansionism tree:[NEWLINE][ICON_BULLET]+1 [ICON_HAPPINESS_1] Happiness from each[NEWLINE]     Luxury resource[NEWLINE][ICON_BULLET]Buy [ICON_GREAT_ADMIRAL] Great Admirals with [ICON_PEACE][NEWLINE]     Faith from the [COLOR_CYAN]Industrial Era[ENDCOLOR] on
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_FREEDOM"> 
@@ -118015,7 +118015,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_TREASURE_FLEETS_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Treasure Fleets[ENDCOLOR][NEWLINE][ICON_BULLET]Cities with a [ICON_BUILDING_LIGHTHOUSE] Lighthouse: +1 [ICON_PRODUCTION] Production on Coast tiles without a resource[NEWLINE][ICON_BULLET]Cities with a [ICON_BUILDING_HARBOR] Harbor: +1 [ICON_GOLD] Gold on Coast tiles next to the city[NEWLINE][ICON_BULLET]Cities with a [ICON_BUILDING_SEAPORT] Seaport: +3 [ICON_PRODUCTION] Production on Coast tiles next to the city and to a Mountain[NEWLINE][ICON_BULLET]Lakes don't count[NEWLINE][ICON_BULLET]A free [ICON_GREAT_ADMIRAL] Great Admiral
+				[COLOR_POSITIVE_TEXT]Treasure Fleets[ENDCOLOR][NEWLINE][ICON_BULLET]Cities with a [ICON_BUILDING_LIGHTHOUSE] Lighthouse: +1 [ICON_PRODUCTION] Production on Coast tiles without a resource[NEWLINE][ICON_BULLET]Cities with a [ICON_BUILDING_HARBOR] Harbor: +1 [ICON_GOLD] Gold on Coast tiles next to the city[NEWLINE][ICON_BULLET]Cities with a [ICON_BUILDING_SEAPORT] Seaport: +3 [ICON_PRODUCTION] Production on Coast tiles next to the city and to a Mountain[NEWLINE][ICON_BULLET]A free [ICON_GREAT_ADMIRAL] Great Admiral
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_TREASURE_FLEETS_TEXT"> 
@@ -120453,7 +120453,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Ascetic Discipline</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_FIRST_BORN">
-			<Text>When a city first grows to 2 [ICON_CITIZEN] Citizens, it drops back to 1 and you gain 20 [ICON_PEACE] Faith[NEWLINE]The city gets a [COLOR_POSITIVE_TEXT]Rite of the First-Born[ENDCOLOR] building: +1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture, kept on capture</Text>
+			<Text>When a city first grows to 2 [ICON_CITIZEN] Citizens, it drops back to 1.[NEWLINE]You gain 20 [ICON_PEACE] Faith and the city gets +1 [ICON_PRODUCTION] Production and +1 [ICON_CULTURE] Culture for the rest of the game.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_FIRST_BORN_SHORT">
 			<Text>Rite of the First-Born</Text>
@@ -120619,6 +120619,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_BUILD_TOURISM_STRING">
 			<Text>{1_Num}[ENDCOLOR] [ICON_TOURISM] Tourism</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_DIPLO_STRATEGIC_NO_TRADE">
+			<Text>Strategic resources cannot be traded.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>

@@ -281362,13 +281362,6 @@
 			<PrereqPolicy>POLICY_MERCHANT_NAVY</PrereqPolicy>
 		</Row>
 	</Policy_PrereqPolicies>
-	<Policy_GoldPurchaseUnitClasses>
-		<Row>
-			<PolicyType>POLICY_EXPLORATION_FINISHER</PolicyType>
-			<UnitClassType>UNITCLASS_GREAT_ADMIRAL</UnitClassType>
-			<EraType>ERA_INDUSTRIAL</EraType>
-		</Row>
-	</Policy_GoldPurchaseUnitClasses>
 	<!-- Aesthetics: Flourishing of the Arts (tier 2 left; 34.11 Culture/Tourism per World Wonder restored, 6-turn Golden Age on quick),
 	     Artistic Genius (2 Science 2 Culture per Great Work, +1 Culture from culture buildings), Cultural Exchange is now Literary Tradition
 	     (tier 3 left; Culture from Trading Posts only), Fine Arts (school buildings in the first 5 cities, +50% great work yields),
@@ -281784,4 +281777,20 @@
 			<PromotionType>PROMOTION_COVER_1</PromotionType>
 		</Row>
 	</Policy_UnitCombatPromotionsIfBuilding>
+	<!-- LEKMOD: city names removed: joke-length names (Taumata..., Llanfair...gogogoch, Tweebuffels...) and names without a text (they showed the raw key) -->
+	<Civilization_CityNames>
+		<Delete CivilizationType="CIVILIZATION_MAORI" CityName="TXT_KEY_CITY_NAME_MC_MAORI_TAUMATA"/>
+		<Delete CivilizationType="CIVILIZATION_WALES" CityName="TXT_KEY_CITY_NAME_US_WALES_11"/>
+		<Delete CivilizationType="CIVILIZATION_BOERS" CityName="TXT_KEY_CITY_NAME_TWEEBUFFELS"/>
+		<Delete CivilizationType="CIVILIZATION_TURKEY" CityName="TXT_KEY_CITY_NAME_TURKEY_28"/>
+		<Delete CivilizationType="CIVILIZATION_TURKEY" CityName="TXT_KEY_CITY_NAME_TURKEY_29"/>
+		<Delete CivilizationType="CIVILIZATION_TURKEY" CityName="TXT_KEY_CITY_NAME_TURKEY_30"/>
+		<Delete CivilizationType="CIVILIZATION_TURKEY" CityName="TXT_KEY_CITY_NAME_TURKEY_31"/>
+		<Delete CivilizationType="CIVILIZATION_TURKEY" CityName="TXT_KEY_CITY_NAME_TURKEY_32"/>
+		<Delete CivilizationType="CIVILIZATION_TURKEY" CityName="TXT_KEY_CITY_NAME_TURKEY_33"/>
+		<Delete CivilizationType="CIVILIZATION_TURKEY" CityName="TXT_KEY_CITY_NAME_TURKEY_34"/>
+		<Delete CivilizationType="CIVILIZATION_KHMER" CityName="TXT_KEY_CITY_NAME_PRE_RUP"/>
+		<Delete CivilizationType="CIVILIZATION_ARMENIA" CityName="TXT_KEY_CITY_NAME_ARMAVIR"/>
+		<Delete CivilizationType="CIVILIZATION_VENEZ" CityName="TXT_KEY_CITY_NAME_VEROZ"/>
+	</Civilization_CityNames>
 </GameData>

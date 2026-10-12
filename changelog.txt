@@ -1347,6 +1347,7 @@ Four new pantheons.
 - Added: The Hungering Throne: cities other than the capital -1 Food; the capital's tile gets +1 Production, +1 Science and +1 Faith per other city with the pantheon; when such a city starves, the capital claims 2 tiles
 - Added: Ascetic Discipline: Shrines -1 Food, -1 Gold, +2 Production; +20 Faith whenever a city loses a citizen to starvation
 - Added: Rite of the First-Born: when a city first grows to 2 citizens it drops back to 1, you gain 20 Faith, and the city gets a Rite of the First-Born building (+1 Production, +1 Culture, listed in the city screen, kept on capture)
+- Changed: Rite of the First-Born: its pantheon text describes only the effect
 - DLL: Beliefs.StarvationFaith/StarvationCapitalPlots/FirstGrowthBuildingClass/FirstGrowthFaith, Belief_CapitalYieldPerExpand, Belief_CityFeatureAdjacentYieldChanges, condition NOT_CAPITAL; belief IDs 105-108; building BUILDING_LEKMOD_FIRST_BORN (272, class 179)
 
 SACRED SITES, JESUIT EDUCATION, WORK ETHIC (BELIEF_SACRED_SITES, BELIEF_JESUIT_EDUCATION, BELIEF_WORK_ETHIC)
@@ -1628,6 +1629,18 @@ Tags: policies
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
 
+TRADE SCREEN TEXTS (ui)
+-----------------------
+Tags: ui
+- Changed: Gold's hover says only that it cannot be traded
+- Fixed: strategic resources said both players need the technology to trade them; with strategic trading disabled (the lobby default) the hover now says they cannot be traded
+
+CITY NAMES (Civilization_CityNames)
+-----------------------------------
+Tags: civs, ui
+- Removed: three joke-length city names (the long Maori, Welsh and Boer place names)
+- Fixed: ten city names without a text (Turkey, Khmer, Armenia, Venezuela) no longer show up as raw text keys
+
 TOURISM ON TILES (ui)
 ---------------------
 Tags: ui, art
@@ -1696,7 +1709,7 @@ Tags: policies, naval, units, buildings
 - Removed: Treasure Fleets: Food and Production on unimproved Coast, Ocean and Lake tiles
 - Changed: Navigation School: requires only Naval Tradition; naval units +10% Combat Strength and +1 Movement; a free Great Admiral
 - Removed: Navigation School: +2 Science in every city
-- Changed: finisher: +1 Happiness from each Luxury; buy Great Admirals with Gold from the Industrial Era (shared rising cost with the Patronage Great People)
+- Changed: finisher: +1 Happiness from each Luxury; Great Admirals can still be bought with Faith from the Industrial Era
 - Removed: finisher: Great Admirals twice as fast, free Great Admiral, Gold on Coast and Ocean tiles
 - Added: Crown Office building (free only; counts like a Courthouse for Colonial Administration and Colonial Infrastructure)
 - Note: the branch uses the Commerce branch picture until new Commerce art arrives

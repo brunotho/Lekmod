@@ -1654,7 +1654,7 @@ function ResetDisplay()
             	if (not bCanTradeResource) then
             		if (pResource.ResourceUsage == 1) then
 		    			instance.Button:GetTextControl():SetColorByName("Gray_Black");
-		    			instance.Button:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_BOTH_HAVE_NOT_REASEARCHED_ONE_LINE", GameInfo.Technologies[pResource.TechReveal].Description));
+		    			instance.Button:SetToolTipString((Game.IsOption("GAMEOPTION_DISABLE_STRATEGIC_TRADING") and Locale.ConvertTextKey("TXT_KEY_LEKMOD_DIPLO_STRATEGIC_NO_TRADE") or Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_BOTH_HAVE_NOT_REASEARCHED_ONE_LINE", GameInfo.Technologies[pResource.TechReveal].Description)));
             		else
 		    			instance.Button:GetTextControl():SetColorByName("Gray_Black");
 		    			instance.Button:SetToolTipString(GetDisabledLuxuryTradeTooltip(g_iUs, g_iThem, resType, pResource));
@@ -1737,7 +1737,7 @@ function ResetDisplay()
             	if (not bCanTradeResource) then
             		if (pResource.ResourceUsage == 1) then
 		    			instance.Button:GetTextControl():SetColorByName("Gray_Black");
-		    			instance.Button:SetToolTipString(Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_BOTH_HAVE_NOT_REASEARCHED_ONE_LINE", GameInfo.Technologies[pResource.TechReveal].Description));
+		    			instance.Button:SetToolTipString((Game.IsOption("GAMEOPTION_DISABLE_STRATEGIC_TRADING") and Locale.ConvertTextKey("TXT_KEY_LEKMOD_DIPLO_STRATEGIC_NO_TRADE") or Locale.ConvertTextKey("TXT_KEY_DIPLO_ITEM_BOTH_HAVE_NOT_REASEARCHED_ONE_LINE", GameInfo.Technologies[pResource.TechReveal].Description)));
             		else
 		    			instance.Button:GetTextControl():SetColorByName("Gray_Black");
 		    			instance.Button:SetToolTipString(GetDisabledLuxuryTradeTooltip(g_iThem, g_iUs, resType, pResource));

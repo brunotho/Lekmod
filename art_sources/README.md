@@ -83,7 +83,7 @@ Files `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background_01..11.dds` follow the 
   Autocracy...), BNW's newer ones `PolicyBranch_<Branch>.dds` (Aesthetics, Exploration). All are 192x292 DXT1, one mip.
 - Build: `python art_sources/tools/build_policy_branch.py <source> <game texture name>` (cover-scale to 192x292, centre crop,
   `texconv -f BC1_UNORM -m 1`, written to `LEKMOD/Art/Lekmod (v 1)/Art/PolicyBranches/`).
-- Commerce: `policy_branches/commerce/commerce_merchant_ledger_v2.png` (user, 2026-10-12, 1024x1536; v1 kept for reference)
+- Commerce: `policy_branches/commerce/commerce_merchant_ledger_v3.png` (user, 2026-10-12; v1, v2 kept for reference)
   -> `SocialPoliciesCommerce.dds`.
 
 ## Tile yield icons (map)
