@@ -2203,6 +2203,9 @@ void CvCity::doUpdateCacheOnTurn()
 //	--------------------------------------------------------------------------------
 void CvCity::doTurn()
 {
+#ifdef LEKMOD_POLICY_REWORK
+	LekmodUpdatePolicyFreeBuildings();
+#endif
 #ifdef AUI_PERF_LOGGING_FORMATTING_TWEAKS
 	AI_PERF_FORMAT("City-AI-perf.csv", ("CvCity::doTurn, Turn %03d, %s, %s", GC.getGame().getElapsedGameTurns(), GetPlayer()->getCivilizationShortDescription(), getName().c_str()));
 #else
@@ -13259,6 +13262,30 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 #ifdef LEKMOD_POLICY_REWORK
 //	--------------------------------------------------------------------------------
 //	--------------------------------------------------------------------------------
+//	--------------------------------------------------------------------------------
+/// Buildings policies give to cities that have another building (Liberated Arts: Courthouse Great Work slots); removed when the condition is gone
+void CvCity::LekmodUpdatePolicyFreeBuildings()
+{
+	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
+	const std::vector<int>& aiRows = kPlayer.GetLekmodFreeBuildingRows();
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkGranted = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkGranted == NULL || !pkGranted->IsLekmodPolicyGranted())
+			continue;
+		bool bWanted = false;
+		for (uint i = 0; i + 1 < aiRows.size() && !bWanted; i += 2)
+		{
+			if (aiRows[i + 1] != iBuilding)
+				continue;
+			const BuildingTypes eRequired = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(aiRows[i]);
+			bWanted = (eRequired != NO_BUILDING && m_pCityBuildings->GetNumRealBuilding(eRequired) > 0);
+		}
+		const int iWanted = bWanted ? 1 : 0;
+		if (m_pCityBuildings->GetNumFreeBuilding((BuildingTypes)iBuilding) != iWanted)
+			m_pCityBuildings->SetNumFreeBuilding((BuildingTypes)iBuilding, iWanted);
+	}
+}
 /// Policy_CityYieldIfBuildingClass: per yield the largest value among the rows whose building the city has (Colonial Administration and Military Tradition don't stack)
 int CvCity::GetLekmodPolicyBuildingCityYield(YieldTypes eYield) const
 {

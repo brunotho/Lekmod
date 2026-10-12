@@ -116104,7 +116104,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ARSENAL_DEMOCRACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Arsenal of Democracy[ENDCOLOR][NEWLINE]+25% [ICON_PRODUCTION] Production towards [COLOR_POSITIVE_TEXT]Bombers[ENDCOLOR], [COLOR_POSITIVE_TEXT]Fighters[ENDCOLOR], [COLOR_POSITIVE_TEXT]Helicopters[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Nuclear Missiles[ENDCOLOR]. +25% City [ICON_STRENGTH] Strength. All [COLOR_POSITIVE_TEXT]Fighter[ENDCOLOR] units receive the [ICON_PROMOTION_DOGFIGHTING_1] Dog Fighting I promotion (+33% [ICON_STRENGTH] Combat Bonus when performing an [COLOR_POSITIVE_TEXT]Air Sweep[ENDCOLOR])
+				[COLOR_POSITIVE_TEXT]Arsenal of Democracy[ENDCOLOR][NEWLINE]Air units and Helicopters start with 20 Experience.[NEWLINE]+25% City [ICON_STRENGTH] Strength.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_ARSENAL_DEMOCRACY_TEXT"> 
@@ -116389,7 +116389,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CAPITALISM_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Capitalism[ENDCOLOR][NEWLINE]Provides +1 [ICON_HAPPINESS_1] Happiness from [COLOR_POSITIVE_TEXT]Markets[ENDCOLOR], [COLOR_POSITIVE_TEXT]Banks[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Stock Exchanges[ENDCOLOR]
+				[COLOR_POSITIVE_TEXT]Capitalism[ENDCOLOR][NEWLINE]+1 [ICON_HAPPINESS_1] Happiness and +1 [ICON_GOLD] Gold from Banks and Stock Exchanges.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CAPITALISM_TEXT"> 
@@ -120622,6 +120622,66 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_DIPLO_STRATEGIC_NO_TRADE">
 			<Text>Strategic resources cannot be traded.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS">
+			<Text>Liberated Arts</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Liberated Arts[ENDCOLOR][NEWLINE]+2 [ICON_TOURISM] Tourism and +1 [ICON_HAPPINESS_1] Happiness from each Great Work.[NEWLINE]Courthouses have 2 Great Work slots.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY">
+			<Text>Fruits of Liberty</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Fruits of Liberty[ENDCOLOR][NEWLINE]+1 [ICON_GOLD] Gold, +1 [ICON_CULTURE] Culture and +1 [ICON_RESEARCH] Science from each Great Work and each Great Person improvement (except Holy Sites).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS">
+			<Text>Republic of Letters</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Republic of Letters[ENDCOLOR][NEWLINE]Great Person improvements get +1 [ICON_PRODUCTION] Production for each adjacent Manufactory, +1 [ICON_RESEARCH] Science for each adjacent Academy and +1 [ICON_CULTURE] Culture for each adjacent Festival.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS">
+			<Text>Thoughts and Prayers</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Thoughts and Prayers[ENDCOLOR][NEWLINE]When one of your military units is killed, gain [ICON_CULTURE] Culture equal to half its [ICON_STRENGTH] Strength.[NEWLINE]Gunpowder units get the Foreign Lands Bonus promotion (+20% [ICON_STRENGTH] Strength outside your territory).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_SOFT_POWER">
+			<Text>Soft Power</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_SOFT_POWER_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Soft Power[ENDCOLOR][NEWLINE]Earn [ICON_GREAT_WRITER] Great Writers, [ICON_GREAT_ARTIST] Artists and [ICON_GREAT_MUSICIAN] Musicians 25% faster.[NEWLINE]+2 [ICON_GOLD] Gold from each Great Work.[NEWLINE]Festivals provide +2 [ICON_GOLD] Gold per era.[NEWLINE]Concert Tours of new Great Musicians are 25% stronger.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY">
+			<Text>Technocratic Efficiency</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Technocratic Efficiency[ENDCOLOR][NEWLINE]Rocket Artillery, Mobile SAMs, Helicopter Gunships, Missile Cruisers, Jet Fighters and Stealth Bombers need 1 less [ICON_RES_ALUMINUM] Aluminum.[NEWLINE]Nuclear Submarines, Nuclear Missiles and Giant Death Robots need 1 less [ICON_RES_URANIUM] Uranium.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY">
+			<Text>Broadcast Hegemony</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Broadcast Hegemony[ENDCOLOR][NEWLINE]+50% [ICON_CULTURE] Culture, [ICON_TOURISM] Tourism and [ICON_GOLD] Gold in the [ICON_CAPITAL] Capital.[NEWLINE]-10% [ICON_PRODUCTION] Production in every city.[NEWLINE]-3 [ICON_HAPPINESS_1] Happiness for each city.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_EMINENCE">
+			<Text>Eminence</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_EMINENCE_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Eminence[ENDCOLOR][NEWLINE]A [ICON_GREAT_ARTIST] Great Artist, [ICON_GREAT_WRITER] Great Writer, [ICON_GREAT_MUSICIAN] Great Musician, [ICON_GREAT_ENGINEER] Great Engineer, [ICON_GREAT_MERCHANT] Great Merchant and [ICON_GREAT_GENERAL] Great General appear.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_FREE_WORLD">
+			<Text>Free World</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_FREE_WORLD_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Free World[ENDCOLOR][NEWLINE]+1 World Congress vote for every two allied City-States (rounded up).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY">
+			<Text>Courthouse Gallery</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY_HELP">
+			<Text>Two Great Work slots in a city with a Courthouse, from the Liberated Arts tenet.[NEWLINE]Cannot be built. Disappears with the Courthouse or the tenet.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>

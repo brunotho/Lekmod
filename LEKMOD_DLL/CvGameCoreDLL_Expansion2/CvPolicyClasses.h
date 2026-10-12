@@ -329,6 +329,13 @@ public:
 	int GetGreatWorkYieldModifier() const;
 	int GetTourismModPerAlliedCS() const;
 	int GetGreatScientistDecayModifier() const;
+	int GetGreatWorkHappiness() const;
+	int GetCultureFromUnitDeathPercent() const;
+	int GetGreatMusicianBlastModifier() const;
+	bool IsVotesPerTwoAlliedCS() const;
+	const std::vector<int>& GetBuildingClassFreeBuildings() const;
+	const std::vector<int>& GetGPImprovementAdjacentYields() const;
+	const std::vector<int>& GetImprovementYieldPerEra() const;
 	int GetTradeYieldPerEraTimes100() const;
 	int GetTradeYieldEra() const;
 	bool IsNoExternalTradeRoutes() const;
@@ -700,6 +707,13 @@ private:
 	int m_iGreatWorkYieldModifier;
 	int m_iTourismModPerAlliedCS;
 	int m_iGreatScientistDecayModifier;
+	int m_iGreatWorkHappiness;
+	int m_iCultureFromUnitDeathPercent;
+	int m_iGreatMusicianBlastModifier;
+	bool m_bVotesPerTwoAlliedCS;
+	std::vector<int> m_aiBuildingClassFreeBuildings;
+	std::vector<int> m_aiGPImprovementAdjacentYields;
+	std::vector<int> m_aiImprovementYieldPerEra;
 	int m_iTradeYieldPerEraTimes100;
 	int m_iTradeYieldEra;
 	bool m_bNoExternalTradeRoutes;

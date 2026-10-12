@@ -290,6 +290,10 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iGreatWorkYieldModifier(0),
 	m_iTourismModPerAlliedCS(0),
 	m_iGreatScientistDecayModifier(0),
+	m_iGreatWorkHappiness(0),
+	m_iCultureFromUnitDeathPercent(0),
+	m_iGreatMusicianBlastModifier(0),
+	m_bVotesPerTwoAlliedCS(false),
 	m_iTradeYieldPerEraTimes100(0),
 	m_iTradeYieldEra(NO_ERA),
 	m_bNoExternalTradeRoutes(false),
@@ -815,6 +819,51 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iGreatWorkYieldModifier = kResults.GetInt("GreatWorkYieldModifier");
 	m_iTourismModPerAlliedCS = kResults.GetInt("TourismModPerAlliedCS");
 	m_iGreatScientistDecayModifier = kResults.GetInt("GreatScientistDecayModifier");
+	m_iGreatWorkHappiness = kResults.GetInt("GreatWorkHappiness");
+	m_iCultureFromUnitDeathPercent = kResults.GetInt("CultureFromUnitDeathPercent");
+	m_iGreatMusicianBlastModifier = kResults.GetInt("GreatMusicianBlastModifier");
+	m_bVotesPerTwoAlliedCS = kResults.GetBool("VotesPerTwoAlliedCS");
+	{
+		std::string strKey("Policy_BuildingClassFreeBuildings");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Buildings.ID from Policy_BuildingClassFreeBuildings inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner join Buildings on Buildings.Type = BuildingType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiBuildingClassFreeBuildings.push_back(pResults->GetInt(0));
+			m_aiBuildingClassFreeBuildings.push_back(pResults->GetInt(1));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_GPImprovementAdjacentYields");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select Improvements.ID, Yields.ID, Yield from Policy_GPImprovementAdjacentYields inner join Improvements on Improvements.Type = AdjacentImprovementType inner join Yields on Yields.Type = YieldType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiGPImprovementAdjacentYields.push_back(pResults->GetInt(0));
+			m_aiGPImprovementAdjacentYields.push_back(pResults->GetInt(1));
+			m_aiGPImprovementAdjacentYields.push_back(pResults->GetInt(2));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_ImprovementYieldPerEra");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select Improvements.ID, Yields.ID, Yield from Policy_ImprovementYieldPerEra inner join Improvements on Improvements.Type = ImprovementType inner join Yields on Yields.Type = YieldType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiImprovementYieldPerEra.push_back(pResults->GetInt(0));
+			m_aiImprovementYieldPerEra.push_back(pResults->GetInt(1));
+			m_aiImprovementYieldPerEra.push_back(pResults->GetInt(2));
+		}
+		pResults->Reset();
+	}
 	m_iTradeYieldPerEraTimes100 = kResults.GetInt("TradeYieldPerEraTimes100");
 	m_iTradeYieldEra = GC.getInfoTypeForString(kResults.GetText("TradeYieldEraType"), true);
 	m_bNoExternalTradeRoutes = kResults.GetBool("NoExternalTradeRoutes");
@@ -2965,7 +3014,41 @@ int CvPolicyEntry::GetGreatWorkYieldModifier() const
 {
 	return m_iGreatWorkYieldModifier;
 }
-/// % Tourism in every city per allied City-State (Socialist Heritage)
+/// Happiness from each Great Work (Liberated Arts)
+int CvPolicyEntry::GetGreatWorkHappiness() const
+{
+	return m_iGreatWorkHappiness;
+}
+/// Culture when one of your military units is killed: % of its strength (Thoughts and Prayers)
+int CvPolicyEntry::GetCultureFromUnitDeathPercent() const
+{
+	return m_iCultureFromUnitDeathPercent;
+}
+/// % on a new Great Musician's Concert Tour (Soft Power)
+int CvPolicyEntry::GetGreatMusicianBlastModifier() const
+{
+	return m_iGreatMusicianBlastModifier;
+}
+/// +1 World Congress vote per two allied City-States, rounded up (Free World)
+bool CvPolicyEntry::IsVotesPerTwoAlliedCS() const
+{
+	return m_bVotesPerTwoAlliedCS;
+}
+/// (required building class, free building) pairs: cities with the class get the building (Liberated Arts: Courthouse Great Work slots)
+const std::vector<int>& CvPolicyEntry::GetBuildingClassFreeBuildings() const
+{
+	return m_aiBuildingClassFreeBuildings;
+}
+/// (adjacent improvement, yield, value): Great Person improvements get the yield per adjacent improvement of that type (Republic of Letters)
+const std::vector<int>& CvPolicyEntry::GetGPImprovementAdjacentYields() const
+{
+	return m_aiGPImprovementAdjacentYields;
+}
+/// (improvement, yield, value): value x (owner's era + 1) (Soft Power: Festivals)
+const std::vector<int>& CvPolicyEntry::GetImprovementYieldPerEra() const
+{
+	return m_aiImprovementYieldPerEra;
+}
 /// % on how fast a held Great Scientist loses bulb turns (Command Economy -66: one turn every three turns)
 int CvPolicyEntry::GetGreatScientistDecayModifier() const
 {
@@ -2980,6 +3063,7 @@ int CvPolicyEntry::GetTradeYieldEra() const
 {
 	return m_iTradeYieldEra;
 }
+/// % Tourism in every city per allied City-State (Socialist Heritage)
 int CvPolicyEntry::GetTourismModPerAlliedCS() const
 {
 	return m_iTourismModPerAlliedCS;

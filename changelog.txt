@@ -1656,6 +1656,26 @@ Tags: ui, art
 - Fixed: the improvement build tooltip showed a lone "+" for Tourism; it now shows the Tourism change
 - Changed: tiles with 5 or more Tourism show a large suitcase instead of a camera
 
+FREEDOM (POLICY_BRANCH_FREEDOM)
+-------------------------------
+Tags: policies
+- Removed: Covert Action, Volunteer Army, Creative Expression, Universal Healthcare, Free Mind, New Deal, Media Culture
+- Changed: Capitalism: +1 Gold from Banks and Stock Exchanges (on top of their Happiness)
+- Removed: Capitalism: Happiness from Markets
+- Added: Liberated Arts (tier 1): +2 Tourism and +1 Happiness from each Great Work; Courthouses have 2 Great Work slots
+- Added: Fruits of Liberty (tier 1): +1 Gold, Culture and Science from each Great Work and each Great Person improvement (not Holy Sites)
+- Added: Republic of Letters (tier 1): Great Person improvements get +1 Production per adjacent Manufactory, +1 Science per adjacent Academy, +1 Culture per adjacent Festival
+- Changed: Arsenal of Democracy (rebuilt): air units and Helicopters start with 20 Experience; +25% City Strength
+- Removed: Arsenal of Democracy: Production toward air units and Nuclear Missiles, free Dogfighting I
+- Added: Thoughts and Prayers (tier 2): Culture equal to half a killed military unit's strength; Gunpowder units get the Foreign Lands Bonus promotion (+20%)
+- Added: Soft Power (tier 2): Great Writers, Artists and Musicians 25% faster; +2 Gold from each Great Work; Festivals +2 Gold per era; new Great Musicians' Concert Tours 25% stronger
+- Added: Technocratic Efficiency (tier 2): 1 less Aluminum for Rocket Artillery, Mobile SAMs, Helicopter Gunships, Missile Cruisers, Jet Fighters and Stealth Bombers; 1 less Uranium for Nuclear Submarines, Nuclear Missiles and Giant Death Robots
+- Added: Broadcast Hegemony (tier 3): +50% Culture, Tourism and Gold in the capital; -10% Production in every city; -3 Happiness per city
+- Added: Eminence (tier 3): a free Great Artist, Writer, Musician, Engineer, Merchant and General
+- Added: Free World (tier 3): +1 World Congress vote per two allied City-States (rounded up)
+- Note: Modern Armor needs no Aluminum, so Technocratic Efficiency changes nothing for it (asked)
+- DLL: Policies.GreatWorkHappiness, CultureFromUnitDeathPercent, GreatMusicianBlastModifier, VotesPerTwoAlliedCS; Policy_BuildingClassFreeBuildings with Buildings.LekmodPolicyGranted (Courthouse Gallery, building 276, class 183), Policy_GPImprovementAdjacentYields, Policy_ImprovementYieldPerEra (LEKMOD_POLICY_REWORK)
+
 ORDER (POLICY_BRANCH_ORDER)
 ---------------------------
 Tags: policies

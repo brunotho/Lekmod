@@ -35706,6 +35706,15 @@
 			<MaxTeamInstances>-1</MaxTeamInstances>
 			<MaxPlayerInstances>-1</MaxPlayerInstances>
 		</Row>
+		<Row>
+			<ID>183</ID>
+			<Type>BUILDINGCLASS_LEKMOD_COURTHOUSE_GALLERY</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_COURTHOUSE_GALLERY</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+		</Row>
 	</BuildingClasses> 
 
 	<Table name="Building_AreaYieldModifiers">
@@ -43379,7 +43388,8 @@
 		<Column name="GreatWorkHappiness" type="integer" default="0"/> <!-- Happiness to GreatWorks inside this building -->
 		<Column name="GreatWorkMilitaryProductionModifier" type="integer" default="0"/> <!-- Military production from GreatWorks inside this building -->
 		<Column name="FirstPurchaseDiscount" type="integer" default="0"/> <!-- Faith and Gold Discount if the city has purchased nothing this turn -->
-    </Table>
+    	<Column name="LekmodPolicyGranted" type="boolean" default="false"/> <!-- LEKMOD: given and removed by Policy_BuildingClassFreeBuildings -->
+	</Table>
 	<!-- NOTE: This table is organized, but don't feel like you need to follow it as it uses manually assigned IDs which can be combersome to change. Just add to the end. 
 	Most normal buildings are organized by when the base version appears on the tech tree, and have all the variants below them. Same with other kinds of buildings. 
 	CTRL + F NAVIGATION KEYS : [Guild Buildings] [National Wonders] [World Wonders] [Dummy Buildings] [Building Dummies] [Policy Dummies] [Trait Dummies] [Unit Dummies] -->
@@ -48693,6 +48703,26 @@
 			<ArtDefineTag>TEMPLE</ArtDefineTag>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>LEKMOD_STUPA_ATLAS</IconAtlas>
+		</Row>
+		<!-- LEKMOD: Courthouse Gallery: two Great Work slots that policies give to cities with a Courthouse (Liberated Arts) -->
+		<Row>
+			<ID>276</ID>
+			<Type>BUILDING_LEKMOD_COURTHOUSE_GALLERY</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_COURTHOUSE_GALLERY</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_COURTHOUSE_GALLERY_HELP</Help>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ConquestProb>0</ConquestProb>
+			<NukeImmune>true</NukeImmune>
+			<LekmodPolicyGranted>true</LekmodPolicyGranted>
+			<GreatWorkSlotType>GREAT_WORK_SLOT_ART_ARTIFACT</GreatWorkSlotType>
+			<GreatWorkCount>2</GreatWorkCount>
+			<ArtDefineTag>COURTHOUSE</ArtDefineTag>
+			<PortraitIndex>63</PortraitIndex>
+			<IconAtlas>BW_ATLAS_1</IconAtlas>
 		</Row>
 		<!-- LEKMOD: Crown Office (Expansionism): free in captured and newly founded cities; counts like a Courthouse for the Expansionism policies -->
 		<Row>
@@ -187773,6 +187803,10 @@
 		<Column name="GreatScientistDecayModifier" type="integer" default="0"/> <!-- LEKMOD: % on how fast held Great Scientists lose bulb turns -->
 		<Column name="TradeYieldPerEraTimes100" type="integer" default="0"/> <!-- LEKMOD: + per era after TradeYieldEraType on this policy's flat trade route yields -->
 		<Column name="TradeYieldEraType" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="GreatWorkHappiness" type="integer" default="0"/> <!-- LEKMOD: Happiness from each Great Work -->
+		<Column name="CultureFromUnitDeathPercent" type="integer" default="0"/> <!-- LEKMOD: Culture when a military unit is killed, % of its strength -->
+		<Column name="GreatMusicianBlastModifier" type="integer" default="0"/> <!-- LEKMOD: % on new Great Musicians' Concert Tours -->
+		<Column name="VotesPerTwoAlliedCS" type="boolean" default="false"/> <!-- LEKMOD: +1 World Congress vote per two allied City-States -->
 		<Column name="TourismModPerAlliedCS" type="integer" default="0"/> <!-- LEKMOD: % Tourism in every city per allied City-State -->
 		<Column name="NoExternalTradeRoutes" type="boolean" default="false"/> <!-- LEKMOD: no routes with other civs/City-States; adopting ends all routes -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0"/> <!-- LEKMOD: % on great work yields (not their Happiness) -->
@@ -188706,7 +188740,6 @@
 			<Description>TXT_KEY_POLICY_CREATIVE_EXPRESSION</Description>
 			<Civilopedia>TXT_KEY_POLICY_CREATIVE_EXPRESSION_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_CREATIVE_EXPRESSION_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>1</Level>
@@ -188735,7 +188768,6 @@
 			<Description>TXT_KEY_POLICY_VOLUNTEER_ARMY</Description>
 			<Civilopedia>TXT_KEY_POLICY_VOLUNTEER_ARMY_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_VOLUNTEER_ARMY_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>1</Level>
@@ -188751,7 +188783,6 @@
 			<Description>TXT_KEY_POLICY_COVERT_ACTION</Description>
 			<Civilopedia>TXT_KEY_POLICY_COVERT_ACTION_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_COVERT_ACTION_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>1</Level>
@@ -188810,7 +188841,6 @@
 			<Description>TXT_KEY_POLICY_FREE_MIND</Description>
 			<Civilopedia>TXT_KEY_POLICY_FREE_MIND_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_FREE_MIND_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>2</Level>
@@ -188843,7 +188873,6 @@
 			<Description>TXT_KEY_POLICY_NEW_DEAL</Description>
 			<Civilopedia>TXT_KEY_POLICY_NEW_DEAL_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_NEW_DEAL_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>2</Level>
@@ -188872,7 +188901,6 @@
 			<Description>TXT_KEY_POLICY_MEDIA_CULTURE</Description>
 			<Civilopedia>TXT_KEY_POLICY_MEDIA_CULTURE_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_MEDIA_CULTURE_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>3</Level>
@@ -189358,7 +189386,6 @@
 			<Description>TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE</Description>
 			<Civilopedia>TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_UNIVERSAL_HEALTHCARE_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>2</Level>
@@ -281875,4 +281902,502 @@
 			<ProductionModifier>25</ProductionModifier>
 		</Row>
 	</Policy_BuildingClassProductionModifiers>
+	<!-- Freedom: Covert Action, Volunteer Army, Creative Expression, Universal Healthcare, Free Mind, New Deal, Media Culture removed (no branch);
+	     Capitalism; NEW Liberated Arts, Fruits of Liberty, Republic of Letters (tier 1); Arsenal of Democracy (from scratch); NEW Thoughts and Prayers,
+	     Soft Power, Technocratic Efficiency (tier 2); NEW Broadcast Hegemony, Eminence, Free World (tier 3) -->
+	<Table name="Policy_BuildingClassFreeBuildings">
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)" />
+		<Column name="BuildingType" type="text" reference="Buildings(Type)" />
+	</Table>
+	<Table name="Policy_GPImprovementAdjacentYields">
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="AdjacentImprovementType" type="text" reference="Improvements(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Table name="Policy_ImprovementYieldPerEra">
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" />
+		<Column name="YieldType" type="text" reference="Yields(Type)" />
+		<Column name="Yield" type="integer" default="0" />
+	</Table>
+	<Policies>
+		<Row>
+			<ID>141</ID>
+			<Type>POLICY_LEKMOD_LIBERATED_ARTS</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<GreatWorkHappiness>1</GreatWorkHappiness>
+		</Row>
+		<Row>
+			<ID>142</ID>
+			<Type>POLICY_LEKMOD_FRUITS_OF_LIBERTY</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+		</Row>
+		<Row>
+			<ID>143</ID>
+			<Type>POLICY_LEKMOD_REPUBLIC_OF_LETTERS</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+		</Row>
+		<Row>
+			<ID>144</ID>
+			<Type>POLICY_LEKMOD_THOUGHTS_AND_PRAYERS</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>2</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<CultureFromUnitDeathPercent>50</CultureFromUnitDeathPercent>
+		</Row>
+		<Row>
+			<ID>145</ID>
+			<Type>POLICY_LEKMOD_SOFT_POWER</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_SOFT_POWER</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_SOFT_POWER_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_SOFT_POWER_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>2</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<GreatWriterRateModifier>25</GreatWriterRateModifier>
+			<GreatArtistRateModifier>25</GreatArtistRateModifier>
+			<GreatMusicianRateModifier>25</GreatMusicianRateModifier>
+			<GreatMusicianBlastModifier>25</GreatMusicianBlastModifier>
+		</Row>
+		<Row>
+			<ID>146</ID>
+			<Type>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>2</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+		</Row>
+		<Row>
+			<ID>147</ID>
+			<Type>POLICY_LEKMOD_BROADCAST_HEGEMONY</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>3</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<ExtraHappinessPerCity>-3</ExtraHappinessPerCity>
+		</Row>
+		<Row>
+			<ID>148</ID>
+			<Type>POLICY_LEKMOD_EMINENCE</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_EMINENCE</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_EMINENCE_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_EMINENCE_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>3</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<IncludesOneShotFreeUnits>true</IncludesOneShotFreeUnits>
+		</Row>
+		<Row>
+			<ID>149</ID>
+			<Type>POLICY_LEKMOD_FREE_WORLD</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_FREE_WORLD</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_FREE_WORLD_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_FREE_WORLD_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<Level>3</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<VotesPerTwoAlliedCS>true</VotesPerTwoAlliedCS>
+		</Row>
+	</Policies>
+	<Policy_BuildingClassHappiness>
+		<Delete PolicyType="POLICY_CAPITALISM" BuildingClassType="BUILDINGCLASS_MARKET"/>
+	</Policy_BuildingClassHappiness>
+	<Policy_BuildingClassYieldChanges>
+		<Row>
+			<PolicyType>POLICY_CAPITALISM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BANK</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_CAPITALISM</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_STOCK_EXCHANGE</BuildingClassType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+	</Policy_BuildingClassYieldChanges>
+	<Policy_GreatWorkYieldChanges>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_LIBERATED_ARTS</PolicyType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_SOFT_POWER</PolicyType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Policy_GreatWorkYieldChanges>
+	<Policy_BuildingClassFreeBuildings>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_LIBERATED_ARTS</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_COURTHOUSE_GALLERY</BuildingType>
+		</Row>
+	</Policy_BuildingClassFreeBuildings>
+	<Policy_ImprovementYieldChanges>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CUSTOMS_HOUSE</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CUSTOMS_HOUSE</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_CUSTOMS_HOUSE</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_SACRED_GROVE</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_SACRED_GROVE</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_FRUITS_OF_LIBERTY</PolicyType>
+			<ImprovementType>IMPROVEMENT_SACRED_GROVE</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Policy_ImprovementYieldChanges>
+	<Policy_GPImprovementAdjacentYields>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_REPUBLIC_OF_LETTERS</PolicyType>
+			<AdjacentImprovementType>IMPROVEMENT_MANUFACTORY</AdjacentImprovementType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_REPUBLIC_OF_LETTERS</PolicyType>
+			<AdjacentImprovementType>IMPROVEMENT_ACADEMY</AdjacentImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_REPUBLIC_OF_LETTERS</PolicyType>
+			<AdjacentImprovementType>IMPROVEMENT_CONCERT</AdjacentImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Policy_GPImprovementAdjacentYields>
+	<Policies>
+		<Update>
+			<Where Type="POLICY_ARSENAL_DEMOCRACY"/>
+			<Set CityStrengthMod="25"/>
+		</Update>
+	</Policies>
+	<Policy_UnitCombatProductionModifiers>
+		<Delete PolicyType="POLICY_ARSENAL_DEMOCRACY"/>
+	</Policy_UnitCombatProductionModifiers>
+	<Policy_FreePromotionUnitCombats>
+		<Delete PolicyType="POLICY_ARSENAL_DEMOCRACY"/>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_THOUGHTS_AND_PRAYERS</PolicyType>
+			<PromotionType>PROMOTION_FOREIGN_LANDS</PromotionType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+		</Row>
+	</Policy_FreePromotionUnitCombats>
+	<Policy_UnitCombatFreeExperiences>
+		<Row>
+			<PolicyType>POLICY_ARSENAL_DEMOCRACY</PolicyType>
+			<UnitCombatType>UNITCOMBAT_FIGHTER</UnitCombatType>
+			<FreeExperience>20</FreeExperience>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_ARSENAL_DEMOCRACY</PolicyType>
+			<UnitCombatType>UNITCOMBAT_BOMBER</UnitCombatType>
+			<FreeExperience>20</FreeExperience>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_ARSENAL_DEMOCRACY</PolicyType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+			<FreeExperience>20</FreeExperience>
+		</Row>
+	</Policy_UnitCombatFreeExperiences>
+	<Policy_ImprovementYieldPerEra>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_SOFT_POWER</PolicyType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Policy_ImprovementYieldPerEra>
+	<Policy_UnitClassResourceRequirementChanges>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_ROCKET_ARTILLERY</UnitClassType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_MOBILE_SAM</UnitClassType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_HELICOPTER_GUNSHIP</UnitClassType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_MISSILE_CRUISER</UnitClassType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_MODERN_ARMOR</UnitClassType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_JET_FIGHTER</UnitClassType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_STEALTH_BOMBER</UnitClassType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_NUCLEAR_SUBMARINE</UnitClassType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_NUCLEAR_MISSILE</UnitClassType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</PolicyType>
+			<UnitClassType>UNITCLASS_MECH</UnitClassType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Change>-1</Change>
+		</Row>
+	</Policy_UnitClassResourceRequirementChanges>
+	<Policy_CapitalYieldModifiers>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_BROADCAST_HEGEMONY</PolicyType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>50</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_BROADCAST_HEGEMONY</PolicyType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>50</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_BROADCAST_HEGEMONY</PolicyType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>50</Yield>
+		</Row>
+	</Policy_CapitalYieldModifiers>
+	<Policy_YieldModifiers>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_BROADCAST_HEGEMONY</PolicyType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>-10</Yield>
+		</Row>
+	</Policy_YieldModifiers>
+	<Policy_FreeUnitClasses>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_EMINENCE</PolicyType>
+			<UnitClassType>UNITCLASS_ARTIST</UnitClassType>
+			<Count>1</Count>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_EMINENCE</PolicyType>
+			<UnitClassType>UNITCLASS_WRITER</UnitClassType>
+			<Count>1</Count>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_EMINENCE</PolicyType>
+			<UnitClassType>UNITCLASS_MUSICIAN</UnitClassType>
+			<Count>1</Count>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_EMINENCE</PolicyType>
+			<UnitClassType>UNITCLASS_ENGINEER</UnitClassType>
+			<Count>1</Count>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_EMINENCE</PolicyType>
+			<UnitClassType>UNITCLASS_MERCHANT</UnitClassType>
+			<Count>1</Count>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_EMINENCE</PolicyType>
+			<UnitClassType>UNITCLASS_GREAT_GENERAL</UnitClassType>
+			<Count>1</Count>
+		</Row>
+	</Policy_FreeUnitClasses>
 </GameData>

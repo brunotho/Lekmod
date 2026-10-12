@@ -787,7 +787,11 @@ void CvUnit::initWithNameOffset(int iID, UnitTypes eUnit, int iNameOffset, UnitA
 	}
 	if (getUnitInfo().GetOneShotTourism() > 0)
 	{
+#ifdef LEKMOD_POLICY_REWORK
+		SetTourismBlastStrength(kPlayer.GetCulture()->GetTourismBlastStrength(getUnitInfo().GetOneShotTourism()) * (100 + kPlayer.GetLekmodMusicianBlastModifier()) / 100);
+#else
 		SetTourismBlastStrength(kPlayer.GetCulture()->GetTourismBlastStrength(getUnitInfo().GetOneShotTourism()));
+#endif
 	}
 
 	// GJS: Great Scientists now bulb for science at point of birth, not current science
@@ -1663,6 +1667,16 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer /*= NO_PLAYER*/)
 	}
 
 #ifdef ENHANCED_GRAPHS
+#ifdef LEKMOD_POLICY_REWORK
+	// Thoughts and Prayers: Culture when another player kills one of your military units (not upgrades or disbanding)
+	if (getUnitCombatType() != NO_UNITCOMBAT && ePlayer != NO_PLAYER && ePlayer != getOwner() && GET_PLAYER(getOwner()).GetLekmodUnitDeathCulturePercent() != 0)
+	{
+		const int iStrength = std::max(getUnitInfo().GetCombat(), getUnitInfo().GetRangedCombat());
+		const int iCulture = iStrength * GET_PLAYER(getOwner()).GetLekmodUnitDeathCulturePercent() / 100;
+		if (iCulture > 0)
+			GET_PLAYER(getOwner()).changeJONSCulture(iCulture);
+	}
+#endif
 	if (getUnitCombatType() != NO_UNITCOMBAT && ePlayer != NO_PLAYER && ePlayer != BARBARIAN_PLAYER)
 	{
 		GET_PLAYER(ePlayer).ChangeNumKilledUnits(1);

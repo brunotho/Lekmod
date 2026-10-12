@@ -316,6 +316,9 @@ public:
 #endif
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
 	int GetGreatWorkHappiness() const;
+#ifdef LEKMOD_POLICY_REWORK
+	bool IsLekmodPolicyGranted() const;
+#endif
 #endif
 	int GetPreferredDisplayPosition() const;
 	int GetPortraitIndex() const;
@@ -667,6 +670,9 @@ private:
 #endif
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
 	int m_iGreatWorkHappiness;
+#ifdef LEKMOD_POLICY_REWORK
+	bool m_bLekmodPolicyGranted;
+#endif
 #endif
 	int m_iPreferredDisplayPosition;
 	int m_iPortraitIndex;

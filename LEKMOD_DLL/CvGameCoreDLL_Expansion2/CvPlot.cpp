@@ -9169,6 +9169,11 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 	}
 
 #ifdef LEKMOD_POLICY_REWORK
+	// policies: yield per era and next to other improvements (Soft Power, Republic of Letters)
+	if (ePlayer != NO_PLAYER)
+		iYield += GET_PLAYER(ePlayer).GetLekmodPolicyImprovementYield(this, eImprovement, eYield);
+#endif
+#ifdef LEKMOD_POLICY_REWORK
 	// policies: % on this improvement's yields (Socialist Heritage: Landmarks and Festivals)
 	if (ePlayer != NO_PLAYER && iYield > 0)
 	{

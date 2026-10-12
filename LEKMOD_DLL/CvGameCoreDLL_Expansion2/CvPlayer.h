@@ -268,6 +268,12 @@ public:
 	int GetLekmodTourismModFromAlliedCS() const;
 	int GetLekmodGreatScientistDecayModifier() const;
 	bool IsLekmodNoExternalTrade() const;
+	int GetLekmodPolicyGreatWorkHappiness() const;
+	int GetLekmodUnitDeathCulturePercent() const;
+	int GetLekmodMusicianBlastModifier() const;
+	int GetLekmodAlliedCSVotes() const;
+	const std::vector<int>& GetLekmodFreeBuildingRows() const;
+	int GetLekmodPolicyImprovementYield(const CvPlot* pPlot, ImprovementTypes eImprovement, YieldTypes eYield) const;
 	void LekmodDoPolicyWaterUnits(PolicyTypes ePolicy);
 	int GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const;
 	int GetLekmodAllyUUPurchaseMod() const;
@@ -2651,6 +2657,13 @@ protected:
 	mutable std::vector<int> m_aiLekmodImprovementYieldMods;
 	mutable int m_iLekmodTourismModPerAlliedCS;
 	mutable bool m_bLekmodNoExternalTrade;
+	mutable std::vector<int> m_aiLekmodFreeBuildingRows;
+	mutable std::vector<int> m_aiLekmodGPAdjRows;
+	mutable std::vector<int> m_aiLekmodImpEraRows;
+	mutable int m_iLekmodGreatWorkHappiness;
+	mutable int m_iLekmodUnitDeathCulture;
+	mutable int m_iLekmodMusicianBlastMod;
+	mutable bool m_bLekmodVotesPerTwoCS;
 #endif
 #endif
 };

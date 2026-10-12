@@ -546,6 +546,10 @@ CvPlayer::CvPlayer() :
 	, m_bLekmodPolicyCacheDirty(true)
 	, m_iLekmodTourismModPerAlliedCS(0)
 	, m_bLekmodNoExternalTrade(false)
+	, m_iLekmodGreatWorkHappiness(0)
+	, m_iLekmodUnitDeathCulture(0)
+	, m_iLekmodMusicianBlastMod(0)
+	, m_bLekmodVotesPerTwoCS(false)
 #endif
 #endif
 
@@ -28369,6 +28373,13 @@ void CvPlayer::LekmodRebuildPolicyCache() const
 	m_aiLekmodImprovementYieldMods.clear();
 	m_iLekmodTourismModPerAlliedCS = 0;
 	m_bLekmodNoExternalTrade = false;
+	m_aiLekmodFreeBuildingRows.clear();
+	m_aiLekmodGPAdjRows.clear();
+	m_aiLekmodImpEraRows.clear();
+	m_iLekmodGreatWorkHappiness = 0;
+	m_iLekmodUnitDeathCulture = 0;
+	m_iLekmodMusicianBlastMod = 0;
+	m_bLekmodVotesPerTwoCS = false;
 	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
 	{
 		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
@@ -28399,12 +28410,100 @@ void CvPlayer::LekmodRebuildPolicyCache() const
 		m_iLekmodTourismModPerAlliedCS += pkPolicy->GetTourismModPerAlliedCS();
 		if (pkPolicy->IsNoExternalTradeRoutes())
 			m_bLekmodNoExternalTrade = true;
+		const std::vector<int>& aiFree = pkPolicy->GetBuildingClassFreeBuildings();
+		for (uint i = 0; i + 1 < aiFree.size(); i += 2)
+		{
+			m_aiLekmodFreeBuildingRows.push_back(aiFree[i]);
+			m_aiLekmodFreeBuildingRows.push_back(aiFree[i + 1]);
+		}
+		const std::vector<int>& aiAdj = pkPolicy->GetGPImprovementAdjacentYields();
+		for (uint i = 0; i + 2 < aiAdj.size(); i += 3)
+		{
+			m_aiLekmodGPAdjRows.push_back(aiAdj[i]);
+			m_aiLekmodGPAdjRows.push_back(aiAdj[i + 1]);
+			m_aiLekmodGPAdjRows.push_back(aiAdj[i + 2]);
+		}
+		const std::vector<int>& aiEra = pkPolicy->GetImprovementYieldPerEra();
+		for (uint i = 0; i + 2 < aiEra.size(); i += 3)
+		{
+			m_aiLekmodImpEraRows.push_back(aiEra[i]);
+			m_aiLekmodImpEraRows.push_back(aiEra[i + 1]);
+			m_aiLekmodImpEraRows.push_back(aiEra[i + 2]);
+		}
+		m_iLekmodGreatWorkHappiness += pkPolicy->GetGreatWorkHappiness();
+		m_iLekmodUnitDeathCulture += pkPolicy->GetCultureFromUnitDeathPercent();
+		m_iLekmodMusicianBlastMod += pkPolicy->GetGreatMusicianBlastModifier();
+		if (pkPolicy->IsVotesPerTwoAlliedCS())
+			m_bLekmodVotesPerTwoCS = true;
 	}
 	m_bLekmodPolicyCacheDirty = false;
 }
 void CvPlayer::LekmodSetPolicyCacheDirty()
 {
 	m_bLekmodPolicyCacheDirty = true;
+}
+int CvPlayer::GetLekmodPolicyGreatWorkHappiness() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_iLekmodGreatWorkHappiness;
+}
+int CvPlayer::GetLekmodUnitDeathCulturePercent() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_iLekmodUnitDeathCulture;
+}
+int CvPlayer::GetLekmodMusicianBlastModifier() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_iLekmodMusicianBlastMod;
+}
+/// Free World: +1 vote per two allied City-States (rounded up)
+int CvPlayer::GetLekmodAlliedCSVotes() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	if (!m_bLekmodVotesPerTwoCS)
+		return 0;
+	int iAllies = 0;
+	for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS; iMinor++)
+	{
+		if (GET_PLAYER((PlayerTypes)iMinor).isAlive() && GET_PLAYER((PlayerTypes)iMinor).GetMinorCivAI()->GetAlly() == GetID())
+			iAllies++;
+	}
+	return (iAllies + 1) / 2;
+}
+const std::vector<int>& CvPlayer::GetLekmodFreeBuildingRows() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_aiLekmodFreeBuildingRows;
+}
+/// Republic of Letters and Soft Power: policy yields of an improvement on this plot for this player
+int CvPlayer::GetLekmodPolicyImprovementYield(const CvPlot* pPlot, ImprovementTypes eImprovement, YieldTypes eYield) const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	int iYield = 0;
+	for (uint i = 0; i + 2 < m_aiLekmodImpEraRows.size(); i += 3)
+		if (m_aiLekmodImpEraRows[i] == eImprovement && m_aiLekmodImpEraRows[i + 1] == eYield)
+			iYield += m_aiLekmodImpEraRows[i + 2] * ((int)GetCurrentEra() + 1);
+	CvImprovementEntry* pkImprovement = GC.getImprovementInfo(eImprovement);
+	if (pPlot != NULL && pkImprovement != NULL && pkImprovement->IsCreatedByGreatPerson() && !m_aiLekmodGPAdjRows.empty())
+	{
+		for (int iDir = 0; iDir < NUM_DIRECTION_TYPES; iDir++)
+		{
+			CvPlot* pAdjacent = plotDirection(pPlot->getX(), pPlot->getY(), (DirectionTypes)iDir);
+			if (pAdjacent == NULL || pAdjacent->getImprovementType() == NO_IMPROVEMENT || pAdjacent->getOwner() != GetID())
+				continue;
+			for (uint i = 0; i + 2 < m_aiLekmodGPAdjRows.size(); i += 3)
+				if (m_aiLekmodGPAdjRows[i] == pAdjacent->getImprovementType() && m_aiLekmodGPAdjRows[i + 1] == eYield)
+					iYield += m_aiLekmodGPAdjRows[i + 2];
+		}
+	}
+	return iYield;
 }
 /// Policy change to a unit class's or building class's requirement of a resource (sum of adopted policies)
 int CvPlayer::GetLekmodResourceRequirementChange(bool bUnit, int iClass, ResourceTypes eResource) const
@@ -28964,6 +29063,16 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 #ifdef LEKMOD_POLICY_REWORK
 	LekmodSetPolicyCacheDirty();
 	GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
+	if (!pPolicy->GetBuildingClassFreeBuildings().empty() || !pPolicy->GetGPImprovementAdjacentYields().empty() || !pPolicy->GetImprovementYieldPerEra().empty() || pPolicy->GetGreatWorkHappiness() != 0)
+	{
+		int iFreeCityLoop;
+		for (CvCity* pFreeCity = firstCity(&iFreeCityLoop); pFreeCity != NULL; pFreeCity = nextCity(&iFreeCityLoop))
+		{
+			pFreeCity->LekmodUpdatePolicyFreeBuildings();
+			pFreeCity->GetCityBuildings()->calculateHappinessFromGreatWorks();
+			pFreeCity->updateYield();
+		}
+	}
 #endif
 #if defined(LEKMOD_v34) // Grant free resources from this policy
 	for (int i = 0; i < GC.getNumResourceInfos(); ++i)

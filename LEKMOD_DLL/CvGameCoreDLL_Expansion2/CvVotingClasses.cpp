@@ -3690,6 +3690,10 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		// League Votes from Policies
 		int iPolicyVotes = GET_PLAYER(ePlayer).GetPolicyExtraLeagueVotes();
 		iVotes += iPolicyVotes;
+#ifdef LEKMOD_POLICY_REWORK
+		// Free World: +1 per two allied City-States (gone with the ideology)
+		iVotes += GET_PLAYER(ePlayer).GetLekmodAlliedCSVotes();
+#endif
 #endif
 
 		// World Religion

@@ -180,6 +180,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 #endif
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
 	m_iGreatWorkHappiness(0),
+#ifdef LEKMOD_POLICY_REWORK
+	m_bLekmodPolicyGranted(false),
+#endif
 #endif
 	m_iPreferredDisplayPosition(0),
 	m_iPortraitIndex(-1),
@@ -604,6 +607,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
 	m_iGreatWorkHappiness = kResults.GetInt("GreatWorkHappiness");
+#ifdef LEKMOD_POLICY_REWORK
+	m_bLekmodPolicyGranted = kResults.GetBool("LekmodPolicyGranted");
+#endif
 #endif
 	m_iPreferredDisplayPosition = kResults.GetInt("DisplayPosition");
 	m_iPortraitIndex = kResults.GetInt("PortraitIndex");
@@ -2268,6 +2274,13 @@ int CvBuildingEntry::GetGarrisonStrengthBonus() const
 #endif
 #if defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
 /// How much happiness does this building provide to Great Works inside it
+#ifdef LEKMOD_POLICY_REWORK
+/// Given and taken away by Policy_BuildingClassFreeBuildings (CvCity::LekmodUpdatePolicyFreeBuildings)
+bool CvBuildingEntry::IsLekmodPolicyGranted() const
+{
+	return m_bLekmodPolicyGranted;
+}
+#endif
 int CvBuildingEntry::GetGreatWorkHappiness() const
 {
 	return m_iGreatWorkHappiness;
@@ -4205,6 +4218,10 @@ void CvCityBuildings::SetNumRealBuildingTimed(BuildingTypes eIndex, int iNewValu
 		//Test for any achievements being unlocked.
 		pPlayer->GetPlayerAchievements().FinishedBuilding(m_pCity, eIndex);
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	if (iChangeNumRealBuilding != 0)
+		m_pCity->LekmodUpdatePolicyFreeBuildings();
+#endif
 }
 
 /// Accessor: Get number of free buildings of this type in city
@@ -4874,6 +4891,9 @@ void CvCityBuildings::calculateHappinessFromGreatWorks()
 				if (!pkBuildingInfo)
 					continue;
 				int buildingHappiness = pkBuildingInfo->GetGreatWorkHappiness();
+#ifdef LEKMOD_POLICY_REWORK
+				buildingHappiness += GET_PLAYER(m_pCity->getOwner()).GetLekmodPolicyGreatWorkHappiness();
+#endif
 				iTotalHappiness += buildingHappiness;
 			}
 		}
