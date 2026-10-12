@@ -43,6 +43,7 @@ enum LekmodResolutionColumn
 	LRC_HAPPINESS_PER_FACTORY,		// LekmodHappinessPerFactory
 	LRC_TRANSPARENCY,				// LekmodTransparency: other civs' cities revealed (radius 2)
 	LRC_TOURISM,					// LekmodTourismModifier: % Tourism everywhere
+	LRC_CHARTER,					// LekmodCivilLiberties: ideology unhappiness from other ideologies' influence returns (weaker formula)
 	NUM_LEKMOD_RESOLUTION_COLUMNS
 };
 #endif

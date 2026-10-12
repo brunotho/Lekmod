@@ -3393,6 +3393,9 @@ PublicOpinionTypes CvPlayerCulture::GetPublicOpinionType() const
 /// Which ideology would the populace prefer?
 PolicyBranchTypes CvPlayerCulture::GetPublicOpinionPreferredIdeology() const
 {
+#ifdef LEKMOD_NO_PUBLIC_OPINION
+	return NO_POLICY_BRANCH_TYPE; // influence never pushes an ideology switch (also with the Charter of Civil Liberties)
+#endif
 	return m_ePreferredIdeology;
 }
 
@@ -3472,6 +3475,10 @@ void CvPlayerCulture::DoPublicOpinion()
 	// no dissidents, and influence never pushes an ideology switch (only the World Ideology proposal changes it)
 	if (m_pPlayer->GetPlayerPolicies()->GetLateGamePolicyTree() != NO_POLICY_BRANCH_TYPE)
 		m_eOpinion = PUBLIC_OPINION_CONTENT;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Charter of Civil Liberties: public opinion works again while the resolution is active
+	if (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_CHARTER) == 0)
+#endif
 	return;
 #endif
 
@@ -4007,6 +4014,17 @@ int CvPlayerCulture::ComputePublicOpinionUnhappiness(int iDissatisfaction, int &
 int CvPlayerCulture::ComputePublicOpinionUnhappiness(int iDissatisfaction, int &iPerCityUnhappy, int &iUnhappyPerXPop)
 #endif
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Charter of Civil Liberties: dissatisfaction 1-5 (dissidents, unrest, civil resistance, revolutionary wave, system collapse);
+	// Unhappiness = dissatisfaction/2 x cities + population / (20 - 2 x dissatisfaction)
+	if (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_CHARTER) != 0)
+	{
+		const int iLevel = std::max(1, std::min(5, iDissatisfaction));
+		iPerCityUnhappy = iLevel / 2;
+		iUnhappyPerXPop = 20 - 2 * iLevel;
+		return (iLevel * m_pPlayer->getNumCities()) / 2 + m_pPlayer->getTotalPopulation() / iUnhappyPerXPop;
+	}
+#endif
 	if (iDissatisfaction < 3)
 	{
 		iPerCityUnhappy = 1;

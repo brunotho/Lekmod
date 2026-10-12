@@ -194700,6 +194700,7 @@
 		<Column name="LekmodHappinessPerFactory" type="integer" default="0"/>
 		<Column name="LekmodTransparency" type="integer" default="0"/>
 		<Column name="LekmodTourismModifier" type="integer" default="0"/>
+		<Column name="LekmodCivilLiberties" type="integer" default="0"/>
 		<Column name="LekmodAllPlayersEra" type="text" reference="Eras(Type)" default="NULL"/> <!-- LEKMOD: every living major civ in this era -->
 		<Column name="LekmodAllHumansEra" type="text" reference="Eras(Type)" default="NULL"/> <!-- LEKMOD: every living human player in this era -->
 		<Column name="LekmodRepealsResolution" type="text" default="NULL"/> <!-- LEKMOD: ends this resolution when enacted -->
@@ -195549,6 +195550,16 @@
 			<LekmodAllPlayersEra>ERA_MODERN</LekmodAllPlayersEra>
 			<LekmodClimateReparations>200</LekmodClimateReparations>
 			<LekmodHappinessPerFactory>1</LekmodHappinessPerFactory>
+		</Row>
+		<Row>
+			<ID>31</ID>
+			<Type>RESOLUTION_LEKMOD_CIVIL_LIBERTIES</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_CIVIL_LIBERTIES</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_CIVIL_LIBERTIES_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
+			<LekmodCivilLiberties>1</LekmodCivilLiberties>
 		</Row>
 	</Resolutions>
 	<Table name="Resolution_LekmodBuildingClassProductionModifiers"> <!-- LEKMOD: % Production toward a building class while the resolution is active -->

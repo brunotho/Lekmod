@@ -6025,7 +6025,8 @@ static const char* s_aszLekmodResolutionColumns[NUM_LEKMOD_RESOLUTION_COLUMNS] =
 	"LekmodDurationTurns", "LekmodSpaceshipCostModifier", "LekmodAttackModifier", "LekmodDevelopmentFund", "LekmodBreakdown",
 	"LekmodCapturedCapitalVotes", "LekmodLuxuryHappinessPercent", "LekmodBlackout", "LekmodVoiceForTheVoiceless", "LekmodExperienceModifier",
 	"LekmodAirExperienceModifier", "LekmodTargetVotes", "LekmodTargetCombatModifier", "LekmodTargetNoTrade", "LekmodFirstTechGoldPercent",
-	"LekmodTechDiscountPerCiv", "LekmodClimateReparations", "LekmodHappinessPerFactory", "LekmodTransparency", "LekmodTourismModifier"
+	"LekmodTechDiscountPerCiv", "LekmodClimateReparations", "LekmodHappinessPerFactory", "LekmodTransparency", "LekmodTourismModifier",
+	"LekmodCivilLiberties"
 };
 
 /// Sum of a Lekmod column over the active resolutions (only those whose chosen civ is eTarget, if given)
