@@ -114,7 +114,7 @@ NEW. Enemy units within 1 tile have -15% combat strength.
 ZEALOT (PROMOTION_ZEALOT)
 -------------------------
 Tags: promotions, religion, civs
-NEW. Killing a unit yields Faith equal to its combat strength (max 40).
+NEW. Killing a unit yields Faith equal to its combat strength (max. 40).
 - Changed: the Pictish Warrior and the Maccabee get Zealot instead of their own faith-from-kills ability
 - Changed: the Pictish Warrior's faith from kills is now capped at 40 (was uncapped)
 - Fixed: the Pictish Warrior tooltip now shows the faith icon
@@ -535,9 +535,9 @@ New main menu background pictures, a different one each time.
 BARBARIAN KILL BONUSES
 ----------------------
 Tags: game mechanics, combat
-From turn 70 on, farming barbarians stops paying off.
-- Changed: from turn 70, killing barbarians gives no bonus yields any more (Honor culture, gold and science from kills, Iron Fist, Zealot, the Aztec ability and every other kill bonus). Kills of other civilizations' and city-states' units are unaffected
-- DLL: LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 70 (CvPlayer::DoYieldsFromKill returns early)
+From turn 80 on, farming barbarians stops paying off.
+- Changed: from turn 80, killing barbarians gives no bonus yields any more (Honor culture, gold and science from kills, Iron Fist, Zealot, the Aztec ability and every other kill bonus). Kills of other civilizations' and city-states' units are unaffected
+- DLL: LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 80 (CvPlayer::DoYieldsFromKill returns early)
 
 TECH TREE CHANGES
 -----------------
@@ -578,10 +578,10 @@ City-state banners show who has pledged to protect them.
 MILITARY CASTE (POLICY_MILITARY_CASTE)
 --------------------------------------
 Tags: policies
-From turn 70 on, Military Caste's city bonus no longer needs a garrison.
-- Changed: from turn 70, every city gets +2 Culture and +1 Happiness from Military Caste, garrisoned or not (before turn 70 it still needs a garrisoned unit)
+From turn 80 on, Military Caste's city bonus no longer needs a garrison.
+- Changed: from turn 80, every city gets +2 Culture and +1 Happiness from Military Caste, garrisoned or not (before turn 80 it still needs a garrisoned unit)
 - Note: garrison bonuses from buildings still need a garrisoned unit. Piety's and Tradition's garrison effects get the same rule with their policy reworks
-- DLL: LEKMOD_POLICY_GARRISON_ATTACH_TURN 70 (CvCity::GetBaseYieldRateFromGarrison: policy part only when ungarrisoned; local happiness)
+- DLL: LEKMOD_POLICY_GARRISON_ATTACH_TURN 80 (CvCity::GetBaseYieldRateFromGarrison: policy part only when ungarrisoned; local happiness)
 
 WORKER TURNS REMAINING
 ----------------------
@@ -1009,7 +1009,7 @@ Drydocks work like naval Citadels; Repair Fleet heals less.
 - Added: Drydocks claim all surrounding tiles, like Citadels
 - Added: Drydocks can be built directly next to your territory, not only inside it
 - Added: units in a Drydock get +25% defense
-- Changed: Drydock: 3 Production (was 5)
+- Changed: Drydock: 4 Production (was 5)
 - Changed: Repair Fleet heals 25 HP (was a full heal)
 - Changed: Chile: only Fishing Boats claim the surrounding tiles in its unique ability (Drydocks now do this for everyone)
 - Fixed: the Drydock's Civilopedia page showed the Manufactory's text
@@ -1545,7 +1545,7 @@ TRADITION (POLICY_BRANCH_TRADITION)
 ----------------------------------
 Tags: policies
 - Changed: opener: border growth bonus 25% -> 20% (the Culture cost of new tiles rises 20% slower)
-- Changed: Oligarchy: free Walls in your first 2 cities without Walls; 5 units cost no maintenance; cities with a garrison (not Recon) get +1 Gold and +1 Culture (every city from turn 70)
+- Changed: Oligarchy: free Walls in your first 2 cities without Walls; 5 units cost no maintenance; cities with a garrison (not Recon) get +1 Gold and +1 Culture (every city from turn 80)
 - Removed: Oligarchy: garrisoned units no longer cost no maintenance; no +50% ranged strength for garrisoned cities
 - DLL: Policy_GarrisonYieldChanges, NumCitiesFreeWalls only counts cities without walls and gives maintenance-free walls (LEKMOD_POLICY_REWORK)
 
@@ -1560,6 +1560,10 @@ COMMERCE (POLICY_BRANCH_COMMERCE)
 Tags: policies, art
 - Removed: finisher: no more +1 Food from unique improvements (Scottish Caer); Trading Posts keep it
 - Changed: new branch picture
+- Changed: Silk Road: +50% range for trade routes to other civilizations and City-States
+- Changed: Protectionism requires Silk Road (was Mercantilism); Mercenary Army requires Protectionism; the tree is rearranged (Silk Road on top; Entrepreneurship, Mercantilism and Protectionism below it; Mercenary Army below Protectionism)
+- Changed: finisher: 1 free Great Merchant (was 2)
+- DLL: Policies.ExternalTradeRouteRangeModifier (CvGameTrade::IsValidTradeRoutePath)
 
 HONOR (POLICY_BRANCH_HONOR)
 --------------------------
@@ -1573,21 +1577,23 @@ Tags: policies, combat
 - Changed: Military Tradition: unit upgrades 10% cheaper; +100% Production toward Armories; +30% toward Courthouses (was 50%); cities with a Courthouse get +3 Production +3 Food (doesn't stack with Expansionism's Colonial Administration)
 - Changed: Military Caste: the Courthouse +2 Happiness doesn't stack with Expansionism's Colonial Infrastructure
 - Removed: Military Tradition: Citadel yields; Courthouse Gold
-- Changed: finisher: all non-air military units get the Discipline promotion (+50% Experience); +1 Food from Barracks, Colosseums and National Wonders
-- Removed: finisher: Science from kills; +1 Food in every city; Armory Food
-- Note: National Wonders for the finisher Food are the Legalism list plus the Uranium Mapping Project, Apollo Program building and Canal Project
-- DLL: Policies.CampClearGold, Policies.FreeTilesExistingCities (LEKMOD_POLICY_REWORK); kill caps use Policy_YieldFromKills.Max
+- Changed: finisher: +1 Food from Barracks and Colosseums; all non-air military units get the Discipline promotion (+50% Experience)
+- Removed: finisher: Science from kills; +1 Food in every city; Armory and National Wonder Food
+- DLL: Policies.CampClearGold, Policies.FreeTilesExistingCities (LEKMOD_POLICY_REWORK); kill caps use Policy_YieldFromKills.Max; Policy_BuildingClassNoMaintenance (Sacred Duty, CvTreasury::GetBuildingGoldMaintenance)
 
 PIETY (POLICY_BRANCH_PIETY)
 --------------------------
 Tags: policies, religion
 - Changed: opener: +100% Production toward Shrines and Temples (was 50%)
-- Changed: Theocracy is now Sacred Duty: Temples +2 Gold (was +1); 5 units cost no maintenance; cities with a garrison (not Recon) get +1 Faith and +1 Culture (every city from turn 70); clearing a Barbarian Encampment gives +20 Gold
-- Removed: Sacred Duty: Shrine Gold
+- Changed: Theocracy is now Sacred Duty: Temples cost no Gold maintenance; 5 units cost no maintenance; clearing a Barbarian Encampment gives +20 Gold; cities with a garrison (not Recon) get +1 Faith and +1 Culture (every city from turn 80); Grand Temple +25% Gold in its city (was +33%)
+- Removed: Sacred Duty: Shrine and Temple Gold; Holy Site Gold (moved to the finisher)
 - Changed: Mandate of Heaven: Palace +2 Faith (was +1); every city you own claims 2 extra tiles when you adopt it
-- Changed: the +25% Production toward religious buildings (it only matters for Georgia, who builds them with Production) moves from Mandate of Heaven to Reformation, along with the Faith discount
-- Removed: Mandate of Heaven: Palace Production; the Faith purchase discount (moved to Reformation)
-- Changed: Reformation: 20% discount on Faith purchases of religious units and buildings
+- Changed: the +25% Production toward religious buildings (it only matters for Georgia, who builds them with Production) moves from Mandate of Heaven to Reformation
+- Removed: Mandate of Heaven: Palace Production; the Faith purchase discount (moved to Organized Religion)
+- Changed: Organized Religion: 20% discount on Faith purchases of religious units and buildings
+- Changed: Religious Tolerance: tooltip lists Temple Science, Grand Temple Science, then the second Pantheon belief
+- Changed: finisher: Holy Sites +1 Food, +3 Gold and +1 Tourism; a free Garden in your first 5 cities (was 4)
+- Removed: finisher: Holy Site Culture
 - Removed: Reformation: border growth bonus
 
 POLICY TEXTS (POLICY_BRANCH_*)
@@ -1595,7 +1601,10 @@ POLICY TEXTS (POLICY_BRANCH_*)
 Tags: policies, ui
 - Changed: every policy tooltip (not the ideologies) lists its effects as bullet points; long bullets wrap with the text lined up under the first line
 - Changed: Quinquereme: its texts describe carrying troops instead of pillaging and plundering, and no longer mention the Great Lighthouse
-- Changed: Warrior Code and Zealot texts say that barbarian kills stop giving yields from turn 70 (this already applied to all kill yields)
+- Changed: Warrior Code and Zealot texts say that barbarian kills stop giving yields from turn 80 (this already applied to all kill yields)
+- Changed: the tree tooltips (opener and finisher) no longer start with a sentence describing the tree
+- Changed: garrison effects are the last bullet of their policy; kill caps read "max. 40"
+- Changed: the Civilopedia shows the new ideology tenets with their ideology's icon and without a duplicated history text
 - Fixed: a few unit and building texts showed a gap where an icon did not exist (Czech Legion, Arabia's building, Huns' building, Serai, a Courthouse replacement)
 
 RATIONALISM (POLICY_BRANCH_RATIONALISM)
@@ -1610,7 +1619,7 @@ Tags: policies
 - Added: finisher: a free Great Scientist; Academies on strategic resources provide double the resource
 - Removed: Sovereignty: +1 Gold from Science buildings
 - Removed: finisher: +10% Science while the empire is happy
-- Changed: the tree is rearranged (Sovereignty and Humanism on top; Scientific Revolution below both, Free Thought below Humanism)
+- Changed: the tree is rearranged like Expansionism (Humanism and Sovereignty on top; Free Thought below Humanism, Scientific Revolution below Sovereignty, Secularism below Scientific Revolution)
 - Dev: Sovereignty's University Happiness first sat in a code path that is compiled out; moved to the live one
 - DLL: Policy_BuildingClassPurchaseCostModifiers, Policy_BuildingClassHappinessUntilIdeology, Policy_BuildingClassGoldPerEarlierIdeology, Policy_ImprovementResourceExtractionMods, Policies.TempScienceModifier/TempScienceTurns; new saved player fields (old saves incompatible)
 
@@ -1627,7 +1636,7 @@ Tags: policies
 - Changed: Consulates is now Open Markets: Friendly and Allied City-States give 50% more Food, Culture, Faith and Happiness
 - Removed: Open Markets: its World Congress Delegates (moved to the finisher), including the extra Delegate per era from the Industrial Era on
 - Dev: a leftover script still gave Consulates/Open Markets a Delegate per era from the Industrial Era; removed
-- Changed: finisher: +1 World Congress Delegate; buy Great Engineers, Generals and Writers with Gold from the Industrial Era (1000, then 1500, 2500, 4000 ...; all types count together)
+- Changed: finisher: +1 World Congress Delegate; buy Great Engineers, Generals and Writers with Gold from the Industrial Era (1000, then 1500, 2500, 4000 etc.; all types count together; purchase discounts don't apply)
 - Removed: finisher: Great People gifts from allies, 50% more City-State yields, double unit gifts (moved to Open Markets and Treaty of Arms)
 - DLL: Policies.AllyCityStateVisionRange, AllyMilitaristicUUPurchaseMod, ImmediateMilitaristicGift, Policy_GoldPurchaseUnitClasses (LEKMOD_POLICY_REWORK); Mercantile Happiness now uses the player's CityStateBonusModifier; new saved fields in CvPlayer and CvMinorCivAI
 
@@ -1726,8 +1735,9 @@ Tags: policies, game mechanics
 AESTHETICS (POLICY_BRANCH_AESTHETICS)
 -------------------------------------
 Tags: policies
-- Changed: Flourishing of the Arts: now right below Cultural Centers (requires only Cultural Centers); +1 Culture and +1 Tourism from every Great Work and World Wonder; starts a 6-turn Golden Age (was 8)
-- Changed: Artistic Genius: Great Works +1 Science +1 Culture (was +3 Science); Amphitheaters, Opera Houses, Museums and Broadcast Towers +1 Culture on top of their +1 Science; Monuments +1 Science +1 Culture
+- Changed: Flourishing of the Arts: now right below Cultural Centers (requires only Cultural Centers); +1 Culture and +1 Tourism from every World Wonder; starts a 6-turn Golden Age (was 8)
+- Removed: Flourishing of the Arts: Culture and Tourism from Great Works
+- Changed: Artistic Genius: Great Works +1 Science +1 Culture (was +3 Science); Amphitheaters, Opera Houses, Museums and Broadcast Towers +1 Culture on top of their +1 Science; Monuments +1 Science +1 Culture; Festivals +1 Science per era (was +2)
 - Changed: Aesthetics tooltips say "culture buildings" (Monument, Amphitheater, Opera House, Museum, Broadcast Tower) instead of listing them
 - Changed: Cultural Exchange is now Literary Tradition: requires Flourishing of the Arts; a free Great Writer; +1 Culture from Trading Posts
 - Removed: Literary Tradition: Culture from Great Person improvements, Landmarks, Moai, Brazilwood Camps, Chateaus, Caers and Citadels

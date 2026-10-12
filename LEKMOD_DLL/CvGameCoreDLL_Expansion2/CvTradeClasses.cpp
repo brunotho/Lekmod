@@ -528,6 +528,14 @@ bool CvGameTrade::IsValidTradeRoutePath (CvCity* pOriginCity, CvCity* pDestCity,
 	// beyond the origin player's trade range
 	int iPathDistance = pPathfinderNode->m_iTotalCost;
 	int iRange = GET_PLAYER(eOriginPlayer).GetTrade()->GetTradeRouteRange(eDomain, pOriginCity) * 100 + 99; // adding 99 so that any movement penalties are ignored
+#ifdef LEKMOD_POLICY_REWORK
+	// Silk Road: longer routes to other civilizations and City-States
+	const int iExternalRangeMod = GET_PLAYER(eOriginPlayer).GetLekmodExternalTradeRangeModifier();
+	if (iExternalRangeMod != 0 && pDestCity->getOwner() != eOriginPlayer)
+	{
+		iRange = GET_PLAYER(eOriginPlayer).GetTrade()->GetTradeRouteRange(eDomain, pOriginCity) * (100 + iExternalRangeMod) / 100 * 100 + 99;
+	}
+#endif
 	if (iPathDistance > iRange)
 	{
 		return false;

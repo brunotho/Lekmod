@@ -28894,6 +28894,38 @@ bool CvPlayer::LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const
 	return false;
 }
 /// Gold cost of the next Great Person bought with Gold: 1000, 1500, 2500, 4000, ... (all types share the count)
+/// % range of trade routes to other civilizations and City-States from policies (Silk Road)
+int CvPlayer::GetLekmodExternalTradeRangeModifier() const
+{
+	int iMod = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy != NULL && pkPolicy->GetExternalTradeRouteRangeModifier() != 0 && GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) && !GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			iMod += pkPolicy->GetExternalTradeRouteRangeModifier();
+	}
+	return iMod;
+}
+/// Gold maintenance of buildings that policies make free (Sacred Duty: Temples)
+int CvPlayer::GetLekmodPolicyFreeBuildingMaintenance() const
+{
+	int iFree = 0;
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy == NULL || pkPolicy->GetNoMaintenanceBuildingClasses().empty() || !GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+			continue;
+		const std::vector<int>& aiClasses = pkPolicy->GetNoMaintenanceBuildingClasses();
+		for (uint i = 0; i < aiClasses.size(); i++)
+		{
+			const BuildingTypes eBuilding = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(aiClasses[i]);
+			CvBuildingEntry* pkBuilding = (eBuilding != NO_BUILDING) ? GC.getBuildingInfo(eBuilding) : NULL;
+			if (pkBuilding != NULL && pkBuilding->GetGoldMaintenance() > 0)
+				iFree += pkBuilding->GetGoldMaintenance() * countNumBuildings(eBuilding);
+		}
+	}
+	return iFree;
+}
 int CvPlayer::GetLekmodGreatPersonGoldCost() const
 {
 	const int iBought = m_iLekmodGoldGreatPeoplePurchased;

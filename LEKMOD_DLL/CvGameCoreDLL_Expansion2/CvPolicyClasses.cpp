@@ -297,6 +297,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iCultureFromUnitDeathPercent(0),
 	m_iGreatMusicianBlastModifier(0),
 	m_bVotesPerTwoAlliedCS(false),
+	m_iExternalTradeRouteRangeModifier(0),
 	m_iTradeYieldPerEraTimes100(0),
 	m_iTradeYieldEra(NO_ERA),
 	m_bNoExternalTradeRoutes(false),
@@ -842,6 +843,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iCultureFromUnitDeathPercent = kResults.GetInt("CultureFromUnitDeathPercent");
 	m_iGreatMusicianBlastModifier = kResults.GetInt("GreatMusicianBlastModifier");
 	m_bVotesPerTwoAlliedCS = kResults.GetBool("VotesPerTwoAlliedCS");
+	m_iExternalTradeRouteRangeModifier = kResults.GetInt("ExternalTradeRouteRangeModifier");
 	{
 		std::string strKey("Policy_BuildingClassGreatWorks");
 		Database::Results* pResults = kUtility.GetResults(strKey);
@@ -852,6 +854,18 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 		{
 			m_aiBuildingClassGreatWorks.push_back(pResults->GetInt(0));
 			m_aiBuildingClassGreatWorks.push_back(pResults->GetInt(1));
+		}
+		pResults->Reset();
+	}
+	{
+		std::string strKey("Policy_BuildingClassNoMaintenance");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID from Policy_BuildingClassNoMaintenance inner join BuildingClasses on BuildingClasses.Type = BuildingClassType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiNoMaintenanceBuildingClasses.push_back(pResults->GetInt(0));
 		}
 		pResults->Reset();
 	}
@@ -3085,6 +3099,16 @@ int CvPolicyEntry::GetGreatMusicianBlastModifier() const
 bool CvPolicyEntry::IsVotesPerTwoAlliedCS() const
 {
 	return m_bVotesPerTwoAlliedCS;
+}
+/// % range of trade routes to other civilizations and City-States (Silk Road)
+int CvPolicyEntry::GetExternalTradeRouteRangeModifier() const
+{
+	return m_iExternalTradeRouteRangeModifier;
+}
+/// Building classes that cost no Gold maintenance (Sacred Duty: Temples)
+const std::vector<int>& CvPolicyEntry::GetNoMaintenanceBuildingClasses() const
+{
+	return m_aiNoMaintenanceBuildingClasses;
 }
 /// (required building class, free building) pairs: cities with the class get the building (Liberated Arts: Courthouse Great Work slots)
 const std::vector<int>& CvPolicyEntry::GetBuildingClassFreeBuildings() const

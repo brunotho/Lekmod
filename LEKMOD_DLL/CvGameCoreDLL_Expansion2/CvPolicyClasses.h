@@ -337,6 +337,8 @@ public:
 	int GetCultureFromUnitDeathPercent() const;
 	int GetGreatMusicianBlastModifier() const;
 	bool IsVotesPerTwoAlliedCS() const;
+	int GetExternalTradeRouteRangeModifier() const;
+	const std::vector<int>& GetNoMaintenanceBuildingClasses() const;
 	const std::vector<int>& GetBuildingClassFreeBuildings() const;
 	const std::vector<int>& GetGPImprovementAdjacentYields() const;
 	const std::vector<int>& GetImprovementYieldPerEra() const;
@@ -720,6 +722,8 @@ private:
 	int m_iCultureFromUnitDeathPercent;
 	int m_iGreatMusicianBlastModifier;
 	bool m_bVotesPerTwoAlliedCS;
+	int m_iExternalTradeRouteRangeModifier;
+	std::vector<int> m_aiNoMaintenanceBuildingClasses;
 	std::vector<int> m_aiBuildingClassFreeBuildings;
 	std::vector<int> m_aiGPImprovementAdjacentYields;
 	std::vector<int> m_aiImprovementYieldPerEra;

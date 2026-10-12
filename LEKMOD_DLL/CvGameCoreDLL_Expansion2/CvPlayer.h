@@ -284,6 +284,8 @@ public:
 	bool LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const;
 	bool LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const;
 	int GetLekmodGreatPersonGoldCost() const;
+	int GetLekmodExternalTradeRangeModifier() const;
+	int GetLekmodPolicyFreeBuildingMaintenance() const;
 	void ChangeLekmodGoldGreatPeoplePurchased(int iChange);
 	void SetLekmodIdeologyTurn(int iTurn) { m_iLekmodIdeologyTurn = iTurn; }
 #endif

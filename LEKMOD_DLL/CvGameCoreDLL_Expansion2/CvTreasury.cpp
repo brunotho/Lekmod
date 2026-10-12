@@ -787,6 +787,10 @@ int CvTreasury::CalculateInflatedCosts()
 int CvTreasury::GetBuildingGoldMaintenance() const
 {
 	int iMaintenance = GetBaseBuildingGoldMaintenance();
+#ifdef LEKMOD_POLICY_REWORK
+	// Buildings that policies make free (Sacred Duty: Temples)
+	iMaintenance = MAX(0, iMaintenance - m_pPlayer->GetLekmodPolicyFreeBuildingMaintenance());
+#endif
 
 	// Player modifier
 	iMaintenance *= (100 + m_pPlayer->GetBuildingGoldMaintenanceMod());

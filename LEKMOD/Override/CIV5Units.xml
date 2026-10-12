@@ -187780,6 +187780,7 @@
 		<Column name="GreatWorkHappiness" type="integer" default="0"/> <!-- LEKMOD: Happiness from each Great Work -->
 		<Column name="CultureFromUnitDeathPercent" type="integer" default="0"/> <!-- LEKMOD: Culture when a military unit is killed, % of its strength -->
 		<Column name="GreatMusicianBlastModifier" type="integer" default="0"/> <!-- LEKMOD: % on new Great Musicians' Concert Tours -->
+		<Column name="ExternalTradeRouteRangeModifier" type="integer" default="0"/> <!-- LEKMOD: % range of trade routes to other civs and City-States -->
 		<Column name="VotesPerTwoAlliedCS" type="boolean" default="false"/> <!-- LEKMOD: +1 World Congress vote per two allied City-States -->
 		<Column name="TourismModPerAlliedCS" type="integer" default="0"/> <!-- LEKMOD: % Tourism in every city per allied City-State -->
 		<Column name="NoExternalTradeRoutes" type="boolean" default="false"/> <!-- LEKMOD: no routes with other civs/City-States; adopting ends all routes -->
@@ -281542,7 +281543,6 @@
 			<ID>136</ID>
 			<Type>POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_MONUMENTS_OF_THE_PEOPLE_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<Level>1</Level>
@@ -281554,7 +281554,6 @@
 			<ID>137</ID>
 			<Type>POLICY_LEKMOD_SOCIALIST_HERITAGE</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_SOCIALIST_HERITAGE_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<Level>1</Level>
@@ -281567,7 +281566,6 @@
 			<ID>138</ID>
 			<Type>POLICY_LEKMOD_RE_EDUCATION</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_RE_EDUCATION</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_RE_EDUCATION_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_RE_EDUCATION_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<Level>2</Level>
@@ -281580,7 +281578,6 @@
 			<ID>139</ID>
 			<Type>POLICY_LEKMOD_ATOMIC_PROGRAM</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_ATOMIC_PROGRAM_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<Level>2</Level>
@@ -281592,7 +281589,6 @@
 			<ID>140</ID>
 			<Type>POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_FIVE_YEAR_OFFENSIVE_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
 			<Level>2</Level>
@@ -281900,7 +281896,6 @@
 			<ID>141</ID>
 			<Type>POLICY_LEKMOD_LIBERATED_ARTS</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>1</Level>
@@ -281913,7 +281908,6 @@
 			<ID>142</ID>
 			<Type>POLICY_LEKMOD_FRUITS_OF_LIBERTY</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>1</Level>
@@ -281925,7 +281919,6 @@
 			<ID>143</ID>
 			<Type>POLICY_LEKMOD_REPUBLIC_OF_LETTERS</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_REPUBLIC_OF_LETTERS_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>1</Level>
@@ -281937,7 +281930,6 @@
 			<ID>144</ID>
 			<Type>POLICY_LEKMOD_THOUGHTS_AND_PRAYERS</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_THOUGHTS_AND_PRAYERS_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>2</Level>
@@ -281950,7 +281942,6 @@
 			<ID>145</ID>
 			<Type>POLICY_LEKMOD_SOFT_POWER</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_SOFT_POWER</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_SOFT_POWER_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_SOFT_POWER_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>2</Level>
@@ -281966,7 +281957,6 @@
 			<ID>146</ID>
 			<Type>POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>2</Level>
@@ -281978,7 +281968,6 @@
 			<ID>147</ID>
 			<Type>POLICY_LEKMOD_BROADCAST_HEGEMONY</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_BROADCAST_HEGEMONY_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>3</Level>
@@ -281991,7 +281980,6 @@
 			<ID>148</ID>
 			<Type>POLICY_LEKMOD_EMINENCE</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_EMINENCE</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_EMINENCE_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_EMINENCE_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>3</Level>
@@ -282004,7 +281992,6 @@
 			<ID>149</ID>
 			<Type>POLICY_LEKMOD_FREE_WORLD</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_FREE_WORLD</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_FREE_WORLD_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_FREE_WORLD_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
 			<Level>3</Level>
@@ -282384,7 +282371,6 @@
 			<ID>150</ID>
 			<Type>POLICY_LEKMOD_CULTURAL_DOMINION</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
 			<Level>1</Level>
@@ -282400,7 +282386,6 @@
 			<ID>151</ID>
 			<Type>POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
 			<Level>1</Level>
@@ -282414,7 +282399,6 @@
 			<ID>152</ID>
 			<Type>POLICY_LEKMOD_ADVANCED_INTERROGATION</Type>
 			<Description>TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION</Description>
-			<Civilopedia>TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION_HELP</Civilopedia>
 			<Help>TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION_HELP</Help>
 			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
 			<Level>1</Level>
@@ -282560,4 +282544,192 @@
 			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
 		</Row>
 	</Policy_FreePromotionUnitCombats>
+	<!-- LEKMOD: policy feedback 2026-10-12 (Piety, Commerce, Rationalism layout, Aesthetics, Honor; new tenets' pedia icons) -->
+	<Table name="Policy_BuildingClassNoMaintenance"> <!-- LEKMOD: buildings of the class cost no Gold maintenance -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)"/>
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)"/>
+	</Table>
+	<Policy_BuildingClassNoMaintenance>
+		<Row>
+			<PolicyType>POLICY_THEOCRACY</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_TEMPLE</BuildingClassType>
+		</Row>
+	</Policy_BuildingClassNoMaintenance>
+	<Policies>
+		<Update>
+			<Where Type="POLICY_LEKMOD_LIBERATED_ARTS"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_FRUITS_OF_LIBERTY"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_REPUBLIC_OF_LETTERS"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_THOUGHTS_AND_PRAYERS"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_SOFT_POWER"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_TECHNOCRATIC_EFFICIENCY"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_BROADCAST_HEGEMONY"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_EMINENCE"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_FREE_WORLD"/>
+			<Set IconAtlas="POLICY_ATLAS" IconAtlasAchieved="POLICY_A_ATLAS" PortraitIndex="25"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_CULTURAL_DOMINION"/>
+			<Set PortraitIndex="10"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION"/>
+			<Set PortraitIndex="10"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_LEKMOD_ADVANCED_INTERROGATION"/>
+			<Set PortraitIndex="10"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_PIETY_FINISHER"/>
+			<Set NumCitiesFreePietyGardens="5"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_REFORMATION"/>
+			<Set FaithCostModifier="0"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_ORGANIZED_RELIGION"/>
+			<Set FaithCostModifier="-20"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_CARAVANS"/>
+			<Set ExternalTradeRouteRangeModifier="50" GridX="3" GridY="1"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_ENTREPRENEURSHIP"/>
+			<Set GridX="1" GridY="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_MERCANTILISM"/>
+			<Set GridX="3" GridY="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_PROTECTIONISM"/>
+			<Set GridX="5" GridY="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_TRADE_UNIONS"/>
+			<Set GridX="5" GridY="3"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_HUMANISM"/>
+			<Set GridX="1" GridY="1"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_SOVEREIGNTY"/>
+			<Set GridX="3" GridY="1"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_FREE_THOUGHT"/>
+			<Set GridX="1" GridY="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_SCIENTIFIC_REVOLUTION"/>
+			<Set GridX="3" GridY="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_SECULARISM"/>
+			<Set GridX="3" GridY="3"/>
+		</Update>
+	</Policies>
+	<Policy_GreatWorkYieldChanges>
+		<Delete PolicyType="POLICY_FLOURISHING_OF_ARTS"/>
+	</Policy_GreatWorkYieldChanges>
+	<Policy_BuildingClassYieldChanges>
+		<Delete PolicyType="POLICY_THEOCRACY" BuildingClassType="BUILDINGCLASS_TEMPLE" YieldType="YIELD_GOLD"/>
+		<Delete PolicyType="POLICY_HONOR_FINISHER"/>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_HONOR_FINISHER</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COLOSSEUM</BuildingClassType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+	</Policy_BuildingClassYieldChanges>
+	<Policy_BuildingClassYieldModifiers>
+		<Update>
+			<Where PolicyType="POLICY_THEOCRACY" BuildingClassType="BUILDINGCLASS_GRAND_TEMPLE" YieldType="YIELD_GOLD"/>
+			<Set YieldMod="25"/>
+		</Update>
+	</Policy_BuildingClassYieldModifiers>
+	<Policy_ImprovementYieldChanges>
+		<Delete PolicyType="POLICY_THEOCRACY" ImprovementType="IMPROVEMENT_HOLY_SITE" YieldType="YIELD_GOLD"/>
+		<Delete PolicyType="POLICY_ARTISTIC_GENIUS" ImprovementType="IMPROVEMENT_CONCERT" YieldType="YIELD_SCIENCE"/>
+		<Row>
+			<PolicyType>POLICY_PIETY_FINISHER</PolicyType>
+			<ImprovementType>IMPROVEMENT_HOLY_SITE</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_PIETY_FINISHER</PolicyType>
+			<ImprovementType>IMPROVEMENT_HOLY_SITE</ImprovementType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Policy_ImprovementYieldChanges>
+	<Policy_ImprovementCultureChanges>
+		<Delete PolicyType="POLICY_PIETY_FINISHER"/>
+	</Policy_ImprovementCultureChanges>
+	<Policy_ImprovementYieldPerEra>
+		<Row>
+			<PolicyType>POLICY_ARTISTIC_GENIUS</PolicyType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Policy_ImprovementYieldPerEra>
+	<Policy_FreeUnitClasses>
+		<Update>
+			<Where PolicyType="POLICY_COMMERCE_FINISHER" UnitClassType="UNITCLASS_MERCHANT"/>
+			<Set Count="1"/>
+		</Update>
+	</Policy_FreeUnitClasses>
+	<Policy_PrereqPolicies>
+		<Delete PolicyType="POLICY_PROTECTIONISM"/>
+		<Row>
+			<PolicyType>POLICY_PROTECTIONISM</PolicyType>
+			<PrereqPolicy>POLICY_CARAVANS</PrereqPolicy>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_TRADE_UNIONS</PolicyType>
+			<PrereqPolicy>POLICY_PROTECTIONISM</PrereqPolicy>
+		</Row>
+	</Policy_PrereqPolicies>
+	<Improvement_Yields>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_DOCK" YieldType="YIELD_PRODUCTION"/>
+			<Set Yield="4"/>
+		</Update>
+	</Improvement_Yields>
 </GameData>

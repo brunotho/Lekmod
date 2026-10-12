@@ -1230,11 +1230,11 @@ TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_TRAIT_VOTES
 // Consolidate Garrison Yield effects
 #define LEKMOD_GARRISON_YIELD_EFFECTS
 // From this turn on, policy garrison effects (culture, production, happiness) work in every city, garrisoned or not. Building garrison effects still need a unit.
-#define LEKMOD_POLICY_GARRISON_ATTACH_TURN 70
+#define LEKMOD_POLICY_GARRISON_ATTACH_TURN 80
 // Ruins offer a choice of 2 rewards (3 with the goody hut picker promotion), with trade-off rewards and a free ancient tech
 #define LEKMOD_RUIN_CHOICE
 // From this turn on, killing barbarians gives no kill yields (ends "barbarian farming"; same turn as the garrison rule)
-#define LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 70
+#define LEKMOD_BARBARIAN_KILL_YIELDS_END_TURN 80
 // Great Work Yield stuff
 #define LEKMOD_GREAT_WORK_YIELD_EFFECTS
 // Convert invaild Promotions for a Unit combat to valid ones.
@@ -1519,6 +1519,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // Autocracy: Policies.TourismPerCapturedWonder, CaptureGoldModifier (added to the trait's PlunderModifier), SpoilsOfWarModifier
 // (+% on the spoils-of-war share, max 100); Policy_ResourceQuantityModifiers (Third Alternative: Oil, Aluminum, Uranium x2);
 // MinorBullyNoPenalty also ignores the low-Influence block and the 10-20 turn tribute penalty (Gunboat Diplomacy).
+// Policies.ExternalTradeRouteRangeModifier (% range of routes to other civs/City-States, CvGameTrade::IsValidTradeRoutePath; Silk Road);
+// Policy_BuildingClassNoMaintenance (CvTreasury::GetBuildingGoldMaintenance; Sacred Duty: Temples).
 #define LEKMOD_GOLD_GREAT_PERSON_BASE_COST 1000
 // A human player with a pending policy pick (enough Culture, a free policy or tenet, or an ideology to choose) is never forced
 // to pick, but while the pick is pending at turn processing the empire's yields freeze: no positive Food (starvation still
