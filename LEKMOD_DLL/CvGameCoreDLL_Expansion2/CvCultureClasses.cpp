@@ -855,6 +855,9 @@ void CvPlayerCulture::Init(CvPlayer* pPlayer)
 
 	m_iLastTurnLifetimeCulture = 0;
 	m_iOpinionUnhappiness = 0;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_iLekmodDissatisfaction = 0;
+#endif
 
 	for (int iI = 0; iI < MAX_MAJOR_CIVS; iI++)
 	{
@@ -3466,6 +3469,9 @@ void CvPlayerCulture::AddTourismAllKnownCivs(int iTourism)
 void CvPlayerCulture::DoPublicOpinion()
 {
 	m_eOpinion = NO_PUBLIC_OPINION;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_iLekmodDissatisfaction = 0;
+#endif
 	m_ePreferredIdeology = NO_POLICY_BRANCH_TYPE;
 	m_iOpinionUnhappiness = 0;
 	m_strOpinionTooltip = "";
@@ -3678,6 +3684,11 @@ void CvPlayerCulture::DoPublicOpinion()
 			{
 				m_eOpinion = PUBLIC_OPINION_REVOLUTIONARY_WAVE;
 			}
+#ifdef LEKMOD_CONGRESS_CYCLE
+			// Charter of Civil Liberties: 5 levels (dissidents, unrest, civil resistance, revolutionary wave, system collapse)
+			if (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_CHARTER) != 0)
+				m_iLekmodDissatisfaction = std::max(1, std::min(5, iDissatisfaction));
+#endif
 #ifdef NQ_IDEOLOGY_PRESSURE_UNHAPPINESS_MODIFIER_FROM_POLICIES
 			int iUnhappinessModifier = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_IDEOLOGY_PRESSURE_UNHAPPINESS_MODIFIER);
 #if defined(TRAITIFY) // Ideology Pressure Unhappiness Modifier from Traits
@@ -4380,6 +4391,12 @@ FDataStream& operator>>(FDataStream& loadFrom, CvPlayerCulture& writeTo)
 		writeTo.m_iSwappableArtifactIndex = -1;
 		writeTo.m_iSwappableMusicIndex = -1;
 	}
+#ifdef LEKMOD_CONGRESS_CYCLE
+	if (uiVersion >= 7)
+		loadFrom >> writeTo.m_iLekmodDissatisfaction;
+	else
+		writeTo.m_iLekmodDissatisfaction = 0;
+#endif
 
 	return loadFrom;
 }
@@ -4387,7 +4404,11 @@ FDataStream& operator>>(FDataStream& loadFrom, CvPlayerCulture& writeTo)
 /// Serialization write
 FDataStream& operator<<(FDataStream& saveTo, const CvPlayerCulture& readFrom)
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	uint uiVersion = 7;
+#else
 	uint uiVersion = 6;
+#endif
 	saveTo << uiVersion;
 
 	vector<CvPlot *>::const_iterator it;
@@ -4426,6 +4447,9 @@ FDataStream& operator<<(FDataStream& saveTo, const CvPlayerCulture& readFrom)
 	saveTo << readFrom.m_iSwappableArtIndex;
 	saveTo << readFrom.m_iSwappableArtifactIndex;
 	saveTo << readFrom.m_iSwappableMusicIndex;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	saveTo << readFrom.m_iLekmodDissatisfaction;
+#endif
 
 	return saveTo;
 }

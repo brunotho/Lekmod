@@ -2036,6 +2036,10 @@ function RefreshCultureVictory()
 				elseif (iOpinion == PublicOpinionTypes.PUBLIC_OPINION_REVOLUTIONARY_WAVE) then
 					szOpinionString = Locale.ConvertTextKey("TXT_KEY_CO_PUBLIC_OPINION_REVOLUTIONARY_WAVE");
 				end
+				-- LEKMOD: Charter of Civil Liberties uses 5 levels
+				if (pPlayer.LekmodGetDissatisfactionLevel ~= nil and pPlayer:LekmodGetDissatisfactionLevel() > 0) then
+					szOpinionString = Locale.ConvertTextKey("TXT_KEY_LEKMOD_OPINION_LEVEL_" .. pPlayer:LekmodGetDissatisfactionLevel());
+				end
 				row.iPublicOpinion = iOpinion;
 				row.strPublicOpinion = szOpinionString;
 				row.strPublicOpinionToolTip = pPlayer:GetPublicOpinionTooltip();

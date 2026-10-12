@@ -264,6 +264,9 @@ protected:
 	static int lGetTourismModifierWith(lua_State* L);
 	static int lGetTourismModifierWithTooltip(lua_State* L);
 	static int lGetPublicOpinionType(lua_State* L);
+#ifdef LEKMOD_CONGRESS_CYCLE
+	static int lLekmodGetDissatisfactionLevel(lua_State* L);
+#endif
 	static int lGetPublicOpinionPreferredIdeology(lua_State* L);
 	static int lGetPublicOpinionTooltip(lua_State* L);
 	static int lGetPublicOpinionUnhappiness(lua_State* L);

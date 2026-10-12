@@ -243,6 +243,9 @@ public:
 	int GetTourismModifierTradeRoute() const;
 	int GetTourismModifierOpenBorders() const;
 	PublicOpinionTypes GetPublicOpinionType() const;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	int GetLekmodDissatisfactionLevel() const { return m_iLekmodDissatisfaction; }
+#endif
 	PolicyBranchTypes GetPublicOpinionPreferredIdeology() const;
 	CvString GetPublicOpinionTooltip() const;
 	int GetPublicOpinionUnhappiness() const;
@@ -268,6 +271,9 @@ public:
 	bool m_bReportedTwoCivsAway;
 	bool m_bReportedOneCivAway;
 	PublicOpinionTypes m_eOpinion;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	int m_iLekmodDissatisfaction; // 1-5 while the Charter of Civil Liberties is active and the populace is unhappy, else 0 (saved)
+#endif
 	PlayerTypes m_eOpinionBiggestInfluence;
 	int m_iTurnIdeologySwitch;
 	PolicyBranchTypes m_ePreferredIdeology;

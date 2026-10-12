@@ -278,6 +278,9 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetTourismModifierWith);
 	Method(GetTourismModifierWithTooltip);
 	Method(GetPublicOpinionType);
+#ifdef LEKMOD_CONGRESS_CYCLE
+	Method(LekmodGetDissatisfactionLevel);
+#endif
 	Method(GetPublicOpinionPreferredIdeology);
 	Method(GetPublicOpinionTooltip);
 	Method(GetPublicOpinionUnhappiness);
@@ -2743,6 +2746,16 @@ int CvLuaPlayer::lGetPublicOpinionType(lua_State* L)
 	lua_pushinteger(L, pkPlayer->GetCulture()->GetPublicOpinionType());
 	return 1;
 }
+#ifdef LEKMOD_CONGRESS_CYCLE
+//------------------------------------------------------------------------------
+//int LekmodGetDissatisfactionLevel(); 1-5 under the Charter of Civil Liberties, else 0
+int CvLuaPlayer::lLekmodGetDissatisfactionLevel(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	lua_pushinteger(L, pkPlayer->GetCulture()->GetLekmodDissatisfactionLevel());
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //PolicyBranchTypes GetPublicOpinionPreferredIdeology();
 int CvLuaPlayer::lGetPublicOpinionPreferredIdeology(lua_State* L)

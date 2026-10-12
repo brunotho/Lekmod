@@ -791,6 +791,10 @@ function UpdateDisplay()
 		else
 			szOpinionString = Locale.ConvertTextKey("TXT_KEY_CO_PUBLIC_OPINION_CONTENT");
 		end
+		-- LEKMOD: Charter of Civil Liberties uses 5 levels
+		if (player.LekmodGetDissatisfactionLevel ~= nil and player:LekmodGetDissatisfactionLevel() > 0) then
+			szOpinionString = Locale.ConvertTextKey("TXT_KEY_LEKMOD_OPINION_LEVEL_" .. player:LekmodGetDissatisfactionLevel());
+		end
 		Controls.PublicOpinion:SetText(szOpinionString);
 		Controls.PublicOpinion:SetToolTipString(player:GetPublicOpinionTooltip());
 				
