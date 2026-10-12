@@ -10367,6 +10367,13 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 	{
 		return false;
 	}
+#ifdef LEKMOD_BUILDING_OBSOLETE_NO_CONSTRUCT
+	// Obsolete buildings can't be built any more (Uranium Mapping Project after Atomic Theory)
+	if (pBuildingInfo.GetObsoleteTech() != NO_TECH && currentTeam.GetTeamTechs()->HasTech((TechTypes)pBuildingInfo.GetObsoleteTech()))
+	{
+		return false;
+	}
+#endif
 #if !defined(TRAITIFY) // redo the building blocking code that is based on the buildings base production as there is now a mechanic to override it.
 	if (!bIgnoreCost)
 	{

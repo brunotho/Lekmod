@@ -120354,7 +120354,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Uranium Mapping Project</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT_HELP">
-			<Text>[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]Reveals all [ICON_RES_URANIUM] Uranium on the map for your team, as Atomic Theory does.</Text>
+			<Text>[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]Reveals all [ICON_RES_URANIUM] Uranium on the map for your team, as Atomic Theory does.[NEWLINE]Can no longer be built once you know Atomic Theory.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_URANIUM_MAPPING_PROJECT_STRATEGY">
 			<Text>Build the Uranium Mapping Project to find [ICON_RES_URANIUM] Uranium before researching Atomic Theory. Mining it still needs Atomic Theory.</Text>

@@ -743,6 +743,7 @@ public:
 	Member* LekmodPickSecondProposer();
 	void LekmodRemoveActiveResolution(int iResolutionID);
 	void LekmodRevealCities();
+	std::vector<int> m_aiLekmodTransparencyVision; // plot index x MAX_TEAMS + team with Transparency vision (saved)
 	void LekmodDoEnactOneShot(CvEnactProposal* pProposal);
 	void LekmodDoExpiry();
 	void LekmodPickVoicelessHost();

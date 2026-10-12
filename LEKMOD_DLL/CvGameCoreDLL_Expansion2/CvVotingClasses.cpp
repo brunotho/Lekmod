@@ -3364,7 +3364,7 @@ std::vector<ResolutionTypes> CvLeague::GetInactiveResolutions() const
 		ResolutionTypes e = (ResolutionTypes)i;
 		CvResolutionEntry* pInfo = GC.getResolutionInfo(e);
 #ifdef LEKMOD_CONGRESS_CYCLE
-		if (pInfo && !pInfo->IsLekmodDisabled())
+		if (pInfo && !pInfo->IsLekmodDisabled() && !pInfo->IsNoProposalByPlayer()) // Choose Host and World Leader are never proposed
 #else
 		if (pInfo)
 #endif
@@ -6084,9 +6084,22 @@ void CvLeague::LekmodRemoveActiveResolution(int iResolutionID)
 	}
 }
 
-/// Every major civ sees the cities of the other major civs and 2 tiles around them (Diplomatic Transparency)
+/// Every major civ sees the cities of the other major civs and 2 tiles around them, live (Diplomatic Transparency).
+/// Refreshed each turn: the vision added last time is removed first (m_aiLekmodTransparencyVision, saved).
 void CvLeague::LekmodRevealCities()
 {
+	for (uint i = 0; i < m_aiLekmodTransparencyVision.size(); i++)
+	{
+		const int iPlot = m_aiLekmodTransparencyVision[i] / MAX_TEAMS;
+		const TeamTypes eTeam = (TeamTypes)(m_aiLekmodTransparencyVision[i] % MAX_TEAMS);
+		CvPlot* pPlot = GC.getMap().plotByIndex(iPlot);
+		if (pPlot != NULL)
+			pPlot->changeVisibilityCount(eTeam, -1, NO_INVISIBLE, true, false);
+	}
+	m_aiLekmodTransparencyVision.clear();
+	if (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_TRANSPARENCY) == 0)
+		return;
+
 	for (int iViewer = 0; iViewer < MAX_MAJOR_CIVS; iViewer++)
 	{
 		CvPlayer& kViewer = GET_PLAYER((PlayerTypes)iViewer);
@@ -6105,8 +6118,10 @@ void CvLeague::LekmodRevealCities()
 					for (int iDY = -2; iDY <= 2; iDY++)
 					{
 						CvPlot* pPlot = plotXYWithRangeCheck(pCity->getX(), pCity->getY(), iDX, iDY, 2);
-						if (pPlot != NULL && !pPlot->isRevealed(kViewer.getTeam()))
-							pPlot->setRevealed(kViewer.getTeam(), true);
+						if (pPlot == NULL)
+							continue;
+						pPlot->changeVisibilityCount(kViewer.getTeam(), 1, NO_INVISIBLE, true, false);
+						m_aiLekmodTransparencyVision.push_back(pPlot->GetPlotIndex() * MAX_TEAMS + (int)kViewer.getTeam());
 					}
 				}
 			}
@@ -6336,8 +6351,7 @@ void CvLeague::LekmodDoTurnLate()
 		LekmodStartProposals(iTurn, /*bCallForProposals*/ true);
 	}
 	LekmodDoExpiry();
-	if (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_TRANSPARENCY) != 0)
-		LekmodRevealCities();
+	LekmodRevealCities();
 	if (m_iLekmodLeaderVoteTurn >= 0 && iTurn >= m_iLekmodLeaderVoteTurn)
 	{
 		m_iLekmodLeaderVoteTurn = iTurn + 7;
@@ -8263,7 +8277,19 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 		loadFrom >> writeTo.m_iLekmodPrivilegeTurn;
 		loadFrom >> writeTo.m_bLekmodHostSession;
 	}
-	else
+	if (uiVersion >= 17)
+	{
+		int iNumVision = 0;
+		loadFrom >> iNumVision;
+		writeTo.m_aiLekmodTransparencyVision.clear();
+		for (int i = 0; i < iNumVision; i++)
+		{
+			int iEntry;
+			loadFrom >> iEntry;
+			writeTo.m_aiLekmodTransparencyVision.push_back(iEntry);
+		}
+	}
+	if (uiVersion < 15)
 	{
 		writeTo.m_iLekmodVoteTurn = (writeTo.m_iTurnsUntilSession == MAX_INT) ? MAX_INT : GC.getGame().getGameTurn() + writeTo.m_iTurnsUntilSession;
 		writeTo.m_iLekmodLeaderVoteTurn = -1;
@@ -8279,7 +8305,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 {
 #ifdef LEKMOD_CONGRESS_CYCLE
-	uint uiVersion = 16;
+	uint uiVersion = 17;
 #else
 	uint uiVersion = 14;
 #endif
@@ -8378,6 +8404,9 @@ FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 	saveTo << readFrom.m_iLekmodLeaderVoteTurn;
 	saveTo << readFrom.m_iLekmodPrivilegeTurn;
 	saveTo << readFrom.m_bLekmodHostSession;
+	saveTo << (int)readFrom.m_aiLekmodTransparencyVision.size();
+	for (uint i = 0; i < readFrom.m_aiLekmodTransparencyVision.size(); i++)
+		saveTo << readFrom.m_aiLekmodTransparencyVision[i];
 #endif
 
 	return saveTo;

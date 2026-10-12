@@ -25,6 +25,7 @@ copy /y "%patchfolder%\Lua\tmp\ui\Religion\ChooseReligionPopup.xml.ignore" "%pat
 copy /y "%patchfolder%\Lua\tmp\ui\Religion\ChoosePantheonPopup.lua.ignore" "%patchfolder%\Lua\UI\ChoosePantheonPopup.lua" > nul
 copy /y "%patchfolder%\Lua\tmp\ui\Religion\ChoosePantheonPopup.xml.ignore" "%patchfolder%\Lua\UI\ChoosePantheonPopup.xml" > nul
 copy /y "%patchfolder%\Lua\tmp\ui\Civilopedia\CivilopediaScreen.lua.ignore" "%patchfolder%\Lua\UI\CivilopediaScreen.lua" > nul
+copy /y "%patchfolder%\Lua\tmp\ui\LeagueOverview\LeagueOverview.lua.ignore" "%patchfolder%\Lua\UI\LeagueOverview.lua" > nul
 REM --------------------------------------------------------------------------------------------------
 set text="CityBannerProductionBox = function( city )"
 IF EXIST "%euifolder%\CityBanners\CityBannerManager.lua" (

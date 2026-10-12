@@ -1835,7 +1835,7 @@ Thirteen new proposals.
 - Added: Breakdown of International Relations (every human player in the Information Era, Nuclear Fusion known): everyone at war, no peace, all other resolutions end, no further sessions, -33% Tourism, next World Leader vote 3 turns later
 - Added: Mandate of Occupation (Atomic Era): +1 Delegate per other civilization's original capital you hold
 - Added: Import Tariffs (Modern Era): luxuries give half the Happiness for 3 turns
-- Added: Diplomatic Transparency (Modern Era): every civilization sees the other civilizations' cities and the tiles within 2 of them
+- Added: Diplomatic Transparency (Modern Era): every civilization has live vision of the other civilizations' cities and the tiles within 2 of them
 - Added: Blackout (Information Era): the Demographics screen is disabled; ends Diplomatic Transparency
 - Added: Voice for the Voiceless (Modern Era): no host votes; the civilization with the fewest Delegates hosts; the host gets +1 Delegate
 - Added: War Games (Modern Era): +50% Experience (air units +25%), double unit maintenance, for 8 turns
@@ -1844,3 +1844,21 @@ Thirteen new proposals.
 - Added: Climate Change Reparations (every civilization in the Modern Era): 200 Gold per Factory paid once (not below 0); +1 Happiness per Factory; +30% Production toward Hydro, Nuclear and Solar Plants
 - Note: Charter of Civil Liberties waits for its dissident rules; the spy parts of Diplomatic Transparency and Blackout come with the Diplomat/Spy rework
 - DLL: Resolutions.Lekmod* columns (LekmodResolutionColumn, read at runtime), Resolution_LekmodBuildingClassProductionModifiers, timed resolutions end in CvLeague::LekmodDoExpiry; Lua Game.LekmodIsBlackout (Demographics)
+
+WORLD CONGRESS SCREEN (ui)
+--------------------------
+Tags: world congress, ui
+- Changed: the proposal lists are sorted alphabetically
+- Removed: Choose Host and World Leader no longer appear among the proposals (they are never proposed)
+- Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat
+
+NUCLEAR FUSION (TECH_NUCLEAR_FUSION)
+------------------------------------
+Tags: ui
+- Changed: moved up one row in the tech tree, level with Advanced Ballistics
+
+URANIUM MAPPING PROJECT (BUILDING_URANIUM_MAPPING_PROJECT)
+----------------------------------------------------------
+Tags: buildings
+- Changed: can no longer be built once you know Atomic Theory
+- DLL: LEKMOD_BUILDING_OBSOLETE_NO_CONSTRUCT (Buildings.ObsoleteTech blocks construction)

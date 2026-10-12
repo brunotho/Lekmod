@@ -48640,6 +48640,7 @@
 			<ArtDefineTag>ART_DEF_BUILDING_LABORATORY</ArtDefineTag>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>LEKMOD_URANIUM_MAPPING_PROJECT_ATLAS</IconAtlas>
+			<ObsoleteTech>TECH_ATOMIC_THEORY</ObsoleteTech>
 		</Row>
 		<!-- LEKMOD: Rite of the First-Born, given when a city first reaches 2 citizens; kept on capture -->
 		<Row>
@@ -204708,7 +204709,7 @@
 			<TriggersArchaeologicalSites>false</TriggersArchaeologicalSites> 
 			<AllowsWorldCongress>false</AllowsWorldCongress> 
 			<GridX>16</GridX> 
-			<GridY>5</GridY> 
+			<GridY>4</GridY> 
 			<Quote>TXT_KEY_TECH_NUCLEAR_FUSION_QUOTE</Quote> 
 			<PortraitIndex>9</PortraitIndex> 
 			<ScenarioTechButton>-1</ScenarioTechButton> 

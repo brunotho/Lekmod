@@ -1543,6 +1543,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // can be flipped (a new one replaces the active one); an embargoed civ -1 vote; project tiers rounded to whole Production.
 // AIs never propose and never host (host vote choices are humans only while a human is alive); a slot an AI took over gets no proposal.
 #define LEKMOD_CONGRESS_CYCLE
+// Buildings can't be built once their ObsoleteTech is known (CvPlayer::canConstruct)
+#define LEKMOD_BUILDING_OBSOLETE_NO_CONSTRUCT
 #define LEKMOD_WORLD_LEADER_VOTES_BASE 45
 // Vote sources (CvLeague::CalculateStartingVotesForMember), by congress era Ren/Ind/Mod/Atomic/Info: membership 1/2/3/4/5, each held
 // original capital of another civ 0/1/1/2/3, host 1/1/2/2/2, allied City-State 0/1/1/1/2; +1 per own passed proposal
