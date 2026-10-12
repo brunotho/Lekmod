@@ -282638,23 +282638,23 @@
 		</Update>
 		<Update>
 			<Where Type="POLICY_HUMANISM"/>
-			<Set GridX="1" GridY="1"/>
+			<Set GridX="2" GridY="1"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_SOVEREIGNTY"/>
-			<Set GridX="3" GridY="1"/>
+			<Set GridX="4" GridY="1"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_FREE_THOUGHT"/>
-			<Set GridX="1" GridY="2"/>
+			<Set GridX="2" GridY="2"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_SCIENTIFIC_REVOLUTION"/>
-			<Set GridX="3" GridY="2"/>
+			<Set GridX="4" GridY="2"/>
 		</Update>
 		<Update>
 			<Where Type="POLICY_SECULARISM"/>
-			<Set GridX="3" GridY="3"/>
+			<Set GridX="4" GridY="3"/>
 		</Update>
 	</Policies>
 	<Policy_GreatWorkYieldChanges>

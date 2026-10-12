@@ -1619,7 +1619,7 @@ Tags: policies
 - Added: finisher: a free Great Scientist; Academies on strategic resources provide double the resource
 - Removed: Sovereignty: +1 Gold from Science buildings
 - Removed: finisher: +10% Science while the empire is happy
-- Changed: the tree is rearranged like Expansionism (Humanism and Sovereignty on top; Free Thought below Humanism, Scientific Revolution below Sovereignty, Secularism below Scientific Revolution)
+- Changed: the tree is rearranged in two centered columns like Aesthetics (Humanism and Sovereignty on top; Free Thought below Humanism, Scientific Revolution below Sovereignty, Secularism below Scientific Revolution)
 - Dev: Sovereignty's University Happiness first sat in a code path that is compiled out; moved to the live one
 - DLL: Policy_BuildingClassPurchaseCostModifiers, Policy_BuildingClassHappinessUntilIdeology, Policy_BuildingClassGoldPerEarlierIdeology, Policy_ImprovementResourceExtractionMods, Policies.TempScienceModifier/TempScienceTurns; new saved player fields (old saves incompatible)
 

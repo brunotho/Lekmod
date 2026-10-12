@@ -118150,7 +118150,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_WARRIOR_CODE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Warrior Code[ENDCOLOR][NEWLINE][ICON_BULLET]10 units cost no [ICON_GOLD] Gold maintenance[NEWLINE][ICON_BULLET]2 [ICON_UNIT_WARRIOR] Warriors appear immediately[NEWLINE][ICON_BULLET][ICON_GOLD] Gold for each enemy unit killed (max. 40; barbarian kills stop counting from turn 80)
+				[COLOR_POSITIVE_TEXT]Warrior Code[ENDCOLOR][NEWLINE][ICON_BULLET]2 [ICON_UNIT_WARRIOR] Warriors appear immediately[NEWLINE][ICON_BULLET]10 units cost no [ICON_GOLD] Gold maintenance[NEWLINE][ICON_BULLET][ICON_GOLD] Gold for each enemy unit killed (max. 40; barbarian kills stop counting from turn 80)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_WORKERS_FACULTIES"> 
