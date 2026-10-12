@@ -809,6 +809,16 @@ function RefreshAgents()
 					agentEntry.StageCoupButton:LocalizeAndSetToolTip("TXT_KEY_EO_SPY_COUP_ENABLED_TT", v.Rank, v.Name, city:GetNameKey(), Players[iCityAlly]:GetCivilizationAdjectiveKey(), Players[Game.GetActivePlayer()]:GetCoupChanceOfSuccess(city), v.Rank, v.Name, city:GetNameKey(), Players[iCityAlly]:GetCivilizationShortDescriptionKey(), v.Rank, v.Name, city:GetNameKey());
 				end
 			
+				-- LEKMOD: coup chance bar with its breakdown
+				agentEntry.LekmodCoupBar:SetHide(true);
+				if (pActivePlayer.LekmodGetCoupInfo ~= nil and not bCoupDisabled) then
+					local iChance, strBreakdown = LekmodCoupInfoText(pActivePlayer, v.AgentID);
+					agentEntry.LekmodCoupBar:SetHide(false);
+					agentEntry.LekmodCoupBarFill:SetSizeX(math.floor(96 * iChance / 100));
+					agentEntry.LekmodCoupBarLabel:SetText(iChance .. "%");
+					agentEntry.LekmodCoupBar:SetToolTipString(strBreakdown);
+					agentEntry.StageCoupButton:SetToolTipString(Locale.Lookup("TXT_KEY_EO_SPY_COUP_ENABLED_TT", v.Rank, v.Name, city:GetNameKey(), Players[iCityAlly]:GetCivilizationAdjectiveKey(), iChance, v.Rank, v.Name, city:GetNameKey(), Players[iCityAlly]:GetCivilizationShortDescriptionKey(), v.Rank, v.Name, city:GetNameKey()) .. "[NEWLINE][NEWLINE]" .. strBreakdown);
+				end
 				agentEntry.ViewCityButton:SetHide(true);
 				agentEntry.StageCoupButton:SetHide(false);	
 			else
@@ -836,7 +846,8 @@ function RefreshAgents()
 				end
 				
 				agentEntry.ViewCityButton:SetHide(false);
-				agentEntry.StageCoupButton:SetHide(true);		
+				agentEntry.StageCoupButton:SetHide(true);
+				agentEntry.LekmodCoupBar:SetHide(true);		
 			end
 			
 			-- LEKMOD: level 3+ spies: full-tech steal toggle (stealing) and sweep (guarding a city)
@@ -1511,6 +1522,27 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 	Controls.TheirCityStack:CalculateSize();
 	Controls.TheirCityStack:ReprocessAnchoring();
 	Controls.TheirCityScrollPanel:CalculateInternalSize();
+end
+
+-- LEKMOD: coup chance and its parts
+function LekmodCoupInfoText(pPlayer, iAgentID)
+	local c = pPlayer:LekmodGetCoupInfo(iAgentID);
+	local function dec(x100)
+		return (string.gsub(string.format("%.2f", x100 / 100), "%.?0+$", ""));
+	end
+	local strMult;
+	if (c.AllyLevel == 0) then
+		strMult = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUP_MULT_HALVED", dec(c.Multiplier), dec(c.MyValue), c.MyLevel);
+	else
+		strMult = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUP_MULT", dec(c.Multiplier), dec(c.AllyValue), c.AllyLevel, dec(c.MyValue), c.MyLevel);
+	end
+	local strPolicy = "";
+	if (c.Policy ~= 0) then
+		strPolicy = "[NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_COUP_POLICY", c.Policy);
+	end
+	local strText = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUP_TT", c.Chance, c.AllyInfluence - c.MyInfluence, c.AllyInfluence, c.MyInfluence)
+		.. "[NEWLINE]" .. strMult .. strPolicy .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_COUP_FORMULA");
+	return c.Chance, strText;
 end
 
 -- LEKMOD: steal formula for the agent tooltip

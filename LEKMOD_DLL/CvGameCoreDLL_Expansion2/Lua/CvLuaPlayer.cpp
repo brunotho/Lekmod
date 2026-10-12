@@ -1006,6 +1006,7 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 #ifdef LEKMOD_SPY_REWORK
 	Method(LekmodGetCaughtSpies);
 	Method(LekmodGetSpyStealInfo);
+	Method(LekmodGetCoupInfo);
 	Method(LekmodGetSweepCost);
 	Method(LekmodCanSweep);
 	Method(LekmodGetSpyMaintenance);
@@ -11855,6 +11856,41 @@ int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
 	lua_setfield(L, t, "FullTech");
 	lua_pushinteger(L, pkEspionage->m_aSpyList[iSpy].m_iLekmodTurnsInCity);
 	lua_setfield(L, t, "TurnsInCity");
+	return 1;
+}
+//------------------------------------------------------------------------------
+// table LekmodGetCoupInfo(int iSpy): Chance, AllyInfluence, MyInfluence, MyLevel, AllyLevel (0 = none), MyValue, AllyValue, Multiplier (x100), Policy, Uncapped
+int CvLuaPlayer::lLekmodGetCoupInfo(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	const int iSpy = lua_tointeger(L, 2);
+	CvPlayerEspionage* pkEspionage = pkThisPlayer->GetEspionage();
+	lua_createtable(L, 0, 0);
+	const int t = lua_gettop(L);
+	if (iSpy < 0 || iSpy >= (int)pkEspionage->m_aSpyList.size())
+		return 1;
+	const int iChance = pkEspionage->GetCoupChanceOfSuccess(iSpy);
+	const CvPlayerEspionage::LekmodCoupInfo& k = pkEspionage->m_kLekmodCoupInfo;
+	lua_pushinteger(L, iChance);
+	lua_setfield(L, t, "Chance");
+	lua_pushinteger(L, k.iAllyInfluence);
+	lua_setfield(L, t, "AllyInfluence");
+	lua_pushinteger(L, k.iMyInfluence);
+	lua_setfield(L, t, "MyInfluence");
+	lua_pushinteger(L, k.iMyLevel);
+	lua_setfield(L, t, "MyLevel");
+	lua_pushinteger(L, k.iAllyLevel);
+	lua_setfield(L, t, "AllyLevel");
+	lua_pushinteger(L, k.iMyValueTimes100);
+	lua_setfield(L, t, "MyValue");
+	lua_pushinteger(L, k.iAllyValueTimes100);
+	lua_setfield(L, t, "AllyValue");
+	lua_pushinteger(L, k.iMultiplierTimes100);
+	lua_setfield(L, t, "Multiplier");
+	lua_pushinteger(L, k.iPolicy);
+	lua_setfield(L, t, "Policy");
+	lua_pushinteger(L, k.iUncapped);
+	lua_setfield(L, t, "Uncapped");
 	return 1;
 }
 //------------------------------------------------------------------------------

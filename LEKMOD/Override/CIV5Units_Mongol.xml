@@ -120875,6 +120875,21 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_TP_GOLD_SPY_MAINT">
 			<Text>{1_Num} spent on spies.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_COUP_TT">
+			<Text>Coup chance: {1_Num}%.[NEWLINE][NEWLINE]Influence gap: {2_Num} (ally {3_Num}, you {4_Num}).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_COUP_MULT">
+			<Text>Multiplier: {1_X} = 3 + ally's spy {2_X} (level {3_Num}) - your spy {4_X} (level {5_Num}).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_COUP_MULT_HALVED">
+			<Text>Multiplier: {1_X} = (3 - your spy {2_X} (level {3_Num})) x 0.5, because the ally has no spy there.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_COUP_POLICY">
+			<Text>Policies: +{1_Num}%.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_COUP_FORMULA">
+			<Text>Chance = 100 - influence gap x multiplier (+ policies), between 0% and 85%.[NEWLINE]Spy values for levels 1 / 2 / 3 / 4 / 5: 0 / 1.5 / 2.25 / 2.6 / 2.8.[NEWLINE]Your level counts +1 when you are Popular or Influential with the ally's civilization, +2 when Dominant.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
 		</Row>

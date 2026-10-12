@@ -44,6 +44,7 @@ CvEspionageSpy::CvEspionageSpy()
 	, m_bLekmodFullTech(false)
 	, m_iLekmodSightX(-1)
 	, m_iLekmodSightY(-1)
+	, m_iLekmodSightShareMask(0)
 #endif
 	, m_bEvaluateReassignment(true)
 {
@@ -99,6 +100,10 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 		loadFrom >> writeTo.m_bLekmodFullTech;
 	else
 		writeTo.m_bLekmodFullTech = false;
+	if (uiVersion >= 5)
+		loadFrom >> writeTo.m_iLekmodSightShareMask;
+	else
+		writeTo.m_iLekmodSightShareMask = 0;
 #endif
 
 	return loadFrom;
@@ -108,7 +113,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 {
 #ifdef LEKMOD_SPY_REWORK
-	uint uiVersion = 4;
+	uint uiVersion = 5;
 #else
 	uint uiVersion = 1;
 #endif
@@ -128,6 +133,7 @@ FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 	saveTo << readFrom.m_iLekmodSightX;
 	saveTo << readFrom.m_iLekmodSightY;
 	saveTo << readFrom.m_bLekmodFullTech;
+	saveTo << readFrom.m_iLekmodSightShareMask;
 #endif
 
 	return saveTo;
@@ -1639,13 +1645,7 @@ bool CvPlayerEspionage::ExtractSpyFromCity(uint uiSpyIndex)
 
 	// turn off visibility of city
 #ifdef LEKMOD_SPY_REWORK
-	if (m_aSpyList[uiSpyIndex].m_iLekmodSightRadius > 0)
-	{
-		CvPlot* pSightPlot = GC.getMap().plot(m_aSpyList[uiSpyIndex].m_iLekmodSightX, m_aSpyList[uiSpyIndex].m_iLekmodSightY);
-		if (pSightPlot != NULL)
-			pSightPlot->changeAdjacentSight(m_pPlayer->getTeam(), m_aSpyList[uiSpyIndex].m_iLekmodSightRadius, false, NO_INVISIBLE, NO_DIRECTION, false);
-		m_aSpyList[uiSpyIndex].m_iLekmodSightRadius = 0;
-	}
+	LekmodRemoveSight(uiSpyIndex);
 	if (false)
 #else
 	if(bHadSurveillance)
@@ -2092,7 +2092,8 @@ int CvPlayerEspionage::LekmodGetSpyMaintenance()
 	return iCost;
 }
 
-/// Vision around the city: radius = strength - defense (0 = none), for established spies and diplomats in other civs' cities
+/// Vision around the city: radius = strength - defense (0 = none), for established spies and diplomats in other civs' cities.
+/// Level 3+ spies in a third civ's city share this vision with every civ that has a diplomat with us while we have one with them.
 void CvPlayerEspionage::LekmodUpdateSight(uint uiSpyIndex)
 {
 	if (uiSpyIndex >= m_aSpyList.size())
@@ -2100,29 +2101,80 @@ void CvPlayerEspionage::LekmodUpdateSight(uint uiSpyIndex)
 	CvEspionageSpy& kSpy = m_aSpyList[uiSpyIndex];
 	CvCity* pCity = GetCityWithSpy(uiSpyIndex);
 	int iRadius = 0;
+	int iShareMask = 0;
 	if (pCity != NULL && pCity->getOwner() != m_pPlayer->GetID())
 	{
 		const bool bEstablished = kSpy.m_bIsDiplomat ? (kSpy.m_eSpyState == SPY_STATE_SCHMOOZE) : HasEstablishedSurveillance(uiSpyIndex);
 		if (bEstablished)
 			iRadius = std::max(0, LekmodGetSpyStrength(uiSpyIndex, pCity) - LekmodGetCityDefense(pCity, m_pPlayer->GetID()));
+		if (iRadius > 0 && !kSpy.m_bIsDiplomat && (int)kSpy.m_eRank >= 2 && !GET_PLAYER(pCity->getOwner()).isMinorCiv())
+		{
+			for (int iPlayer = 0; iPlayer < MAX_MAJOR_CIVS; iPlayer++)
+			{
+				const PlayerTypes ePartner = (PlayerTypes)iPlayer;
+				CvPlayerAI& kPartner = GET_PLAYER(ePartner);
+				if (!kPartner.isAlive() || ePartner == m_pPlayer->GetID() || kPartner.getTeam() == m_pPlayer->getTeam() || kPartner.getTeam() == pCity->getTeam())
+					continue;
+				if ((int)kPartner.getTeam() >= 31 || kPartner.GetEspionage() == NULL)
+					continue;
+				if (LekmodHasDiplomatWith(ePartner) && kPartner.GetEspionage()->LekmodHasDiplomatWith(m_pPlayer->GetID()))
+					iShareMask |= (1 << (int)kPartner.getTeam());
+			}
+		}
 	}
-	if (iRadius == kSpy.m_iLekmodSightRadius && (iRadius == 0 || (pCity != NULL && kSpy.m_iLekmodSightX == pCity->getX() && kSpy.m_iLekmodSightY == pCity->getY())))
+	if (iRadius == kSpy.m_iLekmodSightRadius && iShareMask == kSpy.m_iLekmodSightShareMask && (iRadius == 0 || (pCity != NULL && kSpy.m_iLekmodSightX == pCity->getX() && kSpy.m_iLekmodSightY == pCity->getY())))
 		return;
-	// remove the old vision where it was applied
+	LekmodRemoveSight(uiSpyIndex);
+	if (iRadius > 0 && pCity != NULL)
+	{
+		kSpy.m_iLekmodSightRadius = iRadius;
+		kSpy.m_iLekmodSightShareMask = iShareMask;
+		kSpy.m_iLekmodSightX = pCity->getX();
+		kSpy.m_iLekmodSightY = pCity->getY();
+		pCity->plot()->changeAdjacentSight(m_pPlayer->getTeam(), iRadius, true, NO_INVISIBLE, NO_DIRECTION, false);
+		for (int iTeam = 0; iTeam < 31; iTeam++)
+		{
+			if (iShareMask & (1 << iTeam))
+				pCity->plot()->changeAdjacentSight((TeamTypes)iTeam, iRadius, true, NO_INVISIBLE, NO_DIRECTION, false);
+		}
+	}
+}
+
+/// Removes the vision a spy currently gives (ours and the shared one)
+void CvPlayerEspionage::LekmodRemoveSight(uint uiSpyIndex)
+{
+	if (uiSpyIndex >= m_aSpyList.size())
+		return;
+	CvEspionageSpy& kSpy = m_aSpyList[uiSpyIndex];
 	if (kSpy.m_iLekmodSightRadius > 0)
 	{
 		CvPlot* pOldPlot = GC.getMap().plot(kSpy.m_iLekmodSightX, kSpy.m_iLekmodSightY);
 		if (pOldPlot != NULL)
+		{
 			pOldPlot->changeAdjacentSight(m_pPlayer->getTeam(), kSpy.m_iLekmodSightRadius, false, NO_INVISIBLE, NO_DIRECTION, false);
+			for (int iTeam = 0; iTeam < 31; iTeam++)
+			{
+				if (kSpy.m_iLekmodSightShareMask & (1 << iTeam))
+					pOldPlot->changeAdjacentSight((TeamTypes)iTeam, kSpy.m_iLekmodSightRadius, false, NO_INVISIBLE, NO_DIRECTION, false);
+			}
+		}
 	}
 	kSpy.m_iLekmodSightRadius = 0;
-	if (iRadius > 0 && pCity != NULL)
+	kSpy.m_iLekmodSightShareMask = 0;
+}
+
+/// An established diplomat of ours sits in this player's capital
+bool CvPlayerEspionage::LekmodHasDiplomatWith(PlayerTypes eOther)
+{
+	for (uint i = 0; i < m_aSpyList.size(); i++)
 	{
-		pCity->plot()->changeAdjacentSight(m_pPlayer->getTeam(), iRadius, true, NO_INVISIBLE, NO_DIRECTION, false);
-		kSpy.m_iLekmodSightRadius = iRadius;
-		kSpy.m_iLekmodSightX = pCity->getX();
-		kSpy.m_iLekmodSightY = pCity->getY();
+		if (!m_aSpyList[i].m_bIsDiplomat || m_aSpyList[i].m_eSpyState != SPY_STATE_SCHMOOZE)
+			continue;
+		CvCity* pCity = GetCityWithSpy(i);
+		if (pCity != NULL && pCity->getOwner() == eOther)
+			return true;
 	}
+	return false;
 }
 #endif
 
@@ -2527,6 +2579,9 @@ bool CvPlayerEspionage::CanStageCoup(uint uiSpyIndex)
 /// GetCoupChangeOfSuccess - What is the % chance of success that a spy will be able to pull off a coup?
 int CvPlayerEspionage::GetCoupChanceOfSuccess(uint uiSpyIndex)
 {
+#ifdef LEKMOD_SPY_REWORK
+	memset(&m_kLekmodCoupInfo, 0, sizeof(m_kLekmodCoupInfo));
+#endif
 	// if you can't stage a coup, then the likelihood is zero!
 	if(!CanStageCoup(uiSpyIndex))
 	{
@@ -2635,6 +2690,14 @@ int CvPlayerEspionage::GetCoupChanceOfSuccess(uint uiSpyIndex)
 		break;
 	}	
 
+#ifdef LEKMOD_SPY_REWORK
+	// levels 4 and 5 have their own values (NQM_PRUNING dropped them, so they counted like level 1); above level 5 counts as level 5
+	{
+		const float afLevelValue[5] = { fSpyLevelDeltaZero, fSpyLevelDeltaOne, fSpyLevelDeltaTwo, GC.getESPIONAGE_COUP_SPY_LEVEL_DELTA_THREE(), GC.getESPIONAGE_COUP_SPY_LEVEL_DELTA_FOUR() };
+		fMySpyValue = afLevelValue[std::max(0, std::min(4, iMySpyRank))];
+		fAllySpyValue = afLevelValue[std::max(0, std::min(4, iAllySpyRank))];
+	}
+#endif
 	float fSpyMultipier = fAllySpyValue - fMySpyValue + fMultiplyConstant;
 	if (bNoAllySpy)
 	{
@@ -2647,6 +2710,19 @@ int CvPlayerEspionage::GetCoupChanceOfSuccess(uint uiSpyIndex)
 	iResultPercentage += m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_COUP_CHANCE_MODIFIER);
 #endif
 
+#ifdef LEKMOD_SPY_REWORK
+	m_kLekmodCoupInfo.iAllyInfluence = iAllyInfluence / 100;
+	m_kLekmodCoupInfo.iMyInfluence = iMyInfluence / 100;
+	m_kLekmodCoupInfo.iMyLevel = std::min(5, iMySpyRank + 1);
+	m_kLekmodCoupInfo.iAllyLevel = bNoAllySpy ? 0 : std::min(5, iAllySpyRank + 1);
+	m_kLekmodCoupInfo.iMyValueTimes100 = (int)(fMySpyValue * 100 + 0.5f);
+	m_kLekmodCoupInfo.iAllyValueTimes100 = (int)(fAllySpyValue * 100 + 0.5f);
+	m_kLekmodCoupInfo.iMultiplierTimes100 = (int)(fSpyMultipier * 100 + (fSpyMultipier >= 0 ? 0.5f : -0.5f));
+#ifdef NQ_COUP_CHANCE_MODIFIER_FROM_POLICIES
+	m_kLekmodCoupInfo.iPolicy = m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_COUP_CHANCE_MODIFIER);
+#endif
+	m_kLekmodCoupInfo.iUncapped = iResultPercentage;
+#endif
 	if(iResultPercentage > 85)
 	{
 		iResultPercentage = 85;

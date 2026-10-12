@@ -1891,6 +1891,8 @@ Spies and diplomats are being reworked (in progress).
 - Added: diplomats can also be posted in City-States
 - Changed: the spy activity in City-States is now called Meddling
 - Added: the Gold tooltip lists spy upkeep, and the Science tooltip lists diplomat Science
-- Note: shared vision of level 3+ diplomats and the coup chance breakdown follow
+- Added: when two civilizations each have a diplomat in the other's capital, each also sees what the other's level 3+ spies see in third civilizations' cities
+- Added: spies in City-States show a coup chance bar; its tooltip lists the Influence gap, both spy levels, policies and the formula
+- Fixed: a Tourism influence bonus over a City-State's ally could make the coup chance worse instead of better (high spy levels counted like the lowest one)
 - DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetStealChance/LekmodSpyCaught)
 - Dev: EspionageOverview.lua is now a Lekmod template (Lua/tmp/ui/Espionage), copied by ui_check.bat

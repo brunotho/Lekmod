@@ -2,7 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Scott Lewis (Firaxis Games) -->
 <Context ColorSet="Beige_Black_Alpha" Font="TwCenMT16" FontStyle="Shadow">
 	<Instance Name="AgentInstance">
-		<Box Size="451,106" Color="255,255,255,80" ID="Base">
+		<Box Size="451,118" Color="255,255,255,80" ID="Base">
 			<Stack Size="451,40" StackGrowth="Right">
 				<Box Size="116,40" Color="0,0,0,0">
 					<Label ID="AgentName" Anchor="L,T" Offset="10,4" TruncateWidth="105" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
@@ -28,6 +28,11 @@
 							<Label ID="ViewCityButtonLabel" String="TXT_KEY_EO_VIEW" Offset="0,0" Anchor="C,C"/>
 						</GridButton>
 						<GridButton Size="96,26" Style="SmallButton" ID="StageCoupButton" String="TXT_KEY_EO_COUP" ToolTip="TXT_KEY_EO_COUP_TT" Hidden="1"/>
+						<!-- LEKMOD: coup chance bar -->
+						<Box Size="96,14" Color="0,0,0,200" ID="LekmodCoupBar" Hidden="1">
+							<Box Size="0,14" Color="70,170,70,255" Anchor="L,C" ID="LekmodCoupBarFill"/>
+							<Label Anchor="C,C" Font="TwCenMT14" FontStyle="Shadow" ID="LekmodCoupBarLabel"/>
+						</Box>
 						<GridButton Size="96,26" Style="SmallButton" ID="RelocateButton" String="TXT_KEY_EO_RELOCATE" ToolTip="TXT_KEY_EO_RELOCATE_TOOLTIP"/>
 						<!-- LEKMOD: level 3+ actions -->
 						<GridButton Size="96,26" Style="SmallButton" ID="LekmodFullTechButton" String="TXT_KEY_LEKMOD_EO_FULL_TECH_OFF" Hidden="1"/>
@@ -49,7 +54,7 @@
 					</Box>
 				</Box>
 			</Stack>
-			<Box Size="451,106" Color="0,0,0,200" ID="AgentKIAPanel" Hidden="1">
+			<Box Size="451,118" Color="0,0,0,200" ID="AgentKIAPanel" Hidden="1">
 				<Label Anchor="C,C" ColorSet="Red_Black" Font="TwCenMT22" FontStyle="Shadow" String="TXT_KEY_EO_KIA"/>
 			</Box>
 			<Image Anchor="L,B" Offset="0,0" Texture="BlueBar500x3.dds" Size="451,3"/>

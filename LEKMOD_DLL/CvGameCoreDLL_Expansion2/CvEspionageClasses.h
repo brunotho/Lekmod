@@ -84,6 +84,7 @@ public:
 	bool m_bLekmodFullTech; // level 3+: the next steal goes for a whole technology (saved)
 	int m_iLekmodSightX;
 	int m_iLekmodSightY;
+	int m_iLekmodSightShareMask; // teams the vision is shared with (bit per team), saved
 #endif
 	bool m_bEvaluateReassignment; // used by the AI. Flag to indicate if the spy should be evaluated to be reassigned
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
@@ -179,6 +180,21 @@ public:
 	int LekmodGetDiplomatScienceTimes100();
 	int LekmodGetSpyMaintenance();
 	void LekmodUpdateSight(uint uiSpyIndex);
+	void LekmodRemoveSight(uint uiSpyIndex);
+	bool LekmodHasDiplomatWith(PlayerTypes eOther);
+	struct LekmodCoupInfo // parts of the last GetCoupChanceOfSuccess result, for the interface (not saved)
+	{
+		int iAllyInfluence;
+		int iMyInfluence;
+		int iMyLevel;
+		int iAllyLevel; // 0 = no spy of the ally in the city
+		int iMyValueTimes100;
+		int iAllyValueTimes100;
+		int iMultiplierTimes100;
+		int iPolicy;
+		int iUncapped;
+	};
+	LekmodCoupInfo m_kLekmodCoupInfo;
 	struct LekmodCaughtSpy
 	{
 		int m_iSpyOwner;
