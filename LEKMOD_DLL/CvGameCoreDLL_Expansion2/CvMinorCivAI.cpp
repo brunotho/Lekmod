@@ -6220,6 +6220,11 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 #ifdef LEKMOD_BELIEF_CITY_STATE_FOLLOWING_RELIGION_INFLUENCE
 		iRecoveryMod += iBeliefRecoveryMod;
 #endif
+#ifdef LEKMOD_SPY_REWORK
+		// our diplomat here: recovery below the resting point +50% per level
+		if (GetPlayer()->getCapitalCity() != NULL)
+			iRecoveryMod += 50 * kPlayer.GetEspionage()->LekmodGetDiplomatLevelIn(GetPlayer()->getCapitalCity());
+#endif
 #ifdef LEKMOD_PLEDGE_REWORK
 		// An active pledge speeds up recovery towards the anchor
 		if (IsProtectedByMajor(ePlayer))
@@ -6245,6 +6250,19 @@ int CvMinorCivAI::GetFriendshipChangePerTurnTimes100(PlayerTypes ePlayer)
 	if (GET_TEAM(kPlayer.getTeam()).isHasMet(GetPlayer()->getTeam()))
 	{
 		int iShift = 0;
+#ifdef LEKMOD_SPY_REWORK
+		CvCity* pLekmodCapital = GetPlayer()->getCapitalCity();
+		if (pLekmodCapital != NULL)
+		{
+			// our diplomat: +0.33 per level; every other civ's spy here: -0.2 per level (unnamed)
+			iShift += 33 * kPlayer.GetEspionage()->LekmodGetDiplomatLevelIn(pLekmodCapital);
+			for (int iOther = 0; iOther < MAX_MAJOR_CIVS; iOther++)
+			{
+				if ((PlayerTypes)iOther != ePlayer && GET_PLAYER((PlayerTypes)iOther).isAlive())
+					iShift -= 20 * GET_PLAYER((PlayerTypes)iOther).GetEspionage()->LekmodGetSpyLevelIn(pLekmodCapital);
+			}
+		}
+#endif
 
 		if (kPlayer.GetPlayerPolicies()->GetNumericModifier(POLICYMOD_PROTECTED_MINOR_INFLUENCE) != 0)
 		{
@@ -10248,6 +10266,10 @@ void CvMinorCivAI::SetTurnLastBulliedByMajor(PlayerTypes ePlayer, int iTurn)
 // ****************
 void CvMinorCivAI::DoElection()
 {
+#ifdef LEKMOD_SPY_REWORK
+	// Rig Election is removed: spies in City-States meddle with Influence instead
+	return;
+#endif
 	// if it is not an election turn, don't process!
 	if(GC.getGame().GetTurnsUntilMinorCivElection() != 0)
 	{

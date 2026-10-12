@@ -78,6 +78,9 @@ public:
 	CvSpyState m_eSpyState;
 	int m_iReviveCounter; // after killed, counter to reincarnate a spy
 	bool m_bIsDiplomat;
+#ifdef LEKMOD_SPY_REWORK
+	int m_iLekmodTurnsInCity; // diplomats: turns established in the same city (+1 level every 25), saved
+#endif
 	bool m_bEvaluateReassignment; // used by the AI. Flag to indicate if the spy should be evaluated to be reassigned
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
 	int m_iMyPoliciesEspionageModifierCached;
@@ -167,6 +170,9 @@ public:
 	static int LekmodGetStealInterval(int iStrength, int iDefense);
 	static int LekmodGetStealChance(int iStrength, int iDefense);
 	void LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bExecute);
+	int LekmodGetDiplomatLevelIn(CvCity* pCity);
+	int LekmodGetSpyLevelIn(CvCity* pCity);
+	int LekmodGetDiplomatScienceTimes100();
 #endif
 
 	void UpdateSpies();

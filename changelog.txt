@@ -1875,6 +1875,13 @@ Spies and diplomats are being reworked (in progress).
 - Changed: a spy steals every 15 / 13 / 11 / 9 / 7 turns at strength minus defense 1 / 2 / 3 / 4 / 5+ (5 more turns per point below 1); the timer follows changes every turn
 - Changed: each steal attempt succeeds with (strength + 1) / (strength + 1 + defense) (always with no defense); the spy is caught with the rest of that chance, success or not
 - Changed: a successful steal gives 8 turns of the city's Science toward a technology you pick; the victim always learns who stole
-- Note: caught spies are executed for now; the defender's Execute/Evict choice, diplomats, City-State spies, maintenance, vision and the screens follow
+- Changed: diplomats gain a level every 25 turns in the same city (moving keeps the level, restarts the count)
+- Changed: a diplomat in another civilization's capital gives you 2% per level of that capital's Science (halved at war) and +33% per level Gold on your trade routes to that city
+- Changed: a diplomat in a City-State gives +0.33 Influence per turn per level, and Influence below the resting point recovers 50% faster per level
+- Changed: diplomats are no longer expelled by war, and are established at once with civilizations that give you open borders
+- Changed: a spy in a City-State lowers every other civilization's Influence change there by 0.2 per turn per level (they don't learn whose spy it is)
+- Removed: City-State elections (Rig Election)
+- Removed: Tourism bonus from diplomats
+- Note: caught spies are executed for now; the defender's Execute/Evict choice, maintenance, vision and the screens follow
 - DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetStealChance/LekmodSpyCaught)
 - Dev: EspionageOverview.lua is now a Lekmod template (Lua/tmp/ui/Espionage), copied by ui_check.bat

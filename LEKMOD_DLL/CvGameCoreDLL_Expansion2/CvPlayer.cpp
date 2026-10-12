@@ -23355,6 +23355,10 @@ int CvPlayer::getYieldFromOtherPlayersTimes100(YieldTypes eYield) const
 	// Just Research Agreements, for now.
 	if (YIELD_SCIENCE == eYield)
 	{
+#ifdef LEKMOD_SPY_REWORK
+		// diplomats in other civs' capitals
+		yield += const_cast<CvPlayer*>(this)->GetEspionage()->LekmodGetDiplomatScienceTimes100();
+#endif
 		int iScience = getYieldFromCitiesTimes100(eYield, false);
 
 		int iResearchAgreementBonus = /*0*/ GC.getRESEARCH_AGREEMENT_MOD() * GET_TEAM(getTeam()).GetTotalNumResearchAgreements(); // RAs currently do not have this effect

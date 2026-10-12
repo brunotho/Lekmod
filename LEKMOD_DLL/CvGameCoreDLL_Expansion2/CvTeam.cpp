@@ -4284,6 +4284,11 @@ void CvTeam::SetHasEmbassyAtTeam(TeamTypes eIndex, bool bNewValue)
 //	--------------------------------------------------------------------------------
 void CvTeam::EvacuateDiplomatsAtTeam(TeamTypes eIndex)
 {
+#ifdef LEKMOD_SPY_REWORK
+	// diplomats are not expelled by war
+	UNREFERENCED_PARAMETER(eIndex);
+	return;
+#endif
 	for (int iPlayer = 0; iPlayer < MAX_MAJOR_CIVS; iPlayer++)
 	{
 		PlayerTypes ePlayer1 = (PlayerTypes)iPlayer;

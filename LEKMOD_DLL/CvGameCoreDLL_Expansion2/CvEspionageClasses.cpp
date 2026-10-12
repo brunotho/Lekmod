@@ -38,6 +38,9 @@ CvEspionageSpy::CvEspionageSpy()
 	, m_eSpyState(NUM_SPY_STATES)
 	, m_iReviveCounter(0)
 	, m_bIsDiplomat(false)
+#ifdef LEKMOD_SPY_REWORK
+	, m_iLekmodTurnsInCity(0)
+#endif
 	, m_bEvaluateReassignment(true)
 {
 }
@@ -71,6 +74,12 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 	
 	loadFrom >> writeTo.m_bEvaluateReassignment;
 	writeTo.m_bEvaluateReassignment = true;
+#ifdef LEKMOD_SPY_REWORK
+	if (uiVersion >= 2)
+		loadFrom >> writeTo.m_iLekmodTurnsInCity;
+	else
+		writeTo.m_iLekmodTurnsInCity = 0;
+#endif
 
 	return loadFrom;
 }
@@ -78,7 +87,11 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 /// Serialization write
 FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 {
+#ifdef LEKMOD_SPY_REWORK
+	uint uiVersion = 2;
+#else
 	uint uiVersion = 1;
+#endif
 	saveTo << uiVersion;
 
 	saveTo << readFrom.m_iName;
@@ -89,6 +102,9 @@ FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 	saveTo << readFrom.m_iReviveCounter;
 	saveTo << readFrom.m_bIsDiplomat;
 	saveTo << readFrom.m_bEvaluateReassignment;
+#ifdef LEKMOD_SPY_REWORK
+	saveTo << readFrom.m_iLekmodTurnsInCity;
+#endif
 
 	return saveTo;
 }
@@ -974,6 +990,15 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 		if(pSpy->m_eSpyState != SPY_STATE_DEAD)
 		{
 			UncoverIntrigue(uiSpyIndex);
+#ifdef LEKMOD_SPY_REWORK
+			// diplomats gain a level every 25 turns in the same city
+			pSpy->m_iLekmodTurnsInCity++;
+			if (pSpy->m_iLekmodTurnsInCity >= 25)
+			{
+				pSpy->m_iLekmodTurnsInCity = 0;
+				LevelUpSpy(uiSpyIndex);
+			}
+#endif
 		}
 		break;
 	case SPY_STATE_DEAD:
@@ -1450,6 +1475,15 @@ bool CvPlayerEspionage::MoveSpyTo(CvCity* pCity, uint uiSpyIndex, bool bAsDiplom
 		int iRate = CalcPerTurn(SPY_STATE_TRAVELLING, pCity, uiSpyIndex);
 		int iGoal = CalcRequired(SPY_STATE_TRAVELLING, pCity, uiSpyIndex);
 		pCityEspionage->SetActivity(m_pPlayer->GetID(), 0, iRate, iGoal);
+#ifdef LEKMOD_SPY_REWORK
+		m_aSpyList[uiSpyIndex].m_iLekmodTurnsInCity = 0;
+		// diplomats are established at once with civs that grant us open borders
+		if (bAsDiplomat && !GET_PLAYER(pCity->getOwner()).isMinorCiv() && GET_TEAM(pCity->getTeam()).IsAllowsOpenBordersToTeam(m_pPlayer->getTeam()))
+		{
+			pCityEspionage->ResetProgress(m_pPlayer->GetID());
+			m_aSpyList[uiSpyIndex].m_eSpyState = SPY_STATE_SCHMOOZE;
+		}
+#endif
 	}
 
 	if(GC.getLogging())
@@ -1770,6 +1804,52 @@ void CvPlayerEspionage::LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bEx
 
 	ExtractSpyFromCity(uiSpyIndex);
 	pSpy->m_eSpyState = bExecute ? SPY_STATE_DEAD : SPY_STATE_UNASSIGNED;
+}
+#endif
+
+#ifdef LEKMOD_SPY_REWORK
+/// Level of this player's established diplomat in the city (0 if none)
+int CvPlayerEspionage::LekmodGetDiplomatLevelIn(CvCity* pCity)
+{
+	if (pCity == NULL)
+		return 0;
+	const int iIndex = GetSpyIndexInCity(pCity);
+	if (iIndex < 0 || !m_aSpyList[iIndex].m_bIsDiplomat || m_aSpyList[iIndex].m_eSpyState != SPY_STATE_SCHMOOZE)
+		return 0;
+	return (int)m_aSpyList[iIndex].m_eRank + 1;
+}
+
+/// Level of this player's established spy (not a diplomat) in the city (0 if none or still travelling)
+int CvPlayerEspionage::LekmodGetSpyLevelIn(CvCity* pCity)
+{
+	if (pCity == NULL)
+		return 0;
+	const int iIndex = GetSpyIndexInCity(pCity);
+	if (iIndex < 0 || m_aSpyList[iIndex].m_bIsDiplomat)
+		return 0;
+	const CvSpyState eState = m_aSpyList[iIndex].m_eSpyState;
+	if (eState == SPY_STATE_TRAVELLING || eState == SPY_STATE_DEAD || eState == SPY_STATE_UNASSIGNED)
+		return 0;
+	return (int)m_aSpyList[iIndex].m_eRank + 1;
+}
+
+/// Science per turn from diplomats in other civs' capitals: 2% x level of the capital's Science, halved at war
+int CvPlayerEspionage::LekmodGetDiplomatScienceTimes100()
+{
+	int iScience = 0;
+	for (uint i = 0; i < m_aSpyList.size(); i++)
+	{
+		if (!m_aSpyList[i].m_bIsDiplomat || m_aSpyList[i].m_eSpyState != SPY_STATE_SCHMOOZE)
+			continue;
+		CvCity* pCity = GetCityWithSpy(i);
+		if (pCity == NULL || GET_PLAYER(pCity->getOwner()).isMinorCiv())
+			continue;
+		int iValue = pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 2 * ((int)m_aSpyList[i].m_eRank + 1) / 100;
+		if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(pCity->getTeam()))
+			iValue /= 2;
+		iScience += iValue;
+	}
+	return iScience;
 }
 #endif
 
