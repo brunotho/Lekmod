@@ -5,7 +5,7 @@
 
   <Grid Size="990,592" Anchor="C,C" Offset="0,20" Style="Grid9DetailFive140" ConsumeMouse="1" ID="InGameSet">
     <!-- LEKMOD: Blackout (World Congress) covers the content -->
-    <Box ID="LekmodBlackout" Anchor="C,T" Offset="0,44" Size="956,438" Color="0,0,0,255" Hidden="1" />
+    <Box ID="LekmodBlackout" Anchor="C,T" Offset="0,44" Size="962,534" Color="0,0,0,255" Hidden="1" />
 
     <Box Anchor="C,B" AnchorSide="I.I" Offset="0,50"   Size="960,56" Color="255,255,255,0" >
       <!-- Close Button  -->
