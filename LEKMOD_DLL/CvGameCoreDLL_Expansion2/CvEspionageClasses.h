@@ -80,6 +80,9 @@ public:
 	bool m_bIsDiplomat;
 #ifdef LEKMOD_SPY_REWORK
 	int m_iLekmodTurnsInCity; // diplomats: turns established in the same city (+1 level every 25), saved
+	int m_iLekmodSightRadius; // vision radius currently applied (saved, with its plot)
+	int m_iLekmodSightX;
+	int m_iLekmodSightY;
 #endif
 	bool m_bEvaluateReassignment; // used by the AI. Flag to indicate if the spy should be evaluated to be reassigned
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
@@ -173,6 +176,8 @@ public:
 	int LekmodGetDiplomatLevelIn(CvCity* pCity);
 	int LekmodGetSpyLevelIn(CvCity* pCity);
 	int LekmodGetDiplomatScienceTimes100();
+	int LekmodGetSpyMaintenance();
+	void LekmodUpdateSight(uint uiSpyIndex);
 #endif
 
 	void UpdateSpies();

@@ -40,6 +40,9 @@ CvEspionageSpy::CvEspionageSpy()
 	, m_bIsDiplomat(false)
 #ifdef LEKMOD_SPY_REWORK
 	, m_iLekmodTurnsInCity(0)
+	, m_iLekmodSightRadius(0)
+	, m_iLekmodSightX(-1)
+	, m_iLekmodSightY(-1)
 #endif
 	, m_bEvaluateReassignment(true)
 {
@@ -79,6 +82,18 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 		loadFrom >> writeTo.m_iLekmodTurnsInCity;
 	else
 		writeTo.m_iLekmodTurnsInCity = 0;
+	if (uiVersion >= 3)
+	{
+		loadFrom >> writeTo.m_iLekmodSightRadius;
+		loadFrom >> writeTo.m_iLekmodSightX;
+		loadFrom >> writeTo.m_iLekmodSightY;
+	}
+	else
+	{
+		writeTo.m_iLekmodSightRadius = 0;
+		writeTo.m_iLekmodSightX = -1;
+		writeTo.m_iLekmodSightY = -1;
+	}
 #endif
 
 	return loadFrom;
@@ -88,7 +103,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 {
 #ifdef LEKMOD_SPY_REWORK
-	uint uiVersion = 2;
+	uint uiVersion = 3;
 #else
 	uint uiVersion = 1;
 #endif
@@ -104,6 +119,9 @@ FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 	saveTo << readFrom.m_bEvaluateReassignment;
 #ifdef LEKMOD_SPY_REWORK
 	saveTo << readFrom.m_iLekmodTurnsInCity;
+	saveTo << readFrom.m_iLekmodSightRadius;
+	saveTo << readFrom.m_iLekmodSightX;
+	saveTo << readFrom.m_iLekmodSightY;
 #endif
 
 	return saveTo;
@@ -1045,6 +1063,12 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 		break;
 	}
 
+#ifdef LEKMOD_SPY_REWORK
+	// vision follows strength - defense every turn
+	if (pSpy->m_eSpyState != SPY_STATE_DEAD)
+		LekmodUpdateSight(uiSpyIndex);
+	if (false)
+#endif
 	// if we just established surveillance in the city, turn the lights on
 #ifdef AUI_WARNING_FIXES
 	if (HasEstablishedSurveillance(uiSpyIndex) && !bHadSurveillance && pCity)
@@ -1568,7 +1592,18 @@ bool CvPlayerEspionage::ExtractSpyFromCity(uint uiSpyIndex)
 	}
 
 	// turn off visibility of city
+#ifdef LEKMOD_SPY_REWORK
+	if (m_aSpyList[uiSpyIndex].m_iLekmodSightRadius > 0)
+	{
+		CvPlot* pSightPlot = GC.getMap().plot(m_aSpyList[uiSpyIndex].m_iLekmodSightX, m_aSpyList[uiSpyIndex].m_iLekmodSightY);
+		if (pSightPlot != NULL)
+			pSightPlot->changeAdjacentSight(m_pPlayer->getTeam(), m_aSpyList[uiSpyIndex].m_iLekmodSightRadius, false, NO_INVISIBLE, NO_DIRECTION, false);
+		m_aSpyList[uiSpyIndex].m_iLekmodSightRadius = 0;
+	}
+	if (false)
+#else
 	if(bHadSurveillance)
+#endif
 	{
 		pCity->plot()->changeAdjacentSight(m_pPlayer->getTeam(), GC.getESPIONAGE_SURVEILLANCE_SIGHT_RANGE(), false, NO_INVISIBLE, NO_DIRECTION, false);
 	}
@@ -1850,6 +1885,57 @@ int CvPlayerEspionage::LekmodGetDiplomatScienceTimes100()
 		iScience += iValue;
 	}
 	return iScience;
+}
+#endif
+
+#ifdef LEKMOD_SPY_REWORK
+/// Gold per turn for spies placed in a city (diplomats are free): 3 per era from the Renaissance (3/6/9/12/15)
+int CvPlayerEspionage::LekmodGetSpyMaintenance()
+{
+	const int iRenaissance = GC.getInfoTypeForString("ERA_RENAISSANCE", true);
+	const int iPerSpy = 3 * std::max(1, (int)m_pPlayer->GetCurrentEra() - iRenaissance + 1);
+	int iCost = 0;
+	for (uint i = 0; i < m_aSpyList.size(); i++)
+	{
+		const CvSpyState eState = m_aSpyList[i].m_eSpyState;
+		if (m_aSpyList[i].m_bIsDiplomat || eState == SPY_STATE_UNASSIGNED || eState == SPY_STATE_DEAD)
+			continue;
+		iCost += iPerSpy;
+	}
+	return iCost;
+}
+
+/// Vision around the city: radius = strength - defense (0 = none), for established spies and diplomats in other civs' cities
+void CvPlayerEspionage::LekmodUpdateSight(uint uiSpyIndex)
+{
+	if (uiSpyIndex >= m_aSpyList.size())
+		return;
+	CvEspionageSpy& kSpy = m_aSpyList[uiSpyIndex];
+	CvCity* pCity = GetCityWithSpy(uiSpyIndex);
+	int iRadius = 0;
+	if (pCity != NULL && pCity->getOwner() != m_pPlayer->GetID())
+	{
+		const bool bEstablished = kSpy.m_bIsDiplomat ? (kSpy.m_eSpyState == SPY_STATE_SCHMOOZE) : HasEstablishedSurveillance(uiSpyIndex);
+		if (bEstablished)
+			iRadius = std::max(0, LekmodGetSpyStrength(uiSpyIndex, pCity) - LekmodGetCityDefense(pCity, m_pPlayer->GetID()));
+	}
+	if (iRadius == kSpy.m_iLekmodSightRadius && (iRadius == 0 || (pCity != NULL && kSpy.m_iLekmodSightX == pCity->getX() && kSpy.m_iLekmodSightY == pCity->getY())))
+		return;
+	// remove the old vision where it was applied
+	if (kSpy.m_iLekmodSightRadius > 0)
+	{
+		CvPlot* pOldPlot = GC.getMap().plot(kSpy.m_iLekmodSightX, kSpy.m_iLekmodSightY);
+		if (pOldPlot != NULL)
+			pOldPlot->changeAdjacentSight(m_pPlayer->getTeam(), kSpy.m_iLekmodSightRadius, false, NO_INVISIBLE, NO_DIRECTION, false);
+	}
+	kSpy.m_iLekmodSightRadius = 0;
+	if (iRadius > 0 && pCity != NULL)
+	{
+		pCity->plot()->changeAdjacentSight(m_pPlayer->getTeam(), iRadius, true, NO_INVISIBLE, NO_DIRECTION, false);
+		kSpy.m_iLekmodSightRadius = iRadius;
+		kSpy.m_iLekmodSightX = pCity->getX();
+		kSpy.m_iLekmodSightY = pCity->getY();
+	}
 }
 #endif
 

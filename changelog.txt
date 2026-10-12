@@ -1882,6 +1882,8 @@ Spies and diplomats are being reworked (in progress).
 - Changed: a spy in a City-State lowers every other civilization's Influence change there by 0.2 per turn per level (they don't learn whose spy it is)
 - Removed: City-State elections (Rig Election)
 - Removed: Tourism bonus from diplomats
-- Note: caught spies are executed for now; the defender's Execute/Evict choice, maintenance, vision and the screens follow
+- Added: spies placed in a city cost 3 Gold per turn per era from the Renaissance (3 / 6 / 9 / 12 / 15); diplomats are free
+- Changed: spies and diplomats see around their city with a radius of strength minus defense (none at 0 or less), updated every turn
+- Note: caught spies are executed for now; the defender's Execute/Evict choice, full-tech steals, sweeps, shared diplomat vision and the screens follow
 - DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetStealChance/LekmodSpyCaught)
 - Dev: EspionageOverview.lua is now a Lekmod template (Lua/tmp/ui/Espionage), copied by ui_check.bat

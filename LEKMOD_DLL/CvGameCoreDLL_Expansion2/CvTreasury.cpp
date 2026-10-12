@@ -724,6 +724,10 @@ int CvTreasury::CalculatePreInflatedCosts()
 	iTotalCosts += m_iExpensePerTurnUnitSupply;
 	iTotalCosts += GetBuildingGoldMaintenance();
 	iTotalCosts += GetImprovementGoldMaintenance();
+#ifdef LEKMOD_SPY_REWORK
+	// spies placed in a city
+	iTotalCosts += m_pPlayer->GetEspionage()->LekmodGetSpyMaintenance();
+#endif
 
 	return iTotalCosts;
 }
