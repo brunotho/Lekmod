@@ -5790,6 +5790,19 @@ void CvGame::DoInitDiploVictory()
 /// Update diplo victory parameters, such as how many votes are needed to win
 void CvGame::DoUpdateDiploVictory()
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// World leader: LEKMOD_WORLD_LEADER_VOTES_BASE minus 1 per destroyed City-State (annexed ones included)
+	int iDeadCityStates = 0;
+	for (int i = MAX_MAJOR_CIVS; i < MAX_CIV_PLAYERS; i++)
+	{
+		CvPlayer& kMinor = GET_PLAYER((PlayerTypes)i);
+		if (kMinor.isMinorCiv() && kMinor.isEverAlive() && !kMinor.isAlive())
+			iDeadCityStates++;
+	}
+	SetVotesNeededForDiploVictory(MAX(1, LEKMOD_WORLD_LEADER_VOTES_BASE - iDeadCityStates));
+	GC.GetEngineUserInterface()->setDirty(LeagueScreen_DIRTY_BIT, true);
+	return;
+#endif
 	int iVotesForHost = 1;
 	int iVotesPerCiv = 1;
 	int iVotesPerCityState = 1;
@@ -8794,6 +8807,13 @@ void CvGame::doTurn()
 		m_kGameDeals.DoTurn();
 	}
 #endif
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// World Congress results once the new turn is processed; simultaneous turns do this in updateMoves after activating the humans
+	if (!isOption(GAMEOPTION_DYNAMIC_TURNS) && !isOption(GAMEOPTION_SIMULTANEOUS_TURNS))
+	{
+		GetGameLeagues()->DoTurnLate();
+	}
+#endif
 	LogGameState();
 #ifndef AUTOSAVE_END_OF_TURN
 	if(isNetworkMultiPlayer())
@@ -9734,6 +9754,10 @@ void CvGame::updateMoves()
 #ifdef LEKMOD_v34 // Process deals after the player's turns are activated
 			m_kGameDeals.DoTurn();
 #endif
+#endif
+#ifdef LEKMOD_CONGRESS_CYCLE
+			// World Congress results once the new turn is processed (not in the turn transition)
+			GetGameLeagues()->DoTurnLate();
 #endif
 		}
 	}

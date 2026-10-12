@@ -1527,6 +1527,18 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_POLICY_PICK_FREEZE
 #define LEKMOD_GOLD_GREAT_PERSON_COST_STEP 500
 #define LEKMOD_POLICY_REWORK
+// World Congress cycle (spec "Diplo Wincon and Congress"). Congress era = era of the most advanced player (GetGameEraForTrigger).
+// Fixed schedule around the voting turn V (CvLeague::m_iLekmodVoteTurn, absolute turn): V-4 host election (a session with only the
+// host proposal), V-3 proposal privileges (host + most votes, ties random; MP: second after the host proposed), a member who has not
+// proposed by the end of a turn gets a random proposal (AIs their own pick), V voting. Sessions resolve in CvGameLeagues::DoTurnLate
+// (after the new turn's player processing, not in the turn transition). Next V = V + 15/13/11/9/7 by congress era (Renaissance or
+// earlier / Industrial / Modern / Atomic / Information), not speed scaled. First cycle: the founder hosts (ties: most votes, then
+// random), proposals at once, V = founding turn + 3. World leader votes (m_iLekmodLeaderVoteTurn): 7 turns after the first player
+// reaches Atomic, then every 7 turns; every member votes for itself; a civ with at least LEKMOD_WORLD_LEADER_VOTES_BASE minus 1 per
+// destroyed City-State wins, otherwise first and second place gain 1 permanent vote (Member::iExtraVotes; ties: all tied).
+// Era special sessions only mark the era (splash, United Nations, delegate data); no session, no recurring victory proposal.
+#define LEKMOD_CONGRESS_CYCLE
+#define LEKMOD_WORLD_LEADER_VOTES_BASE 45
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

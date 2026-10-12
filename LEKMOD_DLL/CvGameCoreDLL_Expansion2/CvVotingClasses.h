@@ -695,6 +695,22 @@ public:
 	LeagueSpecialSessionTypes m_eCurrentSpecialSession;
 	EnactProposalList m_vEnactProposalsOnHold;
 	RepealProposalList m_vRepealProposalsOnHold;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	int m_iLekmodVoteTurn;
+	int m_iLekmodLeaderVoteTurn;
+	int m_iLekmodPrivilegeTurn;
+	bool m_bLekmodHostSession;
+
+	void LekmodDoTurnLate();
+	void LekmodStartProposals(int iTurn, bool bCallForProposals);
+	void LekmodCallForProposals();
+	void LekmodAutoPropose(PlayerTypes ePlayer);
+	void LekmodStartHostSession();
+	void LekmodDoWorldLeaderVote();
+	int LekmodGetSessionInterval() const;
+	void LekmodPickFounderHost(const std::vector<PlayerTypes>& vCandidates);
+	Member* LekmodPickSecondProposer();
+#endif
 
 private:
 	void CheckStartSession();
@@ -769,6 +785,11 @@ public:
 
 	// Called each player turn
 	void DoPlayerTurn(CvPlayer& kPlayer);
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Called once the new turn's players are processed (session results, world leader votes)
+	void DoTurnLate();
+	bool m_bLekmodInTransition; // true while DoTurn runs (before the game turn is incremented); not saved
+#endif
 
 	void FoundLeague(PlayerTypes eFounder = NO_PLAYER);
 	void DoPlayerAliveStatusChanged(PlayerTypes ePlayer);

@@ -1761,3 +1761,19 @@ Tags: policies, naval, units, buildings
 - Removed: the Colonialism Governor's Mansion in newly founded cities
 - Dev: the No Quitters script that granted it was still loaded by InGame.lua; no longer loaded
 - DLL: Policies.ResistanceTimeModifier, ConquestFreeUnitClass, NewCityFreeBuildingClass, NewCityFreeUnitClass, FreeTilesNewCities, EarlyBuildingProductionModifier/EarlyBuildingEraType, FreeUnitClassNearWater/FreeUnitClassOnWater; tables Policy_CityYieldIfBuildingClass, Policy_CityHappinessIfBuildingClass (largest value counts; Military Tradition and Military Caste moved there), Policy_BuildingTerrainYieldChanges (LEKMOD_POLICY_REWORK)
+
+WORLD CONGRESS SESSIONS (LEAGUE_SESSIONS)
+-----------------------------------------
+Tags: world congress, game mechanics
+The World Congress runs on a fixed cycle: host election, proposals, and the vote 3 turns later. World Leader votes have their own timer.
+- Changed: the Congress era is the era of the most advanced civilization (was one era behind until half the civilizations reached it)
+- Changed: the first civilization with Printing Press that has met everyone founds and hosts the Congress; ties go to the most Delegates, then at random
+- Changed: each session: the host is elected 1 turn before proposals open; the host and the civilization with the most Delegates propose (ties at random, no longer the host's pick); the vote is 3 turns after proposals open
+- Changed: a civilization that has not proposed by the end of its turn gets a random proposal
+- Changed: sessions every 15/13/11/9/7 turns in the Renaissance/Industrial/Modern/Atomic/Information Era (was 16/12/10/5)
+- Changed: results take effect at the start of the turn after the vote, once that turn's yields are in (was during the turn change)
+- Changed: new eras no longer hold a special host session
+- Changed: World Leader votes: 7 turns after the first civilization reaches the Atomic Era, then every 7 turns, independent of sessions; every civilization votes for itself; 45 Delegates win (1 fewer per destroyed City-State); otherwise first and second place each gain 1 permanent Delegate (ties: all tied)
+- Removed: the World Leader proposal in United Nations sessions
+- Note: Delegate sources are still the old ones; the new vote sources are the next item
+- DLL: LEKMOD_CONGRESS_CYCLE, LEKMOD_WORLD_LEADER_VOTES_BASE (CvLeague::m_iLekmodVoteTurn/m_iLekmodLeaderVoteTurn, league save version 15, CvGameLeagues::DoTurnLate)

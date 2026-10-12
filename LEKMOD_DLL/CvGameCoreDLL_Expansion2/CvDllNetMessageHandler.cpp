@@ -654,7 +654,12 @@ void CvDllNetMessageHandler::ResponseLeagueProposeEnact(LeagueTypes eLeague, Res
 
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
+#ifdef LEKMOD_CONGRESS_CYCLE
+			// CvLeague::AssignSecondProposalPrivilege calls for proposals itself
+			if (false)
+#else
 			if ((PlayerTypes)iI != pLeague->GetHostMember() && (PlayerTypes)iI != eProposer)
+#endif
 			{
 				// Call for Proposals
 				if (pLeague->CanPropose((PlayerTypes)iI))
@@ -709,7 +714,12 @@ void CvDllNetMessageHandler::ResponseLeagueProposeRepeal(LeagueTypes eLeague, in
 
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
+#ifdef LEKMOD_CONGRESS_CYCLE
+			// CvLeague::AssignSecondProposalPrivilege calls for proposals itself
+			if (false)
+#else
 			if ((PlayerTypes)iI != pLeague->GetHostMember() && (PlayerTypes)iI != eProposer)
+#endif
 			{
 				// Call for Proposals
 				if (pLeague->CanPropose((PlayerTypes)iI))

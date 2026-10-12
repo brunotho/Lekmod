@@ -109,6 +109,15 @@ CvString LeagueHelpers::GetTextForChoice(ResolutionDecisionTypes eDecision, int 
 EraTypes LeagueHelpers::GetGameEraForTrigger()
 {
 	EraTypes eGameEra = NO_ERA;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Congress era = era of the most advanced player
+	for (int i = 0; i < MAX_MAJOR_CIVS; i++)
+	{
+		if (GET_PLAYER((PlayerTypes)i).isAlive() && GET_PLAYER((PlayerTypes)i).GetCurrentEra() > eGameEra)
+			eGameEra = GET_PLAYER((PlayerTypes)i).GetCurrentEra();
+	}
+	return (eGameEra == NO_ERA) ? (EraTypes)0 : eGameEra;
+#endif
 
 	// Game era is one era less than the most advanced player
 	EraTypes eMostAdvancedEra = NO_ERA;
@@ -1949,6 +1958,12 @@ CvLeague::CvLeague(void)
 	m_eCurrentSpecialSession = NO_LEAGUE_SPECIAL_SESSION;
 	m_vEnactProposalsOnHold.clear();
 	m_vRepealProposalsOnHold.clear();
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_iLekmodVoteTurn = MAX_INT;
+	m_iLekmodLeaderVoteTurn = -1;
+	m_iLekmodPrivilegeTurn = -1;
+	m_bLekmodHostSession = false;
+#endif
 }
 
 CvLeague::CvLeague(LeagueTypes eID)
@@ -2014,15 +2029,82 @@ void CvLeague::Init(LeagueSpecialSessionTypes eGoverningSpecialSession)
 	CvAssertMsg(m_eID != NO_LEAGUE, "Initializing a CvLeague without a proper ID. Please send Anton your save file and verison.");
 	CvAssert(eGoverningSpecialSession != NO_LEAGUE_SPECIAL_SESSION);
 	m_eLastSpecialSession = eGoverningSpecialSession; // Fake the last special session so we have data to inform the World Congress's status
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// First cycle: the founder hosts, proposals open at once, voting 3 turns later
+	const int iTurn = GC.getGame().getGameTurn() + (GC.getGame().GetGameLeagues()->m_bLekmodInTransition ? 1 : 0);
+	m_iLekmodVoteTurn = iTurn + 3;
+	m_iLekmodLeaderVoteTurn = -1;
+	m_bLekmodHostSession = false;
+	SetTurnsUntilSession(3);
+	LekmodStartProposals(iTurn, /*bCallForProposals*/ false);
+#else
 	AssignProposalPrivileges();
 #ifdef CAN_PROPOSE_ENACT_UPDATES_ONCE_PER_SESSION
 	UpdateCanProposeEnact();
 #endif
 	ResetTurnsUntilSession();
+#endif
 }
 
 void CvLeague::DoTurn(LeagueSpecialSessionTypes eTriggeredSpecialSession)
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	const int iTurn = GC.getGame().getGameTurn() + 1; // runs before the game turn is incremented
+	// Era special sessions only mark the new era
+	if (eTriggeredSpecialSession != NO_LEAGUE_SPECIAL_SESSION)
+	{
+		CheckStartSpecialSession(eTriggeredSpecialSession);
+	}
+
+	if (!IsInSession())
+	{
+		// Members who could propose since an earlier turn get a random proposal (AIs make their own pick)
+		if (iTurn > m_iLekmodPrivilegeTurn || iTurn >= m_iLekmodVoteTurn)
+		{
+			for (int iPass = 0; iPass < 3; iPass++)
+			{
+				for (uint i = 0; i < m_vMembers.size(); i++)
+				{
+					if (CanPropose(m_vMembers[i].ePlayer) && (iTurn > m_iLekmodPrivilegeTurn || iTurn >= m_iLekmodVoteTurn))
+						LekmodAutoPropose(m_vMembers[i].ePlayer);
+				}
+			}
+		}
+
+		if (iTurn >= m_iLekmodVoteTurn)
+		{
+			m_bLekmodHostSession = false;
+			StartSession();
+		}
+		else if (iTurn == m_iLekmodVoteTurn - 4)
+		{
+			LekmodStartHostSession();
+		}
+	}
+
+	if (m_iLekmodVoteTurn != MAX_INT)
+	{
+		SetTurnsUntilSession(MAX(0, m_iLekmodVoteTurn - iTurn));
+		if (!IsInSession() && GetTurnsUntilSession() == GC.getLEAGUE_SESSION_SOON_WARNING_TURNS())
+		{
+			NotifySessionSoon(GetTurnsUntilSession());
+		}
+	}
+
+	// World leader votes start 7 turns after the first player reaches the Atomic Era
+	if (m_iLekmodLeaderVoteTurn < 0)
+	{
+		VictoryTypes eDiploVictory = (VictoryTypes) GC.getInfoTypeForString("VICTORY_DIPLOMATIC", true);
+		EraTypes eAtomic = (EraTypes) GC.getInfoTypeForString("ERA_POSTMODERN", true);
+		if (eDiploVictory != NO_VICTORY && GC.getGame().isVictoryValid(eDiploVictory) && eAtomic != NO_ERA && LeagueHelpers::GetGameEraForTrigger() >= eAtomic)
+		{
+			m_iLekmodLeaderVoteTurn = iTurn + 6;
+		}
+	}
+
+	CheckProjectsProgress();
+}
+#else
 	CvAssert(eTriggeredSpecialSession == NO_LEAGUE_SPECIAL_SESSION || CanStartSpecialSession(eTriggeredSpecialSession));
 
 	// Special Session this turn, put everything else on hold
@@ -2057,6 +2139,7 @@ void CvLeague::DoTurn(LeagueSpecialSessionTypes eTriggeredSpecialSession)
 
 	CheckProjectsProgress();
 }
+#endif
 
 LeagueTypes CvLeague::GetID() const
 {
@@ -2144,6 +2227,9 @@ void CvLeague::DoChangeCustomName(PlayerTypes ePlayer, const char* szCustomName)
 
 int CvLeague::GetSessionTurnInterval()
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	return LekmodGetSessionInterval();
+#endif
 	// Determined by most recent special session
 	int iInterval = GC.getLEAGUE_SESSION_INTERVAL_BASE_TURNS();
 	if (GetCurrentSpecialSession() != NO_LEAGUE_SPECIAL_SESSION)
@@ -2239,6 +2325,11 @@ void CvLeague::ResetTurnsUntilSession()
 
 int CvLeague::GetTurnsUntilVictorySession()
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	if (m_iLekmodLeaderVoteTurn < 0)
+		return 999;
+	return MAX(0, m_iLekmodLeaderVoteTurn - (GC.getGame().getGameTurn() + (GC.getGame().GetGameLeagues()->m_bLekmodInTransition ? 1 : 0)));
+#endif
 	VictoryTypes eDiploVictory = (VictoryTypes) GC.getInfoTypeForString("VICTORY_DIPLOMATIC", true);
 	if (eDiploVictory == NO_VICTORY)
 	{
@@ -2337,6 +2428,10 @@ LeagueSpecialSessionTypes CvLeague::GetCurrentSpecialSession() const
 
 bool CvLeague::CanStartSpecialSession(LeagueSpecialSessionTypes /*eSpecialSession*/)
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Only marks the era; no session is held
+	return true;
+#endif
 	// Cannot already be in session
 	if (IsInSession())
 		return false;
@@ -3337,7 +3432,20 @@ void CvLeague::AssignSecondProposalPrivilege()
 
 	int iPrivileges = GetNumProposersPerSession() - 1;
 
-#if defined(LEKMOD_WC_RESPECT_ACTIVATION_ORDER)
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Most votes, ties at random
+	while (iPrivileges > 0)
+	{
+		Member* pBest = LekmodPickSecondProposer();
+		if (pBest == NULL)
+			break;
+		pBest->bMayPropose = true;
+		pBest->iProposals = GC.getLEAGUE_MEMBER_PROPOSALS_BASE();
+		iPrivileges--;
+	}
+	m_iLekmodPrivilegeTurn = GC.getGame().getGameTurn() + (GC.getGame().GetGameLeagues()->m_bLekmodInTransition ? 1 : 0);
+	LekmodCallForProposals();
+#elif defined(LEKMOD_WC_RESPECT_ACTIVATION_ORDER)
 	// Highest votes; ties break by activation order (option on) or lower player ID (option off).
 	while (iPrivileges > 0)
 	{
@@ -5706,6 +5814,339 @@ void CvLeague::CheckProjectAchievements()
 	}
 }
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+/// Session results and world leader votes, once the new turn's players are processed
+void CvLeague::LekmodDoTurnLate()
+{
+	const int iTurn = GC.getGame().getGameTurn();
+	if (IsInSession())
+	{
+		// Host election runs during V-4, voting during V; both resolve at the start of the following turn
+		const bool bDue = m_bLekmodHostSession ? (iTurn > m_iLekmodVoteTurn - 4) : (iTurn > m_iLekmodVoteTurn);
+		if (bDue)
+		{
+			for (uint i = 0; i < m_vMembers.size(); i++)
+			{
+				if (CanVote(m_vMembers[i].ePlayer))
+					DoVoteAbstain(m_vMembers[i].ePlayer, GetRemainingVotesForMember(m_vMembers[i].ePlayer));
+			}
+			const bool bHostSession = m_bLekmodHostSession;
+			FinishSession();
+			if (bHostSession)
+			{
+				LekmodStartProposals(iTurn, /*bCallForProposals*/ true);
+			}
+		}
+	}
+
+	if (m_iLekmodLeaderVoteTurn >= 0 && iTurn >= m_iLekmodLeaderVoteTurn)
+	{
+		m_iLekmodLeaderVoteTurn = iTurn + 7;
+		LekmodDoWorldLeaderVote();
+	}
+	GC.GetEngineUserInterface()->setDirty(LeagueScreen_DIRTY_BIT, true);
+}
+
+/// Host election: a session with only the host proposal
+void CvLeague::LekmodStartHostSession()
+{
+	ResolutionTypes eHostResolution = (ResolutionTypes) GC.getInfoTypeForString("RESOLUTION_CHANGE_LEAGUE_HOST", true);
+	if (eHostResolution == NO_RESOLUTION)
+		return;
+
+	SetInSession(true);
+	m_bLekmodHostSession = true;
+	DoProposeEnact(eHostResolution, NO_PLAYER, LeagueHelpers::CHOICE_NONE);
+	AssignStartingVotes();
+}
+
+/// Proposal privileges for the host (and, outside multiplayer, the second proposer)
+void CvLeague::LekmodStartProposals(int iTurn, bool bCallForProposals)
+{
+	ClearProposalPrivileges();
+	AssignProposalPrivileges();
+#ifdef CAN_PROPOSE_ENACT_UPDATES_ONCE_PER_SESSION
+	UpdateCanProposeEnact();
+#endif
+	m_iLekmodPrivilegeTurn = iTurn;
+	if (bCallForProposals)
+	{
+		LekmodCallForProposals();
+	}
+}
+
+/// AIs propose right away, humans are notified
+void CvLeague::LekmodCallForProposals()
+{
+	for (uint i = 0; i < m_vMembers.size(); i++)
+	{
+		PlayerTypes ePlayer = m_vMembers[i].ePlayer;
+		if (!CanPropose(ePlayer))
+			continue;
+
+		CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+		if (kPlayer.isHuman())
+		{
+			CvNotifications* pNotifications = kPlayer.GetNotifications();
+			if (pNotifications)
+			{
+				CvString strSummary = GetLocalizedText("TXT_KEY_NOTIFICATION_LEAGUE_PROPOSALS_NEEDED");
+				Localization::String strTemp = Localization::Lookup("TXT_KEY_NOTIFICATION_LEAGUE_PROPOSALS_NEEDED_TT");
+				strTemp << GetName();
+				CvString strInfo = strTemp.toUTF8();
+				pNotifications->Add(NOTIFICATION_LEAGUE_CALL_FOR_PROPOSALS, strInfo, strSummary, -1, -1, GetID());
+			}
+		}
+		else
+		{
+			kPlayer.GetLeagueAI()->DoProposals(this);
+		}
+	}
+}
+
+/// A member who did not propose in time: a random proposal (AIs make their own pick)
+void CvLeague::LekmodAutoPropose(PlayerTypes ePlayer)
+{
+	if (!CanPropose(ePlayer))
+		return;
+
+	if (!GET_PLAYER(ePlayer).isHuman())
+	{
+		GET_PLAYER(ePlayer).GetLeagueAI()->DoProposals(this);
+	}
+
+	if (CanPropose(ePlayer))
+	{
+		// Enact options as (resolution, choice), repeal options as (-1, resolution ID)
+		std::vector< std::pair<int, int> > vOptions;
+		for (int iRes = 0; iRes < GC.getNumResolutionInfos(); iRes++)
+		{
+			ResolutionTypes eRes = (ResolutionTypes) iRes;
+			CvResolutionEntry* pInfo = GC.getResolutionInfo(eRes);
+			if (pInfo == NULL)
+				continue;
+			std::vector<int> vChoices = GetChoicesForDecision(pInfo->GetProposerDecision(), ePlayer);
+			if (vChoices.empty())
+			{
+				if (pInfo->GetProposerDecision() == RESOLUTION_DECISION_NONE && CanProposeEnact(eRes, ePlayer, LeagueHelpers::CHOICE_NONE))
+					vOptions.push_back(std::make_pair(iRes, (int)LeagueHelpers::CHOICE_NONE));
+			}
+			else
+			{
+				for (uint j = 0; j < vChoices.size(); j++)
+				{
+					if (CanProposeEnact(eRes, ePlayer, vChoices[j]))
+						vOptions.push_back(std::make_pair(iRes, vChoices[j]));
+				}
+			}
+		}
+		for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
+		{
+			if (CanProposeRepeal(it->GetID(), ePlayer))
+				vOptions.push_back(std::make_pair(-1, it->GetID()));
+		}
+
+		if (vOptions.empty())
+		{
+			// Nothing left to propose: give up the privilege so the session can start
+			Member* pMember = GetMember(ePlayer);
+			if (pMember != NULL)
+			{
+				pMember->iProposals = 0;
+				pMember->bMayPropose = false;
+			}
+		}
+		else
+		{
+			std::pair<int, int> kPick = vOptions[GC.getGame().getJonRandNum((int)vOptions.size(), "Lekmod random proposal")];
+			if (kPick.first >= 0)
+				DoProposeEnact((ResolutionTypes)kPick.first, ePlayer, kPick.second);
+			else
+				DoProposeRepeal(kPick.second, ePlayer);
+		}
+	}
+
+#ifdef ASSIGN_SECOND_PROPOSAL_PRIVILEGE
+	// Multiplayer: the host's proposal opens the second privilege (the AI path does this itself)
+	if (GC.getGame().isGameMultiPlayer() && GET_PLAYER(ePlayer).isHuman() && ePlayer == GetHostMember() && GetNumProposersPerSession() == 2)
+	{
+		bool bSecondAssigned = false;
+		for (uint i = 0; i < m_vMembers.size(); i++)
+		{
+			if (m_vMembers[i].ePlayer != ePlayer && m_vMembers[i].bMayPropose)
+				bSecondAssigned = true;
+		}
+		if (!bSecondAssigned)
+			AssignSecondProposalPrivilege();
+	}
+#endif
+}
+
+/// Most votes among members without a privilege; ties at random
+CvLeague::Member* CvLeague::LekmodPickSecondProposer()
+{
+	std::vector<Member*> vBest;
+	int iBestVotes = -1;
+	for (uint i = 0; i < m_vMembers.size(); i++)
+	{
+		Member* pMember = &m_vMembers[i];
+		if (pMember->bMayPropose || !CanEverPropose(pMember->ePlayer))
+			continue;
+		const int iVotes = CalculateStartingVotesForMember(pMember->ePlayer);
+		if (iVotes > iBestVotes)
+		{
+			iBestVotes = iVotes;
+			vBest.clear();
+		}
+		if (iVotes == iBestVotes)
+			vBest.push_back(pMember);
+	}
+	if (vBest.empty())
+		return NULL;
+	if (vBest.size() == 1)
+		return vBest[0];
+	return vBest[GC.getGame().getJonRandNum((int)vBest.size(), "Lekmod second proposer")];
+}
+
+/// Several civs qualified on the founding turn: most votes hosts, ties at random
+void CvLeague::LekmodPickFounderHost(const std::vector<PlayerTypes>& vCandidates)
+{
+	std::vector<PlayerTypes> vBest;
+	int iBestVotes = -1;
+	for (uint i = 0; i < vCandidates.size(); i++)
+	{
+		if (!IsMember(vCandidates[i]))
+			continue;
+		const int iVotes = CalculateStartingVotesForMember(vCandidates[i]);
+		if (iVotes > iBestVotes)
+		{
+			iBestVotes = iVotes;
+			vBest.clear();
+		}
+		if (iVotes == iBestVotes)
+			vBest.push_back(vCandidates[i]);
+	}
+	if (vBest.empty())
+		return;
+	// The current host was already drawn at random among all candidates
+	for (uint i = 0; i < vBest.size(); i++)
+	{
+		if (vBest[i] == GetHostMember())
+			return;
+	}
+	PlayerTypes eNewHost = vBest[GC.getGame().getJonRandNum((int)vBest.size(), "Lekmod founder host")];
+	SetHostMember(eNewHost);
+	LekmodStartProposals(m_iLekmodPrivilegeTurn, /*bCallForProposals*/ false);
+}
+
+/// Turns between voting sessions by congress era: 15/13/11/9/7 (Renaissance or earlier/Industrial/Modern/Atomic/Information)
+int CvLeague::LekmodGetSessionInterval() const
+{
+	const int iRenaissance = GC.getInfoTypeForString("ERA_RENAISSANCE", true);
+	int iSteps = (int)LeagueHelpers::GetGameEraForTrigger() - iRenaissance;
+	if (iRenaissance < 0 || iSteps < 0)
+		iSteps = 0;
+	return MAX(7, 15 - 2 * iSteps);
+}
+
+/// World leader vote: every member votes for itself
+void CvLeague::LekmodDoWorldLeaderVote()
+{
+	VictoryTypes eDiploVictory = (VictoryTypes) GC.getInfoTypeForString("VICTORY_DIPLOMATIC", true);
+	if (eDiploVictory == NO_VICTORY || !GC.getGame().isVictoryValid(eDiploVictory))
+		return;
+	if (GC.getGame().GetGameLeagues()->GetDiplomaticVictor() != NO_PLAYER)
+		return;
+
+	GC.getGame().DoUpdateDiploVictory();
+	const int iNeeded = GC.getGame().GetVotesNeededForDiploVictory();
+
+	std::vector< std::pair<int, PlayerTypes> > vVotes;
+	for (uint i = 0; i < m_vMembers.size(); i++)
+	{
+		PlayerTypes ePlayer = m_vMembers[i].ePlayer;
+		if (CanEverVote(ePlayer) && GET_PLAYER(ePlayer).isAlive() && !GET_PLAYER(ePlayer).isMinorCiv())
+			vVotes.push_back(std::make_pair(CalculateStartingVotesForMember(ePlayer, /*bForceUpdateSources*/ true), ePlayer));
+	}
+	if (vVotes.empty())
+		return;
+	std::stable_sort(vVotes.begin(), vVotes.end());
+	std::reverse(vVotes.begin(), vVotes.end());
+
+	const int iFirst = vVotes[0].first;
+	int iNumFirst = 0;
+	int iSecond = -1;
+	for (uint i = 0; i < vVotes.size(); i++)
+	{
+		if (vVotes[i].first == iFirst)
+			iNumFirst++;
+		else if (iSecond < 0)
+			iSecond = vVotes[i].first;
+	}
+
+	PlayerTypes eWinner = NO_PLAYER;
+	if (iNumFirst == 1 && iFirst >= iNeeded)
+	{
+		eWinner = vVotes[0].second;
+	}
+	else
+	{
+		// First and second place gain a permanent vote (everyone tied counts)
+		for (uint i = 0; i < vVotes.size(); i++)
+		{
+			if (vVotes[i].first == iFirst || (iSecond >= 0 && vVotes[i].first == iSecond))
+			{
+				Member* pMember = GetMember(vVotes[i].second);
+				if (pMember != NULL)
+					pMember->iExtraVotes = pMember->iExtraVotes + 1;
+			}
+		}
+	}
+
+	// Results for everyone
+	CvString sSummary = "";
+	CvString sMessage = "";
+	if (eWinner != NO_PLAYER)
+	{
+		Localization::String sTemp = Localization::Lookup("TXT_KEY_NOTIFICATION_LEAGUE_VOTING_RESULT_WORLD_LEADER_PASS");
+		sTemp << GET_PLAYER(eWinner).getCivilizationShortDescriptionKey();
+		sSummary = sTemp.toUTF8();
+		sTemp = Localization::Lookup("TXT_KEY_NOTIFICATION_LEAGUE_VOTING_RESULT_WORLD_LEADER_PASS_DETAILS");
+		sTemp << iNeeded << GET_PLAYER(eWinner).getCivilizationShortDescriptionKey();
+		sMessage = sTemp.toUTF8();
+	}
+	else
+	{
+		sSummary = Localization::Lookup("TXT_KEY_NOTIFICATION_LEAGUE_VOTING_RESULT_WORLD_LEADER_FAIL").toUTF8();
+		Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS");
+		sTemp << iNeeded;
+		sMessage = sTemp.toUTF8();
+	}
+	for (uint i = 0; i < vVotes.size(); i++)
+	{
+		Localization::String sLine = Localization::Lookup("TXT_KEY_LEKMOD_WORLD_LEADER_VOTE_LINE");
+		sLine << GET_PLAYER(vVotes[i].second).getCivilizationShortDescriptionKey() << vVotes[i].first;
+		sMessage += "[NEWLINE]";
+		sMessage += sLine.toUTF8();
+	}
+	for (uint i = 0; i < m_vMembers.size(); i++)
+	{
+		CvPlayer& kPlayer = GET_PLAYER(m_vMembers[i].ePlayer);
+		if (kPlayer.isHuman() && kPlayer.isAlive())
+		{
+			CvNotifications* pNotifications = kPlayer.GetNotifications();
+			if (pNotifications)
+				pNotifications->Add(NOTIFICATION_LEAGUE_VOTING_DONE, sMessage, sSummary, -1, -1, GetID());
+		}
+	}
+
+	if (eWinner != NO_PLAYER)
+	{
+		GC.getGame().GetGameLeagues()->SetDiplomaticVictor(eWinner);
+	}
+}
+#endif
+
 void CvLeague::CheckStartSession()
 {
 	if (!IsInSession())
@@ -5769,7 +6210,12 @@ void CvLeague::CheckStartSpecialSession(LeagueSpecialSessionTypes eSpecialSessio
 
 			// Only actually hold a session if there is a proposal to be decided
 			CvAssertMsg(pInfo->GetImmediateProposal() != NO_RESOLUTION, "Cannot hold special session because there is no proposal to decide on. Please send Anton your save file and version.");
+#ifdef LEKMOD_CONGRESS_CYCLE
+			m_eLastSpecialSession = eSpecialSession;
+			if (false)
+#else
 			if (pInfo->GetImmediateProposal() != NO_RESOLUTION)
+#endif
 			{
 				StartSpecialSession(eSpecialSession);
 			}
@@ -5837,7 +6283,12 @@ void CvLeague::FinishSession()
 	// Find out if we have a recurring proposal
 	ResolutionTypes eRecurringProposal = NO_RESOLUTION;
 	bool bRecurringProposalThisSession = false;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// World leader votes have their own timer; no recurring proposal
+	if (false)
+#else
 	if (GetLastSpecialSession() != NO_LEAGUE_SPECIAL_SESSION)
+#endif
 	{
 		CvLeagueSpecialSessionEntry* pInfo = GC.getLeagueSpecialSessionInfo(GetLastSpecialSession());
 		CvAssert(pInfo != NULL);
@@ -5974,6 +6425,10 @@ void CvLeague::FinishSession()
 	}
 
 	// Update number of sessions held by consecutively by host
+#ifdef LEKMOD_CONGRESS_CYCLE
+	if (!m_bLekmodHostSession) {}
+	else
+#endif
 	if (eNewHost == eOldHost)
 	{
 		ChangeConsecutiveHostedSessions(1);
@@ -5989,6 +6444,17 @@ void CvLeague::FinishSession()
 	// Clear existing proposal privileges
 	ClearProposalPrivileges();
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Voting session: the next voting turn follows from the congress era at resolution (host elections keep the schedule)
+	if (!m_bLekmodHostSession)
+	{
+		m_iLekmodVoteTurn += LekmodGetSessionInterval();
+		SetTurnsUntilSession(MAX(0, m_iLekmodVoteTurn - GC.getGame().getGameTurn()));
+	}
+	m_bLekmodHostSession = false;
+	SetInSession(false);
+	return;
+#endif
 	bool bRegularSession = (GetCurrentSpecialSession() == NO_LEAGUE_SPECIAL_SESSION);
 	if (bRegularSession)
 	{
@@ -6103,7 +6569,17 @@ void CvLeague::AssignProposalPrivileges()
 	}
 	else
 	{
-#if defined(LEKMOD_WC_RESPECT_ACTIVATION_ORDER)
+#ifdef LEKMOD_CONGRESS_CYCLE
+		while (iPrivileges > 0)
+		{
+			Member* pBest = LekmodPickSecondProposer();
+			if (pBest == NULL)
+				break;
+			pBest->bMayPropose = true;
+			pBest->iProposals = GC.getLEAGUE_MEMBER_PROPOSALS_BASE();
+			iPrivileges--;
+		}
+#elif defined(LEKMOD_WC_RESPECT_ACTIVATION_ORDER)
 		// SP: same vote + activation-order (or slot) tie-break as AssignSecondProposalPrivilege
 		while (iPrivileges > 0)
 		{
@@ -7214,6 +7690,22 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 		writeTo.m_vEnactProposalsOnHold.clear();
 		writeTo.m_vRepealProposalsOnHold.clear();
 	}
+#ifdef LEKMOD_CONGRESS_CYCLE
+	if (uiVersion >= 15)
+	{
+		loadFrom >> writeTo.m_iLekmodVoteTurn;
+		loadFrom >> writeTo.m_iLekmodLeaderVoteTurn;
+		loadFrom >> writeTo.m_iLekmodPrivilegeTurn;
+		loadFrom >> writeTo.m_bLekmodHostSession;
+	}
+	else
+	{
+		writeTo.m_iLekmodVoteTurn = (writeTo.m_iTurnsUntilSession == MAX_INT) ? MAX_INT : GC.getGame().getGameTurn() + writeTo.m_iTurnsUntilSession;
+		writeTo.m_iLekmodLeaderVoteTurn = -1;
+		writeTo.m_iLekmodPrivilegeTurn = GC.getGame().getGameTurn();
+		writeTo.m_bLekmodHostSession = false;
+	}
+#endif
 
 	return loadFrom;
 }
@@ -7221,7 +7713,11 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 // Serialization Write
 FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	uint uiVersion = 15;
+#else
 	uint uiVersion = 14;
+#endif
 	
 	saveTo << uiVersion;
 	saveTo << readFrom.m_eID;
@@ -7309,6 +7805,12 @@ FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 	{
 		saveTo << *it;
 	}
+#ifdef LEKMOD_CONGRESS_CYCLE
+	saveTo << readFrom.m_iLekmodVoteTurn;
+	saveTo << readFrom.m_iLekmodLeaderVoteTurn;
+	saveTo << readFrom.m_iLekmodPrivilegeTurn;
+	saveTo << readFrom.m_bLekmodHostSession;
+#endif
 
 	return saveTo;
 }
@@ -7328,6 +7830,9 @@ CvGameLeagues::CvGameLeagues(void)
 	m_eDiplomaticVictor = NO_PLAYER;
 	m_iGeneratedIDCount = 0;
 	m_eLastEraTrigger = NO_ERA;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_bLekmodInTransition = false;
+#endif
 }
 
 CvGameLeagues::~CvGameLeagues(void)
@@ -7345,6 +7850,9 @@ void CvGameLeagues::Init()
 
 void CvGameLeagues::DoTurn()
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_bLekmodInTransition = true;
+#endif
 	if (!GC.getGame().isOption(GAMEOPTION_NO_LEAGUES))
 	{
 		GC.getGame().DoUpdateDiploVictory();
@@ -7399,7 +7907,18 @@ void CvGameLeagues::DoTurn()
 #ifdef AUI_VOTING_RANDOMIZED_LEAGUE_FOUNDER
 			if (vePossibleFounders.size() > 0)
 			{
-#if defined(LEKMOD_WC_RESPECT_ACTIVATION_ORDER)
+#ifdef LEKMOD_CONGRESS_CYCLE
+				// First with the tech hosts; ties: most votes, then random
+				FoundLeague(vePossibleFounders.at(uint(GC.getGame().getJonRandNum(int(vePossibleFounders.size()), "Lekmod founder"))));
+				if (vePossibleFounders.size() > 1 && GetActiveLeague() != NULL)
+				{
+					std::vector<PlayerTypes> vCandidates;
+					for (uint iFounder = 0; iFounder < vePossibleFounders.size(); iFounder++)
+						vCandidates.push_back(vePossibleFounders[iFounder]);
+					GetActiveLeague()->LekmodPickFounderHost(vCandidates);
+				}
+				if (false)
+#elif defined(LEKMOD_WC_RESPECT_ACTIVATION_ORDER)
 				// With randomized activation order: earliest activator among eligible founders
 				// (same-turn unlock race), matching wonder-race semantics. Otherwise keep AUI random.
 				if (GC.getGame().IsRandomizedTurnActivationOrderEnabled())
@@ -7494,7 +8013,23 @@ void CvGameLeagues::DoTurn()
 			CvAssertMsg(!GC.getGame().isVictoryValid(eDiploVictory), "Diplomacy victory is valid, but leagues are disabled.  Please send Anton your save file and version.");
 		}
 	}
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_bLekmodInTransition = false;
+#endif
 }
+
+#ifdef LEKMOD_CONGRESS_CYCLE
+void CvGameLeagues::DoTurnLate()
+{
+	if (GC.getGame().isOption(GAMEOPTION_NO_LEAGUES))
+		return;
+	CvLeague* pLeague = GetActiveLeague();
+	if (pLeague != NULL)
+	{
+		pLeague->LekmodDoTurnLate();
+	}
+}
+#endif
 
 void CvGameLeagues::DoPlayerTurn(CvPlayer& kPlayer)
 {

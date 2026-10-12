@@ -120680,6 +120680,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_GREAT_WORK_FROM_POLICY">
 			<Text>Your new Courthouse brought {@2_WorkName} to your empire.</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
+			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_VOTE_LINE">
+			<Text>[ICON_BULLET]{@1_CivName}: {2_Num} {2_Num: plural 1?Delegate; other?Delegates;}</Text>
+		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION">
 			<Text>Cultural Dominion</Text>
 		</Row>
