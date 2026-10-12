@@ -495,12 +495,25 @@ end
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+-- LEKMOD: Blackout (World Congress): the screen opens, but its content is black
+function LekmodApplyBlackout()
+	local bBlackout = (not m_bIsEndGame) and (Game.LekmodIsBlackout ~= nil) and Game.LekmodIsBlackout();
+	print("Blackout", tostring(bBlackout));
+	if( Controls.LekmodBlackout ~= nil ) then
+		Controls.LekmodBlackout:SetHide( not bBlackout );
+	end
+	if( Controls.BigStack ~= nil ) then
+		Controls.BigStack:SetHide( bBlackout );
+	end
+end
+
 function ShowHideHandler( bIsHide, bIsInit )
 
     if( not bIsInit ) then
         if( not bIsHide ) then
             BuildTables();
             BuildList( Game.GetActivePlayer() );
+            LekmodApplyBlackout();
             
             if( not m_bIsEndGame ) then
 	            UI.incTurnTimerSemaphore();
@@ -547,16 +560,6 @@ function OnPopup( popupInfo )
 	
 	if( popupInfo.Type == ButtonPopupTypes.BUTTONPOPUP_DEMOGRAPHICS ) then
 		m_PopupInfo = popupInfo;
-		-- LEKMOD: Blackout (World Congress) disables Demographics during the game
-		local bBlackout = (Game.LekmodIsBlackout ~= nil) and Game.LekmodIsBlackout();
-		print("Demographics: Blackout", tostring(bBlackout));
-		if( bBlackout ) then
-			if( ContextPtr:IsHidden() == false ) then
-				OnBack();
-			end
-			Events.GameplayAlertMessage( Locale.ConvertTextKey("TXT_KEY_LEKMOD_DEMOGRAPHICS_BLACKOUT") );
-			return;
-		end
 		if( m_PopupInfo.Data1 == 1 ) then
         	if( ContextPtr:IsHidden() == false ) then
         	    OnBack();

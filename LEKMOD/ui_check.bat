@@ -168,6 +168,7 @@ IF NOT EXIST "%euifolder%\Options\OptionsMenu.lua" (
 )
 REM --------------------------------------------------------------------------------------------------
 copy /y "%patchfolder%\Lua\tmp\ui\Replays\Demographics.lua.ignore" "%patchfolder%\Lua\UI\Demographics.lua" > nul
+copy /y "%patchfolder%\Lua\tmp\ui\Replays\Demographics.xml.ignore" "%patchfolder%\Lua\UI\Demographics.xml" > nul
 copy /y "%patchfolder%\Lua\tmp\ui\Replays\GameMenu.lua.ignore" "%patchfolder%\Lua\UI\GameMenu.lua" > nul
 copy /y "%patchfolder%\Lua\tmp\ui\Replays\ReplayViewer.lua.ignore" "%patchfolder%\Lua\UI\ReplayViewer.lua" > nul
 copy /y "%patchfolder%\Lua\tmp\ui\Replays\ReplayViewer.xml.ignore" "%patchfolder%\Lua\UI\ReplayViewer.xml" > nul

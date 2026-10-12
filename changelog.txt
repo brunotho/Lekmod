@@ -1836,7 +1836,7 @@ Fourteen new proposals.
 - Added: Mandate of Occupation (Atomic Era): +1 Delegate per other civilization's original capital you hold
 - Added: Import Tariffs (Modern Era): luxuries give half the Happiness for 3 turns
 - Added: Diplomatic Transparency (Modern Era): every civilization has live vision of the other civilizations' cities and the tiles within 2 of them
-- Added: Blackout (Information Era): the Demographics screen can't be opened (a message says why); ends Diplomatic Transparency
+- Added: Blackout (Information Era): the Demographics screen shows only black (no headers, numbers or rows); ends Diplomatic Transparency
 - Added: Voice for the Voiceless (Modern Era): no host votes; the civilization with the fewest Delegates hosts; the host gets +1 Delegate
 - Added: War Games (Modern Era): +50% Experience (air units +25%), double unit maintenance, for 8 turns
 - Added: Pariah (Atomic Era): nobody can trade with the chosen civilization (peace still possible), its deals and foreign Trade Routes end, it has 2 Delegates less and +15% Combat Strength
@@ -1851,7 +1851,7 @@ WORLD CONGRESS SCREEN (ui)
 Tags: world congress, ui
 - Changed: the proposal lists are sorted alphabetically
 - Removed: Choose Host and World Leader no longer appear among the proposals (they are never proposed)
-- Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat
+- Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat; Demographics.xml too (Lua/tmp/ui/Replays, for the Blackout overlay)
 
 NUCLEAR FUSION (TECH_NUCLEAR_FUSION)
 ------------------------------------
