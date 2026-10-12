@@ -2049,10 +2049,33 @@ void CvLeague::Init(LeagueSpecialSessionTypes eGoverningSpecialSession)
 #endif
 }
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+/// Congress cycle log (Logs/LekmodCongress.log, needs LoggingEnabled)
+static void LekmodCongressLog(const char* szFormat, int a = 0, int b = 0, int c = 0, int d = 0)
+{
+	if (!GC.getLogging())
+		return;
+	CvString strMsg;
+	strMsg.Format(szFormat, a, b, c, d);
+	FILogFile* pLog = LOGFILEMGR.GetLog("LekmodCongress.log", FILogFile::kDontTimeStamp);
+	if (pLog)
+		pLog->Msg(strMsg.c_str());
+}
+#endif
+
 void CvLeague::DoTurn(LeagueSpecialSessionTypes eTriggeredSpecialSession)
 {
 #ifdef LEKMOD_CONGRESS_CYCLE
 	const int iTurn = GC.getGame().getGameTurn() + 1; // runs before the game turn is incremented
+	LekmodCongressLog("DoTurn: new turn %d, vote turn %d, in session %d, host session %d", iTurn, m_iLekmodVoteTurn, IsInSession() ? 1 : 0, m_bLekmodHostSession ? 1 : 0);
+	// Fallback: a session whose results should have applied last turn (DoTurnLate missed) resolves now
+	if (IsInSession() && (m_bLekmodHostSession ? (iTurn > m_iLekmodVoteTurn - 3) : (iTurn > m_iLekmodVoteTurn + 1)))
+	{
+		LekmodCongressLog("DoTurn: fallback resolve at turn %d", iTurn);
+		GC.getGame().GetGameLeagues()->m_bLekmodInTransition = false;
+		LekmodDoTurnLate();
+		GC.getGame().GetGameLeagues()->m_bLekmodInTransition = true;
+	}
 	// Era special sessions only mark the new era
 	if (eTriggeredSpecialSession != NO_LEAGUE_SPECIAL_SESSION)
 	{
@@ -6324,6 +6347,7 @@ void CvLeague::LekmodPickVoicelessHost()
 void CvLeague::LekmodDoTurnLate()
 {
 	const int iTurn = GC.getGame().getGameTurn();
+	LekmodCongressLog("DoTurnLate: turn %d, vote turn %d, in session %d, active resolutions %d", iTurn, m_iLekmodVoteTurn, IsInSession() ? 1 : 0, (int)m_vActiveResolutions.size());
 	if (IsInSession())
 	{
 		// Host election runs during V-4, voting during V; both resolve at the start of the following turn
@@ -7253,6 +7277,9 @@ void CvLeague::AssignNewHost()
 
 void CvLeague::DoEnactResolution(CvEnactProposal* pProposal)
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	LekmodCongressLog("Enact: resolution %d, choice %d, turn %d", (int)pProposal->GetType(), pProposal->GetProposerDecision()->GetDecision(), GC.getGame().getGameTurn());
+#endif
 	CvAssertMsg(pProposal->IsPassed(GetVotesSpentThisSession()), "Doing a proposal that has not been passed. Please send Anton your save file and version.");
 
 #ifdef LEKMOD_CONGRESS_CYCLE
