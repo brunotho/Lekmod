@@ -21,6 +21,10 @@ enum CvSpyRank
     SPY_RANK_RECRUIT,
     SPY_RANK_AGENT,
     SPY_RANK_SPECIAL_AGENT,
+#ifdef LEKMOD_SPY_REWORK
+    SPY_RANK_LEVEL_4,
+    SPY_RANK_LEVEL_5,
+#endif
     NUM_SPY_RANKS
 };
 
@@ -157,6 +161,13 @@ public:
 	bool MoveSpyTo(CvCity* pCity, uint uiSpyIndex, bool bAsDiplomat);
 	bool ExtractSpyFromCity(uint uiSpyIndex);
 	void LevelUpSpy(uint uiSpyIndex);
+#ifdef LEKMOD_SPY_REWORK
+	int LekmodGetSpyStrength(uint uiSpyIndex, CvCity* pCity);
+	int LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner);
+	static int LekmodGetStealInterval(int iStrength, int iDefense);
+	static int LekmodGetStealChance(int iStrength, int iDefense);
+	void LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bExecute);
+#endif
 
 	void UpdateSpies();
 	void UpdateCity(CvCity* pCity);

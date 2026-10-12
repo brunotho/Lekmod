@@ -1864,3 +1864,17 @@ URANIUM MAPPING PROJECT (BUILDING_URANIUM_MAPPING_PROJECT)
 Tags: buildings
 - Changed: can no longer be built once you know Atomic Theory
 - DLL: LEKMOD_BUILDING_OBSOLETE_NO_CONSTRUCT (Buildings.ObsoleteTech blocks construction)
+
+SPIES AND DIPLOMATS (ESPIONAGE)
+-------------------------------
+Tags: game mechanics
+Spies and diplomats are being reworked (in progress).
+- Changed: spies and diplomats have levels 1 to 5 (was Recruit, Agent, Special Agent); a spy gains a level for each successful steal, coup or caught enemy spy
+- Changed: spy strength = level, +1 with your level 3+ diplomat in that empire, + your tourism influence levels over them, +1 with Industrial Espionage
+- Changed: city defense = the defending spy's level, +1 Constabulary, +1 Police Station, +1 Intelligence Agency, + their tourism influence levels over you
+- Changed: a spy steals every 15 / 13 / 11 / 9 / 7 turns at strength minus defense 1 / 2 / 3 / 4 / 5+ (5 more turns per point below 1); the timer follows changes every turn
+- Changed: each steal attempt succeeds with (strength + 1) / (strength + 1 + defense) (always with no defense); the spy is caught with the rest of that chance, success or not
+- Changed: a successful steal gives 8 turns of the city's Science toward a technology you pick; the victim always learns who stole
+- Note: caught spies are executed for now; the defender's Execute/Evict choice, diplomats, City-State spies, maintenance, vision and the screens follow
+- DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetStealChance/LekmodSpyCaught)
+- Dev: EspionageOverview.lua is now a Lekmod template (Lua/tmp/ui/Espionage), copied by ui_check.bat

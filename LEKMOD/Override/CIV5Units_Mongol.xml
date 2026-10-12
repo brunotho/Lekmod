@@ -131966,19 +131966,25 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_RANK_0"> 
 			<Text>
-				Recruit
+				Level 1
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_RANK_1"> 
 			<Text>
-				Agent
+				Level 2
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_RANK_2"> 
 			<Text>
-				Special Agent
+				Level 3
 			</Text>
 		</Replace>
+		<Row Tag="TXT_KEY_SPY_RANK_3">
+			<Text>Level 4</Text>
+		</Row>
+		<Row Tag="TXT_KEY_SPY_RANK_4">
+			<Text>Level 5</Text>
+		</Row>
 		<Replace Tag="TXT_KEY_SPY_STATE_COUNTER_INTEL"> 
 			<Text>
 				Counter-intelligence

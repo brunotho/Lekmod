@@ -1663,6 +1663,11 @@ Diversify Spain and Australia's NW Discovery bonus
 #define BUILD_STEALABLE_TECH_LIST_ONCE_PER_TURN
 // Spy system changes description https://docs.google.com/document/d/1i5nFrJT5HRlEhPELHmOWDiQs9j0hsbt3B5wq6-5WBUA/
 #define ESPIONAGE_SYSTEM_REWORK
+// Lekmod spy rework (Diplomat/Spy spec): levels 1-5 (+1 per successful action); strength = level + level 3+ diplomat + influence
+// levels + Industrial Espionage; defense = defending spy level + Constabulary + Police Station + Intelligence Agency + their influence
+// levels. Steal every 15/13/11/9/7 turns at strength - defense 1..5+ (+5 turns per point below 1); success (S+1)/(S+1+D), caught
+// 100% minus that; a steal gives 8 turns of the city's Science toward a picked tech.
+#define LEKMOD_SPY_REWORK
 /*ESPIONAGE CHANGES END*/
 
 // The number of free policies for accepting an ideology is set at the start of the turn.

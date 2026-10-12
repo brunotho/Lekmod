@@ -11821,6 +11821,14 @@ int CvLuaPlayer::lGetEspionageSpies(lua_State* L)
 		case SPY_RANK_SPECIAL_AGENT:
 			lua_pushstring(L, "TXT_KEY_SPY_RANK_2");
 			break;
+#ifdef LEKMOD_SPY_REWORK
+		case SPY_RANK_LEVEL_4:
+			lua_pushstring(L, "TXT_KEY_SPY_RANK_3");
+			break;
+		case SPY_RANK_LEVEL_5:
+			lua_pushstring(L, "TXT_KEY_SPY_RANK_4");
+			break;
+#endif
 		default:
 			CvAssertMsg(false, "pSpy->m_eRank not in case statement");
 			break;

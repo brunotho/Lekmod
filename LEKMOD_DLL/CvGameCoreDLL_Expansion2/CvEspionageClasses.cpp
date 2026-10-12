@@ -447,6 +447,10 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 #ifndef BUILD_STEALABLE_TECH_LIST_ONCE_PER_TURN
 		BuildStealableTechList(eCityOwner);
 #endif
+#ifdef LEKMOD_SPY_REWORK
+		// the steal interval follows strength and defense every turn
+		pCityEspionage->m_aiGoal[ePlayer] = CalcRequired(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex);
+#endif
 		pCityEspionage->Process(ePlayer);
 		// if the rate is too low, reassign the spy
 		if (pCityEspionage->m_aiRate[m_pPlayer->GetID()] < 100)
@@ -513,6 +517,53 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 			kHeistLocation.m_iY = pCity->getY();
 			m_aHeistLocations[eCityOwner].push_back(kHeistLocation);
 
+#ifdef LEKMOD_SPY_REWORK
+			// One steal attempt: succeeds with (strength + 1) / (strength + 1 + defense), caught with 100% minus that
+			{
+				const int iStrength = LekmodGetSpyStrength(uiSpyIndex, pCity);
+				const int iDefense = LekmodGetCityDefense(pCity, ePlayer);
+				const int iStealChance = LekmodGetStealChance(iStrength, iDefense);
+				const bool bStole = GC.getGame().getJonRandNum(100, "Lekmod spy steal roll") < iStealChance;
+				const bool bCaught = GC.getGame().getJonRandNum(100, "Lekmod spy catch roll") < (100 - iStealChance);
+
+				pCityEspionage->ResetProgress(ePlayer);
+				const int iLekmodRate = CalcPerTurn(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex);
+				pCityEspionage->SetActivity(ePlayer, 0, iLekmodRate, CalcRequired(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex));
+				pCityEspionage->SetLastProgress(ePlayer, iLekmodRate);
+
+				if (bStole)
+				{
+					// 8 turns of the city's Science, used toward a technology the player picks
+					const int iAmount = std::max(1, pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 8 / 100);
+					m_aiNumTechsToStealList[eCityOwner] = m_aiNumTechsToStealList[eCityOwner] + 1;
+					m_aaPlayerScienceToStealList[eCityOwner].push_back(iAmount);
+					pCityEspionage->m_aiNumTimesCityRobbed[eCityOwner]++;
+					pCityEspionage->SetSpyResult(ePlayer, SPY_RESULT_IDENTIFIED);
+					CvPlayerEspionage* pDefendingEspionage = GET_PLAYER(eCityOwner).GetEspionage();
+					if (pDefendingEspionage)
+						pDefendingEspionage->AddSpyMessage(pCity->getX(), pCity->getY(), ePlayer, SPY_RESULT_IDENTIFIED, NO_TECH);
+					if (GET_PLAYER(eCityOwner).GetDiplomacyAI())
+						GET_PLAYER(eCityOwner).GetDiplomacyAI()->ChangeNumTimesRobbedBy(ePlayer, 1);
+					CvNotifications* pNotifications = m_pPlayer->GetNotifications();
+					if (pNotifications)
+					{
+						Localization::String strSummary = GetLocalizedText("TXT_KEY_NOTIFICATION_SPY_STEAL_TECH_S");
+						Localization::String strNotification = Localization::Lookup("TXT_KEY_NOTIFICATION_SPY_STEAL_TECH");
+						strNotification << GetSpyRankName(pSpy->m_eRank);
+						strNotification << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName);
+						strNotification << pCity->getNameKey();
+						strNotification << GET_PLAYER(eCityOwner).getCivilizationInfo().getShortDescriptionKey();
+						pNotifications->Add(NOTIFICATION_SPY_STOLE_TECH, strNotification.toUTF8(), strSummary.toUTF8(), -1, -1, eCityOwner);
+					}
+					LevelUpSpy(uiSpyIndex);
+				}
+				if (bCaught)
+				{
+					LekmodSpyCaught(uiSpyIndex, pCity, /*bExecute*/ true);
+				}
+				break;
+			}
+#endif
 #ifdef ESPIONAGE_SYSTEM_REWORK
 			int iCounterspyRank = 0;
 			if (pCityEspionage->HasCounterSpy())
@@ -1582,6 +1633,146 @@ void CvPlayerEspionage::CacheSpyStats()
 }
 #endif
 
+#ifdef LEKMOD_SPY_REWORK
+/// Spy strength in a city: level + 1 for a level 3+ diplomat in that empire + tourism influence levels over them
+/// + 1 with Industrial Espionage (+ Underground Sect)
+int CvPlayerEspionage::LekmodGetSpyStrength(uint uiSpyIndex, CvCity* pCity)
+{
+	if (uiSpyIndex >= m_aSpyList.size() || pCity == NULL)
+		return 1;
+	int iStrength = (int)m_aSpyList[uiSpyIndex].m_eRank + 1;
+	const PlayerTypes eOwner = pCity->getOwner();
+	if (!GET_PLAYER(eOwner).isMinorCiv())
+	{
+		iStrength += std::max(0, (int)m_pPlayer->GetCulture()->GetInfluenceLevel(eOwner));
+		for (uint i = 0; i < m_aSpyList.size(); i++)
+		{
+			if (i == uiSpyIndex || !m_aSpyList[i].m_bIsDiplomat || (int)m_aSpyList[i].m_eRank < 2)
+				continue;
+			if (m_aSpyList[i].m_eSpyState == SPY_STATE_DEAD || m_aSpyList[i].m_eSpyState == SPY_STATE_UNASSIGNED || m_aSpyList[i].m_eSpyState == SPY_STATE_TRAVELLING)
+				continue;
+			CvCity* pDiplomatCity = GetCityWithSpy(i);
+			if (pDiplomatCity != NULL && pDiplomatCity->getOwner() == eOwner)
+			{
+				iStrength++;
+				break;
+			}
+		}
+	}
+	if (m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_STEAL_TECH_FASTER_MODIFIER) > 0)
+		iStrength++;
+#ifdef UNDERGROUND_SECT_REWORK
+	iStrength += m_pPlayer->GetReligions()->GetSpyPressure();
+#endif
+	return iStrength;
+}
+
+static bool LekmodCityHasBuildingClass(CvCity* pCity, const char* szClass)
+{
+	const BuildingClassTypes eClass = (BuildingClassTypes)GC.getInfoTypeForString(szClass, true);
+	if (eClass == NO_BUILDINGCLASS)
+		return false;
+	const BuildingTypes eBuilding = (BuildingTypes)GET_PLAYER(pCity->getOwner()).getCivilizationInfo().getCivilizationBuildings(eClass);
+	return eBuilding != NO_BUILDING && pCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0;
+}
+
+/// Defense of a city against the spies of eSpyOwner: defending spy level + 1 Constabulary + 1 Police Station
+/// + 1 Intelligence Agency + the owner's tourism influence levels over eSpyOwner
+int CvPlayerEspionage::LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner)
+{
+	if (pCity == NULL)
+		return 0;
+	int iDefense = 0;
+	const PlayerTypes eOwner = pCity->getOwner();
+	CvCityEspionage* pCityEspionage = pCity->GetCityEspionage();
+	if (pCityEspionage != NULL && pCityEspionage->HasCounterSpy())
+	{
+		CvPlayerEspionage* pOwnerEspionage = GET_PLAYER(eOwner).GetEspionage();
+		const int iIndex = pOwnerEspionage->GetSpyIndexInCity(pCity);
+		if (iIndex >= 0)
+			iDefense += (int)pOwnerEspionage->m_aSpyList[iIndex].m_eRank + 1;
+	}
+	if (LekmodCityHasBuildingClass(pCity, "BUILDINGCLASS_CONSTABLE"))
+		iDefense++;
+	if (LekmodCityHasBuildingClass(pCity, "BUILDINGCLASS_POLICE_STATION"))
+		iDefense++;
+	if (LekmodCityHasBuildingClass(pCity, "BUILDINGCLASS_INTELLIGENCE_AGENCY"))
+		iDefense++;
+	if (!GET_PLAYER(eOwner).isMinorCiv() && eSpyOwner != NO_PLAYER)
+		iDefense += std::max(0, (int)GET_PLAYER(eOwner).GetCulture()->GetInfluenceLevel(eSpyOwner));
+	return iDefense;
+}
+
+/// Turns per steal from strength - defense: 15/13/11/9/7 at 1/2/3/4/5+, +5 turns per point below 1
+int CvPlayerEspionage::LekmodGetStealInterval(int iStrength, int iDefense)
+{
+	const int iNet = iStrength - iDefense;
+	if (iNet >= 5)
+		return 7;
+	if (iNet >= 1)
+		return 15 - 2 * (iNet - 1);
+	return 15 + 5 * (1 - iNet);
+}
+
+/// % chance a steal succeeds: (strength + 1) / (strength + 1 + defense); 100% without defense.
+/// The spy is caught with 100% minus this chance (on every attempt).
+int CvPlayerEspionage::LekmodGetStealChance(int iStrength, int iDefense)
+{
+	if (iDefense <= 0)
+		return 100;
+	const int iTop = std::max(1, iStrength + 1);
+	return std::max(1, (iTop * 100) / (iTop + iDefense));
+}
+
+/// A caught spy: executed (the default until the defender's choice is in the interface) or evicted
+void CvPlayerEspionage::LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bExecute)
+{
+	CvEspionageSpy* pSpy = &(m_aSpyList[uiSpyIndex]);
+	const PlayerTypes eCityOwner = pCity->getOwner();
+	CvPlayerEspionage* pDefending = GET_PLAYER(eCityOwner).GetEspionage();
+	CvCityEspionage* pCityEspionage = pCity->GetCityEspionage();
+
+	// the defending spy (if any) gains a level for the catch
+	if (pCityEspionage != NULL)
+	{
+		const int iDefendingSpy = pCityEspionage->m_aiSpyAssignment[eCityOwner];
+		if (iDefendingSpy >= 0 && pDefending != NULL)
+			pDefending->LevelUpSpy(iDefendingSpy);
+	}
+	if (pDefending != NULL)
+		pDefending->AddSpyMessage(pCity->getX(), pCity->getY(), m_pPlayer->GetID(), bExecute ? SPY_RESULT_KILLED : SPY_RESULT_IDENTIFIED, NO_TECH);
+
+	CvNotifications* pNotifications = m_pPlayer->GetNotifications();
+	if (pNotifications)
+	{
+		Localization::String strSummary = Localization::Lookup(bExecute ? "TXT_KEY_NOTIFICATION_SPY_WAS_KILLED_S" : "TXT_KEY_NOTIFICATION_SPY_WAS_SPOTTED_S");
+		strSummary << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName);
+		Localization::String strNotification = Localization::Lookup(bExecute ? "TXT_KEY_NOTIFICATION_SPY_WAS_KILLED" : "TXT_KEY_NOTIFICATION_SPY_WAS_SPOTTED");
+		strNotification << GetSpyRankName(pSpy->m_eRank);
+		strNotification << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName);
+		strNotification << GET_PLAYER(eCityOwner).getCivilizationInfo().getShortDescriptionKey();
+		strNotification << pCity->getNameKey();
+		pNotifications->Add(bExecute ? NOTIFICATION_SPY_WAS_KILLED : NOTIFICATION_SPY_EVICTED, strNotification.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
+	}
+
+	CvEspionageAI* pEspionageAI = m_pPlayer->GetEspionageAI();
+	if (pEspionageAI && bExecute)
+	{
+		pEspionageAI->m_aiTurnLastSpyDied[eCityOwner] = GC.getGame().getGameTurn();
+		pEspionageAI->m_aiNumSpiesDied[eCityOwner]++;
+	}
+	CvEspionageAI* pDefenderEspionageAI = GET_PLAYER(eCityOwner).GetEspionageAI();
+	if (pDefenderEspionageAI && bExecute)
+	{
+		pDefenderEspionageAI->m_aiTurnLastSpyKilled[m_pPlayer->GetID()] = GC.getGame().getGameTurn();
+		pDefenderEspionageAI->m_aiNumSpiesKilled[m_pPlayer->GetID()]++;
+	}
+
+	ExtractSpyFromCity(uiSpyIndex);
+	pSpy->m_eSpyState = bExecute ? SPY_STATE_DEAD : SPY_STATE_UNASSIGNED;
+}
+#endif
+
 /// CalcPerTurn - How much the spy will do at this task per turn
 int CvPlayerEspionage::CalcPerTurn(int iSpyState, CvCity* pCity, int iSpyIndex)
 {
@@ -1600,6 +1791,10 @@ int CvPlayerEspionage::CalcPerTurn(int iSpyState, CvCity* pCity, int iSpyIndex)
 	break;
 	case SPY_STATE_GATHERING_INTEL:
 	{
+#ifdef LEKMOD_SPY_REWORK
+		// progress counts turns; the goal is the steal interval
+		return 100;
+#endif
 		if(pCity)
 		{
 			PlayerTypes eCityOwner = pCity->getOwner();
@@ -1687,7 +1882,7 @@ int CvPlayerEspionage::CalcRequired(int iSpyState, CvCity* pCity, int iSpyIndex)
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
 int CvPlayerEspionage::CalcRequired(int iSpyState, CvCity* pCity, int iSpyIndex)
 #else
-int CvPlayerEspionage::CalcRequired(int iSpyState, CvCity* pCity, int)
+int CvPlayerEspionage::CalcRequired(int iSpyState, CvCity* pCity, int iSpyIndex)
 #endif
 {
 #endif
@@ -1718,6 +1913,13 @@ int CvPlayerEspionage::CalcRequired(int iSpyState, CvCity* pCity, int)
 	break;
 	case SPY_STATE_GATHERING_INTEL:
 	{
+#ifdef LEKMOD_SPY_REWORK
+		if (pCity)
+		{
+			const int iStrength = (iSpyIndex >= 0) ? LekmodGetSpyStrength((uint)iSpyIndex, pCity) : 1;
+			return LekmodGetStealInterval(iStrength, LekmodGetCityDefense(pCity, m_pPlayer->GetID())) * 100;
+		}
+#endif
 		if(pCity)
 		{
 			PlayerTypes ePlayer = pCity->getOwner();
@@ -1768,6 +1970,12 @@ const char* CvPlayerEspionage::GetSpyRankName(int iRank) const
 		break;
 	case SPY_RANK_SPECIAL_AGENT:
 		return "TXT_KEY_SPY_RANK_2";
+#ifdef LEKMOD_SPY_REWORK
+	case SPY_RANK_LEVEL_4:
+		return "TXT_KEY_SPY_RANK_3";
+	case SPY_RANK_LEVEL_5:
+		return "TXT_KEY_SPY_RANK_4";
+#endif
 		break;
 	}
 
