@@ -256181,7 +256181,7 @@
 			<PromotionType>PROMOTION_ZEALOT</PromotionType>
 			<YieldType>YIELD_FAITH</YieldType>
 			<Yield>100</Yield>
-			<Max>30</Max>
+			<Max>40</Max>
 		</Row>
 	</UnitPromotions_YieldFromKills>
 

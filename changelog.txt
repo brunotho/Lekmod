@@ -114,11 +114,11 @@ NEW. Enemy units within 1 tile have -15% combat strength.
 ZEALOT (PROMOTION_ZEALOT)
 -------------------------
 Tags: promotions, religion, civs
-NEW. Killing a unit yields Faith equal to its combat strength (max 30).
+NEW. Killing a unit yields Faith equal to its combat strength (max 40).
 - Changed: the Pictish Warrior and the Maccabee get Zealot instead of their own faith-from-kills ability
-- Changed: the Pictish Warrior's faith from kills is now capped at 30 (was uncapped)
+- Changed: the Pictish Warrior's faith from kills is now capped at 40 (was uncapped)
 - Fixed: the Pictish Warrior tooltip now shows the faith icon
-- Dev: UnitPromotions_YieldFromKills (YIELD_FAITH, 100%, max 30) and KillYieldValidEras rows for all eras
+- Dev: UnitPromotions_YieldFromKills (YIELD_FAITH, 100%, max 40) and KillYieldValidEras rows for all eras
 
 
 PROMOTION KILL YIELDS (BUGFIX)
@@ -1667,7 +1667,7 @@ Tags: policies
 - Removed: Third Alternative: double all strategic resources; Food and Science in the capital
 - Changed: Iron Fist: all non-air military units get Discipline (+50% Experience); Gold and Culture from kills capped at 40 each
 - Removed: Iron Fist: +50% Experience from combat; Science from kills
-- Changed: Gunboat Diplomacy (rebuilt): +2 World Congress votes; tribute costs no Influence and works at any Influence level, once every 10 turns per City-State
+- Changed: Gunboat Diplomacy (rebuilt): +2 World Congress votes; tribute costs no Influence, keeps your own pledge of protection and works at any Influence level, once every 10 turns per City-State
 - Removed: Gunboat Diplomacy: +50% intimidation, +50 Influence from tribute
 - Added: Cult of Personality: +2 Happiness from each Great Work
 - Note: Advanced Interrogation Techniques' "steal a technology when you capture a spy" waits for the Diplomat/Spy rework

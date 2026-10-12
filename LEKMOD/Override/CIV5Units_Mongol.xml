@@ -1396,7 +1396,7 @@
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_ZEALOT_HELP">
 			<Text>
-				Killing a unit yields [ICON_PEACE] Faith equal to its [ICON_STRENGTH] Combat Strength (max 30).[NEWLINE]Barbarian kills stop counting from turn 70.
+				Killing a unit yields [ICON_PEACE] Faith equal to its [ICON_STRENGTH] Combat Strength (max 40).[NEWLINE]Barbarian kills stop counting from turn 70.
 			</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_ENVELOPMENT">
@@ -116644,7 +116644,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULT_PERSONALITY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Cult of Personality[ENDCOLOR][NEWLINE]Gain up to +100% Tourism [ICON_TOURISM] depending on your military strength (Soldiers) relative to other players.[NEWLINE]+2 [ICON_HAPPINESS_1] Happiness from each Great Work.
+				[COLOR_POSITIVE_TEXT]Cult of Personality[ENDCOLOR][NEWLINE]Gain up to +100% Tourism [ICON_TOURISM] depending on your military strength relative to other players.[NEWLINE]+2 [ICON_HAPPINESS_1] Happiness from each Great Work.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULT_PERSONALITY_TEXT"> 
@@ -116989,7 +116989,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_GUNBOAT_DIPLOMACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Gunboat Diplomacy[ENDCOLOR][NEWLINE]+2 World Congress votes.[NEWLINE]Demanding tribute from a City-State costs no [ICON_INFLUENCE] Influence and works at any Influence level, once every 10 turns per City-State.
+				[COLOR_POSITIVE_TEXT]Gunboat Diplomacy[ENDCOLOR][NEWLINE]+2 World Congress votes.[NEWLINE]Demanding tribute from a City-State costs no [ICON_INFLUENCE] Influence, does not break your pledge to protect it and works at any Influence level, once every 10 turns per City-State.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_GUNBOAT_DIPLOMACY_TEXT"> 
@@ -120627,7 +120627,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Liberated Arts</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_LIBERATED_ARTS_HELP">
-			<Text>[COLOR_POSITIVE_TEXT]Liberated Arts[ENDCOLOR][NEWLINE]+2 [ICON_TOURISM] Tourism and +1 [ICON_HAPPINESS_1] Happiness from each Great Work.[NEWLINE]Each Courthouse you build creates 2 Great Works in your empty Great Work slots.</Text>
+			<Text>[COLOR_POSITIVE_TEXT]Liberated Arts[ENDCOLOR][NEWLINE]+2 [ICON_TOURISM] Tourism and +1 [ICON_HAPPINESS_1] Happiness from each Great Work.[NEWLINE]Each Courthouse you build creates 2 Great Works.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_FRUITS_OF_LIBERTY">
 			<Text>Fruits of Liberty</Text>
@@ -120690,13 +120690,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Doctrine of Subjugation</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION_HELP">
-			<Text>[COLOR_POSITIVE_TEXT]Doctrine of Subjugation[ENDCOLOR][NEWLINE]Each Courthouse you build creates 2 Great Works in your empty Great Work slots.[NEWLINE]+100% [ICON_GOLD] Gold from capturing cities.[NEWLINE]Resistance in cities you capture lasts half as long.</Text>
+			<Text>[COLOR_POSITIVE_TEXT]Doctrine of Subjugation[ENDCOLOR][NEWLINE]Each Courthouse you build creates 2 Great Works.[NEWLINE]+100% [ICON_GOLD] Gold from capturing cities.[NEWLINE]Resistance in cities you capture lasts half as long.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION">
 			<Text>Advanced Interrogation Techniques</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION_HELP">
-			<Text>[COLOR_POSITIVE_TEXT]Advanced Interrogation Techniques[ENDCOLOR][NEWLINE]Capturing a city gives 10% more of a technology (Spoils of War), up to the whole technology.</Text>
+			<Text>[COLOR_POSITIVE_TEXT]Advanced Interrogation Techniques[ENDCOLOR][NEWLINE]Capturing a city gives 10% more of a technology (Spoils of War).</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>
@@ -141246,7 +141246,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CELT_PICTISH_WARRIOR"> 
 			<Text>
-				Only the Celts may build this unit. It has a combat bonus outside of friendly territory and can pillage enemy improvements at no additional movement cost. Earns [ICON_PEACE] Faith equal to opponents' [ICON_STRENGTH] Combat Strength when killing a unit (max 30).
+				Only the Celts may build this unit. It has a combat bonus outside of friendly territory and can pillage enemy improvements at no additional movement cost. Earns [ICON_PEACE] Faith equal to opponents' [ICON_STRENGTH] Combat Strength when killing a unit (max 40).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CHARIOR_ARCHER"> 

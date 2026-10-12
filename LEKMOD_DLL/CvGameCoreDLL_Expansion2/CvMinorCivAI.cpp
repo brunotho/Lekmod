@@ -7619,7 +7619,12 @@ void CvMinorCivAI::DoPledgeTributeConsequences(PlayerTypes eBully)
 	if(eBully < 0 || eBully >= MAX_MAJOR_CIVS) return;
 	const int iTurn = GC.getGame().getGameTurn();
 
+#ifdef LEKMOD_POLICY_REWORK
+	// Gunboat Diplomacy: tribute does not break your own pledge
+	if(IsProtectedByMajor(eBully) && !GET_PLAYER(eBully).GetPlayerPolicies()->IsMinorBullyNoPenalty())
+#else
 	if(IsProtectedByMajor(eBully))
+#endif
 	{
 		SetTurnLastPledgeBrokenByMajor(eBully, iTurn);
 		DoChangeProtectionFromMajor(eBully, false, /*bPledgeNowBroken*/ false);
