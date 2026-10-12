@@ -41,6 +41,7 @@ CvEspionageSpy::CvEspionageSpy()
 #ifdef LEKMOD_SPY_REWORK
 	, m_iLekmodTurnsInCity(0)
 	, m_iLekmodSightRadius(0)
+	, m_bLekmodFullTech(false)
 	, m_iLekmodSightX(-1)
 	, m_iLekmodSightY(-1)
 #endif
@@ -94,6 +95,10 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 		writeTo.m_iLekmodSightX = -1;
 		writeTo.m_iLekmodSightY = -1;
 	}
+	if (uiVersion >= 4)
+		loadFrom >> writeTo.m_bLekmodFullTech;
+	else
+		writeTo.m_bLekmodFullTech = false;
 #endif
 
 	return loadFrom;
@@ -103,7 +108,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvEspionageSpy& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 {
 #ifdef LEKMOD_SPY_REWORK
-	uint uiVersion = 3;
+	uint uiVersion = 4;
 #else
 	uint uiVersion = 1;
 #endif
@@ -122,6 +127,7 @@ FDataStream& operator<<(FDataStream& saveTo, const CvEspionageSpy& readFrom)
 	saveTo << readFrom.m_iLekmodSightRadius;
 	saveTo << readFrom.m_iLekmodSightX;
 	saveTo << readFrom.m_iLekmodSightY;
+	saveTo << readFrom.m_bLekmodFullTech;
 #endif
 
 	return saveTo;
@@ -218,6 +224,9 @@ void CvPlayerEspionage::Reset()
 #ifdef ESPIONAGE_SYSTEM_REWORK
 	m_aaPlayerScienceToStealList.clear();
 #endif
+#ifdef LEKMOD_SPY_REWORK
+	m_aLekmodCaught.clear();
+#endif
 	for(uint ui = 0; ui < MAX_MAJOR_CIVS; ui++)
 	{
 		m_aiMaxTechCost[ui] = -1;
@@ -230,6 +239,9 @@ void CvPlayerEspionage::Reset()
 void CvPlayerEspionage::DoTurn()
 {
 	AI_PERF_FORMAT("AI-perf.csv", ("CvPlayerEspionage::DoTurn, Turn %03d, %s", GC.getGame().getElapsedGameTurns(), m_pPlayer->getCivilizationShortDescription()) );
+#ifdef LEKMOD_SPY_REWORK
+	LekmodResolveOldCaughtSpies();
+#endif
 	ProcessSpyMessages();
 
 	for(uint ui = 0; ui < MAX_MAJOR_CIVS; ui++)
@@ -557,7 +569,10 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 				const int iStrength = LekmodGetSpyStrength(uiSpyIndex, pCity);
 				const int iDefense = LekmodGetCityDefense(pCity, ePlayer);
 				const int iStealChance = LekmodGetStealChance(iStrength, iDefense);
-				const bool bStole = GC.getGame().getJonRandNum(100, "Lekmod spy steal roll") < iStealChance;
+				// level 3+ full-tech attempt: a quarter of the chance, a whole technology; the catch roll is the same
+				const bool bFullTech = pSpy->m_bLekmodFullTech && (int)pSpy->m_eRank >= 2;
+				pSpy->m_bLekmodFullTech = false;
+				const bool bStole = GC.getGame().getJonRandNum(100, "Lekmod spy steal roll") < (bFullTech ? std::max(1, iStealChance / 4) : iStealChance);
 				const bool bCaught = GC.getGame().getJonRandNum(100, "Lekmod spy catch roll") < (100 - iStealChance);
 
 				pCityEspionage->ResetProgress(ePlayer);
@@ -565,7 +580,34 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 				pCityEspionage->SetActivity(ePlayer, 0, iLekmodRate, CalcRequired(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex));
 				pCityEspionage->SetLastProgress(ePlayer, iLekmodRate);
 
-				if (bStole)
+				if (bStole && bFullTech)
+				{
+					// the most expensive technology they know and we can steal
+					TechTypes eBestTech = NO_TECH;
+					int iBestCost = -1;
+					for (uint uiTech = 0; uiTech < m_aaPlayerStealableTechList[eCityOwner].size(); uiTech++)
+					{
+						const TechTypes eTech = m_aaPlayerStealableTechList[eCityOwner][uiTech];
+						if (!m_pPlayer->canStealTech(eCityOwner, eTech))
+							continue;
+						const int iCost = m_pPlayer->GetPlayerTechs()->GetResearchCost(eTech);
+						if (iCost > iBestCost)
+						{
+							iBestCost = iCost;
+							eBestTech = eTech;
+						}
+					}
+					if (eBestTech != NO_TECH)
+					{
+						GET_TEAM(m_pPlayer->getTeam()).setHasTech(eBestTech, true, m_pPlayer->GetID(), true, true);
+						pCityEspionage->m_aiNumTimesCityRobbed[eCityOwner]++;
+						CvPlayerEspionage* pDefendingEspionage = GET_PLAYER(eCityOwner).GetEspionage();
+						if (pDefendingEspionage)
+							pDefendingEspionage->AddSpyMessage(pCity->getX(), pCity->getY(), ePlayer, SPY_RESULT_IDENTIFIED, eBestTech);
+						LevelUpSpy(uiSpyIndex);
+					}
+				}
+				else if (bStole)
 				{
 					// 8 turns of the city's Science, used toward a technology the player picks
 					const int iAmount = std::max(1, pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 8 / 100);
@@ -1020,6 +1062,10 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 		}
 		break;
 	case SPY_STATE_DEAD:
+#ifdef LEKMOD_SPY_REWORK
+		if (pSpy->m_iReviveCounter < 0)
+			return; // captured, waiting for the defender's choice
+#endif
 		pSpy->m_iReviveCounter++;
 		if(pSpy->m_iReviveCounter >= iSpyTurnsToRevive)
 		{
@@ -1793,7 +1839,7 @@ int CvPlayerEspionage::LekmodGetStealChance(int iStrength, int iDefense)
 	return std::max(1, (iTop * 100) / (iTop + iDefense));
 }
 
-/// A caught spy: executed (the default until the defender's choice is in the interface) or evicted
+/// A caught spy (this player's): a human defender decides Execute or Evict (Execute when its turn ends); AIs execute at once
 void CvPlayerEspionage::LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bExecute)
 {
 	CvEspionageSpy* pSpy = &(m_aSpyList[uiSpyIndex]);
@@ -1808,11 +1854,59 @@ void CvPlayerEspionage::LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bEx
 		if (iDefendingSpy >= 0 && pDefending != NULL)
 			pDefending->LevelUpSpy(iDefendingSpy);
 	}
+
+	if (GET_PLAYER(eCityOwner).isHuman() && pDefending != NULL)
+	{
+		// held until the defender decides
+		ExtractSpyFromCity(uiSpyIndex);
+		pSpy->m_eSpyState = SPY_STATE_DEAD;
+		pSpy->m_iReviveCounter = -1000;
+		LekmodCaughtSpy kEntry;
+		kEntry.m_iSpyOwner = m_pPlayer->GetID();
+		kEntry.m_iSpyIndex = uiSpyIndex;
+		kEntry.m_iCityX = pCity->getX();
+		kEntry.m_iCityY = pCity->getY();
+		kEntry.m_iTurn = GC.getGame().getGameTurn();
+		pDefending->m_aLekmodCaught.push_back(kEntry);
+
+		CvNotifications* pDefNotifications = GET_PLAYER(eCityOwner).GetNotifications();
+		if (pDefNotifications)
+		{
+			Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_SPY_CAUGHT_S");
+			Localization::String strText = Localization::Lookup("TXT_KEY_LEKMOD_SPY_CAUGHT");
+			strText << m_pPlayer->getCivilizationInfo().getShortDescriptionKey() << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName) << pCity->getNameKey();
+			pDefNotifications->Add(NOTIFICATION_SPY_KILLED_A_SPY, strText.toUTF8(), strSummary.toUTF8(), pCity->getX(), pCity->getY(), -1);
+		}
+		CvNotifications* pNotifications = m_pPlayer->GetNotifications();
+		if (pNotifications)
+		{
+			Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_SPY_CAPTURED_S");
+			strSummary << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName);
+			Localization::String strText = Localization::Lookup("TXT_KEY_LEKMOD_SPY_CAPTURED");
+			strText << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName) << pCity->getNameKey() << GET_PLAYER(eCityOwner).getCivilizationInfo().getShortDescriptionKey();
+			pNotifications->Add(NOTIFICATION_SPY_WAS_KILLED, strText.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
+		}
+		return;
+	}
+
+	ExtractSpyFromCity(uiSpyIndex);
+	LekmodFinishCaughtSpy(uiSpyIndex, eCityOwner, pCity->getX(), pCity->getY(), bExecute);
+}
+
+/// The verdict on one of this player's caught spies: executed (dies, a new spy comes later) or evicted (back home, keeps its level)
+void CvPlayerEspionage::LekmodFinishCaughtSpy(uint uiSpyIndex, PlayerTypes eCityOwner, int iCityX, int iCityY, bool bExecute)
+{
+	if (uiSpyIndex >= m_aSpyList.size())
+		return;
+	CvEspionageSpy* pSpy = &(m_aSpyList[uiSpyIndex]);
+	CvPlot* pPlot = GC.getMap().plot(iCityX, iCityY);
+	CvCity* pCity = pPlot ? pPlot->getPlotCity() : NULL;
+	CvPlayerEspionage* pDefending = GET_PLAYER(eCityOwner).GetEspionage();
 	if (pDefending != NULL)
-		pDefending->AddSpyMessage(pCity->getX(), pCity->getY(), m_pPlayer->GetID(), bExecute ? SPY_RESULT_KILLED : SPY_RESULT_IDENTIFIED, NO_TECH);
+		pDefending->AddSpyMessage(iCityX, iCityY, m_pPlayer->GetID(), bExecute ? SPY_RESULT_KILLED : SPY_RESULT_IDENTIFIED, NO_TECH);
 
 	CvNotifications* pNotifications = m_pPlayer->GetNotifications();
-	if (pNotifications)
+	if (pNotifications && pCity != NULL)
 	{
 		Localization::String strSummary = Localization::Lookup(bExecute ? "TXT_KEY_NOTIFICATION_SPY_WAS_KILLED_S" : "TXT_KEY_NOTIFICATION_SPY_WAS_SPOTTED_S");
 		strSummary << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName);
@@ -1824,21 +1918,114 @@ void CvPlayerEspionage::LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bEx
 		pNotifications->Add(bExecute ? NOTIFICATION_SPY_WAS_KILLED : NOTIFICATION_SPY_EVICTED, strNotification.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
 	}
 
-	CvEspionageAI* pEspionageAI = m_pPlayer->GetEspionageAI();
-	if (pEspionageAI && bExecute)
+	if (bExecute)
 	{
-		pEspionageAI->m_aiTurnLastSpyDied[eCityOwner] = GC.getGame().getGameTurn();
-		pEspionageAI->m_aiNumSpiesDied[eCityOwner]++;
+		CvEspionageAI* pEspionageAI = m_pPlayer->GetEspionageAI();
+		if (pEspionageAI)
+		{
+			pEspionageAI->m_aiTurnLastSpyDied[eCityOwner] = GC.getGame().getGameTurn();
+			pEspionageAI->m_aiNumSpiesDied[eCityOwner]++;
+		}
+		CvEspionageAI* pDefenderEspionageAI = GET_PLAYER(eCityOwner).GetEspionageAI();
+		if (pDefenderEspionageAI)
+		{
+			pDefenderEspionageAI->m_aiTurnLastSpyKilled[m_pPlayer->GetID()] = GC.getGame().getGameTurn();
+			pDefenderEspionageAI->m_aiNumSpiesKilled[m_pPlayer->GetID()]++;
+		}
+		pSpy->m_eSpyState = SPY_STATE_DEAD;
+		pSpy->m_iReviveCounter = 0;
 	}
-	CvEspionageAI* pDefenderEspionageAI = GET_PLAYER(eCityOwner).GetEspionageAI();
-	if (pDefenderEspionageAI && bExecute)
+	else
 	{
-		pDefenderEspionageAI->m_aiTurnLastSpyKilled[m_pPlayer->GetID()] = GC.getGame().getGameTurn();
-		pDefenderEspionageAI->m_aiNumSpiesKilled[m_pPlayer->GetID()]++;
+		pSpy->m_eSpyState = SPY_STATE_UNASSIGNED;
+		pSpy->m_iReviveCounter = 0;
+		pSpy->m_iCityX = -1;
+		pSpy->m_iCityY = -1;
 	}
+}
 
-	ExtractSpyFromCity(uiSpyIndex);
-	pSpy->m_eSpyState = bExecute ? SPY_STATE_DEAD : SPY_STATE_UNASSIGNED;
+/// The defender's choice for a spy it caught (entry in m_aLekmodCaught)
+void CvPlayerEspionage::LekmodResolveCaughtSpy(int iEntry, bool bExecute)
+{
+	if (iEntry < 0 || iEntry >= (int)m_aLekmodCaught.size())
+		return;
+	const LekmodCaughtSpy kEntry = m_aLekmodCaught[iEntry];
+	m_aLekmodCaught.erase(m_aLekmodCaught.begin() + iEntry);
+	if (kEntry.m_iSpyOwner >= 0 && kEntry.m_iSpyOwner < MAX_MAJOR_CIVS)
+		GET_PLAYER((PlayerTypes)kEntry.m_iSpyOwner).GetEspionage()->LekmodFinishCaughtSpy(kEntry.m_iSpyIndex, m_pPlayer->GetID(), kEntry.m_iCityX, kEntry.m_iCityY, bExecute);
+}
+
+/// Spies caught in an earlier turn without a choice are executed
+void CvPlayerEspionage::LekmodResolveOldCaughtSpies()
+{
+	const int iTurn = GC.getGame().getGameTurn();
+	for (int i = (int)m_aLekmodCaught.size() - 1; i >= 0; i--)
+	{
+		if (m_aLekmodCaught[i].m_iTurn < iTurn)
+			LekmodResolveCaughtSpy(i, /*bExecute*/ true);
+	}
+}
+
+/// Sweep: a level 3+ spy guarding the city looks for enemy spies, for the city's last 5 turns of Science in Gold
+bool CvPlayerEspionage::LekmodCanSweep(CvCity* pCity)
+{
+	if (pCity == NULL || pCity->getOwner() != m_pPlayer->GetID())
+		return false;
+	const int iIndex = GetSpyIndexInCity(pCity);
+	if (iIndex < 0 || m_aSpyList[iIndex].m_bIsDiplomat || (int)m_aSpyList[iIndex].m_eRank < 2 || m_aSpyList[iIndex].m_eSpyState != SPY_STATE_COUNTER_INTEL)
+		return false;
+	return m_pPlayer->GetTreasury()->GetGold() >= LekmodGetSweepCost(pCity);
+}
+
+int CvPlayerEspionage::LekmodGetSweepCost(CvCity* pCity)
+{
+	if (pCity == NULL)
+		return 0;
+	return std::max(1, pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 5 / 100);
+}
+
+bool CvPlayerEspionage::LekmodDoSweep(CvCity* pCity)
+{
+	if (!LekmodCanSweep(pCity))
+		return false;
+	m_pPlayer->GetTreasury()->ChangeGold(-LekmodGetSweepCost(pCity));
+	int iFound = 0;
+	for (int iOther = 0; iOther < MAX_MAJOR_CIVS; iOther++)
+	{
+		const PlayerTypes eOther = (PlayerTypes)iOther;
+		if (eOther == m_pPlayer->GetID() || !GET_PLAYER(eOther).isAlive())
+			continue;
+		CvPlayerEspionage* pOther = GET_PLAYER(eOther).GetEspionage();
+		if (pOther->LekmodGetSpyLevelIn(pCity) <= 0)
+			continue;
+		const int iSpyIndex = pOther->GetSpyIndexInCity(pCity);
+		if (iSpyIndex < 0)
+			continue;
+		const int iCatch = 100 - LekmodGetStealChance(pOther->LekmodGetSpyStrength(iSpyIndex, pCity), LekmodGetCityDefense(pCity, eOther));
+		if (GC.getGame().getJonRandNum(100, "Lekmod sweep roll") < iCatch)
+		{
+			pOther->LekmodSpyCaught(iSpyIndex, pCity, /*bExecute*/ true);
+			iFound++;
+		}
+	}
+	CvNotifications* pNotifications = m_pPlayer->GetNotifications();
+	if (pNotifications && iFound == 0)
+	{
+		Localization::String strText = Localization::Lookup("TXT_KEY_LEKMOD_SWEEP_NOTHING");
+		strText << pCity->getNameKey();
+		pNotifications->Add(NOTIFICATION_GENERIC, strText.toUTF8(), strText.toUTF8(), pCity->getX(), pCity->getY(), -1);
+	}
+	return true;
+}
+
+/// Level 3+ spies: the next steal goes for a whole technology (chance / 4)
+void CvPlayerEspionage::LekmodToggleFullTech(uint uiSpyIndex)
+{
+	if (uiSpyIndex >= m_aSpyList.size())
+		return;
+	if ((int)m_aSpyList[uiSpyIndex].m_eRank < 2 && !m_aSpyList[uiSpyIndex].m_bLekmodFullTech)
+		return;
+	m_aSpyList[uiSpyIndex].m_bLekmodFullTech = !m_aSpyList[uiSpyIndex].m_bLekmodFullTech;
 }
 #endif
 
@@ -4426,6 +4613,9 @@ FDataStream& operator>>(FDataStream& loadFrom, CvPlayerEspionage& writeTo)
 	uint uiVersion;
 	loadFrom >> uiVersion;
 	{ FILogFile* pDbg = LOGFILEMGR.GetLog("LoadDebug.log", FILogFile::kDontTimeStamp); pDbg->Msg("  [CvPlayerEspionage::Read] uiVersion=%u (expected 0)", uiVersion); }
+#ifdef LEKMOD_SPY_REWORK
+	writeTo.m_aLekmodCaught.clear();
+#endif
 
 	int iNumSpies;
 	loadFrom >> iNumSpies;
@@ -4563,6 +4753,23 @@ FDataStream& operator>>(FDataStream& loadFrom, CvPlayerEspionage& writeTo)
 		writeTo.m_aIntrigueNotificationMessages.push_back(kMessage);
 	}
 
+#ifdef LEKMOD_SPY_REWORK
+	if (uiVersion >= 1)
+	{
+		int iNumCaught = 0;
+		loadFrom >> iNumCaught;
+		for (int i = 0; i < iNumCaught; i++)
+		{
+			CvPlayerEspionage::LekmodCaughtSpy kEntry;
+			loadFrom >> kEntry.m_iSpyOwner;
+			loadFrom >> kEntry.m_iSpyIndex;
+			loadFrom >> kEntry.m_iCityX;
+			loadFrom >> kEntry.m_iCityY;
+			loadFrom >> kEntry.m_iTurn;
+			writeTo.m_aLekmodCaught.push_back(kEntry);
+		}
+	}
+#endif
 	{ FILogFile* pDbg = LOGFILEMGR.GetLog("LoadDebug.log", FILogFile::kDontTimeStamp);
 	  pDbg->Msg("  [CvPlayerEspionage::Read END] spies=%d spyNames=%d stealableTechCivs=%d numTechsToStealCivs=%d heistCivs=%d spyMsgs=%d intrigueMsgs=%d",
 		(int)writeTo.m_aSpyList.size(), (int)writeTo.m_aiSpyListNameOrder.size(), (int)writeTo.m_aaPlayerStealableTechList.size(),
@@ -4574,7 +4781,11 @@ FDataStream& operator>>(FDataStream& loadFrom, CvPlayerEspionage& writeTo)
 /// Serialization write
 FDataStream& operator<<(FDataStream& saveTo, const CvPlayerEspionage& readFrom)
 {
+#ifdef LEKMOD_SPY_REWORK
+	uint uiVersion = 1;
+#else
 	uint uiVersion = 0;
+#endif
 	saveTo << uiVersion;
 
 	saveTo << readFrom.m_aSpyList.size();
@@ -4686,6 +4897,17 @@ FDataStream& operator<<(FDataStream& saveTo, const CvPlayerEspionage& readFrom)
 #endif
 	}
 
+#ifdef LEKMOD_SPY_REWORK
+	saveTo << (int)readFrom.m_aLekmodCaught.size();
+	for (uint i = 0; i < readFrom.m_aLekmodCaught.size(); i++)
+	{
+		saveTo << readFrom.m_aLekmodCaught[i].m_iSpyOwner;
+		saveTo << readFrom.m_aLekmodCaught[i].m_iSpyIndex;
+		saveTo << readFrom.m_aLekmodCaught[i].m_iCityX;
+		saveTo << readFrom.m_aLekmodCaught[i].m_iCityY;
+		saveTo << readFrom.m_aLekmodCaught[i].m_iTurn;
+	}
+#endif
 	{ FILogFile* pDbg = LOGFILEMGR.GetLog("SaveDebug.log", FILogFile::kDontTimeStamp);
 	  pDbg->Msg("  [CvPlayerEspionage::Write END] spies=%d spyNames=%d stealableTechCivs=%d numTechsToStealCivs=%d heistCivs=%d spyMsgs=%d intrigueMsgs=%d",
 		(int)readFrom.m_aSpyList.size(), (int)readFrom.m_aiSpyListNameOrder.size(), (int)readFrom.m_aaPlayerStealableTechList.size(),

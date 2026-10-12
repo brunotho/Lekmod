@@ -1884,6 +1884,13 @@ Spies and diplomats are being reworked (in progress).
 - Removed: Tourism bonus from diplomats
 - Added: spies placed in a city cost 3 Gold per turn per era from the Renaissance (3 / 6 / 9 / 12 / 15); diplomats are free
 - Changed: spies and diplomats see around their city with a radius of strength minus defense (none at 0 or less), updated every turn
-- Note: caught spies are executed for now; the defender's Execute/Evict choice, full-tech steals, sweeps, shared diplomat vision and the screens follow
+- Added: a caught enemy spy is held by the defender, who chooses in the Espionage screen to execute it or evict it (it returns home and keeps its level); without a choice it is executed when the turn ends (computer players always execute)
+- Added: level 3+ spies can switch to full-tech steals: a whole technology instead of Science, at a quarter of the steal chance; the catch chance stays the same
+- Added: a level 3+ spy guarding your own city can sweep it for 5 turns of that city's Science in Gold; every enemy spy there is caught with its usual catch chance
+- Added: the Espionage screen shows each spy's strength, the city's defense, the steal timer and the chances, with the formulas
+- Added: diplomats can also be posted in City-States
+- Changed: the spy activity in City-States is now called Meddling
+- Added: the Gold tooltip lists spy upkeep, and the Science tooltip lists diplomat Science
+- Note: shared vision of level 3+ diplomats and the coup chance breakdown follow
 - DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetStealChance/LekmodSpyCaught)
 - Dev: EspionageOverview.lua is now a Lekmod template (Lua/tmp/ui/Espionage), copied by ui_check.bat

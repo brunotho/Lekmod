@@ -1644,7 +1644,10 @@ g_toolTipHandler.SciencePerTurn = function()-- control )
 			end
 
 			-- Science from Research Agreements
-			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_YIELD_FROM_RESEARCH_AGREEMENTS", researchAgr / 100, YieldIcons[YieldTypes.YIELD_SCIENCE] )
+			-- LEKMOD: spy rework: diplomat Science is part of the yield from other players
+			local diplomats = g_activePlayer.LekmodGetDiplomatScience and g_activePlayer:LekmodGetDiplomatScience() or 0
+			tips:insertLocalizedIfNonZero( "TXT_KEY_TP_YIELD_FROM_RESEARCH_AGREEMENTS", (researchAgr - diplomats) / 100, YieldIcons[YieldTypes.YIELD_SCIENCE] )
+			tips:insertLocalizedIfNonZero( "TXT_KEY_LEKMOD_TP_SCIENCE_FROM_DIPLOMATS", diplomats / 100, YieldIcons[YieldTypes.YIELD_SCIENCE] )
 
 			-- Show Research Agreements
 
@@ -1761,6 +1764,7 @@ g_toolTipHandler.GoldPerTurn = function()-- control )
 	local unitSupply = g_activePlayer:CalculateUnitSupply()
 	local buildingMaintenance = g_activePlayer:GetBuildingGoldMaintenance()
 	local improvementMaintenance = g_activePlayer:GetImprovementGoldMaintenance()
+	local spyMaintenance = g_activePlayer.LekmodGetSpyMaintenance and g_activePlayer:LekmodGetSpyMaintenance() or 0 -- LEKMOD: spy upkeep
 	local vassalMaintenance = g_activePlayer.GetVassalGoldMaintenance and g_activePlayer:GetVassalGoldMaintenance() or 0	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
 	local routeMaintenance = 0
 	local beaconEnergyDelta = 0
@@ -1790,7 +1794,7 @@ g_toolTipHandler.GoldPerTurn = function()-- control )
 		beaconEnergyDelta = g_activePlayer:GetBeaconEnergyCostPerTurn()
 	end
 	tips:insert( L( "TXT_KEY_TP_AVAILABLE_GOLD", totalWealth ) )
-	local totalExpenses = unitCost + unitSupply + buildingMaintenance + improvementMaintenance + goldPerTurnToOtherPlayers + vassalMaintenance + routeMaintenance + beaconEnergyDelta
+	local totalExpenses = unitCost + unitSupply + buildingMaintenance + improvementMaintenance + spyMaintenance + goldPerTurnToOtherPlayers + vassalMaintenance + routeMaintenance + beaconEnergyDelta
 	tips:insert( "" )
 
 	-- Gold per turn
@@ -1828,6 +1832,7 @@ g_toolTipHandler.GoldPerTurn = function()-- control )
 	tips:insertLocalizedBulletIfNonZero( S("TXT_KEY_TP_%s_UNIT_SUPPLY", g_currencyString), unitSupply )
 	tips:insertLocalizedBulletIfNonZero( S("TXT_KEY_TP_%s_BUILDING_MAINT", g_currencyString), buildingMaintenance )
 	tips:insertLocalizedBulletIfNonZero( S("TXT_KEY_TP_%s_TILE_MAINT", g_currencyString), improvementMaintenance )
+	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_LEKMOD_TP_GOLD_SPY_MAINT", spyMaintenance )
 	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_ENERGY_ROUTE_MAINT", routeMaintenance )
 	tips:insertLocalizedBulletIfNonZero( "TXT_KEY_TP_GOLD_VASSAL_MAINT", vassalMaintenance )	-- Compatibility with Putmalk's Civ IV Diplomacy Features Mod
 	tips:insertLocalizedBulletIfNonZero( S("TXT_KEY_TP_%s_TO_OTHERS", g_currencyString), goldPerTurnToOtherPlayers )

@@ -1004,6 +1004,14 @@ protected:
 	static int lGetNumSpies(lua_State* L);
 	static int lGetNumUnassignedSpies(lua_State* L);
 	static int lGetEspionageSpies(lua_State* L);
+#ifdef LEKMOD_SPY_REWORK
+	static int lLekmodGetCaughtSpies(lua_State* L);
+	static int lLekmodGetSpyStealInfo(lua_State* L);
+	static int lLekmodGetSweepCost(lua_State* L);
+	static int lLekmodCanSweep(lua_State* L);
+	static int lLekmodGetSpyMaintenance(lua_State* L);
+	static int lLekmodGetDiplomatScience(lua_State* L);
+#endif
 	static int lHasSpyEstablishedSurveillance(lua_State* L);
 	static int lIsSpyDiplomat(lua_State* L);
 	static int lIsSpySchmoozing(lua_State* L);

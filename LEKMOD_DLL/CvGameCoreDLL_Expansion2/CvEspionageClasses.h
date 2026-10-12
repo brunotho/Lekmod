@@ -81,6 +81,7 @@ public:
 #ifdef LEKMOD_SPY_REWORK
 	int m_iLekmodTurnsInCity; // diplomats: turns established in the same city (+1 level every 25), saved
 	int m_iLekmodSightRadius; // vision radius currently applied (saved, with its plot)
+	bool m_bLekmodFullTech; // level 3+: the next steal goes for a whole technology (saved)
 	int m_iLekmodSightX;
 	int m_iLekmodSightY;
 #endif
@@ -178,6 +179,22 @@ public:
 	int LekmodGetDiplomatScienceTimes100();
 	int LekmodGetSpyMaintenance();
 	void LekmodUpdateSight(uint uiSpyIndex);
+	struct LekmodCaughtSpy
+	{
+		int m_iSpyOwner;
+		int m_iSpyIndex;
+		int m_iCityX;
+		int m_iCityY;
+		int m_iTurn;
+	};
+	std::vector<LekmodCaughtSpy> m_aLekmodCaught; // spies this player caught, waiting for Execute/Evict (saved)
+	void LekmodFinishCaughtSpy(uint uiSpyIndex, PlayerTypes eCityOwner, int iCityX, int iCityY, bool bExecute);
+	void LekmodResolveCaughtSpy(int iEntry, bool bExecute);
+	void LekmodResolveOldCaughtSpies();
+	bool LekmodCanSweep(CvCity* pCity);
+	int LekmodGetSweepCost(CvCity* pCity);
+	bool LekmodDoSweep(CvCity* pCity);
+	void LekmodToggleFullTech(uint uiSpyIndex);
 #endif
 
 	void UpdateSpies();

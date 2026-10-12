@@ -447,7 +447,11 @@ function ScienceTipHandler( control )
 			addLine("TXT_KEY_TP_YIELD_FROM_GOLDEN_AGE", (iSciBase * GameInfo.Yields[iSciYield].PlayerGoldenAgeYieldMod) / 100);
 		end
 		addLine("TXT_KEY_TP_YIELD_FROM_MINORS", iSciMinors);
-		addLine("TXT_KEY_TP_YIELD_FROM_RESEARCH_AGREEMENTS", iSciRA);
+		-- LEKMOD: spy rework: diplomat Science is part of the yield from other players
+		local iSciDiplomats = 0;
+		if (pPlayer.LekmodGetDiplomatScience ~= nil) then iSciDiplomats = pPlayer:LekmodGetDiplomatScience(); end
+		addLine("TXT_KEY_TP_YIELD_FROM_RESEARCH_AGREEMENTS", iSciRA - iSciDiplomats);
+		addLine("TXT_KEY_LEKMOD_TP_SCIENCE_FROM_DIPLOMATS", iSciDiplomats);
 
 		-- Let people know that building more cities makes techs harder to get
 		if (not OptionsManager.IsNoBasicHelp()) then
@@ -521,7 +525,9 @@ function GoldTipHandler( control )
 	local iUnitSupply = pPlayer:CalculateUnitSupply();
 	local iBuildingMaintenance = pPlayer:GetBuildingGoldMaintenance();
 	local iImprovementMaintenance = pPlayer:GetImprovementGoldMaintenance();
-	local iTotalExpenses = iUnitCost + iUnitSupply + iBuildingMaintenance + iImprovementMaintenance + iGoldPerTurnToOtherPlayers;
+	local iSpyMaintenance = 0; -- LEKMOD: spy upkeep
+	if (pPlayer.LekmodGetSpyMaintenance ~= nil) then iSpyMaintenance = pPlayer:LekmodGetSpyMaintenance(); end
+	local iTotalExpenses = iUnitCost + iUnitSupply + iBuildingMaintenance + iImprovementMaintenance + iSpyMaintenance + iGoldPerTurnToOtherPlayers;
 	
 	strText = strText .. "[NEWLINE]";
 	strText = strText .. "[COLOR:255:150:150:255]";
@@ -537,6 +543,9 @@ function GoldTipHandler( control )
 	end
 	if (iImprovementMaintenance ~= 0) then
 		strText = strText .. "[NEWLINE]  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_TP_GOLD_TILE_MAINT", iImprovementMaintenance);
+	end
+	if (iSpyMaintenance ~= 0) then
+		strText = strText .. "[NEWLINE]  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_TP_GOLD_SPY_MAINT", iSpyMaintenance);
 	end
 	if (iGoldPerTurnToOtherPlayers > 0) then
 		strText = strText .. "[NEWLINE]  [ICON_BULLET]" .. Locale.ConvertTextKey("TXT_KEY_TP_GOLD_TO_OTHERS", iGoldPerTurnToOtherPlayers);

@@ -883,6 +883,21 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 	case -6:
 		pkMPVotingSystem->DoVote((int)eMinor, ePlayer, false);
 		return;
+#ifdef LEKMOD_SPY_REWORK
+	// -20 / -21: Execute / Evict a caught spy (eMinor = entry); -22: sweep (eMinor = city ID); -23: full-tech toggle (eMinor = spy index)
+	case -20:
+		GET_PLAYER(ePlayer).GetEspionage()->LekmodResolveCaughtSpy((int)eMinor, true);
+		return;
+	case -21:
+		GET_PLAYER(ePlayer).GetEspionage()->LekmodResolveCaughtSpy((int)eMinor, false);
+		return;
+	case -22:
+		GET_PLAYER(ePlayer).GetEspionage()->LekmodDoSweep(GET_PLAYER(ePlayer).getCity((int)eMinor));
+		return;
+	case -23:
+		GET_PLAYER(ePlayer).GetEspionage()->LekmodToggleFullTech((uint)eMinor);
+		return;
+#endif
 	default:
 		break;
 	}

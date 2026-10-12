@@ -284,6 +284,9 @@ if(renaissanceEra ~= nil) then
 end
 
 function ShowHideHandler( bIsHide, bInitState )
+	if (not bIsHide) then
+		g_LekmodCaughtDismissed = false; -- LEKMOD: ask again about caught spies
+	end
     if( not bInitState ) then
         if( not bIsHide ) then
         	UI.incTurnTimerSemaphore(); 
@@ -637,10 +640,18 @@ function RefreshAgents()
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_TRAVELLING_TT", v.Rank, v.Name, city:GetName());
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_SURVEILLANCE")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_SURVEILLANCE_TT", v.Rank, v.Name, city:GetName());			
+				if (city ~= nil and not Players[city:GetOwner()]:IsMinorCiv()) then
+					strActivityTT = strActivityTT .. LekmodStealInfoText(pActivePlayer, v.AgentID);
+				end
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_GATHERING_INTEL")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_GATHERING_INTEL_TT", v.Rank, v.Name, city:GetName());	
+				strActivityTT = strActivityTT .. LekmodStealInfoText(pActivePlayer, v.AgentID);
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_RIGGING_ELECTION")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT", v.Rank, v.Name, city:GetName());
+			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_COUNTER_INTEL") and pActivePlayer.LekmodGetSpyStealInfo ~= nil) then
+				-- LEKMOD: the defending spy adds its level to the city's defense
+				local info = pActivePlayer:LekmodGetSpyStealInfo(v.AgentID);
+				strActivityTT = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT", v.Rank, v.Name, city:GetName(), info.Level);
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_COUNTER_INTEL")) then
 				strActivityTT = strActivityTT .. Locale.Lookup("TXT_KEY_EO_SPY_COUNTER_INTEL_TT", v.Rank, v.Name, city:GetName());
 				strActivityTT = strActivityTT .. "[NEWLINE]";
@@ -672,6 +683,12 @@ function RefreshAgents()
 				strActivityTT = Locale.Lookup("TXT_KEY_SPY_STATE_MAKING_INTRODUCTIONS_TT", v.Rank, v.Name, city:GetName());				
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_SCHMOOZING")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_SPY_STATE_SCHMOOZING_TT", v.Rank, v.Name, city:GetName());				
+				if (pActivePlayer.LekmodGetSpyStealInfo ~= nil) then
+					local info = pActivePlayer:LekmodGetSpyStealInfo(v.AgentID);
+					if (info.Level < 5) then
+						strActivityTT = strActivityTT .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_LEVEL_TT", 25 - info.TurnsInCity);
+					end
+				end
 			else
 				print("falling out");
 				print(v.AgentActivity);
@@ -822,6 +839,43 @@ function RefreshAgents()
 				agentEntry.StageCoupButton:SetHide(true);		
 			end
 			
+			-- LEKMOD: level 3+ spies: full-tech steal toggle (stealing) and sweep (guarding a city)
+			agentEntry.LekmodFullTechButton:SetHide(true);
+			agentEntry.LekmodSweepButton:SetHide(true);
+			if (pActivePlayer.LekmodGetSpyStealInfo ~= nil and city ~= nil and not v.IsDiplomat and v.State ~= "TXT_KEY_SPY_STATE_DEAD") then
+				local info = pActivePlayer:LekmodGetSpyStealInfo(v.AgentID);
+				if (info.Level >= 3 and city:GetOwner() ~= Game.GetActivePlayer() and not Players[city:GetOwner()]:IsMinorCiv()) then
+					agentEntry.LekmodFullTechButton:SetHide(false);
+					if (info.FullTech) then
+						agentEntry.LekmodFullTechButton:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_FULL_TECH_ON");
+					else
+						agentEntry.LekmodFullTechButton:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_FULL_TECH_OFF");
+					end
+					agentEntry.LekmodFullTechButton:LocalizeAndSetToolTip("TXT_KEY_LEKMOD_EO_FULL_TECH_TT", math.max(1, math.floor(info.Chance / 4)), info.Catch);
+					agentEntry.LekmodFullTechButton:RegisterCallback(Mouse.eLClick, function()
+						Network.SendGiftUnit(v.AgentID, -23);
+					end);
+				elseif (info.Level >= 3 and city:GetOwner() == Game.GetActivePlayer()) then
+					local iCost = pActivePlayer:LekmodGetSweepCost(city:GetID());
+					agentEntry.LekmodSweepButton:SetHide(false);
+					agentEntry.LekmodSweepButton:SetDisabled(not pActivePlayer:LekmodCanSweep(city:GetID()));
+					agentEntry.LekmodSweepButton:LocalizeAndSetToolTip("TXT_KEY_LEKMOD_EO_SWEEP_TT", iCost, city:GetName());
+					agentEntry.LekmodSweepButton:RegisterCallback(Mouse.eLClick, function()
+						g_ConfirmAction = function()
+							Network.SendGiftUnit(city:GetID(), -22);
+						end
+						g_DenyAction = nil;
+						Controls.ConfirmText:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_SWEEP_QUESTION", iCost, city:GetName());
+						Controls.ConfirmContent:CalculateSize();
+						local width, height = Controls.ConfirmContent:GetSizeVal();
+						Controls.ConfirmFrame:SetSizeVal(width + 60, height + 120);
+						Controls.ChooseConfirm:SetHide(false);
+						Controls.YesString:LocalizeAndSetText("TXT_KEY_YES_BUTTON");
+						Controls.NoString:LocalizeAndSetText("TXT_KEY_NO_BUTTON");
+					end);
+				end
+			end
+
 			agentEntry.AgentActivitiesStack:CalculateSize();
 			agentEntry.AgentActivitiesStack:ReprocessAnchoring();
 		end
@@ -1409,6 +1463,10 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 			if (city:IsCapital() and (not Players[v.PlayerID]:IsMinorCiv()) and (not pMyTeam:IsAtWar(city:GetTeam()))) then
 				bCheckDiplomat = true;
 			end 
+			-- LEKMOD: diplomats can also be posted in City-States
+			if (Players[v.PlayerID]:IsMinorCiv() and (not pMyTeam:IsAtWar(city:GetTeam()))) then
+				bCheckDiplomat = true;
+			end
 
 			ApplyGenericEntrySettings(cityEntry, v, agent, bTickTock)
 			
@@ -1455,6 +1513,50 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 	Controls.TheirCityScrollPanel:CalculateInternalSize();
 end
 
+-- LEKMOD: steal formula for the agent tooltip
+function LekmodStealInfoText(pPlayer, iAgentID)
+	if (pPlayer.LekmodGetSpyStealInfo == nil) then
+		return "";
+	end
+	local info = pPlayer:LekmodGetSpyStealInfo(iAgentID);
+	return "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_TT", info.Strength, info.Defense, info.Turns, info.Chance, info.Catch);
+end
+
+-- LEKMOD: enemy spies we caught: Execute / Evict / decide later (Execute when the turn ends)
+g_LekmodCaughtDismissed = false;
+function LekmodPromptCaughtSpy()
+	local pPlayer = Players[Game.GetActivePlayer()];
+	if (g_LekmodCaughtDismissed or pPlayer.LekmodGetCaughtSpies == nil) then
+		return;
+	end
+	local caught = pPlayer:LekmodGetCaughtSpies();
+	if (#caught == 0) then
+		return;
+	end
+	local entry = caught[1];
+	g_ConfirmAction = function()
+		Network.SendGiftUnit(entry.Entry, -20);
+		Controls.LekmodLater:SetHide(true);
+	end
+	g_DenyAction = function()
+		Network.SendGiftUnit(entry.Entry, -21);
+		Controls.LekmodLater:SetHide(true);
+	end
+	Controls.ConfirmText:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_CAUGHT_QUESTION", Players[entry.OwnerID]:GetCivilizationAdjectiveKey(), entry.Name, entry.CityName);
+	Controls.LekmodLater:SetHide(false);
+	Controls.ConfirmContent:CalculateSize();
+	local width, height = Controls.ConfirmContent:GetSizeVal();
+	Controls.ConfirmFrame:SetSizeVal(width + 60, height + 120);
+	Controls.ChooseConfirm:SetHide(false);
+	Controls.YesString:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_EXECUTE");
+	Controls.NoString:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_EVICT");
+end
+Controls.LekmodLater:RegisterCallback(Mouse.eLClick, function()
+	g_LekmodCaughtDismissed = true;
+	Controls.LekmodLater:SetHide(true);
+	Controls.ChooseConfirm:SetHide(true);
+end);
+
 function Refresh()
 	
 	function TestEspionageStarted()
@@ -1480,6 +1582,7 @@ function Refresh()
 		RefreshMyCities();
 		RefreshTheirCities();
 		RefreshIntrigue();
+		LekmodPromptCaughtSpy();
 	end
 end
 Events.SerialEventEspionageScreenDirty.Add(Refresh);
@@ -1495,6 +1598,7 @@ Controls.Yes:RegisterCallback( Mouse.eLClick, OnYes );
 
 function OnNo( )
 	Controls.ChooseConfirm:SetHide(true);
+	Controls.LekmodLater:SetHide(true);
 	if (g_DenyAction ~= nil) then
 		g_DenyAction();
 	end

@@ -66490,7 +66490,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} is attempting to rig the election in {3_CityName} to increase our influence there.[NEWLINE][NEWLINE]Only one civilization may successfuly rig an election. If more than one spy is in a City-State, the highest ranked spy that has been in that City-State the longest has the greatest chance of successfully rigging the election in its favor.
+				{1_RankName} {2_SpyName} meddles in {3_CityName}.[NEWLINE]Every other civilization's [ICON_INFLUENCE] Influence change there is 0.2 lower per turn per level; they don't learn whose spy it is.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_SURVEILLANCE_TT"> 
@@ -120815,6 +120815,66 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_OPINION_LEVEL_5">
 			<Text>[COLOR_NEGATIVE_TEXT]System Collapse[ENDCOLOR]</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_CAUGHT_S">
+			<Text>Enemy spy caught</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_CAUGHT">
+			<Text>We caught {@2_SpyName}, a spy of {@1_CivName}, in {@3_CityName}.[NEWLINE]Open the Espionage screen to execute or evict them. Without a choice the spy is executed when the turn ends.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_CAPTURED_S">
+			<Text>{@1_SpyName} captured</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_CAPTURED">
+			<Text>{@1_SpyName} was caught in {@2_CityName}.[NEWLINE]{@3_CivName} decides whether to execute or evict them.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SWEEP_NOTHING">
+			<Text>The sweep in {@1_CityName} found no enemy spies.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_FULL_TECH_OFF">
+			<Text>Full tech: off</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_FULL_TECH_ON">
+			<Text>Full tech: on</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_FULL_TECH_TT">
+			<Text>From level 3: the next steal goes for a whole technology instead of [ICON_RESEARCH] Science.[NEWLINE]Chance {1_Num}% (a quarter of the normal chance). Caught: {2_Num}%, as with every attempt.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SWEEP">
+			<Text>Sweep</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SWEEP_TT">
+			<Text>Search {2_CityName} for enemy spies for {1_Num} [ICON_GOLD] Gold (5 turns of the city's [ICON_RESEARCH] Science).[NEWLINE]Each enemy spy there is caught with its usual catch chance.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SWEEP_QUESTION">
+			<Text>Pay {1_Num} [ICON_GOLD] Gold to search {2_CityName} for enemy spies?</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DECIDE_LATER">
+			<Text>Decide later</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_EXECUTE">
+			<Text>Execute</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_EVICT">
+			<Text>Evict</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_CAUGHT_QUESTION">
+			<Text>We caught {@2_SpyName}, a {@1_CivAdjective} spy, in {@3_CityName}.[NEWLINE][NEWLINE]Execute: the spy dies.[NEWLINE]Evict: the spy returns home and keeps its level.[NEWLINE][NEWLINE]Without a choice the spy is executed when the turn ends.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_TT">
+			<Text>Strength {1_Num} vs. defense {2_Num}: a steal every {3_Num} turns.[NEWLINE]Steal chance {4_Num}%, caught {5_Num}%.[NEWLINE][NEWLINE]Strength = level, +1 with your level 3+ diplomat in that empire, + your influence levels over them, +1 with Industrial Espionage.[NEWLINE]Defense = their spy's level, +1 Constabulary, +1 Police Station, +1 Intelligence Agency, + their influence levels over you.[NEWLINE][NEWLINE]Turns: 15 / 13 / 11 / 9 / 7 at strength minus defense 1 / 2 / 3 / 4 / 5+, 5 more per point below 1.[NEWLINE]Steal chance = (strength + 1) / (strength + 1 + defense); caught = the rest.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT">
+			<Text>{1_RankName} {2_SpyName} guards {3_CityName} and adds {4_Num} to its defense against enemy spies.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_LEVEL_TT">
+			<Text>Next level in {1_Num} turns.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_TP_SCIENCE_FROM_DIPLOMATS">
+			<Text>[ICON_BULLET] {1_Num: number "'[COLOR_POSITIVE_TEXT]+'#.#'[ENDCOLOR]';'[COLOR_NEGATIVE_TEXT]-'#.#'[ENDCOLOR]'"} {2_Icon} from your diplomats in other capitals.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_TP_GOLD_SPY_MAINT">
+			<Text>{1_Num} spent on spies.</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
 		</Row>
@@ -129324,7 +129384,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_BE_DIPLOMAT"> 
 			<Text>
-				Do you want this spy to be a diplomat? A spy can be a diplomat if they are placed in the capital of another civilization you are not at war with. (If war is declared, your spy will escape the city.) A diplomat will not attempt to steal technology from the other player but will still provide intrigue. Once the World Congress convenes, you will be able to determine their opinion on proposals and trade for their support if needed. If you have differing Ideologies, Diplomats will automatically conduct propaganda that provides a boost to [ICON_TOURISM] Tourism output to the target civilization.
+				Should this agent be a diplomat?[NEWLINE][NEWLINE]Diplomats go to City-States and capitals. They don't steal, and gain a level every 25 turns in the same city. War doesn't expel them, and they cost no upkeep.[NEWLINE][NEWLINE]In a capital: [ICON_RESEARCH] Science equal to 2% of the capital's per level (halved at war), +33% [ICON_GOLD] Gold per level from your trade routes to it, and from level 3 your spies in that empire are 1 stronger.[NEWLINE][NEWLINE]In a City-State: +0.33 [ICON_INFLUENCE] Influence per turn per level, and Influence below the resting point recovers 50% faster per level.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_BONUS_CITY_STATE"> 
@@ -132022,7 +132082,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_STATE_RIGGING_ELECTION"> 
 			<Text>
-				Rigging Election
+				Meddling
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_STATE_SCHMOOZING"> 

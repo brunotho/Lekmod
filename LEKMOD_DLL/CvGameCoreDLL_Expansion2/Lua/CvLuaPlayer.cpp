@@ -1003,6 +1003,14 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(GetNumSpies);
 	Method(GetNumUnassignedSpies);
 	Method(GetEspionageSpies);
+#ifdef LEKMOD_SPY_REWORK
+	Method(LekmodGetCaughtSpies);
+	Method(LekmodGetSpyStealInfo);
+	Method(LekmodGetSweepCost);
+	Method(LekmodCanSweep);
+	Method(LekmodGetSpyMaintenance);
+	Method(LekmodGetDiplomatScience);
+#endif
 	Method(HasSpyEstablishedSurveillance);
 	Method(IsSpyDiplomat);
 	Method(IsSpySchmoozing);
@@ -11782,6 +11790,101 @@ int CvLuaPlayer::lGetNumUnassignedSpies(lua_State* L)
 }
 
 //------------------------------------------------------------------------------
+#ifdef LEKMOD_SPY_REWORK
+//------------------------------------------------------------------------------
+// table LekmodGetCaughtSpies(): enemy spies this player caught and has to judge {Entry, OwnerID, Name, CityName}
+int CvLuaPlayer::lLekmodGetCaughtSpies(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	CvPlayerEspionage* pkEspionage = pkThisPlayer->GetEspionage();
+	lua_createtable(L, 0, 0);
+	int index = 1;
+	for (uint i = 0; i < pkEspionage->m_aLekmodCaught.size(); i++)
+	{
+		const CvPlayerEspionage::LekmodCaughtSpy& kEntry = pkEspionage->m_aLekmodCaught[i];
+		if (kEntry.m_iSpyOwner < 0 || kEntry.m_iSpyOwner >= MAX_MAJOR_CIVS)
+			continue;
+		CvPlayerAI& kOwner = GET_PLAYER((PlayerTypes)kEntry.m_iSpyOwner);
+		lua_createtable(L, 0, 0);
+		const int t = lua_gettop(L);
+		lua_pushinteger(L, i);
+		lua_setfield(L, t, "Entry");
+		lua_pushinteger(L, kEntry.m_iSpyOwner);
+		lua_setfield(L, t, "OwnerID");
+		const char* szName = "";
+		if (kEntry.m_iSpyIndex >= 0 && kEntry.m_iSpyIndex < (int)kOwner.GetEspionage()->m_aSpyList.size())
+			szName = kOwner.getCivilizationInfo().getSpyNames(kOwner.GetEspionage()->m_aSpyList[kEntry.m_iSpyIndex].m_iName);
+		lua_pushstring(L, szName);
+		lua_setfield(L, t, "Name");
+		CvPlot* pPlot = GC.getMap().plot(kEntry.m_iCityX, kEntry.m_iCityY);
+		CvCity* pCity = pPlot ? pPlot->getPlotCity() : NULL;
+		lua_pushstring(L, pCity ? pCity->getNameKey() : "");
+		lua_setfield(L, t, "CityName");
+		lua_rawseti(L, -2, index++);
+	}
+	return 1;
+}
+//------------------------------------------------------------------------------
+// table LekmodGetSpyStealInfo(int iSpy): Strength, Defense, Turns, Chance, Catch, Level, FullTech
+int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	const int iSpy = lua_tointeger(L, 2);
+	CvPlayerEspionage* pkEspionage = pkThisPlayer->GetEspionage();
+	lua_createtable(L, 0, 0);
+	const int t = lua_gettop(L);
+	if (iSpy < 0 || iSpy >= (int)pkEspionage->m_aSpyList.size())
+		return 1;
+	CvCity* pCity = pkEspionage->GetCityWithSpy(iSpy);
+	const int iStrength = pCity ? pkEspionage->LekmodGetSpyStrength(iSpy, pCity) : (int)pkEspionage->m_aSpyList[iSpy].m_eRank + 1;
+	const int iDefense = pCity ? pkEspionage->LekmodGetCityDefense(pCity, pkThisPlayer->GetID()) : 0;
+	const int iChance = CvPlayerEspionage::LekmodGetStealChance(iStrength, iDefense);
+	lua_pushinteger(L, iStrength);
+	lua_setfield(L, t, "Strength");
+	lua_pushinteger(L, iDefense);
+	lua_setfield(L, t, "Defense");
+	lua_pushinteger(L, CvPlayerEspionage::LekmodGetStealInterval(iStrength, iDefense));
+	lua_setfield(L, t, "Turns");
+	lua_pushinteger(L, iChance);
+	lua_setfield(L, t, "Chance");
+	lua_pushinteger(L, 100 - iChance);
+	lua_setfield(L, t, "Catch");
+	lua_pushinteger(L, (int)pkEspionage->m_aSpyList[iSpy].m_eRank + 1);
+	lua_setfield(L, t, "Level");
+	lua_pushboolean(L, pkEspionage->m_aSpyList[iSpy].m_bLekmodFullTech);
+	lua_setfield(L, t, "FullTech");
+	lua_pushinteger(L, pkEspionage->m_aSpyList[iSpy].m_iLekmodTurnsInCity);
+	lua_setfield(L, t, "TurnsInCity");
+	return 1;
+}
+//------------------------------------------------------------------------------
+int CvLuaPlayer::lLekmodGetSweepCost(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	CvCity* pCity = pkThisPlayer->getCity(lua_tointeger(L, 2));
+	lua_pushinteger(L, pkThisPlayer->GetEspionage()->LekmodGetSweepCost(pCity));
+	return 1;
+}
+int CvLuaPlayer::lLekmodCanSweep(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	CvCity* pCity = pkThisPlayer->getCity(lua_tointeger(L, 2));
+	lua_pushboolean(L, pkThisPlayer->GetEspionage()->LekmodCanSweep(pCity));
+	return 1;
+}
+int CvLuaPlayer::lLekmodGetSpyMaintenance(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	lua_pushinteger(L, pkThisPlayer->GetEspionage()->LekmodGetSpyMaintenance());
+	return 1;
+}
+int CvLuaPlayer::lLekmodGetDiplomatScience(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	lua_pushinteger(L, pkThisPlayer->GetEspionage()->LekmodGetDiplomatScienceTimes100());
+	return 1;
+}
+#endif
 int CvLuaPlayer::lGetEspionageSpies(lua_State* L)
 {
 	CvPlayerAI* pkThisPlayer = GetInstance(L);
