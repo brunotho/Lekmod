@@ -7011,6 +7011,15 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 
 	int iTempMod;
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// World Congress (Climate Change Reparations: power plants)
+	iTempMod = GC.getGame().GetGameLeagues()->LekmodBuildingProductionModifier((BuildingClassTypes)thisBuildingEntry->GetBuildingClassType());
+	if (iTempMod != 0)
+	{
+		iMultiplier += iTempMod;
+		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_CONGRESS", iTempMod);
+	}
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	// policies: % Production toward early buildings (Colonial Infrastructure: buildings from before the Renaissance; not wonders)
 	if (!::isWorldWonderClass(kBuildingClassInfo) && !::isTeamWonderClass(kBuildingClassInfo) && !::isNationalWonderClass(kBuildingClassInfo))

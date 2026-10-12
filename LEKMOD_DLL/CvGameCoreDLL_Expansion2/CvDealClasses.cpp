@@ -341,6 +341,11 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 	CvTeam* pFromTeam = &GET_TEAM(eFromTeam);
 	CvTeam* pToTeam = &GET_TEAM(eToTeam);
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Pariah: nobody trades with the chosen civ (peace is still possible)
+	if (eItem != TRADE_ITEM_PEACE_TREATY && (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_TARGET_NO_TRADE, ePlayer) != 0 || GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_TARGET_NO_TRADE, eToPlayer) != 0))
+		return false;
+#endif
 	CvDeal* pRenewDeal = pFromPlayer->GetDiplomacyAI()->GetDealToRenew();
 	if (!pRenewDeal)
 	{
@@ -861,6 +866,11 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 		if(!pToTeam->isAtWar(eFromTeam))
 			return false;
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+		// Breakdown of International Relations: no peace between major civs
+		if (!pFromTeam->isMinorCiv() && !pToTeam->isMinorCiv() && GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BREAKDOWN) != 0)
+			return false;
+#endif
 #ifdef LEKMOD_WAR_START
 		// Start at war: no peace between major civs before the set turn
 		if(GC.getGame().isOption("GAMEOPTION_LEKMOD_WAR_START") && GC.getGame().getGameTurn() < LEKMOD_WAR_START_PEACE_TURN

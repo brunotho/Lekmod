@@ -2059,7 +2059,9 @@ void CvLeague::DoTurn(LeagueSpecialSessionTypes eTriggeredSpecialSession)
 		CheckStartSpecialSession(eTriggeredSpecialSession);
 	}
 
-	if (!IsInSession())
+	// Breakdown of International Relations: no further sessions
+	const bool bLekmodBreakdown = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BREAKDOWN) != 0;
+	if (!IsInSession() && !bLekmodBreakdown)
 	{
 		// Members who could propose since an earlier turn get a random proposal (AIs make their own pick)
 		if (iTurn > m_iLekmodPrivilegeTurn || iTurn >= m_iLekmodVoteTurn)
@@ -2079,7 +2081,7 @@ void CvLeague::DoTurn(LeagueSpecialSessionTypes eTriggeredSpecialSession)
 			m_bLekmodHostSession = false;
 			StartSession();
 		}
-		else if (iTurn == m_iLekmodVoteTurn - 4)
+		else if (iTurn == m_iLekmodVoteTurn - 4 && GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_VOICE) == 0)
 		{
 			LekmodStartHostSession();
 		}
@@ -2799,6 +2801,30 @@ bool CvLeague::CanProposeEnact(ResolutionTypes eResolution, PlayerTypes ePropose
 	if (pInfo->IsLekmodDisabled())
 	{
 		bValid = false;
+	}
+	// Every living (human) major civ must have reached an era
+	for (int iAll = 0; iAll < 2; iAll++)
+	{
+		const EraTypes eAllEra = (iAll == 0) ? pInfo->GetLekmodAllPlayersEra() : pInfo->GetLekmodAllHumansEra();
+		if (eAllEra == NO_ERA)
+			continue;
+		bool bAllThere = true;
+		for (int iMajor = 0; iMajor < MAX_MAJOR_CIVS; iMajor++)
+		{
+			CvPlayer& kMajor = GET_PLAYER((PlayerTypes)iMajor);
+			if (kMajor.isAlive() && (iAll == 0 || kMajor.isHuman()) && kMajor.GetCurrentEra() < eAllEra)
+				bAllThere = false;
+		}
+		if (!bAllThere)
+		{
+			if (sTooltipSink != NULL && GC.getEraInfo(eAllEra) != NULL)
+			{
+				Localization::String sTemp = Localization::Lookup(iAll == 0 ? "TXT_KEY_LEKMOD_RESOLUTION_NEEDS_ALL_ERA" : "TXT_KEY_LEKMOD_RESOLUTION_NEEDS_ALL_HUMANS_ERA");
+				sTemp << GC.getEraInfo(eAllEra)->GetDescriptionKey();
+				(*sTooltipSink) += sTemp.toUTF8();
+			}
+			bValid = false;
+		}
 	}
 	if (pInfo->GetLekmodMinCongressEra() != NO_ERA && LeagueHelpers::GetGameEraForTrigger() < pInfo->GetLekmodMinCongressEra())
 	{
@@ -3814,7 +3840,7 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		if (IsHostMember(ePlayer))
 		{
 #ifdef LEKMOD_CONGRESS_CYCLE
-			iHostVotes += s_aiLekmodHostVotes[LekmodCongressEraIndex()];
+			iHostVotes += s_aiLekmodHostVotes[LekmodCongressEraIndex()] + (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_VOICE) != 0 ? 1 : 0);
 #else
 			iHostVotes += pInfo->GetHostDelegates();
 #endif
@@ -3908,13 +3934,13 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 #ifdef LEKMOD_CONGRESS_CYCLE
 		// Original capitals of other civilizations
 		int iCapitalVotes = 0;
-		if (s_aiLekmodCapitalVotes[LekmodCongressEraIndex()] > 0)
+		if (s_aiLekmodCapitalVotes[LekmodCongressEraIndex()] + GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_CAPTURED_CAPITAL_VOTES) > 0)
 		{
 			int iCityLoop;
 			for (CvCity* pLoopCity = GET_PLAYER(ePlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(ePlayer).nextCity(&iCityLoop))
 			{
 				if (pLoopCity->IsOriginalMajorCapital() && pLoopCity->getOriginalOwner() != ePlayer)
-					iCapitalVotes += s_aiLekmodCapitalVotes[LekmodCongressEraIndex()];
+					iCapitalVotes += s_aiLekmodCapitalVotes[LekmodCongressEraIndex()] + GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_CAPTURED_CAPITAL_VOTES);
 			}
 		}
 		iVotes += iCapitalVotes;
@@ -3925,8 +3951,9 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		int iEmbargoVotes = 0;
 		for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
 		{
-			if (it->GetEffects()->bEmbargoPlayer && it->GetProposerDecision()->GetDecision() == ePlayer)
-				iEmbargoVotes--;
+			CvResolutionEntry* pTargetInfo = GC.getResolutionInfo(it->GetType());
+			if (pTargetInfo != NULL && it->GetProposerDecision()->GetDecision() == ePlayer)
+				iEmbargoVotes += pTargetInfo->GetLekmodInt(LRC_TARGET_VOTES);
 		}
 		iVotes += iEmbargoVotes;
 		// Cultural influence: +1 per civ we are Influential over, -1 per civ Influential over us
@@ -4730,6 +4757,11 @@ int CvLeague::GetCityTourismModifier(const CvCity* pCity)
 				iMod += it->GetEffects()->iHolyCityTourism;
 			}
 		}
+#ifdef LEKMOD_CONGRESS_CYCLE
+		CvResolutionEntry* pTourismInfo = GC.getResolutionInfo(it->GetType());
+		if (pTourismInfo != NULL)
+			iMod += pTourismInfo->GetLekmodInt(LRC_TOURISM);
+#endif
 	}
 	return iMod;
 }
@@ -5987,6 +6019,291 @@ void CvLeague::CheckProjectAchievements()
 }
 
 #ifdef LEKMOD_CONGRESS_CYCLE
+#ifdef LEKMOD_CONGRESS_CYCLE
+static const char* s_aszLekmodResolutionColumns[NUM_LEKMOD_RESOLUTION_COLUMNS] =
+{
+	"LekmodDurationTurns", "LekmodSpaceshipCostModifier", "LekmodAttackModifier", "LekmodDevelopmentFund", "LekmodBreakdown",
+	"LekmodCapturedCapitalVotes", "LekmodLuxuryHappinessPercent", "LekmodBlackout", "LekmodVoiceForTheVoiceless", "LekmodExperienceModifier",
+	"LekmodAirExperienceModifier", "LekmodTargetVotes", "LekmodTargetCombatModifier", "LekmodTargetNoTrade", "LekmodFirstTechGoldPercent",
+	"LekmodTechDiscountPerCiv", "LekmodClimateReparations", "LekmodHappinessPerFactory", "LekmodTransparency", "LekmodTourismModifier"
+};
+
+/// Sum of a Lekmod column over the active resolutions (only those whose chosen civ is eTarget, if given)
+int CvGameLeagues::LekmodSumActive(int eColumn, PlayerTypes eTarget)
+{
+	CvLeague* pLeague = GetActiveLeague();
+	if (pLeague == NULL || GC.getGame().isOption(GAMEOPTION_NO_LEAGUES))
+		return 0;
+	int iSum = 0;
+	for (ActiveResolutionList::iterator it = pLeague->m_vActiveResolutions.begin(); it != pLeague->m_vActiveResolutions.end(); ++it)
+	{
+		CvResolutionEntry* pInfo = GC.getResolutionInfo(it->GetType());
+		if (pInfo == NULL)
+			continue;
+		if (eTarget != NO_PLAYER && it->GetProposerDecision()->GetDecision() != (int)eTarget)
+			continue;
+		iSum += pInfo->GetLekmodInt(eColumn);
+	}
+	return iSum;
+}
+
+/// % Production toward a building class from active resolutions (Climate Change Reparations)
+int CvGameLeagues::LekmodBuildingProductionModifier(BuildingClassTypes eClass)
+{
+	CvLeague* pLeague = GetActiveLeague();
+	if (pLeague == NULL || eClass == NO_BUILDINGCLASS)
+		return 0;
+	int iSum = 0;
+	for (ActiveResolutionList::iterator it = pLeague->m_vActiveResolutions.begin(); it != pLeague->m_vActiveResolutions.end(); ++it)
+	{
+		CvResolutionEntry* pInfo = GC.getResolutionInfo(it->GetType());
+		if (pInfo != NULL)
+			iSum += pInfo->GetLekmodBuildingClassProductionModifier(eClass);
+	}
+	return iSum;
+}
+
+/// Removes an active resolution and its effects (expiry, Breakdown, Blackout)
+void CvLeague::LekmodRemoveActiveResolution(int iResolutionID)
+{
+	for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
+	{
+		if (it->GetID() == iResolutionID)
+		{
+			for (uint i = 0; i < m_vMembers.size(); i++)
+				it->RemoveEffects(m_vMembers[i].ePlayer);
+			m_vActiveResolutions.erase(it);
+			for (uint i = 0; i < m_vMembers.size(); i++)
+			{
+				GET_PLAYER(m_vMembers[i].ePlayer).DoUpdateHappiness();
+				GET_PLAYER(m_vMembers[i].ePlayer).updateYield();
+				GET_PLAYER(m_vMembers[i].ePlayer).recomputeGreatPeopleModifiers();
+			}
+			return;
+		}
+	}
+}
+
+/// Every major civ sees the cities of the other major civs and 2 tiles around them (Diplomatic Transparency)
+void CvLeague::LekmodRevealCities()
+{
+	for (int iViewer = 0; iViewer < MAX_MAJOR_CIVS; iViewer++)
+	{
+		CvPlayer& kViewer = GET_PLAYER((PlayerTypes)iViewer);
+		if (!kViewer.isAlive())
+			continue;
+		for (int iOwner = 0; iOwner < MAX_MAJOR_CIVS; iOwner++)
+		{
+			CvPlayer& kOwner = GET_PLAYER((PlayerTypes)iOwner);
+			if (iOwner == iViewer || !kOwner.isAlive() || kOwner.getTeam() == kViewer.getTeam())
+				continue;
+			int iLoop;
+			for (CvCity* pCity = kOwner.firstCity(&iLoop); pCity != NULL; pCity = kOwner.nextCity(&iLoop))
+			{
+				for (int iDX = -2; iDX <= 2; iDX++)
+				{
+					for (int iDY = -2; iDY <= 2; iDY++)
+					{
+						CvPlot* pPlot = plotXYWithRangeCheck(pCity->getX(), pCity->getY(), iDX, iDY, 2);
+						if (pPlot != NULL && !pPlot->isRevealed(kViewer.getTeam()))
+							pPlot->setRevealed(kViewer.getTeam(), true);
+					}
+				}
+			}
+		}
+	}
+}
+
+/// One-shot effects of the new proposals, before the resolution becomes active
+void CvLeague::LekmodDoEnactOneShot(CvEnactProposal* pProposal)
+{
+	CvResolutionEntry* pInfo = GC.getResolutionInfo(pProposal->GetType());
+	if (pInfo == NULL)
+		return;
+	const int iChoice = pProposal->GetProposerDecision()->GetDecision();
+
+	// Breakdown of International Relations: every other resolution ends, total war, World Leader vote 3 turns later
+	if (pInfo->GetLekmodInt(LRC_BREAKDOWN) != 0)
+	{
+		while (!m_vActiveResolutions.empty())
+			LekmodRemoveActiveResolution(m_vActiveResolutions.begin()->GetID());
+		for (int iA = 0; iA < MAX_MAJOR_CIVS; iA++)
+		{
+			CvPlayer& kA = GET_PLAYER((PlayerTypes)iA);
+			if (!kA.isAlive())
+				continue;
+			for (int iB = 0; iB < MAX_MAJOR_CIVS; iB++)
+			{
+				CvPlayer& kB = GET_PLAYER((PlayerTypes)iB);
+				if (iA == iB || !kB.isAlive() || kA.getTeam() == kB.getTeam())
+					continue;
+				if (!GET_TEAM(kA.getTeam()).isAtWar(kB.getTeam()))
+					GET_TEAM(kA.getTeam()).declareWar(kB.getTeam());
+			}
+		}
+		if (m_iLekmodLeaderVoteTurn >= 0)
+			m_iLekmodLeaderVoteTurn += 3;
+	}
+
+	// Repeals another resolution (Blackout ends Diplomatic Transparency)
+	if (pInfo->GetLekmodRepealsResolution() != NO_RESOLUTION)
+	{
+		for (uint i = 0; i < m_vActiveResolutions.size(); i++)
+		{
+			if (m_vActiveResolutions[i].GetType() == pInfo->GetLekmodRepealsResolution())
+			{
+				LekmodRemoveActiveResolution(m_vActiveResolutions[i].GetID());
+				break;
+			}
+		}
+	}
+
+	// International Development Fund
+	if (pInfo->GetLekmodInt(LRC_DEVELOPMENT_FUND) != 0)
+	{
+		int iMostPolicies = 0;
+		EraTypes eMostAdvanced = (EraTypes)0;
+		for (int i = 0; i < MAX_MAJOR_CIVS; i++)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)i);
+			if (!kPlayer.isAlive())
+				continue;
+			iMostPolicies = std::max(iMostPolicies, kPlayer.GetPlayerPolicies()->GetNumPoliciesOwned());
+			if (kPlayer.GetCurrentEra() > eMostAdvanced)
+				eMostAdvanced = kPlayer.GetCurrentEra();
+		}
+		for (int i = 0; i < MAX_MAJOR_CIVS; i++)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)i);
+			if (!kPlayer.isAlive())
+				continue;
+			// a free policy for everyone but the civs with the most policies
+			if (kPlayer.GetPlayerPolicies()->GetNumPoliciesOwned() < iMostPolicies)
+			{
+#ifdef PENALTY_FOR_DELAYING_POLICIES
+				kPlayer.ChangeNumFreePolicies(1024);
+				kPlayer.ChangeNumFreePoliciesEver(-1024);
+#else
+				kPlayer.ChangeNumFreePolicies(1);
+#endif
+			}
+			// the cheapest researchable tech another civ knows, for everyone not in the most advanced era
+			if (kPlayer.GetCurrentEra() < eMostAdvanced)
+			{
+				std::vector<TechTypes> vBest;
+				int iBestCost = MAX_INT;
+				for (int iTech = 0; iTech < GC.getNumTechInfos(); iTech++)
+				{
+					TechTypes eTech = (TechTypes)iTech;
+					if (GC.getTechInfo(eTech) == NULL || !kPlayer.GetPlayerTechs()->CanResearch(eTech))
+						continue;
+					bool bKnownElsewhere = false;
+					for (int j = 0; j < MAX_MAJOR_CIVS; j++)
+					{
+						CvPlayer& kOther = GET_PLAYER((PlayerTypes)j);
+						if (kOther.isAlive() && kOther.getTeam() != kPlayer.getTeam() && GET_TEAM(kOther.getTeam()).GetTeamTechs()->HasTech(eTech))
+						{
+							bKnownElsewhere = true;
+							break;
+						}
+					}
+					if (!bKnownElsewhere)
+						continue;
+					const int iCost = GET_TEAM(kPlayer.getTeam()).GetTeamTechs()->GetResearchCost(eTech);
+					if (iCost < iBestCost)
+					{
+						iBestCost = iCost;
+						vBest.clear();
+					}
+					if (iCost == iBestCost)
+						vBest.push_back(eTech);
+				}
+				if (!vBest.empty())
+				{
+					TechTypes eGift = vBest.size() == 1 ? vBest[0] : vBest[GC.getGame().getJonRandNum((int)vBest.size(), "Lekmod development fund tech")];
+					GET_TEAM(kPlayer.getTeam()).setHasTech(eGift, true, kPlayer.GetID(), true, true);
+				}
+			}
+		}
+	}
+
+	// Climate Change Reparations: -200 Gold per Factory (not below 0)
+	if (pInfo->GetLekmodInt(LRC_CLIMATE) != 0)
+	{
+		for (int i = 0; i < MAX_MAJOR_CIVS; i++)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)i);
+			if (!kPlayer.isAlive())
+				continue;
+			const BuildingTypes eFactory = (BuildingTypes)kPlayer.getCivilizationInfo().getCivilizationBuildings(GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true));
+			if (eFactory == NO_BUILDING)
+				continue;
+			const int iLoss = std::min(kPlayer.GetTreasury()->GetGold(), pInfo->GetLekmodInt(LRC_CLIMATE) * kPlayer.countNumBuildings(eFactory));
+			if (iLoss > 0)
+				kPlayer.GetTreasury()->ChangeGold(-iLoss);
+		}
+	}
+
+	// Pariah: all deals with the chosen civ end
+	if (pInfo->GetLekmodInt(LRC_TARGET_NO_TRADE) != 0 && iChoice >= 0 && iChoice < MAX_MAJOR_CIVS)
+	{
+		GC.getGame().GetGameDeals()->DoCancelAllDealsWithPlayer((PlayerTypes)iChoice);
+	}
+}
+
+/// Resolutions that end after a number of turns
+void CvLeague::LekmodDoExpiry()
+{
+	const int iTurn = GC.getGame().getGameTurn();
+	bool bAgain = true;
+	while (bAgain)
+	{
+		bAgain = false;
+		for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
+		{
+			CvResolutionEntry* pInfo = GC.getResolutionInfo(it->GetType());
+			if (pInfo == NULL || pInfo->GetLekmodInt(LRC_DURATION) <= 0 || iTurn < it->GetTurnEnacted() + pInfo->GetLekmodInt(LRC_DURATION))
+				continue;
+			// tell everyone
+			Localization::String sSummary = Localization::Lookup("TXT_KEY_LEKMOD_RESOLUTION_EXPIRED");
+			sSummary << pInfo->GetDescriptionKey();
+			for (uint i = 0; i < m_vMembers.size(); i++)
+			{
+				CvPlayer& kPlayer = GET_PLAYER(m_vMembers[i].ePlayer);
+				if (kPlayer.isHuman() && kPlayer.isAlive() && kPlayer.GetNotifications())
+					kPlayer.GetNotifications()->Add(NOTIFICATION_LEAGUE_VOTING_DONE, sSummary.toUTF8(), sSummary.toUTF8(), -1, -1, GetID());
+			}
+			LekmodRemoveActiveResolution(it->GetID());
+			bAgain = true;
+			break;
+		}
+	}
+}
+
+/// Voice for the Voiceless: the human member with the fewest votes hosts (ties at random)
+void CvLeague::LekmodPickVoicelessHost()
+{
+	std::vector<PlayerTypes> vBest;
+	int iFewest = MAX_INT;
+	for (uint i = 0; i < m_vMembers.size(); i++)
+	{
+		PlayerTypes ePlayer = m_vMembers[i].ePlayer;
+		if (!GET_PLAYER(ePlayer).isAlive() || GET_PLAYER(ePlayer).isMinorCiv() || !LekmodIsHostCandidate(ePlayer))
+			continue;
+		const int iVotes = CalculateStartingVotesForMember(ePlayer);
+		if (iVotes < iFewest)
+		{
+			iFewest = iVotes;
+			vBest.clear();
+		}
+		if (iVotes == iFewest)
+			vBest.push_back(ePlayer);
+	}
+	if (!vBest.empty())
+		SetHostMember(vBest.size() == 1 ? vBest[0] : vBest[GC.getGame().getJonRandNum((int)vBest.size(), "Lekmod voiceless host")]);
+}
+#endif
+
 /// Session results and world leader votes, once the new turn's players are processed
 void CvLeague::LekmodDoTurnLate()
 {
@@ -6011,6 +6328,16 @@ void CvLeague::LekmodDoTurnLate()
 		}
 	}
 
+	// Voice for the Voiceless: no host vote; the civ with the fewest votes hosts and proposals open
+	if (!IsInSession() && iTurn == m_iLekmodVoteTurn - 3 && m_iLekmodPrivilegeTurn < iTurn && GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_VOICE) != 0
+		&& GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BREAKDOWN) == 0)
+	{
+		LekmodPickVoicelessHost();
+		LekmodStartProposals(iTurn, /*bCallForProposals*/ true);
+	}
+	LekmodDoExpiry();
+	if (GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_TRANSPARENCY) != 0)
+		LekmodRevealCities();
 	if (m_iLekmodLeaderVoteTurn >= 0 && iTurn >= m_iLekmodLeaderVoteTurn)
 	{
 		m_iLekmodLeaderVoteTurn = iTurn + 7;
@@ -6914,6 +7241,7 @@ void CvLeague::DoEnactResolution(CvEnactProposal* pProposal)
 	CvAssertMsg(pProposal->IsPassed(GetVotesSpentThisSession()), "Doing a proposal that has not been passed. Please send Anton your save file and version.");
 
 #ifdef LEKMOD_CONGRESS_CYCLE
+	LekmodDoEnactOneShot(pProposal);
 	// World Ideology can be flipped: a new one replaces the active one
 	if (pProposal->GetEffects()->iVotesForFollowingIdeology != 0)
 	{
@@ -12591,6 +12919,11 @@ CvResolutionEntry::CvResolutionEntry(void)
 	m_bChangeLeagueHost					= false;
 #ifdef LEKMOD_CONGRESS_CYCLE
 	m_eLekmodMinCongressEra = NO_ERA;
+	for (int i = 0; i < NUM_LEKMOD_RESOLUTION_COLUMNS; i++)
+		m_aiLekmodInts[i] = 0;
+	m_eLekmodAllPlayersEra = NO_ERA;
+	m_eLekmodAllHumansEra = NO_ERA;
+	m_eLekmodRepealsResolution = NO_RESOLUTION;
 	m_bLekmodDisabled = false;
 	m_iLekmodNukeProductionModifier = 0;
 #endif
@@ -12643,6 +12976,24 @@ bool CvResolutionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtil
 	m_eLekmodMinCongressEra = (EraTypes) GC.getInfoTypeForString(kResults.GetText("LekmodMinCongressEra"), true);
 	m_bLekmodDisabled = kResults.GetBool("LekmodDisabled");
 	m_iLekmodNukeProductionModifier = kResults.GetInt("LekmodNukeProductionModifier");
+	for (int i = 0; i < NUM_LEKMOD_RESOLUTION_COLUMNS; i++)
+		m_aiLekmodInts[i] = kResults.GetInt(s_aszLekmodResolutionColumns[i]);
+	m_eLekmodAllPlayersEra = (EraTypes) GC.getInfoTypeForString(kResults.GetText("LekmodAllPlayersEra"), true);
+	m_eLekmodAllHumansEra = (EraTypes) GC.getInfoTypeForString(kResults.GetText("LekmodAllHumansEra"), true);
+	m_eLekmodRepealsResolution = (ResolutionTypes) GC.getInfoTypeForString(kResults.GetText("LekmodRepealsResolution"), true);
+	{
+		std::string strKey("Resolution_LekmodBuildingClassProductionModifiers");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select BuildingClasses.ID, Modifier from Resolution_LekmodBuildingClassProductionModifiers inner join BuildingClasses on BuildingClasses.Type = BuildingClassType where ResolutionType = ?");
+		pResults->Bind(1, GetType());
+		while (pResults->Step())
+		{
+			m_aiLekmodBuildingClassProductionModifiers.push_back(pResults->GetInt(0));
+			m_aiLekmodBuildingClassProductionModifiers.push_back(pResults->GetInt(1));
+		}
+		pResults->Reset();
+	}
 #endif
 	m_bChangeLeagueHost					= kResults.GetBool("ChangeLeagueHost");
 	m_iOneTimeGold						= kResults.GetInt("OneTimeGold");
@@ -12717,6 +13068,33 @@ bool CvResolutionEntry::IsDiplomaticVictory() const
 	return m_bDiplomaticVictory;
 }
 #ifdef LEKMOD_CONGRESS_CYCLE
+int CvResolutionEntry::GetLekmodInt(int eColumn) const
+{
+	return (eColumn >= 0 && eColumn < NUM_LEKMOD_RESOLUTION_COLUMNS) ? m_aiLekmodInts[eColumn] : 0;
+}
+/// Proposable only when every living major civ is in this era or later
+EraTypes CvResolutionEntry::GetLekmodAllPlayersEra() const
+{
+	return m_eLekmodAllPlayersEra;
+}
+/// Proposable only when every living human player is in this era or later
+EraTypes CvResolutionEntry::GetLekmodAllHumansEra() const
+{
+	return m_eLekmodAllHumansEra;
+}
+/// Ends this other resolution when enacted
+ResolutionTypes CvResolutionEntry::GetLekmodRepealsResolution() const
+{
+	return m_eLekmodRepealsResolution;
+}
+int CvResolutionEntry::GetLekmodBuildingClassProductionModifier(BuildingClassTypes eClass) const
+{
+	int iMod = 0;
+	for (uint i = 0; i + 1 < m_aiLekmodBuildingClassProductionModifiers.size(); i += 2)
+		if (m_aiLekmodBuildingClassProductionModifiers[i] == (int)eClass)
+			iMod += m_aiLekmodBuildingClassProductionModifiers[i + 1];
+	return iMod;
+}
 /// Proposable once the congress era (most advanced civ) reaches this era
 EraTypes CvResolutionEntry::GetLekmodMinCongressEra() const
 {

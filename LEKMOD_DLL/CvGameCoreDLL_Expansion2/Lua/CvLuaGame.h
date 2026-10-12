@@ -193,6 +193,9 @@ protected:
 
 	static int lGetVotesNeededForDiploVictory(lua_State* L);
 	static int lIsUnitedNationsActive(lua_State* L);
+#ifdef LEKMOD_CONGRESS_CYCLE
+	static int lLekmodIsBlackout(lua_State* L);
+#endif
 
 	// DEPRECATED
 	static int lGetNumVictoryVotesTallied(lua_State* L);

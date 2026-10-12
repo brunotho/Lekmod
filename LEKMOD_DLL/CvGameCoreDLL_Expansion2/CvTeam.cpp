@@ -5697,6 +5697,15 @@ void CvTeam::setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, b
 	if(GetTeamTechs()->HasTech(eIndex) != bNewValue)
 	{
 		CvPlayerAI& kResearchingPlayer = GET_PLAYER(ePlayer);
+#ifdef LEKMOD_CONGRESS_CYCLE
+		// Brain Trust: the first civ with a technology gets % of its cost in Gold
+		if (bNewValue && !isMinorCiv() && !isBarbarian() && GC.getGame().countKnownTechNumTeams(eIndex) == 0)
+		{
+			const int iPct = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_FIRST_TECH_GOLD);
+			if (iPct > 0)
+				kResearchingPlayer.GetTreasury()->ChangeGold(GetTeamTechs()->GetResearchCost(eIndex) * iPct / 100);
+		}
+#endif
 
 		if(	GC.getGame().getActivePlayer() == ePlayer &&
 			strcmp(pkTechInfo->GetType(), "TECH_SATELLITES") == 0 &&

@@ -499,6 +499,11 @@ function ShowHideHandler( bIsHide, bIsInit )
 
     if( not bIsInit ) then
         if( not bIsHide ) then
+            -- LEKMOD: Blackout (World Congress) disables Demographics during the game
+            if( not m_bIsEndGame and Game.LekmodIsBlackout ~= nil and Game.LekmodIsBlackout() ) then
+                UIManager:DequeuePopup( ContextPtr );
+                return;
+            end
             BuildTables();
             BuildList( Game.GetActivePlayer() );
             

@@ -14259,6 +14259,15 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_INFLUENCE", iTempModifier);
 	}
 #endif
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Pariah: the chosen civ fights harder
+	iTempModifier = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_TARGET_COMBAT, getOwner());
+	iModifier += iTempModifier;
+	if (kModifierList && iTempModifier)
+	{
+		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_PARIAH", iTempModifier);
+	}
+#endif
 
 #ifdef LEKMOD_FUTURE_TECH_BONUS
 	// Future Tech: +X% combat strength per Future Tech researched
@@ -14804,6 +14813,19 @@ int CvUnit::GetMaxAttackStrength(const CvCombatInfo& kInfo, CvCombatModifierList
 			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_ATTACKMOD_CLAUZWITZ", iTempModifier, GET_PLAYER(getOwner()).GetAttackBonusTurns());
 		}
 	}
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Clausewitz Book Club: attack bonus for everyone; doesn't stack with Clausewitz's Legacy (the larger counts)
+	if (!bRangedAttack && !kInfo.getAttackIsAirSweep())
+	{
+		const int iClausewitz = GET_PLAYER(getOwner()).GetAttackBonusTurns() > 0 ? GC.getPOLICY_ATTACK_BONUS_MOD() : 0;
+		iTempModifier = std::max(0, GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_ATTACK) - iClausewitz);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_ATTACKMOD_BOOK_CLUB", iTempModifier);
+		}
+	}
+#endif
 
 	////////////////////////
 	// KNOWN DESTINATION PLOT
@@ -19459,6 +19481,10 @@ void CvUnit::changeExperience(int iChange, int iMax, bool bFromCombat, bool bInB
 		}
 #else
 		iUnitExperience += (iChange * kPlayer.getExpModifier()) / 100;
+#endif
+#ifdef LEKMOD_CONGRESS_CYCLE
+		// War Games: more XP (less for air units)
+		iUnitExperience += (iChange * GC.getGame().GetGameLeagues()->LekmodSumActive(getDomainType() == DOMAIN_AIR ? LRC_AIR_EXPERIENCE : LRC_EXPERIENCE)) / 100;
 #endif
 		// Great General & Unit XP mod in borders
 		if (bInBorders && getDomainType() == DOMAIN_LAND)

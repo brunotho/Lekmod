@@ -120698,6 +120698,102 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_NON_PROLIFERATION">
 			<Text>[NEWLINE][ICON_BULLET]Nuclear Non-Proliferation: {1_Num}%</Text>
 		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_PAYLOAD_CONTROLS">
+			<Text>Payload Controls</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_PAYLOAD_CONTROLS_HELP">
+			<Text>Spaceship parts cost 50% more [ICON_PRODUCTION] Production (also for Great Engineers and purchases).[NEWLINE][NEWLINE]Available once the World Congress reaches the Information Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_CLAUSEWITZ_BOOK_CLUB">
+			<Text>Clausewitz Book Club</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_CLAUSEWITZ_BOOK_CLUB_HELP">
+			<Text>+25% [ICON_STRENGTH] Combat Strength when attacking (melee) for all Civilizations; does not stack with Clausewitz's Legacy.[NEWLINE]Ends after 8 turns.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_DEVELOPMENT_FUND">
+			<Text>International Development Fund</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_DEVELOPMENT_FUND_HELP">
+			<Text>Every Civilization except the one(s) with the most Social Policies gets a free Social Policy.[NEWLINE]Every Civilization not in the most advanced Era gets one of the cheapest technologies it can research that another Civilization already knows.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BREAKDOWN">
+			<Text>Breakdown of International Relations</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BREAKDOWN_HELP">
+			<Text>All Civilizations are at war with each other and peace is not possible.[NEWLINE]All other active resolutions end and the World Congress holds no further sessions.[NEWLINE]All [ICON_TOURISM] Tourism -33%.[NEWLINE]The next World Leader vote is 3 turns later.[NEWLINE][NEWLINE]Available once every human player is in the Information Era and any Civilization discovers Nuclear Fusion.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_MANDATE_OF_OCCUPATION">
+			<Text>Mandate of Occupation</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_MANDATE_OF_OCCUPATION_HELP">
+			<Text>Each original capital of another Civilization you hold gives +1 Delegate.[NEWLINE][NEWLINE]Available once the World Congress reaches the Atomic Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_IMPORT_TARIFFS">
+			<Text>Import Tariffs</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_IMPORT_TARIFFS_HELP">
+			<Text>Luxury resources give half the [ICON_HAPPINESS_1] Happiness.[NEWLINE]Ends after 3 turns.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY">
+			<Text>Diplomatic Transparency</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY_HELP">
+			<Text>Every Civilization sees the cities of all other Civilizations and the tiles within 2 of them.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BLACKOUT">
+			<Text>Blackout</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BLACKOUT_HELP">
+			<Text>The Demographics screen is disabled.[NEWLINE]Ends Diplomatic Transparency.[NEWLINE][NEWLINE]Available once the World Congress reaches the Information Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_VOICE_FOR_THE_VOICELESS">
+			<Text>Voice for the Voiceless</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_VOICE_FOR_THE_VOICELESS_HELP">
+			<Text>No more host votes: the Civilization with the fewest Delegates always becomes the host.[NEWLINE]The host gets +1 Delegate.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_WAR_GAMES">
+			<Text>War Games</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_WAR_GAMES_HELP">
+			<Text>Units earn 50% more Experience (air units 25%).[NEWLINE]Unit maintenance costs twice as much [ICON_GOLD] Gold.[NEWLINE]Ends after 8 turns.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_PARIAH">
+			<Text>Pariah</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_PARIAH_HELP">
+			<Text>Nobody can trade with the chosen Civilization (peace is still possible); its deals end.[NEWLINE]It cannot send or receive [ICON_INTERNATIONAL_TRADE] Trade Routes with other Civilizations.[NEWLINE]It has 2 Delegates less.[NEWLINE]Its units get +15% [ICON_STRENGTH] Combat Strength.[NEWLINE][NEWLINE]Available once the World Congress reaches the Atomic Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BRAIN_TRUST">
+			<Text>Brain Trust</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BRAIN_TRUST_HELP">
+			<Text>The first Civilization to research a technology gets 10% of its cost in [ICON_GOLD] Gold.[NEWLINE]Technologies known by other Civilizations are researched 5% faster for each of them.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_CLIMATE_REPARATIONS">
+			<Text>Climate Change Reparations</Text>
+		</Row>
+		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_CLIMATE_REPARATIONS_HELP">
+			<Text>Every Civilization pays 200 [ICON_GOLD] Gold per Factory (not below 0).[NEWLINE]+1 [ICON_HAPPINESS_1] Happiness per Factory.[NEWLINE]+30% [ICON_PRODUCTION] Production toward Hydro Plants, Nuclear Plants and Solar Plants.[NEWLINE][NEWLINE]Available once every Civilization is in the Modern Era.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RESOLUTION_NEEDS_ALL_ERA">
+			<Text>[NEWLINE][NEWLINE][COLOR_WARNING_TEXT]Available once every Civilization is in the {1_EraName}.[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RESOLUTION_NEEDS_ALL_HUMANS_ERA">
+			<Text>[NEWLINE][NEWLINE][COLOR_WARNING_TEXT]Available once every human player is in the {1_EraName}.[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RESOLUTION_EXPIRED">
+			<Text>{@1_Resolution} has ended.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_ATTACKMOD_BOOK_CLUB">
+			<Text>Clausewitz Book Club</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_PARIAH">
+			<Text>Pariah</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_CONGRESS">
+			<Text>[NEWLINE][ICON_BULLET]World Congress: {1_Num}%</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
 		</Row>

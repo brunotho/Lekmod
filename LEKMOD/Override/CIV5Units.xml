@@ -194678,6 +194678,30 @@
 		<Column name="DiplomaticVictory" type="boolean"  default="false"/>
 		<Column name="LekmodMinCongressEra" type="text" reference="Eras(Type)" default="NULL"/> <!-- LEKMOD: proposable from this congress era -->
 		<Column name="LekmodDisabled" type="boolean" default="false"/> <!-- LEKMOD: removed proposal -->
+		<!-- LEKMOD: new proposals (integer flags and values, see LekmodResolutionColumn in CvVotingClasses.h) -->
+		<Column name="LekmodDurationTurns" type="integer" default="0"/>
+		<Column name="LekmodSpaceshipCostModifier" type="integer" default="0"/>
+		<Column name="LekmodAttackModifier" type="integer" default="0"/>
+		<Column name="LekmodDevelopmentFund" type="integer" default="0"/>
+		<Column name="LekmodBreakdown" type="integer" default="0"/>
+		<Column name="LekmodCapturedCapitalVotes" type="integer" default="0"/>
+		<Column name="LekmodLuxuryHappinessPercent" type="integer" default="0"/>
+		<Column name="LekmodBlackout" type="integer" default="0"/>
+		<Column name="LekmodVoiceForTheVoiceless" type="integer" default="0"/>
+		<Column name="LekmodExperienceModifier" type="integer" default="0"/>
+		<Column name="LekmodAirExperienceModifier" type="integer" default="0"/>
+		<Column name="LekmodTargetVotes" type="integer" default="0"/>
+		<Column name="LekmodTargetCombatModifier" type="integer" default="0"/>
+		<Column name="LekmodTargetNoTrade" type="integer" default="0"/>
+		<Column name="LekmodFirstTechGoldPercent" type="integer" default="0"/>
+		<Column name="LekmodTechDiscountPerCiv" type="integer" default="0"/>
+		<Column name="LekmodClimateReparations" type="integer" default="0"/>
+		<Column name="LekmodHappinessPerFactory" type="integer" default="0"/>
+		<Column name="LekmodTransparency" type="integer" default="0"/>
+		<Column name="LekmodTourismModifier" type="integer" default="0"/>
+		<Column name="LekmodAllPlayersEra" type="text" reference="Eras(Type)" default="NULL"/> <!-- LEKMOD: every living major civ in this era -->
+		<Column name="LekmodAllHumansEra" type="text" reference="Eras(Type)" default="NULL"/> <!-- LEKMOD: every living human player in this era -->
+		<Column name="LekmodRepealsResolution" type="text" default="NULL"/> <!-- LEKMOD: ends this resolution when enacted -->
 		<Column name="LekmodNukeProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward nuclear weapons while active -->
 		<Column name="ChangeLeagueHost" type="boolean"  default="false"/>
 		<Column name="OneTimeGold" type="integer"  default="0"/>
@@ -195348,6 +195372,10 @@
 	<!-- LEKMOD: proposal changes (Diplo Wincon and Congress spec) -->
 	<Resolutions>
 		<Update>
+			<Where Type="RESOLUTION_PLAYER_EMBARGO"/>
+			<Set LekmodTargetVotes="-1"/>
+		</Update>
+		<Update>
 			<Where Type="RESOLUTION_ALL_CITY_STATES_EMBARGO"/>
 			<Set LekmodMinCongressEra="ERA_INDUSTRIAL"/>
 		</Update>
@@ -195375,7 +195403,175 @@
 			<Where Type="RESOLUTION_NATURAL_HERITAGE_SITES"/>
 			<Set LekmodDisabled="true"/>
 		</Update>
-	</Resolutions> 
+	</Resolutions>
+	<!-- LEKMOD: new proposals (Diplo Wincon and Congress spec, favorites) -->
+	<Resolutions>
+		<Row>
+			<ID>18</ID>
+			<Type>RESOLUTION_LEKMOD_PAYLOAD_CONTROLS</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_PAYLOAD_CONTROLS</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_PAYLOAD_CONTROLS_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_FUTURE</LekmodMinCongressEra>
+			<LekmodSpaceshipCostModifier>50</LekmodSpaceshipCostModifier>
+		</Row>
+		<Row>
+			<ID>19</ID>
+			<Type>RESOLUTION_LEKMOD_CLAUSEWITZ_BOOK_CLUB</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_CLAUSEWITZ_BOOK_CLUB</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_CLAUSEWITZ_BOOK_CLUB_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
+			<LekmodAttackModifier>25</LekmodAttackModifier>
+			<LekmodDurationTurns>8</LekmodDurationTurns>
+		</Row>
+		<Row>
+			<ID>20</ID>
+			<Type>RESOLUTION_LEKMOD_DEVELOPMENT_FUND</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_DEVELOPMENT_FUND</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_DEVELOPMENT_FUND_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
+			<LekmodDevelopmentFund>1</LekmodDevelopmentFund>
+			<LekmodDurationTurns>1</LekmodDurationTurns>
+		</Row>
+		<Row>
+			<ID>21</ID>
+			<Type>RESOLUTION_LEKMOD_BREAKDOWN</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_BREAKDOWN</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_BREAKDOWN_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<TechPrereqAnyMember>TECH_NUCLEAR_FUSION</TechPrereqAnyMember>
+			<LekmodAllHumansEra>ERA_FUTURE</LekmodAllHumansEra>
+			<LekmodBreakdown>1</LekmodBreakdown>
+			<LekmodTourismModifier>-33</LekmodTourismModifier>
+		</Row>
+		<Row>
+			<ID>22</ID>
+			<Type>RESOLUTION_LEKMOD_MANDATE_OF_OCCUPATION</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_MANDATE_OF_OCCUPATION</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_MANDATE_OF_OCCUPATION_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_POSTMODERN</LekmodMinCongressEra>
+			<LekmodCapturedCapitalVotes>1</LekmodCapturedCapitalVotes>
+		</Row>
+		<Row>
+			<ID>23</ID>
+			<Type>RESOLUTION_LEKMOD_IMPORT_TARIFFS</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_IMPORT_TARIFFS</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_IMPORT_TARIFFS_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
+			<LekmodLuxuryHappinessPercent>-50</LekmodLuxuryHappinessPercent>
+			<LekmodDurationTurns>3</LekmodDurationTurns>
+		</Row>
+		<Row>
+			<ID>24</ID>
+			<Type>RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
+			<LekmodTransparency>1</LekmodTransparency>
+		</Row>
+		<Row>
+			<ID>25</ID>
+			<Type>RESOLUTION_LEKMOD_BLACKOUT</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_BLACKOUT</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_BLACKOUT_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_FUTURE</LekmodMinCongressEra>
+			<LekmodBlackout>1</LekmodBlackout>
+			<LekmodRepealsResolution>RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY</LekmodRepealsResolution>
+		</Row>
+		<Row>
+			<ID>26</ID>
+			<Type>RESOLUTION_LEKMOD_VOICE_FOR_THE_VOICELESS</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_VOICE_FOR_THE_VOICELESS</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_VOICE_FOR_THE_VOICELESS_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
+			<LekmodVoiceForTheVoiceless>1</LekmodVoiceForTheVoiceless>
+		</Row>
+		<Row>
+			<ID>27</ID>
+			<Type>RESOLUTION_LEKMOD_WAR_GAMES</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_WAR_GAMES</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_WAR_GAMES_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
+			<LekmodExperienceModifier>50</LekmodExperienceModifier>
+			<LekmodAirExperienceModifier>25</LekmodAirExperienceModifier>
+			<UnitMaintenanceGoldPercent>100</UnitMaintenanceGoldPercent>
+			<LekmodDurationTurns>8</LekmodDurationTurns>
+		</Row>
+		<Row>
+			<ID>28</ID>
+			<Type>RESOLUTION_LEKMOD_PARIAH</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_PARIAH</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_PARIAH_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_OTHER_MAJOR_CIV_MEMBER</ProposerDecision>
+			<LekmodMinCongressEra>ERA_POSTMODERN</LekmodMinCongressEra>
+			<EmbargoPlayer>true</EmbargoPlayer>
+			<LekmodTargetVotes>-2</LekmodTargetVotes>
+			<LekmodTargetCombatModifier>15</LekmodTargetCombatModifier>
+			<LekmodTargetNoTrade>1</LekmodTargetNoTrade>
+		</Row>
+		<Row>
+			<ID>29</ID>
+			<Type>RESOLUTION_LEKMOD_BRAIN_TRUST</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_BRAIN_TRUST</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_BRAIN_TRUST_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodFirstTechGoldPercent>10</LekmodFirstTechGoldPercent>
+			<LekmodTechDiscountPerCiv>5</LekmodTechDiscountPerCiv>
+		</Row>
+		<Row>
+			<ID>30</ID>
+			<Type>RESOLUTION_LEKMOD_CLIMATE_REPARATIONS</Type>
+			<Description>TXT_KEY_RESOLUTION_LEKMOD_CLIMATE_REPARATIONS</Description>
+			<Help>TXT_KEY_RESOLUTION_LEKMOD_CLIMATE_REPARATIONS_HELP</Help>
+			<VoterDecision>RESOLUTION_DECISION_YES_OR_NO</VoterDecision>
+			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
+			<LekmodAllPlayersEra>ERA_MODERN</LekmodAllPlayersEra>
+			<LekmodClimateReparations>200</LekmodClimateReparations>
+			<LekmodHappinessPerFactory>1</LekmodHappinessPerFactory>
+		</Row>
+	</Resolutions>
+	<Table name="Resolution_LekmodBuildingClassProductionModifiers"> <!-- LEKMOD: % Production toward a building class while the resolution is active -->
+		<Column name="ResolutionType" type="text" reference="Resolutions(Type)"/>
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)"/>
+		<Column name="Modifier" type="integer" default="0"/>
+	</Table>
+	<Resolution_LekmodBuildingClassProductionModifiers>
+		<Row>
+			<ResolutionType>RESOLUTION_LEKMOD_CLIMATE_REPARATIONS</ResolutionType>
+			<BuildingClassType>BUILDINGCLASS_HYDRO_PLANT</BuildingClassType>
+			<Modifier>30</Modifier>
+		</Row>
+		<Row>
+			<ResolutionType>RESOLUTION_LEKMOD_CLIMATE_REPARATIONS</ResolutionType>
+			<BuildingClassType>BUILDINGCLASS_NUCLEAR_PLANT</BuildingClassType>
+			<Modifier>30</Modifier>
+		</Row>
+		<Row>
+			<ResolutionType>RESOLUTION_LEKMOD_CLIMATE_REPARATIONS</ResolutionType>
+			<BuildingClassType>BUILDINGCLASS_SOLAR_PLANT</BuildingClassType>
+			<Modifier>30</Modifier>
+		</Row>
+	</Resolution_LekmodBuildingClassProductionModifiers> 
 
 	<Table name="ResourceClasses">
 		<Column name="ID" type="integer"  primarykey="true" autoincrement="true" />

@@ -11054,6 +11054,14 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 	
 	iProductionNeeded *= 100 + getUnitClassCount(eUnitClass) * pkUnitClassInfo->getInstanceCostModifier();
 	iProductionNeeded /= 100;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Payload Controls: spaceship parts cost more (also for Engineers and purchases)
+	if (pkUnitEntry->GetSpaceshipProject() != NO_PROJECT)
+	{
+		iProductionNeeded *= 100 + GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_SPACESHIP_COST);
+		iProductionNeeded /= 100;
+	}
+#endif
 
 	if(isMinorCiv())
 	{
@@ -12845,6 +12853,22 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech)
 		iModifier *= 100 + iLeaguesMod;
 		iModifier /= 100;
 	}
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Brain Trust: x (100 + N x value)% for a tech N other civs know
+	const int iLekmodPerCiv = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_TECH_DISCOUNT_PER_CIV);
+	if (iLekmodPerCiv != 0)
+	{
+		int iLekmodKnown = 0;
+		for (int iTeamLoop = 0; iTeamLoop < MAX_CIV_TEAMS; iTeamLoop++)
+		{
+			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeamLoop);
+			if ((TeamTypes)iTeamLoop != getTeam() && kLoopTeam.isAlive() && !kLoopTeam.isMinorCiv() && kLoopTeam.GetTeamTechs()->HasTech(eTech))
+				iLekmodKnown++;
+		}
+		iModifier *= 100 + iLekmodPerCiv * iLekmodKnown;
+		iModifier /= 100;
+	}
+#endif
 
 	return iModifier;
 #endif
@@ -16754,7 +16778,12 @@ int CvPlayer::GetHappinessFromLuxury(ResourceTypes eResource) const
 		else if(getNumResourceAvailable(eResource, /*bIncludeImport*/ true) > 0)
 		{
 		// NQMP GJS - New Netherlands UA gives +1 Happiness per unique Luxury for the empire BEGIN
+#ifdef LEKMOD_CONGRESS_CYCLE
+			// Import Tariffs: luxuries give less Happiness
+			return (iBaseHappiness + GetPlayerTraits()->GetExtraHappinessPerLuxury()) * (100 + GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_LUXURY_HAPPINESS)) / 100;
+#else
 			return iBaseHappiness + GetPlayerTraits()->GetExtraHappinessPerLuxury();
+#endif
 			//return iBaseHappiness;
 		}
 		
@@ -17610,6 +17639,16 @@ int CvPlayer::GetHappinessFromMinor(PlayerTypes eMinor) const
 /// Happiness from Leagues
 int CvPlayer::GetHappinessFromLeagues() const
 {
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Climate Change Reparations: Happiness per Factory
+	const int iPerFactory = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_HAPPINESS_PER_FACTORY);
+	if (iPerFactory != 0)
+	{
+		const BuildingTypes eFactory = (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(GC.getInfoTypeForString("BUILDINGCLASS_FACTORY", true));
+		if (eFactory != NO_BUILDING)
+			return m_iHappinessFromLeagues + iPerFactory * countNumBuildings(eFactory);
+	}
+#endif
 	return m_iHappinessFromLeagues;
 }
 

@@ -1824,3 +1824,23 @@ Existing proposals reworked for the new Congress.
 - Changed: International Games rewards: Bronze +6 Happiness (was +3); Silver a free Social Policy (was +3 Happiness and 30 Influence with City-States); Gold +100% Tourism for 10 turns (was 20, and the free Social Policy moved to Silver)
 - Removed: International Space Station and Natural Heritage Sites proposals
 - DLL: Resolutions.LekmodMinCongressEra, LekmodDisabled, LekmodNukeProductionModifier (LEKMOD_CONGRESS_CYCLE); project tier thresholds rounded to whole Production
+
+WORLD CONGRESS: NEW PROPOSALS (RESOLUTIONS)
+-------------------------------------------
+Tags: world congress
+Thirteen new proposals.
+- Added: Payload Controls (Information Era): spaceship parts cost 50% more Production (also for Great Engineers and purchases)
+- Added: Clausewitz Book Club (Modern Era): +25% attack strength (melee) for everyone for 8 turns; doesn't stack with Clausewitz's Legacy
+- Added: International Development Fund (Modern Era): a free Social Policy for everyone except the civilization(s) with the most policies; everyone not in the most advanced era gets one of the cheapest technologies they can research that another civilization knows
+- Added: Breakdown of International Relations (every human player in the Information Era, Nuclear Fusion known): everyone at war, no peace, all other resolutions end, no further sessions, -33% Tourism, next World Leader vote 3 turns later
+- Added: Mandate of Occupation (Atomic Era): +1 Delegate per other civilization's original capital you hold
+- Added: Import Tariffs (Modern Era): luxuries give half the Happiness for 3 turns
+- Added: Diplomatic Transparency (Modern Era): every civilization sees the other civilizations' cities and the tiles within 2 of them
+- Added: Blackout (Information Era): the Demographics screen is disabled; ends Diplomatic Transparency
+- Added: Voice for the Voiceless (Modern Era): no host votes; the civilization with the fewest Delegates hosts; the host gets +1 Delegate
+- Added: War Games (Modern Era): +50% Experience (air units +25%), double unit maintenance, for 8 turns
+- Added: Pariah (Atomic Era): nobody can trade with the chosen civilization (peace still possible), its deals and foreign Trade Routes end, it has 2 Delegates less and +15% Combat Strength
+- Added: Brain Trust: the first civilization with a technology gets 10% of its cost in Gold; technologies other civilizations know are 5% faster per civilization that knows them
+- Added: Climate Change Reparations (every civilization in the Modern Era): 200 Gold per Factory paid once (not below 0); +1 Happiness per Factory; +30% Production toward Hydro, Nuclear and Solar Plants
+- Note: Charter of Civil Liberties waits for its dissident rules; the spy parts of Diplomatic Transparency and Blackout come with the Diplomat/Spy rework
+- DLL: Resolutions.Lekmod* columns (LekmodResolutionColumn, read at runtime), Resolution_LekmodBuildingClassProductionModifiers, timed resolutions end in CvLeague::LekmodDoExpiry; Lua Game.LekmodIsBlackout (Demographics)

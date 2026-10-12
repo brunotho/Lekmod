@@ -206,6 +206,9 @@ void CvLuaGame::RegisterMembers(lua_State* L)
 
 	Method(GetVotesNeededForDiploVictory);
 	Method(IsUnitedNationsActive);
+#ifdef LEKMOD_CONGRESS_CYCLE
+	Method(LekmodIsBlackout);
+#endif
 
 	Method(GetNumVictoryVotesTallied);
 	Method(GetVoteCast);
@@ -1320,6 +1323,15 @@ int CvLuaGame::lGetVotesNeededForDiploVictory(lua_State* L)
 {
 	return BasicLuaMethod(L, &CvGame::GetVotesNeededForDiploVictory);
 }
+#ifdef LEKMOD_CONGRESS_CYCLE
+//------------------------------------------------------------------------------
+//bool LekmodIsBlackout(); Demographics are disabled (Blackout proposal)
+int CvLuaGame::lLekmodIsBlackout(lua_State* L)
+{
+	lua_pushboolean(L, GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BLACKOUT) != 0);
+	return 1;
+}
+#endif
 //------------------------------------------------------------------------------
 //bool IsUnitedNationsActive();
 int CvLuaGame::lIsUnitedNationsActive(lua_State* L)

@@ -19,6 +19,34 @@ class CvLeague;
 
 
 // Helper namespace
+#ifdef LEKMOD_CONGRESS_CYCLE
+// Integer columns of the new World Congress proposals (Resolutions.Lekmod*), read at runtime from the resolution info
+enum LekmodResolutionColumn
+{
+	LRC_DURATION,					// LekmodDurationTurns: repealed automatically after N turns
+	LRC_SPACESHIP_COST,				// LekmodSpaceshipCostModifier: % cost of spaceship parts
+	LRC_ATTACK,						// LekmodAttackModifier: % attack for everyone (not with Clausewitz's Legacy)
+	LRC_DEVELOPMENT_FUND,			// LekmodDevelopmentFund: one-shot policies and techs
+	LRC_BREAKDOWN,					// LekmodBreakdown: total war, no more sessions
+	LRC_CAPTURED_CAPITAL_VOTES,		// LekmodCapturedCapitalVotes: votes per held original capital of another civ
+	LRC_LUXURY_HAPPINESS,			// LekmodLuxuryHappinessPercent: % Happiness from luxuries
+	LRC_BLACKOUT,					// LekmodBlackout: no Demographics
+	LRC_VOICE,						// LekmodVoiceForTheVoiceless: no host votes, fewest votes hosts, host +1
+	LRC_EXPERIENCE,					// LekmodExperienceModifier: % XP (not air)
+	LRC_AIR_EXPERIENCE,				// LekmodAirExperienceModifier: % XP for air units
+	LRC_TARGET_VOTES,				// LekmodTargetVotes: votes of the chosen civ
+	LRC_TARGET_COMBAT,				// LekmodTargetCombatModifier: % combat strength of the chosen civ
+	LRC_TARGET_NO_TRADE,			// LekmodTargetNoTrade: nobody can trade with the chosen civ
+	LRC_FIRST_TECH_GOLD,			// LekmodFirstTechGoldPercent: first civ with a tech gets % of its cost in Gold
+	LRC_TECH_DISCOUNT_PER_CIV,		// LekmodTechDiscountPerCiv: research x (100 + N x value)% for techs N other civs know
+	LRC_CLIMATE,					// LekmodClimateReparations: one-shot Gold loss per Factory
+	LRC_HAPPINESS_PER_FACTORY,		// LekmodHappinessPerFactory
+	LRC_TRANSPARENCY,				// LekmodTransparency: other civs' cities revealed (radius 2)
+	LRC_TOURISM,					// LekmodTourismModifier: % Tourism everywhere
+	NUM_LEKMOD_RESOLUTION_COLUMNS
+};
+#endif
+
 namespace LeagueHelpers
 {
 	CvString GetTextForChoice(ResolutionDecisionTypes eDecision, int iChoice);
@@ -713,6 +741,11 @@ public:
 	int LekmodGetSessionInterval() const;
 	void LekmodPickFounderHost(const std::vector<PlayerTypes>& vCandidates);
 	Member* LekmodPickSecondProposer();
+	void LekmodRemoveActiveResolution(int iResolutionID);
+	void LekmodRevealCities();
+	void LekmodDoEnactOneShot(CvEnactProposal* pProposal);
+	void LekmodDoExpiry();
+	void LekmodPickVoicelessHost();
 #endif
 
 private:
@@ -792,6 +825,8 @@ public:
 	// Called once the new turn's players are processed (session results, world leader votes)
 	void DoTurnLate();
 	int GetLekmodNukeProductionModifier();
+	int LekmodSumActive(int eColumn, PlayerTypes eTarget = NO_PLAYER);
+	int LekmodBuildingProductionModifier(BuildingClassTypes eClass);
 	bool m_bLekmodInTransition; // true while DoTurn runs (before the game turn is incremented); not saved
 #endif
 
@@ -1377,6 +1412,11 @@ public:
 	bool IsDiplomaticVictory() const;
 	bool IsChangeLeagueHost() const;
 #ifdef LEKMOD_CONGRESS_CYCLE
+	int GetLekmodInt(int eColumn) const;
+	EraTypes GetLekmodAllPlayersEra() const;
+	EraTypes GetLekmodAllHumansEra() const;
+	ResolutionTypes GetLekmodRepealsResolution() const;
+	int GetLekmodBuildingClassProductionModifier(BuildingClassTypes eClass) const;
 	EraTypes GetLekmodMinCongressEra() const;
 	bool IsLekmodDisabled() const;
 	int GetLekmodNukeProductionModifier() const;
@@ -1417,6 +1457,11 @@ protected:
 	bool m_bDiplomaticVictory;
 #ifdef LEKMOD_CONGRESS_CYCLE
 	EraTypes m_eLekmodMinCongressEra;
+	int m_aiLekmodInts[NUM_LEKMOD_RESOLUTION_COLUMNS];
+	EraTypes m_eLekmodAllPlayersEra;
+	EraTypes m_eLekmodAllHumansEra;
+	ResolutionTypes m_eLekmodRepealsResolution;
+	std::vector<int> m_aiLekmodBuildingClassProductionModifiers;
 	bool m_bLekmodDisabled;
 	int m_iLekmodNukeProductionModifier;
 #endif
