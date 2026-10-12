@@ -1532,6 +1532,7 @@ Tags: ui
 - Changed: in trade route tooltips, effects that exist but don't apply to this route are shown in dull gray instead of yellow, so the active (green) ones stand out
 - Added: the destination list also shows cities that would be in range if this city had a range building it lacks (e.g. Harbor, Caravansary); they are grayed out, can't be picked, and name the building
 - DLL: Lua Player:LekmodGetTradeRangePreview(unit) (LEKMOD_CANAL_RULES); Colors row COLOR_LEKMOD_INACTIVE
+- Changed: the route tooltip names the sender and the receiver block, says that each side gets its own share, splits the base into route and era parts, explains the city Gold (5% of each city's Gold) and the resource bonus (resources only one of the two cities has), names the coastal city and the river city behind those bonuses, and grays out headings whose entries are all inactive
 
 CULTURAL CITY-STATES: GREAT WORK ON CAPTURE (MINOR_CIV_TRAIT_CULTURED)
 ---------------------------------------------------------------------

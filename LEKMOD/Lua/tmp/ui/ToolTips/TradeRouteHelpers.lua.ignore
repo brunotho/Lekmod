@@ -108,6 +108,25 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 			baseText = string.format("%s %+g%s", baseText, baseValue, yieldIcon)
 			anyBase = true
 		end
+
+		-- LEKMOD: where the base comes from (route type and the owner's era); late-era starts scale internal routes, then no split is shown
+		if baseValue ~= 0 and yieldID ~= YIELD_SCIENCE then
+			local routePart, eraPart = 0, 0
+			for row in GameInfo.TradeConnections_Yields{ TradeConnectionType = connectionInfo.Type, YieldType = yield.Type } do
+				routePart = routePart + ((bAsOrigin and row.OriginBaseValue or row.DestinationBaseValue) or 0) / 100
+			end
+			local bInternal = (pOriginOwner:GetID() == pDestOwner:GetID())
+			local pEraPlayer = (bAsOrigin and not bInternal) and pOriginOwner or pDestOwner
+			local eraInfo = GameInfo.Eras[pEraPlayer:GetCurrentEra()]
+			if eraInfo then
+				for row in GameInfo.TradeConnections_BaseYieldEraBonus{ TradeConnectionType = connectionInfo.Type, YieldType = yield.Type, EraType = eraInfo.Type } do
+					eraPart = eraPart + ((bAsOrigin and row.OriginBonus or row.DestinationBonus) or 0) / 100
+				end
+			end
+			if eraPart ~= 0 and math.abs(routePart + eraPart - baseValue) < 0.01 then
+				baseText = string.format("%s (route %+g, %s %+g)", baseText, routePart, Locale.ConvertTextKey(eraInfo.Description), eraPart)
+			end
+		end
 		if originCityValue ~= 0 then
 			originCityText = string.format("%s %+g%s", originCityText, originCityValue, yieldIcon)
 			anyBase = true
@@ -401,13 +420,22 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 		end
 	end
 
+	-- LEKMOD: a section whose entries are all inactive (only "you could get this") gets a gray heading
+	local function Heading(text, activeText)
+		if activeText ~= "" then
+			return text .. activeText
+		end
+		return "[COLOR_LEKMOD_INACTIVE]" .. text .. "[ENDCOLOR]"
+	end
+
 	if anyBase or hasDetails then
-		lines[#lines + 1] = "[BASE]"
+		lines[#lines + 1] = ""
 
 		if baseText ~= "" then lines[#lines + 1] = "Base:" .. baseText end
 		if technologyText ~= "" then lines[#lines + 1] = technologyText end
 		if originCityText ~= "" or destCityText ~= "" then
-			lines[#lines + 1] = "Cities:"
+			local iDivisor = (GameDefines and GameDefines.INTERNATIONAL_TRADE_CITY_GPT_DIVISOR) or 20
+			lines[#lines + 1] = string.format("Gold of both cities (%g%% of each city's Gold per turn):", 100 / math.max(1, iDivisor))
 
 			if originCityText ~= "" then
 				lines[#lines + 1] = "  [ICON_BULLET][COLOR_POSITIVE_TEXT]" .. pOriginCity:GetName() .. "[ENDCOLOR]:" .. originCityText
@@ -420,7 +448,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 
 		if yourBuildingText ~= "" or next(potentialYourBuildings) then
 			local cityName = bAsOrigin and pOriginCity:GetName() or pTargetCity:GetName()
-			lines[#lines + 1] = cityName .. "'s Buildings:" .. yourBuildingText
+			lines[#lines + 1] = Heading(cityName .. "'s buildings:", yourBuildingText)
 
 			for _, entry in pairs(potentialYourBuildings) do
 				lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.BuildingInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
@@ -428,7 +456,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 		end
 
 		if theirBuildingText ~= "" or next(potentialTheirBuildings) then
-			lines[#lines + 1] = pTargetCity:GetName() .. "'s Buildings:" .. theirBuildingText
+			lines[#lines + 1] = Heading(pTargetCity:GetName() .. "'s buildings:", theirBuildingText)
 
 			for _, entry in pairs(potentialTheirBuildings) do
 				lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.BuildingInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
@@ -436,27 +464,27 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 		end
 
 		if resourceText ~= "" or next(resourceSources) then
-			lines[#lines + 1] = "Resources:" .. resourceText
+			lines[#lines + 1] = "Resources only one of the two cities has (each adds Gold for the sender):" .. resourceText
 
 			for _, entry in pairs(resourceSources) do
 				lines[#lines + 1] = "  [ICON_BULLET][COLOR_POSITIVE_TEXT]" .. (entry.ResourceInfo.IconString or "") .. Locale.Lookup(entry.ResourceInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
 			end
 		end
 
-		if exclusiveText ~= "" then lines[#lines + 1] = "Exclusive:" .. exclusiveText end
+		if exclusiveText ~= "" then lines[#lines + 1] = "Only route to this city:" .. exclusiveText end
 
 		if policyText ~= "" or next(potentialPolicies) then
-			lines[#lines + 1] = "Policies:" .. policyText
+			lines[#lines + 1] = Heading("Policies:", policyText)
 
 			for _, entry in pairs(potentialPolicies) do
 				lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
 			end
 		end
 
-		if traitText ~= "" then lines[#lines + 1] = "Traits:" .. traitText end
+		if traitText ~= "" then lines[#lines + 1] = "Civilization ability:" .. traitText end
 
 		if religionText ~= "" or next(potentialBeliefs) then
-			lines[#lines + 1] = "Religion:" .. religionText
+			lines[#lines + 1] = Heading("Religion:", religionText)
 
 			for _, entry in pairs(potentialBeliefs) do
 				local description = entry.BeliefInfo.ShortDescription or entry.BeliefInfo.Description
@@ -467,15 +495,17 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 
 	if hasModifiers or next(potentialPolicyModifiers) then
 		if sumText ~= baseText then
-			lines[#lines + 1] = "Sum:" .. (sumText ~= "" and sumText or " 0")
+			lines[#lines + 1] = "Subtotal:" .. (sumText ~= "" and sumText or " 0")
 		end
-		lines[#lines + 1] = "[MODIFIERS]"
+		lines[#lines + 1] = ""
+		lines[#lines + 1] = Heading("Bonuses in %:", hasModifiers and " " or "")
 
+		local riverCity = bAsOrigin and pOriginCity or pTargetCity
 		if policyModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Policies[ENDCOLOR]:" .. policyModifierText end
-		if traitModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Traits[ENDCOLOR]:" .. traitModifierText end
-		if riverModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]River[ENDCOLOR]:" .. riverModifierText end
-		if domainModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Coastal city[ENDCOLOR]:" .. domainModifierText end
-		if originBuildingModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Canal Project[ENDCOLOR]:" .. originBuildingModifierText end
+		if traitModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Civilization ability[ENDCOLOR]:" .. traitModifierText end
+		if riverModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]" .. riverCity:GetName() .. " is on a river[ENDCOLOR]:" .. riverModifierText end
+		if domainModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Route starts in a coastal city (" .. pOriginCity:GetName() .. ")[ENDCOLOR]:" .. domainModifierText end
+		if originBuildingModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Canal Project in " .. pOriginCity:GetName() .. "[ENDCOLOR]:" .. originBuildingModifierText end
 
 		for _, entry in pairs(potentialPolicyModifiers) do
 			lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text
@@ -483,8 +513,8 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 	end
 
 	if totalText ~= "" or sumText ~= "" then
-		lines[#lines + 1] = "[TOTAL]"
-		lines[#lines + 1] = "Total:" .. (totalText ~= "" and totalText or sumText)
+		lines[#lines + 1] = ""
+		lines[#lines + 1] = "[COLOR_POSITIVE_TEXT]Total for " .. GetDisplayPlayerName(pPlayer) .. "[ENDCOLOR]:" .. (totalText ~= "" and totalText or sumText)
 	end
 
 	return table.concat(lines, "[NEWLINE]")
@@ -496,12 +526,17 @@ function BuildTradeRouteToolTipString(pPlayer, pOriginCity, pTargetCity, eConnec
 	local pOriginOwner = Players[pOriginCity:GetOwner()]
 	local pDestOwner   = Players[pTargetCity:GetOwner()]
 
-	local header1 = string.format("=== %s (%s) ===", pOriginCity:GetName(), Locale.Lookup(GameInfo.Civilizations[pOriginOwner:GetCivilizationType()].Description) )
-	local header2 = string.format("=== %s (%s) ===", pTargetCity:GetName(), Locale.Lookup(GameInfo.Civilizations[pDestOwner:GetCivilizationType()].Description) )
+	-- LEKMOD: each side gets its own share of the route; say clearly which block is the sender's and which the receiver's
+	local intro = "Both cities' owners get their own share of this route."
+	local header1 = string.format("=== Sender: %s (%s) ===", pOriginCity:GetName(), Locale.Lookup(GameInfo.Civilizations[pOriginOwner:GetCivilizationType()].Description) )
+	local header2 = string.format("=== Receiver: %s (%s) ===", pTargetCity:GetName(), Locale.Lookup(GameInfo.Civilizations[pDestOwner:GetCivilizationType()].Description) )
 
-	local originBlock, originSum = BuildSingleSide(pOriginOwner, pOriginCity, pTargetCity, eConnectionType, eDomain, true)
-	local destBlock, destSum = BuildSingleSide(pDestOwner, pOriginCity, pTargetCity, eConnectionType, eDomain, false)
+	local originBlock = BuildSingleSide(pOriginOwner, pOriginCity, pTargetCity, eConnectionType, eDomain, true)
+	local destBlock = BuildSingleSide(pDestOwner, pOriginCity, pTargetCity, eConnectionType, eDomain, false)
 
-	local out = header1 .. "[NEWLINE]" .. originBlock .. "[NEWLINE][NEWLINE]" .. header2 .. "[NEWLINE]" .. destBlock
+	if pOriginOwner:GetID() == pDestOwner:GetID() then
+		intro = "Internal route: the receiving city gets the Food or Production."
+	end
+	local out = intro .. "[NEWLINE][NEWLINE]" .. header1 .. "[NEWLINE]" .. originBlock .. "[NEWLINE][NEWLINE]" .. header2 .. "[NEWLINE]" .. destBlock
 	return out
 end
