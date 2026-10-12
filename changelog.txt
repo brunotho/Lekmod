@@ -1656,6 +1656,23 @@ Tags: ui, art
 - Fixed: the improvement build tooltip showed a lone "+" for Tourism; it now shows the Tourism change
 - Changed: tiles with 5 or more Tourism show a large suitcase instead of a camera
 
+AUTOCRACY (POLICY_BRANCH_AUTOCRACY)
+-----------------------------------
+Tags: policies
+- Removed: Nationalism
+- Added: Cultural Dominion (tier 1): Great Writers, Artists and Musicians 25% faster; World Wonders in captured cities +10 Tourism
+- Added: Doctrine of Subjugation (tier 1): each Courthouse built after adopting it creates 2 Great Works in your empty slots; +100% Gold from capturing cities (adds up with Songhai's bonus); resistance in captured cities lasts half as long
+- Added: Advanced Interrogation Techniques (tier 1): Spoils of War give 10 percentage points more of the technology (e.g. 30% -> 40% in the Information Era)
+- Changed: Third Alternative (rebuilt): double Oil, Aluminum and Uranium; +50% Production toward Military Academies
+- Removed: Third Alternative: double all strategic resources; Food and Science in the capital
+- Changed: Iron Fist: all non-air military units get Discipline (+50% Experience); Gold and Culture from kills capped at 40 each
+- Removed: Iron Fist: +50% Experience from combat; Science from kills
+- Changed: Gunboat Diplomacy (rebuilt): +2 World Congress votes; tribute costs no Influence and works at any Influence level, once every 10 turns per City-State
+- Removed: Gunboat Diplomacy: +50% intimidation, +50 Influence from tribute
+- Added: Cult of Personality: +2 Happiness from each Great Work
+- Note: Advanced Interrogation Techniques' "steal a technology when you capture a spy" waits for the Diplomat/Spy rework
+- DLL: Policies.TourismPerCapturedWonder, CaptureGoldModifier, SpoilsOfWarModifier; Policy_ResourceQuantityModifiers; Gunboat (MinorBullyNoPenalty) ignores the Influence block and the 10-20 turn tribute penalty (LEKMOD_POLICY_REWORK)
+
 FREEDOM (POLICY_BRANCH_FREEDOM)
 -------------------------------
 Tags: policies

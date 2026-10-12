@@ -9648,7 +9648,12 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 	//
 	// -999 ~ -0
 	// **************************
+#ifdef LEKMOD_POLICY_REWORK
+	const bool bLekmodGunboat = GET_PLAYER(eBullyPlayer).GetPlayerPolicies()->IsMinorBullyNoPenalty();
+	if(!bLekmodGunboat && GetEffectiveFriendshipWithMajor(eBullyPlayer) < GC.getFRIENDSHIP_THRESHOLD_CAN_BULLY())
+#else
 	if(GetEffectiveFriendshipWithMajor(eBullyPlayer) < GC.getFRIENDSHIP_THRESHOLD_CAN_BULLY())
+#endif
 	{
 		int iInfluenceScore = iFailScore;
 		iScore += iInfluenceScore;
@@ -9681,7 +9686,11 @@ int CvMinorCivAI::CalculateBullyMetric(PlayerTypes eBullyPlayer, bool bForUnit, 
 				sFactors += strNegativeFactor.toUTF8();
 			}
 		}
+#ifdef LEKMOD_POLICY_REWORK
+		else if(!bLekmodGunboat && iLastBullyTurn + 20 >= GC.getGame().getGameTurn())
+#else
 		else if(iLastBullyTurn + 20 >= GC.getGame().getGameTurn())
+#endif
 		{
 			int iBulliedRecentlyScore = -40;
 			iScore += iBulliedRecentlyScore;

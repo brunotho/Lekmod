@@ -291,6 +291,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iTourismModPerAlliedCS(0),
 	m_iGreatScientistDecayModifier(0),
 	m_iGreatWorkHappiness(0),
+	m_iTourismPerCapturedWonder(0),
+	m_iCaptureGoldModifier(0),
+	m_iSpoilsOfWarModifier(0),
 	m_iCultureFromUnitDeathPercent(0),
 	m_iGreatMusicianBlastModifier(0),
 	m_bVotesPerTwoAlliedCS(false),
@@ -820,6 +823,22 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iTourismModPerAlliedCS = kResults.GetInt("TourismModPerAlliedCS");
 	m_iGreatScientistDecayModifier = kResults.GetInt("GreatScientistDecayModifier");
 	m_iGreatWorkHappiness = kResults.GetInt("GreatWorkHappiness");
+	m_iTourismPerCapturedWonder = kResults.GetInt("TourismPerCapturedWonder");
+	m_iCaptureGoldModifier = kResults.GetInt("CaptureGoldModifier");
+	m_iSpoilsOfWarModifier = kResults.GetInt("SpoilsOfWarModifier");
+	{
+		std::string strKey("Policy_ResourceQuantityModifiers");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+			pResults = kUtility.PrepareResults(strKey, "select Resources.ID, Modifier from Policy_ResourceQuantityModifiers inner join Resources on Resources.Type = ResourceType where PolicyType = ?");
+		pResults->Bind(1, szPolicyType);
+		while (pResults->Step())
+		{
+			m_aiResourceQuantityModifiers.push_back(pResults->GetInt(0));
+			m_aiResourceQuantityModifiers.push_back(pResults->GetInt(1));
+		}
+		pResults->Reset();
+	}
 	m_iCultureFromUnitDeathPercent = kResults.GetInt("CultureFromUnitDeathPercent");
 	m_iGreatMusicianBlastModifier = kResults.GetInt("GreatMusicianBlastModifier");
 	m_bVotesPerTwoAlliedCS = kResults.GetBool("VotesPerTwoAlliedCS");
@@ -3026,6 +3045,26 @@ int CvPolicyEntry::GetFreeUnitClassOnWater() const
 int CvPolicyEntry::GetGreatWorkYieldModifier() const
 {
 	return m_iGreatWorkYieldModifier;
+}
+/// Tourism from each World Wonder in cities you did not found (Cultural Dominion)
+int CvPolicyEntry::GetTourismPerCapturedWonder() const
+{
+	return m_iTourismPerCapturedWonder;
+}
+/// % Gold from capturing cities, added to other capture Gold bonuses (Doctrine of Subjugation)
+int CvPolicyEntry::GetCaptureGoldModifier() const
+{
+	return m_iCaptureGoldModifier;
+}
+/// + percentage points on the spoils-of-war share of a tech (Advanced Interrogation Techniques)
+int CvPolicyEntry::GetSpoilsOfWarModifier() const
+{
+	return m_iSpoilsOfWarModifier;
+}
+/// (resource, % modifier) pairs on the quantity you own (Third Alternative)
+const std::vector<int>& CvPolicyEntry::GetResourceQuantityModifiers() const
+{
+	return m_aiResourceQuantityModifiers;
 }
 /// Happiness from each Great Work (Liberated Arts)
 int CvPolicyEntry::GetGreatWorkHappiness() const

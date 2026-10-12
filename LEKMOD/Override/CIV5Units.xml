@@ -187774,6 +187774,9 @@
 		<Column name="GreatScientistDecayModifier" type="integer" default="0"/> <!-- LEKMOD: % on how fast held Great Scientists lose bulb turns -->
 		<Column name="TradeYieldPerEraTimes100" type="integer" default="0"/> <!-- LEKMOD: + per era after TradeYieldEraType on this policy's flat trade route yields -->
 		<Column name="TradeYieldEraType" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="TourismPerCapturedWonder" type="integer" default="0"/> <!-- LEKMOD: Tourism per World Wonder in cities you did not found -->
+		<Column name="CaptureGoldModifier" type="integer" default="0"/> <!-- LEKMOD: % Gold from capturing cities, added to the trait bonus -->
+		<Column name="SpoilsOfWarModifier" type="integer" default="0"/> <!-- LEKMOD: + points on the spoils-of-war share (max 100) -->
 		<Column name="GreatWorkHappiness" type="integer" default="0"/> <!-- LEKMOD: Happiness from each Great Work -->
 		<Column name="CultureFromUnitDeathPercent" type="integer" default="0"/> <!-- LEKMOD: Culture when a military unit is killed, % of its strength -->
 		<Column name="GreatMusicianBlastModifier" type="integer" default="0"/> <!-- LEKMOD: % on new Great Musicians' Concert Tours -->
@@ -189263,7 +189266,6 @@
 			<Description>TXT_KEY_POLICY_NATIONALISM</Description>
 			<Civilopedia>TXT_KEY_POLICY_NATIONALISM_TEXT</Civilopedia>
 			<Help>TXT_KEY_POLICY_NATIONALISM_HELP</Help>
-			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
 			<GridX>0</GridX>
 			<GridY>0</GridY>
 			<Level>2</Level>
@@ -282370,4 +282372,192 @@
 			<Count>1</Count>
 		</Row>
 	</Policy_FreeUnitClasses>
+	<!-- Autocracy: Nationalism removed (no branch); NEW Cultural Dominion, Doctrine of Subjugation, Advanced Interrogation Techniques (tier 1;
+	     the spy part waits for the Diplomat/Spy rework); Third Alternative (from scratch); Iron Fist; Gunboat Diplomacy (from a blank policy); Cult of Personality -->
+	<Table name="Policy_ResourceQuantityModifiers"> <!-- LEKMOD: % on the quantity of single resources you own -->
+		<Column name="PolicyType" type="text" reference="Policies(Type)" />
+		<Column name="ResourceType" type="text" reference="Resources(Type)" />
+		<Column name="Modifier" type="integer" default="0" />
+	</Table>
+	<Policies>
+		<Row>
+			<ID>150</ID>
+			<Type>POLICY_LEKMOD_CULTURAL_DOMINION</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<GreatWriterRateModifier>25</GreatWriterRateModifier>
+			<GreatArtistRateModifier>25</GreatArtistRateModifier>
+			<GreatMusicianRateModifier>25</GreatMusicianRateModifier>
+			<TourismPerCapturedWonder>10</TourismPerCapturedWonder>
+		</Row>
+		<Row>
+			<ID>151</ID>
+			<Type>POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<CaptureGoldModifier>100</CaptureGoldModifier>
+			<ResistanceTimeModifier>-50</ResistanceTimeModifier>
+		</Row>
+		<Row>
+			<ID>152</ID>
+			<Type>POLICY_LEKMOD_ADVANCED_INTERROGATION</Type>
+			<Description>TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION</Description>
+			<Civilopedia>TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION_HELP</Civilopedia>
+			<Help>TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION_HELP</Help>
+			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
+			<Level>1</Level>
+			<PortraitIndex>11</PortraitIndex>
+			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
+			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
+			<SpoilsOfWarModifier>10</SpoilsOfWarModifier>
+		</Row>
+		<Update>
+			<Where Type="POLICY_THIRD_ALTERNATIVE"/>
+			<Set StrategicResourceMod="0"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_IRON_FIST"/>
+			<Set ExpModifier="0" ScienceFromKills="0" CultureFromKills="0" GoldFromKills="0"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_GUNBOAT_DIPLOMACY"/>
+			<Set MinorBullyScoreModifier="0" MinorBullyInfluenceReward="0" MinorBullyNoPenalty="true" NumExtraLeagueVotes="2"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_CULT_PERSONALITY"/>
+			<Set GreatWorkHappiness="2"/>
+		</Update>
+	</Policies>
+	<Policy_BuildingClassGreatWorks>
+		<Row>
+			<PolicyType>POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_COURTHOUSE</BuildingClassType>
+			<Count>2</Count>
+		</Row>
+	</Policy_BuildingClassGreatWorks>
+	<Policy_CapitalYieldChanges>
+		<Delete PolicyType="POLICY_THIRD_ALTERNATIVE"/>
+	</Policy_CapitalYieldChanges>
+	<Policy_ResourceQuantityModifiers>
+		<Row>
+			<PolicyType>POLICY_THIRD_ALTERNATIVE</PolicyType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Modifier>100</Modifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_THIRD_ALTERNATIVE</PolicyType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Modifier>100</Modifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_THIRD_ALTERNATIVE</PolicyType>
+			<ResourceType>RESOURCE_URANIUM</ResourceType>
+			<Modifier>100</Modifier>
+		</Row>
+	</Policy_ResourceQuantityModifiers>
+	<Policy_BuildingClassProductionModifiers>
+		<Row>
+			<PolicyType>POLICY_THIRD_ALTERNATIVE</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_MILITARY_ACADEMY</BuildingClassType>
+			<ProductionModifier>50</ProductionModifier>
+		</Row>
+	</Policy_BuildingClassProductionModifiers>
+	<Policy_YieldFromKills>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>100</Yield>
+			<Max>40</Max>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>100</Yield>
+			<Max>40</Max>
+		</Row>
+	</Policy_YieldFromKills>
+	<Policy_FreePromotionUnitCombats>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_IRON_FIST</PolicyType>
+			<PromotionType>PROMOTION_DISCIPLINE</PromotionType>
+			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
+		</Row>
+	</Policy_FreePromotionUnitCombats>
 </GameData>

@@ -269,6 +269,10 @@ public:
 	int GetLekmodGreatScientistDecayModifier() const;
 	bool IsLekmodNoExternalTrade() const;
 	int GetLekmodPolicyGreatWorkHappiness() const;
+	int GetLekmodTourismPerCapturedWonder() const;
+	int GetLekmodCaptureGoldModifier() const;
+	int GetLekmodSpoilsOfWarModifier() const;
+	int GetLekmodResourceQuantityModifier(ResourceTypes eResource) const;
 	int GetLekmodUnitDeathCulturePercent() const;
 	int GetLekmodMusicianBlastModifier() const;
 	int GetLekmodAlliedCSVotes() const;
@@ -2669,6 +2673,10 @@ protected:
 	mutable int m_iLekmodUnitDeathCulture;
 	mutable int m_iLekmodMusicianBlastMod;
 	mutable bool m_bLekmodVotesPerTwoCS;
+	mutable int m_iLekmodTourismPerCapturedWonder;
+	mutable int m_iLekmodCaptureGoldMod;
+	mutable int m_iLekmodSpoilsMod;
+	mutable std::vector<int> m_aiLekmodResQtyRows;
 #endif
 #endif
 };

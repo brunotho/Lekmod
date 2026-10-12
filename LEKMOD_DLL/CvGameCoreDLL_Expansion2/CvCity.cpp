@@ -13260,6 +13260,8 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 	{
 		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodEarlierIdeologyGold() + GetLekmodPolicyBuildingCityYield(eIndex);
 	}
+	if (eIndex == YIELD_TOURISM && getOriginalOwner() != getOwner() && GET_PLAYER(getOwner()).GetLekmodTourismPerCapturedWonder() != 0)
+		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodPolicyBuildingCityYield(eIndex) + getNumWorldWonders() * GET_PLAYER(getOwner()).GetLekmodTourismPerCapturedWonder();
 	return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodPolicyBuildingCityYield(eIndex);
 #endif
 	return m_aiBaseYieldRateFromBuildings[eIndex];

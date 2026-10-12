@@ -551,6 +551,9 @@ CvPlayer::CvPlayer() :
 	, m_iLekmodUnitDeathCulture(0)
 	, m_iLekmodMusicianBlastMod(0)
 	, m_bLekmodVotesPerTwoCS(false)
+	, m_iLekmodTourismPerCapturedWonder(0)
+	, m_iLekmodCaptureGoldMod(0)
+	, m_iLekmodSpoilsMod(0)
 #endif
 #endif
 
@@ -2559,7 +2562,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift, bool bP
 		}
 
 		iCaptureGold *= (100 + pOldCity->getCapturePlunderModifier()) / 100;
+#ifdef LEKMOD_POLICY_REWORK
+		// trait and policy bonuses add up (Songhai + Doctrine of Subjugation = +300%)
+		iCaptureGold = iCaptureGold * (100 + GetPlayerTraits()->GetPlunderModifier() + GetLekmodCaptureGoldModifier()) / 100;
+#else
 		iCaptureGold *= (100 + GetPlayerTraits()->GetPlunderModifier()) / 100;
+#endif
 #ifndef AUI_WARNING_FIXES
 	}
 #endif
@@ -15459,6 +15467,11 @@ void CvPlayer::DoTechFromCityConquer(CvCity* pConqueredCity)
 					iPercentage = 30; // GC.getSPOILS_OF_WAR_FUTURE();
 					break;
 				}
+#ifdef LEKMOD_POLICY_REWORK
+				// policies: more of the tech (Advanced Interrogation Techniques: +10 points, at most 100%)
+				if (iPercentage > 0)
+					iPercentage = std::min(100, iPercentage + GetLekmodSpoilsOfWarModifier());
+#endif
 				if (iPercentage > 0 && iPercentage <= 100)
 				{
 					iCost = (iCost / 100 * iPercentage) / 100;
@@ -24580,6 +24593,11 @@ int CvPlayer::getNumResourceTotal(ResourceTypes eIndex, bool bIncludeImport) con
 			iTotalNumResource /= 100;
 		}
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	// policies: % on single resources (Third Alternative: Oil, Aluminum, Uranium)
+	if (GetLekmodResourceQuantityModifier(eIndex) != 0)
+		iTotalNumResource = iTotalNumResource * (100 + GetLekmodResourceQuantityModifier(eIndex)) / 100;
+#endif
 
 	if(bIncludeImport)
 	{
@@ -28412,6 +28430,10 @@ void CvPlayer::LekmodRebuildPolicyCache() const
 	m_iLekmodUnitDeathCulture = 0;
 	m_iLekmodMusicianBlastMod = 0;
 	m_bLekmodVotesPerTwoCS = false;
+	m_iLekmodTourismPerCapturedWonder = 0;
+	m_iLekmodCaptureGoldMod = 0;
+	m_iLekmodSpoilsMod = 0;
+	m_aiLekmodResQtyRows.clear();
 	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
 	{
 		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
@@ -28467,12 +28489,49 @@ void CvPlayer::LekmodRebuildPolicyCache() const
 		m_iLekmodMusicianBlastMod += pkPolicy->GetGreatMusicianBlastModifier();
 		if (pkPolicy->IsVotesPerTwoAlliedCS())
 			m_bLekmodVotesPerTwoCS = true;
+		m_iLekmodTourismPerCapturedWonder += pkPolicy->GetTourismPerCapturedWonder();
+		m_iLekmodCaptureGoldMod += pkPolicy->GetCaptureGoldModifier();
+		m_iLekmodSpoilsMod += pkPolicy->GetSpoilsOfWarModifier();
+		const std::vector<int>& aiQty = pkPolicy->GetResourceQuantityModifiers();
+		for (uint i = 0; i + 1 < aiQty.size(); i += 2)
+		{
+			m_aiLekmodResQtyRows.push_back(aiQty[i]);
+			m_aiLekmodResQtyRows.push_back(aiQty[i + 1]);
+		}
 	}
 	m_bLekmodPolicyCacheDirty = false;
 }
 void CvPlayer::LekmodSetPolicyCacheDirty()
 {
 	m_bLekmodPolicyCacheDirty = true;
+}
+int CvPlayer::GetLekmodTourismPerCapturedWonder() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_iLekmodTourismPerCapturedWonder;
+}
+int CvPlayer::GetLekmodCaptureGoldModifier() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_iLekmodCaptureGoldMod;
+}
+int CvPlayer::GetLekmodSpoilsOfWarModifier() const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	return m_iLekmodSpoilsMod;
+}
+int CvPlayer::GetLekmodResourceQuantityModifier(ResourceTypes eResource) const
+{
+	if (m_bLekmodPolicyCacheDirty)
+		LekmodRebuildPolicyCache();
+	int iMod = 0;
+	for (uint i = 0; i + 1 < m_aiLekmodResQtyRows.size(); i += 2)
+		if (m_aiLekmodResQtyRows[i] == eResource)
+			iMod += m_aiLekmodResQtyRows[i + 1];
+	return iMod;
 }
 int CvPlayer::GetLekmodPolicyGreatWorkHappiness() const
 {

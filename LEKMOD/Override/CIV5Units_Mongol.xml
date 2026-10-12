@@ -116644,7 +116644,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULT_PERSONALITY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Cult of Personality[ENDCOLOR][NEWLINE]Gain up to +100% Tourism [ICON_TOURISM] depending on your military strength (Soldiers) relative to other players.
+				[COLOR_POSITIVE_TEXT]Cult of Personality[ENDCOLOR][NEWLINE]Gain up to +100% Tourism [ICON_TOURISM] depending on your military strength (Soldiers) relative to other players.[NEWLINE]+2 [ICON_HAPPINESS_1] Happiness from each Great Work.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_CULT_PERSONALITY_TEXT"> 
@@ -116989,7 +116989,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_GUNBOAT_DIPLOMACY_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Gunboat Diplomacy[ENDCOLOR][NEWLINE][COLOR_POSITIVE_TEXT]Military Units[ENDCOLOR] are 50% more effective at intimidating [ICON_CITY_STATE] City-States. Tributing a [ICON_CITY_STATE] City-State increases [ICON_INFLUENCE] Influence with it by 50 (rather than decreasing it), and no longer clears given [COLOR_POSITIVE_TEXT]Quests[ENDCOLOR].
+				[COLOR_POSITIVE_TEXT]Gunboat Diplomacy[ENDCOLOR][NEWLINE]+2 World Congress votes.[NEWLINE]Demanding tribute from a City-State costs no [ICON_INFLUENCE] Influence and works at any Influence level, once every 10 turns per City-State.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_GUNBOAT_DIPLOMACY_TEXT"> 
@@ -117325,7 +117325,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_IRON_FIST_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Iron Fist[ENDCOLOR][NEWLINE]All [COLOR_POSITIVE_TEXT]Military[ENDCOLOR] units earn [ICON_GOLD] Gold, [ICON_CULTURE] Culture and [ICON_RESEARCH] Science from Kills. All Non-Airplane [COLOR_POSITIVE_TEXT]Military[ENDCOLOR] units earn 50% more [COLOR_POSITIVE_TEXT]Experience[ENDCOLOR] from Combat.
+				[COLOR_POSITIVE_TEXT]Iron Fist[ENDCOLOR][NEWLINE]All non-air military units get the Discipline promotion (+50% Experience).[NEWLINE]Kills give [ICON_GOLD] Gold and [ICON_CULTURE] Culture equal to the killed unit's [ICON_STRENGTH] Strength, at most 40 each.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_NATIONALISM"> 
@@ -117955,7 +117955,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THIRD_ALTERNATIVE_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Third Alternative[ENDCOLOR][NEWLINE]Quantity of [COLOR_POSITIVE_TEXT]Strategic[ENDCOLOR] Resources produced is increased by 100%. +5 [ICON_FOOD] Food and +5 [ICON_RESEARCH] Science in [ICON_CAPITAL] Capital.
+				[COLOR_POSITIVE_TEXT]Third Alternative[ENDCOLOR][NEWLINE]Double the [ICON_RES_OIL] Oil, [ICON_RES_ALUMINUM] Aluminum and [ICON_RES_URANIUM] Uranium you own.[NEWLINE]+50% [ICON_PRODUCTION] Production toward Military Academies.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_THIRD_ALTERNATIVE_TEXT"> 
@@ -120678,7 +120678,25 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>[COLOR_POSITIVE_TEXT]Free World[ENDCOLOR][NEWLINE]+1 World Congress vote for every two allied City-States (rounded up).</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_GREAT_WORK_FROM_POLICY">
-			<Text>Liberated Arts: {@2_WorkName} was created for your empire.</Text>
+			<Text>Your new Courthouse brought {@2_WorkName} to your empire.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION">
+			<Text>Cultural Dominion</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_CULTURAL_DOMINION_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Cultural Dominion[ENDCOLOR][NEWLINE]Earn [ICON_GREAT_WRITER] Great Writers, [ICON_GREAT_ARTIST] Artists and [ICON_GREAT_MUSICIAN] Musicians 25% faster.[NEWLINE]World Wonders in cities you captured provide +10 [ICON_TOURISM] Tourism.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION">
+			<Text>Doctrine of Subjugation</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_DOCTRINE_OF_SUBJUGATION_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Doctrine of Subjugation[ENDCOLOR][NEWLINE]Each Courthouse you build creates 2 Great Works in your empty Great Work slots.[NEWLINE]+100% [ICON_GOLD] Gold from capturing cities.[NEWLINE]Resistance in cities you capture lasts half as long.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION">
+			<Text>Advanced Interrogation Techniques</Text>
+		</Row>
+		<Row Tag="TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION_HELP">
+			<Text>[COLOR_POSITIVE_TEXT]Advanced Interrogation Techniques[ENDCOLOR][NEWLINE]Capturing a city gives 10% more of a technology (Spoils of War), up to the whole technology.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>

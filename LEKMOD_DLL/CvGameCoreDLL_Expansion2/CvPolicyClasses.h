@@ -330,6 +330,10 @@ public:
 	int GetTourismModPerAlliedCS() const;
 	int GetGreatScientistDecayModifier() const;
 	int GetGreatWorkHappiness() const;
+	int GetTourismPerCapturedWonder() const;
+	int GetCaptureGoldModifier() const;
+	int GetSpoilsOfWarModifier() const;
+	const std::vector<int>& GetResourceQuantityModifiers() const;
 	int GetCultureFromUnitDeathPercent() const;
 	int GetGreatMusicianBlastModifier() const;
 	bool IsVotesPerTwoAlliedCS() const;
@@ -709,6 +713,10 @@ private:
 	int m_iTourismModPerAlliedCS;
 	int m_iGreatScientistDecayModifier;
 	int m_iGreatWorkHappiness;
+	int m_iTourismPerCapturedWonder;
+	int m_iCaptureGoldModifier;
+	int m_iSpoilsOfWarModifier;
+	std::vector<int> m_aiResourceQuantityModifiers;
 	int m_iCultureFromUnitDeathPercent;
 	int m_iGreatMusicianBlastModifier;
 	bool m_bVotesPerTwoAlliedCS;
