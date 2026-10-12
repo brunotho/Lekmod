@@ -298,6 +298,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iGreatMusicianBlastModifier(0),
 	m_bVotesPerTwoAlliedCS(false),
 	m_iExternalTradeRouteRangeModifier(0),
+	m_iLeagueVotesPerEraFromIndustrial(0),
 	m_iTradeYieldPerEraTimes100(0),
 	m_iTradeYieldEra(NO_ERA),
 	m_bNoExternalTradeRoutes(false),
@@ -844,6 +845,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iGreatMusicianBlastModifier = kResults.GetInt("GreatMusicianBlastModifier");
 	m_bVotesPerTwoAlliedCS = kResults.GetBool("VotesPerTwoAlliedCS");
 	m_iExternalTradeRouteRangeModifier = kResults.GetInt("ExternalTradeRouteRangeModifier");
+	m_iLeagueVotesPerEraFromIndustrial = kResults.GetInt("LeagueVotesPerEraFromIndustrial");
 	{
 		std::string strKey("Policy_BuildingClassGreatWorks");
 		Database::Results* pResults = kUtility.GetResults(strKey);
@@ -3104,6 +3106,11 @@ bool CvPolicyEntry::IsVotesPerTwoAlliedCS() const
 int CvPolicyEntry::GetExternalTradeRouteRangeModifier() const
 {
 	return m_iExternalTradeRouteRangeModifier;
+}
+/// World Congress votes per congress era from the Industrial Era (Patronage finisher; LEKMOD_CONGRESS_CYCLE)
+int CvPolicyEntry::GetLeagueVotesPerEraFromIndustrial() const
+{
+	return m_iLeagueVotesPerEraFromIndustrial;
 }
 /// Building classes that cost no Gold maintenance (Sacred Duty: Temples)
 const std::vector<int>& CvPolicyEntry::GetNoMaintenanceBuildingClasses() const

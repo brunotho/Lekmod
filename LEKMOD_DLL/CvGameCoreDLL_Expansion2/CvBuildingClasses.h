@@ -310,6 +310,7 @@ public:
 	int GetCityStateTradeRouteGoldModifier() const; // NQMP GJS - new Economic Union
 	int GetGreatScientistBeakerModifier() const;
 	int GetExtraLeagueVotes() const;
+	int GetExtraLeagueVotesAtomic() const;
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 	int GetGarrisonStrengthBonus() const;
 	int IsGarrisonMaintenanceFree() const { return m_bGarrisonMaintenanceFree; };
@@ -664,6 +665,7 @@ private:
 	int m_iCityStateTradeRouteGoldModifier; // NQMP GJS - new Economic Union
 	int m_iGreatScientistBeakerModifier;
 	int m_iExtraLeagueVotes;
+	int m_iExtraLeagueVotesAtomic;
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 	int m_iGarrisonStrengthBonus;
 	bool m_bGarrisonMaintenanceFree;

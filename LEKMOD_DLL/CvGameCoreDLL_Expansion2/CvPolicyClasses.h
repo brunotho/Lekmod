@@ -338,6 +338,7 @@ public:
 	int GetGreatMusicianBlastModifier() const;
 	bool IsVotesPerTwoAlliedCS() const;
 	int GetExternalTradeRouteRangeModifier() const;
+	int GetLeagueVotesPerEraFromIndustrial() const;
 	const std::vector<int>& GetNoMaintenanceBuildingClasses() const;
 	const std::vector<int>& GetBuildingClassFreeBuildings() const;
 	const std::vector<int>& GetGPImprovementAdjacentYields() const;
@@ -723,6 +724,7 @@ private:
 	int m_iGreatMusicianBlastModifier;
 	bool m_bVotesPerTwoAlliedCS;
 	int m_iExternalTradeRouteRangeModifier;
+	int m_iLeagueVotesPerEraFromIndustrial;
 	std::vector<int> m_aiNoMaintenanceBuildingClasses;
 	std::vector<int> m_aiBuildingClassFreeBuildings;
 	std::vector<int> m_aiGPImprovementAdjacentYields;

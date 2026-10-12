@@ -43355,7 +43355,8 @@
 		<Column name="GreatWorkCount" type="integer" default="0" /> <!-- How many Great Works can this building hold? paired with <GreatWorkSlotType>. if -1 will hide if from the city view buildings tab -->
 		<Column name="SpecialistExtraCulture" type="integer" default="0" /> <!-- Changes the amount of culture all Specialist yield. Includes Unemployed Citizens -->
 		<Column name="GreatPeopleRateChange" type="integer" default="0" />  <!-- Changes the cities progress towards X great person every turn, tied to <SpecialistType> -->
-		<Column name="ExtraLeagueVotes" type="integer" default="0" /> <!-- Changes the Number of votes the player has in the World Congress -->
+		<Column name="ExtraLeagueVotes" type="integer" default="0" />
+		<Column name="ExtraLeagueVotesAtomic" type="integer" default="0" /> <!-- LEKMOD: more World Congress votes once the congress era is Atomic or later --> <!-- Changes the Number of votes the player has in the World Congress -->
 		<Column name="CityWall" type="boolean" default="false" /> <!-- Likely creates the Wall model in the city. -->
 		<Column name="DisplayPosition" type="integer" default="0" /> <!-- If the building has a 3d model, this chooses where to place it around the city -->
 		<Column name="PortraitIndex" type="integer" default="-1" />
@@ -50117,6 +50118,21 @@
 	<Building_TradeConnectionOriginYieldChanges>
 		<Delete BuildingType="BUILDING_PANAMA"/>
 	</Building_TradeConnectionOriginYieldChanges>
+	<!-- LEKMOD: World Congress vote sources: Forbidden Palace 3 votes from the Atomic Era, Big Ben and Oxford +1 vote -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_FORBIDDEN_PALACE"/>
+			<Set ExtraLeagueVotesAtomic="1"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_BIG_BEN"/>
+			<Set ExtraLeagueVotes="1"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_OXFORD_UNIVERSITY"/>
+			<Set ExtraLeagueVotes="1"/>
+		</Update>
+	</Buildings>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -187780,6 +187796,7 @@
 		<Column name="GreatWorkHappiness" type="integer" default="0"/> <!-- LEKMOD: Happiness from each Great Work -->
 		<Column name="CultureFromUnitDeathPercent" type="integer" default="0"/> <!-- LEKMOD: Culture when a military unit is killed, % of its strength -->
 		<Column name="GreatMusicianBlastModifier" type="integer" default="0"/> <!-- LEKMOD: % on new Great Musicians' Concert Tours -->
+		<Column name="LeagueVotesPerEraFromIndustrial" type="integer" default="0"/> <!-- LEKMOD: World Congress votes per congress era from the Industrial Era (Ind 1 ... Info 4) -->
 		<Column name="ExternalTradeRouteRangeModifier" type="integer" default="0"/> <!-- LEKMOD: % range of trade routes to other civs and City-States -->
 		<Column name="VotesPerTwoAlliedCS" type="boolean" default="false"/> <!-- LEKMOD: +1 World Congress vote per two allied City-States -->
 		<Column name="TourismModPerAlliedCS" type="integer" default="0"/> <!-- LEKMOD: % Tourism in every city per allied City-State -->
@@ -204937,6 +204954,13 @@
 		<Update>
 			<Where Type="TECH_FUTURE_TECH"/>
 			<Set Cost="11655"/>
+		</Update>
+	</Technologies>
+	<!-- LEKMOD: World Congress: no Delegates from Diplomats (Globalization keeps its own +1) -->
+	<Technologies>
+		<Update>
+			<Where Type="TECH_GLOBALIZATION"/>
+			<Set ExtraVotesPerDiplomat="0"/>
 		</Update>
 	</Technologies>
 
@@ -282655,6 +282679,10 @@
 		<Update>
 			<Where Type="POLICY_SECULARISM"/>
 			<Set GridX="4" GridY="3"/>
+		</Update>
+		<Update>
+			<Where Type="POLICY_PATRONAGE_FINISHER"/>
+			<Set LeagueVotesPerEraFromIndustrial="1"/>
 		</Update>
 	</Policies>
 	<Policy_GreatWorkYieldChanges>

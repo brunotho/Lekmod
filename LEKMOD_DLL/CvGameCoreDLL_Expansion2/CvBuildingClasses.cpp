@@ -174,6 +174,7 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iXBuiltTriggersIdeologyChoice(0),
 	m_iGreatScientistBeakerModifier(0),
 	m_iExtraLeagueVotes(0),
+	m_iExtraLeagueVotesAtomic(0),
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 	m_iGarrisonStrengthBonus(0),
 	m_bGarrisonMaintenanceFree(false),
@@ -601,6 +602,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iXBuiltTriggersIdeologyChoice = kResults.GetInt("XBuiltTriggersIdeologyChoice");
 	m_iGreatScientistBeakerModifier = kResults.GetInt("GreatScientistBeakerModifier");
 	m_iExtraLeagueVotes = kResults.GetInt("ExtraLeagueVotes");
+	m_iExtraLeagueVotesAtomic = kResults.GetInt("ExtraLeagueVotesAtomic");
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 	m_iGarrisonStrengthBonus = kResults.GetInt("GarrisonStrengthBonus");
 	m_bGarrisonMaintenanceFree = kResults.GetBool("GarrisonMaintenanceFree");
@@ -2264,6 +2266,11 @@ int CvBuildingEntry::GetXBuiltTriggersIdeologyChoice() const
 int CvBuildingEntry::GetExtraLeagueVotes() const
 {
 	return m_iExtraLeagueVotes;
+}
+/// More World Congress votes once the congress era is Atomic or later (LEKMOD_CONGRESS_CYCLE)
+int CvBuildingEntry::GetExtraLeagueVotesAtomic() const
+{
+	return m_iExtraLeagueVotesAtomic;
 }
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
 /// Amount of Extra strenght a city gets for having a Garrisoned unit

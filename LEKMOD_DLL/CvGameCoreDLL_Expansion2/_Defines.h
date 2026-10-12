@@ -1541,6 +1541,10 @@ Diversify Spain and Australia's NW Discovery bonus
 // Era special sessions only mark the era (splash, United Nations, delegate data); no session, no recurring victory proposal.
 #define LEKMOD_CONGRESS_CYCLE
 #define LEKMOD_WORLD_LEADER_VOTES_BASE 45
+// Vote sources (CvLeague::CalculateStartingVotesForMember), by congress era Ren/Ind/Mod/Atomic/Info: membership 1/2/3/4/5, each held
+// original capital of another civ 0/1/1/2/3, host 1/1/2/2/2, allied City-State 0/1/1/1/2; +1 per own passed proposal
+// (Member::iLekmodPassedProposals, saved); +1 per civ we are Influential over, -1 per civ Influential over us; no Diplomat votes;
+// Buildings.ExtraLeagueVotesAtomic, Policies.LeagueVotesPerEraFromIndustrial. League save version 16.
 /// New DP: Acts as a peace treaty for 10 turns, can be sent in deals like normal, allowing for a non-agression pact to be enforced by the game.
 #define NEW_DEFENSIVE_PACT
 ///AI Peace treaty amount is 5

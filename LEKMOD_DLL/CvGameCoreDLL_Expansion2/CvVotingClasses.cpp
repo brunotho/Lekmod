@@ -2003,6 +2003,9 @@ CvLeague::Member::Member(void)
 	iAbstainedVotes = 0;
 	bEverBeenHost = false;
 	bAlwaysBeenHost = true;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	iLekmodPassedProposals = 0;
+#endif
 }
 
 CvLeague::Member::~Member(void)
@@ -3688,6 +3691,22 @@ int CvLeague::GetSpentVotesForMember(PlayerTypes ePlayer)
 	return iVotes;
 }
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+/// Congress era as 0..4 (Renaissance or earlier, Industrial, Modern, Atomic, Information) for the vote tables
+static int LekmodCongressEraIndex()
+{
+	const int iRenaissance = GC.getInfoTypeForString("ERA_RENAISSANCE", true);
+	int iIndex = (int)LeagueHelpers::GetGameEraForTrigger() - iRenaissance;
+	if (iRenaissance < 0 || iIndex < 0)
+		iIndex = 0;
+	return MIN(iIndex, 4);
+}
+static const int s_aiLekmodMemberVotes[5] = {1, 2, 3, 4, 5};
+static const int s_aiLekmodCapitalVotes[5] = {0, 1, 1, 2, 3};
+static const int s_aiLekmodHostVotes[5] = {1, 1, 2, 2, 2};
+static const int s_aiLekmodCityStateVotes[5] = {0, 1, 1, 1, 2};
+#endif
+
 int CvLeague::GetCoreVotesForMember(PlayerTypes ePlayer)
 {
 	int iVotes = 0;
@@ -3712,7 +3731,12 @@ int CvLeague::GetCoreVotesForMember(PlayerTypes ePlayer)
 		CvAssert(pMember != NULL);
 		if (pMember == NULL) return GC.getLEAGUE_MEMBER_VOTES_BASE();
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+		// Membership: 1/2/3/4/5 by congress era
+		iVotes += s_aiLekmodMemberVotes[LekmodCongressEraIndex()];
+#else
 		iVotes += pInfo->GetCivDelegates();
+#endif
 	}
 	return iVotes;
 }
@@ -3753,18 +3777,27 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		int iHostVotes = 0;
 		if (IsHostMember(ePlayer))
 		{
+#ifdef LEKMOD_CONGRESS_CYCLE
+			iHostVotes += s_aiLekmodHostVotes[LekmodCongressEraIndex()];
+#else
 			iHostVotes += pInfo->GetHostDelegates();
+#endif
 		}
 		iVotes += iHostVotes;
 
 		// City-State allies
+#ifdef LEKMOD_CONGRESS_CYCLE
+		const int iLekmodVotesPerCS = s_aiLekmodCityStateVotes[LekmodCongressEraIndex()];
+#else
+		const int iLekmodVotesPerCS = pInfo->GetCityStateDelegates();
+#endif
 		int iCityStateVotes = 0;
 		for (int i = MAX_MAJOR_CIVS; i < MAX_CIV_PLAYERS; i++)
 		{
 			PlayerTypes eMinor = (PlayerTypes) i;
 			if (GET_PLAYER(eMinor).isAlive() && GET_PLAYER(eMinor).GetMinorCivAI()->IsAllies(ePlayer))
 			{
-				iCityStateVotes += pInfo->GetCityStateDelegates();
+				iCityStateVotes += iLekmodVotesPerCS;
 			}
 		}
 		iVotes += iCityStateVotes;
@@ -3776,7 +3809,11 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 			PlayerTypes eMajor = (PlayerTypes) i;
 			if (GET_PLAYER(eMajor).isAlive())
 			{
+#ifdef LEKMOD_CONGRESS_CYCLE
+				if (false) // no Delegates from Diplomats
+#else
 				if (GET_PLAYER(ePlayer).GetEspionage()->IsMyDiplomatVisitingThem(eMajor))
+#endif
 				{
 					iDiplomatVotes += GET_PLAYER(ePlayer).GetExtraVotesPerDiplomat();
 				}
@@ -3786,6 +3823,18 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 
 		// Wonders
 		int iWonderVotes = GET_PLAYER(ePlayer).GetExtraLeagueVotes();
+#ifdef LEKMOD_CONGRESS_CYCLE
+		// Buildings with more votes from the Atomic Era (Forbidden Palace)
+		if (LekmodCongressEraIndex() >= 3)
+		{
+			for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+			{
+				CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+				if (pkBuilding != NULL && pkBuilding->GetExtraLeagueVotesAtomic() != 0)
+					iWonderVotes += pkBuilding->GetExtraLeagueVotesAtomic() * GET_PLAYER(ePlayer).countNumBuildings((BuildingTypes)iBuilding);
+			}
+		}
+#endif
 		iVotes += iWonderVotes;
 
 #if defined(TRAITIFY) // League Votes from Traits
@@ -3797,6 +3846,15 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		iVotes += iTechVotes;
 		// League Votes from Policies
 		int iPolicyVotes = GET_PLAYER(ePlayer).GetPolicyExtraLeagueVotes();
+#ifdef LEKMOD_CONGRESS_CYCLE
+		// Policies with more votes per era from the Industrial Era (Patronage finisher)
+		for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+		{
+			CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+			if (pkPolicy != NULL && pkPolicy->GetLeagueVotesPerEraFromIndustrial() != 0 && GET_PLAYER(ePlayer).GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) && !GET_PLAYER(ePlayer).GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
+				iPolicyVotes += pkPolicy->GetLeagueVotesPerEraFromIndustrial() * LekmodCongressEraIndex();
+		}
+#endif
 		iVotes += iPolicyVotes;
 #ifdef LEKMOD_POLICY_REWORK
 		// Free World: +1 per two allied City-States (gone with the ideology)
@@ -3811,6 +3869,38 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		// World Ideology
 		int iWorldIdeologyVotes = GetExtraVotesForFollowingIdeology(ePlayer);
 		iVotes += iWorldIdeologyVotes;
+#ifdef LEKMOD_CONGRESS_CYCLE
+		// Original capitals of other civilizations
+		int iCapitalVotes = 0;
+		if (s_aiLekmodCapitalVotes[LekmodCongressEraIndex()] > 0)
+		{
+			int iCityLoop;
+			for (CvCity* pLoopCity = GET_PLAYER(ePlayer).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(ePlayer).nextCity(&iCityLoop))
+			{
+				if (pLoopCity->IsOriginalMajorCapital() && pLoopCity->getOriginalOwner() != ePlayer)
+					iCapitalVotes += s_aiLekmodCapitalVotes[LekmodCongressEraIndex()];
+			}
+		}
+		iVotes += iCapitalVotes;
+		// Own proposals that passed
+		int iPassedVotes = pMember->iLekmodPassedProposals;
+		iVotes += iPassedVotes;
+		// Cultural influence: +1 per civ we are Influential over, -1 per civ Influential over us
+		int iInfluenceVotes = 0;
+		for (int iMajor = 0; iMajor < MAX_MAJOR_CIVS; iMajor++)
+		{
+			PlayerTypes eOther = (PlayerTypes)iMajor;
+			if (eOther == ePlayer || !GET_PLAYER(eOther).isAlive())
+				continue;
+			if (GET_PLAYER(ePlayer).GetCulture()->GetInfluenceLevel(eOther) >= INFLUENCE_LEVEL_INFLUENTIAL)
+				iInfluenceVotes++;
+			if (GET_PLAYER(eOther).GetCulture()->GetInfluenceLevel(ePlayer) >= INFLUENCE_LEVEL_INFLUENTIAL)
+				iInfluenceVotes--;
+		}
+		iVotes += iInfluenceVotes;
+		if (iVotes < 0)
+			iVotes = 0;
+#endif
 
 		// Vote Sources - Normally this is only updated when we are not in session
 		if (bForceUpdateSources || !IsInSession())
@@ -3834,11 +3924,11 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 				sTemp << iHostVotes;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
-			if (pInfo->GetCityStateDelegates() > 0) // Show even if we have none from this source, to remind players that CS can give Delegates
+			if (iLekmodVotesPerCS > 0) // Show even if we have none from this source, to remind players that CS can give Delegates
 			{
 				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_CS_VOTES");
 				sTemp << iCityStateVotes;
-				sTemp << pInfo->GetCityStateDelegates();
+				sTemp << iLekmodVotesPerCS;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
 			if (iDiplomatVotes > 0)
@@ -3888,6 +3978,26 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 				sTemp << iWorldIdeologyVotes;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
+#ifdef LEKMOD_CONGRESS_CYCLE
+			if (iCapitalVotes > 0)
+			{
+				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_LEAGUE_VOTES_CAPITALS");
+				sTemp << iCapitalVotes;
+				pMember->sVoteSources += sTemp.toUTF8();
+			}
+			if (iPassedVotes > 0)
+			{
+				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_LEAGUE_VOTES_PASSED");
+				sTemp << iPassedVotes;
+				pMember->sVoteSources += sTemp.toUTF8();
+			}
+			if (iInfluenceVotes != 0)
+			{
+				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_LEAGUE_VOTES_INFLUENCE");
+				sTemp << iInfluenceVotes;
+				pMember->sVoteSources += sTemp.toUTF8();
+			}
+#endif
 		}
 	}
 	return iVotes;
@@ -6318,6 +6428,11 @@ void CvLeague::FinishSession()
 		if (it->IsPassed(iTotalSessionVotes))
 		{
 			// Proposer is grateful to people who helped it pass
+#ifdef LEKMOD_CONGRESS_CYCLE
+			// +1 permanent vote for the proposer
+			if (eProposer != NO_PLAYER && GetMember(eProposer) != NULL)
+				GetMember(eProposer)->iLekmodPassedProposals++;
+#endif
 			if (eProposer != NO_PLAYER)
 			{
 				for (LeagueHelpers::PlayerList::iterator playerIt = vHelpedOutcome.begin(); playerIt != vHelpedOutcome.end(); ++playerIt)
@@ -6358,6 +6473,11 @@ void CvLeague::FinishSession()
 		if (it->IsPassed(iTotalSessionVotes))
 		{
 			// Proposer is grateful to people who helped it pass
+#ifdef LEKMOD_CONGRESS_CYCLE
+			// +1 permanent vote for the proposer
+			if (eProposer != NO_PLAYER && GetMember(eProposer) != NULL)
+				GetMember(eProposer)->iLekmodPassedProposals++;
+#endif
 			if (eProposer != NO_PLAYER)
 			{
 				for (LeagueHelpers::PlayerList::iterator playerIt = vHelpedOutcome.begin(); playerIt != vHelpedOutcome.end(); ++playerIt)
@@ -7597,6 +7717,12 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 			temp.bEverBeenHost = false;
 			temp.bAlwaysBeenHost = true;
 		}
+#ifdef LEKMOD_CONGRESS_CYCLE
+		if (uiVersion >= 16)
+			loadFrom >> temp.iLekmodPassedProposals;
+		else
+			temp.iLekmodPassedProposals = 0;
+#endif
 		writeTo.m_vMembers.push_back(temp);
 	}
 	if (uiVersion >= 3)
@@ -7714,7 +7840,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 {
 #ifdef LEKMOD_CONGRESS_CYCLE
-	uint uiVersion = 15;
+	uint uiVersion = 16;
 #else
 	uint uiVersion = 14;
 #endif
@@ -7768,6 +7894,9 @@ FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 		saveTo << it->iAbstainedVotes;
 		saveTo << it->bEverBeenHost;
 		saveTo << it->bAlwaysBeenHost;
+#ifdef LEKMOD_CONGRESS_CYCLE
+		saveTo << it->iLekmodPassedProposals;
+#endif
 	}
 	saveTo << readFrom.m_eHost;
 	saveTo << readFrom.m_vProjects.size();

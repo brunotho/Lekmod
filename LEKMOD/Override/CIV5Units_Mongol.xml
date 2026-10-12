@@ -20510,7 +20510,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_OXFORD_UNIVERSITY_HELP"> 
 			<Text>
-				[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]1 Free Technology. Contains 2 slots for Great Works of Writing.[NEWLINE][NEWLINE]Must have built a University in all Cities. The cost goes up the more cities there are in the empire.
+				[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]1 Free Technology.[NEWLINE]+1 Delegate in the World Congress. Contains 2 slots for Great Works of Writing.[NEWLINE][NEWLINE]Must have built a University in all Cities. The cost goes up the more cities there are in the empire.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_OXFORD_UNIVERSITY_PEDIA"> 
@@ -97218,7 +97218,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_WONDER_VOTES"> 
 			<Text>
-				[NEWLINE][ICON_BULLET]{1_NumVotes} from World Wonders
+				[NEWLINE][ICON_BULLET]{1_NumVotes} from Wonders
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_WORLD_IDEOLOGY_VOTES"> 
@@ -116324,7 +116324,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_PATRONAGE_HELP"> 
 			<Text>
-				Adopting Patronage:[NEWLINE][ICON_BULLET]The resting point for [ICON_INFLUENCE][NEWLINE]     Influence with all City-States is 20[NEWLINE]     higher[NEWLINE][ICON_BULLET]Unlocks building the [ICON_WONDER_FORBIDDEN_PALACE][NEWLINE]     Forbidden Palace[NEWLINE][NEWLINE]Completing the Patronage tree:[NEWLINE][ICON_BULLET]+1 [COLOR_POSITIVE_TEXT]Delegate[ENDCOLOR] in the World Congress[NEWLINE][ICON_BULLET]Buy [ICON_GREAT_ENGINEER] Great Engineers, [ICON_GREAT_GENERAL][NEWLINE]     Great Generals and [ICON_GREAT_WRITER] Great[NEWLINE]     Writers with [ICON_GOLD] Gold from the[NEWLINE]     [COLOR_CYAN]Industrial Era[ENDCOLOR] on[NEWLINE][ICON_BULLET]The first costs 1000 [ICON_GOLD] Gold,[NEWLINE]     then 1500, 2500, 4000 etc. (all[NEWLINE]     three types count together;[NEWLINE]     purchase discounts don't apply)
+				Adopting Patronage:[NEWLINE][ICON_BULLET]The resting point for [ICON_INFLUENCE][NEWLINE]     Influence with all City-States is 20[NEWLINE]     higher[NEWLINE][ICON_BULLET]Unlocks building the [ICON_WONDER_FORBIDDEN_PALACE][NEWLINE]     Forbidden Palace[NEWLINE][NEWLINE]Completing the Patronage tree:[NEWLINE][ICON_BULLET]+1 [COLOR_POSITIVE_TEXT]Delegate[ENDCOLOR] in the World[NEWLINE]     Congress, +1 more per era from[NEWLINE]     the Industrial Era (5 in the[NEWLINE]     Information Era)[NEWLINE][ICON_BULLET]Buy [ICON_GREAT_ENGINEER] Great Engineers, [ICON_GREAT_GENERAL][NEWLINE]     Great Generals and [ICON_GREAT_WRITER] Great[NEWLINE]     Writers with [ICON_GOLD] Gold from the[NEWLINE]     [COLOR_CYAN]Industrial Era[ENDCOLOR] on[NEWLINE][ICON_BULLET]The first costs 1000 [ICON_GOLD] Gold,[NEWLINE]     then 1500, 2500, 4000 etc. (all[NEWLINE]     three types count together;[NEWLINE]     purchase discounts don't apply)
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_BRANCH_PIETY"> 
@@ -120679,6 +120679,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_GREAT_WORK_FROM_POLICY">
 			<Text>Your new Courthouse brought {@2_WorkName} to your empire.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LEAGUE_VOTES_CAPITALS">
+			<Text>[NEWLINE][ICON_BULLET]{1_NumVotes} from other civilizations' capitals you hold</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LEAGUE_VOTES_PASSED">
+			<Text>[NEWLINE][ICON_BULLET]{1_NumVotes} from your proposals that passed</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LEAGUE_VOTES_INFLUENCE">
+			<Text>[NEWLINE][ICON_BULLET]{1_NumVotes} from cultural influence (+1 per civilization you are Influential over, -1 per civilization Influential over you)</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
@@ -135250,7 +135259,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_GLOBALIZATION_HELP"> 
 			<Text>
-				With Globalization, you gain +1 Delegate in the World congress, and each Spy you send to another Civilization as a [ICON_DIPLOMAT] Diplomat will further increase the number of Delegates you control in the World Congress, bringing you closer to [COLOR_POSITIVE_TEXT]Diplomatic Victory[ENDCOLOR].
+				With Globalization, you gain +1 Delegate in the World Congress.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TECH_GLOBALIZATION_QUOTE"> 
@@ -144394,7 +144403,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_BIG_BEN_HELP"> 
 			<Text>
-				Requires Commerce. Cost of [ICON_GOLD] Gold purchasing in all cities reduced by 12%.
+				Requires Commerce. Cost of [ICON_GOLD] Gold purchasing in all cities reduced by 12%.[NEWLINE]+1 Delegate in the World Congress.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_BOROBUDUR_HELP"> 
@@ -144539,7 +144548,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_FORBIDDEN_PALACE_HELP"> 
 			<Text>
-				Requires Patronage. Grants 2 additional Delegates in the World Congress. -10% [ICON_HAPPINESS_4] Unhappiness from [ICON_CITIZEN] Citizens in non-occupied Cities.
+				Requires Patronage. Grants 2 additional Delegates in the World Congress (3 from the Atomic Era). -10% [ICON_HAPPINESS_4] Unhappiness from [ICON_CITIZEN] Citizens in non-occupied Cities.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_GLOBE_THEATER_HELP"> 

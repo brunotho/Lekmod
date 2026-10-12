@@ -494,6 +494,9 @@ public:
 
 		bool bEverBeenHost;
 		bool bAlwaysBeenHost;
+#ifdef LEKMOD_CONGRESS_CYCLE
+		int iLekmodPassedProposals; // proposals by this member that passed: +1 vote each
+#endif
 	};
 	typedef FStaticVector<Member, MAX_CIV_PLAYERS, false, c_eCiv5GameplayDLL> MemberList;
 

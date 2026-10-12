@@ -1787,3 +1787,20 @@ The World Congress runs on a fixed cycle: host election, proposals, and the vote
 - Removed: the World Leader proposal in United Nations sessions
 - Note: Delegate sources are still the old ones; the new vote sources are the next item
 - DLL: LEKMOD_CONGRESS_CYCLE, LEKMOD_WORLD_LEADER_VOTES_BASE (CvLeague::m_iLekmodVoteTurn/m_iLekmodLeaderVoteTurn, league save version 15, CvGameLeagues::DoTurnLate)
+
+WORLD CONGRESS DELEGATES (LEAGUE_VOTES)
+---------------------------------------
+Tags: world congress, game mechanics
+Delegates now depend on the Congress era and on what you hold, not on special sessions.
+- Changed: membership 1/2/3/4/5 Delegates in the Renaissance/Industrial/Modern/Atomic/Information Era (was 1-4 by special session)
+- Added: each other civilization's original capital you hold: 0/1/1/2/3 Delegates
+- Changed: host 1 Delegate, 2 from the Modern Era
+- Changed: each allied City-State 0/1/1/1/2 Delegates (was 0-2 by special session)
+- Added: +1 permanent Delegate for each of your proposals that passes
+- Added: +1 Delegate per civilization you are Influential (or more) over, -1 per civilization Influential over you
+- Changed: Forbidden Palace 3 Delegates from the Atomic Era (2 before)
+- Changed: Patronage finisher: +1 Delegate, +1 more per era from the Industrial Era (5 in the Information Era)
+- Added: Big Ben +1 Delegate; Oxford University +1 Delegate
+- Removed: Delegates from Diplomats (Globalization keeps its own +1 Delegate)
+- Note: World Leader placements (first and second place +1 permanent Delegate) are part of World Congress Sessions; World Religion, World Ideology, Embargo and Mandate of Occupation come with the proposal changes
+- DLL: LEKMOD_CONGRESS_CYCLE vote tables in CvLeague::CalculateStartingVotesForMember; Member::iLekmodPassedProposals (league save version 16); Buildings.ExtraLeagueVotesAtomic, Policies.LeagueVotesPerEraFromIndustrial
