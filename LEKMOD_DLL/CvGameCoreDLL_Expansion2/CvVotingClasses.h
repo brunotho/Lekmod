@@ -791,6 +791,7 @@ public:
 #ifdef LEKMOD_CONGRESS_CYCLE
 	// Called once the new turn's players are processed (session results, world leader votes)
 	void DoTurnLate();
+	int GetLekmodNukeProductionModifier();
 	bool m_bLekmodInTransition; // true while DoTurn runs (before the game turn is incremented); not saved
 #endif
 
@@ -1375,6 +1376,11 @@ public:
 	int GetLeadersVoteBonusOnFail() const;
 	bool IsDiplomaticVictory() const;
 	bool IsChangeLeagueHost() const;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	EraTypes GetLekmodMinCongressEra() const;
+	bool IsLekmodDisabled() const;
+	int GetLekmodNukeProductionModifier() const;
+#endif
 	int GetOneTimeGold() const;
 	int GetOneTimeGoldPercent() const;
 	bool IsRaiseCityStateInfluenceToNeutral() const;
@@ -1409,6 +1415,11 @@ protected:
 	int m_iQuorumPercent;
 	int m_iLeadersVoteBonusOnFail;
 	bool m_bDiplomaticVictory;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	EraTypes m_eLekmodMinCongressEra;
+	bool m_bLekmodDisabled;
+	int m_iLekmodNukeProductionModifier;
+#endif
 	bool m_bChangeLeagueHost;
 	int m_iOneTimeGold;
 	int m_iOneTimeGoldPercent;

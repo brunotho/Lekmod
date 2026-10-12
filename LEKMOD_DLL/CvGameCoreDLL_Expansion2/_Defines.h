@@ -1539,6 +1539,9 @@ Diversify Spain and Australia's NW Discovery bonus
 // reaches Atomic, then every 7 turns; every member votes for itself; a civ with at least LEKMOD_WORLD_LEADER_VOTES_BASE minus 1 per
 // destroyed City-State wins, otherwise first and second place gain 1 permanent vote (Member::iExtraVotes; ties: all tied).
 // Era special sessions only mark the era (splash, United Nations, delegate data); no session, no recurring victory proposal.
+// Resolutions.LekmodMinCongressEra / LekmodDisabled / LekmodNukeProductionModifier; World Religion no votes from Atomic; World Ideology
+// can be flipped (a new one replaces the active one); an embargoed civ -1 vote; project tiers rounded to whole Production.
+// AIs never propose and never host (host vote choices are humans only while a human is alive); a slot an AI took over gets no proposal.
 #define LEKMOD_CONGRESS_CYCLE
 #define LEKMOD_WORLD_LEADER_VOTES_BASE 45
 // Vote sources (CvLeague::CalculateStartingVotesForMember), by congress era Ren/Ind/Mod/Atomic/Info: membership 1/2/3/4/5, each held

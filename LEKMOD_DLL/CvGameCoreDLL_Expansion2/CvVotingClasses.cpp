@@ -2795,6 +2795,22 @@ bool CvLeague::CanProposeEnact(ResolutionTypes eResolution, PlayerTypes ePropose
 		}
 	}
 	
+#ifdef LEKMOD_CONGRESS_CYCLE
+	if (pInfo->IsLekmodDisabled())
+	{
+		bValid = false;
+	}
+	if (pInfo->GetLekmodMinCongressEra() != NO_ERA && LeagueHelpers::GetGameEraForTrigger() < pInfo->GetLekmodMinCongressEra())
+	{
+		if (sTooltipSink != NULL && GC.getEraInfo(pInfo->GetLekmodMinCongressEra()) != NULL)
+		{
+			Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_RESOLUTION_NEEDS_ERA");
+			sTemp << GC.getEraInfo(pInfo->GetLekmodMinCongressEra())->GetDescriptionKey();
+			(*sTooltipSink) += sTemp.toUTF8();
+		}
+		bValid = false;
+	}
+#endif
 	// Prereq tech
 	if (pInfo->GetTechPrereqAnyMember() != NO_TECH)
 	{
@@ -3166,6 +3182,22 @@ bool CvLeague::IsRepealProposed(int iResolutionID) const
 	return false;
 }
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+/// Host vote choices: AIs only while no human major civ is alive
+static bool LekmodIsHostCandidate(PlayerTypes ePlayer)
+{
+	if (GET_PLAYER(ePlayer).isHuman())
+		return true;
+	for (int i = 0; i < MAX_MAJOR_CIVS; i++)
+	{
+		if (GET_PLAYER((PlayerTypes)i).isAlive() && GET_PLAYER((PlayerTypes)i).isHuman())
+			return false;
+	}
+	return true;
+}
+#else
+static bool LekmodIsHostCandidate(PlayerTypes) { return true; }
+#endif
 #if defined(AUI_WARNING_FIXES) || defined(AUI_CONSTIFY)
 std::vector<int> CvLeague::GetChoicesForDecision(ResolutionDecisionTypes eDecision, PlayerTypes eDecider) const
 #else
@@ -3225,7 +3257,7 @@ std::vector<int> CvLeague::GetChoicesForDecision(ResolutionDecisionTypes eDecisi
 			{
 				for (uint i = 0; i < m_vMembers.size(); i++)
 				{
-					if (!GET_PLAYER(m_vMembers[i].ePlayer).isMinorCiv())
+					if (!GET_PLAYER(m_vMembers[i].ePlayer).isMinorCiv() && LekmodIsHostCandidate(m_vMembers[i].ePlayer))
 					{
 						vChoices.push_back(m_vMembers[i].ePlayer);
 					}
@@ -3235,7 +3267,7 @@ std::vector<int> CvLeague::GetChoicesForDecision(ResolutionDecisionTypes eDecisi
 #else
 		for (uint i = 0; i < m_vMembers.size(); i++)
 		{
-			if (!GET_PLAYER(m_vMembers[i].ePlayer).isMinorCiv())
+			if (!GET_PLAYER(m_vMembers[i].ePlayer).isMinorCiv() && LekmodIsHostCandidate(m_vMembers[i].ePlayer))
 			{
 				vChoices.push_back(m_vMembers[i].ePlayer);
 			}
@@ -3305,7 +3337,11 @@ std::vector<ResolutionTypes> CvLeague::GetInactiveResolutions() const
 	{
 		ResolutionTypes e = (ResolutionTypes)i;
 		CvResolutionEntry* pInfo = GC.getResolutionInfo(e);
+#ifdef LEKMOD_CONGRESS_CYCLE
+		if (pInfo && !pInfo->IsLekmodDisabled())
+#else
 		if (pInfo)
+#endif
 		{
 			v.push_back(e);
 		}
@@ -3885,6 +3921,14 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		// Own proposals that passed
 		int iPassedVotes = pMember->iLekmodPassedProposals;
 		iVotes += iPassedVotes;
+		// Embargoed: -1
+		int iEmbargoVotes = 0;
+		for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
+		{
+			if (it->GetEffects()->bEmbargoPlayer && it->GetProposerDecision()->GetDecision() == ePlayer)
+				iEmbargoVotes--;
+		}
+		iVotes += iEmbargoVotes;
 		// Cultural influence: +1 per civ we are Influential over, -1 per civ Influential over us
 		int iInfluenceVotes = 0;
 		for (int iMajor = 0; iMajor < MAX_MAJOR_CIVS; iMajor++)
@@ -3989,6 +4033,12 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 			{
 				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_LEAGUE_VOTES_PASSED");
 				sTemp << iPassedVotes;
+				pMember->sVoteSources += sTemp.toUTF8();
+			}
+			if (iEmbargoVotes != 0)
+			{
+				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_LEAGUE_VOTES_EMBARGO");
+				sTemp << iEmbargoVotes;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
 			if (iInfluenceVotes != 0)
@@ -4445,11 +4495,17 @@ float CvLeague::GetContributionTierThreshold(ContributionTier eTier, LeagueProje
 	case CONTRIBUTION_TIER_1:
 		{
 			fThreshold = GC.getLEAGUE_PROJECT_REWARD_TIER_1_THRESHOLD() * GetProjectCostPerPlayer(eLeagueProject);
+#ifdef LEKMOD_CONGRESS_CYCLE
+			fThreshold = (float)(((int)fThreshold / 100) * 100); // whole Production (250 on quick)
+#endif
 			break;
 		}
 	case CONTRIBUTION_TIER_2:
 		{
 			fThreshold = GC.getLEAGUE_PROJECT_REWARD_TIER_2_THRESHOLD() * GetProjectCostPerPlayer(eLeagueProject);
+#ifdef LEKMOD_CONGRESS_CYCLE
+			fThreshold = (float)(((int)fThreshold / 100) * 100); // whole Production (500 on quick)
+#endif
 			break;
 		}
 	case CONTRIBUTION_TIER_3:
@@ -4638,6 +4694,12 @@ bool CvLeague::IsNoTrainingNuclearWeapons()
 int CvLeague::GetExtraVotesForFollowingReligion(PlayerTypes ePlayer)
 {
 	int iVotes = 0;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// World Religion gives no votes once the congress era is Atomic
+	const EraTypes eAtomic = (EraTypes) GC.getInfoTypeForString("ERA_POSTMODERN", true);
+	if (eAtomic != NO_ERA && LeagueHelpers::GetGameEraForTrigger() >= eAtomic)
+		return 0;
+#endif
 	for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
 	{
 		if (it->GetEffects()->iVotesForFollowingReligion != 0)
@@ -5979,6 +6041,11 @@ void CvLeague::LekmodStartProposals(int iTurn, bool bCallForProposals)
 	UpdateCanProposeEnact();
 #endif
 	m_iLekmodPrivilegeTurn = iTurn;
+#ifdef ASSIGN_SECOND_PROPOSAL_PRIVILEGE
+	// Multiplayer with an AI host (no human left to host): the second proposer doesn't wait for the host
+	if (GC.getGame().isGameMultiPlayer() && GetHostMember() != NO_PLAYER && !GET_PLAYER(GetHostMember()).isHuman() && GetNumProposersPerSession() == 2)
+		AssignSecondProposalPrivilege();
+#endif
 	if (bCallForProposals)
 	{
 		LekmodCallForProposals();
@@ -6009,12 +6076,14 @@ void CvLeague::LekmodCallForProposals()
 		}
 		else
 		{
-			kPlayer.GetLeagueAI()->DoProposals(this);
+			// AIs never propose
+			m_vMembers[i].bMayPropose = false;
+			m_vMembers[i].iProposals = 0;
 		}
 	}
 }
 
-/// A member who did not propose in time: a random proposal (AIs make their own pick)
+/// A member who did not propose in time: a random proposal (AIs never propose)
 void CvLeague::LekmodAutoPropose(PlayerTypes ePlayer)
 {
 	if (!CanPropose(ePlayer))
@@ -6022,7 +6091,13 @@ void CvLeague::LekmodAutoPropose(PlayerTypes ePlayer)
 
 	if (!GET_PLAYER(ePlayer).isHuman())
 	{
-		GET_PLAYER(ePlayer).GetLeagueAI()->DoProposals(this);
+		// AIs never propose (also a human slot an AI took over): the proposal stays blank
+		Member* pAIMember = GetMember(ePlayer);
+		if (pAIMember != NULL)
+		{
+			pAIMember->bMayPropose = false;
+			pAIMember->iProposals = 0;
+		}
 	}
 
 	if (CanPropose(ePlayer))
@@ -6078,7 +6153,7 @@ void CvLeague::LekmodAutoPropose(PlayerTypes ePlayer)
 
 #ifdef ASSIGN_SECOND_PROPOSAL_PRIVILEGE
 	// Multiplayer: the host's proposal opens the second privilege (the AI path does this itself)
-	if (GC.getGame().isGameMultiPlayer() && GET_PLAYER(ePlayer).isHuman() && ePlayer == GetHostMember() && GetNumProposersPerSession() == 2)
+	if (GC.getGame().isGameMultiPlayer() && ePlayer == GetHostMember() && GetNumProposersPerSession() == 2)
 	{
 		bool bSecondAssigned = false;
 		for (uint i = 0; i < m_vMembers.size(); i++)
@@ -6100,7 +6175,7 @@ CvLeague::Member* CvLeague::LekmodPickSecondProposer()
 	for (uint i = 0; i < m_vMembers.size(); i++)
 	{
 		Member* pMember = &m_vMembers[i];
-		if (pMember->bMayPropose || !CanEverPropose(pMember->ePlayer))
+		if (pMember->bMayPropose || !CanEverPropose(pMember->ePlayer) || !GET_PLAYER(pMember->ePlayer).isHuman() || pMember->ePlayer == GetHostMember())
 			continue;
 		const int iVotes = CalculateStartingVotesForMember(pMember->ePlayer);
 		if (iVotes > iBestVotes)
@@ -6118,9 +6193,21 @@ CvLeague::Member* CvLeague::LekmodPickSecondProposer()
 	return vBest[GC.getGame().getJonRandNum((int)vBest.size(), "Lekmod second proposer")];
 }
 
-/// Several civs qualified on the founding turn: most votes hosts, ties at random
-void CvLeague::LekmodPickFounderHost(const std::vector<PlayerTypes>& vCandidates)
+/// Founding host: the qualifying civ with most votes, ties at random; AIs never host (if no human qualified, the human with most votes)
+void CvLeague::LekmodPickFounderHost(const std::vector<PlayerTypes>& vAllCandidates)
 {
+	std::vector<PlayerTypes> vCandidates;
+	for (uint i = 0; i < vAllCandidates.size(); i++)
+		if (GET_PLAYER(vAllCandidates[i]).isHuman())
+			vCandidates.push_back(vAllCandidates[i]);
+	if (vCandidates.empty())
+	{
+		for (uint i = 0; i < m_vMembers.size(); i++)
+			if (GET_PLAYER(m_vMembers[i].ePlayer).isHuman() && GET_PLAYER(m_vMembers[i].ePlayer).isAlive() && !GET_PLAYER(m_vMembers[i].ePlayer).isMinorCiv())
+				vCandidates.push_back(m_vMembers[i].ePlayer);
+	}
+	if (vCandidates.empty())
+		vCandidates = vAllCandidates;
 	std::vector<PlayerTypes> vBest;
 	int iBestVotes = -1;
 	for (uint i = 0; i < vCandidates.size(); i++)
@@ -6656,6 +6743,14 @@ void CvLeague::AssignProposalPrivileges()
 
 	// Host gets one
 	PlayerTypes eHost = GetHostMember();
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// AIs never propose
+	if (eHost != NO_PLAYER && !GET_PLAYER(eHost).isHuman())
+	{
+		iPrivileges--;
+	}
+	else
+#endif
 	if (eHost != NO_PLAYER)
 	{
 		GetMember(eHost)->bMayPropose = true;
@@ -6818,6 +6913,22 @@ void CvLeague::DoEnactResolution(CvEnactProposal* pProposal)
 {
 	CvAssertMsg(pProposal->IsPassed(GetVotesSpentThisSession()), "Doing a proposal that has not been passed. Please send Anton your save file and version.");
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// World Ideology can be flipped: a new one replaces the active one
+	if (pProposal->GetEffects()->iVotesForFollowingIdeology != 0)
+	{
+		for (ActiveResolutionList::iterator it = m_vActiveResolutions.begin(); it != m_vActiveResolutions.end(); ++it)
+		{
+			if (it->GetType() == pProposal->GetType())
+			{
+				for (uint i = 0; i < m_vMembers.size(); i++)
+					it->RemoveEffects(m_vMembers[i].ePlayer);
+				m_vActiveResolutions.erase(it);
+				break;
+			}
+		}
+	}
+#endif
 	CvActiveResolution resolution(pProposal);
 	for (uint i = 0; i < m_vMembers.size(); i++)
 	{
@@ -8039,7 +8150,7 @@ void CvGameLeagues::DoTurn()
 #ifdef LEKMOD_CONGRESS_CYCLE
 				// First with the tech hosts; ties: most votes, then random
 				FoundLeague(vePossibleFounders.at(uint(GC.getGame().getJonRandNum(int(vePossibleFounders.size()), "Lekmod founder"))));
-				if (vePossibleFounders.size() > 1 && GetActiveLeague() != NULL)
+				if (GetActiveLeague() != NULL)
 				{
 					std::vector<PlayerTypes> vCandidates;
 					for (uint iFounder = 0; iFounder < vePossibleFounders.size(); iFounder++)
@@ -8148,6 +8259,21 @@ void CvGameLeagues::DoTurn()
 }
 
 #ifdef LEKMOD_CONGRESS_CYCLE
+/// % Production toward nuclear weapons from active resolutions
+int CvGameLeagues::GetLekmodNukeProductionModifier()
+{
+	CvLeague* pLeague = GetActiveLeague();
+	if (pLeague == NULL)
+		return 0;
+	int iMod = 0;
+	for (ActiveResolutionList::iterator it = pLeague->m_vActiveResolutions.begin(); it != pLeague->m_vActiveResolutions.end(); ++it)
+	{
+		CvResolutionEntry* pInfo = GC.getResolutionInfo(it->GetType());
+		if (pInfo != NULL)
+			iMod += pInfo->GetLekmodNukeProductionModifier();
+	}
+	return iMod;
+}
 void CvGameLeagues::DoTurnLate()
 {
 	if (GC.getGame().isOption(GAMEOPTION_NO_LEAGUES))
@@ -12463,6 +12589,11 @@ CvResolutionEntry::CvResolutionEntry(void)
 	m_iLeadersVoteBonusOnFail			= 0;
 	m_bDiplomaticVictory				= false;
 	m_bChangeLeagueHost					= false;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_eLekmodMinCongressEra = NO_ERA;
+	m_bLekmodDisabled = false;
+	m_iLekmodNukeProductionModifier = 0;
+#endif
 	m_iOneTimeGold						= 0;
 	m_iOneTimeGoldPercent				= 0;
 	m_bRaiseCityStateInfluenceToNeutral	= false;
@@ -12508,6 +12639,11 @@ bool CvResolutionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtil
 	m_iQuorumPercent					= kResults.GetInt("QuorumPercent");
 	m_iLeadersVoteBonusOnFail			= kResults.GetInt("LeadersVoteBonusOnFail");
 	m_bDiplomaticVictory				= kResults.GetBool("DiplomaticVictory");
+#ifdef LEKMOD_CONGRESS_CYCLE
+	m_eLekmodMinCongressEra = (EraTypes) GC.getInfoTypeForString(kResults.GetText("LekmodMinCongressEra"), true);
+	m_bLekmodDisabled = kResults.GetBool("LekmodDisabled");
+	m_iLekmodNukeProductionModifier = kResults.GetInt("LekmodNukeProductionModifier");
+#endif
 	m_bChangeLeagueHost					= kResults.GetBool("ChangeLeagueHost");
 	m_iOneTimeGold						= kResults.GetInt("OneTimeGold");
 	m_iOneTimeGoldPercent				= kResults.GetInt("OneTimeGoldPercent");
@@ -12580,6 +12716,23 @@ bool CvResolutionEntry::IsDiplomaticVictory() const
 {
 	return m_bDiplomaticVictory;
 }
+#ifdef LEKMOD_CONGRESS_CYCLE
+/// Proposable once the congress era (most advanced civ) reaches this era
+EraTypes CvResolutionEntry::GetLekmodMinCongressEra() const
+{
+	return m_eLekmodMinCongressEra;
+}
+/// Removed from the game (never listed or proposable)
+bool CvResolutionEntry::IsLekmodDisabled() const
+{
+	return m_bLekmodDisabled;
+}
+/// % Production toward nuclear weapons while active (Nuclear Non-Proliferation)
+int CvResolutionEntry::GetLekmodNukeProductionModifier() const
+{
+	return m_iLekmodNukeProductionModifier;
+}
+#endif
 
 bool CvResolutionEntry::IsChangeLeagueHost() const
 {

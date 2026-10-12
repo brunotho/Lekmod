@@ -1711,6 +1711,7 @@ Tags: policies
 - Added: Socialist Heritage (tier 1): +10% Tourism in every city per allied City-State; Landmarks and Festivals give double yields
 - Changed: Party Leadership: now tier 2; +2 Food, Production, Science and Gold in every city (was +1 each and +1 Culture)
 - Added: Re-Education (tier 2): +2 Happiness from each Constabulary and Courthouse; resistance in captured cities lasts half as long
+- Changed: shorter resistance from Colonial Administration, Re-Education and Doctrine of Subjugation adds up (two of them: no resistance beyond the minimum of 1 turn)
 - Added: Atomic Program (tier 2): 4 Uranium; Nuclear Missiles and Nuclear Plants need 1 less Uranium; +20% Production toward Nuclear Plants
 - Added: Five Year Offensive (tier 2): 15 Oil and 15 Aluminum; +100% Production toward Refineries and Recycling Centers; Siege units trained in a city with a Refinery start with Bombardment I and Cover I
 - Changed: Command Economy (rebuilt): +30% Production toward military units; -10% Science in every city; a Great Scientist you keep loses its Science bonus three times slower (one counted turn every three turns instead of every turn)
@@ -1780,6 +1781,7 @@ The World Congress runs on a fixed cycle: host election, proposals, and the vote
 - Changed: the first civilization with Printing Press that has met everyone founds and hosts the Congress; ties go to the most Delegates, then at random
 - Changed: each session: the host is elected 1 turn before proposals open; the host and the civilization with the most Delegates propose (ties at random, no longer the host's pick); the vote is 3 turns after proposals open
 - Changed: a civilization that has not proposed by the end of its turn gets a random proposal
+- Changed: AI civilizations never propose and never host (the host vote only lists human players); a player slot an AI took over makes no proposal
 - Changed: sessions every 15/13/11/9/7 turns in the Renaissance/Industrial/Modern/Atomic/Information Era (was 16/12/10/5)
 - Changed: results take effect at the start of the turn after the vote, once that turn's yields are in (was during the turn change)
 - Changed: new eras no longer hold a special host session
@@ -1804,3 +1806,21 @@ Delegates now depend on the Congress era and on what you hold, not on special se
 - Removed: Delegates from Diplomats (Globalization keeps its own +1 Delegate)
 - Note: World Leader placements (first and second place +1 permanent Delegate) are part of World Congress Sessions; World Religion, World Ideology, Embargo and Mandate of Occupation come with the proposal changes
 - DLL: LEKMOD_CONGRESS_CYCLE vote tables in CvLeague::CalculateStartingVotesForMember; Member::iLekmodPassedProposals (league save version 16); Buildings.ExtraLeagueVotesAtomic, Policies.LeagueVotesPerEraFromIndustrial
+
+WORLD CONGRESS PROPOSALS (RESOLUTIONS)
+--------------------------------------
+Tags: world congress
+Existing proposals reworked for the new Congress.
+- Changed: Embargo City-States: available once the Congress reaches the Industrial Era
+- Changed: Nuclear Non-Proliferation: -50% Production toward nuclear weapons instead of banning them; available once any civilization discovers Nuclear Fission (was Advanced Ballistics)
+- Changed: World Religion: 3 Delegates (was 2), none once the Congress reaches the Atomic Era; Holy City +50% Tourism stays
+- Removed: World Religion: faster religion spread
+- Changed: World Ideology: a new World Ideology can be proposed while one is active and replaces it
+- Removed: World Ideology: public opinion effect
+- Changed: Embargo (civilization): the embargoed civilization has 1 Delegate less
+- Changed: Cultural Heritage Sites: +2 Culture per World Wonder (was +3)
+- Changed: World's Fair and International Games: 300 Production per civilization on quick; Bronze from 250 contributed, Silver from 500, Gold for the top contributor
+- Changed: World's Fair rewards: Bronze 300 Golden Age points (was 500); Silver a free Social Policy; Gold +100% Culture for 10 turns (was 20)
+- Changed: International Games rewards: Bronze +6 Happiness (was +3); Silver a free Social Policy (was +3 Happiness and 30 Influence with City-States); Gold +100% Tourism for 10 turns (was 20, and the free Social Policy moved to Silver)
+- Removed: International Space Station and Natural Heritage Sites proposals
+- DLL: Resolutions.LekmodMinCongressEra, LekmodDisabled, LekmodNukeProductionModifier (LEKMOD_CONGRESS_CYCLE); project tier thresholds rounded to whole Production

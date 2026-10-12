@@ -97568,7 +97568,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_FAIR_1_HELP"> 
 			<Text>
-				500 points towards next [ICON_GOLDEN_AGE] Golden Age.
+				300 points towards the next [ICON_GOLDEN_AGE] Golden Age (at least 250 [ICON_PRODUCTION] Production contributed).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_FAIR_2"> 
@@ -97578,7 +97578,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_FAIR_2_HELP"> 
 			<Text>
-				Free Social Policy.
+				Free Social Policy (at least 500 [ICON_PRODUCTION] Production contributed).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_FAIR_3"> 
@@ -97588,7 +97588,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_FAIR_3_HELP"> 
 			<Text>
-				[ICON_CULTURE] Culture increases by 100% for 20 Turns.
+				[ICON_CULTURE] Culture increases by 100% for 10 turns (the top contributor).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_GAMES_1"> 
@@ -97598,7 +97598,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_GAMES_1_HELP"> 
 			<Text>
-				+3 [ICON_HAPPINESS_1] Happiness.
+				+6 [ICON_HAPPINESS_1] Happiness (at least 250 [ICON_PRODUCTION] Production contributed).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_GAMES_2"> 
@@ -97608,7 +97608,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_GAMES_2_HELP"> 
 			<Text>
-				+3 [ICON_HAPPINESS_1] Happiness.  One time increase of 30 [ICON_INFLUENCE] Influence with City-States.
+				Free Social Policy (at least 500 [ICON_PRODUCTION] Production contributed).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_GAMES_3"> 
@@ -97618,7 +97618,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_REWARD_WORLD_GAMES_3_HELP"> 
 			<Text>
-				[ICON_TOURISM] Tourism increases by 100% for 20 Turns.  Free Social Policy.
+				[ICON_TOURISM] Tourism increases by 100% for 10 turns (the top contributor).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_PROJECT_WORLD_FAIR"> 
@@ -120689,6 +120689,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_LEAGUE_VOTES_INFLUENCE">
 			<Text>[NEWLINE][ICON_BULLET]{1_NumVotes} from cultural influence (+1 per civilization you are Influential over, -1 per civilization Influential over you)</Text>
 		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RESOLUTION_NEEDS_ERA">
+			<Text>[NEWLINE][NEWLINE][COLOR_WARNING_TEXT]Available once the World Congress reaches the {1_EraName}.[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LEAGUE_VOTES_EMBARGO">
+			<Text>[NEWLINE][ICON_BULLET]{1_NumVotes} from being embargoed</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_NON_PROLIFERATION">
+			<Text>[NEWLINE][ICON_BULLET]Nuclear Non-Proliferation: {1_Num}%</Text>
+		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
 		</Row>
@@ -124310,7 +124319,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_ALL_CITY_STATES_EMBARGO_HELP"> 
 			<Text>
-				No [ICON_INTERNATIONAL_TRADE] Trade Routes can be established with City-States.  Any such Trade Routes are ended and must be reassigned.
+				No [ICON_INTERNATIONAL_TRADE] Trade Routes can be established with City-States.[NEWLINE]Any such Trade Routes are ended and must be reassigned.[NEWLINE][NEWLINE]Available once the World Congress reaches the Industrial Era.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_ARTS_FUNDING"> 
@@ -124410,7 +124419,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_CULTURAL_HERITAGE_SITES_HELP"> 
 			<Text>
-				Each World Wonder provides +3 [ICON_CULTURE] Culture to its city.
+				Each World Wonder provides +2 [ICON_CULTURE] Culture to its city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_DECISION_ANY_LUXURY_RESOURCE"> 
@@ -124545,7 +124554,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_NUCLEAR_NON_PROLIFERATION_HELP"> 
 			<Text>
-				All Civilizations are prevented from constructing new nuclear weapons (Atomic Bomb and Nuclear Missile).  Weapons already constructed, however, are not disarmed.[NEWLINE][NEWLINE]Available once any Civilization discovers Advanced Ballistics.
+				-50% [ICON_PRODUCTION] Production toward nuclear weapons (Atomic Bomb and Nuclear Missile) for all Civilizations.[NEWLINE][NEWLINE]Available once any Civilization discovers Nuclear Fission.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_PLAYER_EMBARGO"> 
@@ -124555,7 +124564,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_PLAYER_EMBARGO_HELP"> 
 			<Text>
-				No [ICON_INTERNATIONAL_TRADE] Trade Routes can be established between the chosen Civilization and any other Civilization.  Any such Trade Routes are ended and must be reassigned.
+				No [ICON_INTERNATIONAL_TRADE] Trade Routes can be established between the chosen Civilization and any other Civilization.[NEWLINE]Any such Trade Routes are ended and must be reassigned.[NEWLINE]The chosen Civilization has 1 Delegate less.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_RESOURCE_FOR_EVERYONE"> 
@@ -124615,7 +124624,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_WORLD_IDEOLOGY_HELP"> 
 			<Text>
-				Designate an Ideology as the official World Ideology.  Civilizations following that Ideology get an additional 2 Delegates.  Public opinion in favor of that Ideology is increased for all Civilizations.  There can only be one World Ideology at a time.[NEWLINE][NEWLINE]Available once any Civilization discovers Radio.
+				Designate an Ideology as the official World Ideology.[NEWLINE]Civilizations following that Ideology get an additional 2 Delegates.[NEWLINE]There can only be one World Ideology at a time; a new one replaces it.[NEWLINE][NEWLINE]Available once any Civilization discovers Radio.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_WORLD_RELIGION"> 
@@ -124625,7 +124634,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_WORLD_RELIGION_HELP"> 
 			<Text>
-				Designate a religion as the official World Religion.  Civilizations who have a majority of the cities in their empire following the religion get an additional 2 Delegates.  The religion spreads 25% faster, and its Holy City receives +50% [ICON_TOURISM] Tourism.  There can only be one World Religion at a time.
+				Designate a religion as the official World Religion.[NEWLINE]Civilizations who have a majority of the cities in their empire following the religion get an additional 3 Delegates (none once the World Congress reaches the Atomic Era).[NEWLINE]Its Holy City receives +50% [ICON_TOURISM] Tourism.[NEWLINE]There can only be one World Religion at a time.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCE"> 

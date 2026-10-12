@@ -6838,6 +6838,18 @@ int CvCity::getProductionModifier(UnitTypes eUnit, CvString* toolTipSink) const
 	iMultiplier += thisPlayer.getProductionModifier(eUnit, toolTipSink);
 
 	int iTempMod;
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Nuclear Non-Proliferation
+	if (pkUnitInfo->GetNukeDamageLevel() != -1)
+	{
+		iTempMod = GC.getGame().GetGameLeagues()->GetLekmodNukeProductionModifier();
+		if (iTempMod != 0)
+		{
+			iMultiplier += iTempMod;
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_NON_PROLIFERATION", iTempMod);
+		}
+	}
+#endif
 #if defined(LEKMOD_v34) // Display the city's Unit Production Cost reduction.
 	// Player Unit Cost (This adjusts based on game info instead of pkUnitInfo which is just the database value)
 	// Which means we wont see the GameSpeed, StartEra and oter such costs encounter here which is desired.

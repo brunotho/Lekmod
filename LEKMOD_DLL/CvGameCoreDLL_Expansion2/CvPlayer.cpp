@@ -28745,9 +28745,9 @@ int CvPlayer::GetLekmodResistanceTimeModifier() const
 		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
 		if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
 			continue;
-		iValue = std::min(iValue, pkPolicy->GetResistanceTimeModifier());
+		iValue += pkPolicy->GetResistanceTimeModifier(); // reductions add up; resistance stays at least 1 turn
 	}
-	return iValue;
+	return std::max(-100, iValue);
 }
 /// On adoption: free units near or on water (Expansionism opener: Conquistador, Galleass)
 void CvPlayer::LekmodDoPolicyWaterUnits(PolicyTypes ePolicy)

@@ -97451,11 +97451,11 @@
 		</Row>
 		<Row> 
 			<Name>LEAGUE_PROJECT_REWARD_TIER_1_THRESHOLD</Name> 
-			<Value>0.5</Value> 
+			<Value>0.8334</Value> 
 		</Row>
 		<Row> 
 			<Name>LEAGUE_PROJECT_REWARD_TIER_2_THRESHOLD</Name> 
-			<Value>1</Value> 
+			<Value>1.6667</Value> 
 		</Row>
 		<Row> 
 			<Name>VICTORY_POINTS_PER_ERA</Name> 
@@ -175642,6 +175642,39 @@
 			<IconAtlas>INTL_PROJECT_ATLAS_EXP2</IconAtlas> 
 		</Row>
 	</LeagueProjects> 
+	<!-- LEKMOD: World's Fair and International Games: 300 Production per civ on quick; Bronze 250, Silver 500, Gold = top contributor -->
+	<LeagueProjects>
+		<Update>
+			<Where Type="LEAGUE_PROJECT_WORLD_FAIR"/>
+			<Set CostPerPlayer="448"/>
+		</Update>
+		<Update>
+			<Where Type="LEAGUE_PROJECT_WORLD_GAMES"/>
+			<Set CostPerPlayer="448"/>
+		</Update>
+	</LeagueProjects>
+	<LeagueProjectRewards>
+		<Update>
+			<Where Type="LEAGUE_PROJECT_REWARD_WORLD_FAIR_1"/>
+			<Set GoldenAgePoints="300"/>
+		</Update>
+		<Update>
+			<Where Type="LEAGUE_PROJECT_REWARD_WORLD_FAIR_3"/>
+			<Set CultureBonusTurns="15"/>
+		</Update>
+		<Update>
+			<Where Type="LEAGUE_PROJECT_REWARD_WORLD_GAMES_1"/>
+			<Set Happiness="6"/>
+		</Update>
+		<Update>
+			<Where Type="LEAGUE_PROJECT_REWARD_WORLD_GAMES_2"/>
+			<Set Happiness="0" CityStateInfluenceBoost="0" FreeSocialPolicies="1"/>
+		</Update>
+		<Update>
+			<Where Type="LEAGUE_PROJECT_REWARD_WORLD_GAMES_3"/>
+			<Set FreeSocialPolicies="0" TourismBonusTurns="10"/>
+		</Update>
+	</LeagueProjectRewards>
 
 	<Table name="LeagueSpecialSessions">
 		<Column name="ID" type="integer"  primarykey="true" autoincrement="true" />
@@ -194643,6 +194676,9 @@
 		<Column name="QuorumPercent" type="integer"  default="0"/>
 		<Column name="LeadersVoteBonusOnFail" type="integer"  default="0"/>
 		<Column name="DiplomaticVictory" type="boolean"  default="false"/>
+		<Column name="LekmodMinCongressEra" type="text" reference="Eras(Type)" default="NULL"/> <!-- LEKMOD: proposable from this congress era -->
+		<Column name="LekmodDisabled" type="boolean" default="false"/> <!-- LEKMOD: removed proposal -->
+		<Column name="LekmodNukeProductionModifier" type="integer" default="0"/> <!-- LEKMOD: % Production toward nuclear weapons while active -->
 		<Column name="ChangeLeagueHost" type="boolean"  default="false"/>
 		<Column name="OneTimeGold" type="integer"  default="0"/>
 		<Column name="OneTimeGoldPercent" type="integer"  default="0"/>
@@ -195308,6 +195344,37 @@
 			<GreatPersonTileImprovementCulture>2</GreatPersonTileImprovementCulture> 
 			<LandmarkCulture>4</LandmarkCulture> 
 		</Row>
+	</Resolutions>
+	<!-- LEKMOD: proposal changes (Diplo Wincon and Congress spec) -->
+	<Resolutions>
+		<Update>
+			<Where Type="RESOLUTION_ALL_CITY_STATES_EMBARGO"/>
+			<Set LekmodMinCongressEra="ERA_INDUSTRIAL"/>
+		</Update>
+		<Update>
+			<Where Type="RESOLUTION_NUCLEAR_NON_PROLIFERATION"/>
+			<Set TechPrereqAnyMember="TECH_NUCLEAR_FISSION" NoTrainingNuclearWeapons="false" LekmodNukeProductionModifier="-50"/>
+		</Update>
+		<Update>
+			<Where Type="RESOLUTION_WORLD_RELIGION"/>
+			<Set VotesForFollowingReligion="3" ReligionSpreadStrengthMod="0"/>
+		</Update>
+		<Update>
+			<Where Type="RESOLUTION_WORLD_IDEOLOGY"/>
+			<Set OtherIdeologyRebellionMod="0" UniqueType="false"/>
+		</Update>
+		<Update>
+			<Where Type="RESOLUTION_CULTURAL_HERITAGE_SITES"/>
+			<Set CulturePerWonder="2"/>
+		</Update>
+		<Update>
+			<Where Type="RESOLUTION_INTERNATIONAL_SPACE_STATION"/>
+			<Set LekmodDisabled="true"/>
+		</Update>
+		<Update>
+			<Where Type="RESOLUTION_NATURAL_HERITAGE_SITES"/>
+			<Set LekmodDisabled="true"/>
+		</Update>
 	</Resolutions> 
 
 	<Table name="ResourceClasses">
