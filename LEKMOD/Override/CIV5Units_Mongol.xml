@@ -116849,7 +116849,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FINE_ARTS_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Fine Arts[ENDCOLOR][NEWLINE][ICON_BULLET]A free Scriptorium, Gallery and Conservatory in your first 5 cities (cities founded later count too)[NEWLINE][ICON_BULLET]+50% yields and [ICON_HAPPINESS_1] Happiness from [ICON_GREAT_WORK] Great Works
+				[COLOR_POSITIVE_TEXT]Fine Arts[ENDCOLOR][NEWLINE][ICON_BULLET]A free Scriptorium, Gallery and Conservatory in your first 5 cities (cities founded later count too)[NEWLINE][ICON_BULLET]+50% yields from [ICON_GREAT_WORK] Great Works
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_FINE_ARTS_TEXT"> 
@@ -117074,7 +117074,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_IRON_CURTAIN_HELP"> 
 			<Text>
-				[COLOR_POSITIVE_TEXT]Iron Curtain[ENDCOLOR][NEWLINE]All your running [ICON_INTERNATIONAL_TRADE] Trade Routes end when you adopt it (the trade units return home).[NEWLINE]No more Trade Routes with other civilizations or City-States.[NEWLINE]Internal Trade Routes provide +10 [ICON_FOOD] Food or [ICON_PRODUCTION] Production, +1 more for each era after the Industrial Era.[NEWLINE]Enemy [ICON_SPY] Spies steal technologies 50% slower in your cities.
+				[COLOR_POSITIVE_TEXT]Iron Curtain[ENDCOLOR][NEWLINE]Internal Trade Routes provide +10 [ICON_FOOD] Food or [ICON_PRODUCTION] Production, +1 more for each era after the Industrial Era.[NEWLINE]All your running [ICON_INTERNATIONAL_TRADE] Trade Routes end when you adopt it (the trade units return home).[NEWLINE]No more Trade Routes with other civilizations or City-States.[NEWLINE]Enemy [ICON_SPY] Spies steal technologies 50% slower in your cities.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_POLICY_IRON_CURTAIN_TEXT"> 

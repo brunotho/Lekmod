@@ -281830,4 +281830,49 @@
 		<Delete CivilizationType="CIVILIZATION_ARMENIA" CityName="TXT_KEY_CITY_NAME_ARMAVIR"/>
 		<Delete CivilizationType="CIVILIZATION_VENEZ" CityName="TXT_KEY_CITY_NAME_VEROZ"/>
 	</Civilization_CityNames>
+	<!-- Georgia: the +25% Production toward religious buildings (Georgia builds them with Production) follows the Faith discount from Mandate of Heaven to Reformation; not in the tooltips -->
+	<Policy_BuildingClassProductionModifiers>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_CATHEDRAL"/>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_MOSQUE"/>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_PAGODA"/>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_GURDWARA"/>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_SYNAGOGUE"/>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_VIHARA"/>
+		<Delete PolicyType="POLICY_MANDATE_OF_HEAVEN" BuildingClassType="BUILDINGCLASS_MANDIR"/>
+		<Row>
+			<PolicyType>POLICY_REFORMATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_CATHEDRAL</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_REFORMATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_MOSQUE</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_REFORMATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_PAGODA</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_REFORMATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_GURDWARA</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_REFORMATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_SYNAGOGUE</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_REFORMATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_VIHARA</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<PolicyType>POLICY_REFORMATION</PolicyType>
+			<BuildingClassType>BUILDINGCLASS_MANDIR</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+	</Policy_BuildingClassProductionModifiers>
 </GameData>

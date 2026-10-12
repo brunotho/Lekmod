@@ -241,6 +241,19 @@ CvString CvGameCulture::GetGreatWorkTooltip(int iIndex, PlayerTypes eOwner) cons
 		cultureString += CvString::format("+%d %s ", iYield, strYieldIcon.c_str());
 #endif
 	}
+#ifdef LEKMOD_POLICY_REWORK
+	// Happiness of the holding building, per work and with the policy % (Fine Arts), shown like the yields
+	if (eBuilding != NO_BUILDING && GC.getBuildingInfo(eBuilding) && GC.getBuildingInfo(eBuilding)->GetGreatWorkHappiness() != 0)
+	{
+		const int iHappy = GC.getBuildingInfo(eBuilding)->GetGreatWorkHappiness() * (100 + GET_PLAYER(eOwner).GetLekmodPolicyGreatWorkYieldModifier());
+		if (iHappy % 100 == 0)
+			cultureString += CvString::format("+%d [ICON_HAPPINESS_1] ", iHappy / 100);
+		else if (iHappy % 10 == 0)
+			cultureString += CvString::format("+%d.%d [ICON_HAPPINESS_1] ", iHappy / 100, (iHappy % 100) / 10);
+		else
+			cultureString += CvString::format("+%d.%02d [ICON_HAPPINESS_1] ", iHappy / 100, iHappy % 100);
+	}
+#endif
 #endif
 #if !defined(LEK_YIELD_TOURISM)
 #if !defined(LEKMOD_GREAT_WORK_YIELD_EFFECTS)
