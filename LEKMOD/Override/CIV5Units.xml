@@ -283249,4 +283249,458 @@
 			<Set Yield="4"/>
 		</Update>
 	</Improvement_Yields>
+	<!-- LEKMOD: Phase 6 civs (2026-10-13). Costs: spec numbers are quick speed, the table holds standard (quick = x0.67); unit Faith costs stay 2x Production. -->
+	<!-- Argentina: Gaucho needs 3 Horses 1 Iron -->
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_ARGENTINA_KNIGHT"/>
+		<Row>
+			<UnitType>UNIT_ARGENTINA_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARGENTINA_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<!-- Armenia: Sparapet needs 3 Horses 1 Iron -->
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_ARMENIA_HORSEMAN"/>
+		<Row>
+			<UnitType>UNIT_ARMENIA_HORSEMAN</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ARMENIA_HORSEMAN</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<!-- Poland: Winged Hussar needs 2 Horses 1 Iron; Ukraine: Tachanka needs 2 Horses -->
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_POLISH_WINGED_HUSSAR"/>
+		<Row>
+			<UnitType>UNIT_POLISH_WINGED_HUSSAR</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_POLISH_WINGED_HUSSAR</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_TACHANKA"/>
+		<Row>
+			<UnitType>UNIT_TACHANKA</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<!-- Hittites: War Chariot 42 Production on quick, 11 ranged / 7 melee, 4 Horses 3 Iron -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_HITTITE_CHARIOT"/>
+			<Set Cost="63" FaithCost="126" Combat="7" RangedCombat="11"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_HITTITE_CHARIOT"/>
+		<Row>
+			<UnitType>UNIT_HITTITE_CHARIOT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_HITTITE_CHARIOT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<!-- Sumeria: Ziggurat no maintenance; Phalanx: Envelopment instead of the 50% flanking bonus -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_ZIGGURAT"/>
+			<Set GoldMaintenance="0"/>
+		</Update>
+	</Buildings>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_PHALANXX" PromotionType="PROMOTION_FLANK_ATTACK_BONUS"/>
+		<Row>
+			<UnitType>UNIT_PHALANXX</UnitType>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Persia: Satrap's Court 1 Happiness; Immortal 42 Production on quick, 3 Iron, March instead of faster healing -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_SATRAPS_COURT"/>
+			<Set Happiness="1"/>
+		</Update>
+	</Buildings>
+	<Units>
+		<Update>
+			<Where Type="UNIT_PERSIAN_IMMORTAL"/>
+			<Set Cost="63" FaithCost="126"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_PERSIAN_IMMORTAL"/>
+		<Row>
+			<UnitType>UNIT_PERSIAN_IMMORTAL</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_PERSIAN_IMMORTAL" PromotionType="PROMOTION_FASTER_HEAL"/>
+		<Row>
+			<UnitType>UNIT_PERSIAN_IMMORTAL</UnitType>
+			<PromotionType>PROMOTION_MARCH</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Egypt: Burial Tomb (from scratch): Construction, no Shrine needed, 2 Gold maintenance, 3 Faith; War Chariot 1 Horse, 10% cheaper -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_BURIAL_TOMB"/>
+			<Set Happiness="0" CapturePlunderModifier="0" GoldMaintenance="2" PrereqTech="TECH_CONSTRUCTION"/>
+		</Update>
+	</Buildings>
+	<Building_ClassesNeededInCity>
+		<Delete BuildingType="BUILDING_BURIAL_TOMB"/>
+	</Building_ClassesNeededInCity>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_BURIAL_TOMB"/>
+		<Row>
+			<BuildingType>BUILDING_BURIAL_TOMB</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Units>
+		<Update>
+			<Where Type="UNIT_EGYPTIAN_WARCHARIOT"/>
+			<Set Cost="50" FaithCost="100"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_EGYPTIAN_WARCHARIOT"/>
+		<Row>
+			<UnitType>UNIT_EGYPTIAN_WARCHARIOT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<!-- Huns: Horse Archer 6 melee (as the Chariot Archer), 3 Horses, no Accuracy I; Qara: no Horses, +2 Faith from Horses -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_HUN_HORSE_ARCHER"/>
+			<Set Combat="6"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_HUN_HORSE_ARCHER"/>
+		<Row>
+			<UnitType>UNIT_HUN_HORSE_ARCHER</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_HUN_HORSE_ARCHER" PromotionType="PROMOTION_ACCURACY_1"/>
+	</Unit_FreePromotions>
+	<Building_ResourceQuantity>
+		<Delete BuildingType="BUILDING_QARA"/>
+	</Building_ResourceQuantity>
+	<Building_ResourceYieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_QARA" ResourceType="RESOURCE_HORSE" YieldType="YIELD_FAITH"/>
+			<Set Yield="2"/>
+		</Update>
+	</Building_ResourceYieldChanges>
+	<!-- Colombia: +1 Gold from Lumbermills; Llanero: no fortify/terrain defense, 3 Horses 1 Iron, Shock I and II -->
+	<Trait_ImprovementYieldChanges>
+		<Row>
+			<TraitType>TRAIT_INDEPENDENCE</TraitType>
+			<ImprovementType>IMPROVEMENT_LUMBERMILL</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_ImprovementYieldChanges>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_COLOMBIAN_CAVALRY"/>
+		<Row>
+			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType>
+			<PromotionType>PROMOTION_SHOCK_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_COLOMBIAN_CAVALRY</UnitType>
+			<PromotionType>PROMOTION_SHOCK_2</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Austria: Hussar: Envelopment instead of the flanking bonus (keeps 2 Horses 1 Iron) -->
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_AUSTRIAN_HUSSAR" PromotionType="PROMOTION_FLANK_ATTACK_BONUS"/>
+		<Row>
+			<UnitType>UNIT_AUSTRIAN_HUSSAR</UnitType>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Byzantium: Hippodrome Amphitheater cost, 3 Culture 3 Faith, no Happiness, no maintenance; Cataphract 2 Horses 1 Iron, normal city attack penalty -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_HIPPODROME"/>
+			<Set Cost="100" Happiness="0" GoldMaintenance="0"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_HIPPODROME"/>
+		<Row>
+			<BuildingType>BUILDING_HIPPODROME</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HIPPODROME</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_BYZANTINE_CATAPHRACT"/>
+		<Row>
+			<UnitType>UNIT_BYZANTINE_CATAPHRACT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BYZANTINE_CATAPHRACT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_BYZANTINE_CATAPHRACT" PromotionType="PROMOTION_SMALL_CITY_PENALTY"/>
+		<Row>
+			<UnitType>UNIT_BYZANTINE_CATAPHRACT</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Franks: Seaxmann Longswordsman cost, Amphibious I instead of Amphibious -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_SEAXMANN"/>
+			<Set Cost="120" FaithCost="240"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_SEAXMANN" PromotionType="PROMOTION_AMPHIBIOUS"/>
+		<Row>
+			<UnitType>UNIT_SEAXMANN</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Russia: +1 Production +1 Gold +1 Faith from Snow; Krepost at Mining, 60 Production on quick, 2 maintenance, +1 Culture +1 Food -->
+	<Trait_TerrainYieldChanges>
+		<Row>
+			<TraitType>TRAIT_STRATEGIC_RICHES</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_STRATEGIC_RICHES</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_STRATEGIC_RICHES</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_TerrainYieldChanges>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_KREPOST"/>
+			<Set Cost="90" GoldMaintenance="2" PrereqTech="TECH_MINING"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_KREPOST</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_KREPOST</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- Norway: Snow +1 Food +1 Production +1 Faith; Stave Church: no Shrine needed, no Snow bonus -->
+	<Trait_TerrainYieldChanges>
+		<Delete TraitType="TRAIT_NORDIC_BOUNTY" TerrainType="TERRAIN_SNOW"/>
+		<Row>
+			<TraitType>TRAIT_NORDIC_BOUNTY</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_NORDIC_BOUNTY</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_NORDIC_BOUNTY</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_TerrainYieldChanges>
+	<Building_ClassesNeededInCity>
+		<Delete BuildingType="BUILDING_STAVE"/>
+	</Building_ClassesNeededInCity>
+	<Building_TerrainYieldChanges>
+		<Delete BuildingType="BUILDING_STAVE" TerrainType="TERRAIN_SNOW"/>
+	</Building_TerrainYieldChanges>
+	<!-- Gauls: all land units have Woodsman; UU (from scratch) now replaces the Swordsman: 60 Production on quick, 15 strength, 3 Iron, Fear Aura -->
+	<Trait_FreePromotionUnitCombats>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GAULS</TraitType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<Civilization_UnitClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_GAUL" UnitType="UNIT_NOBLE_SWORDSMAN"/>
+			<Set UnitClassType="UNITCLASS_SWORDSMAN"/>
+		</Update>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_NOBLE_SWORDSMAN"/>
+			<Set Class="UNITCLASS_SWORDSMAN" PrereqTech="TECH_IRON_WORKING" ObsoleteTech="TECH_STEEL" GoodyHutUpgradeUnitClass="UNITCLASS_LONGSWORDSMAN" Combat="15" Cost="90" FaithCost="180"/>
+		</Update>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_NOBLE_SWORDSMAN"/>
+		<Row>
+			<UnitType>UNIT_NOBLE_SWORDSMAN</UnitType>
+			<UnitClassType>UNITCLASS_LONGSWORDSMAN</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_NOBLE_SWORDSMAN"/>
+		<Row>
+			<UnitType>UNIT_NOBLE_SWORDSMAN</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_NOBLE_SWORDSMAN"/>
+		<Row>
+			<UnitType>UNIT_NOBLE_SWORDSMAN</UnitType>
+			<PromotionType>PROMOTION_FEAR_AURA</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Fear Aura is lost on upgrade (Gauls spec; also the Berserker and the GDR) -->
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_FEAR_AURA"/>
+			<Set LostWithUpgrade="true"/>
+		</Update>
+	</UnitPromotions>
+	<!-- Wales: no combat bonus on Hills, no Gold from Sheep; Saethwyr 17 ranged / 12 melee, moves after attacking, ignores terrain cost -->
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_US_WALES"/>
+	</Trait_FreePromotionUnitCombats>
+	<Building_ResourceYieldChangesGlobal>
+		<Delete BuildingType="BUILDING_WALES_TRAIT" YieldType="YIELD_GOLD"/>
+	</Building_ResourceYieldChangesGlobal>
+	<Units>
+		<Update>
+			<Where Type="UNIT_US_LONGBOWMAN"/>
+			<Set Combat="12" RangedCombat="17"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_US_LONGBOWMAN</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_US_LONGBOWMAN</UnitType>
+			<PromotionType>PROMOTION_IGNORE_TERRAIN_COST</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
 </GameData>

@@ -1954,3 +1954,111 @@ ARSENAL (BUILDING_ARSENAL)
 --------------------------
 Tags: buildings, ui, bugfix
 - Fixed: the tooltip named the Mughal Fort as a separate requirement; it only says Castle now (unique Castles like the Mughal Fort still count)
+
+ARGENTINA (CIVILIZATION_ARGENTINA)
+----------------------------------
+Tags: civs, units
+- Changed: Gaucho needs 3 Horses and 1 Iron (was 2 Horses and 1 Iron)
+
+ARMENIA (CIVILIZATION_ARMENIA)
+------------------------------
+Tags: civs, units
+- Changed: Sparapet needs 3 Horses and 1 Iron (was 2 Horses); shorter tooltip
+
+POLAND (CIVILIZATION_POLAND)
+----------------------------
+Tags: civs, units
+- Changed: Winged Hussar needs 2 Horses and 1 Iron (was 2 Horses)
+
+UKRAINE (CIVILIZATION_UKRAINE)
+------------------------------
+Tags: civs, units
+- Changed: Tachanka needs 2 Horses (was 1)
+
+QING (CIVILIZATION_MANCHURIA)
+-----------------------------
+Tags: civs, units
+- Changed: Manchuria is renamed Qing; its unique Cavalry is renamed Banner Cavalry (still 2 Horses and 1 Iron)
+
+HITTITES (CIVILIZATION_HITTITE)
+-------------------------------
+Tags: civs, units
+- Changed: War Chariot: 11 Ranged Strength (was 10), 7 Strength (was 10), costs 42 (was 37), needs 4 Horses and 3 Iron (was 2 Horses)
+
+SUMERIA (CIVILIZATION_SUMERIA)
+------------------------------
+Tags: civs, units, buildings
+- Changed: Ziggurat costs no Gold maintenance (was 1)
+- Changed: Phalanx starts with Envelopment instead of its +50% flanking bonus
+
+PERSIA (CIVILIZATION_PERSIA)
+----------------------------
+Tags: civs, units, buildings
+- Changed: Satrap's Court gives 1 Happiness (was 2)
+- Changed: Immortal costs 42 (was 37) and needs 3 Iron; starts with March instead of healing faster
+
+EGYPT (CIVILIZATION_EGYPT)
+--------------------------
+Tags: civs, units, buildings
+- Changed: Burial Tomb (rebuilt): available with Construction, needs no Shrine, 3 Faith, 2 Gold maintenance
+- Removed: Burial Tomb: 2 Happiness, double Gold for whoever captures the city, no maintenance
+- Changed: War Chariot needs 1 Horse (was none) and costs 33 (was 37)
+
+HUNS (CIVILIZATION_HUNS)
+------------------------
+Tags: civs, units, buildings
+- Changed: Horse Archer: 6 Strength (was 7, now the same as the Chariot Archer), needs 3 Horses (was 2)
+- Removed: Horse Archer: Accuracy I
+- Changed: Qara: +2 Faith from Horses (was +1)
+- Removed: Qara: the 2 Horses it provided
+
+COLOMBIA (CIVILIZATION_COLOMBIA)
+--------------------------------
+Tags: civs, units
+- Added: +1 Gold from Lumbermills
+- Changed: Llanero needs 3 Horses and 1 Iron (was 2 Horses and 1 Iron) and starts with Shock I and Shock II
+- Removed: Llanero: defensive terrain bonuses and fortifying
+
+AUSTRIA (CIVILIZATION_AUSTRIA)
+------------------------------
+Tags: civs, units
+- Changed: Hussar starts with Envelopment instead of its larger flanking bonus
+
+BYZANTIUM (CIVILIZATION_BYZANTIUM)
+----------------------------------
+Tags: civs, units, buildings
+- Changed: Hippodrome costs as much as an Amphitheater (67, was 63), 3 Culture and 3 Faith (was 2 and 2), no Gold maintenance
+- Removed: Hippodrome: 1 Happiness
+- Changed: Cataphract needs 2 Horses and 1 Iron (was 2 Horses) and has the usual mounted penalty against cities (was a smaller one)
+
+FRANKS (CIVILIZATION_FRANKS)
+----------------------------
+Tags: civs, units
+- Changed: Seaxmann costs as much as a Longswordsman (80, was 76) and starts with Amphibious I instead of Amphibious
+
+RUSSIA (CIVILIZATION_RUSSIA)
+----------------------------
+Tags: civs, buildings
+- Added: Snow tiles yield +1 Production, +1 Gold and +1 Faith
+- Changed: Krepost: available with Mining, costs 60 (was 50), 2 Gold maintenance (was 1), +1 Culture and +1 Food
+
+NORWAY (CIVILIZATION_NORWAY)
+----------------------------
+Tags: civs, buildings
+- Changed: Snow tiles yield +1 Food, +1 Production and +1 Faith (was +2 Food and +1 Production)
+- Changed: Stave Church needs no Shrine
+- Removed: Stave Church: +1 Production from Snow tiles
+
+GAULS (CIVILIZATION_GAUL)
+-------------------------
+Tags: civs, units, promotions
+- Added: all land units have Woodsman
+- Changed: Noble Swordsman (rebuilt) replaces the Swordsman instead of the Longswordsman: 15 Strength, costs 60, needs 3 Iron, starts with Fear Aura
+- Removed: Noble Swordsman: its Forest and attack bonuses
+- Changed: Fear Aura is lost on upgrade (also for the Berserker and the Giant Death Robot)
+
+WALES (CIVILIZATION_WALES)
+--------------------------
+Tags: civs, units
+- Removed: +10% combat strength on Hills for all units; +1 Gold from Sheep
+- Changed: Saethwyr: 17 Ranged Strength (was 18), 12 Strength (was 15); can move after attacking and ignores terrain movement costs

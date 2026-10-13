@@ -147396,6 +147396,91 @@ The ship has weather'd every rack; the prize we sought is won."
 				If this and the turn timer are enabled, whenever a player replaces another player's ally status of a [ICON_CITY_STATE] City-State, that player may not declare war on the replaced player for a full 120 seconds. During this time, the replaced player may still declare war on the replacing player even if the replaced player regains the ally status of the [ICON_CITY_STATE] City-State. If the replaced player does regain ally status, the timer resets, and the replacing player has to wait another 120 seconds. If the replaced player fails to regain the ally status within the allotted time, the replacing player will gain priority over the [ICON_CITY_STATE] City-State, reversing the roles. This timer is independent for each [ICON_CITY_STATE] City-State.
 			</Text>
 		</Row>
+		<!-- LEKMOD: Phase 6 civs (2026-10-13) -->
+		<Replace Tag="TXT_KEY_CIV_JURCHEN_DESC">
+			<Text>Qing Empire</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV_JURCHEN_SHORT_DESC">
+			<Text>Qing</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV_JURCHEN_ADJECTIVE">
+			<Text>Qing</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_QIANLONG">
+			<Text>Banner Cavalry</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_SPARAPET">
+			<Text>Replaces the Horseman. Much stronger, but more expensive.[NEWLINE]Adjacent units receive the Great General combat bonus.[NEWLINE]Does not become obsolete.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HITTITE_WARCHARIOT_HELP">
+			<Text>Replaces the Chariot Archer. Stronger [ICON_RANGE_STRENGTH] Ranged attack, but costs more and needs Iron as well as Horses.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_ZIGGURAT_HELP">
+			<Text>Replaces the Temple. Costs no [ICON_GOLD] Gold maintenance.[NEWLINE]+10% [ICON_RESEARCH] Science in the city.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_PHALANXX_HELP">
+			<Text>Replaces the Spearman. Has the Spearman's bonus against Mounted units (+33%; against Mounted Ranged units +66% when attacking, +33% when defending).[NEWLINE]Starts with Envelopment and is cheaper.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_IMMORTAL">
+			<Text>Replaces the Spearman. Stronger, and starts with March (heals every turn, even after acting).[NEWLINE]Needs Iron.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_BURIAL_TOMB_HELP">
+			<Text>Replaces the Temple. Available with Construction and needs no Shrine.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_EGYPTIAN_WAR_CHARIOT">
+			<Text>Replaces the Chariot Archer. Faster and 10% cheaper, and needs only 1 [ICON_RES_HORSE] Horse.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_HUN_HORSE_ARCHER">
+			<Text>Replaces the Chariot Archer. A fast ranged unit for hit-and-run attacks that is not slowed down by rough terrain.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HUN_HORSE_ARCHER_STRATEGY">
+			<Text>Horse Archers are fast ranged units, deadly on open terrain. Unlike the Chariot Archer they move through rough terrain without losing their movement. As a mounted unit, the Horse Archer is vulnerable to Spearmen.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_QARA_HELP">
+			<Text>Replaces the [ICON_BUILDING_STABLE] Stable. +15% [ICON_PRODUCTION] Production when building Mounted Units.[NEWLINE][NEWLINE]Each source of [ICON_RES_HORSE] Horses, [ICON_RES_SHEEP] Sheep and [ICON_RES_COW] Cattle worked by this City produces +1 [ICON_PRODUCTION] Production.[NEWLINE][ICON_RES_HORSE] Horses also yield +2 [ICON_PEACE] Faith.[NEWLINE][ICON_RES_MAIZE] Maize yields +1 [ICON_FOOD] Food.[NEWLINE][NEWLINE]City must have at least one of these resources improved with a Pasture.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_INDEPENDENCE">
+			<Text>+1 [ICON_FOOD] Food and +1 [ICON_GOLD] Gold from [ICON_BUILD_LUMBERMILL] Lumbermills.[NEWLINE]+1 more [ICON_RESEARCH] Science from them after [ICON_TECH_CHEMISTRY] Chemistry.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_COLOMBIAN_CAVALRY">
+			<Text>Replaces the Cavalry. Starts with Shock I and Shock II.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_AUSTRIAN_HUSSAR">
+			<Text>Replaces the Cavalry. +1 Sight and +1 [ICON_MOVES] Movement.[NEWLINE]Starts with Envelopment.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_BYZANTINE_CATAPHRACT">
+			<Text>Replaces the Horseman. Slower, but has a higher [ICON_STRENGTH] Combat Strength and keeps its defensive terrain bonuses.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_FRANK_SEAXMAN">
+			<Text>Replaces the Longswordsman. Higher [ICON_STRENGTH] Combat Strength.[NEWLINE]Starts with Amphibious I and Cover I.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_STRATEGIC_RICHES">
+			<Text>[ICON_RES_IRON] Iron, [ICON_RES_COAL] Coal, [ICON_RES_ALUMINUM] Aluminum and [ICON_RES_URANIUM] Uranium yield +1 [ICON_PRODUCTION] Production.[NEWLINE]These resources and [ICON_RES_HORSE] Horses give double quantity, and Strategic resources are improved instantly.[NEWLINE][NEWLINE]Snow tiles yield +1 [ICON_PRODUCTION] Production, +1 [ICON_GOLD] Gold and +1 [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_KREPOST_HELP">
+			<Text>Replaces the [ICON_BUILDING_BARRACKS] Barracks. Available with Mining.[NEWLINE]+15 XP for all Units trained in this city.[NEWLINE][ICON_CULTURE] Culture and [ICON_GOLD] Gold costs of acquiring new tiles reduced by 25% in this city.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_NORDIC_BOUNTY">
+			<Text>+1 [ICON_PEACE] Faith from Coastal Resources.[NEWLINE]Snow tiles yield +1 [ICON_FOOD] Food, +1 [ICON_PRODUCTION] Production and +1 [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_STAVE_HELP">
+			<Text>Replaces the Temple. Needs no Shrine.[NEWLINE]+1 [ICON_PRODUCTION] Production from Tundra tiles.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_GAULS">
+			<Text>Receive a [COLOR_YELLOW]Murus Gallicus[ENDCOLOR] in the [ICON_CAPITAL] Capital upon the discovery of [ICON_TECH_MINING] Mining.[NEWLINE]All land units have Woodsman (double movement in Forest and Jungle).</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_NOBLE_SWORDSMAN_HELP">
+			<Text>Replaces the Swordsman. Stronger, but needs more Iron.[NEWLINE]Starts with Fear Aura (enemies within 1 tile are weaker).</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_NOBLE_SWORDSMAN_STRATEGY">
+			<Text>The Noble Swordsman is the Gauls' unique unit, replacing the Swordsman. Its Fear Aura weakens nearby enemies, so it works best at the front of an attack.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_US_WALES">
+			<Text>Upon the discovery of [ICON_TECH_ANIMAL_HUSBANDRY] Animal Husbandry, [ICON_RES_SHEEP] Sheep tiles yield +1 [ICON_FOOD] Food.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_US_LONGBOWMAN_HELP">
+			<Text>Replaces the Crossbowman. Can move after attacking and ignores terrain movement costs.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>
