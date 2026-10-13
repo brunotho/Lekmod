@@ -457,7 +457,7 @@
 				<Label Anchor="C,C" Offset="0,10" WrapWidth="440" ID="NoIntrigueAvailable" Hidden="1" String="TXT_KEY_EO_NO_INTRIGUE_AVAILABLE" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"/>
 				<!-- LEKMOD: rules (replaces the intrigue messages): plain background, one page at a time -->
 				<Box Size="954,463" Color="12,18,26,255" ID="LekmodRulesBack">
-					<ScrollPanel Vertical="1" Size="830,447" Offset="20,8" AutoScrollBar="1" ID="LekmodRulesScroll">
+					<ScrollPanel Vertical="1" Size="916,447" Offset="20,8" AutoScrollBar="1" ID="LekmodRulesScroll">
 						<ScrollBar Style="VertSlider" Length="431" Anchor="R,C" AnchorSide="O,I"/>
 						<UpButton Style="ScrollBarUp" Anchor="R,T" AnchorSide="O,I"/>
 						<DownButton Style="ScrollBarDown" Anchor="R,B" AnchorSide="O,I"/>
@@ -465,8 +465,8 @@
 							<Label WrapWidth="780" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LekmodRulesText"/>
 						</Stack>
 					</ScrollPanel>
-					<Button Anchor="R,T" Offset="62,10" Size="45,45" Texture="Esp_FramedIcons45_Expansion.dds" TextureOffset="0,45" NoStateChange="1" ToolTip="TXT_KEY_LEKMOD_EO_RULES_SPIES_BUTTON" ID="LekmodRulesSpyButton"/>
-					<Button Anchor="R,T" Offset="12,10" Size="45,45" Texture="Esp_Diplomat_FramedIcon45.dds" NoStateChange="1" ToolTip="TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS_BUTTON" ID="LekmodRulesDiplomatButton"/>
+					<Button Anchor="R,T" Offset="86,10" Size="45,45" Texture="Esp_FramedIcons45_Expansion.dds" TextureOffset="0,45" NoStateChange="1" ToolTip="TXT_KEY_LEKMOD_EO_RULES_SPIES_BUTTON" ID="LekmodRulesSpyButton"/>
+					<Button Anchor="R,T" Offset="36,10" Size="45,45" Texture="Esp_Diplomat_FramedIcon45.dds" NoStateChange="1" ToolTip="TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS_BUTTON" ID="LekmodRulesDiplomatButton"/>
 				</Box>
 			</Box>
 		</Box>

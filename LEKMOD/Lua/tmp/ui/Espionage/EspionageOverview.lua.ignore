@@ -58,10 +58,11 @@ local g_ProgressBarStates = {
 		IconOffset = {x = 45,y = 0},
 		ProgressBarTexture = "MeterBarGreatEspionageBlue.dds",
 	},
-	-- LEKMOD: diplomats: progress to the next level
+	-- LEKMOD: diplomats: progress to the next level (icon: level-up arrow, see LekmodSetActivityIcon)
 	TXT_KEY_SPY_STATE_SCHMOOZING = {
 		IconOffset = {x = 45,y = 0},
 		ProgressBarTexture = "MeterBarGreatPersonGold.dds",
+		LekmodLevelUpIcon = true,
 	},
 }
 	
@@ -492,7 +493,7 @@ function RelocateAgent(agentID, city)
 	if(not bHideActivityInfo) then
 		
 		local progressBarState = progressBarStates[agent.State];
-		Controls.AgentActivityIcon:SetTextureOffset(progressBarState.IconOffset);
+		LekmodSetActivityIcon(Controls.AgentActivityIcon, progressBarState);
 		
 		if (progressBarState.ProgressBarTexture) then
 			Controls.AgentActivityProgress:SetHide(false);
@@ -702,7 +703,7 @@ function RefreshAgents()
 			if(not bHideActivityInfo) then
 				
 				local progressBarState = progressBarStates[v.State];
-				agentEntry.AgentActivityIcon:SetTextureOffset(progressBarState.IconOffset);
+				LekmodSetActivityIcon(agentEntry.AgentActivityIcon, progressBarState);
 				
 				if (progressBarState.ProgressBarTexture) then
 					agentEntry.AgentActivityProgress:SetHide(false);
@@ -1586,6 +1587,17 @@ function LekmodHangingIndent(text, iPixels)
 	return table.concat(out, "[NEWLINE]");
 end
 
+-- LEKMOD: the activity icon left of the progress bar; diplomats show a level-up arrow (art_sources/tools/build_levelup_icon.py)
+function LekmodSetActivityIcon(control, progressBarState)
+	if (progressBarState.LekmodLevelUpIcon) then
+		control:SetTexture("lekmod_esp_levelup45.dds");
+		control:SetTextureOffsetVal(0, 0);
+	else
+		control:SetTexture("Esp_FramedIcons45_Expansion.dds");
+		control:SetTextureOffset(progressBarState.IconOffset);
+	end
+end
+
 -- LEKMOD: agent tooltips from the current rules (nil = keep the base text)
 local function LekmodDec(x100)
 	return (string.gsub(string.format("%.2f", x100 / 100), "%.?0+$", ""));
@@ -1602,13 +1614,15 @@ local function LekmodPartLines(parts)
 	return str;
 end
 
--- catch chance of a spy with this strength (same formula as the DLL CvPlayerEspionage::LekmodGetCatchChance):
--- 10% per defense building + 100% x guard level / (guard level + strength + 1), at most 100%
+-- catch chance of a spy with this strength (same as the DLL CvPlayerEspionage::LekmodGetCatchChance):
+-- 10% per defense building + a guard part from guard level - spy strength (-4 or less .. +4 or more), at most 100%
+local LEKMOD_GUARD_PART_BY_GAP = { 0, 5, 10, 20, 33, 50, 67, 83, 100 };
 local function LekmodGuardPart(iGuardLevel, iStrength)
 	if (iGuardLevel <= 0) then
 		return 0;
 	end
-	return math.floor(100 * iGuardLevel / (iGuardLevel + math.max(1, iStrength) + 1));
+	local iGap = math.max(-4, math.min(4, iGuardLevel - iStrength));
+	return LEKMOD_GUARD_PART_BY_GAP[iGap + 5];
 end
 local function LekmodCatch(iFromBuildings, iGuardLevel, iStrength)
 	return math.min(100, iFromBuildings + LekmodGuardPart(iGuardLevel, iStrength));

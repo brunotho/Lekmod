@@ -1847,7 +1847,9 @@ int CvPlayerEspionage::LekmodGetStealInterval(int iStrength, int iDefense)
 }
 
 /// % chance a spy of this strength is caught on a steal attempt in pCity: 10% per Constabulary, Police Station and
-/// Intelligence Agency (public) + 100% x guard level / (guard level + strength + 1) (hidden from the attacker), at most 100%
+/// Intelligence Agency (public) + a guard part from guard level - spy strength (hidden from the attacker), at most 100%.
+/// Guard part for a gap of -4 or less .. +4 or more: 0 / 5 / 10 / 20 / 33 / 50 / 67 / 83 / 100%
+/// (level 5 guard vs a strength 1 spy is a sure catch; a strength 5 spy vs a level 1 guard is never caught by the guard).
 int CvPlayerEspionage::LekmodGetCatchChance(CvCity* pCity, int iStrength, int* piFromBuildings, int* piGuardLevel)
 {
 	if (pCity == NULL)
@@ -1872,7 +1874,9 @@ int CvPlayerEspionage::LekmodGetCatchChance(CvCity* pCity, int iStrength, int* p
 		*piFromBuildings = std::min(100, 10 * iBuildings);
 	if (piGuardLevel)
 		*piGuardLevel = iGuardLevel;
-	const int iGuardPart = iGuardLevel > 0 ? 100 * iGuardLevel / (iGuardLevel + std::max(1, iStrength) + 1) : 0;
+	static const int aiGuardPartByGap[9] = { 0, 5, 10, 20, 33, 50, 67, 83, 100 };
+	const int iGap = std::max(-4, std::min(4, iGuardLevel - iStrength));
+	const int iGuardPart = iGuardLevel > 0 ? aiGuardPartByGap[iGap + 4] : 0;
 	return std::min(100, 10 * iBuildings + iGuardPart);
 }
 

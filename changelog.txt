@@ -1837,7 +1837,7 @@ Fourteen new proposals.
 - Added: Mandate of Occupation (Atomic Era): +1 Delegate per other civilization's original capital you hold
 - Added: Import Tariffs (Modern Era): luxuries give half the Happiness for 3 turns
 - Added: Diplomatic Transparency (Modern Era): every civilization has live vision of the other civilizations' cities and the tiles within 2 of them
-- Added: Blackout (Information Era): the Demographics screen shows only black (no headers, numbers or rows); ends Diplomatic Transparency
+- Added: Blackout (Information Era): the Demographics screen shows no headers, numbers or rows (only its empty background); ends Diplomatic Transparency
 - Added: Voice for the Voiceless (Modern Era): no host votes; the civilization with the fewest Delegates hosts; the host gets +1 Delegate
 - Added: War Games (Modern Era): +50% Experience (air units +25%), double unit maintenance, for 8 turns
 - Added: Pariah (Atomic Era): nobody can trade with the chosen civilization (peace still possible), its deals and foreign Trade Routes end, it has 2 Delegates less and +15% Combat Strength
@@ -1853,7 +1853,7 @@ WORLD CONGRESS SCREEN (ui)
 Tags: world congress, ui
 - Changed: the proposal lists are sorted alphabetically
 - Removed: Choose Host and World Leader no longer appear among the proposals (they are never proposed)
-- Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat; Demographics.xml too (Lua/tmp/ui/Replays, for the Blackout overlay)
+- Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat; Demographics.xml too (Lua/tmp/ui/Replays)
 
 NUCLEAR FUSION (TECH_NUCLEAR_FUSION)
 ------------------------------------
@@ -1875,7 +1875,7 @@ Spies and diplomats are being reworked (in progress).
 - Changed: a city's visible defense = +1 Constabulary, +1 Police Station, +1 Intelligence Agency, + their tourism influence levels over you
 - Changed: a spy steals every 15 / 13 / 11 / 9 / 7 turns at strength minus visible defense 1 / 2 / 3 / 4 / 5+ (5 more turns per point below 1); the timer follows changes every turn
 - Changed: a steal always succeeds and gives 8 turns of the city's Science toward a technology you pick; the victim always learns who stole
-- Changed: each steal can get the spy caught: 10% per Constabulary, Police Station and Intelligence Agency, plus the guarding spy's level / (its level + the spy's strength + 1), e.g. a level 2 guard against a level 1 spy adds 50% (at most 100%); the guarding spy is hidden from the attacker and doesn't slow the steals
+- Changed: each steal can get the spy caught: 10% per Constabulary, Police Station and Intelligence Agency, plus a part from the guarding spy's level minus the spy's strength (-4 or less 0%, -3 5%, -2 10%, -1 20%, 0 33%, +1 50%, +2 67%, +3 83%, +4 or more 100%; at most 100% in total); the guarding spy is hidden from the attacker and doesn't slow the steals
 - Changed: diplomats gain a level every 25 turns in the same city (moving keeps the level, restarts the count)
 - Changed: a diplomat in another civilization's capital gives you 2% per level of that capital's Science (halved at war; only while they know a technology you lack) and +15% per level Gold on your trade routes to that city
 - Changed: a diplomat in a City-State gives +0.33 Influence per turn per level, and Influence below the resting point recovers 50% faster per level
@@ -1893,7 +1893,7 @@ Spies and diplomats are being reworked (in progress).
 - Removed: the Potential column in the city lists
 - Removed: tooltip explanations of mechanics that no longer apply (elections, the old Potential and rank rules)
 - Added: trade route tooltips show the Gold bonus from your diplomat in the destination capital
-- Changed: diplomats show a progress bar to their next level; meddling spies no longer show a meaningless election timer
+- Changed: diplomats show a progress bar to their next level (with a level-up arrow icon); meddling spies no longer show a meaningless election timer
 - Added: diplomats can also be posted in City-States
 - Changed: the spy activity in City-States is now called Meddling
 - Added: the Gold tooltip lists spy upkeep, and the Science tooltip lists diplomat Science

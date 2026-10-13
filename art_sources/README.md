@@ -66,6 +66,12 @@ from the sources, so it can be run any number of times (nothing gets shifted or 
   Used for Sanctuary, Stupa and the Uranium Mapping Project (2026-10-11).
 - Atlases: one 1x1 atlas per icon.
 
+## Espionage screen icons
+- `python art_sources/tools/build_levelup_icon.py [--preview out.png]` draws the framed 45 px level-up arrow for the diplomat
+  progress bar (`lekmod_esp_levelup45.dds`): gold ring, glossy black-to-blue disc and pale cyan double chevron, matching the
+  base game's `Esp_FramedIcons45_Expansion` icons (those are packed in the game archives, so the style was copied from a
+  screenshot). Uncompressed, one mip.
+
 ## Main menu backgrounds
 Since 2026-10-13 there is one background: `course_of_empire_destruction_v1.jpg` (1920x1200), written as BC1 (no alpha)
 with one mip to `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background.dds` (1.2 MB):
