@@ -45,6 +45,7 @@ enum LekmodResolutionColumn
 	LRC_TOURISM,					// LekmodTourismModifier: % Tourism everywhere
 	LRC_CHARTER,					// LekmodCivilLiberties: ideology unhappiness from other ideologies' influence returns (weaker formula)
 	LRC_NUKE_COST,					// LekmodNukeCostModifier: % cost of nuclear weapons (Non-Proliferation; also for purchases)
+	LRC_STEAL_SLOWER,				// LekmodStealSlower: spies everywhere take % longer per steal (Diplomatic Transparency)
 	NUM_LEKMOD_RESOLUTION_COLUMNS
 };
 #endif
@@ -733,6 +734,11 @@ public:
 	int m_iLekmodLeaderVoteTurn;
 	int m_iLekmodPrivilegeTurn;
 	bool m_bLekmodHostSession;
+#ifdef LEKMOD_SPY_WONDERS
+	int m_iLekmodExtraLeaderVoteTurn; // extra World Leader vote (Extraordinary Session), -1 = none (saved)
+	void LekmodScheduleExtraLeaderVote();
+	int LekmodGetExtraLeaderVoteTurn() const { return m_iLekmodExtraLeaderVoteTurn; }
+#endif
 
 	void LekmodDoTurnLate();
 	void LekmodStartProposals(int iTurn, bool bCallForProposals);

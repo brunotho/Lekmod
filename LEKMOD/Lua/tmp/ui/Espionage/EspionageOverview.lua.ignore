@@ -1472,7 +1472,11 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 			local bCheckDiplomat = false;
 			if (city:IsCapital() and (not Players[v.PlayerID]:IsMinorCiv()) and (not pMyTeam:IsAtWar(city:GetTeam()))) then
 				bCheckDiplomat = true;
-			end 
+			end
+			-- LEKMOD: no diplomats in other civilizations' capitals while Blackout (World Congress) is active
+			if (bCheckDiplomat and Game.LekmodIsBlackout ~= nil and Game.LekmodIsBlackout()) then
+				bCheckDiplomat = false;
+			end
 			-- LEKMOD: diplomats can also be posted in City-States
 			if (Players[v.PlayerID]:IsMinorCiv() and (not pMyTeam:IsAtWar(city:GetTeam()))) then
 				bCheckDiplomat = true;
@@ -1661,6 +1665,13 @@ function LekmodStealInfoText(info)
 		str = Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_LINE", info.Turns, info.StealAmount);
 	end
 	str = "[NEWLINE][NEWLINE]" .. str;
+	-- Iron Curtain, Kremlin, Great Firewall, Diplomatic Transparency
+	if (info.Slower ~= nil and info.Slower > 0) then
+		str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_SLOWER", info.Slower);
+		for _, part in ipairs(info.SlowerParts) do
+			str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_SLOWER_PART", part.Value, Locale.Lookup(part.Key));
+		end
+	end
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_HEADER");
 	str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_BUILDINGS", info.CatchFromBuildings, info.DefenseBuildings);
 	str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_GUARD",

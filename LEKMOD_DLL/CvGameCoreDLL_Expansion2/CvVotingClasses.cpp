@@ -1963,6 +1963,9 @@ CvLeague::CvLeague(void)
 	m_iLekmodLeaderVoteTurn = -1;
 	m_iLekmodPrivilegeTurn = -1;
 	m_bLekmodHostSession = false;
+#ifdef LEKMOD_SPY_WONDERS
+	m_iLekmodExtraLeaderVoteTurn = -1;
+#endif
 #endif
 }
 
@@ -2354,6 +2357,10 @@ void CvLeague::ResetTurnsUntilSession()
 int CvLeague::GetTurnsUntilVictorySession()
 {
 #ifdef LEKMOD_CONGRESS_CYCLE
+#ifdef LEKMOD_SPY_WONDERS
+	if (m_iLekmodExtraLeaderVoteTurn >= 0 && (m_iLekmodLeaderVoteTurn < 0 || m_iLekmodExtraLeaderVoteTurn < m_iLekmodLeaderVoteTurn))
+		return MAX(0, m_iLekmodExtraLeaderVoteTurn - (GC.getGame().getGameTurn() + (GC.getGame().GetGameLeagues()->m_bLekmodInTransition ? 1 : 0)));
+#endif
 	if (m_iLekmodLeaderVoteTurn < 0)
 		return 999;
 	return MAX(0, m_iLekmodLeaderVoteTurn - (GC.getGame().getGameTurn() + (GC.getGame().GetGameLeagues()->m_bLekmodInTransition ? 1 : 0)));
@@ -6049,7 +6056,7 @@ static const char* s_aszLekmodResolutionColumns[NUM_LEKMOD_RESOLUTION_COLUMNS] =
 	"LekmodCapturedCapitalVotes", "LekmodLuxuryHappinessPercent", "LekmodBlackout", "LekmodVoiceForTheVoiceless", "LekmodExperienceModifier",
 	"LekmodAirExperienceModifier", "LekmodTargetVotes", "LekmodTargetCombatModifier", "LekmodTargetNoTrade", "LekmodFirstTechGoldPercent",
 	"LekmodTechDiscountPerCiv", "LekmodClimateReparations", "LekmodHappinessPerFactory", "LekmodTransparency", "LekmodTourismModifier",
-	"LekmodCivilLiberties", "LekmodNukeCostModifier"
+	"LekmodCivilLiberties", "LekmodNukeCostModifier", "LekmodStealSlower"
 };
 
 /// Sum of a Lekmod column over the active resolutions (only those whose chosen civ is eTarget, if given)
@@ -6182,6 +6189,10 @@ void CvLeague::LekmodDoEnactOneShot(CvEnactProposal* pProposal)
 		}
 		if (m_iLekmodLeaderVoteTurn >= 0)
 			m_iLekmodLeaderVoteTurn += 3;
+#ifdef LEKMOD_SPY_WONDERS
+		if (m_iLekmodExtraLeaderVoteTurn >= 0)
+			m_iLekmodExtraLeaderVoteTurn += 3;
+#endif
 	}
 
 	// Repeals another resolution (Blackout ends Diplomatic Transparency)
@@ -6384,6 +6395,14 @@ void CvLeague::LekmodDoTurnLate()
 		m_iLekmodLeaderVoteTurn = iTurn + 7;
 		LekmodDoWorldLeaderVote();
 	}
+#ifdef LEKMOD_SPY_WONDERS
+	else if (m_iLekmodExtraLeaderVoteTurn >= 0 && iTurn >= m_iLekmodExtraLeaderVoteTurn)
+	{
+		// Extraordinary Session: an extra vote; the regular schedule stays
+		m_iLekmodExtraLeaderVoteTurn = -1;
+		LekmodDoWorldLeaderVote();
+	}
+#endif
 	GC.GetEngineUserInterface()->setDirty(LeagueScreen_DIRTY_BIT, true);
 }
 
@@ -6615,6 +6634,18 @@ int CvLeague::LekmodGetSessionInterval() const
 }
 
 /// World leader vote: every member votes for itself
+#ifdef LEKMOD_SPY_WONDERS
+/// Extraordinary Session: an extra World Leader vote in 2 turns; one turn later if a regular vote falls on that turn
+void CvLeague::LekmodScheduleExtraLeaderVote()
+{
+	const int iTurn = GC.getGame().getGameTurn() + (GC.getGame().GetGameLeagues()->m_bLekmodInTransition ? 1 : 0);
+	m_iLekmodExtraLeaderVoteTurn = iTurn + 2;
+	if (m_iLekmodExtraLeaderVoteTurn == m_iLekmodLeaderVoteTurn)
+		m_iLekmodExtraLeaderVoteTurn++;
+	GC.GetEngineUserInterface()->setDirty(LeagueScreen_DIRTY_BIT, true);
+}
+
+#endif
 void CvLeague::LekmodDoWorldLeaderVote()
 {
 	// The vote turn: Delegates are counted and frozen; the World Leader vote screen shows them.
@@ -8378,6 +8409,14 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 			writeTo.m_aiLekmodLastLeaderVote.push_back(iEntry);
 		}
 	}
+	{
+		int iExtraLeaderVoteTurn = -1;
+		if (uiVersion >= 19)
+			loadFrom >> iExtraLeaderVoteTurn;
+#ifdef LEKMOD_SPY_WONDERS
+		writeTo.m_iLekmodExtraLeaderVoteTurn = iExtraLeaderVoteTurn;
+#endif
+	}
 	if (uiVersion < 15)
 	{
 		writeTo.m_iLekmodVoteTurn = (writeTo.m_iTurnsUntilSession == MAX_INT) ? MAX_INT : GC.getGame().getGameTurn() + writeTo.m_iTurnsUntilSession;
@@ -8394,7 +8433,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 {
 #ifdef LEKMOD_CONGRESS_CYCLE
-	uint uiVersion = 18;
+	uint uiVersion = 19;
 #else
 	uint uiVersion = 14;
 #endif
@@ -8499,6 +8538,11 @@ FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 	saveTo << (int)readFrom.m_aiLekmodLastLeaderVote.size();
 	for (uint i = 0; i < readFrom.m_aiLekmodLastLeaderVote.size(); i++)
 		saveTo << readFrom.m_aiLekmodLastLeaderVote[i];
+#ifdef LEKMOD_SPY_WONDERS
+	saveTo << readFrom.m_iLekmodExtraLeaderVoteTurn;
+#else
+	saveTo << -1;
+#endif
 #endif
 
 	return saveTo;

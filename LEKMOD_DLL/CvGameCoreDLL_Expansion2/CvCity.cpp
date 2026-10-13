@@ -7854,6 +7854,15 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 					GET_PLAYER(eBest).GetMinorCivAI()->AddQuestForPlayer(getOwner(), MINOR_CIV_QUEST_TRADE_ROUTE, GC.getGame().getGameTurn());
 			}
 #endif
+#ifdef LEKMOD_SPY_WONDERS
+			// Buildings.ExtraWorldLeaderVote (Extraordinary Session): an extra World Leader vote in 2 turns
+			if (pBuildingInfo->IsExtraWorldLeaderVote())
+			{
+				CvLeague* pLeague = GC.getGame().GetGameLeagues()->GetActiveLeague();
+				if (pLeague != NULL)
+					pLeague->LekmodScheduleExtraLeaderVote();
+			}
+#endif
 #ifdef LEKMOD_DEFENSE_BUILDINGS
 			// Buildings.RevealResource: the team sees this resource from now on (saved team list, also used by the base game)
 			if (pBuildingInfo->GetRevealResource() != -1)

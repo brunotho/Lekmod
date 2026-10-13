@@ -20,6 +20,8 @@ TEXCONV = os.environ.get('TEXCONV', os.path.join(os.path.dirname(REPO), 'texconv
 SIZES = (32, 45, 64, 80, 128, 214, 256)
 DIAMETER, OFF_X, OFF_Y = 171 / 256.0, 43 / 256.0, 42 / 256.0
 CROP = 0.05  # fraction trimmed from each edge of the source before scaling
+# sources delivered as a cut-out on white: the white connected to the edges becomes this background colour
+WHITE_BACKGROUND = {'ministry_of_truth': (22, 22, 24)}
 
 
 def icon(src, size):
@@ -36,6 +38,22 @@ def icon(src, size):
     return canvas.resize((size, size), Image.LANCZOS)
 
 
+def replace_white_background(src, colour):
+    rgb = src.convert('RGB')
+    w, h = rgb.size
+    seeds = [(x, 0) for x in range(0, w, 8)] + [(x, h - 1) for x in range(0, w, 8)] +             [(0, y) for y in range(0, h, 8)] + [(w - 1, y) for y in range(0, h, 8)]
+    marker = (255, 0, 255)
+    for seed in seeds:
+        if min(rgb.getpixel(seed)) >= 225:
+            ImageDraw.floodfill(rgb, seed, marker, thresh=40)
+    out = Image.new('RGBA', (w, h))
+    px_in, px_out = rgb.load(), out.load()
+    for yy in range(h):
+        for xx in range(w):
+            px_out[xx, yy] = colour + (255,) if px_in[xx, yy] == marker else px_in[xx, yy] + (255,)
+    return out
+
+
 def build(name):
     folder = os.path.join(SRC, name)
     have = {}
@@ -43,6 +61,8 @@ def build(name):
         if f.startswith(name + '_') and f.endswith('.dds'):
             have[int(f[len(name) + 1:-4])] = os.path.join(folder, f)
     src = Image.open(have[max(have)]).convert('RGBA')
+    if name in WHITE_BACKGROUND:
+        src = replace_white_background(src, WHITE_BACKGROUND[name])
     # the delivered art has a dark border/vignette: trim it so the circle shows the picture, not a black ring
     c = int(round(src.size[0] * CROP))
     src = src.crop((c, c, src.size[0] - c, src.size[1] - c))

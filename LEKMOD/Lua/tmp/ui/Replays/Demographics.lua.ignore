@@ -497,7 +497,7 @@ end
 ----------------------------------------------------------------
 -- LEKMOD: Blackout (World Congress): the screen opens with its usual background, but without the table
 function LekmodApplyBlackout()
-	local bBlackout = (not m_bIsEndGame) and (Game.LekmodIsBlackout ~= nil) and Game.LekmodIsBlackout();
+	local bBlackout = (not m_bIsEndGame) and (Game.LekmodIsBlackout ~= nil) and Game.LekmodIsBlackout(Game.GetActivePlayer());
 	if( Controls.BigStack ~= nil ) then
 		Controls.BigStack:SetHide( bBlackout );
 	end

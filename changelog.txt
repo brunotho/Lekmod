@@ -1672,7 +1672,7 @@ Tags: policies
 - Removed: Nationalism
 - Added: Cultural Dominion (tier 1): Great Writers, Artists and Musicians 25% faster; World Wonders in captured cities +10 Tourism
 - Added: Doctrine of Subjugation (tier 1): each Courthouse built after adopting it creates 2 Great Works in your empty slots; +100% Gold from capturing cities (adds up with Songhai's bonus); resistance in captured cities lasts half as long
-- Added: Advanced Interrogation Techniques (tier 1): Spoils of War give 10 percentage points more of the technology (e.g. 30% -> 40% in the Information Era)
+- Added: Advanced Interrogation Techniques (tier 1): Spoils of War give 10 percentage points more of the technology (e.g. 30% -> 40% in the Information Era); each enemy spy you catch also steals a random technology from its owner (one you could research now)
 - Changed: Third Alternative (rebuilt): double Oil, Aluminum and Uranium; +50% Production toward Military Academies
 - Removed: Third Alternative: double all strategic resources; Food and Science in the capital
 - Changed: Iron Fist: all non-air military units get Discipline (+50% Experience); Gold and Culture from kills capped at 40 each
@@ -1680,8 +1680,7 @@ Tags: policies
 - Changed: Gunboat Diplomacy (rebuilt): +2 World Congress votes; tribute costs no Influence, keeps your own pledge of protection and works at any Influence level, once every 10 turns per City-State
 - Removed: Gunboat Diplomacy: +50% intimidation, +50 Influence from tribute
 - Added: Cult of Personality: +2 Happiness from each Great Work
-- Note: Advanced Interrogation Techniques' "steal a technology when you capture a spy" waits for the Diplomat/Spy rework
-- DLL: Policies.TourismPerCapturedWonder, CaptureGoldModifier, SpoilsOfWarModifier; Policy_ResourceQuantityModifiers; Gunboat (MinorBullyNoPenalty) ignores the Influence block and the 10-20 turn tribute penalty (LEKMOD_POLICY_REWORK)
+- DLL: Policies.TourismPerCapturedWonder, CaptureGoldModifier, SpoilsOfWarModifier, StealTechOnSpyCatch (LEKMOD_SPY_WONDERS); Policy_ResourceQuantityModifiers; Gunboat (MinorBullyNoPenalty) ignores the Influence block and the 10-20 turn tribute penalty (LEKMOD_POLICY_REWORK)
 
 FREEDOM (POLICY_BRANCH_FREEDOM)
 -------------------------------
@@ -1837,17 +1836,16 @@ Fourteen new proposals.
 - Added: Breakdown of International Relations (every human player in the Information Era, Nuclear Fusion known): everyone at war, no peace, all other resolutions end, no further sessions, -33% Tourism, next World Leader vote 3 turns later
 - Added: Mandate of Occupation (Atomic Era): +1 Delegate per other civilization's original capital you hold
 - Added: Import Tariffs (Modern Era): luxuries give half the Happiness for 3 turns
-- Added: Diplomatic Transparency (Modern Era): every civilization has live vision of the other civilizations' cities and the tiles within 2 of them
-- Added: Blackout (Information Era): the Demographics screen shows only the word BLACKOUT instead of its table; ends Diplomatic Transparency
+- Added: Diplomatic Transparency (Modern Era): every civilization has live vision of the other civilizations' cities and the tiles within 2 of them; spies take 50% longer per steal
+- Added: Blackout (Information Era): the Demographics screen shows only the word BLACKOUT instead of its table; all diplomats in other civilizations' capitals are sent home and can't be placed there while it is active; ends Diplomatic Transparency
 - Added: Voice for the Voiceless (Modern Era): no host votes; the civilization with the fewest Delegates hosts; the host gets +1 Delegate
 - Added: War Games (Modern Era): +50% Experience (air units +25%), double unit maintenance, for 8 turns
 - Added: Pariah (Atomic Era): nobody can trade with the chosen civilization (peace still possible), its deals and foreign Trade Routes end, it has 2 Delegates less and +15% Combat Strength
 - Added: Brain Trust: the first civilization with a technology gets 10% of its cost in Gold; technologies other civilizations know are 5% faster per civilization that knows them
 - Added: Climate Change Reparations (every civilization in the Modern Era): 200 Gold per Factory paid once (not below 0); +1 Happiness per Factory; +30% Production toward Hydro, Nuclear and Solar Plants
 - Added: Charter of Civil Liberties (Modern Era): public opinion returns while it is active; a civilization under other ideologies' cultural pressure gets Unhappiness = dissatisfaction (1-5) / 2 per city + population / (20 - 2 x dissatisfaction); influence still never forces an ideology switch; the five levels are named Dissidents, Unrest, Civil Resistance, Revolutionary Wave and System Collapse
-- Note: the spy parts of Diplomatic Transparency and Blackout come with the Diplomat/Spy rework
 - Dev: proposals with only Lekmod effects (Blackout, Import Tariffs, the new Non-Proliferation, ...) were dropped right after passing because the base game keeps only resolutions with base-game effects; fixed
-- DLL: Resolutions.Lekmod* columns (LekmodResolutionColumn, read at runtime), Resolution_LekmodBuildingClassProductionModifiers, timed resolutions end in CvLeague::LekmodDoExpiry; Lua Game.LekmodIsBlackout (Demographics)
+- DLL: Resolutions.Lekmod* columns (LekmodResolutionColumn, read at runtime), Resolution_LekmodBuildingClassProductionModifiers, timed resolutions end in CvLeague::LekmodDoExpiry; Lua Game.LekmodIsBlackout (Demographics); Resolutions.LekmodStealSlower (Transparency)
 
 ADDITIONAL INFORMATION MENU (ui)
 --------------------------------
@@ -1909,6 +1907,44 @@ Spies and diplomats are reworked: spies steal on a timer and risk getting caught
 - Added: the Gold tooltip lists spy upkeep, and the Science tooltip lists diplomat Science
 - Added: when two civilizations each have a diplomat in the other's capital, each also sees what the other's level 3+ spies see in third civilizations' cities
 - Added: spies in City-States show a coup chance bar; its tooltip lists the Influence gap, both spy levels, policies and the formula
+- Changed: effects that slow down steals add up and lengthen the steal timer: Iron Curtain +50%, Kremlin +30%, Great Firewall +25%, Diplomatic Transparency +50%; a spying agent's tooltip lists the ones that apply
+- Dev: Iron Curtain's slower steals were ignored by the reworked steal timer; fixed
 - Fixed: a Tourism influence bonus over a City-State's ally could make the coup chance worse instead of better (high spy levels counted like the lowest one)
-- DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetCatchChance/LekmodSpyCaught), LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL
+- DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetCatchChance/LekmodSpyCaught), LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL; LEKMOD_SPY_WONDERS (LekmodGetStealSlower, LekmodEvictBlockedAgents, LekmodInterrogate, LekmodPlayerBuildingValue)
 - Dev: EspionageOverview.lua is now a Lekmod template (Lua/tmp/ui/Espionage), copied by ui_check.bat
+
+KREMLIN (BUILDING_KREMLIN)
+--------------------------
+Tags: buildings, game mechanics
+Now a counter-espionage wonder.
+- Added: enemy spies take 30% longer per steal in all your cities
+- Added: your guarding spies count 1 level higher
+- Added: enemy spies caught in your cities are always executed (no choice to send them home)
+- Removed: +50% Production toward Armor units
+- DLL: Buildings.EnemySpyStealSlower, GuardLevelChange, ExecuteCaughtSpies (LEKMOD_SPY_WONDERS)
+
+GREAT FIREWALL (BUILDING_GREAT_FIREWALL)
+----------------------------------------
+Tags: buildings, game mechanics
+- Added: other civilizations' spies and diplomats are sent home from its city and can't be placed there
+- Changed: enemy spies take 25% longer per steal in your other cities (was 25% weaker spies in the old spy system)
+- DLL: Buildings.BlockForeignSpies; the old EspionageModifier and GlobalEspionageModifier are set to 0 (unused by the spy rework)
+
+MINISTRY OF TRUTH (BUILDING_LEKMOD_MINISTRY_OF_TRUTH)
+-----------------------------------------------------
+Tags: buildings, game mechanics
+New World Wonder (Telecommunications, 2000 Production).
+- Added: 3 free spies
+- Added: your spies and diplomats are set up in their city as soon as they arrive
+- Added: all other players see only BLACKOUT on their Demographics screen
+- DLL: Buildings.FastSpyEstablish, DemographicsBlackout (LEKMOD_SPY_WONDERS); Lua Game.LekmodIsBlackout(iObserver)
+- Dev: building 276, class 183; icon from the user's art (white background replaced, art_sources/tools/round_building_icon.py)
+
+EXTRAORDINARY SESSION (BUILDING_LEKMOD_EXTRAORDINARY_SESSION)
+-------------------------------------------------------------
+Tags: buildings, world congress
+New World Wonder (Globalization, 1600 Production).
+- Added: +2 Delegates in the World Congress
+- Added: an extra World Leader vote 2 turns after it is built (3 turns if a regular vote falls on that turn); the regular votes keep their schedule
+- DLL: Buildings.ExtraWorldLeaderVote, CvLeague::LekmodScheduleExtraLeaderVote (m_iLekmodExtraLeaderVoteTurn, league save version 19)
+- Dev: building 277, class 184

@@ -63,7 +63,9 @@ from the sources, so it can be run any number of times (nothing gets shifted or 
   (`IconFrame64.dds`) around that circle; the production list shows the bare circle.
 - `python art_sources/tools/round_building_icon.py <name>`: trims 5% of the source's dark border, scales it into that
   circle, masks it (anti-aliased) and writes 32/45/64/80/128/214/256 to `LEKMOD/Art/Lekmod (v 1)/Art/Buildings/`.
-  Used for Sanctuary, Stupa and the Uranium Mapping Project (2026-10-11).
+  Used for Sanctuary, Stupa and the Uranium Mapping Project (2026-10-11), Ministry of Truth and Extraordinary Session
+  (2026-10-13). Sources delivered as a cut-out on white get their white background (connected to the edges) replaced by
+  a dark colour first: list them in `WHITE_BACKGROUND` in the tool (Ministry of Truth).
 - Atlases: one 1x1 atlas per icon.
 
 ## Espionage screen icons

@@ -249,6 +249,15 @@ public:
 	int GetClosestCoastalMinorInfluence() const { return m_iLekmodClosestCoastalMinorInfluence; }
 	bool IsClosestCoastalMinorTradeQuest() const { return m_bLekmodClosestCoastalMinorTradeQuest; }
 	int GetGoldenAgePopulationChange() const { return m_iLekmodGoldenAgePopulationChange; }
+#ifdef LEKMOD_SPY_WONDERS
+	int GetEnemySpyStealSlower() const { return m_iLekmodEnemySpyStealSlower; }
+	int GetGuardLevelChange() const { return m_iLekmodGuardLevelChange; }
+	bool IsExecuteCaughtSpies() const { return m_bLekmodExecuteCaughtSpies; }
+	bool IsBlockForeignSpies() const { return m_bLekmodBlockForeignSpies; }
+	bool IsFastSpyEstablish() const { return m_bLekmodFastSpyEstablish; }
+	bool IsDemographicsBlackout() const { return m_bLekmodDemographicsBlackout; }
+	bool IsExtraWorldLeaderVote() const { return m_bLekmodExtraWorldLeaderVote; }
+#endif
 	const std::vector<LekmodFreshWaterImprovementYield>& GetLekmodFreshWaterImprovementYields() const { return m_aLekmodFreshWaterImprovementYields; }
 	bool HasLekmodWonderEffects() const
 	{
@@ -610,6 +619,15 @@ private:
 	bool m_bLekmodClosestCoastalMinorTradeQuest;
 	int m_iLekmodGoldenAgePopulationChange;
 	std::vector<LekmodFreshWaterImprovementYield> m_aLekmodFreshWaterImprovementYields;
+#endif
+#ifdef LEKMOD_SPY_WONDERS
+	int m_iLekmodEnemySpyStealSlower;
+	int m_iLekmodGuardLevelChange;
+	bool m_bLekmodExecuteCaughtSpies;
+	bool m_bLekmodBlockForeignSpies;
+	bool m_bLekmodFastSpyEstablish;
+	bool m_bLekmodDemographicsBlackout;
+	bool m_bLekmodExtraWorldLeaderVote;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	int m_iTerritoryHealChange;

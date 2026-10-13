@@ -213,6 +213,15 @@ public:
 	bool LekmodCanSweep(CvCity* pCity);
 	int LekmodGetSweepCost(CvCity* pCity);
 	bool LekmodDoSweep(CvCity* pCity);
+#ifdef LEKMOD_SPY_WONDERS
+	enum LekmodSpyBuildingStat { LSB_STEAL_SLOWER, LSB_GUARD_LEVEL, LSB_EXECUTE_CAUGHT, LSB_FAST_ESTABLISH, LSB_DEMOGRAPHICS_BLACKOUT };
+	static int LekmodPlayerBuildingValue(PlayerTypes ePlayer, LekmodSpyBuildingStat eStat);
+	static bool LekmodCityBlocksSpies(CvCity* pCity);
+	static int LekmodGetStealSlower(CvCity* pCity, LekmodParts* pParts = NULL);
+	int LekmodGetStealTurnsTimes100(uint uiSpyIndex, CvCity* pCity);
+	void LekmodEvictBlockedAgents();
+	void LekmodInterrogate(PlayerTypes eSpyOwner);
+#endif
 	void LekmodToggleFullTech(uint uiSpyIndex);
 #endif
 

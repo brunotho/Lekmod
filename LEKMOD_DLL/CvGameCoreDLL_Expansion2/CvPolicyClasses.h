@@ -347,6 +347,9 @@ public:
 	int GetTradeYieldPerEraTimes100() const;
 	int GetTradeYieldEra() const;
 	bool IsNoExternalTradeRoutes() const;
+#ifdef LEKMOD_SPY_WONDERS
+	bool IsStealTechOnSpyCatch() const { return m_bLekmodStealTechOnSpyCatch; }
+#endif
 	const std::vector<int>& GetUnitClassResourceRequirementChanges() const;
 	const std::vector<int>& GetBuildingClassResourceRequirementChanges() const;
 	const std::vector<int>& GetUnitCombatPromotionsIfBuilding() const;
@@ -733,6 +736,9 @@ private:
 	int m_iTradeYieldPerEraTimes100;
 	int m_iTradeYieldEra;
 	bool m_bNoExternalTradeRoutes;
+#ifdef LEKMOD_SPY_WONDERS
+	bool m_bLekmodStealTechOnSpyCatch;
+#endif
 	std::vector<int> m_aiUnitClassResourceRequirementChanges;
 	std::vector<int> m_aiBuildingClassResourceRequirementChanges;
 	std::vector<int> m_aiUnitCombatPromotionsIfBuilding;

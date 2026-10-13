@@ -1669,6 +1669,17 @@ Diversify Spain and Australia's NW Discovery bonus
 // 100% minus that; a steal gives 8 turns of the city's Science toward a picked tech.
 #define LEKMOD_SPY_REWORK
 #define LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL 15 // % Gold on your trade routes to a capital with your diplomat, per level
+// LEKMOD (2026-10-13): spy wonders and leftovers of the spy rework. Steals in a city take longer by the sum of: the owner's
+// Policies.StealTechSlowerModifier (Iron Curtain 50), the owner's Buildings.EnemySpyStealSlower (Kremlin 30, Great Firewall 25)
+// and Resolutions.LekmodStealSlower while active (Diplomatic Transparency 50). Buildings.GuardLevelChange (Kremlin +1) raises the
+// owner's guards, Buildings.ExecuteCaughtSpies (Kremlin) executes caught spies without the Execute/Evict choice,
+// Buildings.BlockForeignSpies (Great Firewall) evicts other civs' spies and diplomats from the city and keeps them out,
+// Buildings.FastSpyEstablish (Ministry of Truth) establishes the owner's spies and diplomats on arrival,
+// Buildings.DemographicsBlackout (Ministry of Truth) shows other players BLACKOUT in the Demographics,
+// Buildings.ExtraWorldLeaderVote (Extraordinary Session) holds an extra World Leader vote 2 turns later (3 if a regular one falls
+// on that turn), Policies.StealTechOnSpyCatch (Advanced Interrogation) steals a random technology from the owner of a caught spy,
+// and while Resolutions.LekmodBlackout is active, diplomats are sent home from other civs' capitals and can't go there.
+#define LEKMOD_SPY_WONDERS
 /*ESPIONAGE CHANGES END*/
 
 // The number of free policies for accepting an ideology is set at the start of the turn.

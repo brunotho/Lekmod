@@ -35706,6 +35706,24 @@
 			<MaxTeamInstances>-1</MaxTeamInstances>
 			<MaxPlayerInstances>-1</MaxPlayerInstances>
 		</Row>
+		<Row>
+			<ID>183</ID>
+			<Type>BUILDINGCLASS_LEKMOD_MINISTRY_OF_TRUTH</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_MINISTRY_OF_TRUTH</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_MINISTRY_OF_TRUTH</DefaultBuilding>
+			<MaxGlobalInstances>1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+		</Row>
+		<Row>
+			<ID>184</ID>
+			<Type>BUILDINGCLASS_LEKMOD_EXTRAORDINARY_SESSION</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_EXTRAORDINARY_SESSION</Description>
+			<DefaultBuilding>BUILDING_LEKMOD_EXTRAORDINARY_SESSION</DefaultBuilding>
+			<MaxGlobalInstances>1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+		</Row>
 	</BuildingClasses> 
 
 	<Table name="Building_AreaYieldModifiers">
@@ -43270,6 +43288,13 @@
 		<Column name="NearbyEnemyCombatRange" type="integer" default="0" />
 		<Column name="ClosestCoastalMinorInfluence" type="integer" default="0" />
 		<Column name="ClosestCoastalMinorTradeQuest" type="boolean" default="false" /> <!-- LEKMOD: when built, the closest coastal city-state at peace asks for a trade route -->
+		<Column name="EnemySpyStealSlower" type="integer" default="0" /> <!-- LEKMOD: other civs' spies take % longer per steal in all of the owner's cities (Kremlin, Great Firewall) -->
+		<Column name="GuardLevelChange" type="integer" default="0" /> <!-- LEKMOD: the owner's guarding spies count this many levels higher (Kremlin) -->
+		<Column name="ExecuteCaughtSpies" type="boolean" default="false" /> <!-- LEKMOD: spies caught by the owner are executed without the Execute/Evict choice (Kremlin) -->
+		<Column name="BlockForeignSpies" type="boolean" default="false" /> <!-- LEKMOD: other civs' spies and diplomats are sent home from this city and can't enter it (Great Firewall) -->
+		<Column name="FastSpyEstablish" type="boolean" default="false" /> <!-- LEKMOD: the owner's spies and diplomats are established when they arrive (Ministry of Truth) -->
+		<Column name="DemographicsBlackout" type="boolean" default="false" /> <!-- LEKMOD: other players see BLACKOUT in the Demographics (Ministry of Truth) -->
+		<Column name="ExtraWorldLeaderVote" type="boolean" default="false" /> <!-- LEKMOD: when built, an extra World Leader vote 2 turns later (Extraordinary Session) -->
 		<Column name="GoldenAgePopulationChange" type="integer" default="0" /> <!-- LEKMOD: city population change when the owner starts a golden age (never below 1) --> <!-- LEKMOD: one-time influence with the closest coastal city-state at peace, when built -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0" /> <!-- LEKMOD: % more yield from great works held in this building (Museum) -->
 		<Column name="WorshipHouse" type="boolean" default="false" /> <!-- LEKMOD: Houses of Worship: 4 Culture for the first in a city, 2 for the second, 0 after -->
@@ -48715,6 +48740,47 @@
 			<PortraitIndex>63</PortraitIndex>
 			<IconAtlas>BW_ATLAS_1</IconAtlas>
 		</Row>
+		<!-- LEKMOD: Ministry of Truth (NEW world wonder): Telecommunications, 2000 Production on quick; 3 spies, spies and diplomats established on arrival, Demographics blacked out for everyone else -->
+		<Row>
+			<ID>276</ID>
+			<Type>BUILDING_LEKMOD_MINISTRY_OF_TRUTH</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_MINISTRY_OF_TRUTH</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_MINISTRY_OF_TRUTH</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_MINISTRY_OF_TRUTH_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_MINISTRY_OF_TRUTH_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_MINISTRY_OF_TRUTH_HELP</Help>
+			<NukeImmune>true</NukeImmune>
+			<Cost>2986</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ConquestProb>100</ConquestProb>
+			<PrereqTech>TECH_TELECOM</PrereqTech>
+			<ExtraSpies>3</ExtraSpies>
+			<FastSpyEstablish>true</FastSpyEstablish>
+			<DemographicsBlackout>true</DemographicsBlackout>
+			<ArtDefineTag>TERRACOTTA ARMY</ArtDefineTag>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</IconAtlas>
+		</Row>
+		<!-- LEKMOD: Extraordinary Session (NEW world wonder): Globalization, 1600 Production on quick; +2 votes, an extra World Leader vote 2 turns after it is built -->
+		<Row>
+			<ID>277</ID>
+			<Type>BUILDING_LEKMOD_EXTRAORDINARY_SESSION</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_EXTRAORDINARY_SESSION</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_EXTRAORDINARY_SESSION</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_EXTRAORDINARY_SESSION_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_EXTRAORDINARY_SESSION_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_EXTRAORDINARY_SESSION_HELP</Help>
+			<NukeImmune>true</NukeImmune>
+			<Cost>2389</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ConquestProb>100</ConquestProb>
+			<PrereqTech>TECH_GLOBALIZATION</PrereqTech>
+			<ExtraLeagueVotes>2</ExtraLeagueVotes>
+			<ExtraWorldLeaderVote>true</ExtraWorldLeaderVote>
+			<ArtDefineTag>PENTAGON</ArtDefineTag>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</IconAtlas>
+		</Row>
 	</Buildings> 
 	<!-- LEKMOD: every purchasable building costs +25% Gold to buy (like the Granary); Stone Works and Aqueduct keep 0% -->
 	<Buildings>
@@ -50134,6 +50200,42 @@
 			<Set ExtraLeagueVotes="1"/>
 		</Update>
 	</Buildings>
+	<!-- LEKMOD: Phase 5 spy wonders: Kremlin (spies steal 30% slower in all your cities, guards +1 level, caught spies are executed; no Armor production bonus), Great Firewall (keeps other civs' spies and diplomats out of its city; 25% slower steals in your other cities, as before) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_KREMLIN"/>
+			<Set EnemySpyStealSlower="30" GuardLevelChange="1" ExecuteCaughtSpies="true"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_GREAT_FIREWALL"/>
+			<Set BlockForeignSpies="true" EnemySpyStealSlower="25" EspionageModifier="0" GlobalEspionageModifier="0"/>
+		</Update>
+	</Buildings>
+	<Building_UnitCombatProductionModifiers>
+		<Delete BuildingType="BUILDING_KREMLIN"/>
+	</Building_UnitCombatProductionModifiers>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MINISTRY_OF_TRUTH</BuildingType>
+			<FlavorType>FLAVOR_ESPIONAGE</FlavorType>
+			<Flavor>60</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MINISTRY_OF_TRUTH</BuildingType>
+			<FlavorType>FLAVOR_WONDER</FlavorType>
+			<Flavor>25</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_EXTRAORDINARY_SESSION</BuildingType>
+			<FlavorType>FLAVOR_DIPLOMACY</FlavorType>
+			<Flavor>60</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_EXTRAORDINARY_SESSION</BuildingType>
+			<FlavorType>FLAVOR_WONDER</FlavorType>
+			<Flavor>25</Flavor>
+		</Row>
+	</Building_Flavors>
 	<Table name="Builds">
 		<Column name="ID" type="integer" primarykey="true" autoincrement="true" />
 		<Column name="Type" type="text" unique="true" notnull="true" />
@@ -138285,6 +138387,104 @@
 			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
 		<Row>
+			<Atlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>ministry_of_truth_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>ministry_of_truth_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>ministry_of_truth_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>ministry_of_truth_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>ministry_of_truth_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>ministry_of_truth_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MINISTRY_OF_TRUTH_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>ministry_of_truth_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>extraordinary_session_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>extraordinary_session_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>extraordinary_session_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>extraordinary_session_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>extraordinary_session_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>extraordinary_session_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_EXTRAORDINARY_SESSION_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>extraordinary_session_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
 			<Atlas>LEKMOD_SANCTUARY_ATLAS</Atlas>
 			<IconSize>32</IconSize>
 			<Filename>sanctuary_32.dds</Filename>
@@ -187834,6 +188034,7 @@
 		<Column name="ExternalTradeRouteRangeModifier" type="integer" default="0"/> <!-- LEKMOD: % range of trade routes to other civs and City-States -->
 		<Column name="VotesPerTwoAlliedCS" type="boolean" default="false"/> <!-- LEKMOD: +1 World Congress vote per two allied City-States -->
 		<Column name="TourismModPerAlliedCS" type="integer" default="0"/> <!-- LEKMOD: % Tourism in every city per allied City-State -->
+		<Column name="StealTechOnSpyCatch" type="boolean" default="false"/> <!-- LEKMOD: catching a spy steals a random technology from its owner (Advanced Interrogation) -->
 		<Column name="NoExternalTradeRoutes" type="boolean" default="false"/> <!-- LEKMOD: no routes with other civs/City-States; adopting ends all routes -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0"/> <!-- LEKMOD: % on great work yields (not their Happiness) -->
 		<Column name="FreeUnitClassOnWater" type="text" reference="UnitClasses(Type)" default="NULL"/> <!-- LEKMOD: on adoption, appears on the water tile closest to a city -->
@@ -194700,6 +194901,7 @@
 		<Column name="LekmodClimateReparations" type="integer" default="0"/>
 		<Column name="LekmodHappinessPerFactory" type="integer" default="0"/>
 		<Column name="LekmodTransparency" type="integer" default="0"/>
+		<Column name="LekmodStealSlower" type="integer" default="0"/> <!-- LEKMOD: spies take % longer per steal while active (Diplomatic Transparency) -->
 		<Column name="LekmodTourismModifier" type="integer" default="0"/>
 		<Column name="LekmodCivilLiberties" type="integer" default="0"/>
 		<Column name="LekmodAllPlayersEra" type="text" reference="Eras(Type)" default="NULL"/> <!-- LEKMOD: every living major civ in this era -->
@@ -195483,6 +195685,7 @@
 			<ProposerDecision>RESOLUTION_DECISION_NONE</ProposerDecision>
 			<LekmodMinCongressEra>ERA_MODERN</LekmodMinCongressEra>
 			<LekmodTransparency>1</LekmodTransparency>
+			<LekmodStealSlower>50</LekmodStealSlower>
 		</Row>
 		<Row>
 			<ID>25</ID>
@@ -282706,6 +282909,7 @@
 			<IconAtlas>POLICY_ATLAS_EXP2</IconAtlas>
 			<IconAtlasAchieved>POLICY_A_ATLAS_EXP2</IconAtlasAchieved>
 			<SpoilsOfWarModifier>10</SpoilsOfWarModifier>
+			<StealTechOnSpyCatch>true</StealTechOnSpyCatch>
 		</Row>
 		<Update>
 			<Where Type="POLICY_THIRD_ALTERNATIVE"/>

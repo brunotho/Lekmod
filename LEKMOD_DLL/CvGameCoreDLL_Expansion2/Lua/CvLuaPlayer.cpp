@@ -11903,8 +11903,32 @@ int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
 	lua_setfield(L, t, "Strength");
 	lua_pushinteger(L, iDefense);
 	lua_setfield(L, t, "Defense");
+#ifdef LEKMOD_SPY_WONDERS
+	// steals take longer with Iron Curtain, Kremlin, Great Firewall, Diplomatic Transparency
+	{
+		CvPlayerEspionage::LekmodParts aSlowerParts;
+		const int iSlower = (pCity && !bOwnCity) ? CvPlayerEspionage::LekmodGetStealSlower(pCity, &aSlowerParts) : 0;
+		lua_pushinteger(L, (CvPlayerEspionage::LekmodGetStealInterval(iStrength, iDefense) * (100 + iSlower) + 99) / 100);
+		lua_setfield(L, t, "Turns");
+		lua_pushinteger(L, iSlower);
+		lua_setfield(L, t, "Slower");
+		lua_createtable(L, 0, 0);
+		const int tSlower = lua_gettop(L);
+		for (uint i = 0; i < aSlowerParts.size(); i++)
+		{
+			lua_createtable(L, 0, 0);
+			lua_pushstring(L, aSlowerParts[i].first);
+			lua_setfield(L, -2, "Key");
+			lua_pushinteger(L, aSlowerParts[i].second);
+			lua_setfield(L, -2, "Value");
+			lua_rawseti(L, tSlower, i + 1);
+		}
+		lua_setfield(L, t, "SlowerParts");
+	}
+#else
 	lua_pushinteger(L, CvPlayerEspionage::LekmodGetStealInterval(iStrength, iDefense));
 	lua_setfield(L, t, "Turns");
+#endif
 	lua_pushinteger(L, iChance);
 	lua_setfield(L, t, "Chance"); // 100% - the catch chance this player may know
 	lua_pushinteger(L, 100 - iChance);

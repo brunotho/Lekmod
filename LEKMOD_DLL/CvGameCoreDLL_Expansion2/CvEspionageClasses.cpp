@@ -248,6 +248,9 @@ void CvPlayerEspionage::DoTurn()
 #ifdef LEKMOD_SPY_REWORK
 	LekmodResolveOldCaughtSpies();
 #endif
+#ifdef LEKMOD_SPY_WONDERS
+	LekmodEvictBlockedAgents();
+#endif
 	ProcessSpyMessages();
 
 	for(uint ui = 0; ui < MAX_MAJOR_CIVS; ui++)
@@ -391,6 +394,21 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 		if(pCityEspionage->HasReachedGoal(ePlayer))
 		{
 			pCityEspionage->ResetProgress(ePlayer);
+#ifdef LEKMOD_SPY_WONDERS
+			// Buildings.FastSpyEstablish (Ministry of Truth): spies and diplomats are established on arrival
+			if (pCity->getTeam() != m_pPlayer->getTeam() && LekmodPlayerBuildingValue(ePlayer, LSB_FAST_ESTABLISH) > 0)
+			{
+				if (pSpy->m_bIsDiplomat)
+				{
+					pSpy->m_eSpyState = SPY_STATE_SCHMOOZE;
+					break;
+				}
+				pSpy->m_eSpyState = SPY_STATE_SURVEILLANCE;
+				pCityEspionage->SetActivity(ePlayer, 0, CalcPerTurn(SPY_STATE_SURVEILLANCE, pCity, uiSpyIndex), 0);
+				ProcessSpy(uiSpyIndex);
+				return;
+			}
+#endif
 			if (pSpy->m_bIsDiplomat)
 			{
 				pSpy->m_eSpyState = SPY_STATE_MAKING_INTRODUCTIONS;
@@ -1488,6 +1506,17 @@ bool CvPlayerEspionage::CanMoveSpyTo(CvCity* pCity, uint uiSpyIndex, bool bAsDip
 		return false;
 	}
 
+#ifdef LEKMOD_SPY_WONDERS
+	// Great Firewall: no foreign spies or diplomats; Blackout: no diplomats with other civs
+	if (pCity->getOwner() != ePlayerID && LekmodCityBlocksSpies(pCity))
+	{
+		return false;
+	}
+	if (bAsDiplomat && !GET_PLAYER(pCity->getOwner()).isMinorCiv() && GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BLACKOUT) != 0)
+	{
+		return false;
+	}
+#endif
 	if (bAsDiplomat)
 	{
 		// diplomatic spy must be in capital
@@ -1873,6 +1902,10 @@ int CvPlayerEspionage::LekmodGetCatchChance(CvCity* pCity, int iStrength, int* p
 		const int iIndex = pOwnerEspionage->GetSpyIndexInCity(pCity);
 		if (iIndex >= 0)
 			iGuardLevel = (int)pOwnerEspionage->m_aSpyList[iIndex].m_eRank + 1;
+#ifdef LEKMOD_SPY_WONDERS
+		if (iIndex >= 0)
+			iGuardLevel += LekmodPlayerBuildingValue(pCity->getOwner(), LSB_GUARD_LEVEL);
+#endif
 	}
 	if (piFromBuildings)
 		*piFromBuildings = std::min(100, 10 * iBuildings);
@@ -1900,6 +1933,14 @@ void CvPlayerEspionage::LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bEx
 			pDefending->LevelUpSpy(iDefendingSpy);
 	}
 
+#ifdef LEKMOD_SPY_WONDERS
+	if (pDefending != NULL)
+		pDefending->LekmodInterrogate(m_pPlayer->GetID());
+	// Buildings.ExecuteCaughtSpies (Kremlin): no Execute/Evict choice
+	if (LekmodPlayerBuildingValue(eCityOwner, LSB_EXECUTE_CAUGHT) > 0)
+		bExecute = true;
+	else
+#endif
 	if (GET_PLAYER(eCityOwner).isHuman() && pDefending != NULL)
 	{
 		// held until the defender decides
@@ -2071,6 +2112,174 @@ void CvPlayerEspionage::LekmodToggleFullTech(uint uiSpyIndex)
 	if ((int)m_aSpyList[uiSpyIndex].m_eRank < 2 && !m_aSpyList[uiSpyIndex].m_bLekmodFullTech)
 		return;
 	m_aSpyList[uiSpyIndex].m_bLekmodFullTech = !m_aSpyList[uiSpyIndex].m_bLekmodFullTech;
+}
+#endif
+
+#ifdef LEKMOD_SPY_WONDERS
+/// A spy column summed over ePlayer's buildings (flags count 1 per building): Buildings.EnemySpyStealSlower, GuardLevelChange,
+/// ExecuteCaughtSpies, FastSpyEstablish, DemographicsBlackout
+int CvPlayerEspionage::LekmodPlayerBuildingValue(PlayerTypes ePlayer, LekmodSpyBuildingStat eStat)
+{
+	if (ePlayer < 0 || ePlayer >= MAX_MAJOR_CIVS)
+		return 0;
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	int iTotal = 0;
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding == NULL)
+			continue;
+		int iValue = 0;
+		switch (eStat)
+		{
+		case LSB_STEAL_SLOWER: iValue = pkBuilding->GetEnemySpyStealSlower(); break;
+		case LSB_GUARD_LEVEL: iValue = pkBuilding->GetGuardLevelChange(); break;
+		case LSB_EXECUTE_CAUGHT: iValue = pkBuilding->IsExecuteCaughtSpies() ? 1 : 0; break;
+		case LSB_FAST_ESTABLISH: iValue = pkBuilding->IsFastSpyEstablish() ? 1 : 0; break;
+		case LSB_DEMOGRAPHICS_BLACKOUT: iValue = pkBuilding->IsDemographicsBlackout() ? 1 : 0; break;
+		}
+		if (iValue != 0)
+			iTotal += iValue * kPlayer.countNumBuildings((BuildingTypes)iBuilding);
+	}
+	return iTotal;
+}
+
+/// The city has a building that keeps foreign spies and diplomats out (Great Firewall)
+bool CvPlayerEspionage::LekmodCityBlocksSpies(CvCity* pCity)
+{
+	if (pCity == NULL)
+		return false;
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding != NULL && pkBuilding->IsBlockForeignSpies() && pCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding) > 0)
+			return true;
+	}
+	return false;
+}
+
+/// % longer per steal in pCity: the owner's policies (Iron Curtain) and buildings (Kremlin, Great Firewall) + active proposals
+/// (Diplomatic Transparency), added together
+int CvPlayerEspionage::LekmodGetStealSlower(CvCity* pCity, LekmodParts* pParts)
+{
+	if (pCity == NULL)
+		return 0;
+	const PlayerTypes eOwner = pCity->getOwner();
+	CvPlayer& kOwner = GET_PLAYER(eOwner);
+	int iTotal = 0;
+	if (!kOwner.isMinorCiv() && !kOwner.isBarbarian())
+	{
+		CvPlayerPolicies* pPolicies = kOwner.GetPlayerPolicies();
+		for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
+		{
+			CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+			if (pkPolicy == NULL || pkPolicy->GetStealTechSlowerModifier() == 0)
+				continue;
+			if (!pPolicies->HasPolicy((PolicyTypes)iPolicy) || pPolicies->IsPolicyBlocked((PolicyTypes)iPolicy))
+				continue;
+			iTotal += pkPolicy->GetStealTechSlowerModifier();
+			if (pParts)
+				pParts->push_back(std::make_pair(pkPolicy->GetDescriptionKey(), pkPolicy->GetStealTechSlowerModifier()));
+		}
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding == NULL || pkBuilding->GetEnemySpyStealSlower() == 0)
+				continue;
+			const int iValue = pkBuilding->GetEnemySpyStealSlower() * kOwner.countNumBuildings((BuildingTypes)iBuilding);
+			if (iValue == 0)
+				continue;
+			iTotal += iValue;
+			if (pParts)
+				pParts->push_back(std::make_pair(pkBuilding->GetDescriptionKey(), iValue));
+		}
+	}
+	const int iCongress = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_STEAL_SLOWER);
+	if (iCongress != 0)
+	{
+		iTotal += iCongress;
+		if (pParts)
+			pParts->push_back(std::make_pair("TXT_KEY_RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY", iCongress)); // the only proposal with LekmodStealSlower
+	}
+	return std::max(0, iTotal);
+}
+
+/// Turns per steal x100 for this spy in pCity: the interval from strength and defense, x (100 + slower)%
+int CvPlayerEspionage::LekmodGetStealTurnsTimes100(uint uiSpyIndex, CvCity* pCity)
+{
+	const int iStrength = LekmodGetSpyStrength(uiSpyIndex, pCity);
+	return LekmodGetStealInterval(iStrength, LekmodGetCityDefense(pCity, m_pPlayer->GetID())) * (100 + LekmodGetStealSlower(pCity));
+}
+
+/// Our spies and diplomats leave cities that keep them out (Great Firewall), and our diplomats leave other civs while Blackout is active
+void CvPlayerEspionage::LekmodEvictBlockedAgents()
+{
+	const bool bBlackout = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BLACKOUT) != 0;
+	for (uint i = 0; i < m_aSpyList.size(); i++)
+	{
+		const CvSpyState eState = m_aSpyList[i].m_eSpyState;
+		if (eState == SPY_STATE_UNASSIGNED || eState == SPY_STATE_DEAD)
+			continue;
+		CvCity* pCity = GetCityWithSpy(i);
+		if (pCity == NULL || pCity->getOwner() == m_pPlayer->GetID())
+			continue;
+		const bool bFirewall = LekmodCityBlocksSpies(pCity);
+		const bool bNoDiplomats = bBlackout && m_aSpyList[i].m_bIsDiplomat && !GET_PLAYER(pCity->getOwner()).isMinorCiv();
+		if (!bFirewall && !bNoDiplomats)
+			continue;
+		const int iName = m_aSpyList[i].m_iName;
+		const CvSpyRank eRank = m_aSpyList[i].m_eRank;
+		ExtractSpyFromCity(i);
+		m_aSpyList[i].m_bEvaluateReassignment = true;
+		CvNotifications* pNotifications = m_pPlayer->GetNotifications();
+		if (pNotifications)
+		{
+			Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_SPY_SENT_HOME_S");
+			strSummary << m_pPlayer->getCivilizationInfo().getSpyNames(iName);
+			Localization::String strText = Localization::Lookup(bFirewall ? "TXT_KEY_LEKMOD_SPY_SENT_HOME_FIREWALL" : "TXT_KEY_LEKMOD_SPY_SENT_HOME_BLACKOUT");
+			strText << GetSpyRankName(eRank) << m_pPlayer->getCivilizationInfo().getSpyNames(iName) << pCity->getNameKey();
+			pNotifications->Add(NOTIFICATION_SPY_EVICTED, strText.toUTF8(), strSummary.toUTF8(), -1, -1, -1);
+		}
+	}
+}
+
+/// Policies.StealTechOnSpyCatch (Advanced Interrogation): we caught a spy of eSpyOwner and learn a random technology
+/// they know and we could research
+void CvPlayerEspionage::LekmodInterrogate(PlayerTypes eSpyOwner)
+{
+	if (eSpyOwner == NO_PLAYER || eSpyOwner == m_pPlayer->GetID())
+		return;
+	bool bHasPolicy = false;
+	CvPlayerPolicies* pPolicies = m_pPlayer->GetPlayerPolicies();
+	for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos() && !bHasPolicy; iPolicy++)
+	{
+		CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
+		if (pkPolicy != NULL && pkPolicy->IsStealTechOnSpyCatch() && pPolicies->HasPolicy((PolicyTypes)iPolicy) && !pPolicies->IsPolicyBlocked((PolicyTypes)iPolicy))
+			bHasPolicy = true;
+	}
+	if (!bHasPolicy)
+		return;
+	CvTeamTechs* pTheirTechs = GET_TEAM(GET_PLAYER(eSpyOwner).getTeam()).GetTeamTechs();
+	std::vector<TechTypes> aeCandidates;
+	for (int iTech = 0; iTech < GC.getNumTechInfos(); iTech++)
+	{
+		const TechTypes eTech = (TechTypes)iTech;
+		if (pTheirTechs->HasTech(eTech) && m_pPlayer->GetPlayerTechs()->CanResearch(eTech))
+			aeCandidates.push_back(eTech);
+	}
+	if (aeCandidates.empty())
+		return;
+	const TechTypes eTech = aeCandidates[GC.getGame().getJonRandNum((int)aeCandidates.size(), "Lekmod interrogation tech")];
+	GET_TEAM(m_pPlayer->getTeam()).setHasTech(eTech, true, m_pPlayer->GetID(), true, true);
+	CvNotifications* pNotifications = m_pPlayer->GetNotifications();
+	CvTechEntry* pkTech = GC.getTechInfo(eTech);
+	if (pNotifications && pkTech)
+	{
+		Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_INTERROGATION_S");
+		Localization::String strText = Localization::Lookup("TXT_KEY_LEKMOD_INTERROGATION");
+		strText << pkTech->GetDescriptionKey() << GET_PLAYER(eSpyOwner).getCivilizationInfo().getShortDescriptionKey();
+		pNotifications->Add(NOTIFICATION_TECH_AWARD, strText.toUTF8(), strSummary.toUTF8(), -1, -1, eTech);
+	}
 }
 #endif
 
@@ -2391,6 +2600,10 @@ int CvPlayerEspionage::CalcRequired(int iSpyState, CvCity* pCity, int iSpyIndex)
 #ifdef LEKMOD_SPY_REWORK
 		if (pCity)
 		{
+#ifdef LEKMOD_SPY_WONDERS
+			if (iSpyIndex >= 0)
+				return LekmodGetStealTurnsTimes100((uint)iSpyIndex, pCity);
+#endif
 			const int iStrength = (iSpyIndex >= 0) ? LekmodGetSpyStrength((uint)iSpyIndex, pCity) : 1;
 			return LekmodGetStealInterval(iStrength, LekmodGetCityDefense(pCity, m_pPlayer->GetID())) * 100;
 		}

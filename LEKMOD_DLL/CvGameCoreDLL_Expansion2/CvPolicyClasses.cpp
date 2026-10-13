@@ -302,6 +302,9 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_iTradeYieldPerEraTimes100(0),
 	m_iTradeYieldEra(NO_ERA),
 	m_bNoExternalTradeRoutes(false),
+#ifdef LEKMOD_SPY_WONDERS
+	m_bLekmodStealTechOnSpyCatch(false),
+#endif
 #endif
 	m_piCoastalCityYieldChange(NULL),
 	m_piCapitalYieldChange(NULL),
@@ -915,6 +918,9 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_iTradeYieldPerEraTimes100 = kResults.GetInt("TradeYieldPerEraTimes100");
 	m_iTradeYieldEra = GC.getInfoTypeForString(kResults.GetText("TradeYieldEraType"), true);
 	m_bNoExternalTradeRoutes = kResults.GetBool("NoExternalTradeRoutes");
+#ifdef LEKMOD_SPY_WONDERS
+	m_bLekmodStealTechOnSpyCatch = kResults.GetBool("StealTechOnSpyCatch");
+#endif
 	{
 		std::string strKey("Policy_UnitClassResourceRequirementChanges");
 		Database::Results* pResults = kUtility.GetResults(strKey);

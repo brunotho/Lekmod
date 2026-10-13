@@ -19387,7 +19387,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GREAT_FIREWALL_HELP"> 
 			<Text>
-				99.9% reduction in effectiveness of enemy spies in the city in which it is built. All other cities in the civilization get a 25% reduction in enemy spy effectiveness. Negates the [ICON_TOURISM] Tourism bonus from other players' Internet technology.
+				Other civilizations' [ICON_SPY] Spies and Diplomats are sent home from this city and can't be placed in it.[NEWLINE]Enemy [ICON_SPY] Spies take 25% longer to steal in your other cities.[NEWLINE][NEWLINE]Negates the [ICON_TOURISM] Tourism bonus from other players' Internet technology.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_GREAT_LIBRARY"> 
@@ -120735,13 +120735,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Diplomatic Transparency</Text>
 		</Row>
 		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_DIPLOMATIC_TRANSPARENCY_HELP">
-			<Text>Every Civilization sees the cities of all other Civilizations and the tiles within 2 of them.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
+			<Text>Every Civilization sees the cities of all other Civilizations and the tiles within 2 of them.[NEWLINE][ICON_SPY] Spies take 50% longer to steal.[NEWLINE][NEWLINE]Available once the World Congress reaches the Modern Era.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BLACKOUT">
 			<Text>Blackout</Text>
 		</Row>
 		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_BLACKOUT_HELP">
-			<Text>The Demographics screen is disabled.[NEWLINE]Ends Diplomatic Transparency.[NEWLINE][NEWLINE]Available once the World Congress reaches the Information Era.</Text>
+			<Text>The Demographics screen is disabled.[NEWLINE]All Diplomats in other civilizations' capitals are sent home and can't be placed there anymore.[NEWLINE]Ends Diplomatic Transparency.[NEWLINE][NEWLINE]Available once the World Congress reaches the Information Era.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_VOICE_FOR_THE_VOICELESS">
 			<Text>Voice for the Voiceless</Text>
@@ -120811,6 +120811,39 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_OPINION_LEVEL_5">
 			<Text>[COLOR_NEGATIVE_TEXT]System Collapse[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_SENT_HOME_S">
+			<Text>{@1_SpyName} sent home</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_SENT_HOME_FIREWALL">
+			<Text>{@1_RankName} {@2_SpyName} had to leave {@3_CityName}.[NEWLINE]The Great Firewall keeps foreign agents out of that city.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_SENT_HOME_BLACKOUT">
+			<Text>{@1_RankName} {@2_SpyName} had to leave {@3_CityName}.[NEWLINE]While Blackout (World Congress) is active, diplomats can't stay in other civilizations' capitals.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_INTERROGATION_S">
+			<Text>Technology from an interrogation</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_INTERROGATION">
+			<Text>Interrogating a captured spy of {@2_CivName} revealed {@1_TechName}.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_SLOWER">
+			<Text>Steals take {1_Num}% longer in this civilization:</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SLOWER_PART">
+			<Text>{2_Name}: +{1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_MINISTRY_OF_TRUTH">
+			<Text>Ministry of Truth</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_MINISTRY_OF_TRUTH_HELP">
+			<Text>Gives 3 [ICON_SPY] Spies.[NEWLINE]Your [ICON_SPY] Spies and Diplomats are set up in their city as soon as they arrive.[NEWLINE][NEWLINE]All other players see only BLACKOUT on their Demographics screen.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_EXTRAORDINARY_SESSION">
+			<Text>Extraordinary Session</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_EXTRAORDINARY_SESSION_HELP">
+			<Text>+2 Delegates in the World Congress.[NEWLINE][NEWLINE]An extra World Leader vote is held 2 turns after it is built (3 turns if a regular vote falls on that turn). The regular votes keep their schedule.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_SPY_CAUGHT_S">
 			<Text>Enemy spy caught</Text>
@@ -120957,10 +120990,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>How agents, spies and diplomats work.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_SPIES">
-			<Text>[COLOR_CYAN]SPIES[ENDCOLOR][NEWLINE][NEWLINE][COLOR_CYAN]Stealing from another civilization[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of their cities. It works toward a steal only while they know a technology you don't. If you catch up, its timer starts over.[NEWLINE][ICON_BULLET] Each steal gives you 8 turns of that city's [ICON_RESEARCH] Science toward one of their technologies (you pick which).[NEWLINE][ICON_BULLET] A steal always succeeds, and they always learn who did it.[NEWLINE][ICON_BULLET] Each steal can also get your spy caught. Its owner then decides to execute it or send it home.[NEWLINE][ICON_BULLET] From level 3 you can switch on "Full tech": the next steal tries for a whole technology instead. If it fails, you get nothing.[NEWLINE][ICON_BULLET] Full tech works as often as your spy stays uncaught, times a share by the stealing spy's level: level 3 half, level 4 three quarters, level 5 or more all of it. A level 5 spy against an undefended city always succeeds.[NEWLINE][NEWLINE][COLOR_CYAN]How fast a spy steals[ENDCOLOR][NEWLINE][ICON_BULLET] The stealing spy's level includes bonuses: +1 for each level of your cultural influence over them, +1 with your level 3+ diplomat in their capital, +1 with Industrial Espionage.[NEWLINE][ICON_BULLET] The city's defense: +1 each for a Constabulary, Police Station and Intelligence Agency, +1 for each level of their cultural influence over you. Guarding spies don't count here.[NEWLINE][ICON_BULLET] If the stealing spy's level is 1 above the city's defense, it steals every 15 turns. Each further level makes it 2 turns faster (7 turns at best). Each level below makes it 5 turns slower.[NEWLINE][ICON_BULLET] The timer follows every change right away: new defense buildings slow a running steal, new bonuses speed it up.[NEWLINE][ICON_BULLET] The spy also sees the tiles around the city: 1 tile for each level it is above the city's defense.[NEWLINE][NEWLINE][COLOR_CYAN]How likely a spy is caught[ENDCOLOR][NEWLINE][ICON_BULLET] Each defense building in the city (Constabulary, Police Station, Intelligence Agency) adds 10%.[NEWLINE][ICON_BULLET] A guarding spy adds more. How much depends on its level compared to the stealing spy's level:[NEWLINE]          guarding spy 4 or more levels lower:  0%[NEWLINE]          3 levels lower:  5%[NEWLINE]          2 levels lower:  10%[NEWLINE]          1 level lower:  20%[NEWLINE]          same level:  33%[NEWLINE]          1 level higher:  50%[NEWLINE]          2 levels higher:  67%[NEWLINE]          3 levels higher:  83%[NEWLINE]          4 or more levels higher:  100%[NEWLINE][ICON_BULLET] You never see whether a city has a guarding spy.[NEWLINE][ICON_BULLET] The total never goes above 100%.[NEWLINE][NEWLINE][COLOR_CYAN]Guarding your own city[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of your own cities to guard it. Enemy spies there are caught more often (see above).[NEWLINE][ICON_BULLET] From level 3 the guard can sweep the city: pay 5 turns of the city's [ICON_RESEARCH] Science in [ICON_GOLD] Gold, and each enemy spy there gets a chance to be caught.[NEWLINE][NEWLINE][COLOR_CYAN]Spying in a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] Every other civilization's [ICON_INFLUENCE] Influence there drops by 0.2 per level of your spy each turn, on top of its normal change. Above the resting point it falls faster, below it recovers more slowly. Quests and gifts are not affected.[NEWLINE][ICON_BULLET] Nobody learns whose spy it is.[NEWLINE][ICON_BULLET] The spy can also stage a coup.[NEWLINE][NEWLINE][COLOR_CYAN]Upkeep and levels[ENDCOLOR][NEWLINE][ICON_BULLET] A spy in a city costs 3 [ICON_GOLD] Gold per turn per era from the Renaissance on. Diplomats are free.[NEWLINE][ICON_BULLET] A spy gains a level for each successful steal, coup or caught enemy spy.</Text>
+			<Text>[COLOR_CYAN]SPIES[ENDCOLOR][NEWLINE][NEWLINE][COLOR_CYAN]Stealing from another civilization[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of their cities. It works toward a steal only while they know a technology you don't. If you catch up, its timer starts over.[NEWLINE][ICON_BULLET] Each steal gives you 8 turns of that city's [ICON_RESEARCH] Science toward one of their technologies (you pick which).[NEWLINE][ICON_BULLET] A steal always succeeds, and they always learn who did it.[NEWLINE][ICON_BULLET] Each steal can also get your spy caught. Its owner then decides to execute it or send it home.[NEWLINE][ICON_BULLET] From level 3 you can switch on "Full tech": the next steal tries for a whole technology instead. If it fails, you get nothing.[NEWLINE][ICON_BULLET] Full tech works as often as your spy stays uncaught, times a share by the stealing spy's level: level 3 half, level 4 three quarters, level 5 or more all of it. A level 5 spy against an undefended city always succeeds.[NEWLINE][NEWLINE][COLOR_CYAN]How fast a spy steals[ENDCOLOR][NEWLINE][ICON_BULLET] The stealing spy's level includes bonuses: +1 for each level of your cultural influence over them, +1 with your level 3+ diplomat in their capital, +1 with Industrial Espionage.[NEWLINE][ICON_BULLET] The city's defense: +1 each for a Constabulary, Police Station and Intelligence Agency, +1 for each level of their cultural influence over you. Guarding spies don't count here.[NEWLINE][ICON_BULLET] If the stealing spy's level is 1 above the city's defense, it steals every 15 turns. Each further level makes it 2 turns faster (7 turns at best). Each level below makes it 5 turns slower.[NEWLINE][ICON_BULLET] Some things make steals take longer in a civilization's cities (added together): Iron Curtain +50%, Kremlin +30%, Great Firewall +25%, and Diplomatic Transparency (World Congress) +50% everywhere.[NEWLINE][ICON_BULLET] No spy or diplomat can enter a city with the Great Firewall.[NEWLINE][ICON_BULLET] The timer follows every change right away: new defense buildings slow a running steal, new bonuses speed it up.[NEWLINE][ICON_BULLET] The spy also sees the tiles around the city: 1 tile for each level it is above the city's defense.[NEWLINE][NEWLINE][COLOR_CYAN]How likely a spy is caught[ENDCOLOR][NEWLINE][ICON_BULLET] Each defense building in the city (Constabulary, Police Station, Intelligence Agency) adds 10%.[NEWLINE][ICON_BULLET] A guarding spy adds more. How much depends on its level compared to the stealing spy's level:[NEWLINE]          guarding spy 4 or more levels lower:  0%[NEWLINE]          3 levels lower:  5%[NEWLINE]          2 levels lower:  10%[NEWLINE]          1 level lower:  20%[NEWLINE]          same level:  33%[NEWLINE]          1 level higher:  50%[NEWLINE]          2 levels higher:  67%[NEWLINE]          3 levels higher:  83%[NEWLINE]          4 or more levels higher:  100%[NEWLINE][ICON_BULLET] With the Kremlin, its owner's guarding spies count 1 level higher.[NEWLINE][ICON_BULLET] You never see whether a city has a guarding spy.[NEWLINE][ICON_BULLET] The total never goes above 100%.[NEWLINE][NEWLINE][COLOR_CYAN]Guarding your own city[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of your own cities to guard it. Enemy spies there are caught more often (see above).[NEWLINE][ICON_BULLET] From level 3 the guard can sweep the city: pay 5 turns of the city's [ICON_RESEARCH] Science in [ICON_GOLD] Gold, and each enemy spy there gets a chance to be caught.[NEWLINE][ICON_BULLET] With the Kremlin, spies you catch are always executed. With Advanced Interrogation Techniques, each catch also steals a random technology from the spy's owner.[NEWLINE][NEWLINE][COLOR_CYAN]Spying in a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] Every other civilization's [ICON_INFLUENCE] Influence there drops by 0.2 per level of your spy each turn, on top of its normal change. Above the resting point it falls faster, below it recovers more slowly. Quests and gifts are not affected.[NEWLINE][ICON_BULLET] Nobody learns whose spy it is.[NEWLINE][ICON_BULLET] The spy can also stage a coup.[NEWLINE][NEWLINE][COLOR_CYAN]Upkeep and levels[ENDCOLOR][NEWLINE][ICON_BULLET] A spy in a city costs 3 [ICON_GOLD] Gold per turn per era from the Renaissance on. Diplomats are free.[NEWLINE][ICON_BULLET] A spy gains a level for each successful steal, coup or caught enemy spy.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS">
-			<Text>[COLOR_CYAN]DIPLOMATS[ENDCOLOR][NEWLINE][ICON_BULLET] A diplomat goes to another civilization's capital or to a City-State. It never steals, costs no upkeep and stays during wars.[NEWLINE][ICON_BULLET] It is set up at once with civilizations that give you open borders.[NEWLINE][ICON_BULLET] It gains a level every 25 turns in the same city. Moving it keeps its level.[NEWLINE][ICON_BULLET] It sees the tiles around its city, like a spy.[NEWLINE][NEWLINE][COLOR_CYAN]In a capital[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_RESEARCH] Science: 2% of the capital's Science per level of the diplomat, halved while you are at war with them. Only while they know a technology you don't.[NEWLINE][ICON_BULLET] [ICON_GOLD] Gold: +15% per level on your trade routes to that city.[NEWLINE][NEWLINE][COLOR_CYAN]From level 3[ENDCOLOR][NEWLINE][ICON_BULLET] Your stealing spies in that civilization count 1 level higher.[NEWLINE][ICON_BULLET] If they also have a diplomat in your capital, you both see what the other's level 3+ spies see in other civilizations' cities.[NEWLINE][NEWLINE][COLOR_CYAN]In a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_INFLUENCE] Influence: +0.33 per level of the diplomat each turn, on top of the normal change.[NEWLINE][ICON_BULLET] Influence below the resting point recovers 50% faster per level.</Text>
+			<Text>[COLOR_CYAN]DIPLOMATS[ENDCOLOR][NEWLINE][ICON_BULLET] A diplomat goes to another civilization's capital or to a City-State. It never steals, costs no upkeep and stays during wars.[NEWLINE][ICON_BULLET] It is set up at once with civilizations that give you open borders.[NEWLINE][ICON_BULLET] While Blackout (World Congress) is active, diplomats can't stay in other civilizations' capitals.[NEWLINE][ICON_BULLET] It gains a level every 25 turns in the same city. Moving it keeps its level.[NEWLINE][ICON_BULLET] It sees the tiles around its city, like a spy.[NEWLINE][NEWLINE][COLOR_CYAN]In a capital[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_RESEARCH] Science: 2% of the capital's Science per level of the diplomat, halved while you are at war with them. Only while they know a technology you don't.[NEWLINE][ICON_BULLET] [ICON_GOLD] Gold: +15% per level on your trade routes to that city.[NEWLINE][NEWLINE][COLOR_CYAN]From level 3[ENDCOLOR][NEWLINE][ICON_BULLET] Your stealing spies in that civilization count 1 level higher.[NEWLINE][ICON_BULLET] If they also have a diplomat in your capital, you both see what the other's level 3+ spies see in other civilizations' cities.[NEWLINE][NEWLINE][COLOR_CYAN]In a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_INFLUENCE] Influence: +0.33 per level of the diplomat each turn, on top of the normal change.[NEWLINE][ICON_BULLET] Influence below the resting point recovers 50% faster per level.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_LINE">
 			<Text>Every {1_Num} turns: steals about {2_Num} [ICON_RESEARCH] Science (8 turns of this city's) toward one of their technologies. This always succeeds.</Text>
@@ -120981,7 +121014,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Your city's defense (from buildings): {1_Num}</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_AGENTS">
-			<Text>[COLOR_CYAN]AGENTS[ENDCOLOR][NEWLINE][ICON_BULLET] You get agents as you advance through the eras, and from some wonders and policies.[NEWLINE][ICON_BULLET] Each agent works as a spy or as a diplomat. You choose when you send it to another civilization's capital or to a City-State. In any other city it is a spy.[NEWLINE][ICON_BULLET] Agents have levels 1 to 5.[NEWLINE][ICON_BULLET] At home an agent does nothing and costs nothing.[NEWLINE][NEWLINE]Click the spy or the diplomat icon at the top right for their rules.</Text>
+			<Text>[COLOR_CYAN]AGENTS[ENDCOLOR][NEWLINE][ICON_BULLET] You get agents as you advance through the eras, and from some wonders and policies.[NEWLINE][ICON_BULLET] Each agent works as a spy or as a diplomat. You choose when you send it to another civilization's capital or to a City-State. In any other city it is a spy.[NEWLINE][ICON_BULLET] Agents have levels 1 to 5.[NEWLINE][ICON_BULLET] At home an agent does nothing and costs nothing.[NEWLINE][ICON_BULLET] With the Ministry of Truth, your agents are set up as soon as they arrive.[NEWLINE][NEWLINE]Click the spy or the diplomat icon at the top right for their rules.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_SPIES_BUTTON">
 			<Text>Spies</Text>
@@ -121056,7 +121089,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Advanced Interrogation Techniques</Text>
 		</Row>
 		<Row Tag="TXT_KEY_POLICY_LEKMOD_ADVANCED_INTERROGATION_HELP">
-			<Text>[COLOR_POSITIVE_TEXT]Advanced Interrogation Techniques[ENDCOLOR][NEWLINE]Capturing a city gives 10% more of a technology (Spoils of War).</Text>
+			<Text>[COLOR_POSITIVE_TEXT]Advanced Interrogation Techniques[ENDCOLOR][NEWLINE]Capturing a city gives 10% more of a technology (Spoils of War).[NEWLINE]Catching an enemy [ICON_SPY] Spy steals a random technology from its owner.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_TEMP_SCIENCE">
 			<Text>[NEWLINE][ICON_BULLET]Scientific Revolution: {1_Num}%</Text>
@@ -145064,7 +145097,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_KREMLIN_HELP"> 
 			<Text>
-				Requires Order. +50% [ICON_PRODUCTION] Production when building Armor Units. 1 Free Social Policy.
+				Requires Order.[NEWLINE]1 free Social Policy.[NEWLINE][NEWLINE]Enemy [ICON_SPY] Spies take 30% longer to steal in all your cities.[NEWLINE]Your guarding [ICON_SPY] Spies count 1 level higher.[NEWLINE]Enemy [ICON_SPY] Spies caught in your cities are always executed.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_KREMLIN_QUOTE"> 

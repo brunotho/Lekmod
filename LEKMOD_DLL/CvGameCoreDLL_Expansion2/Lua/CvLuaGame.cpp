@@ -1325,10 +1325,21 @@ int CvLuaGame::lGetVotesNeededForDiploVictory(lua_State* L)
 }
 #ifdef LEKMOD_CONGRESS_CYCLE
 //------------------------------------------------------------------------------
-//bool LekmodIsBlackout(); Demographics are disabled (Blackout proposal)
+//bool LekmodIsBlackout(int iObserver = -1); Demographics are disabled (Blackout proposal; for iObserver also when
+//another civ owns a building with Buildings.DemographicsBlackout, the Ministry of Truth)
 int CvLuaGame::lLekmodIsBlackout(lua_State* L)
 {
-	lua_pushboolean(L, GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BLACKOUT) != 0);
+	bool bBlackout = GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_BLACKOUT) != 0;
+#ifdef LEKMOD_SPY_WONDERS
+	const int iObserver = luaL_optint(L, 1, -1);
+	for (int iPlayer = 0; iPlayer < MAX_MAJOR_CIVS && !bBlackout && iObserver >= 0; iPlayer++)
+	{
+		if (iPlayer != iObserver && GET_PLAYER((PlayerTypes)iPlayer).isAlive()
+			&& CvPlayerEspionage::LekmodPlayerBuildingValue((PlayerTypes)iPlayer, CvPlayerEspionage::LSB_DEMOGRAPHICS_BLACKOUT) > 0)
+			bBlackout = true;
+	}
+#endif
+	lua_pushboolean(L, bBlackout);
 	return 1;
 }
 #endif

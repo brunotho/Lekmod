@@ -120,6 +120,15 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_bLekmodClosestCoastalMinorTradeQuest(false),
 	m_iLekmodGoldenAgePopulationChange(0),
 #endif
+#ifdef LEKMOD_SPY_WONDERS
+	m_iLekmodEnemySpyStealSlower(0),
+	m_iLekmodGuardLevelChange(0),
+	m_bLekmodExecuteCaughtSpies(false),
+	m_bLekmodBlockForeignSpies(false),
+	m_bLekmodFastSpyEstablish(false),
+	m_bLekmodDemographicsBlackout(false),
+	m_bLekmodExtraWorldLeaderVote(false),
+#endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange(0),
 #endif
@@ -532,6 +541,15 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iLekmodClosestCoastalMinorInfluence = kResults.GetInt("ClosestCoastalMinorInfluence");
 	m_bLekmodClosestCoastalMinorTradeQuest = kResults.GetBool("ClosestCoastalMinorTradeQuest");
 	m_iLekmodGoldenAgePopulationChange = kResults.GetInt("GoldenAgePopulationChange");
+#endif
+#ifdef LEKMOD_SPY_WONDERS
+	m_iLekmodEnemySpyStealSlower = kResults.GetInt("EnemySpyStealSlower");
+	m_iLekmodGuardLevelChange = kResults.GetInt("GuardLevelChange");
+	m_bLekmodExecuteCaughtSpies = kResults.GetBool("ExecuteCaughtSpies");
+	m_bLekmodBlockForeignSpies = kResults.GetBool("BlockForeignSpies");
+	m_bLekmodFastSpyEstablish = kResults.GetBool("FastSpyEstablish");
+	m_bLekmodDemographicsBlackout = kResults.GetBool("DemographicsBlackout");
+	m_bLekmodExtraWorldLeaderVote = kResults.GetBool("ExtraWorldLeaderVote");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
 	m_iTerritoryHealChange = kResults.GetInt("TerritoryHealChange");
