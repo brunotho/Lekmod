@@ -18400,7 +18400,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ARSENAL_HELP"> 
 			<Text>
-				City must have a Castle or Mughal Fort.
+				City must have a Castle.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ARSENAL_STRATEGY"> 

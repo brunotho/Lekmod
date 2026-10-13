@@ -1948,3 +1948,8 @@ New World Wonder (Globalization, 1600 Production).
 - Added: an extra World Leader vote 2 turns after it is built (3 turns if a regular vote falls on that turn); the regular votes keep their schedule
 - DLL: Buildings.ExtraWorldLeaderVote, CvLeague::LekmodScheduleExtraLeaderVote (m_iLekmodExtraLeaderVoteTurn, league save version 19)
 - Dev: building 277, class 184
+
+ARSENAL (BUILDING_ARSENAL)
+--------------------------
+Tags: buildings, ui, bugfix
+- Fixed: the tooltip named the Mughal Fort as a separate requirement; it only says Castle now (unique Castles like the Mughal Fort still count)
