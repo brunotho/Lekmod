@@ -175,7 +175,7 @@ public:
 	int LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner, LekmodParts* pParts = NULL);
 	int LekmodGetDiplomatScienceTimes100(uint uiSpyIndex);
 	static int LekmodGetStealInterval(int iStrength, int iDefense);
-	static int LekmodGetStealChance(int iStrength, int iDefense);
+	static int LekmodGetCatchChance(CvCity* pCity, int iStrength, int* piFromBuildings = NULL, int* piGuardLevel = NULL);
 	void LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bExecute);
 	int LekmodGetDiplomatLevelIn(CvCity* pCity);
 	int LekmodGetSpyLevelIn(CvCity* pCity);

@@ -1007,6 +1007,7 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(LekmodGetCaughtSpies);
 	Method(LekmodGetSpyStealInfo);
 	Method(LekmodGetCoupInfo);
+	Method(LekmodGetDiplomatLevelIn);
 	Method(LekmodGetSweepCost);
 	Method(LekmodCanSweep);
 	Method(LekmodGetSpyMaintenance);
@@ -11646,6 +11647,15 @@ int CvLuaPlayer::lIsAllowPuppetPurchasing(lua_State* L)
 #endif
 
 //------------------------------------------------------------------------------
+#ifdef LEKMOD_SPY_REWORK
+// The espionage screen's Potential column shows the city's Science: always for your own cities, otherwise once a spy has been there
+static int LekmodCityScienceShown(CvCity* pCity, PlayerTypes ePlayer, int iKnownValue)
+{
+	if (pCity->getOwner() == ePlayer || iKnownValue > 0)
+		return std::max(1, pCity->getYieldRateTimes100(YIELD_SCIENCE, false) / 100);
+	return iKnownValue;
+}
+#endif
 int CvLuaPlayer::lGetEspionageCityStatus(lua_State* L)
 {
 	CvPlayerAI* pkThisPlayer = GetInstance(L);
@@ -11681,6 +11691,9 @@ int CvLuaPlayer::lGetEspionageCityStatus(lua_State* L)
 				{
 					iPotential = pCityEspionage->m_aiLastBasePotential[pkThisPlayer->GetID()];
 				}
+#ifdef LEKMOD_SPY_REWORK
+				iPotential = LekmodCityScienceShown(pCity, pkThisPlayer->GetID(), pCityEspionage->m_aiLastBasePotential[pkThisPlayer->GetID()]);
+#endif
 
 				if (iPotential > iLargestBasePotential)
 				{
@@ -11735,6 +11748,12 @@ int CvLuaPlayer::lGetEspionageCityStatus(lua_State* L)
 				lua_pushinteger(L, pCity->getPopulation());
 				lua_setfield(L, t, "Population");
 
+#ifdef LEKMOD_SPY_REWORK
+				lua_pushinteger(L, LekmodCityScienceShown(pCity, pkThisPlayer->GetID(), pCityEspionage->m_aiLastBasePotential[pkThisPlayer->GetID()]));
+				lua_setfield(L, t, "Potential");
+				lua_pushinteger(L, LekmodCityScienceShown(pCity, pkThisPlayer->GetID(), pCityEspionage->m_aiLastBasePotential[pkThisPlayer->GetID()]));
+				lua_setfield(L, t, "BasePotential");
+#else
 				if(pCity->getOwner() == pkThisPlayer->GetID())
 				{
 					int iRate = pkPlayerEspionage->CalcPerTurn(SPY_STATE_GATHERING_INTEL, pCity, -1);
@@ -11755,6 +11774,7 @@ int CvLuaPlayer::lGetEspionageCityStatus(lua_State* L)
 					lua_pushinteger(L,  pCityEspionage->m_aiLastBasePotential[pkThisPlayer->GetID()]);
 				}
 				lua_setfield(L, t, "BasePotential");
+#endif
 
 				lua_pushinteger(L, iLargestBasePotential);
 				lua_setfield(L, t, "LargestBasePotential");
@@ -11866,7 +11886,17 @@ int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
 	lua_setfield(L, t, "AtWar");
 	lua_pushboolean(L, pCity != NULL && GET_PLAYER(pCity->getOwner()).isMinorCiv());
 	lua_setfield(L, t, "MinorCiv");
-	const int iChance = CvPlayerEspionage::LekmodGetStealChance(iStrength, iDefense);
+	int iCatchFromBuildings = 0;
+	int iGuardLevel = 0;
+	const int iCatch = pCity ? CvPlayerEspionage::LekmodGetCatchChance(pCity, iStrength, &iCatchFromBuildings, &iGuardLevel) : 0;
+	lua_pushinteger(L, iCatchFromBuildings);
+	lua_setfield(L, t, "CatchFromBuildings");
+	lua_pushinteger(L, iCatchFromBuildings / 10);
+	lua_setfield(L, t, "DefenseBuildings");
+	// the guard is hidden from the attacker: only your own city reveals it
+	lua_pushinteger(L, bOwnCity ? iGuardLevel : 0);
+	lua_setfield(L, t, "GuardLevel");
+	const int iChance = 100 - (bOwnCity ? iCatch : iCatchFromBuildings);
 	lua_pushinteger(L, iStrength);
 	lua_setfield(L, t, "Strength");
 	lua_pushinteger(L, iDefense);
@@ -11874,7 +11904,7 @@ int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
 	lua_pushinteger(L, CvPlayerEspionage::LekmodGetStealInterval(iStrength, iDefense));
 	lua_setfield(L, t, "Turns");
 	lua_pushinteger(L, iChance);
-	lua_setfield(L, t, "Chance");
+	lua_setfield(L, t, "Chance"); // 100% - the catch chance this player may know
 	lua_pushinteger(L, 100 - iChance);
 	lua_setfield(L, t, "Catch");
 	lua_pushinteger(L, (int)pkEspionage->m_aSpyList[iSpy].m_eRank + 1);
@@ -11886,6 +11916,14 @@ int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
 	return 1;
 }
 //------------------------------------------------------------------------------
+// int LekmodGetDiplomatLevelIn(city): level of this player's established diplomat there (0 = none)
+int CvLuaPlayer::lLekmodGetDiplomatLevelIn(lua_State* L)
+{
+	CvPlayerAI* pkThisPlayer = GetInstance(L);
+	CvCity* pkCity = CvLuaCity::GetInstance(L, 2);
+	lua_pushinteger(L, pkThisPlayer->GetEspionage()->LekmodGetDiplomatLevelIn(pkCity));
+	return 1;
+}
 // table LekmodGetCoupInfo(int iSpy): Chance, AllyInfluence, MyInfluence, MyLevel, AllyLevel (0 = none), MyValue, AllyValue, Multiplier (x100), Policy, Uncapped
 int CvLuaPlayer::lLekmodGetCoupInfo(lua_State* L)
 {

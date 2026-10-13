@@ -1008,6 +1008,7 @@ protected:
 	static int lLekmodGetCaughtSpies(lua_State* L);
 	static int lLekmodGetSpyStealInfo(lua_State* L);
 	static int lLekmodGetCoupInfo(lua_State* L);
+	static int lLekmodGetDiplomatLevelIn(lua_State* L);
 	static int lLekmodGetSweepCost(lua_State* L);
 	static int lLekmodCanSweep(lua_State* L);
 	static int lLekmodGetSpyMaintenance(lua_State* L);

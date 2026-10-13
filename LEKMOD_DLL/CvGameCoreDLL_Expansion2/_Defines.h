@@ -1668,6 +1668,7 @@ Diversify Spain and Australia's NW Discovery bonus
 // levels. Steal every 15/13/11/9/7 turns at strength - defense 1..5+ (+5 turns per point below 1); success (S+1)/(S+1+D), caught
 // 100% minus that; a steal gives 8 turns of the city's Science toward a picked tech.
 #define LEKMOD_SPY_REWORK
+#define LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL 15 // % Gold on your trade routes to a capital with your diplomat, per level
 /*ESPIONAGE CHANGES END*/
 
 // The number of free policies for accepting an ideology is set at the start of the turn.

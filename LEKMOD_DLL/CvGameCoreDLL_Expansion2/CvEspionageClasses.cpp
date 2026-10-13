@@ -570,16 +570,15 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 			m_aHeistLocations[eCityOwner].push_back(kHeistLocation);
 
 #ifdef LEKMOD_SPY_REWORK
-			// One steal attempt: succeeds with (strength + 1) / (strength + 1 + defense), caught with 100% minus that
+			// One steal attempt: the normal steal always lands; a full-tech attempt succeeds with (100% - catch chance) / 4.
+			// Either way the spy is caught with the city's catch chance (buildings + hidden guard).
 			{
 				const int iStrength = LekmodGetSpyStrength(uiSpyIndex, pCity);
-				const int iDefense = LekmodGetCityDefense(pCity, ePlayer);
-				const int iStealChance = LekmodGetStealChance(iStrength, iDefense);
-				// level 3+ full-tech attempt: a quarter of the chance, a whole technology; the catch roll is the same
+				const int iCatch = LekmodGetCatchChance(pCity, iStrength);
 				const bool bFullTech = pSpy->m_bLekmodFullTech && (int)pSpy->m_eRank >= 2;
 				pSpy->m_bLekmodFullTech = false;
-				const bool bStole = GC.getGame().getJonRandNum(100, "Lekmod spy steal roll") < (bFullTech ? std::max(1, iStealChance / 4) : iStealChance);
-				const bool bCaught = GC.getGame().getJonRandNum(100, "Lekmod spy catch roll") < (100 - iStealChance);
+				const bool bStole = !bFullTech || GC.getGame().getJonRandNum(100, "Lekmod spy full tech roll") < (100 - iCatch) / 4;
+				const bool bCaught = iCatch > 0 && GC.getGame().getJonRandNum(100, "Lekmod spy catch roll") < iCatch;
 
 				pCityEspionage->ResetProgress(ePlayer);
 				const int iLekmodRate = CalcPerTurn(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex);
@@ -1802,27 +1801,15 @@ static bool LekmodCityHasBuildingClass(CvCity* pCity, const char* szClass)
 	return eBuilding != NO_BUILDING && pCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0;
 }
 
-/// Defense of a city against the spies of eSpyOwner: defending spy level + 1 Constabulary + 1 Police Station
-/// + 1 Intelligence Agency + the owner's tourism influence levels over eSpyOwner
+/// Visible defense of a city against the spies of eSpyOwner (sets the steal timer and the vision radius):
+/// +1 Constabulary, +1 Police Station, +1 Intelligence Agency, + the owner's tourism influence levels over eSpyOwner.
+/// A guarding spy is not part of it: it only raises the catch chance and stays hidden from the attacker.
 int CvPlayerEspionage::LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner, LekmodParts* pParts)
 {
 	if (pCity == NULL)
 		return 0;
 	int iDefense = 0;
 	const PlayerTypes eOwner = pCity->getOwner();
-	CvCityEspionage* pCityEspionage = pCity->GetCityEspionage();
-	if (pCityEspionage != NULL && pCityEspionage->HasCounterSpy())
-	{
-		CvPlayerEspionage* pOwnerEspionage = GET_PLAYER(eOwner).GetEspionage();
-		const int iIndex = pOwnerEspionage->GetSpyIndexInCity(pCity);
-		if (iIndex >= 0)
-		{
-			const int iSpyLevel = (int)pOwnerEspionage->m_aSpyList[iIndex].m_eRank + 1;
-			iDefense += iSpyLevel;
-			if (pParts)
-				pParts->push_back(std::make_pair("TXT_KEY_LEKMOD_EO_PART_GUARD", iSpyLevel));
-		}
-	}
 	const char* aszDefenseClasses[3] = { "BUILDINGCLASS_CONSTABLE", "BUILDINGCLASS_POLICE_STATION", "BUILDINGCLASS_INTELLIGENCE_AGENCY" };
 	for (int iClass = 0; iClass < 3; iClass++)
 	{
@@ -1859,14 +1846,33 @@ int CvPlayerEspionage::LekmodGetStealInterval(int iStrength, int iDefense)
 	return 15 + 5 * (1 - iNet);
 }
 
-/// % chance a steal succeeds: (strength + 1) / (strength + 1 + defense); 100% without defense.
-/// The spy is caught with 100% minus this chance (on every attempt).
-int CvPlayerEspionage::LekmodGetStealChance(int iStrength, int iDefense)
+/// % chance a spy of this strength is caught on a steal attempt in pCity: 10% per Constabulary, Police Station and
+/// Intelligence Agency (public) + 25% x guarding spy level / strength (hidden from the attacker), at most 100%
+int CvPlayerEspionage::LekmodGetCatchChance(CvCity* pCity, int iStrength, int* piFromBuildings, int* piGuardLevel)
 {
-	if (iDefense <= 0)
-		return 100;
-	const int iTop = std::max(1, iStrength + 1);
-	return std::max(1, (iTop * 100) / (iTop + iDefense));
+	if (pCity == NULL)
+		return 0;
+	int iBuildings = 0;
+	const char* aszDefenseClasses[3] = { "BUILDINGCLASS_CONSTABLE", "BUILDINGCLASS_POLICE_STATION", "BUILDINGCLASS_INTELLIGENCE_AGENCY" };
+	for (int iClass = 0; iClass < 3; iClass++)
+	{
+		if (LekmodCityHasBuildingClass(pCity, aszDefenseClasses[iClass]))
+			iBuildings++;
+	}
+	int iGuardLevel = 0;
+	CvCityEspionage* pCityEspionage = pCity->GetCityEspionage();
+	if (pCityEspionage != NULL && pCityEspionage->HasCounterSpy())
+	{
+		CvPlayerEspionage* pOwnerEspionage = GET_PLAYER(pCity->getOwner()).GetEspionage();
+		const int iIndex = pOwnerEspionage->GetSpyIndexInCity(pCity);
+		if (iIndex >= 0)
+			iGuardLevel = (int)pOwnerEspionage->m_aSpyList[iIndex].m_eRank + 1;
+	}
+	if (piFromBuildings)
+		*piFromBuildings = std::min(100, 10 * iBuildings);
+	if (piGuardLevel)
+		*piGuardLevel = iGuardLevel;
+	return std::min(100, 10 * iBuildings + 25 * iGuardLevel / std::max(1, iStrength));
 }
 
 /// A caught spy (this player's): a human defender decides Execute or Evict (Execute when its turn ends); AIs execute at once
@@ -2031,7 +2037,7 @@ bool CvPlayerEspionage::LekmodDoSweep(CvCity* pCity)
 		const int iSpyIndex = pOther->GetSpyIndexInCity(pCity);
 		if (iSpyIndex < 0)
 			continue;
-		const int iCatch = 100 - LekmodGetStealChance(pOther->LekmodGetSpyStrength(iSpyIndex, pCity), LekmodGetCityDefense(pCity, eOther));
+		const int iCatch = LekmodGetCatchChance(pCity, pOther->LekmodGetSpyStrength(iSpyIndex, pCity));
 		if (GC.getGame().getJonRandNum(100, "Lekmod sweep roll") < iCatch)
 		{
 			pOther->LekmodSpyCaught(iSpyIndex, pCity, /*bExecute*/ true);

@@ -3029,13 +3029,13 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100(const TradeConnection& kTrade
 		iModifier += iDomainModifier;
 		iModifier += iRiverMod;
 #ifdef LEKMOD_SPY_REWORK
-		// our diplomat in the destination capital: +33% Gold per level (origin's share only)
+		// our diplomat in the destination capital: +15% Gold per level (origin's share only)
 		if (eYield == YIELD_GOLD && bAsOriginPlayer && kTradeConnection.m_eOriginOwner != NO_PLAYER)
 		{
 			CvPlot* pDestPlot = GC.getMap().plot(kTradeConnection.m_iDestX, kTradeConnection.m_iDestY);
 			CvCity* pDestCity = pDestPlot ? pDestPlot->getPlotCity() : NULL;
 			if (pDestCity != NULL && pDestCity->getOwner() != kTradeConnection.m_eOriginOwner)
-				iModifier += 33 * GET_PLAYER(kTradeConnection.m_eOriginOwner).GetEspionage()->LekmodGetDiplomatLevelIn(pDestCity);
+				iModifier += LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL * GET_PLAYER(kTradeConnection.m_eOriginOwner).GetEspionage()->LekmodGetDiplomatLevelIn(pDestCity);
 		}
 #endif
 #ifdef LEKMOD_CANAL_PROJECT

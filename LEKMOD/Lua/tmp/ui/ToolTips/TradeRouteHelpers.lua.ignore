@@ -85,6 +85,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 	local policyText, traitText, religionText = "", "", ""
 	local policyModifierText, traitModifierText = "", ""
 	local riverModifierText, domainModifierText, originBuildingModifierText = "", "", ""
+	local diplomatModifierText = "" -- LEKMOD
 	local sumText, totalText = "", ""
 	local anyBase, hasModifiers = false, false
 
@@ -347,6 +348,16 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 				domainModifierText = string.format("%s %+d%%%s (%+g%s)", domainModifierText, domainModifier, yieldIcon, bonus, yieldIcon)
 				hasModifiers = true
 			end
+			-- LEKMOD: your diplomat in the destination capital: +15% Gold per level (LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL)
+			local diplomatModifier = 0
+			if bAsOrigin and yieldID == YieldTypes.YIELD_GOLD and pPlayer.LekmodGetDiplomatLevelIn and pTargetCity:GetOwner() ~= pPlayer:GetID() then
+				diplomatModifier = 15 * pPlayer:LekmodGetDiplomatLevelIn(pTargetCity)
+			end
+			if diplomatModifier ~= 0 then
+				local bonus = sumValue * diplomatModifier / 100
+				diplomatModifierText = string.format("%s %+d%%%s (%+g%s)", diplomatModifierText, diplomatModifier, yieldIcon, bonus, yieldIcon)
+				hasModifiers = true
+			end
 			if originBuildingModifier ~= 0 then
 				local bonus = sumValue * originBuildingModifier / 100
 				originBuildingModifierText = string.format("%s %+d%%%s (%+g%s)", originBuildingModifierText, originBuildingModifier, yieldIcon, bonus, yieldIcon)
@@ -506,6 +517,7 @@ local function BuildSingleSide(pPlayer, pOriginCity, pTargetCity, eConnectionTyp
 		if riverModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]" .. riverCity:GetName() .. " is on a river[ENDCOLOR]:" .. riverModifierText end
 		if domainModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Route starts in a coastal city (" .. pOriginCity:GetName() .. ")[ENDCOLOR]:" .. domainModifierText end
 		if originBuildingModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Canal Project in " .. pOriginCity:GetName() .. "[ENDCOLOR]:" .. originBuildingModifierText end
+		if diplomatModifierText ~= "" then lines[#lines + 1] = " [ICON_BULLET][COLOR_POSITIVE_TEXT]Your diplomat in " .. pTargetCity:GetName() .. "[ENDCOLOR]:" .. diplomatModifierText end
 
 		for _, entry in pairs(potentialPolicyModifiers) do
 			lines[#lines + 1] = "  [ICON_BULLET][COLOR_LEKMOD_INACTIVE]" .. Locale.Lookup(entry.PolicyInfo.Description) .. "[ENDCOLOR]:" .. entry.Text

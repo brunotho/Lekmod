@@ -246,7 +246,7 @@
 						<!-- Selected State  -->
 						<Grid Anchor="C,C" Offset="0,1" Size="300,26" Style="Grid9FrameTurns" Hidden="0" ID="OverviewSelectHighlight"/>
 					</Button>
-					<Button Anchor="L,T" Size="300,24" Offset="0,0" String="TXT_KEY_EO_INTRIGUE" ToolTip="TXT_KEY_EO_INTRIGUE_TT" ID="TabButtonIntrigue">
+					<Button Anchor="L,T" Size="300,24" Offset="0,0" String="TXT_KEY_LEKMOD_EO_RULES_TAB" ToolTip="TXT_KEY_LEKMOD_EO_RULES_TAB_TT" ID="TabButtonIntrigue">
 						<ShowOnMouseOver>
 							<AlphaAnim Anchor="L,C" Size="300,27" Pause="0" Cycle="Bounce" Speed="1" AlphaStart="2" AlphaEnd="1">
 								<Grid Size="300,27" Offset="0,2" Padding="0,0" Style="Grid9FrameTurnsHL"/>
@@ -263,7 +263,7 @@
 				<Box Size="479,464" Offset="0,0" Color="0,0,0,0" ID="AgentsListBox" Hidden="0">
 					<Stack Size="479,464" Anchor="L,T" StackGrowth="Bottom">
 						<Box Size="484,22" Color="0,0,0,0">
-							<!-- LEKMOD: the rules, on demand --><TextButton Anchor="L,B" Offset="12,0" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" String="TXT_KEY_LEKMOD_EO_HELP_SPIES_BUTTON" ToolTip="TXT_KEY_LEKMOD_EO_HELP_SPIES" ID="LekmodHelpSpies"/><TextButton Anchor="C,B" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" String="TXT_KEY_EO_AGENTS" ToolTip="TXT_KEY_LEKMOD_EO_HELP_AGENTS" ID="LekmodHelpAgents"/><TextButton Anchor="R,B" Offset="12,0" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" String="TXT_KEY_LEKMOD_EO_HELP_DIPLOMATS_BUTTON" ToolTip="TXT_KEY_LEKMOD_EO_HELP_DIPLOMATS" ID="LekmodHelpDiplomats"/>
+							<Label Anchor="C,B" String="TXT_KEY_EO_AGENTS" ColorSet="Beige_Black_Alpha" Font="TwCenMT22" FontStyle="Shadow"/>
 						</Box>
 						<Box Size="484,20" Color="0,0,0,0">
 							<Stack Size="484,20" StackGrowth="Right">
@@ -455,6 +455,16 @@
 					<Stack StackGrowth="Bottom" ID="IntrigueMessageStack"/>
 				</ScrollPanel>
 				<Label Anchor="C,C" Offset="0,10" WrapWidth="440" ID="NoIntrigueAvailable" Hidden="1" String="TXT_KEY_EO_NO_INTRIGUE_AVAILABLE" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"/>
+				<!-- LEKMOD: rules (replaces the intrigue messages) -->
+				<ScrollPanel Vertical="1" Size="936,455" Offset="0,4" AutoScrollBar="1" ID="LekmodRulesScroll">
+					<ScrollBar Style="VertSlider" Length="439" Anchor="R,C" AnchorSide="O,I"/>
+					<UpButton Style="ScrollBarUp" Anchor="R,T" AnchorSide="O,I"/>
+					<DownButton Style="ScrollBarDown" Anchor="R,B" AnchorSide="O,I"/>
+					<Stack StackGrowth="Right" Padding="20" Offset="12,6" ID="LekmodRulesStack">
+						<Label WrapWidth="440" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LekmodRulesLeft"/>
+						<Label WrapWidth="440" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LekmodRulesRight"/>
+					</Stack>
+				</ScrollPanel>
 			</Box>
 		</Box>
 		<Box Anchor="C,B" AnchorSide="I.I" Offset="0,54" Size="927,56" Color="255,255,255,0">

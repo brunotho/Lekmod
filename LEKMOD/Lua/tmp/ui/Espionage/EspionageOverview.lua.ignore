@@ -857,7 +857,7 @@ function RefreshAgents()
 					else
 						agentEntry.LekmodFullTechButton:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_FULL_TECH_OFF");
 					end
-					agentEntry.LekmodFullTechButton:LocalizeAndSetToolTip("TXT_KEY_LEKMOD_EO_FULL_TECH_TT", math.max(1, math.floor(info.Chance / 4)), info.Catch);
+					agentEntry.LekmodFullTechButton:SetToolTipString(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_FULL_TECH_TT", math.floor(info.Chance / 4), info.Catch)));
 					agentEntry.LekmodFullTechButton:RegisterCallback(Mouse.eLClick, function()
 						Network.SendGiftUnit(v.AgentID, -23);
 					end);
@@ -1101,8 +1101,6 @@ function RefreshMyCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID, s
 		
 		if(cityInfo.BasePotential > 0) then
 			strPotentialToolTip = Locale.Lookup("TXT_KEY_EO_OWN_CITY_POTENTIAL_TT", cityInfo.Name, cityInfo.BasePotential);
-			strPotentialToolTip = strPotentialToolTip .. BuildPotentialModifierTT(cityInfo);
-			strPotentialToolTip = strPotentialToolTip .. BuildExtraCatchSpiesModifierTT(cityInfo.PlayerID);
 			
 			local potentialMeter = entry.PotentialMeterFront;
 			potentialMeter:SetHide(false);
@@ -1297,8 +1295,6 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 			strCityCivToolTip = strCityCivToolTip .. strTraitTT;
 			
 			local strCityStateTT = Locale.Lookup("TXT_KEY_EO_CITY_STATE_POTENTIAL_TT");
-			strCityStateTT = strCityStateTT .. "[NEWLINE][NEWLINE]";
-			strCityStateTT = strCityStateTT .. Locale.Lookup("TXT_KEY_EO_CITY_STATE_ELECTION", Game.GetTurnsBetweenMinorCivElections(), Game.GetTurnsUntilMinorCivElection());
 			entry.RigElectionDisabled:SetToolTipString(strCityStateTT);
 			entry.RigElectionEnabled:SetToolTipString(strCityStateTT);
 		else
@@ -1307,8 +1303,6 @@ function RefreshTheirCities(selectedAgentIndex, selectedAgentCurrentCityPlayerID
 				if (agent ~= nil and agent.EstablishedSurveillance) then
 					if (cityInfo.Potential > 0) then
 						strPotentialToolTip = Locale.Lookup("TXT_KEY_EO_CITY_POTENTIAL_TT", agent.Rank, agent.Name, cityInfo.Potential, cityInfo.Name, cityInfo.Name, cityInfo.BasePotential);
-						strPotentialToolTip = strPotentialToolTip .. BuildPotentialModifierTT(cityInfo);
-						strPotentialToolTip = strPotentialToolTip .. BuildExtraCatchSpiesModifierTT(cityInfo.PlayerID);				
 					else
 						strPotentialToolTip = Locale.Lookup("TXT_KEY_EO_CITY_POTENTIAL_CANNOT_STEAL_TT", agent.Rank, agent.Name, cityInfo.Name, cityInfo.Name, cityInfo.BasePotential);
 					end
@@ -1540,6 +1534,58 @@ function LekmodCoupInfoText(pPlayer, iAgentID)
 	return c.Chance, strText;
 end
 
+-- LEKMOD: wrap long [ICON_BULLET] lines ourselves so the wrapped part starts under the text, not under the bullet
+-- (same estimate as SocialPolicyPopup: tooltip font widths measured from a screenshot, 2026-10-11; the game wraps tooltips at about 300 px)
+local LEKMOD_BULLET_LINE_PIXELS = 275;
+local LEKMOD_BULLET_INDENT = "     ";	-- 5 spaces = about the bullet icon plus its gap (22 px)
+local LEKMOD_CHAR_PIXELS = { [" "] = 4, ["i"] = 3, ["l"] = 3, ["j"] = 3, ["."] = 3, [","] = 3, [";"] = 3, [":"] = 3, ["'"] = 3, ["!"] = 3, ["|"] = 3,
+	["f"] = 4, ["t"] = 4, ["r"] = 4, ["("] = 4, [")"] = 4, ["I"] = 4, ["m"] = 10, ["w"] = 9, ["M"] = 11, ["W"] = 11, ["%"] = 9 };
+local function LekmodVisibleLength(s)
+	s = string.gsub(s, "%[COLOR_[%w_]+%]", "");
+	s = string.gsub(s, "%[ENDCOLOR%]", "");
+	local iWidth = 0;
+	s = string.gsub(s, "%[ICON_[%w_]+%]", function() iWidth = iWidth + 22; return ""; end);
+	for i = 1, string.len(s) do
+		local c = string.sub(s, i, i);
+		local w = LEKMOD_CHAR_PIXELS[c];
+		if w == nil then
+			w = (string.find(c, "%u") ~= nil) and 8 or 6.5;
+		end
+		iWidth = iWidth + w;
+	end
+	return iWidth * 1.18;
+end
+function LekmodHangingIndent(text, iPixels)
+	iPixels = iPixels or LEKMOD_BULLET_LINE_PIXELS;
+	if text == nil or string.find(text, "[ICON_BULLET]", 1, true) == nil then
+		return text;
+	end
+	local out = {};
+	local rest = text .. "[NEWLINE]";
+	while true do
+		local i = string.find(rest, "[NEWLINE]", 1, true);
+		if i == nil then break; end
+		local line = string.sub(rest, 1, i - 1);
+		rest = string.sub(rest, i + 9);
+		if string.find(line, "[ICON_BULLET]", 1, true) == 1 and LekmodVisibleLength(line) > iPixels then
+			local current = "";
+			for word in string.gmatch(line, "%S+") do
+				local candidate = (current == "") and word or (current .. " " .. word);
+				if current ~= "" and LekmodVisibleLength(candidate) > iPixels then
+					table.insert(out, current);
+					current = LEKMOD_BULLET_INDENT .. word;
+				else
+					current = candidate;
+				end
+			end
+			table.insert(out, current);
+		else
+			table.insert(out, line);
+		end
+	end
+	return table.concat(out, "[NEWLINE]");
+end
+
 -- LEKMOD: agent tooltips from the current rules (nil = keep the base text)
 local function LekmodDec(x100)
 	return (string.gsub(string.format("%.2f", x100 / 100), "%.?0+$", ""));
@@ -1556,18 +1602,23 @@ local function LekmodPartLines(parts)
 	return str;
 end
 
+-- catch chance of a spy with this strength (same formula as the DLL: 10% per building + 25% x guard level / strength, at most 100%)
+local function LekmodCatch(iFromBuildings, iGuardLevel, iStrength)
+	return math.min(100, iFromBuildings + math.floor(25 * iGuardLevel / math.max(1, iStrength)));
+end
+
 function LekmodStealInfoText(info)
-	local str = "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_ATTEMPT", info.Turns);
+	local str;
 	if (info.FullTech) then
-		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_SUCCESS_TECH", math.max(1, math.floor(info.Chance / 4)));
+		str = Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_FULL_TECH_LINE", info.Turns, math.floor(info.Chance / 4));
 	else
-		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_SUCCESS", info.Chance, info.StealAmount);
+		str = Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_LINE", info.Turns, info.StealAmount);
 	end
-	if (info.Catch > 0) then
-		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_CAUGHT", info.Catch);
-	else
-		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_NEVER_CAUGHT");
-	end
+	str = "[NEWLINE][NEWLINE]" .. str;
+	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_HEADER");
+	str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_BUILDINGS", info.CatchFromBuildings, info.DefenseBuildings);
+	str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_GUARD",
+		math.floor(25 / math.max(1, info.Strength)), math.floor(50 / math.max(1, info.Strength)), math.floor(75 / math.max(1, info.Strength)));
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_YOUR_STRENGTH", info.Strength) .. LekmodPartLines(info.StrengthParts);
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_THEIR_DEFENSE", info.Defense) .. LekmodPartLines(info.DefenseParts);
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_RULE");
@@ -1594,10 +1645,7 @@ function LekmodAdjustAgent(pPlayer, agent)
 	end
 end
 
-function LekmodAgentActivityTT(pPlayer, agent, city)
-	if (pPlayer.LekmodGetSpyStealInfo == nil or agent == nil) then
-		return nil;
-	end
+local function LekmodAgentActivityRaw(pPlayer, agent, city)
 	local state = agent.State;
 	local info = pPlayer:LekmodGetSpyStealInfo(agent.AgentID);
 	local strCity = "";
@@ -1618,7 +1666,12 @@ function LekmodAgentActivityTT(pPlayer, agent, city)
 	elseif (state == "TXT_KEY_SPY_STATE_RIGGING_ELECTION") then
 		return Locale.Lookup("TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT", agent.Rank, agent.Name, strCity, LekmodDec(20 * info.Level));
 	elseif (state == "TXT_KEY_SPY_STATE_COUNTER_INTEL") then
-		local str = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT", agent.Rank, agent.Name, strCity, info.Defense) .. LekmodPartLines(info.DefenseParts);
+		local catches = {};
+		for s = 1, 5 do
+			catches[s] = LekmodCatch(info.CatchFromBuildings, info.GuardLevel, s);
+		end
+		local str = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT", agent.Rank, agent.Name, strCity, table.concat(catches, " / "));
+		str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_YOUR_DEFENSE", info.Defense) .. LekmodPartLines(info.DefenseParts);
 		if (info.Level >= 3) then
 			return str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_SWEEP_READY");
 		end
@@ -1630,7 +1683,7 @@ function LekmodAgentActivityTT(pPlayer, agent, city)
 		if (info.MinorCiv) then
 			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CS_TT", agent.Rank, agent.Name, strCity, LekmodDec(33 * info.Level), 50 * info.Level);
 		else
-			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CAPITAL_TT", agent.Rank, agent.Name, strCity, LekmodDec(info.DiplomatScience), 33 * info.Level);
+			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CAPITAL_TT", agent.Rank, agent.Name, strCity, LekmodDec(info.DiplomatScience), 2 * info.Level, 15 * info.Level);
 			if (info.AtWar) then
 				str = str .. "[NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_AT_WAR");
 			end
@@ -1646,6 +1699,26 @@ function LekmodAgentActivityTT(pPlayer, agent, city)
 		return str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_MAX_LEVEL");
 	end
 	return nil;
+end
+
+function LekmodAgentActivityTT(pPlayer, agent, city)
+	if (pPlayer.LekmodGetSpyStealInfo == nil or agent == nil) then
+		return nil;
+	end
+	return LekmodHangingIndent(LekmodAgentActivityRaw(pPlayer, agent, city));
+end
+
+-- LEKMOD: the second tab shows the rules instead of the (AI-only) intrigue messages
+local LEKMOD_RULES_LINE_PIXELS = 380;	-- the rule labels wrap at 440 px; our own wrap stays well below it
+function LekmodShowRules()
+	Controls.IntrigueMessageHeaders:SetHide(true);
+	Controls.IntrigueMessageScrollPanel:SetHide(true);
+	Controls.NoIntrigueAvailable:SetHide(true);
+	Controls.LekmodRulesLeft:SetText(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_RULES_SPIES"), LEKMOD_RULES_LINE_PIXELS));
+	Controls.LekmodRulesRight:SetText(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS"), LEKMOD_RULES_LINE_PIXELS));
+	Controls.LekmodRulesStack:CalculateSize();
+	Controls.LekmodRulesStack:ReprocessAnchoring();
+	Controls.LekmodRulesScroll:CalculateInternalSize();
 end
 
 -- LEKMOD: enemy spies we caught: Execute / Evict / decide later (Execute when the turn ends)
@@ -1734,6 +1807,10 @@ Controls.No:RegisterCallback( Mouse.eLClick, OnNo );
 
 ----------------------------------------------------------------
 function RefreshIntrigue()
+	if (Controls.LekmodRulesLeft ~= nil) then
+		LekmodShowRules(); -- LEKMOD
+		return;
+	end
 	local pActivePlayer = Players[Game.GetActivePlayer()];
 	local intrigueMessages = pActivePlayer:GetIntrigueMessages();
 	
