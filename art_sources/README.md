@@ -67,10 +67,11 @@ from the sources, so it can be run any number of times (nothing gets shifted or 
 - Atlases: one 1x1 atlas per icon.
 
 ## Main menu backgrounds
-Each PNG is scaled to cover 1920x1200 (centre crop), then BC1 (no alpha) with one mip: about 1.2 MB each.
-Files `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background_01..11.dds` follow the alphabetical order of the PNGs here;
-`lekmod_menu_background.dds` is the original Great Wall painting. `FrontEnd.lua` picks one at random
-(`LEKMOD_MENU_BACKGROUND_COUNT`).
+Since 2026-10-13 there is one background: `course_of_empire_destruction_v1.jpg` (1920x1200), written as BC1 (no alpha)
+with one mip to `LEKMOD/Art/Lekmod (v 1)/UI/lekmod_menu_background.dds` (1.2 MB):
+`texconv -f BC1_UNORM -m 1` on a PNG copy. `FrontEnd.lua` sets it directly.
+The other files here (11 paintings, the Great Wall DDS) were the earlier random rotation; they are no longer in the mod
+(removed with the unused 12 MB `civilzationvatlas_vanilla.dds` to cut the download size).
 
 ## Policy branch pictures
 - The policy screen loads one 192x292 picture per branch by file name (`PolicyBranch_<Branch>.dds` in

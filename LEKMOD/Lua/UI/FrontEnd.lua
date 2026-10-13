@@ -36,19 +36,6 @@ local function IsUiCheckConfigured()
 	return userOk;
 end
 
--- LEKMOD: a random main menu background each time the menu appears (lekmod_menu_background.dds and _01.._11)
-local LEKMOD_MENU_BACKGROUND_COUNT = 11;
-if os ~= nil and os.time ~= nil then
-	math.randomseed( os.time() );
-	math.random(); -- the first value after seeding barely changes between launches
-end
-function LekmodRandomMenuBackground()
-	local i = math.random( 0, LEKMOD_MENU_BACKGROUND_COUNT );
-	if i == 0 then
-		return "lekmod_menu_background.dds";
-	end
-	return string.format( "lekmod_menu_background_%02d.dds", i );
-end
 
 function ShowHideHandler( bIsHide, bIsInit )
 
@@ -58,7 +45,7 @@ function ShowHideHandler( bIsHide, bIsInit )
 
     if not bIsHide then
         Controls.AtlasLogo:SetTexture( "CivilzationVAtlas.dds" );
-        Controls.AtlasLogo:SetTexture( LekmodRandomMenuBackground() );
+        Controls.AtlasLogo:SetTexture( "lekmod_menu_background.dds" ); -- LEKMOD: main menu background
     	UIManager:SetUICursor( 0 );
 		if not IsUiCheckConfigured() then
 			-- Manual install without ui_check.bat: block the menus.
