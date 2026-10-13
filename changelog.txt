@@ -529,8 +529,9 @@ Clearer icons for some tech effects.
 MAIN MENU BACKGROUND
 --------------------
 Tags: ui, art
-New main menu background pictures, a different one each time.
-- Changed: the main menu shows one of 12 new paintings, picked at random each time it appears (the Great Wall at sunset, the Colosseum, a harbor at dusk, a desert caravan, an alpine steam train, the Terracotta Army, a Zulu charge and more)
+A new main menu background.
+- Changed: the main menu shows Thomas Cole's The Course of Empire: Destruction
+- Dev: replaces the earlier random rotation of 12 paintings and drops an unused 12 MB texture (about 33 MB less to download)
 
 BARBARIAN KILL BONUSES
 ----------------------
