@@ -1894,7 +1894,7 @@ Spies and diplomats are reworked: spies steal on a timer and risk getting caught
 - Added: spies placed in a city cost 3 Gold per turn per era from the Renaissance (3 / 6 / 9 / 12 / 15); diplomats are free
 - Changed: spies and diplomats see around their city with a radius of strength minus visible defense (none at 0 or less), updated every turn
 - Added: a caught enemy spy is held by the defender, who chooses in the Espionage screen to execute it or evict it (it returns home and keeps its level); without a choice it is executed when the turn ends (computer players always execute)
-- Added: level 3+ spies can switch to full-tech steals: a whole technology instead of Science, it succeeds with the chance not to be caught times a share by the spy's level (level 3 half, level 4 three quarters, level 5+ all of it) and a failure gives nothing; the catch chance stays the same
+- Added: level 3+ spies can switch to full-tech steals: a whole technology of your choice instead of Science, it succeeds with the chance not to be caught times a share by the spy's level (level 3 half, level 4 three quarters, level 5+ all of it) and a failure gives nothing; the catch chance stays the same
 - Added: a level 3+ spy guarding your own city can sweep it for 5 turns of that city's Science in Gold; every enemy spy there is caught with its usual catch chance
 - Changed: the Espionage screen's Intrigue tab is now a Rules tab: it opens on the agents page, and the spy and diplomat icons at the top right switch to their rules; choosing spy or diplomat for an agent is a short question
 - Changed: agent tooltips describe the current rules: a spying agent shows its steal timer, its catch chance from buildings (and what a hidden guard would add) and what makes up its strength and the city's visible defense; guards show the catch chance against each spy strength and the part from defense buildings; diplomats show their actual Science, Gold and Influence bonuses
@@ -2077,14 +2077,16 @@ BABYLON (CIVILIZATION_BABYLON)
 Tags: civs, units, buildings
 - Changed: Bowman: 8 Ranged Strength (was 9), 6 Strength (was 7)
 - Changed: Walls of Babylon cost 45 (was 43), give +50 city HP (was +100), +1 Faith and +1 Science, and buying tiles in the city costs 25% less Gold
-- Note: open: the free Great Scientist after both Philosophy and Mathematics (needs C++)
+- Changed: the free Great Scientist comes once both Philosophy and Mathematics are known (was Philosophy)
+- DLL: Traits.FreeUnitPrereqTech2
 
 KHMER (CIVILIZATION_KHMER)
 --------------------------
 Tags: civs, units, buildings
 - Changed: Ballista Elephant: 18 Strength (was 20), 2 Movement (was 3), needs 2 Iron (was 1)
 - Changed: Baray gives its +2 Food and +2 Faith right away (the Drama and Poetry step is gone; it is built at Drama anyway)
-- Note: open: the new UA (capital yields once all Ancient techs are known; needs C++)
+- Changed: new UA: once every Ancient Era technology is known, the capital yields +3 Food and +3 Faith
+- Dev: capital dummy building 287 (class 190) with a Building_LekmodConditionalYields row (RequiresAllTechsOfEra)
 
 MAYA (CIVILIZATION_MAYA)
 ------------------------
@@ -2107,7 +2109,8 @@ Tags: civs, units, buildings
 - Changed: Granadine Cavalry needs 2 Horses and 1 Iron (was 2 Horses)
 - Changed: Alcazaba: +1 Science from Forts and +5 Science from Citadels worked by the city
 - Removed: Alcazaba: +3 Science and +10% Food
-- Note: open: Alcazaba +5 Science per nearby foreign city (needs C++)
+- Added: Alcazaba: +5 Science for every city of another civilization within 4 tiles (not City-States)
+- DLL: Building_LekmodConditionalYields (PerForeignMajorCityRange)
 
 LITHUANIA (CIVILIZATION_LITHUANIA)
 ----------------------------------
@@ -2141,7 +2144,9 @@ Tags: civs, units
 - Added: start the game with Animal Husbandry
 - Changed: Keshik: 19 Ranged Strength (was 17), 13 Strength (was 17), needs 4 Horses (was 2 Horses and 1 Iron), has the usual mounted penalty against cities
 - Removed: Keshik: Quick Study (faster promotions)
-- Note: open: small Horse nodes and no pledges of protection (need C++)
+- Changed: the Horse sources revealed at Chivalry are small (2 Horses)
+- Added: cannot pledge to protect City-States
+- DLL: Traits.NoPledgeProtection
 
 ARABIA (CIVILIZATION_ARABIA)
 ----------------------------
@@ -2161,7 +2166,8 @@ GREECE (CIVILIZATION_GREECE)
 ----------------------------
 Tags: civs, buildings
 - Removed: Odeon: +1 Gold
-- Note: open: Shrine and mountain Faith, City-State territory explanation (UA)
+- Added: cities with a Shrine next to a mountain +2 Faith
+- Dev: per-city dummy building 284 (class 187); the City-State territory rule was already explained in the UA text
 
 SPAIN (CIVILIZATION_SPAIN)
 --------------------------
@@ -2175,7 +2181,9 @@ Tags: civs, units
 - Removed: Sipahi (unique Lancer)
 - Changed: Janissary starts with Charge and Zealot, and can always be bought with Faith
 - Removed: Janissary: healing on kills and the attack bonus
-- Note: open: the new UA and the Su Kemeri (needs C++)
+- Added: Su Kemeri, a unique Aqueduct: +1 Faith and +1 Science next to fresh water or a mountain, +3 and +3 next to both
+- Note: open: the new UA (needs C++)
+- Dev: building 283, icon art_sources/buildings/su_kemeri
 
 KOREA (CIVILIZATION_KOREA)
 --------------------------
@@ -2255,7 +2263,9 @@ Tags: civs, units
 - Changed: Cardoen (rebuilt) is a basic Helicopter Gunship: 70 Strength (was 85), 8 Movement (was 10)
 - Removed: Cardoen: +100% defense against ranged attacks
 - Added: Cardoen starts with +30 XP
-- Note: open: Stargazing for units trained next to mountains, coast-and-mountain Culture (need C++)
+- Added: cities next to the coast and a mountain +1 Culture
+- Note: open: Stargazing for units trained next to mountains (needs C++)
+- Dev: per-city dummy building 285 (class 188)
 - DLL: Units.FreeExperience
 
 BRAZIL (CIVILIZATION_BRAZIL)
@@ -2270,6 +2280,7 @@ Tags: civs, units
 - Removed: the extra Spy; faster Constabularies and Police Stations and their Happiness
 - Changed: Longbowman: 20 Ranged Strength (was 18), 8 Strength (was 12), costs 88 (was 80), -20% when attacking cities
 - Added: Fulling Mill, a unique Water Mill: Sheep, Cotton, Dyes and Silk next to the city yield +1 Production
+- Added: start bias towards rivers (coast already)
 - Note: open: double first Great Writer, MI6 (need C++; its icon is built)
 - DLL: Building_AdjacentCityPlotYieldChanges (yields on tiles next to the city); building ID 282
 
@@ -2278,13 +2289,17 @@ INCA (CIVILIZATION_INCA)
 Tags: civs, units
 - Changed: Slinger: available at Agriculture (was Archery), costs 22 (was 26), Range 1 (was 2), 4 Strength and 6 Ranged Strength (was 5 and 7), can move after attacking
 - Removed: Slinger: withdrawing before melee attacks
-- Note: open: the new UA and the Terrace Farm mountain rule (need C++)
+- Changed: Terrace Farms can only be built next to a mountain
+- Note: open: the new UA (needs C++)
+- DLL: Improvements.RequiresAdjacentMountain
 
 TIBET (CIVILIZATION_TIBET)
 --------------------------
 Tags: civs
 - Removed: Monastery: +1 Faith with Theology
-- Note: open: UA, Dalai Lama abilities, Monastery mountain rule and University Science (need C++)
+- Changed: Monasteries can only be built next to a mountain; +1 Science when worked by a city with a University
+- Added: start bias towards hills
+- Note: open: UA and Dalai Lama abilities (need C++)
 
 SONGHAI (CIVILIZATION_SONGHAI)
 ------------------------------
@@ -2322,7 +2337,11 @@ GOLDEN HORDE (CIVILIZATION_GOLDEN_HORDE)
 Tags: civs, units
 - Changed: intimidating City-States +33% (was +50%); puppets yield +33% Gold, Science and Culture (was +50% Gold, Science and Production)
 - Changed: Ulan needs 2 Horses and 1 Iron (was 1 Horse)
-- Note: open: tribute keeps pledges, Yam Route (need C++)
+- Added: demanding tribute does not break your own pledge of protection
+- Changed: Yam Route: available at the Wheel, +3 Gold, +3 Science only while connected to the capital
+- Removed: Yam Route: airlift and its unconditional Science
+- Note: open: +2 Movement for mounted units and civilians starting the turn in a city with a Yam Route (needs C++)
+- DLL: Traits.TributeKeepsPledge
 
 GOTHS (CIVILIZATION_GOTH)
 -------------------------
@@ -2344,7 +2363,9 @@ Tags: civs, units
 - Changed: civilians +1 Movement in own territory (was +2); land units start with Amphibious I
 - Changed: Gerilya: 46 Strength (was 55), can move after attacking, starts with Woodsman
 - Removed: Gerilya: Volley
-- Note: open: only the first expansion gets +1 Population, Simbahan (need C++)
+- Changed: Simbahan (rebuilt) now replaces the Colosseum: costs 60, +2 Happiness, +2 Faith with another own city within 4 tiles, +2 Production with two
+- Removed: Simbahan: its Culture, Faith and XP as a Zoo replacement
+- Note: open: only the first expansion gets +1 Population (needs C++)
 
 NORMANDY (CIVILIZATION_NORMANDY)
 --------------------------------
@@ -2386,13 +2407,16 @@ Tags: civs, units
 - Removed: Marathi (air-like unique Horseman)
 - Added: Gurkani Guard, a unique Knight: 22 Strength, costs 90, needs 3 Horses and 3 Iron, starts with Blitz
 - Dev: rebuilt from the UNIT_MARATHI row (Sipahi model)
-- Note: open: the new UA and the Serai (need C++)
+- Changed: Serai: available at the Wheel, costs 60 (was 67), +1 Food per other Serai within 4 tiles, +3 Culture if no other Serai is within 5
+- Removed: Serai: Gold per population, airlift and air unit slot
+- Note: open: the Serai's faster border growth, the new UA (need C++)
 
 OMAN (CIVILIZATION_OMAN)
 ------------------------
 Tags: civs, units, naval
 - Changed: Baghlah: 7 Strength and 9 Ranged Strength (was 8 and 12; the Galley +1 each), starts with Supply Ship and Swift Transport
-- Note: open: the new UA and the Minaa (need C++)
+- Changed: Minaa now replaces the Caravansary (was the Harbor): the Wheel, costs 60, +2 Food when connected to the capital, +4 Culture while a Caravan's route ends there, +4 Gold while a Cargo Ship's route ends there
+- Note: open: the new UA (needs C++)
 
 SWEDEN (CIVILIZATION_SWEDEN)
 ----------------------------
@@ -2406,7 +2430,9 @@ MAURYA (CIVILIZATION_MAURYA)
 ----------------------------
 Tags: civs, units
 - Removed: unique Missionary
-- Note: open: the new UA and the Mahamatras' Office (need C++)
+- Added: cities connected to the capital +1 Culture (first part of the new UA; the old defense bonus stays until the rest is done)
+- Note: open: roads from the start, Worker movement on roads, the Mahamatras' Office (need C++)
+- Dev: per-city dummy building 286 (class 189)
 
 NEW ZEALAND (CIVILIZATION_NEW_ZEALAND)
 --------------------------------------
@@ -2422,6 +2448,7 @@ BRUNEI (CIVILIZATION_BRUNEI)
 Tags: civs, buildings
 - Changed: their Oil Refinery provides 6 Oil (was 2), +3 Production and +3 Gold (was +5 and +3), +2 Happiness
 - Changed: Kampong Ayer: 1 Food and 1 Culture, +1 Culture and +2 Gold with Flight (was 1 Food, 1 Gold, 1 Culture, +1 Culture with Flight, +1 Production with Navigation)
+- Added: start bias towards rivers (coast already)
 - Note: open: the UA rework (incl. Kampong Ayer placement), no refinery limit, the Nelayan (need C++)
 
 UAE (CIVILIZATION_UAE)
@@ -2487,7 +2514,7 @@ Tags: civs, units, buildings
 - Added: Barcid Elephant, elephant cavalry that can only be reached by upgrading a Numidian Elephant (Chivalry): 21 Strength, 3 Movement, costs 90, needs 3 Iron, Feared Elephant; upgrades to the Cavalry, which loses Feared Elephant
 - Changed: Cothon costs 40 (was 50); its Coast Production no longer needs Construction
 - Removed: Cothon: +1 Food and +1 Production
-- Note: open: Cothon next to lakes (needs C++)
+- Added: the Cothon can also be built in a city next to a lake
 - Dev: unit ID 273, class 118 (Units.UpgradeOnly)
 
 ZULU (CIVILIZATION_ZULU)
@@ -2501,3 +2528,16 @@ Tags: civs, units, buildings, promotions
 - Removed: Impi: bonus against gunpowder units
 - Note: open: Impi first strike at 60% for all units with it, -25% Gold while at peace (need C++)
 - Dev: marker promotion PROMOTION_LEKMOD_IKANDA (387) gates the Buffalo line
+
+TURKEY (CIVILIZATION_TURKEY)
+----------------------------
+Tags: civs, buildings
+- Changed: Halkevleri (rebuilt): available at Industrialization, costs 30% more than a Public School, no Science of its own; with a Broadcast Tower +1 Science and +1 Culture per 5 Population
+- Removed: Halkevleri: +3 Science, +3 Culture, Science per population and from Forests
+- DLL: Building_LekmodConditionalYields (RequiresBuildingClass, PerPopulation)
+
+MEXICO (CIVILIZATION_MEXICO)
+----------------------------
+Tags: civs
+- Added: demanding tribute does not break your own pledge of protection
+- Note: open: the rest of the new UA (+10 Gold for meeting City-States, tribute for Influence; needs C++/UI)

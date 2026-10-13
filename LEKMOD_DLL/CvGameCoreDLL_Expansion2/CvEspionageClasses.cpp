@@ -605,37 +605,11 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 				pCityEspionage->SetActivity(ePlayer, 0, iLekmodRate, CalcRequired(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex));
 				pCityEspionage->SetLastProgress(ePlayer, iLekmodRate);
 
-				if (bStole && bFullTech)
+				if (bStole)
 				{
-					// the most expensive technology they know and we can steal
-					TechTypes eBestTech = NO_TECH;
-					int iBestCost = -1;
-					for (uint uiTech = 0; uiTech < m_aaPlayerStealableTechList[eCityOwner].size(); uiTech++)
-					{
-						const TechTypes eTech = m_aaPlayerStealableTechList[eCityOwner][uiTech];
-						if (!m_pPlayer->canStealTech(eCityOwner, eTech))
-							continue;
-						const int iCost = m_pPlayer->GetPlayerTechs()->GetResearchCost(eTech);
-						if (iCost > iBestCost)
-						{
-							iBestCost = iCost;
-							eBestTech = eTech;
-						}
-					}
-					if (eBestTech != NO_TECH)
-					{
-						GET_TEAM(m_pPlayer->getTeam()).setHasTech(eBestTech, true, m_pPlayer->GetID(), true, true);
-						pCityEspionage->m_aiNumTimesCityRobbed[eCityOwner]++;
-						CvPlayerEspionage* pDefendingEspionage = GET_PLAYER(eCityOwner).GetEspionage();
-						if (pDefendingEspionage)
-							pDefendingEspionage->AddSpyMessage(pCity->getX(), pCity->getY(), ePlayer, SPY_RESULT_IDENTIFIED, eBestTech);
-						LevelUpSpy(uiSpyIndex);
-					}
-				}
-				else if (bStole)
-				{
-					// 8 turns of the city's Science, used toward a technology the player picks
-					const int iAmount = std::max(1, pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 8 / 100);
+					// 8 turns of the city's Science, used toward a technology the player picks; a full-tech steal
+					// stores an amount larger than any tech, so the picked technology is completed (user, 2026-10-13)
+					const int iAmount = bFullTech ? LEKMOD_SPY_FULL_TECH_SCIENCE : std::max(1, pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 8 / 100);
 					m_aiNumTechsToStealList[eCityOwner] = m_aiNumTechsToStealList[eCityOwner] + 1;
 					m_aaPlayerScienceToStealList[eCityOwner].push_back(iAmount);
 					pCityEspionage->m_aiNumTimesCityRobbed[eCityOwner]++;

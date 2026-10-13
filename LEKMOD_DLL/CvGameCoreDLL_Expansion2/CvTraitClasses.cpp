@@ -148,6 +148,11 @@ CvTraitEntry::CvTraitEntry() :
 #ifdef LEKMOD_TRAIT_CIVILIAN_EMBARK_ONE_MOVE
     m_bCiviliansEmbarkOneMove(false),
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	m_eLekmodFreeUnitPrereqTech2(NO_TECH),
+	m_bLekmodNoPledgeProtection(false),
+	m_bLekmodTributeKeepsPledge(false),
+#endif
 	m_bNoHillsImprovementMaintenance(false),
 	m_bTechBoostFromCapitalScienceBuildings(false),
 	m_bStaysAliveZeroCities(false),
@@ -967,6 +972,23 @@ bool CvTraitEntry::IsEmbarkedToLandFlatCost() const
 }
 
 /// Accessor:: civilian units embarking cost 1 MP
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// The free unit also needs this tech (whichever of the two comes second grants it)
+TechTypes CvTraitEntry::GetLekmodFreeUnitPrereqTech2() const
+{
+	return m_eLekmodFreeUnitPrereqTech2;
+}
+/// May not pledge to protect City-States
+bool CvTraitEntry::IsLekmodNoPledgeProtection() const
+{
+	return m_bLekmodNoPledgeProtection;
+}
+/// Demanding tribute does not break our own pledge
+bool CvTraitEntry::IsLekmodTributeKeepsPledge() const
+{
+	return m_bLekmodTributeKeepsPledge;
+}
+#endif
 bool CvTraitEntry::IsCiviliansEmbarkOneMove() const
 {
     return m_bCiviliansEmbarkOneMove;
@@ -1883,6 +1905,11 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
     m_bEmbarkedToLandFlatCost = kResults.GetBool("EmbarkedToLandFlatCost");
 #ifdef LEKMOD_TRAIT_CIVILIAN_EMBARK_ONE_MOVE
     m_bCiviliansEmbarkOneMove = kResults.GetBool("CiviliansEmbarkOneMove");
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	m_eLekmodFreeUnitPrereqTech2 = (TechTypes)GC.getInfoTypeForString(kResults.GetText("FreeUnitPrereqTech2"), true);
+	m_bLekmodNoPledgeProtection = kResults.GetBool("NoPledgeProtection");
+	m_bLekmodTributeKeepsPledge = kResults.GetBool("TributeKeepsPledge");
 #endif
 	m_bNoHillsImprovementMaintenance = kResults.GetBool("NoHillsImprovementMaintenance");
 	m_bTechBoostFromCapitalScienceBuildings = kResults.GetBool("TechBoostFromCapitalScienceBuildings");
@@ -5202,6 +5229,50 @@ TechTypes CvPlayerTraits::GetCapitalFreeBuildingPrereqTech() const
 }
 
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+bool CvPlayerTraits::IsLekmodNoPledgeProtection() const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && pkTraitInfo->IsLekmodNoPledgeProtection())
+			return true;
+	}
+	return false;
+}
+bool CvPlayerTraits::IsLekmodTributeKeepsPledge() const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && pkTraitInfo->IsLekmodTributeKeepsPledge())
+			return true;
+	}
+	return false;
+}
+/// Free trait unit uiIndex is due when eTech arrives; with a second prerequisite tech both must be known
+bool CvPlayerTraits::LekmodFreeUnitMatches(uint uiIndex, TechTypes eTech) const
+{
+	const FreeTraitUnit& kUnit = m_aFreeTraitUnits[uiIndex];
+	TechTypes eSecond = NO_TECH;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && pkTraitInfo->GetFreeUnitClassType() == (int)kUnit.m_iFreeUnit
+			&& pkTraitInfo->GetFreeUnitPrereqTech() == kUnit.m_ePrereqTech && pkTraitInfo->GetLekmodFreeUnitPrereqTech2() != NO_TECH)
+		{
+			eSecond = pkTraitInfo->GetLekmodFreeUnitPrereqTech2();
+			break;
+		}
+	}
+	if(eSecond == NO_TECH)
+		return eTech == kUnit.m_ePrereqTech;
+	if(eTech != kUnit.m_ePrereqTech && eTech != eSecond)
+		return false;
+	CvTeamTechs* pTechs = GET_TEAM(m_pPlayer->getTeam()).GetTeamTechs();
+	return pTechs->HasTech(kUnit.m_ePrereqTech) && pTechs->HasTech(eSecond);
+}
+#endif
 /// First free unit received through traits
 int CvPlayerTraits::GetFirstFreeUnit(TechTypes eTech)
 {
@@ -5210,7 +5281,11 @@ int CvPlayerTraits::GetFirstFreeUnit(TechTypes eTech)
 
 	while(m_uiFreeUnitIndex < m_aFreeTraitUnits.size())
 	{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		if(LekmodFreeUnitMatches(m_uiFreeUnitIndex, eTech))
+#else
 		if(eTech == m_aFreeTraitUnits[m_uiFreeUnitIndex].m_ePrereqTech)
+#endif
 		{
 			return m_aFreeTraitUnits[m_uiFreeUnitIndex].m_iFreeUnit;
 		}
@@ -5228,7 +5303,11 @@ int CvPlayerTraits::GetNextFreeUnit()
 
 	while(m_uiFreeUnitIndex < m_aFreeTraitUnits.size())
 	{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		if(LekmodFreeUnitMatches(m_uiFreeUnitIndex, m_eFreeUnitPrereqTech))
+#else
 		if(m_eFreeUnitPrereqTech == m_aFreeTraitUnits[m_uiFreeUnitIndex].m_ePrereqTech)
+#endif
 		{
 			return m_aFreeTraitUnits[m_uiFreeUnitIndex].m_iFreeUnit;
 		}

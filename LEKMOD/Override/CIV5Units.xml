@@ -110069,6 +110069,29 @@
 			<Yield>5</Yield>
 		</Row>
 	</Feature_HolyCityYieldChanges>
+	<Table name="Building_LekmodConditionalYields">
+		<Column name="BuildingType" type="text" reference="Buildings(Type)"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+		<Column name="RequiresBuildingClass" type="text" reference="BuildingClasses(Type)" default="NULL"/>
+		<Column name="RequiresCoastal" type="boolean" default="false"/>
+		<Column name="RequiresFreshWater" type="boolean" default="false"/>
+		<Column name="ConnectedToCapital" type="boolean" default="false"/>
+		<Column name="RequiresCapital" type="boolean" default="false"/>
+		<Column name="PerConnectedCity" type="boolean" default="false"/>
+		<Column name="AdjacentTerrainType" type="text" reference="Terrains(Type)" default="NULL"/>
+		<Column name="AdjacentFeatureType" type="text" reference="Features(Type)" default="NULL"/>
+		<Column name="AdjacentCount" type="integer" default="1"/>
+		<Column name="OtherOwnCitiesRange" type="integer" default="0"/>
+		<Column name="OtherOwnCitiesNeeded" type="integer" default="0"/>
+		<Column name="PerForeignMajorCityRange" type="integer" default="0"/>
+		<Column name="PerSameBuildingRange" type="integer" default="0"/>
+		<Column name="NoSameBuildingRange" type="integer" default="0"/>
+		<Column name="PerPopulation" type="integer" default="0"/>
+		<Column name="IncomingTradeDomain" type="text" reference="Domains(Type)" default="NULL"/>
+		<Column name="RequiresEra" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="RequiresAllTechsOfEra" type="text" reference="Eras(Type)" default="NULL"/>
+	</Table>
 	<Table name="Building_AdjacentCityPlotYieldChanges">
 		<Column name="BuildingType" type="text" reference="Buildings(Type)"/>
 		<Column name="ImprovementType" type="text" reference="Improvements(Type)" default="NULL"/>
@@ -142123,6 +142146,7 @@
 		<Column name="NearbyEnemyDamage" type="integer" default="0" />
 		<Column name="PillageGold" type="integer" default="0" />
 		<Column name="ResourceExtractionMod" type="integer" default="0" />
+		<Column name="RequiresAdjacentMountain" type="boolean" default="false"/>
 		<Column name="LuxuryCopiesSiphonedFromMinor" type="integer" default="0" />
 		<Column name="GoldMaintenance" type="integer" default="0" />
 		<Column name="CultureBombRadius" type="integer" default="0" />
@@ -211398,6 +211422,9 @@
 		<Column name="LandTradeRouteYieldBonus" type="integer" default="0" />
 		<Column name="FriendlyLandsCitizenMoveChange" type="integer" default="0" />
 		<Column name="CiviliansEmbarkOneMove" type="boolean" default="false"/>
+		<Column name="FreeUnitPrereqTech2" type="text" reference="Technologies(Type)" default="NULL"/>
+		<Column name="NoPledgeProtection" type="boolean" default="false"/>
+		<Column name="TributeKeepsPledge" type="boolean" default="false"/>
 		<Column name="FirstProphetCostMod" type="integer" default="0"/>
 		<Column name="EmbarkedUnitsFullStrength" type="boolean" default="false"/>
 		<Column name="CityStateUnitGiftExtraExperience" type="integer"  default="0"/>
@@ -286427,4 +286454,591 @@
 			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
 	</IconTextureAtlases>
+	<!-- Phase 6 C++ batch B (2026-10-13) -->
+	<!-- Start biases: England and Brunei along rivers (coast already), Tibet hills -->
+	<Civilization_Start_Along_River>
+		<Row>
+			<CivilizationType>CIVILIZATION_ENGLAND</CivilizationType>
+			<StartAlongRiver>true</StartAlongRiver>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_BRUNEI</CivilizationType>
+			<StartAlongRiver>true</StartAlongRiver>
+		</Row>
+	</Civilization_Start_Along_River>
+	<Civilization_Start_Region_Priority>
+		<Row>
+			<CivilizationType>CIVILIZATION_TIBET</CivilizationType>
+			<RegionType>REGION_HILLS</RegionType>
+		</Row>
+	</Civilization_Start_Region_Priority>
+	<!-- Greece: cities with a Shrine next to a mountain +2 Faith (per-city dummy) -->
+	<BuildingClasses>
+		<Row>
+			<ID>187</ID>
+			<Type>BUILDINGCLASS_LEKMOD_GREECE_TRAIT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_GREECE_TRAIT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>284</ID>
+			<Type>BUILDING_LEKMOD_GREECE_TRAIT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_GREECE_TRAIT</BuildingClass>
+			<Description>Trait Greece</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_CITY_STATE_FRIENDSHIP"/>
+			<Set FreeBuilding="BUILDING_LEKMOD_GREECE_TRAIT"/>
+		</Update>
+	</Traits>
+	<!-- Chile: cities next to the coast and a mountain +1 Culture (per-city dummy) -->
+	<BuildingClasses>
+		<Row>
+			<ID>188</ID>
+			<Type>BUILDINGCLASS_LEKMOD_CHILE_TRAIT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_CHILE_TRAIT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>285</ID>
+			<Type>BUILDING_LEKMOD_CHILE_TRAIT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_CHILE_TRAIT</BuildingClass>
+			<Description>Trait Chile</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_BY_REASON"/>
+			<Set FreeBuilding="BUILDING_LEKMOD_CHILE_TRAIT"/>
+		</Update>
+	</Traits>
+	<!-- Maurya: cities connected to the capital +1 Culture (per-city dummy) -->
+	<BuildingClasses>
+		<Row>
+			<ID>189</ID>
+			<Type>BUILDINGCLASS_LEKMOD_MAURYA_TRAIT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_MAURYA_TRAIT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>286</ID>
+			<Type>BUILDING_LEKMOD_MAURYA_TRAIT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_MAURYA_TRAIT</BuildingClass>
+			<Description>Trait Maurya</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_INSCRIPTIONS"/>
+			<Set FreeBuilding="BUILDING_LEKMOD_MAURYA_TRAIT"/>
+		</Update>
+	</Traits>
+	<!-- Ottomans: Su Kemeri (NEW aqueduct UB): +1 Faith +1 Science next to fresh water or a mountain, +3/+3 with both -->
+	<Buildings>
+		<Row>
+			<ID>283</ID>
+			<Type>BUILDING_LEKMOD_SU_KEMERI</Type>
+			<BuildingClass>BUILDINGCLASS_AQUEDUCT</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_SU_KEMERI</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_SU_KEMERI_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_SU_KEMERI_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_SU_KEMERI_HELP</Help>
+			<GoldMaintenance>1</GoldMaintenance>
+			<Sellable>true</Sellable>
+			<Cost>100</Cost>
+			<HurryCostModifier>25</HurryCostModifier>
+			<MinAreaSize>-1</MinAreaSize>
+			<ConquestProb>66</ConquestProb>
+			<FoodKept>40</FoodKept>
+			<ArtDefineTag>ART_DEF_BUILDING_HOSPITAL</ArtDefineTag>
+			<PrereqTech>TECH_ENGINEERING</PrereqTech>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_SU_KEMERI_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<FlavorType>FLAVOR_GROWTH</FlavorType>
+			<Flavor>40</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<FlavorType>FLAVOR_SCIENCE</FlavorType>
+			<Flavor>10</Flavor>
+		</Row>
+	</Building_Flavors>
+	<Civilization_BuildingClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_OTTOMAN</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_AQUEDUCT</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<Building_LekmodConditionalYields>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+			<RequiresFreshWater>true</RequiresFreshWater>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+			<RequiresFreshWater>true</RequiresFreshWater>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+			<RequiresFreshWater>true</RequiresFreshWater>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_SU_KEMERI</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+			<RequiresFreshWater>true</RequiresFreshWater>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_GREECE_TRAIT</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
+			<RequiresBuildingClass>BUILDINGCLASS_SHRINE</RequiresBuildingClass>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_CHILE_TRAIT</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<RequiresCoastal>true</RequiresCoastal>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MAURYA_TRAIT</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<ConnectedToCapital>true</ConnectedToCapital>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_ALCAZABA</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>5</Yield>
+			<PerForeignMajorCityRange>4</PerForeignMajorCityRange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_NATIONALCHURCH</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
+			<OtherOwnCitiesRange>4</OtherOwnCitiesRange>
+			<OtherOwnCitiesNeeded>1</OtherOwnCitiesNeeded>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_NATIONALCHURCH</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+			<OtherOwnCitiesRange>4</OtherOwnCitiesRange>
+			<OtherOwnCitiesNeeded>2</OtherOwnCitiesNeeded>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SERAI</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+			<PerSameBuildingRange>4</PerSameBuildingRange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SERAI</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+			<NoSameBuildingRange>5</NoSameBuildingRange>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_OMANI_MINAA</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+			<ConnectedToCapital>true</ConnectedToCapital>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_OMANI_MINAA</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>4</Yield>
+			<IncomingTradeDomain>DOMAIN_LAND</IncomingTradeDomain>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_OMANI_MINAA</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>4</Yield>
+			<IncomingTradeDomain>DOMAIN_SEA</IncomingTradeDomain>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HORDE_YAM_ROUTE</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>3</Yield>
+			<ConnectedToCapital>true</ConnectedToCapital>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_UC_HALKEVLERI</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+			<RequiresBuildingClass>BUILDINGCLASS_BROADCAST_TOWER</RequiresBuildingClass>
+			<PerPopulation>5</PerPopulation>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_UC_HALKEVLERI</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<RequiresBuildingClass>BUILDINGCLASS_BROADCAST_TOWER</RequiresBuildingClass>
+			<PerPopulation>5</PerPopulation>
+		</Row>
+	</Building_LekmodConditionalYields>
+	<!-- Philippines: Simbahan (from scratch) now replaces the Colosseum: 60 Production on quick, the Colosseum's Happiness; +2 Faith with another own city within 4 tiles, +2 Production with two -->
+	<Civilization_BuildingClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_PHILIPPINES" BuildingType="BUILDING_NATIONALCHURCH"/>
+			<Set BuildingClassType="BUILDINGCLASS_COLOSSEUM"/>
+		</Update>
+	</Civilization_BuildingClassOverrides>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_NATIONALCHURCH"/>
+			<Set BuildingClass="BUILDINGCLASS_COLOSSEUM" Cost="90" GoldMaintenance="1" Happiness="2" PrereqTech="TECH_CONSTRUCTION" FreeStartEra="ERA_INDUSTRIAL"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_NATIONALCHURCH"/>
+	</Building_YieldChanges>
+	<Building_DomainFreeExperiences>
+		<Delete BuildingType="BUILDING_NATIONALCHURCH"/>
+	</Building_DomainFreeExperiences>
+	<!-- Timurids: Serai at the Wheel, 60 Production on quick, the Caravansary's +2 Gold; +1 Food per other Serai within 4 tiles, +3 Culture with no other Serai within 5 (border growth part needs C++, open); airlift and per-population Gold removed -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_SERAI"/>
+			<Set Cost="90" PrereqTech="TECH_THE_WHEEL" Airlift="false" AirModifier="0"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChangesPerPop>
+		<Delete BuildingType="BUILDING_SERAI"/>
+	</Building_YieldChangesPerPop>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_SERAI"/>
+		<Row>
+			<BuildingType>BUILDING_SERAI</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- Oman: Minaa now replaces the Caravansary: the Wheel, 60 Production on quick, the Caravansary's effects; +2 Food when connected to the capital, +4 Culture while a Caravan comes in, +4 Gold while a Cargo Ship comes in -->
+	<Civilization_BuildingClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_OMAN" BuildingType="BUILDING_MC_OMANI_MINAA"/>
+			<Set BuildingClassType="BUILDINGCLASS_CARAVANSARY"/>
+		</Update>
+	</Civilization_BuildingClassOverrides>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_MC_OMANI_MINAA"/>
+			<Set BuildingClass="BUILDINGCLASS_CARAVANSARY" Cost="90" GoldMaintenance="0" Water="false" AllowsWaterRoutes="false" Airlift="false" Defense="0" TradeRouteSeaDistanceModifier="0" TradeRouteLandDistanceModifier="50" PrereqTech="TECH_THE_WHEEL" ArtDefineTag="ART_DEF_BUILDING_CARAVANSARY"/>
+		</Update>
+	</Buildings>
+	<Building_TradeConnectionOriginYieldChanges>
+		<Delete BuildingType="BUILDING_MC_OMANI_MINAA"/>
+		<Row>
+			<BuildingType>BUILDING_MC_OMANI_MINAA</BuildingType>
+			<TradeConnectionType>TRADE_CONNECTION_INTERNATIONAL</TradeConnectionType>
+			<DomainType>DOMAIN_LAND</DomainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<YieldTimes100>200</YieldTimes100>
+		</Row>
+	</Building_TradeConnectionOriginYieldChanges>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_MC_OMANI_MINAA"/>
+		<Row>
+			<BuildingType>BUILDING_MC_OMANI_MINAA</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- Golden Horde: Yam Route +3 Gold, +3 Science only when connected to the capital, no airlift (movement part needs C++, open) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_HORDE_YAM_ROUTE"/>
+			<Set Airlift="false"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_HORDE_YAM_ROUTE"/>
+		<Row>
+			<BuildingType>BUILDING_HORDE_YAM_ROUTE</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- Turkey: Halkevleri (from scratch): Industrialization, Public School cost +30%, no Science of its own; +1 Science +1 Culture per 5 Population with a Broadcast Tower (scientist slot and University requirement kept) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_UC_HALKEVLERI"/>
+			<Set Cost="390" FaithCost="507" PrereqTech="TECH_INDUSTRIALIZATION"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_UC_HALKEVLERI"/>
+	</Building_YieldChanges>
+	<Building_YieldChangesPerPop>
+		<Delete BuildingType="BUILDING_UC_HALKEVLERI"/>
+	</Building_YieldChangesPerPop>
+	<Building_FeatureYieldChanges>
+		<Delete BuildingType="BUILDING_UC_HALKEVLERI"/>
+	</Building_FeatureYieldChanges>
+	<IconTextureAtlases>
+		<Row>
+			<Atlas>LEKMOD_SU_KEMERI_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>su_kemeri_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SU_KEMERI_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>su_kemeri_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SU_KEMERI_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>su_kemeri_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SU_KEMERI_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>su_kemeri_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SU_KEMERI_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>su_kemeri_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SU_KEMERI_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>su_kemeri_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_SU_KEMERI_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>su_kemeri_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+	</IconTextureAtlases>
+	<!-- Phase 6 C++ batch B, part 2 (2026-10-13) -->
+	<!-- Inca Terrace Farm and Tibetan Monastery: only next to a mountain -->
+	<Improvements>
+		<Update>
+			<Where Type="IMPROVEMENT_TERRACE_FARM"/>
+			<Set RequiresAdjacentMountain="true"/>
+		</Update>
+	</Improvements>
+	<Improvements>
+		<Update>
+			<Where Type="IMPROVEMENT_TIBET"/>
+			<Set RequiresAdjacentMountain="true"/>
+		</Update>
+	</Improvements>
+	<!-- Carthage: Cothon also next to a lake (any water counts with MinAreaSize 0) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_COTHON"/>
+			<Set MinAreaSize="0"/>
+		</Update>
+	</Buildings>
+	<!-- Babylon: the free Great Scientist needs both Philosophy and Mathematics -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_INGENIOUS"/>
+			<Set FreeUnitPrereqTech2="TECH_MATHEMATICS"/>
+		</Update>
+	</Traits>
+	<!-- Mongolia: no pledges of protection; the extra Horse nodes are small (2) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_TERROR"/>
+			<Set NoPledgeProtection="true"/>
+		</Update>
+	</Traits>
+	<Trait_FreeResourceCities>
+		<Update>
+			<Where TraitType="TRAIT_TERROR" ResourceType="RESOURCE_HORSE"/>
+			<Set ResourceQuantity="2"/>
+		</Update>
+	</Trait_FreeResourceCities>
+	<!-- Golden Horde and Mexico: demanding tribute keeps their own pledge -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_HORDE"/>
+			<Set TributeKeepsPledge="true"/>
+		</Update>
+	</Traits>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_MEXICO"/>
+			<Set TributeKeepsPledge="true"/>
+		</Update>
+	</Traits>
+	<!-- Khmer: +3 Food +3 Faith in the capital once every Ancient Era technology is known (capital dummy) -->
+	<BuildingClasses>
+		<Row>
+			<ID>190</ID>
+			<Type>BUILDINGCLASS_LEKMOD_KHMER_TRAIT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_KHMER_TRAIT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>287</ID>
+			<Type>BUILDING_LEKMOD_KHMER_TRAIT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_KHMER_TRAIT</BuildingClass>
+			<Description>Trait Khmer</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_ANGKOR"/>
+			<Set FreeCapitalBuilding="BUILDING_LEKMOD_KHMER_TRAIT"/>
+		</Update>
+	</Traits>
+	<Building_LekmodConditionalYields>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_KHMER_TRAIT</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>3</Yield>
+			<RequiresCapital>true</RequiresCapital>
+			<RequiresAllTechsOfEra>ERA_ANCIENT</RequiresAllTechsOfEra>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_KHMER_TRAIT</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>3</Yield>
+			<RequiresCapital>true</RequiresCapital>
+			<RequiresAllTechsOfEra>ERA_ANCIENT</RequiresAllTechsOfEra>
+		</Row>
+	</Building_LekmodConditionalYields>
+	<!-- Tibet: Monasteries worked by a city with a University +1 Science -->
+	<Building_ImprovementYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_UNIVERSITY</BuildingType>
+			<ImprovementType>IMPROVEMENT_TIBET</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_WAT</BuildingType>
+			<ImprovementType>IMPROVEMENT_TIBET</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AYYUBIDS_UNIVERSITY</BuildingType>
+			<ImprovementType>IMPROVEMENT_TIBET</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_ImprovementYieldChanges>
 </GameData>

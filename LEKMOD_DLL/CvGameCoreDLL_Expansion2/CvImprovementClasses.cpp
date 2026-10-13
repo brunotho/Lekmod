@@ -82,6 +82,9 @@ CvImprovementEntry::CvImprovementEntry(void):
 	m_iNearbyEnemyDamage(0),
 	m_iPillageGold(0),
 	m_iResourceExtractionMod(0),
+#ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
+	m_bLekmodRequiresAdjacentMountain(false),
+#endif
 	m_iLuxuryCopiesSiphonedFromMinor(0),
 	m_iImprovementPillage(NO_IMPROVEMENT),
 	m_iImprovementUpgrade(NO_IMPROVEMENT),
@@ -337,6 +340,9 @@ bool CvImprovementEntry::CacheResults(Database::Results& kResults, CvDatabaseUti
 	}
 #endif
 	m_iResourceExtractionMod = kResults.GetInt("ResourceExtractionMod");
+#ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
+	m_bLekmodRequiresAdjacentMountain = kResults.GetBool("RequiresAdjacentMountain");
+#endif
 	m_iLuxuryCopiesSiphonedFromMinor = kResults.GetInt("LuxuryCopiesSiphonedFromMinor");
 
 	const char* szCivilizationType = kResults.GetText("CivilizationType");
@@ -857,6 +863,13 @@ int CvImprovementEntry::GetResourceExtractionMod() const
 {
 	return m_iResourceExtractionMod;
 }
+#ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
+/// Can only be built next to a mountain
+bool CvImprovementEntry::IsLekmodRequiresAdjacentMountain() const
+{
+	return m_bLekmodRequiresAdjacentMountain;
+}
+#endif
 
 /// Do we get any copies of the luxury types that the plot's owner has?
 int CvImprovementEntry::GetLuxuryCopiesSiphonedFromMinor() const

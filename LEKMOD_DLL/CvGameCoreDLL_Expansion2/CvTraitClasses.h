@@ -213,6 +213,11 @@ public:
 #ifdef LEKMOD_TRAIT_CIVILIAN_EMBARK_ONE_MOVE
     bool IsCiviliansEmbarkOneMove() const;
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	TechTypes GetLekmodFreeUnitPrereqTech2() const;
+	bool IsLekmodNoPledgeProtection() const;
+	bool IsLekmodTributeKeepsPledge() const;
+#endif
 	bool IsNoHillsImprovementMaintenance() const;
 	bool IsTechBoostFromCapitalScienceBuildings() const;
 	bool IsStaysAliveZeroCities() const;
@@ -498,6 +503,11 @@ protected:
 #ifdef LEKMOD_TRAIT_CIVILIAN_EMBARK_ONE_MOVE
     bool m_bCiviliansEmbarkOneMove;
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	TechTypes m_eLekmodFreeUnitPrereqTech2;
+	bool m_bLekmodNoPledgeProtection;
+	bool m_bLekmodTributeKeepsPledge;
+#endif
 	bool m_bNoHillsImprovementMaintenance;
 	bool m_bTechBoostFromCapitalScienceBuildings;
 	bool m_bStaysAliveZeroCities;
@@ -700,6 +710,11 @@ public:
 
 	// Accessor functions
 	bool HasTrait(TraitTypes eTrait) const;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	bool IsLekmodNoPledgeProtection() const;
+	bool IsLekmodTributeKeepsPledge() const;
+	bool LekmodFreeUnitMatches(uint uiIndex, TechTypes eTech) const;
+#endif
 	int GetGreatPeopleRateModifier() const
 	{
 		return m_iGreatPeopleRateModifier;

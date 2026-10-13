@@ -120876,7 +120876,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Full tech: on</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_FULL_TECH_TT">
-			<Text>From level 3: the next steal tries for a whole technology instead of [ICON_RESEARCH] Science.[NEWLINE]It succeeds at most {1_Num}% of the time. A failure gives nothing.[NEWLINE][NEWLINE]The chance is the chance not to be caught, times a share that grows with the stealing spy's level: level 3 half, level 4 three quarters, level 5 or more all of it.[NEWLINE][NEWLINE]Caught: at least {2_Num}%, the same as a normal steal.</Text>
+			<Text>From level 3: the next steal tries for a whole technology of your choice instead of [ICON_RESEARCH] Science.[NEWLINE]It succeeds at most {1_Num}% of the time. A failure gives nothing.[NEWLINE][NEWLINE]The chance is the chance not to be caught, times a share that grows with the stealing spy's level: level 3 half, level 4 three quarters, level 5 or more all of it.[NEWLINE][NEWLINE]Caught: at least {2_Num}%, the same as a normal steal.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_SWEEP">
 			<Text>Sweep</Text>
@@ -120999,7 +120999,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>How agents, spies and diplomats work.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_SPIES">
-			<Text>[COLOR_CYAN]SPIES[ENDCOLOR][NEWLINE][NEWLINE][COLOR_CYAN]Stealing from another civilization[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of their cities. It works toward a steal only while they know a technology you don't. If you catch up, its timer starts over.[NEWLINE][ICON_BULLET] Each steal gives you 8 turns of that city's [ICON_RESEARCH] Science toward one of their technologies (you pick which).[NEWLINE][ICON_BULLET] A steal always succeeds, and they always learn who did it.[NEWLINE][ICON_BULLET] Each steal can also get your spy caught. Its owner then decides to execute it or send it home.[NEWLINE][ICON_BULLET] From level 3 you can switch on "Full tech": the next steal tries for a whole technology instead. If it fails, you get nothing.[NEWLINE][ICON_BULLET] Full tech works as often as your spy stays uncaught, times a share by the stealing spy's level: level 3 half, level 4 three quarters, level 5 or more all of it. A level 5 spy against an undefended city always succeeds.[NEWLINE][NEWLINE][COLOR_CYAN]How fast a spy steals[ENDCOLOR][NEWLINE][ICON_BULLET] The stealing spy's level includes bonuses: +1 for each level of your cultural influence over them, +1 with your level 3+ diplomat in their capital, +1 with Industrial Espionage.[NEWLINE][ICON_BULLET] The city's defense: +1 each for a Constabulary, Police Station and Intelligence Agency, +1 for each level of their cultural influence over you. Guarding spies don't count here.[NEWLINE][ICON_BULLET] If the stealing spy's level is 1 above the city's defense, it steals every 15 turns. Each further level makes it 2 turns faster (7 turns at best). Each level below makes it 5 turns slower.[NEWLINE][ICON_BULLET] Some things make steals take longer in a civilization's cities (added together): Iron Curtain +50%, Kremlin +30%, Great Firewall +25%, and Diplomatic Transparency (World Congress) +50% everywhere.[NEWLINE][ICON_BULLET] No spy or diplomat can enter a city with the Great Firewall.[NEWLINE][ICON_BULLET] The timer follows every change right away: new defense buildings slow a running steal, new bonuses speed it up.[NEWLINE][ICON_BULLET] The spy also sees the tiles around the city: 1 tile for each level it is above the city's defense.[NEWLINE][NEWLINE][COLOR_CYAN]How likely a spy is caught[ENDCOLOR][NEWLINE][ICON_BULLET] Each defense building in the city (Constabulary, Police Station, Intelligence Agency) adds 10%.[NEWLINE][ICON_BULLET] A guarding spy adds more. How much depends on its level compared to the stealing spy's level:[NEWLINE]          guarding spy 4 or more levels lower:  0%[NEWLINE]          3 levels lower:  5%[NEWLINE]          2 levels lower:  10%[NEWLINE]          1 level lower:  20%[NEWLINE]          same level:  33%[NEWLINE]          1 level higher:  50%[NEWLINE]          2 levels higher:  67%[NEWLINE]          3 levels higher:  83%[NEWLINE]          4 or more levels higher:  100%[NEWLINE][ICON_BULLET] With the Kremlin, its owner's guarding spies count 1 level higher.[NEWLINE][ICON_BULLET] You never see whether a city has a guarding spy.[NEWLINE][ICON_BULLET] The total never goes above 100%.[NEWLINE][NEWLINE][COLOR_CYAN]Guarding your own city[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of your own cities to guard it. Enemy spies there are caught more often (see above).[NEWLINE][ICON_BULLET] From level 3 the guard can sweep the city: pay 5 turns of the city's [ICON_RESEARCH] Science in [ICON_GOLD] Gold, and each enemy spy there gets a chance to be caught.[NEWLINE][ICON_BULLET] With the Kremlin, spies you catch are always executed. With Advanced Interrogation Techniques, each catch also steals a random technology from the spy's owner.[NEWLINE][NEWLINE][COLOR_CYAN]Spying in a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] Every other civilization's [ICON_INFLUENCE] Influence there drops by 0.2 per level of your spy each turn, on top of its normal change. Above the resting point it falls faster, below it recovers more slowly. Quests and gifts are not affected.[NEWLINE][ICON_BULLET] Nobody learns whose spy it is.[NEWLINE][ICON_BULLET] The spy can also stage a coup.[NEWLINE][NEWLINE][COLOR_CYAN]Upkeep and levels[ENDCOLOR][NEWLINE][ICON_BULLET] A spy in a city costs 3 [ICON_GOLD] Gold per turn per era from the Renaissance on. Diplomats are free.[NEWLINE][ICON_BULLET] A spy gains a level for each successful steal, coup or caught enemy spy.</Text>
+			<Text>[COLOR_CYAN]SPIES[ENDCOLOR][NEWLINE][NEWLINE][COLOR_CYAN]Stealing from another civilization[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of their cities. It works toward a steal only while they know a technology you don't. If you catch up, its timer starts over.[NEWLINE][ICON_BULLET] Each steal gives you 8 turns of that city's [ICON_RESEARCH] Science toward one of their technologies (you pick which).[NEWLINE][ICON_BULLET] A steal always succeeds, and they always learn who did it.[NEWLINE][ICON_BULLET] Each steal can also get your spy caught. Its owner then decides to execute it or send it home.[NEWLINE][ICON_BULLET] From level 3 you can switch on "Full tech": the next steal tries for a whole technology of your choice instead. If it fails, you get nothing.[NEWLINE][ICON_BULLET] Full tech works as often as your spy stays uncaught, times a share by the stealing spy's level: level 3 half, level 4 three quarters, level 5 or more all of it. A level 5 spy against an undefended city always succeeds.[NEWLINE][NEWLINE][COLOR_CYAN]How fast a spy steals[ENDCOLOR][NEWLINE][ICON_BULLET] The stealing spy's level includes bonuses: +1 for each level of your cultural influence over them, +1 with your level 3+ diplomat in their capital, +1 with Industrial Espionage.[NEWLINE][ICON_BULLET] The city's defense: +1 each for a Constabulary, Police Station and Intelligence Agency, +1 for each level of their cultural influence over you. Guarding spies don't count here.[NEWLINE][ICON_BULLET] If the stealing spy's level is 1 above the city's defense, it steals every 15 turns. Each further level makes it 2 turns faster (7 turns at best). Each level below makes it 5 turns slower.[NEWLINE][ICON_BULLET] Some things make steals take longer in a civilization's cities (added together): Iron Curtain +50%, Kremlin +30%, Great Firewall +25%, and Diplomatic Transparency (World Congress) +50% everywhere.[NEWLINE][ICON_BULLET] No spy or diplomat can enter a city with the Great Firewall.[NEWLINE][ICON_BULLET] The timer follows every change right away: new defense buildings slow a running steal, new bonuses speed it up.[NEWLINE][ICON_BULLET] The spy also sees the tiles around the city: 1 tile for each level it is above the city's defense.[NEWLINE][NEWLINE][COLOR_CYAN]How likely a spy is caught[ENDCOLOR][NEWLINE][ICON_BULLET] Each defense building in the city (Constabulary, Police Station, Intelligence Agency) adds 10%.[NEWLINE][ICON_BULLET] A guarding spy adds more. How much depends on its level compared to the stealing spy's level:[NEWLINE]          guarding spy 4 or more levels lower:  0%[NEWLINE]          3 levels lower:  5%[NEWLINE]          2 levels lower:  10%[NEWLINE]          1 level lower:  20%[NEWLINE]          same level:  33%[NEWLINE]          1 level higher:  50%[NEWLINE]          2 levels higher:  67%[NEWLINE]          3 levels higher:  83%[NEWLINE]          4 or more levels higher:  100%[NEWLINE][ICON_BULLET] With the Kremlin, its owner's guarding spies count 1 level higher.[NEWLINE][ICON_BULLET] You never see whether a city has a guarding spy.[NEWLINE][ICON_BULLET] The total never goes above 100%.[NEWLINE][NEWLINE][COLOR_CYAN]Guarding your own city[ENDCOLOR][NEWLINE][ICON_BULLET] Put a spy in one of your own cities to guard it. Enemy spies there are caught more often (see above).[NEWLINE][ICON_BULLET] From level 3 the guard can sweep the city: pay 5 turns of the city's [ICON_RESEARCH] Science in [ICON_GOLD] Gold, and each enemy spy there gets a chance to be caught.[NEWLINE][ICON_BULLET] With the Kremlin, spies you catch are always executed. With Advanced Interrogation Techniques, each catch also steals a random technology from the spy's owner.[NEWLINE][NEWLINE][COLOR_CYAN]Spying in a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] Every other civilization's [ICON_INFLUENCE] Influence there drops by 0.2 per level of your spy each turn, on top of its normal change. Above the resting point it falls faster, below it recovers more slowly. Quests and gifts are not affected.[NEWLINE][ICON_BULLET] Nobody learns whose spy it is.[NEWLINE][ICON_BULLET] The spy can also stage a coup.[NEWLINE][NEWLINE][COLOR_CYAN]Upkeep and levels[ENDCOLOR][NEWLINE][ICON_BULLET] A spy in a city costs 3 [ICON_GOLD] Gold per turn per era from the Renaissance on. Diplomats are free.[NEWLINE][ICON_BULLET] A spy gains a level for each successful steal, coup or caught enemy spy.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS">
 			<Text>[COLOR_CYAN]DIPLOMATS[ENDCOLOR][NEWLINE][ICON_BULLET] A diplomat goes to another civilization's capital or to a City-State. It never steals, costs no upkeep and stays during wars.[NEWLINE][ICON_BULLET] It is set up at once with civilizations that give you open borders.[NEWLINE][ICON_BULLET] While Blackout (World Congress) is active, diplomats can't stay in other civilizations' capitals.[NEWLINE][ICON_BULLET] It gains a level every 25 turns in the same city. Moving it keeps its level.[NEWLINE][ICON_BULLET] It sees the tiles around its city, like a spy.[NEWLINE][NEWLINE][COLOR_CYAN]In a capital[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_RESEARCH] Science: 2% of the capital's Science per level of the diplomat, halved while you are at war with them. Only while they know a technology you don't.[NEWLINE][ICON_BULLET] [ICON_GOLD] Gold: +15% per level on your trade routes to that city.[NEWLINE][NEWLINE][COLOR_CYAN]From level 3[ENDCOLOR][NEWLINE][ICON_BULLET] Your stealing spies in that civilization count 1 level higher.[NEWLINE][ICON_BULLET] If they also have a diplomat in your capital, you both see what the other's level 3+ spies see in other civilizations' cities.[NEWLINE][NEWLINE][COLOR_CYAN]In a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_INFLUENCE] Influence: +0.33 per level of the diplomat each turn, on top of the normal change.[NEWLINE][ICON_BULLET] Influence below the resting point recovers 50% faster per level.</Text>
@@ -121008,7 +121008,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Every {1_Num} turns: steals about {2_Num} [ICON_RESEARCH] Science (8 turns of this city's) toward one of their technologies. This always succeeds.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_FULL_TECH_LINE">
-			<Text>Every {1_Num} turns: tries for one whole technology. Succeeds at most {2_Num}% of the time; a failure gives nothing.</Text>
+			<Text>Every {1_Num} turns: tries for one whole technology of your choice. Succeeds at most {2_Num}% of the time; a failure gives nothing.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_CAUGHT_HEADER">
 			<Text>Chance to be caught on each steal:</Text>
@@ -147519,7 +147519,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Caravansary. Available at Currency (instead of Horseback Riding).[NEWLINE][NEWLINE]With a garrison: +10 City [ICON_STRENGTH] Strength, +1 [ICON_GOLD] Gold and +2 [ICON_CULTURE] Culture.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_ALCAZABA_HELP">
-			<Text>Replaces the Castle. Provides 3 [ICON_RES_HORSE] Horses.[NEWLINE][NEWLINE]+1 [ICON_RESEARCH] Science from Forts and +5 [ICON_RESEARCH] Science from Citadels worked by this City.[NEWLINE][NEWLINE]City must have Walls.</Text>
+			<Text>Replaces the Castle. Provides 3 [ICON_RES_HORSE] Horses.[NEWLINE][NEWLINE]+1 [ICON_RESEARCH] Science from Forts and +5 [ICON_RESEARCH] Science from Citadels worked by this City.[NEWLINE]+5 [ICON_RESEARCH] Science for every city of another civilization within 4 tiles (not City-States).[NEWLINE][NEWLINE]City must have Walls.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PESTININKAS">
 			<Text>Bajoras</Text>
@@ -147549,7 +147549,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Knight. Slower, but much stronger, with a bonus against other Mounted units.[NEWLINE]Starts with Feared Elephant.[NEWLINE]Costs more and needs 3 [ICON_RES_IRON] Iron.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_TERROR">
-			<Text>Upon discovering [ICON_TECH_CHIVALRY] Chivalry, in each owned City, a [ICON_RES_HORSE] Horse tile is revealed nearby and all [ICON_RES_HORSE] Horse tiles yield +1 [ICON_FOOD] Food.[NEWLINE]Start the game with [ICON_TECH_ANIMAL_HUSBANDRY] Animal Husbandry.[NEWLINE][NEWLINE]+30% [ICON_STRENGTH] Combat Strength when fighting a [ICON_CITY_STATE] City-State.[NEWLINE]All mounted and armor units receive +1 [ICON_MOVES] Movement.</Text>
+			<Text>Upon discovering [ICON_TECH_CHIVALRY] Chivalry, in each owned City, a [ICON_RES_HORSE] Horse tile is revealed nearby and all [ICON_RES_HORSE] Horse tiles yield +1 [ICON_FOOD] Food.[NEWLINE]The revealed Horse sources are small (2 Horses).[NEWLINE]Start the game with [ICON_TECH_ANIMAL_HUSBANDRY] Animal Husbandry.[NEWLINE]Cannot pledge to protect [ICON_CITY_STATE] City-States.[NEWLINE][NEWLINE]+30% [ICON_STRENGTH] Combat Strength when fighting a [ICON_CITY_STATE] City-State.[NEWLINE]All mounted and armor units receive +1 [ICON_MOVES] Movement.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_MONGOLIA_KESHIK_HELP">
 			<Text>Replaces the Knight. A fast mounted unit with a strong [ICON_RANGE_STRENGTH] Ranged attack.[NEWLINE]Its battles give double the points towards Great Generals.</Text>
@@ -147649,7 +147649,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Castle. Provides extra [ICON_CULTURE] Culture and [ICON_HAPPINESS_1] Happiness.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_BY_REASON">
-			<Text>[ICON_BUILD_FISHING_BOATS] Fishing Boats instantly claim all surrounding Neutral Tiles.[NEWLINE]Receive a free [ICON_GREAT_ADMIRAL] Great Admiral at the [ICON_TECH_COMPASS] [COLOR_CYAN]Compass[ENDCOLOR] technology.</Text>
+			<Text>[ICON_BUILD_FISHING_BOATS] Fishing Boats instantly claim all surrounding Neutral Tiles.[NEWLINE]Receive a free [ICON_GREAT_ADMIRAL] Great Admiral at the [ICON_TECH_COMPASS] [COLOR_CYAN]Compass[ENDCOLOR] technology.[NEWLINE][NEWLINE]Cities next to the coast and a mountain yield +1 [ICON_CULTURE] Culture.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CARDOEN">
 			<Text>Unique Unit for Chile. Replaces the Helicopter Gunship.[NEWLINE]Starts with +30 XP.</Text>
@@ -147685,7 +147685,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Longswordsman. Available at Civil Service. Weaker and cheaper, needs 3 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Great Generals II, Iaijutsu (attacks again after hitting a unit at full health) and Hatamoto (+1 [ICON_MOVES] Movement next to a Great General).[NEWLINE]Upgrades to the Musketman.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_HORDE">
-			<Text>Units are 33% more effective at intimidating [ICON_CITY_STATE] City-States.[NEWLINE][ICON_PUPPET] Puppeted Cities yield 33% more [ICON_GOLD] Gold, [ICON_RESEARCH] Science and [ICON_CULTURE] Culture and 33% less [ICON_HAPPINESS_4] Unhappiness.</Text>
+			<Text>Units are 33% more effective at intimidating [ICON_CITY_STATE] City-States, and demanding tribute does not break your own pledge of protection.[NEWLINE][ICON_PUPPET] Puppeted Cities yield 33% more [ICON_GOLD] Gold, [ICON_RESEARCH] Science and [ICON_CULTURE] Culture and 33% less [ICON_HAPPINESS_4] Unhappiness.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_GOTH_GADRAUGHT">
 			<Text>Replaces the [ICON_UNIT_SWORDSMAN] Swordsman. Stronger, but needs 4 [ICON_RES_IRON] Iron.[NEWLINE]Heals 25 HP upon killing an enemy unit.[NEWLINE]Starts with Cover I.</Text>
@@ -147864,7 +147864,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Unique Unit that replaces the Pikemen. Only the Zulu may build it. Performs a first-strike ranged attack before combat.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_COTHON_HELP">
-			<Text>Replaces the [ICON_BUILDING_LIGHTHOUSE] Lighthouse.[NEWLINE][NEWLINE]Each source of [ICON_RES_FISH] Fish worked by this City produces +1 [ICON_FOOD] Food.[NEWLINE]Each source of [ICON_RES_AMBER] Amber and each Atoll worked by this City produces +1 [ICON_CULTURE] Culture.[NEWLINE]Coast tiles worked by this City produce +1 [ICON_PRODUCTION] Production (no Construction needed).[NEWLINE][NEWLINE]Buying tiles in this City costs 33% less [ICON_GOLD] Gold.</Text>
+			<Text>Replaces the [ICON_BUILDING_LIGHTHOUSE] Lighthouse.[NEWLINE][NEWLINE]Each source of [ICON_RES_FISH] Fish worked by this City produces +1 [ICON_FOOD] Food.[NEWLINE]Each source of [ICON_RES_AMBER] Amber and each Atoll worked by this City produces +1 [ICON_CULTURE] Culture.[NEWLINE]Coast tiles worked by this City produce +1 [ICON_PRODUCTION] Production (no Construction needed).[NEWLINE][NEWLINE]Buying tiles in this City costs 33% less [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Can also be built in a city next to a lake.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_IKANDA_DESC">
 			<Text>Isibaya</Text>
@@ -147886,6 +147886,49 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_BUFFALO_CHEST_HELP">
 			<Text>+10% [ICON_STRENGTH] Combat Strength.[NEWLINE]Flank attack bonus increased by 25%.[NEWLINE]+10% [COLOR_POSITIVE_TEXT]Defense[ENDCOLOR] against all [COLOR_POSITIVE_TEXT]Ranged Attacks[ENDCOLOR].</Text>
+		</Replace>
+		<!-- Phase 6 C++ batch B -->
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_SU_KEMERI">
+			<Text>Su Kemeri</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_SU_KEMERI_HELP">
+			<Text>Replaces the Aqueduct. 40% of [ICON_FOOD] Food is carried over after a new [ICON_CITIZEN] Citizen is born.[NEWLINE][NEWLINE]+1 [ICON_PEACE] Faith and +1 [ICON_RESEARCH] Science if the city is next to fresh water or a mountain.[NEWLINE]+3 [ICON_PEACE] Faith and +3 [ICON_RESEARCH] Science if it is next to both.</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_BUILDING_NATIONALCHURCH">
+			<Text>Simbahan</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_NATIONALCHURCH_HELP">
+			<Text>Replaces the Colosseum. Cheaper.[NEWLINE]+2 [ICON_HAPPINESS_1] Happiness.[NEWLINE][NEWLINE]+2 [ICON_PEACE] Faith if another of your cities is within 4 tiles.[NEWLINE]+2 [ICON_PRODUCTION] Production if two or more of your other cities are within 4 tiles.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_SERAI_HELP">
+			<Text>Replaces the Caravansary. Available at the Wheel and cheaper.[NEWLINE]+2 [ICON_GOLD] Gold; Caravans from this city reach 50% farther and give +2 [ICON_GOLD] Gold to international routes.[NEWLINE][NEWLINE]+1 [ICON_FOOD] Food for every other Serai of yours within 4 tiles.[NEWLINE]+3 [ICON_CULTURE] Culture if no other Serai of yours is within 5 tiles.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_MC_OMANI_MINAA_HELP">
+			<Text>Replaces the Caravansary. Available at the Wheel and cheaper.[NEWLINE]+2 [ICON_GOLD] Gold; Caravans from this city reach 50% farther and give +2 [ICON_GOLD] Gold to international routes.[NEWLINE][NEWLINE]+2 [ICON_FOOD] Food if the city is connected to the [ICON_CAPITAL] Capital.[NEWLINE]+4 [ICON_CULTURE] Culture while a Caravan's route ends here.[NEWLINE]+4 [ICON_GOLD] Gold while a Cargo Ship's route ends here.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_HORDE_YAM_ROUTE_HELP">
+			<Text>Replaces the Caravansary. Only the Golden Horde may build it. Available at the Wheel.[NEWLINE]+3 [ICON_GOLD] Gold.[NEWLINE]+3 [ICON_RESEARCH] Science if the city is connected to the [ICON_CAPITAL] Capital.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_UC_HALKEVLERI_HELP">
+			<Text>Replaces the Public School. Available at Industrialization, costs 30% more and gives no [ICON_RESEARCH] Science of its own.[NEWLINE][NEWLINE]With a Broadcast Tower in the city: +1 [ICON_RESEARCH] Science and +1 [ICON_CULTURE] Culture for every 5 [ICON_CITIZEN] Citizens.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_CITY_STATE_FRIENDSHIP">
+			<Text>City-State [ICON_INFLUENCE] Influence degrades at half and recovers at twice the normal rate.[NEWLINE][NEWLINE]City-State territory always counts as friendly territory for your units (healing and combat bonuses), and your units never trespass in it.[NEWLINE][NEWLINE]Cities with a Shrine next to a mountain yield +2 [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_INSCRIPTIONS">
+			<Text>All [COLOR_POSITIVE_TEXT]Military Non-Armor[ENDCOLOR], [COLOR_POSITIVE_TEXT]Non-Mounted[ENDCOLOR], and [COLOR_POSITIVE_TEXT]Non-Air units[ENDCOLOR] receive a 20% [ICON_STRENGTH] Combat Bonus when defending.[NEWLINE][NEWLINE]Cities connected to the [ICON_CAPITAL] Capital yield +1 [ICON_CULTURE] Culture.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_ANGKOR">
+			<Text>Once every Ancient Era technology is known, the [ICON_CAPITAL] Capital yields +3 [ICON_FOOD] Food and +3 [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_INGENIOUS">
+			<Text>Receive a free [ICON_GREAT_SCIENTIST] Great Scientist once you know both [ICON_TECH_PHILOSOPHY] Philosophy and [ICON_TECH_MATHEMATICS] Mathematics.[NEWLINE]Earn [ICON_GREAT_SCIENTIST] Great Scientists 25% faster.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_MEXICO">
+			<Text>Receive a free [ICON_WORKER] Worker upon researching [ICON_TECH_POTTERY] Pottery. Gain +6 [ICON_INFLUENCE] Influence per turn from [ICON_CITY_STATE] City-States that you could demand tribute from but do not. At the start of the first turn, discover the location of any nearby [ICON_CITY_STATE] City-States.[NEWLINE][NEWLINE]Demanding tribute does not break your own pledge of protection.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_TERRACE_FARM_HELP">
+			<Text>The Terrace Farm can only be built on hills next to a mountain, and does not need a source of fresh water. It provides additional food next to mountains.</Text>
 		</Replace>
 	</Language_en_US>
 	<Language_de_DE>

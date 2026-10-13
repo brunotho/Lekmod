@@ -75,6 +75,9 @@ public:
 	int GetNearbyEnemyDamage() const;
 	int GetPillageGold() const;
 	int GetResourceExtractionMod() const;
+#ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
+	bool IsLekmodRequiresAdjacentMountain() const;
+#endif
 	int GetLuxuryCopiesSiphonedFromMinor() const;
 	int GetImprovementPillage() const;
 	void SetImprovementPillage(int i);
@@ -223,6 +226,9 @@ protected:
 	int m_iNearbyEnemyDamage;
 	int m_iPillageGold;
 	int m_iResourceExtractionMod;
+#ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
+	bool m_bLekmodRequiresAdjacentMountain;
+#endif
 	int m_iLuxuryCopiesSiphonedFromMinor;
 	int m_iImprovementPillage;
 	int m_iImprovementUpgrade;

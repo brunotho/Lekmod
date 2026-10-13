@@ -7639,7 +7639,11 @@ void CvMinorCivAI::DoPledgeTributeConsequences(PlayerTypes eBully)
 
 #ifdef LEKMOD_POLICY_REWORK
 	// Gunboat Diplomacy: tribute does not break your own pledge
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if(IsProtectedByMajor(eBully) && !GET_PLAYER(eBully).GetPlayerPolicies()->IsMinorBullyNoPenalty() && !GET_PLAYER(eBully).GetPlayerTraits()->IsLekmodTributeKeepsPledge())
+#else
 	if(IsProtectedByMajor(eBully) && !GET_PLAYER(eBully).GetPlayerPolicies()->IsMinorBullyNoPenalty())
+#endif
 #else
 	if(IsProtectedByMajor(eBully))
 #endif
@@ -7707,6 +7711,10 @@ void CvMinorCivAI::DoPledgerInfluenceTicks(PlayerTypes ePledger)
 
 bool CvMinorCivAI::CanMajorProtect(PlayerTypes eMajor)
 {
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if(eMajor >= 0 && eMajor < MAX_MAJOR_CIVS && GET_PLAYER(eMajor).GetPlayerTraits()->IsLekmodNoPledgeProtection())
+		return false;
+#endif
 	CvAssertMsg(eMajor >= 0, "eMajor is expected to be non-negative (invalid Index)");
 	CvAssertMsg(eMajor < MAX_MAJOR_CIVS, "eMajor is expected to be within maximum bounds (invalid Index)");
 	if(eMajor < 0 || eMajor >= MAX_MAJOR_CIVS) return false;

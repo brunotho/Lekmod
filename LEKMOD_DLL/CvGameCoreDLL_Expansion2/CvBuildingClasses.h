@@ -32,6 +32,36 @@ struct BuildingFreeTerrainYields
 	int m_iMinTerrainRequired;
 	int m_iYieldChange;
 };
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+// Building_LekmodConditionalYields: one row = a city yield with optional conditions (-1 / 0 = no condition)
+struct LekmodBuildingConditionalYield
+{
+	LekmodBuildingConditionalYield() : m_eYield(NO_YIELD), m_iYield(0), m_eRequiredClass(NO_BUILDINGCLASS), m_bCoastal(false), m_bFreshWater(false),
+		m_bConnected(false), m_bCapital(false), m_bPerConnectedCity(false), m_eAdjacentTerrain(NO_TERRAIN), m_eAdjacentFeature(NO_FEATURE),
+		m_iAdjacentCount(1), m_iOwnCitiesRange(0), m_iOwnCitiesNeeded(0), m_iPerForeignCityRange(0), m_iPerSameBuildingRange(0),
+		m_iNoSameBuildingRange(0), m_iPerPopulation(0), m_eIncomingDomain(NO_DOMAIN), m_eEra(NO_ERA), m_eAllTechsOfEra(NO_ERA) {};
+	YieldTypes m_eYield;
+	int m_iYield;
+	BuildingClassTypes m_eRequiredClass;
+	bool m_bCoastal;
+	bool m_bFreshWater;
+	bool m_bConnected;
+	bool m_bCapital;
+	bool m_bPerConnectedCity;
+	TerrainTypes m_eAdjacentTerrain;
+	FeatureTypes m_eAdjacentFeature;
+	int m_iAdjacentCount;
+	int m_iOwnCitiesRange;
+	int m_iOwnCitiesNeeded;
+	int m_iPerForeignCityRange;
+	int m_iPerSameBuildingRange;
+	int m_iNoSameBuildingRange;
+	int m_iPerPopulation;
+	DomainTypes m_eIncomingDomain;
+	EraTypes m_eEra;
+	EraTypes m_eAllTechsOfEra;
+};
+#endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 // Building_AdjacentCityPlotYieldChanges: yield on plots next to the city; each condition is optional (-1 = any)
 struct LekmodBuildingAdjacentYield
@@ -486,6 +516,9 @@ public:
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 	const std::vector<LekmodBuildingAdjacentYield>& GetLekmodAdjacentCityYields() const;
 #endif
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+	const std::vector<LekmodBuildingConditionalYield>& GetLekmodConditionalYields() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -838,6 +871,9 @@ private:
 #endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 	std::vector<LekmodBuildingAdjacentYield> m_aLekmodAdjacentCityYields;
+#endif
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+	std::vector<LekmodBuildingConditionalYield> m_aLekmodConditionalYields;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;

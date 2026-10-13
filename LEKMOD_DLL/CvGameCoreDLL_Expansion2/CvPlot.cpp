@@ -2167,6 +2167,20 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	{
 		return false;
 	}
+#ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
+	if(pkImprovementInfo->IsLekmodRequiresAdjacentMountain())
+	{
+		bool bNextToMountain = false;
+		for(int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && !bNextToMountain; iDirection++)
+		{
+			CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+			if(pAdjacentPlot != NULL && pAdjacentPlot->isMountain())
+				bNextToMountain = true;
+		}
+		if(!bNextToMountain)
+			return false;
+	}
+#endif
 
 	if(getFeatureType() != NO_FEATURE)
 	{

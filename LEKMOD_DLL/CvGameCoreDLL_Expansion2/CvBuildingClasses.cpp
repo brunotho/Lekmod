@@ -1202,6 +1202,55 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 		}
 	}
 #endif
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+	{
+		m_aLekmodConditionalYields.clear();
+		std::string strKey("Building_LekmodConditionalYields");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select Yields.ID, Yield, coalesce(BuildingClasses.ID, -1), RequiresCoastal, RequiresFreshWater, ConnectedToCapital, RequiresCapital, PerConnectedCity, "
+				"coalesce(Terrains.ID, -1), coalesce(Features.ID, -1), AdjacentCount, OtherOwnCitiesRange, OtherOwnCitiesNeeded, PerForeignMajorCityRange, "
+				"PerSameBuildingRange, NoSameBuildingRange, PerPopulation, coalesce(Domains.ID, -1), coalesce(Eras.ID, -1), coalesce(TechEras.ID, -1) "
+				"from Building_LekmodConditionalYields "
+				"inner join Yields on Yields.Type = YieldType "
+				"left join BuildingClasses on BuildingClasses.Type = RequiresBuildingClass "
+				"left join Terrains on Terrains.Type = AdjacentTerrainType "
+				"left join Features on Features.Type = AdjacentFeatureType "
+				"left join Domains on Domains.Type = IncomingTradeDomain "
+				"left join Eras on Eras.Type = RequiresEra "
+				"left join Eras as TechEras on TechEras.Type = RequiresAllTechsOfEra "
+				"where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+		{
+			LekmodBuildingConditionalYield kEntry;
+			kEntry.m_eYield = (YieldTypes)pResults->GetInt(0);
+			kEntry.m_iYield = pResults->GetInt(1);
+			kEntry.m_eRequiredClass = (BuildingClassTypes)pResults->GetInt(2);
+			kEntry.m_bCoastal = pResults->GetInt(3) != 0;
+			kEntry.m_bFreshWater = pResults->GetInt(4) != 0;
+			kEntry.m_bConnected = pResults->GetInt(5) != 0;
+			kEntry.m_bCapital = pResults->GetInt(6) != 0;
+			kEntry.m_bPerConnectedCity = pResults->GetInt(7) != 0;
+			kEntry.m_eAdjacentTerrain = (TerrainTypes)pResults->GetInt(8);
+			kEntry.m_eAdjacentFeature = (FeatureTypes)pResults->GetInt(9);
+			kEntry.m_iAdjacentCount = std::max(1, pResults->GetInt(10));
+			kEntry.m_iOwnCitiesRange = pResults->GetInt(11);
+			kEntry.m_iOwnCitiesNeeded = pResults->GetInt(12);
+			kEntry.m_iPerForeignCityRange = pResults->GetInt(13);
+			kEntry.m_iPerSameBuildingRange = pResults->GetInt(14);
+			kEntry.m_iNoSameBuildingRange = pResults->GetInt(15);
+			kEntry.m_iPerPopulation = pResults->GetInt(16);
+			kEntry.m_eIncomingDomain = (DomainTypes)pResults->GetInt(17);
+			kEntry.m_eEra = (EraTypes)pResults->GetInt(18);
+			kEntry.m_eAllTechsOfEra = (EraTypes)pResults->GetInt(19);
+			m_aLekmodConditionalYields.push_back(kEntry);
+		}
+	}
+#endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 	{
 		m_aLekmodAdjacentCityYields.clear();
@@ -3262,6 +3311,13 @@ int CvBuildingEntry::GetDifferentLandMassYieldChange(int i) const
 const std::vector<BuildingFreeTerrainYields>& CvBuildingEntry::GetFreeTerrainYields() const
 {
 	return m_aFreeTerrainYields;
+}
+#endif
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+/// City yields with conditions (Building_LekmodConditionalYields)
+const std::vector<LekmodBuildingConditionalYield>& CvBuildingEntry::GetLekmodConditionalYields() const
+{
+	return m_aLekmodConditionalYields;
 }
 #endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS

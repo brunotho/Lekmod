@@ -1449,6 +1449,15 @@ Diversify Spain and Australia's NW Discovery bonus
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,
 // Terrain and Feature conditions; Fulling Mill, Isibaya, Australia)
 #define LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+// Building_LekmodConditionalYields: city yields from a building with optional AND-ed conditions (building class, coastal,
+// fresh water, adjacent terrain/feature, connected to the capital, own/foreign cities or the same building in range, per
+// population, incoming trade route domain, capital, era); summed on the fly into GetBaseYieldRateFromBuildings
+#define LEKMOD_CONDITIONAL_BUILDING_YIELDS
+// Improvements.RequiresAdjacentMountain (Terrace Farm, Tibetan Monastery)
+#define LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
+// Traits: FreeUnitPrereqTech2 (the free unit needs both techs: Babylon), NoPledgeProtection (Mongolia),
+// TributeKeepsPledge (Golden Horde, Mexico); read from the trait entries, no saved fields
+#define LEKMOD_CIV_TRAIT_FLAGS
 // Buildings.TerritoryHealChange: extra healing for the owner's non-air units on all tiles of the city (Field Hospital)
 #define LEKMOD_TERRITORY_HEAL
 // Buildings.CityHealRate/AdjacentEnemyDamage/HillCityStrength/MountainCityStrength/CityAttackRangeChange (Walls, Castle, Arsenal, Command Bunker), Buildings.NukeUnitDamageFixed (Bomb Shelter);
@@ -1679,6 +1688,8 @@ Diversify Spain and Australia's NW Discovery bonus
 // levels. Steal every 15/13/11/9/7 turns at strength - defense 1..5+ (+5 turns per point below 1); success (S+1)/(S+1+D), caught
 // 100% minus that; a steal gives 8 turns of the city's Science toward a picked tech.
 #define LEKMOD_SPY_REWORK
+// A full-tech steal stores this much stolen Science: the technology the player picks is completed
+#define LEKMOD_SPY_FULL_TECH_SCIENCE 1000000
 #define LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL 15 // % Gold on your trade routes to a capital with your diplomat, per level
 // LEKMOD (2026-10-13): spy wonders and leftovers of the spy rework. Steals in a city take longer by the sum of: the owner's
 // Policies.StealTechSlowerModifier (Iron Curtain 50), the owner's Buildings.EnemySpyStealSlower (Kremlin 30, Great Firewall 25)

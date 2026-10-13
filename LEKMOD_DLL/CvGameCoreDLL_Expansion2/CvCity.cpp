@@ -13287,16 +13287,20 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
 
+	int iLekmodConditional = 0;
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+	iLekmodConditional = GetLekmodConditionalBuildingYield(eIndex);
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	if (eIndex == YIELD_GOLD)
 	{
-		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodEarlierIdeologyGold() + GetLekmodPolicyBuildingCityYield(eIndex);
+		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodEarlierIdeologyGold() + GetLekmodPolicyBuildingCityYield(eIndex) + iLekmodConditional;
 	}
 	if (eIndex == YIELD_TOURISM && getOriginalOwner() != getOwner() && GET_PLAYER(getOwner()).GetLekmodTourismPerCapturedWonder() != 0)
-		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodPolicyBuildingCityYield(eIndex) + getNumWorldWonders() * GET_PLAYER(getOwner()).GetLekmodTourismPerCapturedWonder();
-	return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodPolicyBuildingCityYield(eIndex);
+		return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodPolicyBuildingCityYield(eIndex) + getNumWorldWonders() * GET_PLAYER(getOwner()).GetLekmodTourismPerCapturedWonder() + iLekmodConditional;
+	return m_aiBaseYieldRateFromBuildings[eIndex] + GetLekmodPolicyBuildingCityYield(eIndex) + iLekmodConditional;
 #endif
-	return m_aiBaseYieldRateFromBuildings[eIndex];
+	return m_aiBaseYieldRateFromBuildings[eIndex] + iLekmodConditional;
 }
 #ifdef LEKMOD_POLICY_REWORK
 //	--------------------------------------------------------------------------------
@@ -15367,6 +15371,161 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 }
 #endif
 
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+//	--------------------------------------------------------------------------------
+/// Any building of the class (CvCityBuildings::HasBuildingClass is broken, see CLAUDE.md)
+bool CvCity::LekmodHasBuildingClass(BuildingClassTypes eClass) const
+{
+	if (eClass == NO_BUILDINGCLASS)
+		return true;
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding && pkBuilding->GetBuildingClassType() == eClass && m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) > 0)
+			return true;
+	}
+	return false;
+}
+//	--------------------------------------------------------------------------------
+/// City yield from this city's buildings with conditions (Building_LekmodConditionalYields)
+int CvCity::GetLekmodConditionalBuildingYield(YieldTypes eYield) const
+{
+	static std::vector<int> s_aiBuildings;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding && !pkBuilding->GetLekmodConditionalYields().empty())
+				s_aiBuildings.push_back(iBuilding);
+		}
+		s_bInit = true;
+	}
+	if (s_aiBuildings.empty())
+		return 0;
+	CvPlayer& kOwner = GET_PLAYER(getOwner());
+	int iTotal = 0;
+	for (uint i = 0; i < s_aiBuildings.size(); i++)
+	{
+		const BuildingTypes eBuilding = (BuildingTypes)s_aiBuildings[i];
+		if (m_pCityBuildings->GetNumBuilding(eBuilding) <= 0)
+			continue;
+		const std::vector<LekmodBuildingConditionalYield>& aRows = GC.getBuildingInfo(eBuilding)->GetLekmodConditionalYields();
+		for (uint j = 0; j < aRows.size(); j++)
+		{
+			const LekmodBuildingConditionalYield& kRow = aRows[j];
+			if (kRow.m_eYield != eYield || kRow.m_iYield == 0)
+				continue;
+			if (kRow.m_eRequiredClass != NO_BUILDINGCLASS && !LekmodHasBuildingClass(kRow.m_eRequiredClass))
+				continue;
+			if (kRow.m_bCoastal && !isCoastal())
+				continue;
+			if (kRow.m_bFreshWater && !plot()->isFreshWater())
+				continue;
+			if (kRow.m_bCapital && !isCapital())
+				continue;
+			if (kRow.m_bConnected && (isCapital() || !kOwner.IsCapitalConnectedToCity(const_cast<CvCity*>(this))))
+				continue;
+			if (kRow.m_eEra != NO_ERA && kOwner.GetCurrentEra() < kRow.m_eEra)
+				continue;
+			if (kRow.m_eAllTechsOfEra != NO_ERA)
+			{
+				bool bAllKnown = true;
+				CvTeamTechs* pTechs = GET_TEAM(getTeam()).GetTeamTechs();
+				for (int iTech = 0; iTech < GC.getNumTechInfos() && bAllKnown; iTech++)
+				{
+					CvTechEntry* pkTech = GC.getTechInfo((TechTypes)iTech);
+					if (pkTech && pkTech->GetEra() == kRow.m_eAllTechsOfEra && !pTechs->HasTech((TechTypes)iTech))
+						bAllKnown = false;
+				}
+				if (!bAllKnown)
+					continue;
+			}
+			if (kRow.m_eAdjacentTerrain != NO_TERRAIN || kRow.m_eAdjacentFeature != NO_FEATURE)
+			{
+				int iCount = 0;
+				for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+				{
+					CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+					if (pAdjacentPlot == NULL || pAdjacentPlot->IsNaturalWonder())
+						continue;
+					if (kRow.m_eAdjacentTerrain != NO_TERRAIN && pAdjacentPlot->getTerrainType() != kRow.m_eAdjacentTerrain)
+						continue;
+					if (kRow.m_eAdjacentFeature != NO_FEATURE && pAdjacentPlot->getFeatureType() != kRow.m_eAdjacentFeature)
+						continue;
+					iCount++;
+				}
+				if (iCount < kRow.m_iAdjacentCount)
+					continue;
+			}
+			if (kRow.m_eIncomingDomain != NO_DOMAIN)
+			{
+				bool bFound = false;
+				CvGameTrade* pTrade = GC.getGame().GetGameTrade();
+				for (uint k = 0; k < pTrade->m_aTradeConnections.size() && !bFound; k++)
+				{
+					const TradeConnection& kConnection = pTrade->m_aTradeConnections[k];
+					if (pTrade->IsTradeRouteIndexEmpty(k))
+						continue;
+					if (kConnection.m_iDestX == getX() && kConnection.m_iDestY == getY() && kConnection.m_eDomain == kRow.m_eIncomingDomain)
+						bFound = true;
+				}
+				if (!bFound)
+					continue;
+			}
+			int iMultiplier = 1;
+			if (kRow.m_iOwnCitiesRange > 0 || kRow.m_iNoSameBuildingRange > 0 || kRow.m_iPerSameBuildingRange > 0 || kRow.m_bPerConnectedCity)
+			{
+				int iOwnInRange = 0, iSameInRange = 0, iSameTooClose = 0, iConnected = 0;
+				int iLoop;
+				for (CvCity* pLoopCity = kOwner.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kOwner.nextCity(&iLoop))
+				{
+					if (pLoopCity == this)
+						continue;
+					const int iDistance = plotDistance(getX(), getY(), pLoopCity->getX(), pLoopCity->getY());
+					if (kRow.m_iOwnCitiesRange > 0 && iDistance <= kRow.m_iOwnCitiesRange)
+						iOwnInRange++;
+					const bool bSame = pLoopCity->GetCityBuildings()->GetNumBuilding(eBuilding) > 0;
+					if (bSame && kRow.m_iPerSameBuildingRange > 0 && iDistance <= kRow.m_iPerSameBuildingRange)
+						iSameInRange++;
+					if (bSame && kRow.m_iNoSameBuildingRange > 0 && iDistance <= kRow.m_iNoSameBuildingRange)
+						iSameTooClose++;
+					if (kRow.m_bPerConnectedCity && kOwner.IsCapitalConnectedToCity(pLoopCity))
+						iConnected++;
+				}
+				if (kRow.m_iOwnCitiesRange > 0 && iOwnInRange < std::max(1, kRow.m_iOwnCitiesNeeded))
+					continue;
+				if (kRow.m_iNoSameBuildingRange > 0 && iSameTooClose > 0)
+					continue;
+				if (kRow.m_iPerSameBuildingRange > 0)
+					iMultiplier *= iSameInRange;
+				if (kRow.m_bPerConnectedCity)
+					iMultiplier *= iConnected;
+			}
+			if (kRow.m_iPerForeignCityRange > 0)
+			{
+				int iForeign = 0;
+				for (int iPlayer = 0; iPlayer < MAX_MAJOR_CIVS; iPlayer++)
+				{
+					CvPlayer& kOther = GET_PLAYER((PlayerTypes)iPlayer);
+					if (iPlayer == getOwner() || !kOther.isAlive())
+						continue;
+					int iLoop;
+					for (CvCity* pLoopCity = kOther.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kOther.nextCity(&iLoop))
+						if (plotDistance(getX(), getY(), pLoopCity->getX(), pLoopCity->getY()) <= kRow.m_iPerForeignCityRange)
+							iForeign++;
+				}
+				iMultiplier *= iForeign;
+			}
+			if (kRow.m_iPerPopulation > 0)
+				iMultiplier *= getPopulation() / kRow.m_iPerPopulation;
+			iTotal += kRow.m_iYield * iMultiplier;
+		}
+	}
+	return iTotal;
+}
+#endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 //	--------------------------------------------------------------------------------
 /// Extra yield on pPlot (next to this city) from this city's buildings (Building_AdjacentCityPlotYieldChanges)
