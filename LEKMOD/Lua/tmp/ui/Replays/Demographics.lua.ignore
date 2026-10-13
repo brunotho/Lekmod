@@ -501,6 +501,9 @@ function LekmodApplyBlackout()
 	if( Controls.BigStack ~= nil ) then
 		Controls.BigStack:SetHide( bBlackout );
 	end
+	if( Controls.LekmodBlackoutLabel ~= nil ) then
+		Controls.LekmodBlackoutLabel:SetHide( not bBlackout );
+	end
 end
 
 function ShowHideHandler( bIsHide, bIsInit )
