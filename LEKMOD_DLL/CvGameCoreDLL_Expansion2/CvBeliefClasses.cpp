@@ -105,6 +105,7 @@ CvBeliefEntry::CvBeliefEntry() :
 	m_bLekmodInvisibleMissionaries(false),
 	m_iLekmodFreeBuildingClassInCapital(-1),
 	m_iLekmodOnAdoptCulture(0),
+	m_iLekmodLeagueVotes(0),
 	m_iLekmodOnAdoptGold(0),
 	m_iLekmodOnAdoptCityPlots(0),
 #endif
@@ -985,6 +986,7 @@ bool CvBeliefEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	}
 	m_iLekmodFreeBuildingClassInCapital = GC.getInfoTypeForString(kResults.GetText("FreeBuildingClassInCapital"), true);
 	m_iLekmodOnAdoptCulture = kResults.GetInt("OnAdoptCulture");
+	m_iLekmodLeagueVotes = kResults.GetInt("LeagueVotes");
 	m_iLekmodOnAdoptGold = kResults.GetInt("OnAdoptGold");
 	m_iLekmodOnAdoptCityPlots = kResults.GetInt("OnAdoptCityPlots");
 	m_aiLekmodFaithPurchaseUnitClasses.clear();

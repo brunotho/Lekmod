@@ -3961,6 +3961,25 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		// World Ideology
 		int iWorldIdeologyVotes = GetExtraVotesForFollowingIdeology(ePlayer);
 		iVotes += iWorldIdeologyVotes;
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+		// Beliefs.LeagueVotes of the religion this civ founded (Mandate of God)
+		int iBeliefVotes = 0;
+		{
+			const ReligionTypes eFounded = GET_PLAYER(ePlayer).GetReligions()->GetReligionCreatedByPlayer();
+			const CvReligion* pFounded = (eFounded > RELIGION_PANTHEON) ? GC.getGame().GetGameReligions()->GetReligion(eFounded, ePlayer) : NULL;
+			if (pFounded != NULL)
+			{
+				CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
+				for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
+				{
+					CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
+					if (pkBelief != NULL && pkBelief->GetLeagueVotes() != 0 && pFounded->m_Beliefs.HasBelief((BeliefTypes)iBelief))
+						iBeliefVotes += pkBelief->GetLeagueVotes();
+				}
+			}
+		}
+		iVotes += iBeliefVotes;
+#endif
 #ifdef LEKMOD_CONGRESS_CYCLE
 		// Original capitals of other civilizations
 		int iCapitalVotes = 0;
@@ -4086,6 +4105,14 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 				sTemp << iCapitalVotes;
 				pMember->sVoteSources += sTemp.toUTF8();
 			}
+#ifdef LEKMOD_BELIEF_EXTRA_TABLES
+			if (iBeliefVotes > 0)
+			{
+				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_LEAGUE_VOTES_BELIEF");
+				sTemp << iBeliefVotes;
+				pMember->sVoteSources += sTemp.toUTF8();
+			}
+#endif
 			if (iPassedVotes > 0)
 			{
 				Localization::String sTemp = Localization::Lookup("TXT_KEY_LEKMOD_LEAGUE_VOTES_PASSED");

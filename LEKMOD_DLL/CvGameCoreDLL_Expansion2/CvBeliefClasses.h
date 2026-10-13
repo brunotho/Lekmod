@@ -121,6 +121,7 @@ public:
 	int GetYieldPerMinorityCity(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiLekmodYieldPerMinorityCity[i] : 0; }
 	int GetFreeBuildingClassInCapital() const { return m_iLekmodFreeBuildingClassInCapital; }
 	int GetOnAdoptCulture() const { return m_iLekmodOnAdoptCulture; }
+	int GetLeagueVotes() const { return m_iLekmodLeagueVotes; } // World Congress Delegates for the religion's founder (Mandate of God)
 	int GetOnAdoptGold() const { return m_iLekmodOnAdoptGold; }
 	int GetOnAdoptCityPlots() const { return m_iLekmodOnAdoptCityPlots; }
 	const std::vector<int>& GetFaithPurchaseUnitClasses() const { return m_aiLekmodFaithPurchaseUnitClasses; }
@@ -371,6 +372,7 @@ protected:
 	int m_aiLekmodYieldPerMinorityCity[NUM_YIELD_TYPES];
 	int m_iLekmodFreeBuildingClassInCapital;
 	int m_iLekmodOnAdoptCulture;
+	int m_iLekmodLeagueVotes;
 	int m_iLekmodOnAdoptGold;
 	int m_iLekmodOnAdoptCityPlots;
 	std::vector<int> m_aiLekmodFaithPurchaseUnitClasses;

@@ -120473,6 +120473,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_XIAN_SHORT">
 			<Text>Xian</Text>
 		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_MANDATE_OF_GOD">
+			<Text>+1 Delegate in the World Congress for the founder of this religion.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BELIEF_LEKMOD_MANDATE_OF_GOD_SHORT">
+			<Text>Mandate of God</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_LEAGUE_VOTES_BELIEF">
+			<Text>[NEWLINE][ICON_BULLET]{1_NumVotes} from your religion's beliefs (Mandate of God)</Text>
+		</Row>
 		<Row Tag="TXT_KEY_BELIEF_LEKMOD_SANCTUARY">
 			<Text>Use 220 [ICON_PEACE] Faith to purchase [COLOR_POSITIVE_TEXT]Sanctuaries[ENDCOLOR] (+2 [ICON_HAPPINESS_1] Happiness, +2 [ICON_CULTURE] Culture)</Text>
 		</Row>

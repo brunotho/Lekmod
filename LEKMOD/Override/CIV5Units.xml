@@ -30894,6 +30894,7 @@
 		<Column name="InvisibleMissionaries" type="boolean" default="false"/> <!-- LEKMOD: missionaries hidden like submarines -->
 		<Column name="FreeBuildingClassInCapital" type="text" default="NULL"/> <!-- LEKMOD: adopting the belief gives this building in the capital -->
 		<Column name="OnAdoptCulture" type="integer" default="0"/> <!-- LEKMOD: one-time Culture when adopted -->
+		<Column name="LeagueVotes" type="integer" default="0"/> <!-- LEKMOD: World Congress Delegates for the founder of a religion with this belief (Mandate of God) -->
 		<Column name="OnAdoptGold" type="integer" default="0"/> <!-- LEKMOD: one-time Gold when adopted -->
 		<Column name="OnAdoptCityPlots" type="integer" default="0"/> <!-- LEKMOD: every city claims this many tiles when adopted -->
 		<Column name="FaithBuildingTourism" type="integer" default="0" />
@@ -31931,6 +31932,14 @@
 			<Description>TXT_KEY_BELIEF_LEKMOD_XIAN</Description>
 			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_XIAN_SHORT</ShortDescription>
 			<Enhancer>true</Enhancer>
+		</Row>
+		<Row>
+			<ID>113</ID>
+			<Type>BELIEF_LEKMOD_MANDATE_OF_GOD</Type>
+			<Description>TXT_KEY_BELIEF_LEKMOD_MANDATE_OF_GOD</Description>
+			<ShortDescription>TXT_KEY_BELIEF_LEKMOD_MANDATE_OF_GOD_SHORT</ShortDescription>
+			<Enhancer>true</Enhancer>
+			<LeagueVotes>1</LeagueVotes>
 		</Row>
 	</Beliefs>
 	<Belief_BuildingClassYieldChanges>

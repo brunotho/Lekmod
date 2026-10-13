@@ -1362,12 +1362,13 @@ Tags: religion
 - Changed: Jesuit Education and Work Ethic: Great Prophets no longer appear from Faith (as in the Industrial Era)
 - DLL: Beliefs.NoProphetSpawn/FreeBuildingClassInCapital, Belief_UnitClassFaithPurchase (LEKMOD_CAPITAL_PANTHEON_EFFECTS)
 
-CHARTER OF SETTLEMENT, XIAN (BELIEF_LEKMOD_CHARTER, BELIEF_LEKMOD_XIAN)
---------------------------------------------------------------------
-Tags: religion
+CHARTER OF SETTLEMENT, XIAN, MANDATE OF GOD (BELIEF_LEKMOD_CHARTER, BELIEF_LEKMOD_XIAN, BELIEF_LEKMOD_MANDATE_OF_GOD)
+-------------------------------------------------------------------------------------------------------------------
+Tags: religion, world congress
 - Added: founder belief Charter of Settlement: when adopted +150 Culture, +150 Gold and every city claims 2 tiles
 - Added: enhancer belief Xian: +1 Faith from Strategic resources
-- DLL: Beliefs.OnAdoptCulture/OnAdoptGold/OnAdoptCityPlots; belief IDs 109-110
+- Added: enhancer belief Mandate of God: +1 Delegate in the World Congress for the religion's founder
+- DLL: Beliefs.OnAdoptCulture/OnAdoptGold/OnAdoptCityPlots, LeagueVotes (counted in CvLeague::CalculateStartingVotesForMember, own line in the Delegates tooltip); belief IDs 109-110, 113
 
 RELIGION SCREEN (ChooseReligionPopup)
 ------------------------------------
