@@ -1878,7 +1878,7 @@ Tags: buildings
 SPIES AND DIPLOMATS (ESPIONAGE)
 -------------------------------
 Tags: game mechanics
-Spies and diplomats are being reworked (in progress).
+Spies and diplomats are reworked: spies steal on a timer and risk getting caught by hidden guards, diplomats give steady bonuses; the Espionage screen explains it all on a Rules tab.
 - Changed: spies and diplomats have levels 1 to 5 (was Recruit, Agent, Special Agent); a spy gains a level for each successful steal, coup or caught enemy spy
 - Changed: spy strength = level, +1 with your level 3+ diplomat in that empire, + your tourism influence levels over them, +1 with Industrial Espionage
 - Changed: a city's visible defense = +1 Constabulary, +1 Police Station, +1 Intelligence Agency, + their tourism influence levels over you
