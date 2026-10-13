@@ -38,6 +38,7 @@ This file records what has been **verified** about how this mod works, and how t
    - **"(from scratch)" / "(new)"**: none of the item's old effects or yields persist. Remove everything old, then add the spec.
    - **"NEW"**: an entirely new item that doesn't exist in the code yet, or exists only as disconnected leftovers of an unfinished implementation.
    - **No marker**: the spec adds to the existing item, or overwrites a value when it's functionally the same effect.
+   - **Unique unit specs are target values** (user, 2026-10-13): resource needs, strength, cost written for a UU are its final values, even where the current unit has extra requirements the spec doesn't mention (e.g. Austria's Hussar "2 horses" = 2 Horses and no Iron).
 6. **Specs live in Notion** ("LEK — v3 — implementation checklist" and its section pages; agreed 2026-10-07):
    - Items **not yet implemented**: the user edits the spec freely. The spec as it reads at implementation time counts. Record what was implemented in the changelog and commit.
    - Items **already implemented**: the user doesn't edit the spec in place, but adds a "CHANGE (date): …" note under the item (or tells Claude). Look for these notes.
