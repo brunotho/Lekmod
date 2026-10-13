@@ -570,14 +570,16 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 			m_aHeistLocations[eCityOwner].push_back(kHeistLocation);
 
 #ifdef LEKMOD_SPY_REWORK
-			// One steal attempt: the normal steal always lands; a full-tech attempt succeeds with (100% - catch chance) / 4.
+			// One steal attempt: the normal steal always lands; a full-tech attempt succeeds with
+			// (100% - catch chance) x (stealing spy level - 1) / 4: level 3 half of it, level 4 three quarters, level 5+ all of it.
 			// Either way the spy is caught with the city's catch chance (buildings + hidden guard).
 			{
 				const int iStrength = LekmodGetSpyStrength(uiSpyIndex, pCity);
 				const int iCatch = LekmodGetCatchChance(pCity, iStrength);
 				const bool bFullTech = pSpy->m_bLekmodFullTech && (int)pSpy->m_eRank >= 2;
 				pSpy->m_bLekmodFullTech = false;
-				const bool bStole = !bFullTech || GC.getGame().getJonRandNum(100, "Lekmod spy full tech roll") < (100 - iCatch) / 4;
+				const int iFullTechChance = (100 - iCatch) * std::max(0, std::min(4, iStrength - 1)) / 4;
+				const bool bStole = !bFullTech || GC.getGame().getJonRandNum(100, "Lekmod spy full tech roll") < iFullTechChance;
 				const bool bCaught = iCatch > 0 && GC.getGame().getJonRandNum(100, "Lekmod spy catch roll") < iCatch;
 
 				pCityEspionage->ResetProgress(ePlayer);

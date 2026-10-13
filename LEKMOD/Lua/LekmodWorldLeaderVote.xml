@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- LEKMOD: World Leader vote screen. Opens by itself on the turn of each World Leader vote.
+     Delegates are counted automatically (each civilization's own Delegates count for itself), so the only choice is to close it. -->
+<Context ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow">
+	<Box Color="Black.200" Size="Full.Full" ID="Background" ConsumeMouseOver="1">
+		<Grid Size="560,400" Anchor="C,C" Offset="0,0" Padding="0,20" Style="Grid9DetailFive140" ID="Frame">
+			<Box Style="MenuLeftSideTreatment"/>
+			<Box Style="MenuRightSideTreatment"/>
+			<Image Anchor="C,T" AnchorSide="I.O" Offset="0,-14" Size="256,64" Texture="Top512IconTrim.dds"/>
+			<Stack Anchor="C,T" Offset="0,44" Padding="16" StackGrowth="Bottom" ID="Content">
+				<Label Anchor="C,T" Font="TwCenMT24" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" String="TXT_KEY_LEKMOD_WL_TITLE" ID="Title"/>
+				<Label Anchor="L,T" WrapWidth="480" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" ID="Intro"/>
+				<Label Anchor="L,T" WrapWidth="480" Font="TwCenMT20" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" ID="Votes"/>
+				<Label Anchor="L,T" WrapWidth="480" Font="TwCenMT18" FontStyle="Shadow" ColorSet="Beige_Black_Alpha" ID="Result"/>
+				<GridButton Style="BaseButton" Size="300,42" Anchor="C,T" ID="CloseButton">
+					<Label Anchor="C,C" String="TXT_KEY_LEKMOD_WL_CLOSE" ColorSet="Beige_Black" Font="TwCenMT24" FontStyle="Shadow"/>
+				</GridButton>
+			</Stack>
+		</Grid>
+	</Box>
+</Context>

@@ -1813,7 +1813,7 @@ WORLD CONGRESS PROPOSALS (RESOLUTIONS)
 Tags: world congress
 Existing proposals reworked for the new Congress.
 - Changed: Embargo City-States: available once the Congress reaches the Industrial Era
-- Changed: Nuclear Non-Proliferation: nuclear weapons cost twice as much Production (also when bought with Gold) instead of being banned; available once any civilization discovers Nuclear Fission (was Advanced Ballistics)
+- Changed: Nuclear Non-Proliferation: nuclear weapons cost twice as much Production instead of being banned; available once any civilization discovers Nuclear Fission (was Advanced Ballistics)
 - Changed: World Religion: 3 Delegates (was 2), none once the Congress reaches the Atomic Era; Holy City +50% Tourism stays
 - Removed: World Religion: faster religion spread
 - Changed: World Ideology: a new World Ideology can be proposed while one is active and replaces it
@@ -1830,7 +1830,7 @@ WORLD CONGRESS: NEW PROPOSALS (RESOLUTIONS)
 -------------------------------------------
 Tags: world congress
 Fourteen new proposals.
-- Added: Payload Controls (Information Era): spaceship parts cost 50% more Production (also for Great Engineers and purchases)
+- Added: Payload Controls (Information Era): spaceship parts cost 50% more Production (also when hurried with Great Engineers)
 - DLL: Resolutions.LekmodNukeCostModifier (cost of nuclear weapons, like LekmodSpaceshipCostModifier); the old LekmodNukeProductionModifier is unused
 - Added: Clausewitz Book Club (Modern Era): +25% attack strength (melee) for everyone for 8 turns; doesn't stack with Clausewitz's Legacy
 - Added: International Development Fund (Modern Era): a free Social Policy for everyone except the civilization(s) with the most policies; everyone not in the most advanced era gets one of the cheapest technologies they can research that another civilization knows
@@ -1849,6 +1849,11 @@ Fourteen new proposals.
 - Dev: proposals with only Lekmod effects (Blackout, Import Tariffs, the new Non-Proliferation, ...) were dropped right after passing because the base game keeps only resolutions with base-game effects; fixed
 - DLL: Resolutions.Lekmod* columns (LekmodResolutionColumn, read at runtime), Resolution_LekmodBuildingClassProductionModifiers, timed resolutions end in CvLeague::LekmodDoExpiry; Lua Game.LekmodIsBlackout (Demographics)
 
+ADDITIONAL INFORMATION MENU (ui)
+--------------------------------
+Tags: ui
+- Changed: the Additional Information menu (top right) names the hotkey of each screen that has one, e.g. Demographics (F9)
+
 WORLD CONGRESS SCREEN (ui)
 --------------------------
 Tags: world congress, ui
@@ -1856,6 +1861,7 @@ Tags: world congress, ui
 - Removed: Choose Host and World Leader no longer appear among the proposals (they are never proposed)
 - Added: proposals that last a limited time show their turns left in the list of active proposals; their tooltip names the turn they took effect and the turn they end
 - Added: the World Leader line explains how the vote works (Delegates are counted automatically) and lists the last vote: its turn, the Delegates needed and every civilization's Delegates
+- Added: a World Leader vote screen opens by itself on every World Leader vote: every civilization's Delegates (yours highlighted), the Delegates needed and the result
 - Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat; Demographics.xml too (Lua/tmp/ui/Replays)
 
 NUCLEAR FUSION (TECH_NUCLEAR_FUSION)
@@ -1889,7 +1895,7 @@ Spies and diplomats are being reworked (in progress).
 - Added: spies placed in a city cost 3 Gold per turn per era from the Renaissance (3 / 6 / 9 / 12 / 15); diplomats are free
 - Changed: spies and diplomats see around their city with a radius of strength minus visible defense (none at 0 or less), updated every turn
 - Added: a caught enemy spy is held by the defender, who chooses in the Espionage screen to execute it or evict it (it returns home and keeps its level); without a choice it is executed when the turn ends (computer players always execute)
-- Added: level 3+ spies can switch to full-tech steals: a whole technology instead of Science, but it succeeds only (100% - catch chance) / 4 of the time and a failure gives nothing; the catch chance stays the same
+- Added: level 3+ spies can switch to full-tech steals: a whole technology instead of Science, it succeeds with the chance not to be caught times a share by the spy's level (level 3 half, level 4 three quarters, level 5+ all of it) and a failure gives nothing; the catch chance stays the same
 - Added: a level 3+ spy guarding your own city can sweep it for 5 turns of that city's Science in Gold; every enemy spy there is caught with its usual catch chance
 - Changed: the Espionage screen's Intrigue tab is now a Rules tab: it opens on the agents page, and the spy and diplomat icons at the top right switch to their rules; choosing spy or diplomat for an agent is a short question
 - Changed: agent tooltips describe the current rules: a spying agent shows its steal timer, its catch chance from buildings (and what a hidden guard would add) and what makes up its strength and the city's visible defense; guards show the catch chance against each spy strength and the part from defense buildings; diplomats show their actual Science, Gold and Influence bonuses

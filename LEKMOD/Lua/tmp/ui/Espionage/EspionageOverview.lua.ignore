@@ -863,7 +863,7 @@ function RefreshAgents()
 						end
 					end
 					LekmodSetFullTechText(agentEntry.LekmodFullTechButton, bFullTech);
-					agentEntry.LekmodFullTechButton:SetToolTipString(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_FULL_TECH_TT", math.floor(info.Chance / 4), info.Catch)));
+					agentEntry.LekmodFullTechButton:SetToolTipString(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_FULL_TECH_TT", LekmodFullTechChance(info), info.Catch)));
 					local button = agentEntry.LekmodFullTechButton;
 					button:RegisterCallback(Mouse.eLClick, function()
 						bFullTech = not bFullTech;
@@ -1607,6 +1607,12 @@ function LekmodSetActivityIcon(control, progressBarState)
 	end
 end
 
+-- LEKMOD: full tech chance as far as the player can know it (same as the DLL steal roll, with the visible catch chance):
+-- (100% - catch chance) x (stealing spy level - 1) / 4
+function LekmodFullTechChance(info)
+	return math.floor(info.Chance * math.max(0, math.min(4, info.Strength - 1)) / 4);
+end
+
 -- LEKMOD: full tech toggle: the shown state follows each click at once
 g_LekmodFullTechPending = {};
 function LekmodSetFullTechText(button, bFullTech)
@@ -1650,7 +1656,7 @@ end
 function LekmodStealInfoText(info)
 	local str;
 	if (info.FullTech) then
-		str = Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_FULL_TECH_LINE", info.Turns, math.floor(info.Chance / 4));
+		str = Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_FULL_TECH_LINE", info.Turns, LekmodFullTechChance(info));
 	else
 		str = Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_LINE", info.Turns, info.StealAmount);
 	end

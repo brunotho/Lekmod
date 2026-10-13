@@ -74,6 +74,23 @@ function RefreshAdditionalInformationEntries()
 
 	-- Obtain any modder/dlc entries.
 	LuaEvents.AdditionalInformationDropdownGatherEntries(additionalEntries);
+
+	-- LEKMOD: name the hotkey of each screen that has one, e.g. "Demographics (F9)" (keys from the game's Controls table)
+	local lekmodHotkeys = {
+		[Locale.Lookup("TXT_KEY_ADVISOR_SCREEN_TECH_TREE_DISPLAY")] = "CONTROL_TECH_CHOOSER",
+		[Locale.Lookup("TXT_KEY_DIPLOMACY_OVERVIEW")] = "CONTROL_FOREIGN_SCREEN",
+		[Locale.Lookup("TXT_KEY_MILITARY_OVERVIEW")] = "CONTROL_MILITARY_SCREEN",
+		[Locale.Lookup("TXT_KEY_ECONOMIC_OVERVIEW")] = "CONTROL_DOMESTIC_SCREEN",
+		[Locale.Lookup("TXT_KEY_VP_TT")] = "CONTROL_VICTORY_SCREEN",
+		[Locale.Lookup("TXT_KEY_DEMOGRAPHICS")] = "CONTROL_INFO",
+		[Locale.Lookup("TXT_KEY_POP_NOTIFICATION_LOG")] = "CONTROL_TURN_LOG",
+	};
+	for _, entry in ipairs(additionalEntries) do
+		local control = lekmodHotkeys[entry.text] and GameInfo.Controls[lekmodHotkeys[entry.text]];
+		if (control ~= nil and control.HotKey ~= nil) then
+			entry.text = entry.text .. " (" .. string.gsub(control.HotKey, "^KB_", "") .. ")";
+		end
+	end
 	
 	-- Now that we have all entries, call methods to sort them
 	LuaEvents.AdditionalInformationDropdownSortEntries(additionalEntries);
