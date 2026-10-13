@@ -256359,7 +256359,7 @@
 			<Help>TXT_KEY_PROMOTION_FEAR_AURA_HELP</Help>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<CannotBeChosen>true</CannotBeChosen>
-			<NearbyEnemyCombatMod>-15</NearbyEnemyCombatMod>
+			<NearbyEnemyCombatMod>-10</NearbyEnemyCombatMod>
 			<NearbyEnemyCombatRange>1</NearbyEnemyCombatRange>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>LEKMOD_FEAR_AURA_PROMOTION_ATLAS</IconAtlas>
@@ -283457,7 +283457,15 @@
 			<PromotionType>PROMOTION_SHOCK_2</PromotionType>
 		</Row>
 	</Unit_FreePromotions>
-	<!-- Austria: Hussar: Envelopment instead of the flanking bonus (keeps 2 Horses 1 Iron) -->
+	<!-- Austria: Hussar: Envelopment instead of the flanking bonus; needs 2 Horses, no Iron (UU specs are the target values, user 2026-10-13) -->
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_AUSTRIAN_HUSSAR"/>
+		<Row>
+			<UnitType>UNIT_AUSTRIAN_HUSSAR</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
 	<Unit_FreePromotions>
 		<Delete UnitType="UNIT_AUSTRIAN_HUSSAR" PromotionType="PROMOTION_FLANK_ATTACK_BONUS"/>
 		<Row>

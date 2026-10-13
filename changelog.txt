@@ -2022,7 +2022,7 @@ Tags: civs, units
 AUSTRIA (CIVILIZATION_AUSTRIA)
 ------------------------------
 Tags: civs, units
-- Changed: Hussar starts with Envelopment instead of its larger flanking bonus
+- Changed: Hussar starts with Envelopment instead of its larger flanking bonus, and needs 2 Horses only (was 2 Horses and 1 Iron)
 
 BYZANTIUM (CIVILIZATION_BYZANTIUM)
 ----------------------------------
@@ -2056,6 +2056,8 @@ Tags: civs, units, promotions
 - Changed: Noble Swordsman (rebuilt) replaces the Swordsman instead of the Longswordsman: 15 Strength, costs 60, needs 3 Iron, starts with Fear Aura
 - Removed: Noble Swordsman: its Forest and attack bonuses
 - Changed: Fear Aura is lost on upgrade (also for the Berserker and the Giant Death Robot)
+- Changed: Fear Aura: enemies within 1 tile -10% Combat Strength (was -15%); its icon is centred in the Civilopedia
+- Dev: a combat preview line that wraps to two lines (e.g. Fear Aura with its source) no longer overlaps the next line
 
 WALES (CIVILIZATION_WALES)
 --------------------------

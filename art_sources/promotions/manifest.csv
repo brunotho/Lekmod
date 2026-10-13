@@ -1,4 +1,4 @@
-name,source,scale,key,notes
+name,source,scale,key,notes,dx
 amphibious_1,user_art/amphibious_1_45px.png,0.72,border,user art 2026-10-10 (bold trident + 1 bar); only 45 px exists, so the 256 px file is an upscale
 amphibious_2,user_art/amphibious_2_45px.png,0.72,border,user art 2026-10-10 (2 bars); 45 px source
 amphibious_3,user_art/amphibious_3_45px.png,0.72,border,user art 2026-10-10 (3 bars); 45 px source
@@ -8,7 +8,7 @@ envelopment,user_art/envelopment_256.dds,0.72,border,user art 2026-10-05; the us
 sitting_ducks,user_art/sitting_duck_64.dds,0.72,border,user art 2026-10-10; only 64 px exists
 carpet_bombing,original_ai_2026-04/carpet_bombing_256.dds,0.72,border,April 2026 AI art (commit d224c97d)
 discipline,original_ai_2026-04/discipline_256.dds,0.72,border,April 2026 AI art
-fear_aura,user_art/fear_aura_skull_2026-10-10.png,0.72,border,user art 2026-10-10 (bold skull; cut from merged_shield_and_skull_2026-10-10.png); replaces the April AI skull with waves
+fear_aura,user_art/fear_aura_skull_2026-10-10.png,0.72,border,user art 2026-10-10 (bold skull; cut from merged_shield_and_skull_2026-10-10.png); replaces the April AI skull with waves,-8
 feared_elephant,original_ai_2026-04/feared_elephant_256.dds,0.72,border,April 2026 AI art
 hatamoto,original_ai_2026-04/hatamoto_256.dds,0.72,border,April 2026 AI art
 iaijutsu,original_ai_2026-04/iaijutsu_256.dds,0.72,border,April 2026 AI art

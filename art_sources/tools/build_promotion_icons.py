@@ -102,7 +102,7 @@ def write(im, name, fmt, mips, tmp):
 
 def build(row, tmp):
     src = Image.open(os.path.join(SRC_DIR, row['source']))
-    icon = shift(even(key_out(src, float(row['scale']), row.get('key') or 'border')), SHIFT_X)
+    icon = shift(even(key_out(src, float(row['scale']), row.get('key') or 'border')), SHIFT_X + int(row.get('dx') or 0))  # dx: per-icon correction (manifest)
     n = row['name']
     write(icon, n + '_256', 'BC3_UNORM', 0, tmp)
     for sz in (64, 45):
@@ -122,7 +122,7 @@ def main(argv):
     icons = []
     for r in rows:
         if preview:
-            icons.append(shift(even(key_out(Image.open(os.path.join(SRC_DIR, r['source'])), float(r['scale']), r.get('key') or 'border')), SHIFT_X))
+            icons.append(shift(even(key_out(Image.open(os.path.join(SRC_DIR, r['source'])), float(r['scale']), r.get('key') or 'border')), SHIFT_X + int(r.get('dx') or 0)))
         else:
             icons.append(build(r, tmp))
             print('built', r['name'])

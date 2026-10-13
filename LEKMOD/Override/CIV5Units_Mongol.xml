@@ -1335,7 +1335,7 @@
 			<Text>Fear Aura</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_FEAR_AURA_HELP">
-			<Text>Enemies within 1 tile suffer -15% [ICON_STRENGTH] Combat Strength.</Text>
+			<Text>Enemies within 1 tile suffer -10% [ICON_STRENGTH] Combat Strength.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_MARAUDER">
 			<Text>Marauder</Text>
@@ -142622,7 +142622,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_MECH_STRATEGY">
-			<Text>The strongest land unit in the game.[NEWLINE]It gets no defensive terrain bonuses and can move after attacking.[NEWLINE][NEWLINE]Nuclear weapons deal it only 20 damage, wherever it stands; it is no longer immune.[NEWLINE]It no longer intercepts aircraft.[NEWLINE][NEWLINE]It starts with Fear Aura (enemies within 1 tile: -15% [ICON_STRENGTH] Combat Strength), Charge (+33% vs wounded units), Armor Plating I (+25% defense) and Repair (heals every turn).</Text>
+			<Text>The strongest land unit in the game.[NEWLINE]It gets no defensive terrain bonuses and can move after attacking.[NEWLINE][NEWLINE]Nuclear weapons deal it only 20 damage, wherever it stands; it is no longer immune.[NEWLINE]It no longer intercepts aircraft.[NEWLINE][NEWLINE]It starts with Fear Aura (enemies within 1 tile: -10% [ICON_STRENGTH] Combat Strength), Charge (+33% vs wounded units), Armor Plating I (+25% defense) and Repair (heals every turn).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_MEHAL_SEFARI"> 
 			<Text>

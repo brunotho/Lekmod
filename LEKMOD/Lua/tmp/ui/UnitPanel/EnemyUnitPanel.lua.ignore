@@ -8,6 +8,17 @@ local g_MyCombatDataIM = InstanceManager:new( "UsCombatInfo", "Root", Controls.M
 local g_TheirCombatDataIM = InstanceManager:new( "ThemCombatInfo", "Root", Controls.TheirCombatResultsStack );
 local g_TheirNoteIM = InstanceManager:new( "ThemCombatNote", "Root", Controls.TheirCombatResultsStack );
 
+-- LEKMOD: a modifier text that wraps to two lines (e.g. "Fear Aura (source)") gets a taller row instead of overlapping the next one
+function LekmodFitCombatRows()
+	for _, im in ipairs({ g_MyCombatDataIM, g_TheirCombatDataIM, g_TheirNoteIM }) do
+		for _, inst in ipairs(im.m_AllocatedInstances or {}) do
+			if (inst.Text ~= nil and inst.Root ~= nil) then
+				inst.Root:SetSizeY(math.max(15, inst.Text:GetSizeY() + 2));
+			end
+		end
+	end
+end
+
 local g_NumButtons = 12;
 local g_lastUnitID = -1;		-- Used to determine if a different pUnit has been selected.
 local g_ModifierListLength;
@@ -414,7 +425,7 @@ function UpdateCombatOddsUnitVsCity(pMyUnit, pCity)
 		SetCombatIndicator("Green", "TXT_KEY_EUPANEL_SAFE_ATTACK");
 	end
 
-	Controls.MyCombatResultsStack:CalculateSize();
+	LekmodFitCombatRows(); Controls.MyCombatResultsStack:CalculateSize();
 	Controls.TheirCombatResultsStack:CalculateSize();
 
 	local sizeX = Controls.DetailsGrid:GetSizeX();
@@ -612,7 +623,7 @@ function UpdateCombatOddsUnitVsUnit(pMyUnit, pTheirUnit, pBattlePlot)
 		end
 	end
 	
-    Controls.MyCombatResultsStack:CalculateSize();
+    LekmodFitCombatRows(); Controls.MyCombatResultsStack:CalculateSize();
     Controls.TheirCombatResultsStack:CalculateSize();
     
     local sizeX = Controls.DetailsGrid:GetSizeX();
@@ -687,7 +698,7 @@ function UpdateCombatOddsCityVsUnit(myCity, theirUnit)
 
 	SetCombatIndicator("Green", "TXT_KEY_INTERFACEMODE_RANGE_ATTACK");
 
-	Controls.MyCombatResultsStack:CalculateSize();
+	LekmodFitCombatRows(); Controls.MyCombatResultsStack:CalculateSize();
 	Controls.TheirCombatResultsStack:CalculateSize();
 
 	local sizeX = Controls.DetailsGrid:GetSizeX();
@@ -777,7 +788,7 @@ function UpdateCombatOddsCityVsCity(myCity, theirCity)
 	SetCombatIndicator("Green", "TXT_KEY_INTERFACEMODE_RANGE_ATTACK");
 
 
-	Controls.MyCombatResultsStack:CalculateSize();
+	LekmodFitCombatRows(); Controls.MyCombatResultsStack:CalculateSize();
 	Controls.TheirCombatResultsStack:CalculateSize();
 
 	local sizeX = Controls.DetailsGrid:GetSizeX();
