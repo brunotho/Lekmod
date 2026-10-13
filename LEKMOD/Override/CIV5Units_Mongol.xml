@@ -147481,6 +147481,100 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_US_LONGBOWMAN_HELP">
 			<Text>Replaces the Crossbowman. Can move after attacking and ignores terrain movement costs.</Text>
 		</Replace>
+		<!-- Phase 6 batch 2 -->
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_POINT_BLANK">
+			<Text>Point Blank</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_POINT_BLANK_HELP">
+			<Text>+30% [ICON_RANGE_STRENGTH] Ranged Combat Strength when attacking an adjacent target.</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_BUILDING_AYYUBIDS_UNIVERSITYH_HELP">
+			<Text>Replaces the University.[NEWLINE]+1 [ICON_RESEARCH] Science from Flood Plains and +2 [ICON_RESEARCH] Science from Oasis and Jungle tiles worked by this City.[NEWLINE][NEWLINE]Gives 30 [ICON_PEACE] Faith once when it is built.[NEWLINE][NEWLINE]City must have a Library.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_MAMLUK">
+			<Text>Replaces the Knight. Stronger, but costs more and needs 6 [ICON_RES_HORSE] Horses and 4 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Envelopment and Charge.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_BABYLON_BOWMAN_HELP">
+			<Text>Replaces the Archer. Higher [ICON_RANGE_STRENGTH] Ranged Strength and [ICON_STRENGTH] Combat Strength.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_BABYLON_WALLS_INFO">
+			<Text>Replaces the Walls. Cheaper, and gives the city more Defense.[NEWLINE]+1 [ICON_PEACE] Faith and +1 [ICON_RESEARCH] Science.[NEWLINE][NEWLINE][ICON_GOLD] Gold cost of buying tiles in this city reduced by 25%.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_KHMER_WARELEPHANT_HELP">
+			<Text>Replaces the Trebuchet. Available at Machinery.[NEWLINE]Higher [ICON_STRENGTH] Combat Strength and [ICON_RANGE_STRENGTH] Ranged Strength, no vision penalty, and the Feared Elephant promotion.[NEWLINE]Weaker bonus against Cities, and more expensive.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_BARAY_HELP">
+			<Text>Replaces the Garden. +2 [ICON_FOOD] Food and +2 [ICON_PEACE] Faith.[NEWLINE][NEWLINE]+25% [ICON_GREAT_PEOPLE] Great Person generation in this city.[NEWLINE]10% of [ICON_FOOD] Food is carried over after a new [ICON_CITIZEN] Citizen is born.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_MAYA_PYRAMID_HELP">
+			<Text>Replaces the [ICON_BUILDING_SHRINE] Shrine. Costs more [ICON_PRODUCTION] Production.[NEWLINE]+2 [ICON_PEACE] Faith and +1 [ICON_RESEARCH] Science.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_MAYAN_ATLATLIST">
+			<Text>Replaces the Composite Bowman.[NEWLINE]+30% [ICON_RANGE_STRENGTH] Ranged Combat Strength when attacking an adjacent target (Point Blank).[NEWLINE]Starts with Woodsman.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_MAYAN_ATLATLIST_STRATEGY">
+			<Text>The Atlatlist is the Mayan unique unit, replacing the Composite Bowman. It hits hardest at close range and moves quickly through Forest and Jungle.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_MUGHALS_CARAVANSARY_HELP">
+			<Text>Replaces the Caravansary. Available at Currency (instead of Horseback Riding).[NEWLINE][NEWLINE]With a garrison: +10 City [ICON_STRENGTH] Strength, +1 [ICON_GOLD] Gold and +2 [ICON_CULTURE] Culture.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_ALCAZABA_HELP">
+			<Text>Replaces the Castle. Provides 3 [ICON_RES_HORSE] Horses.[NEWLINE][NEWLINE]+1 [ICON_RESEARCH] Science from Forts and +5 [ICON_RESEARCH] Science from Citadels worked by this City.[NEWLINE][NEWLINE]City must have Walls.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_PESTININKAS">
+			<Text>Bajoras</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_PESTININKAS">
+			<Text>Replaces the Knight. Higher [ICON_STRENGTH] Combat Strength.[NEWLINE]Starts with Woodsman and Ambush Formation I.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_PROMISED_LAND">
+			<Text>+1 [ICON_PEACE] Faith from [ICON_BUILD_PASTURE] Pastures.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_ISRAEL_MACCABEE">
+			<Text>Gibborim</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_MACCABEE">
+			<Text>Replaces the Swordsman. Cheaper, but slightly weaker.[NEWLINE]Starts with Zealot.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_ISRAEL_MACCABEE_STRATEGY">
+			<Text>The Gibborim is Israel's unique unit, replacing the Swordsman. It is cheap to train, and its kills yield [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_ISRAEL_NATIONAL_COLLEGE_HELP">
+			<Text>[COLOR_CULTURE_STORED]* Unique National Wonder (only a specific civ may build one)[ENDCOLOR][NEWLINE][NEWLINE]Unique to Israel. Replaces the [ICON_BUILDING_NATIONAL_COLLEGE] National College.[NEWLINE]Upon expending a [ICON_GREAT_PEOPLE] Great Person, receive 50 [ICON_RESEARCH] Science instantly.[NEWLINE][NEWLINE]Cannot be built with [ICON_PRODUCTION] Production; buy it with [ICON_GOLD] Gold or [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_CITY_STATE_BONUSES">
+			<Text>[ICON_HAPPINESS_1] Happiness, [ICON_FOOD] Food, [ICON_CULTURE] Culture, and [ICON_PEACE] Faith from friendly and allied [ICON_CITY_STATE] City-States increased by 50%.[NEWLINE]Units gifted by [ICON_CITY_STATE] City-States arrive 50% faster.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_SIAMESE_WARELEPHANT">
+			<Text>Replaces the Knight. Slower, but much stronger, with a bonus against other Mounted units.[NEWLINE]Starts with Feared Elephant.[NEWLINE]Costs more and needs 3 [ICON_RES_IRON] Iron.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_TERROR">
+			<Text>Upon discovering [ICON_TECH_CHIVALRY] Chivalry, in each owned City, a [ICON_RES_HORSE] Horse tile is revealed nearby and all [ICON_RES_HORSE] Horse tiles yield +1 [ICON_FOOD] Food.[NEWLINE]Start the game with [ICON_TECH_ANIMAL_HUSBANDRY] Animal Husbandry.[NEWLINE][NEWLINE]+30% [ICON_STRENGTH] Combat Strength when fighting a [ICON_CITY_STATE] City-State.[NEWLINE]All mounted and armor units receive +1 [ICON_MOVES] Movement.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_MONGOLIA_KESHIK_HELP">
+			<Text>Replaces the Knight. A fast mounted unit with a strong [ICON_RANGE_STRENGTH] Ranged attack.[NEWLINE]Its battles give double the points towards Great Generals.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_MONGOLIA_KESHIK_STRATEGY">
+			<Text>The Keshik is a unique replacement for the Knight, available to the Mongols starting in the Medieval Era. Keshiks have a strong ranged attack and, with the Mongol bonus, 5 movement points, which makes them excellent at hit and run attacks. They also earn Great General points twice as fast.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_CAMEL_ARCHER">
+			<Text>Replaces the Knight. A [COLOR_POSITIVE_TEXT]Mounted Ranged[ENDCOLOR] unit with a strong [ICON_RANGE_STRENGTH] Ranged attack, but much lower [ICON_STRENGTH] Melee Strength.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_TEPE_HELP">
+			<Text>+1 [ICON_FOOD] Food, +1 [ICON_PEACE] Faith.[NEWLINE]+1 [ICON_CULTURE] Culture when adjacent to a city.[NEWLINE]+1 [ICON_FOOD] Food with Civil Service, +1 [ICON_GOLD] Gold with Economics.[NEWLINE][NEWLINE]Can only be built on flat plains or flat [ICON_RES_DEER] Deer and [ICON_RES_BISON] Bison, and must be adjacent to a luxury.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_ODEON_HELP">
+			<Text>Replaces the Amphitheater.[NEWLINE]Available much earlier, at [ICON_TECH_WRITING] [COLOR_CYAN]Writing[ENDCOLOR].[NEWLINE]Provides +4 [ICON_CULTURE] Culture and 1 [ICON_GREAT_WRITER] Writer Specialist slot.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_SPAIN_TERCIO_HELP">
+			<Text>Replaces the Musketman. Higher [ICON_STRENGTH] Combat Strength and the Bonus vs Mounted (50) promotion.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_JANISSARY">
+			<Text>Replaces the Musketman. Cheaper to train.[NEWLINE]Starts with Charge and Zealot.[NEWLINE]Can always be bought with [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_OTTOMAN_JANISSARY_STRATEGY">
+			<Text>The Janissary is an Ottoman unique unit, replacing the Musketman. It is cheaper than a Musketman, strong against wounded units, and its kills yield [ICON_PEACE] Faith. It can be bought with Faith even without a religion.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

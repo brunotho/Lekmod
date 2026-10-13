@@ -2064,3 +2064,113 @@ WALES (CIVILIZATION_WALES)
 Tags: civs, units
 - Removed: +10% combat strength on Hills for all units; +1 Gold from Sheep
 - Changed: Saethwyr: 17 Ranged Strength (was 18), 12 Strength (was 15); can move after attacking and ignores terrain movement costs
+
+AYYUBIDS (CIVILIZATION_AYYUBIDS)
+--------------------------------
+Tags: civs, units, buildings
+- Changed: their University gives 30 Faith once when built instead of 2 Faith per turn
+- Changed: Mamluk: 23 Strength (was 20), costs 110 (was 85), needs 6 Horses and 4 Iron (was 2 Horses and 1 Iron), starts with Envelopment and Charge
+- Removed: Mamluk: its bonus against Melee and Gunpowder units
+
+BABYLON (CIVILIZATION_BABYLON)
+------------------------------
+Tags: civs, units, buildings
+- Changed: Bowman: 8 Ranged Strength (was 9), 6 Strength (was 7)
+- Changed: Walls of Babylon cost 45 (was 43), give +50 city HP (was +100), +1 Faith and +1 Science, and buying tiles in the city costs 25% less Gold
+- Note: open: the free Great Scientist after both Philosophy and Mathematics (needs C++)
+
+KHMER (CIVILIZATION_KHMER)
+--------------------------
+Tags: civs, units, buildings
+- Changed: Ballista Elephant: 18 Strength (was 20), 2 Movement (was 3), needs 2 Iron (was 1)
+- Changed: Baray gives its +2 Food and +2 Faith right away (the Drama and Poetry step is gone; it is built at Drama anyway)
+- Note: open: the new UA (capital yields once all Ancient techs are known; needs C++)
+
+MAYA (CIVILIZATION_MAYA)
+------------------------
+Tags: civs, units, buildings, promotions
+- Changed: Pyramid gives +1 Science (was +2)
+- Changed: Atlatlist now replaces the Composite Bowman (with its strength, cost and Construction requirement) instead of the Archer
+- Added: Atlatlist starts with Woodsman and Point Blank (+30% Ranged Strength when attacking an adjacent target)
+- Dev: new promotion PROMOTION_LEKMOD_POINT_BLANK (ID 379, AdjacentRangedAttackMod 30, the Blind Spot mechanism)
+
+MUGHALS (CIVILIZATION_MUGHALS)
+------------------------------
+Tags: civs, buildings
+- Changed: their Caravansary costs 67 (was 60); with a garrison it gives +2 Culture (was +3) and +1 Gold (was +2)
+- Note: "gold down to 3" read as 3 Gold in total with a garrison (on Specs to refine)
+- Note: open: the new UA (border and religion yields; needs C++)
+
+MOORS (CIVILIZATION_MOORS)
+--------------------------
+Tags: civs, units, buildings
+- Changed: Granadine Cavalry needs 2 Horses and 1 Iron (was 2 Horses)
+- Changed: Alcazaba: +1 Science from Forts and +5 Science from Citadels worked by the city
+- Removed: Alcazaba: +3 Science and +10% Food
+- Note: open: Alcazaba +5 Science per nearby foreign city (needs C++)
+
+LITHUANIA (CIVILIZATION_LITHUANIA)
+----------------------------------
+Tags: civs, units
+- Removed: Pestininkas (unique Pikeman)
+- Added: Bajoras, a unique Knight: 21 Strength, needs 2 Horses and 1 Iron, starts with Woodsman and Ambush Formation I
+- Dev: the Bajoras reuses the UNIT_PESTININKAS row (now Knight class, Knight model and icon)
+
+ISRAEL (CIVILIZATION_ISRAEL)
+----------------------------
+Tags: civs, units, buildings
+- Changed: Pastures give +1 Faith instead of +1 Culture
+- Changed: the Maccabee is renamed Gibborim: 13 Strength (was 14), needs 2 Iron, still starts with Zealot
+- Changed: their National College costs 260 Gold (was 201)
+- Removed: their National College's +3 Faith and its Faith when a Great Person is expended
+- Note: open: UA +15% against stronger units and Gibborim +20% next to 3+ enemies (need C++)
+
+SIAM (CIVILIZATION_SIAM)
+------------------------
+Tags: civs, units
+- Removed: +15 XP for units gifted by City-States
+- Added: starts along a river
+- Changed: Naresuan's Elephant costs 90 (was 80), needs 3 Iron and starts with Feared Elephant
+- Note: open: +20 resting Influence with the closest City-State (needs C++)
+
+MONGOLIA (CIVILIZATION_MONGOL)
+------------------------------
+Tags: civs, units
+- Added: start the game with Animal Husbandry
+- Changed: Keshik: 19 Ranged Strength (was 17), 13 Strength (was 17), needs 4 Horses (was 2 Horses and 1 Iron), has the usual mounted penalty against cities
+- Removed: Keshik: Quick Study (faster promotions)
+- Note: open: small Horse nodes and no pledges of protection (need C++)
+
+ARABIA (CIVILIZATION_ARABIA)
+----------------------------
+Tags: civs, units
+- Changed: Camel Archer: 21 Ranged Strength (was 20), 13 Strength (was 14), needs 4 Horses (was 2 Horses and 1 Iron), has the usual mounted penalty against cities
+- Note: open: the new UA (trade route conversion, Oasis Faith; needs C++)
+
+SIOUX (CIVILIZATION_SIOUX)
+--------------------------
+Tags: civs, units
+- Changed: Buffalo Hunter: 7 Strength (was 8)
+- Changed: Tipi: +1 Gold with Economics
+- Removed: Tipi: +1 Gold next to rivers and +1 Faith with Theology
+- Note: open: the new UA (needs C++)
+
+GREECE (CIVILIZATION_GREECE)
+----------------------------
+Tags: civs, buildings
+- Removed: Odeon: +1 Gold
+- Note: open: Shrine and mountain Faith, City-State territory explanation (UA)
+
+SPAIN (CIVILIZATION_SPAIN)
+--------------------------
+Tags: civs, units
+- Changed: Tercio costs 100 (was 107), the same as a Musketman
+- Note: open: the new UA (needs C++)
+
+OTTOMANS (CIVILIZATION_OTTOMAN)
+-------------------------------
+Tags: civs, units
+- Removed: Sipahi (unique Lancer)
+- Changed: Janissary starts with Charge and Zealot, and can always be bought with Faith
+- Removed: Janissary: healing on kills and the attack bonus
+- Note: open: the new UA and the Su Kemeri (needs C++)

@@ -44467,7 +44467,6 @@
 			<ConquestProb>66</ConquestProb> 
 			<GreatPeopleRateModifier>25</GreatPeopleRateModifier> 
 			<FoodKept>10</FoodKept> 
-			<EnhancedYieldTech>TECH_DRAMA</EnhancedYieldTech> 
 			<PrereqTech>TECH_DRAMA</PrereqTech> 
 			<ArtDefineTag>ART_DEF_BUILDING_HOSPITAL</ArtDefineTag> 
 			<PortraitIndex>2</PortraitIndex> 
@@ -256641,6 +256640,19 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_SALT_STARS</PediaEntry>
 		</Row>
+		<Row>
+			<ID>379</ID>
+			<Type>PROMOTION_LEKMOD_POINT_BLANK</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_POINT_BLANK</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_POINT_BLANK_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<AdjacentRangedAttackMod>30</AdjacentRangedAttackMod>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_POINT_BLANK</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -283709,6 +283721,470 @@
 		<Row>
 			<UnitType>UNIT_US_LONGBOWMAN</UnitType>
 			<PromotionType>PROMOTION_IGNORE_TERRAIN_COST</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Phase 6 batch 2 (2026-10-13) -->
+	<!-- Ayyubids: university UB without Faith per turn, 30 Faith once when built (FreeFlatFaith is scaled by game speed: 45 = 30 on quick); Mamluk 110 Production on quick, 23 strength, 6 Horses 4 Iron, Envelopment and Charge instead of the melee/gunpowder bonus -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_AYYUBIDS_UNIVERSITY"/>
+			<Set FreeFlatFaith="45"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_AYYUBIDS_UNIVERSITY" YieldType="YIELD_FAITH"/>
+	</Building_YieldChanges>
+	<Units>
+		<Update>
+			<Where Type="UNIT_AYYUBIDS_KNIGHT"/>
+			<Set Combat="23" Cost="165" FaithCost="330"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_AYYUBIDS_KNIGHT"/>
+		<Row>
+			<UnitType>UNIT_AYYUBIDS_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>6</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AYYUBIDS_KNIGHT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_AYYUBIDS_KNIGHT" PromotionType="PROMOTION_ANTI_MELEE_I"/>
+		<Row>
+			<UnitType>UNIT_AYYUBIDS_KNIGHT</UnitType>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_AYYUBIDS_KNIGHT</UnitType>
+			<PromotionType>PROMOTION_CHARGE</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Babylon: Bowman 8 ranged / 6 melee; Walls of Babylon 45 Production on quick, +50 HP (was +100), +1 Faith +1 Science, tiles 25% cheaper to buy -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_BABYLONIAN_BOWMAN"/>
+			<Set Combat="6" RangedCombat="8"/>
+		</Update>
+	</Units>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_WALLS_OF_BABYLON"/>
+			<Set Cost="68" ExtraCityHitPoints="50" PlotBuyCostModifier="-25"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_WALLS_OF_BABYLON"/>
+		<Row>
+			<BuildingType>BUILDING_WALLS_OF_BABYLON</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_WALLS_OF_BABYLON</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- Khmer: Ballista Elephant 18 melee, 2 moves, 2 Iron; Baray: its +2 Food +2 Faith are plain yields (no Drama step; EnhancedYieldTech removed in the row) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_KHMER_WARELEPHANT"/>
+			<Set Combat="18" Moves="2"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_KHMER_WARELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_KHMER_WARELEPHANT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Building_TechEnhancedYieldChanges>
+		<Delete BuildingType="BUILDING_BARAY"/>
+	</Building_TechEnhancedYieldChanges>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_BARAY"/>
+		<Row>
+			<BuildingType>BUILDING_BARAY</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BARAY</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- Maya: Pyramid 26 Production on quick, 2 Faith 1 Science; Atlatlist now replaces the Composite Bowman (its stats), Point Blank (+30% vs adjacent targets) and Woodsman -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_MAYA_PYRAMID"/>
+			<Set Cost="39"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_MAYA_PYRAMID" YieldType="YIELD_SCIENCE"/>
+			<Set Yield="1"/>
+		</Update>
+	</Building_YieldChanges>
+	<Civilization_UnitClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_MAYA" UnitType="UNIT_MAYAN_ATLATLIST"/>
+			<Set UnitClassType="UNITCLASS_COMPOSITE_BOWMAN"/>
+		</Update>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_MAYAN_ATLATLIST"/>
+			<Set Class="UNITCLASS_COMPOSITE_BOWMAN" Combat="7" RangedCombat="11" Cost="75" FaithCost="150" PrereqTech="TECH_CONSTRUCTION" ObsoleteTech="TECH_MACHINERY" GoodyHutUpgradeUnitClass="UNITCLASS_CROSSBOWMAN" AdvancedStartCost="20"/>
+		</Update>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_MAYAN_ATLATLIST"/>
+		<Row>
+			<UnitType>UNIT_MAYAN_ATLATLIST</UnitType>
+			<UnitClassType>UNITCLASS_CROSSBOWMAN</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_MAYAN_ATLATLIST</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_POINT_BLANK</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MAYAN_ATLATLIST</UnitType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Mughals: caravansary UB 67 Production on quick; garrison yields 2 Culture (was 3) and 1 Gold (was 2), so 3 Gold with a garrison -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_MUGHALS_CARAVANSARY"/>
+			<Set Cost="100"/>
+		</Update>
+	</Buildings>
+	<Building_GarrisonYieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_MUGHALS_CARAVANSARY" YieldType="YIELD_CULTURE"/>
+			<Set Yield="2"/>
+		</Update>
+		<Update>
+			<Where BuildingType="BUILDING_MUGHALS_CARAVANSARY" YieldType="YIELD_GOLD"/>
+			<Set Yield="1"/>
+		</Update>
+	</Building_GarrisonYieldChanges>
+	<!-- Moors: Granadine Cavalry 2 Horses 1 Iron; Alcazaba without +10% Food and +3 Science, +1 Science from Forts and +5 from Citadels worked by the city (science per nearby foreign city: needs C++, open) -->
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_MC_LITE_GRANADINE_CAVALRY"/>
+		<Row>
+			<UnitType>UNIT_MC_LITE_GRANADINE_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_LITE_GRANADINE_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Building_YieldModifiers>
+		<Delete BuildingType="BUILDING_ALCAZABA" YieldType="YIELD_FOOD"/>
+	</Building_YieldModifiers>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_ALCAZABA" YieldType="YIELD_SCIENCE"/>
+	</Building_YieldChanges>
+	<Building_ImprovementYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_ALCAZABA</BuildingType>
+			<ImprovementType>IMPROVEMENT_FORT</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_ALCAZABA</BuildingType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>5</Yield>
+		</Row>
+	</Building_ImprovementYieldChanges>
+	<!-- Lithuania: the Pestininkas row becomes the Bajoras (NEW), a Knight replacement with the Knight's model: 21 strength, 2 Horses 1 Iron, Woodsman, Ambush Formation I -->
+	<Civilization_UnitClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_LITHUANIA" UnitType="UNIT_PESTININKAS"/>
+			<Set UnitClassType="UNITCLASS_KNIGHT"/>
+		</Update>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_PESTININKAS"/>
+			<Set Class="UNITCLASS_KNIGHT" CombatClass="UNITCOMBAT_MOUNTED" DefaultUnitAI="UNITAI_FAST_ATTACK" Combat="21" Cost="120" FaithCost="240" Moves="4" PrereqTech="TECH_CHIVALRY" ObsoleteTech="TECH_MILITARY_SCIENCE" GoodyHutUpgradeUnitClass="UNITCLASS_CAVALRY" AdvancedStartCost="25" Conscription="0" Civilopedia="TXT_KEY_CIVILOPEDIA_UNITS_MEDIEVAL_KNIGHT_TEXT" Strategy="TXT_KEY_UNIT_KNIGHT_STRATEGY" UnitArtInfo="ART_DEF_UNIT_KNIGHT" MoveRate="QUADRUPED" UnitFlagAtlas="UNIT_FLAG_ATLAS" UnitFlagIconOffset="25" IconAtlas="UNIT_ATLAS_1" PortraitIndex="26"/>
+		</Update>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitClassType>UNITCLASS_CAVALRY</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_AITypes>
+		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitAIType>UNITAI_DEFENSE</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitAIType>UNITAI_FAST_ATTACK</UnitAIType>
+		</Row>
+	</Unit_AITypes>
+	<Unit_Flavors>
+		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<FlavorType>FLAVOR_OFFENSE</FlavorType>
+			<Flavor>9</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<FlavorType>FLAVOR_DEFENSE</FlavorType>
+			<Flavor>3</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<FlavorType>FLAVOR_MOBILE</FlavorType>
+			<Flavor>5</Flavor>
+		</Row>
+	</Unit_Flavors>
+	<UnitGameplay2DScripts>
+		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<SelectionSound>AS2D_SELECT_KNIGHT</SelectionSound>
+			<FirstSelectionSound>AS2D_BIRTH_KNIGHT</FirstSelectionSound>
+		</Row>
+	</UnitGameplay2DScripts>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PESTININKAS</UnitType>
+			<PromotionType>PROMOTION_AMBUSH_FORMATION_1</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Israel: +1 Faith from Pastures instead of Culture (rest of the new UA needs C++, open); Gibborim (from scratch, the Maccabee row) 40 Production on quick, 13 strength, 2 Iron, Zealot (adjacency bonus needs C++, open); National College UB without Faith, 260 Gold on quick (GoldCost is scaled by game speed) -->
+	<Trait_ImprovementYieldChanges>
+		<Delete TraitType="TRAIT_PROMISED_LAND"/>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<ImprovementType>IMPROVEMENT_PASTURE</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_ImprovementYieldChanges>
+	<Units>
+		<Update>
+			<Where Type="UNIT_ISRAEL_MACCABEE"/>
+			<Set Combat="13" Cost="60" FaithCost="120"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_ISRAEL_MACCABEE"/>
+		<Row>
+			<UnitType>UNIT_ISRAEL_MACCABEE</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_ISRAEL_MACCABEE"/>
+		<Row>
+			<UnitType>UNIT_ISRAEL_MACCABEE</UnitType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_ISRAEL_NATIONAL_COLLEGE"/>
+			<Set GoldCost="389"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_ISRAEL_NATIONAL_COLLEGE" YieldType="YIELD_FAITH"/>
+	</Building_YieldChanges>
+	<Building_GreatPersonExpendedYields>
+		<Delete BuildingType="BUILDING_ISRAEL_NATIONAL_COLLEGE" YieldType="YIELD_FAITH"/>
+	</Building_GreatPersonExpendedYields>
+	<!-- Siam: no extra XP for units gifted by City-States (resting Influence part needs C++, open); river start bias; Naresuan's Elephant 90 Production on quick, 3 Iron, Feared Elephant -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_CITY_STATE_BONUSES"/>
+			<Set CityStateUnitGiftExtraExperience="0"/>
+		</Update>
+	</Traits>
+	<Civilization_Start_Along_River>
+		<Row>
+			<CivilizationType>CIVILIZATION_SIAM</CivilizationType>
+			<StartAlongRiver>true</StartAlongRiver>
+		</Row>
+	</Civilization_Start_Along_River>
+	<Units>
+		<Update>
+			<Where Type="UNIT_SIAMESE_WARELEPHANT"/>
+			<Set Cost="135" FaithCost="270"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_SIAMESE_WARELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_SIAMESE_WARELEPHANT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_SIAMESE_WARELEPHANT</UnitType>
+			<PromotionType>PROMOTION_FEARED_ELEPHANT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Mongolia: start with Animal Husbandry (small Horse nodes, no pledges: need C++, open); Keshik 19 ranged / 13 melee, 4 Horses, usual mounted city penalty, no Quick Study -->
+	<Civilization_FreeTechs>
+		<Row>
+			<CivilizationType>CIVILIZATION_MONGOL</CivilizationType>
+			<TechType>TECH_ANIMAL_HUSBANDRY</TechType>
+		</Row>
+	</Civilization_FreeTechs>
+	<Units>
+		<Update>
+			<Where Type="UNIT_MONGOLIAN_KESHIK"/>
+			<Set Combat="13" RangedCombat="19"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_MONGOLIAN_KESHIK"/>
+		<Row>
+			<UnitType>UNIT_MONGOLIAN_KESHIK</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_MONGOLIAN_KESHIK" PromotionType="PROMOTION_GAIN_EXPERIENCE"/>
+		<Row>
+			<UnitType>UNIT_MONGOLIAN_KESHIK</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Arabia: Camel Archer 21 ranged / 13 melee, 4 Horses, usual mounted city penalty (rest of the new UA needs C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_ARABIAN_CAMELARCHER"/>
+			<Set Combat="13" RangedCombat="21"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_ARABIAN_CAMELARCHER"/>
+		<Row>
+			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_ARABIAN_CAMELARCHER</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Sioux: Buffalo Hunter 7 melee; Tipi: no river Gold, no Theology Faith, +1 Gold with Economics (new UA needs C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_BUFFALO_HUNTER"/>
+			<Set Combat="7"/>
+		</Update>
+	</Units>
+	<Improvement_RiverSideYields>
+		<Delete ImprovementType="IMPROVEMENT_TEPE"/>
+	</Improvement_RiverSideYields>
+	<Improvement_TechYieldChanges>
+		<Delete ImprovementType="IMPROVEMENT_TEPE" TechType="TECH_THEOLOGY"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_TEPE</ImprovementType>
+			<TechType>TECH_ECONOMICS</TechType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_TechYieldChanges>
+	<!-- Greece: Odeon without Gold (Shrine/mountain Faith needs C++, open) -->
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_ODEON" YieldType="YIELD_GOLD"/>
+	</Building_YieldChanges>
+	<!-- Spain: Tercio costs as much as a Musketman -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_SPANISH_TERCIO"/>
+			<Set Cost="150" FaithCost="300"/>
+		</Update>
+	</Units>
+	<!-- Ottomans: Sipahi removed (Lancers are normal again); Janissary: Charge and Zealot instead of healing on kills and the attack bonus, can always be bought with Faith -->
+	<Civilization_UnitClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_OTTOMAN" UnitType="UNIT_OTTOMAN_SIPAHI"/>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_OTTOMAN_SIPAHI"/>
+			<Set ShowInPedia="0"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_OTTOMAN_JANISSARY"/>
+			<Set RequiresFaithPurchaseEnabled="0"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_OTTOMAN_JANISSARY"/>
+		<Row>
+			<UnitType>UNIT_OTTOMAN_JANISSARY</UnitType>
+			<PromotionType>PROMOTION_CHARGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_OTTOMAN_JANISSARY</UnitType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
 		</Row>
 	</Unit_FreePromotions>
 </GameData>
