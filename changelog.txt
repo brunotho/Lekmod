@@ -2334,3 +2334,136 @@ Tags: civs, units
 - Changed: Gerilya: 46 Strength (was 55), can move after attacking, starts with Woodsman
 - Removed: Gerilya: Volley
 - Note: open: only the first expansion gets +1 Population, Simbahan (need C++)
+
+NORMANDY (CIVILIZATION_NORMANDY)
+--------------------------------
+Tags: civs
+- Removed: +5 city strength in all cities
+- Added: +25% Production towards Walls, Castles, Arsenals and Military Bases
+- Note: open: +2 city strength from those buildings (needs C++)
+
+GERMANY (CIVILIZATION_GERMANY)
+------------------------------
+Tags: civs
+- Added: upgrading units costs 10% less Gold
+- Note: open: Hanse trade route effects (need C++)
+- Dev: capital dummy building BUILDING_LEKMOD_GERMANY_TRAIT (ID 280, class 185, UnitUpgradeCostMod -10)
+
+CANADA (CIVILIZATION_CANADA)
+----------------------------
+Tags: civs, units
+- Added: Lake and Snow tiles yield +2 Gold and +1 Culture (Ice keeps its +2 Gold and +1 Culture)
+- Changed: Combat Engineer works twice as fast as a Worker (was 1.5x)
+- Dev: per-city dummy building BUILDING_LEKMOD_CANADA_TRAIT (ID 281, class 186) for the lake yields; the old text said "Lakes" but the data only covered Ice
+
+TONGA (CIVILIZATION_TONGA)
+--------------------------
+Tags: civs
+- Removed: +5 resting Influence with City-States
+- Note: open: smaller reveal, first pledge bonus, Fale Koloa (need C++)
+
+TUNISIA (CIVILIZATION_TUNISIA)
+------------------------------
+Tags: civs, buildings
+- Changed: their Castle (rebuilt) costs 85 (was 53), 4 Gold maintenance, +4 Faith and +4 Culture with a garrison, still needs no Walls
+- Removed: their Castle's +2 Gold, +2 Faith and +4 Golden Age points
+- Note: open: the Castle's vision, the new UA and the Privateer (need C++)
+
+TIMURIDS (CIVILIZATION_TIMURIDS)
+--------------------------------
+Tags: civs, units
+- Removed: Marathi (air-like unique Horseman)
+- Added: Gurkani Guard, a unique Knight: 22 Strength, costs 90, needs 3 Horses and 3 Iron, starts with Blitz
+- Dev: rebuilt from the UNIT_MARATHI row (Sipahi model)
+- Note: open: the new UA and the Serai (need C++)
+
+OMAN (CIVILIZATION_OMAN)
+------------------------
+Tags: civs, units, naval
+- Changed: Baghlah: 7 Strength and 9 Ranged Strength (was 8 and 12; the Galley +1 each), starts with Supply Ship and Swift Transport
+- Note: open: the new UA and the Minaa (need C++)
+
+SWEDEN (CIVILIZATION_SWEDEN)
+----------------------------
+Tags: civs, buildings
+- Changed: Falu Gruva works like a regular Ironworks: 8 Iron, +8 Production, +2 Production from Mountains
+- Removed: Falu Gruva: +1 Production from Hills, +6 Tourism with Flight
+- Changed: start bias avoids jungle instead of desert (tundra bias kept)
+- Note: open: UA Production from strategic resources in snow (needs C++)
+
+MAURYA (CIVILIZATION_MAURYA)
+----------------------------
+Tags: civs, units
+- Removed: unique Missionary
+- Note: open: the new UA and the Mahamatras' Office (need C++)
+
+NEW ZEALAND (CIVILIZATION_NEW_ZEALAND)
+--------------------------------------
+Tags: civs, units, naval
+- Changed: Defender needs 1 Coal
+- Removed: Defender: ignoring Zones of Control near friendly cities
+- Changed: Maori Battalion starts with Haka War Dance, Amphibious I, Charge and Mobility
+- Removed: Maori Battalion: Amphibious, double embarked defense, the bonus far from the capital, Influence in City-State territory
+- Note: open: the new UA (needs C++)
+
+BRUNEI (CIVILIZATION_BRUNEI)
+----------------------------
+Tags: civs, buildings
+- Changed: their Oil Refinery provides 6 Oil (was 2), +3 Production and +3 Gold (was +5 and +3), +2 Happiness
+- Changed: Kampong Ayer: 1 Food and 1 Culture, +1 Culture and +2 Gold with Flight (was 1 Food, 1 Gold, 1 Culture, +1 Culture with Flight, +1 Production with Navigation)
+- Note: open: the UA rework (incl. Kampong Ayer placement), no refinery limit, the Nelayan (need C++)
+
+UAE (CIVILIZATION_UAE)
+----------------------
+Tags: civs, units, buildings
+- Removed: Qasimi Raider
+- Changed: Burj Al Arab: +7 Gold and +7 Culture
+- Removed: Burj Al Arab: yields on Great Person improvements, desert and natural wonder tiles
+- Note: open: the new UA and the Desert Falcon (need C++ and a new unit)
+
+CUBA (CIVILIZATION_CUBA)
+------------------------
+Tags: civs, buildings
+- Changed: Dance Hall: 3 Culture (was 2), units trained in the city start with +15 XP
+- Removed: Dance Hall: +1 Happiness and +4 Culture when its slot is filled
+- Note: open: +20% city Tourism when filled, the new UA (need C++)
+
+AKSUM (CIVILIZATION_AKSUM)
+--------------------------
+Tags: civs, buildings
+- Removed: their National Epic's Culture
+- Note: open: the new UA and the quarry UI (need C++)
+
+FRANCE (CIVILIZATION_FRANCE)
+----------------------------
+Tags: civs
+- Removed: doubled theming bonuses in the capital
+- Note: open: Great Works in the capital, double Eiffel Tower (need C++)
+
+IRELAND (CIVILIZATION_IRELAND)
+------------------------------
+Tags: civs
+- Added: Great Works yield +3 Faith
+- Removed: +2 Happiness from National Wonders
+
+SWITZERLAND (CIVILIZATION_SWISS)
+--------------------------------
+Tags: civs, buildings
+- Changed: Reislaeufer Post: trained units start with Altitude Training instead of the mountain combat promotion
+- Note: open: the new UA and the Ski Resort (need C++)
+
+SHOSHONE (CIVILIZATION_SHOSHONE)
+--------------------------------
+Tags: civs, units
+- Removed: +15% combat strength in own territory
+- Changed: Pathfinder now replaces the Warrior (so the Shoshone start with one): 9 Strength (was 8), upgrades to the Swordsman (Composite Bowman from ruins), keeps Native Tongue and ignoring terrain on upgrade
+- Changed: Comanche Riders cost 150 (was 134), need 3 Horses (was 2 Horses and 1 Iron)
+- Removed: Comanche Riders: +1 Movement
+- Note: open: Comanche flat-terrain movement and healing, Native Tongue menu values (need C++/Lua)
+
+PRUSSIA (CIVILIZATION_PRUSSIA)
+------------------------------
+Tags: civs, promotions
+- Changed: Haerte heals every turn and +5 HP per turn (was +50% defense against ranged attacks)
+- Removed: Zuverlaessigkeit: the Great General bonus
+- Note: open: Zuverlaessigkeit "always fights at full strength" (needs C++)

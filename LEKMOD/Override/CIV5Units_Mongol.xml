@@ -147699,6 +147699,85 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_PHILIPINO_MARINE_HELP">
 			<Text>Unique Unit for the Philippines. Replaces the Expeditionary Force. Stronger and +2 [ICON_MOVES] Movement when Embarked.[NEWLINE]Can move after attacking and starts with Woodsman.</Text>
 		</Replace>
+		<!-- Phase 6 batch 4 -->
+		<Row Tag="TXT_KEY_UNIT_HELP_LEKMOD_RCE">
+			<Text>Replaces the Rifleman. Can build roads, railroads and forts, remove features and repair, all twice as fast as a Worker.</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_TRAIT_WIRR">
+			<Text>+10% [ICON_STRENGTH] [COLOR_GREEN]Combat Strength[ENDCOLOR] while fighting outside of friendly territory.[NEWLINE]+25% [ICON_PRODUCTION] Production towards Walls, Castles, Arsenals and Military Bases.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_GERMANY">
+			<Text>+1 [ICON_PRODUCTION] Production and +1 [ICON_RESEARCH] Science from [ICON_BUILDING_WORKSHOP] Workshops, [ICON_BUILDING_WINDMILL] Windmills, [ICON_BUILDING_FACTORY] Factories and [ICON_BUILDING_HYDRO_PLANT] Hydro Plants.[NEWLINE]Earn [ICON_GREAT_ENGINEER] Great Engineers 33% Faster.[NEWLINE][NEWLINE]Upgrading units costs 10% less [ICON_GOLD] Gold.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_FURTRADE">
+			<Text>+2 [ICON_GOLD] Gold from [ICON_BUILD_CAMP] Camps.[NEWLINE]Lake, Snow and Ice tiles yield +2 [ICON_GOLD] Gold and +1 [ICON_CULTURE] Culture.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_ISLANDS">
+			<Text>Start the game with nearby Coastal tiles and Islands already explored.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_TUNISIA_CASTLE_HELP">
+			<Text>Tunisian replacement for the [ICON_BUILDING_CASTLE] Castle. 20% cheaper and does not require [ICON_BUILDING_WALLS] Walls.[NEWLINE]4 [ICON_GOLD] Gold maintenance.[NEWLINE][NEWLINE]With a garrison: +4 [ICON_PEACE] Faith and +4 [ICON_CULTURE] Culture.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_MARATHI">
+			<Text>Gurkani Guard</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_MARATHI">
+			<Text>Replaces the Knight. Stronger, but costs more and needs 3 [ICON_RES_HORSE] Horses and 3 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Blitz (attacks more than once per turn).</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_MC_OMANI_BAGHLAH_HELP">
+			<Text>Replaces the Galley. Slightly stronger, and its kills yield [ICON_PEACE] Faith and [ICON_GOLD] Gold.[NEWLINE]Starts with Supply Ship, Swift Transport and Coastal Raider I.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_FALU_GRUVA_HELP">
+			<Text>[COLOR_CULTURE_STORED]* Unique National Wonder (only a specific civ may build one)[ENDCOLOR][NEWLINE][NEWLINE]Replaces the Ironworks and is available earlier. Must have built a Workshop in all Cities. The cost goes up the more cities there are in the empire.[NEWLINE]Provides 8 [ICON_RES_IRON] Iron and +8 [ICON_PRODUCTION] Production.[NEWLINE]+2 [ICON_PRODUCTION] Production from Mountains worked by this City.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_JFD_DEFENDER">
+			<Text>Replaces the Ironclad. May only be trained by New Zealand. 50 Strength (vs. 45).[NEWLINE]+15% [ICON_STRENGTH] Combat Strength inside [COLOR_POSITIVE_TEXT]Friendly[ENDCOLOR] territory.[NEWLINE]Starts with [COLOR_POSITIVE_TEXT]Cover I[ENDCOLOR].[NEWLINE]Needs 1 [ICON_RES_COAL] Coal.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_DEFENDER_HELP">
+			<Text>+15% Combat bonus inside friendly territory.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_MC_NEW_ZEALAND_MAORI_BATTALION_HELP">
+			<Text>Replaces Infantry. Only New Zealand may train it.[NEWLINE]Starts with Haka War Dance (adjacent enemies -10% [ICON_STRENGTH] Combat Strength), Amphibious I, Charge and Mobility.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_BRUNEI_REFINERY_HELP">
+			<Text>Unique Building for Brunei. Replaces the [ICON_BUILDING_REFINERY] Oil Refinery.[NEWLINE]Provides 6 [ICON_RES_OIL] Oil, +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold, and +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold from [ICON_RES_OIL] Oil.[NEWLINE]+2 [ICON_HAPPINESS_1] Happiness.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_AYER_HELP">
+			<Text>Kampong Ayer: +1 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture.[NEWLINE]+1 [ICON_CULTURE] Culture and +2 [ICON_GOLD] Gold with Flight.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_BURJ_HELP">
+			<Text>Unique Hotel Replacement for the U.A.E. Available at the Radio Technology.[NEWLINE]50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city.[NEWLINE][ICON_TOURISM] Tourism output from Great Works +50%.[NEWLINE][NEWLINE]+7 [ICON_GOLD] Gold and +7 [ICON_CULTURE] Culture.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_CL_UC_DANCE_HALL_HELP">
+			<Text>Unique building for Cuba. Replaces the Opera House. It is cheaper.[NEWLINE]+3 [ICON_CULTURE] Culture.[NEWLINE]Units trained in this city start with +15 XP.[NEWLINE]When its Great Work slot is filled: +15% [ICON_PRODUCTION] Military Production.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_ASKUM_NATIONAL_EPIC_HELP">
+			<Text>[COLOR_CULTURE_STORED]* Unique National Wonder (only a specific civ may build one)[ENDCOLOR][NEWLINE][NEWLINE]Unique to Aksum. Replaces the National Epic. The cost goes up the more cities there are in the empire. Must have built a [ICON_BUILDING_MONUMENT] Monument in all cities.[NEWLINE]+4 [ICON_PEACE] Faith.[NEWLINE]All [ICON_BUILDING_MONUMENT] Monuments in the empire provide an additional +1 [ICON_FOOD] Food, +1 [ICON_PRODUCTION] Production, +1 [ICON_PEACE] Faith, and +1 [ICON_GOLD] Gold.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_ENHANCED_CULTURE">
+			<Text>+1 [ICON_CULTURE] Culture in the [ICON_CAPITAL] Capital. +2 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]World Wonders[ENDCOLOR].</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_GAELIC">
+			<Text>Great Works yield +3 [ICON_PEACE] Faith.[NEWLINE][ICON_PRODUCTION] Production towards [COLOR_GREEN]buildings[ENDCOLOR] required for National Wonders increased by 15%.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_SWISS_REISLAUFER_HELP">
+			<Text>Unique building for Switzerland. Replaces the Armory. Costs no [ICON_GOLD] Gold maintenance.[NEWLINE]Units trained in this City start with Altitude Training (Hills cost less movement).[NEWLINE]Upon completion, a Reislaeufer appears in the City.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_GREAT_EXPANSE">
+			<Text>Founded cities start with 4 additional tiles.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_SHOSHONE_PATHFINDER">
+			<Text>Replaces the Warrior, also as a starting unit. Stronger.[NEWLINE]Ignores terrain movement costs and chooses its reward from ancient ruins (Native Tongue). Keeps both on upgrade.[NEWLINE]Upgrades to the Swordsman (Composite Bowman from ruins).</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_SHOSHONE_COMANCHE_RIDERS">
+			<Text>Replaces the Cavalry. Needs 3 [ICON_RES_HORSE] Horses.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_HARTE_HELP">
+			<Text>Heals every turn, even after acting.[NEWLINE]+5 HP healing per turn.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_ZUVER_HELP">
+			<Text>Heals every turn, even after acting.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

@@ -277409,31 +277409,27 @@
 			<Civilopedia>TXT_KEY_CIVILOPEDIA_UNITS_MEDIEVAL_KNIGHT_TEXT</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_KNIGHT_STRATEGY</Strategy>
 			<Help>TXT_KEY_UNIT_HELP_MARATHI</Help>
-			<RangedCombat>19</RangedCombat>
-			<Cost>120</Cost>
-			<FaithCost>240</FaithCost>
+			<Combat>22</Combat>
+			<Cost>135</Cost>
+			<FaithCost>270</FaithCost>
 			<RequiresFaithPurchaseEnabled>true</RequiresFaithPurchaseEnabled>
 			<Moves>4</Moves>
-			<Immobile>true</Immobile>
-			<Range>5</Range>
-			<Class>UNITCLASS_HORSEMAN</Class>
-			<Special>SPECIALUNIT_FIGHTER</Special>
-			<CombatClass>UNITCOMBAT_BOMBER</CombatClass>
-			<Domain>DOMAIN_AIR</Domain>
-			<DefaultUnitAI>UNITAI_ATTACK_AIR</DefaultUnitAI>
+			<Class>UNITCLASS_KNIGHT</Class>
+			<CombatClass>UNITCOMBAT_MOUNTED</CombatClass>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_FAST_ATTACK</DefaultUnitAI>
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
-			<Mechanized>true</Mechanized>
+			<Pillage>true</Pillage>
 			<PrereqTech>TECH_CHIVALRY</PrereqTech>
-			<ObsoleteTech>TECH_FLIGHT</ObsoleteTech>
-			<AdvancedStartCost>50</AdvancedStartCost>
-			<AirUnitCap>1</AirUnitCap>
-			<CombatLimit>0</CombatLimit>
-			<RangedCombatLimit>100</RangedCombatLimit>
+			<ObsoleteTech>TECH_MILITARY_SCIENCE</ObsoleteTech>
+			<GoodyHutUpgradeUnitClass>UNITCLASS_CAVALRY</GoodyHutUpgradeUnitClass>
+			<AdvancedStartCost>25</AdvancedStartCost>
+			<CombatLimit>100</CombatLimit>
 			<XPValueAttack>3</XPValueAttack>
-			<XPValueDefense>2</XPValueDefense>
+			<XPValueDefense>3</XPValueDefense>
 			<UnitArtInfo>ART_DEF_UNIT_U_OTTOMAN_SIPAHI</UnitArtInfo>
-			<MoveRate>AIR_REBASE</MoveRate>
+			<MoveRate>QUADRUPED</MoveRate>
 			<UnitFlagIconOffset>46</UnitFlagIconOffset>
 			<PortraitIndex>2</PortraitIndex>
 			<IconAtlas>TIMURIDS_ATLAS</IconAtlas>
@@ -285130,4 +285126,541 @@
 			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
 	</IconTextureAtlases>
+	<!-- Phase 6 batch 4 (2026-10-13) -->
+	<!-- Normandy: no +5 city strength (WIRR dummy Defense 0); +25% Production towards Walls, Castles, Arsenals, Military Bases (+2 city strength from them needs C++, open) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_WIRR"/>
+			<Set Defense="0"/>
+		</Update>
+	</Buildings>
+	<Trait_BuildingClassProductionModifiers>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_WALLS</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_CASTLE</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_ARSENAL</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MILITARY_BASE</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+	</Trait_BuildingClassProductionModifiers>
+	<!-- Germany: unit upgrades 10% cheaper (capital dummy building, UnitUpgradeCostMod is player-wide per building) (Hanse needs C++, open) -->
+	<BuildingClasses>
+		<Row>
+			<ID>185</ID>
+			<Type>BUILDINGCLASS_LEKMOD_GERMANY_TRAIT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_GERMANY_TRAIT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>280</ID>
+			<Type>BUILDING_LEKMOD_GERMANY_TRAIT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_GERMANY_TRAIT</BuildingClass>
+			<Description>Trait Germany</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+			<UnitUpgradeCostMod>-10</UnitUpgradeCostMod>
+		</Row>
+	</Buildings>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_GERMANY"/>
+			<Set FreeCapitalBuilding="BUILDING_LEKMOD_GERMANY_TRAIT"/>
+		</Update>
+	</Traits>
+	<!-- Canada: Lake and Snow tiles +2 Gold +1 Culture (snow via trait, lakes via a per-city dummy building); Combat Engineer works twice as fast as a Worker (WorkRate 200) -->
+	<Trait_TerrainYieldChanges>
+		<Row>
+			<TraitType>TRAIT_FURTRADE</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_FURTRADE</TraitType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_TerrainYieldChanges>
+	<BuildingClasses>
+		<Row>
+			<ID>186</ID>
+			<Type>BUILDINGCLASS_LEKMOD_CANADA_TRAIT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_CANADA_TRAIT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>281</ID>
+			<Type>BUILDING_LEKMOD_CANADA_TRAIT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_CANADA_TRAIT</BuildingClass>
+			<Description>Trait Canada</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_LakePlotYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_CANADA_TRAIT</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_CANADA_TRAIT</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_LakePlotYieldChanges>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_FURTRADE"/>
+			<Set FreeBuilding="BUILDING_LEKMOD_CANADA_TRAIT"/>
+		</Update>
+	</Traits>
+	<Units>
+		<Update>
+			<Where Type="UNIT_RCE"/>
+			<Set WorkRate="200"/>
+		</Update>
+	</Units>
+	<!-- Tonga: no resting Influence bonus with City-States (reveal radius and first pledge bonus need C++, open) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_ISLANDS"/>
+			<Set MinorFriendshipMinimum="0"/>
+		</Update>
+	</Traits>
+	<!-- Tunisia: Kasbah castle UB (from scratch): no Walls needed, 20% cheaper than a Castle, 4 Gold maintenance, +4 Faith +4 Culture with a garrison (vision part needs C++, open) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_TUNISIA_CASTLE"/>
+			<Set Cost="128" GoldMaintenance="4"/>
+		</Update>
+	</Buildings>
+	<Building_ClassesNeededInCity>
+		<Delete BuildingType="BUILDING_TUNISIA_CASTLE"/>
+	</Building_ClassesNeededInCity>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_TUNISIA_CASTLE"/>
+	</Building_YieldChanges>
+	<Building_GarrisonYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_TUNISIA_CASTLE</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>4</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TUNISIA_CASTLE</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>4</Yield>
+		</Row>
+	</Building_GarrisonYieldChanges>
+	<!-- Timurids: Gurkani Guard (NEW knight UU, rebuilt from the Marathi row, Sipahi model): 22 strength, 90 Production on quick, 3 Horses 3 Iron, Blitz -->
+	<Civilization_UnitClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_TIMURIDS" UnitType="UNIT_MARATHI"/>
+			<Set UnitClassType="UNITCLASS_KNIGHT"/>
+		</Update>
+	</Civilization_UnitClassOverrides>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_MARATHI"/>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitClassType>UNITCLASS_CAVALRY</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_MARATHI"/>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_MARATHI"/>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<PromotionType>PROMOTION_BLITZ</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_AITypes>
+		<Delete UnitType="UNIT_MARATHI"/>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitAIType>UNITAI_DEFENSE</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitAIType>UNITAI_FAST_ATTACK</UnitAIType>
+		</Row>
+	</Unit_AITypes>
+	<UnitGameplay2DScripts>
+		<Delete UnitType="UNIT_MARATHI"/>
+		<Row>
+			<UnitType>UNIT_MARATHI</UnitType>
+			<SelectionSound>AS2D_SELECT_KNIGHT</SelectionSound>
+			<FirstSelectionSound>AS2D_BIRTH_KNIGHT</FirstSelectionSound>
+		</Row>
+	</UnitGameplay2DScripts>
+	<!-- Oman: Baghlah = Galley +1/+1 (7 / 9), Supply Ship and Swift Transport (Coastal Raider I already) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_MC_OMANI_BAGHLAH"/>
+			<Set Combat="7" RangedCombat="9"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_MC_OMANI_BAGHLAH</UnitType>
+			<PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_OMANI_BAGHLAH</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Sweden: Falu Gruva like a regular Ironworks (8 Iron, +8 Production, +2 Production on mountains; hills production and Flight Tourism removed); start bias tundra, avoid jungle -->
+	<Building_TechEnhancedYieldChanges>
+		<Delete BuildingType="BUILDING_FALU_GRUVA"/>
+	</Building_TechEnhancedYieldChanges>
+	<Building_TerrainYieldChanges>
+		<Delete BuildingType="BUILDING_FALU_GRUVA"/>
+		<Row>
+			<BuildingType>BUILDING_FALU_GRUVA</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_TerrainYieldChanges>
+	<Civilization_Start_Region_Priority>
+		<Delete CivilizationType="CIVILIZATION_SWEDEN"/>
+		<Row>
+			<CivilizationType>CIVILIZATION_SWEDEN</CivilizationType>
+			<RegionType>REGION_TUNDRA</RegionType>
+		</Row>
+	</Civilization_Start_Region_Priority>
+	<Civilization_Start_Region_Avoid>
+		<Delete CivilizationType="CIVILIZATION_SWEDEN"/>
+		<Row>
+			<CivilizationType>CIVILIZATION_SWEDEN</CivilizationType>
+			<RegionType>REGION_JUNGLE</RegionType>
+		</Row>
+	</Civilization_Start_Region_Avoid>
+	<!-- Maurya: unique Missionary removed (new UA and Mahamatras' Office need C++, open) -->
+	<Civilization_UnitClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_MAURYA" UnitType="UNIT_MAURYA_MISSIONARY"/>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_MAURYA_MISSIONARY"/>
+			<Set ShowInPedia="0"/>
+		</Update>
+	</Units>
+	<!-- New Zealand: Defender needs 1 Coal, no ZOC ignoring (Lua part removed, +15% in friendly land kept); Maori Battalion: Haka War Dance, Amphibious I, Charge, Mobility instead of Amphibious, defensive embarkation, the away-from-capital bonus and the City-State Influence (Lua part removed) -->
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_JFD_DEFENDER"/>
+		<Row>
+			<UnitType>UNIT_JFD_DEFENDER</UnitType>
+			<ResourceType>RESOURCE_COAL</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_MC_NEW_ZEALAND_MAORI_BATTALION"/>
+		<Row>
+			<UnitType>UNIT_MC_NEW_ZEALAND_MAORI_BATTALION</UnitType>
+			<PromotionType>PROMOTION_HAKA_WAR_DANCE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_NEW_ZEALAND_MAORI_BATTALION</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_NEW_ZEALAND_MAORI_BATTALION</UnitType>
+			<PromotionType>PROMOTION_CHARGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_NEW_ZEALAND_MAORI_BATTALION</UnitType>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Brunei: refinery UB provides 6 Oil, regular Refinery yields, +2 Happiness; Kampong Ayer (from scratch) 1 Food 1 Culture, +1 Culture +2 Gold with Flight (the UA rework incl. Ayer placement and removing the old UA parts, the refinery limit and the Nelayan need C++, open) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_BRUNEI_REFINERY"/>
+			<Set Happiness="2"/>
+		</Update>
+	</Buildings>
+	<Building_ResourceQuantity>
+		<Delete BuildingType="BUILDING_BRUNEI_REFINERY"/>
+		<Row>
+			<BuildingType>BUILDING_BRUNEI_REFINERY</BuildingType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<Quantity>6</Quantity>
+		</Row>
+	</Building_ResourceQuantity>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_BRUNEI_REFINERY"/>
+		<Row>
+			<BuildingType>BUILDING_BRUNEI_REFINERY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BRUNEI_REFINERY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Improvement_Yields>
+		<Delete ImprovementType="IMPROVEMENT_AYER"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_Yields>
+	<Improvement_TechYieldChanges>
+		<Delete ImprovementType="IMPROVEMENT_AYER"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<TechType>TECH_FLIGHT</TechType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<TechType>TECH_FLIGHT</TechType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Improvement_TechYieldChanges>
+	<!-- UAE: Qasimi Raider removed; Burj Al Arab (effect from scratch): a Hotel with +7 Gold +7 Culture (new UA and Desert Falcon pending, open) -->
+	<Civilization_UnitClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_UAE" UnitType="UNIT_QASIMI_RAIDER"/>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_QASIMI_RAIDER"/>
+			<Set ShowInPedia="0"/>
+		</Update>
+	</Units>
+	<Building_ImprovementYieldChanges>
+		<Delete BuildingType="BUILDING_BURJ"/>
+	</Building_ImprovementYieldChanges>
+	<Building_FeatureYieldChanges>
+		<Delete BuildingType="BUILDING_BURJ"/>
+	</Building_FeatureYieldChanges>
+	<Building_LakePlotYieldChanges>
+		<Delete BuildingType="BUILDING_BURJ"/>
+	</Building_LakePlotYieldChanges>
+	<Building_TerrainYieldChanges>
+		<Delete BuildingType="BUILDING_BURJ"/>
+	</Building_TerrainYieldChanges>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_BURJ"/>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>7</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_BURJ</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>7</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<!-- Cuba: Dance Hall +15 XP for trained units, 3 Culture (was 2), no Culture and Happiness from its filled slot (+20% city Tourism when filled needs C++, open) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_DANCE_HALL"/>
+			<Set GreatWorkHappiness="0"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_DANCE_HALL" YieldType="YIELD_CULTURE"/>
+			<Set Yield="3"/>
+		</Update>
+	</Building_YieldChanges>
+	<Building_GreatWorkYieldChanges>
+		<Delete BuildingType="BUILDING_DANCE_HALL" YieldType="YIELD_CULTURE"/>
+	</Building_GreatWorkYieldChanges>
+	<Building_DomainFreeExperiences>
+		<Row>
+			<BuildingType>BUILDING_DANCE_HALL</BuildingType>
+			<DomainType>DOMAIN_LAND</DomainType>
+			<Experience>15</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_DANCE_HALL</BuildingType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<Experience>15</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_DANCE_HALL</BuildingType>
+			<DomainType>DOMAIN_AIR</DomainType>
+			<Experience>15</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_DANCE_HALL</BuildingType>
+			<DomainType>DOMAIN_HOVER</DomainType>
+			<Experience>15</Experience>
+		</Row>
+	</Building_DomainFreeExperiences>
+	<!-- Aksum: national epic UB without its 4 Culture (keeps 4 Faith and the Monument yields) -->
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_ASKUM_NATIONAL_EPIC" YieldType="YIELD_CULTURE"/>
+	</Building_YieldChanges>
+	<!-- France: no doubled theming bonus in the capital (great work and Eiffel parts need C++, open) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_ENHANCED_CULTURE"/>
+			<Set CapitalThemingBonusModifier="0"/>
+		</Update>
+	</Traits>
+	<!-- Ireland: Great Works yield +3 Faith; no Happiness from National Wonders -->
+	<Trait_GreatWorkYieldChanges>
+		<Row>
+			<TraitType>TRAIT_GAELIC</TraitType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>3</YieldChange>
+		</Row>
+	</Trait_GreatWorkYieldChanges>
+	<Trait_BuildingClassHappinessChanges>
+		<Delete TraitType="TRAIT_GAELIC"/>
+	</Trait_BuildingClassHappinessChanges>
+	<!-- Switzerland: Reislaeufer Post gives Altitude Training instead of its mountain promotion (UA and Ski Resort need C++, open) -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_SWISS_REISLAUFER"/>
+			<Set TrainedFreePromotion="PROMOTION_ALTITUDE_TRAINING"/>
+		</Update>
+	</Buildings>
+	<!-- Shoshone: UA combat bonus removed; Pathfinder now replaces the Warrior (9 strength, Faith cost 2x Production, upgrades to Swordsman, Composite Bowman from ruins, keeps its promotions); Comanche Riders 150 Production on quick, 3 Horses, no extra movement (terrain and healing parts need C++, open) -->
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_GREAT_EXPANSE"/>
+	</Trait_FreePromotionUnitCombats>
+	<Civilization_UnitClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_SHOSHONE" UnitType="UNIT_SHOSHONE_PATHFINDER"/>
+			<Set UnitClassType="UNITCLASS_WARRIOR"/>
+		</Update>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_SHOSHONE_PATHFINDER"/>
+			<Set Class="UNITCLASS_WARRIOR" CombatClass="UNITCOMBAT_MELEE" DefaultUnitAI="UNITAI_ATTACK" Combat="9" FaithCost="82" ObsoleteTech="TECH_IRON_WORKING"/>
+		</Update>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_SHOSHONE_PATHFINDER"/>
+		<Row>
+			<UnitType>UNIT_SHOSHONE_PATHFINDER</UnitType>
+			<UnitClassType>UNITCLASS_SWORDSMAN</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Units>
+		<Update>
+			<Where Type="UNIT_SHOSHONE_COMANCHE_RIDERS"/>
+			<Set Cost="224" FaithCost="448"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_SHOSHONE_COMANCHE_RIDERS"/>
+		<Row>
+			<UnitType>UNIT_SHOSHONE_COMANCHE_RIDERS</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_SHOSHONE_COMANCHE_RIDERS" PromotionType="PROMOTION_MOON_STRIKER"/>
+	</Unit_FreePromotions>
+	<!-- Prussia: Haerte heals every turn, +5 HP healing everywhere (instead of +50% vs ranged); Zuverlaessigkeit without the Great General effect (always full strength needs C++, open) -->
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_HARTE"/>
+			<Set RangedDefenseMod="0" AlwaysHeal="true" EnemyHealChange="5" NeutralHealChange="5" FriendlyHealChange="5"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_ZUVER"/>
+			<Set GreatGeneral="false"/>
+		</Update>
+	</UnitPromotions>
+	<Units>
+		<Update>
+			<Where Type="UNIT_RCE"/>
+			<Set Help="TXT_KEY_UNIT_HELP_LEKMOD_RCE"/>
+		</Update>
+	</Units>
 </GameData>
