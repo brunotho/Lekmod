@@ -97463,7 +97463,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_OVERVIEW_WORLD_LEADER_INFO_TT"> 
 			<Text>
-				Diplomatic Victory: a civilization wins with {1_DelegatesForWin} or more Delegates at a World Leader vote.[NEWLINE][NEWLINE]World Leader votes happen every 7 turns, starting 7 turns after the first civilization reaches the Atomic Era.[NEWLINE]Nobody votes: every civilization's own Delegates are counted automatically, and the result arrives as a notification.[NEWLINE]First and second place each gain 1 permanent Delegate. A tie for first never wins.
+				Diplomatic Victory: a civilization wins with {1_DelegatesForWin} or more Delegates at a World Leader vote.[NEWLINE][NEWLINE]World Leader votes happen every 7 turns, starting 7 turns after the first civilization reaches the Atomic Era.[NEWLINE]Nobody votes: every civilization's own Delegates are counted automatically. A screen shows the count on the vote turn; the result applies the turn after.[NEWLINE]First and second place each gain 1 permanent Delegate. A tie for first never wins.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_OVERVIEW_WORLD_LEADER_INFO_VOTES"> 
@@ -121023,13 +121023,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>WORLD LEADER VOTE</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WL_INTRO">
-			<Text>Turn {1_Num}.[NEWLINE]Nobody chooses: every civilization's Delegates count for itself.[NEWLINE]A civilization with {2_Num} or more Delegates (and no tie for first) wins the game.</Text>
+			<Text>Turn {1_Num}: the World Congress convenes for a World Leader vote.[NEWLINE]Nobody chooses: every civilization's Delegates count for itself.[NEWLINE]{2_Num} or more Delegates, with no tie for first place, win the game.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WL_RESULT_WIN">
-			<Text>[COLOR_POSITIVE_TEXT]{@1_CivName} has {2_Num} Delegates and becomes World Leader![ENDCOLOR]</Text>
+			<Text>The vote concludes next turn:[NEWLINE][COLOR_POSITIVE_TEXT]{@1_CivName} becomes World Leader with {2_Num} Delegates and wins the game.[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WL_RESULT_NONE">
-			<Text>No civilization reached {1_Num} Delegates.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]The next World Leader vote is in 7 turns.</Text>
+			<Text>The vote concludes next turn:[NEWLINE]Nobody reaches {1_Num} Delegates.[NEWLINE]The civilizations in green (first and second place) each gain 1 permanent Delegate.[NEWLINE]The next World Leader vote is in 7 turns.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WL_CLOSE">
 			<Text>Continue</Text>

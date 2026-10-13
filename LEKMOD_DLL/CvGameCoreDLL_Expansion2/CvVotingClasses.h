@@ -740,13 +740,14 @@ public:
 	void LekmodAutoPropose(PlayerTypes ePlayer);
 	void LekmodStartHostSession();
 	void LekmodDoWorldLeaderVote();
+	void LekmodResolveWorldLeaderVote();
 	int LekmodGetSessionInterval() const;
 	void LekmodPickFounderHost(const std::vector<PlayerTypes>& vCandidates);
 	Member* LekmodPickSecondProposer();
 	void LekmodRemoveActiveResolution(int iResolutionID);
 	void LekmodRevealCities();
 	std::vector<int> m_aiLekmodTransparencyVision; // plot index x MAX_TEAMS + team with Transparency vision (saved)
-	std::vector<int> m_aiLekmodLastLeaderVote; // last World Leader vote: turn, Delegates needed, then player / Delegates pairs (saved)
+	std::vector<int> m_aiLekmodLastLeaderVote; // last World Leader vote: turn, Delegates needed, resolved, then player / Delegates pairs (saved)
 public:
 	const std::vector<int>& LekmodGetLastLeaderVote() const { return m_aiLekmodLastLeaderVote; }
 	void LekmodDoEnactOneShot(CvEnactProposal* pProposal);

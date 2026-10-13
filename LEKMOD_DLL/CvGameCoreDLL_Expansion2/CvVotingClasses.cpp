@@ -6377,6 +6377,8 @@ void CvLeague::LekmodDoTurnLate()
 	}
 	LekmodDoExpiry();
 	LekmodRevealCities();
+	// last turn's World Leader vote takes effect now
+	LekmodResolveWorldLeaderVote();
 	if (m_iLekmodLeaderVoteTurn >= 0 && iTurn >= m_iLekmodLeaderVoteTurn)
 	{
 		m_iLekmodLeaderVoteTurn = iTurn + 7;
@@ -6615,6 +6617,8 @@ int CvLeague::LekmodGetSessionInterval() const
 /// World leader vote: every member votes for itself
 void CvLeague::LekmodDoWorldLeaderVote()
 {
+	// The vote turn: Delegates are counted and frozen; the World Leader vote screen shows them.
+	// The result applies one turn later (LekmodResolveWorldLeaderVote), so nobody is thrown into the victory screen unannounced.
 	VictoryTypes eDiploVictory = (VictoryTypes) GC.getInfoTypeForString("VICTORY_DIPLOMATIC", true);
 	if (eDiploVictory == NO_VICTORY || !GC.getGame().isVictoryValid(eDiploVictory))
 		return;
@@ -6636,6 +6640,34 @@ void CvLeague::LekmodDoWorldLeaderVote()
 	std::stable_sort(vVotes.begin(), vVotes.end());
 	std::reverse(vVotes.begin(), vVotes.end());
 
+	// turn, Delegates needed, resolved flag, then player / Delegates pairs (most first)
+	m_aiLekmodLastLeaderVote.clear();
+	m_aiLekmodLastLeaderVote.push_back(GC.getGame().getGameTurn());
+	m_aiLekmodLastLeaderVote.push_back(iNeeded);
+	m_aiLekmodLastLeaderVote.push_back(0);
+	for (uint i = 0; i < vVotes.size(); i++)
+	{
+		m_aiLekmodLastLeaderVote.push_back((int)vVotes[i].second);
+		m_aiLekmodLastLeaderVote.push_back(vVotes[i].first);
+	}
+}
+
+/// The turn after a World Leader vote: the frozen counts decide. A single first place with enough Delegates wins;
+/// otherwise first and second place (everyone tied counts) each gain a permanent Delegate.
+void CvLeague::LekmodResolveWorldLeaderVote()
+{
+	std::vector<int>& v = m_aiLekmodLastLeaderVote;
+	if (v.size() < 5 || v[2] != 0 || GC.getGame().getGameTurn() <= v[0])
+		return;
+	v[2] = 1;
+	if (GC.getGame().GetGameLeagues()->GetDiplomaticVictor() != NO_PLAYER)
+		return;
+
+	const int iNeeded = v[1];
+	std::vector< std::pair<int, PlayerTypes> > vVotes;
+	for (uint i = 3; i + 1 < v.size(); i += 2)
+		vVotes.push_back(std::make_pair(v[i + 1], (PlayerTypes)v[i]));
+
 	const int iFirst = vVotes[0].first;
 	int iNumFirst = 0;
 	int iSecond = -1;
@@ -6648,7 +6680,7 @@ void CvLeague::LekmodDoWorldLeaderVote()
 	}
 
 	PlayerTypes eWinner = NO_PLAYER;
-	if (iNumFirst == 1 && iFirst >= iNeeded)
+	if (iNumFirst == 1 && iFirst >= iNeeded && GET_PLAYER(vVotes[0].second).isAlive())
 	{
 		eWinner = vVotes[0].second;
 	}
@@ -6664,16 +6696,6 @@ void CvLeague::LekmodDoWorldLeaderVote()
 					pMember->iExtraVotes = pMember->iExtraVotes + 1;
 			}
 		}
-	}
-
-	// remembered for the Congress screen
-	m_aiLekmodLastLeaderVote.clear();
-	m_aiLekmodLastLeaderVote.push_back(GC.getGame().getGameTurn());
-	m_aiLekmodLastLeaderVote.push_back(iNeeded);
-	for (uint i = 0; i < vVotes.size(); i++)
-	{
-		m_aiLekmodLastLeaderVote.push_back((int)vVotes[i].second);
-		m_aiLekmodLastLeaderVote.push_back(vVotes[i].first);
 	}
 
 	// Results for everyone

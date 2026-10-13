@@ -443,7 +443,7 @@ int CvLuaLeague::lGetActiveResolutions(lua_State* L)
 	return 1;
 }
 //------------------------------------------------------------------------------
-// table LekmodGetLastLeaderVote(): {} before the first World Leader vote, else {Turn, Needed, Votes = {{Player, Delegates}, ...}} (most first)
+// table LekmodGetLastLeaderVote(): {} before the first World Leader vote, else {Turn, Needed, Resolved, Votes = {{Player, Delegates}, ...}} (most first)
 int CvLuaLeague::lLekmodGetLastLeaderVote(lua_State* L)
 {
 	CvLeague* pLeague = GetInstance(L);
@@ -451,16 +451,18 @@ int CvLuaLeague::lLekmodGetLastLeaderVote(lua_State* L)
 	const int t = lua_gettop(L);
 #ifdef LEKMOD_CONGRESS_CYCLE
 	const std::vector<int>& v = pLeague->LekmodGetLastLeaderVote();
-	if (v.size() < 2)
+	if (v.size() < 3)
 		return 1;
 	lua_pushinteger(L, v[0]);
 	lua_setfield(L, t, "Turn");
 	lua_pushinteger(L, v[1]);
 	lua_setfield(L, t, "Needed");
+	lua_pushboolean(L, v[2] != 0);
+	lua_setfield(L, t, "Resolved");
 	lua_createtable(L, 0, 0);
 	const int tVotes = lua_gettop(L);
 	int iIndex = 1;
-	for (uint i = 2; i + 1 < v.size(); i += 2)
+	for (uint i = 3; i + 1 < v.size(); i += 2)
 	{
 		lua_createtable(L, 0, 0);
 		lua_pushinteger(L, v[i]);

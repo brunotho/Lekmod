@@ -1861,7 +1861,7 @@ Tags: world congress, ui
 - Removed: Choose Host and World Leader no longer appear among the proposals (they are never proposed)
 - Added: proposals that last a limited time show their turns left in the list of active proposals; their tooltip names the turn they took effect and the turn they end
 - Added: the World Leader line explains how the vote works (Delegates are counted automatically) and lists the last vote: its turn, the Delegates needed and every civilization's Delegates
-- Added: a World Leader vote screen opens by itself on every World Leader vote: every civilization's Delegates (yours highlighted), the Delegates needed and the result
+- Added: a World Leader vote screen opens by itself on every World Leader vote: every civilization's Delegates (yours marked with a star, the winner or the two places that gain a Delegate in green), the Delegates needed and what will happen; the result applies the turn after (counts frozen on the vote turn), so a Diplomatic Victory is always announced one turn ahead
 - Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat; Demographics.xml too (Lua/tmp/ui/Replays)
 
 NUCLEAR FUSION (TECH_NUCLEAR_FUSION)
