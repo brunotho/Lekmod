@@ -66265,7 +66265,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_OVERVIEW_TT"> 
 			<Text>
-				The Overview screen allows you to see your spies and assign them to cities around the world to do surveillance, steal technology, discover intrigue, or rig City-State elections.
+				Your agents, and the cities you can send them to.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_OWN_CITY_POTENTIAL_TT"> 
@@ -66460,7 +66460,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_GATHERING_INTEL_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} is gathering intelligence in {3_CityName} to steal a technology.[NEWLINE][NEWLINE]A spy may only attempt to steal a technology if the targeted civilization has discovered a technology that the spy's civilization does not.[NEWLINE][NEWLINE]If the city's owner has a spy in the city, your spy has a chance of being discovered and killed when they try to steal the technology!
+				{1_RankName} {2_SpyName} is spying in {3_CityName}.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_LOCATION_TT"> 
@@ -66475,27 +66475,27 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_NAMEPLATE_TT"> 
 			<Text>
-				This is your spy, {1_SpyRank} {2_SpyName}.[NEWLINE][NEWLINE]Spies must be moved into cities to have any effect.[NEWLINE][NEWLINE]If your spy is in one of your cities, they will try to capture and kill any enemy spies that are trying to steal your technology.[NEWLINE][NEWLINE]If your spy is in another civilization's city, they will try to steal technology from that civilization. The spy will also report any intrigue it discovers, such as the civilization planning sneak attacks against you or other civilizations.[NEWLINE][NEWLINE]If your spy is in a City-State, they will try to rig the local elections to increase your influence there.
+				{1_SpyRank} {2_SpyName}, one of your agents.[NEWLINE][NEWLINE]Move an agent into a city to put it to work:[NEWLINE][ICON_BULLET] as a spy in another civilization's city or a City-State[NEWLINE][ICON_BULLET] as a guard in one of your own cities[NEWLINE][ICON_BULLET] as a diplomat in another civilization's capital or a City-State[NEWLINE][NEWLINE]Hover “How spies work” and “How diplomats work” above the agent list for the rules.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_NEEDS_ASSIGNMENT_TT"> 
 			<Text>
-				Move your spy to a city so it can begin doing dastardly deeds.
+				Move this agent to a city to put it to work.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_RANK_TT"> 
 			<Text>
-				{1_SpyName} has achieved the rank of {2_RankName}.[NEWLINE][NEWLINE]There are three spy ranks: Recruit, Agent, and Special Agent. Each subsequent level makes the spy more effective. A higher ranking spy will steal technologies faster, discover and kill enemy spies that are trying to steal from you more frequently, rig elections in City-States more effectively, and have a greater chance of pulling off a coup in a City-State allied with another civilization.[NEWLINE][NEWLINE]Spies level up when they successfully steal technology from another civilization or kill an enemy spy attempting to steal their technology.
+				{1_SpyName}: {2_RankName}.[NEWLINE][NEWLINE]Agents have levels 1 to 5.[NEWLINE]Spies gain a level for each successful steal, coup or caught enemy spy.[NEWLINE]Diplomats gain a level every 25 turns in the same city.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} meddles in {3_CityName}.[NEWLINE]Every other civilization's [ICON_INFLUENCE] Influence change there is 0.2 lower per turn per level; they don't learn whose spy it is.
+				{1_RankName} {2_SpyName} is meddling in {3_CityName}.[NEWLINE]While the spy stays, every other civilization's [ICON_INFLUENCE] Influence there changes {4_X} less per turn (0.2 per level).[NEWLINE]They don't learn whose spy it is.[NEWLINE][NEWLINE]The spy can also stage a coup (Coup button).
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_SURVEILLANCE_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} is establishing surveillance in {3_CityName}.[NEWLINE][NEWLINE]Once surveillance is established, the spy can begin doing more advanced operations in the city. Surveillance also allows you to see into the city screen for other civilization's cities. (But not into City-States.)[NEWLINE][NEWLINE]Surveillance also allows the spy to uncover intrigue, such as plans for sneak attacks that the civilization is drawing up. This information can be important!
+				{1_RankName} {2_SpyName} is settling in at {3_CityName}.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_TRAVELLING_TT"> 
@@ -66505,7 +66505,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_UNASSIGNED_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} is sitting around the hideout doing nobody no good.[NEWLINE][NEWLINE]Move them to a city to do some sneaky stuff!
+				{1_RankName} {2_SpyName} waits at home.[NEWLINE]Move this agent to a city to put it to work.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_STAGE_COUP_QUESTION"> 
@@ -120860,14 +120860,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_EO_CAUGHT_QUESTION">
 			<Text>We caught {@2_SpyName}, a {@1_CivAdjective} spy, in {@3_CityName}.[NEWLINE][NEWLINE]Execute: the spy dies.[NEWLINE]Evict: the spy returns home and keeps its level.[NEWLINE][NEWLINE]Without a choice the spy is executed when the turn ends.</Text>
 		</Row>
-		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_TT">
-			<Text>Strength {1_Num} vs. defense {2_Num}: a steal every {3_Num} turns.[NEWLINE]Steal chance {4_Num}%, caught {5_Num}%.[NEWLINE][NEWLINE]Strength = level, +1 with your level 3+ diplomat in that empire, + your influence levels over them, +1 with Industrial Espionage.[NEWLINE]Defense = their spy's level, +1 Constabulary, +1 Police Station, +1 Intelligence Agency, + their influence levels over you.[NEWLINE][NEWLINE]Turns: 15 / 13 / 11 / 9 / 7 at strength minus defense 1 / 2 / 3 / 4 / 5+, 5 more per point below 1.[NEWLINE]Steal chance = (strength + 1) / (strength + 1 + defense); caught = the rest.</Text>
-		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT">
-			<Text>{1_RankName} {2_SpyName} guards {3_CityName} and adds {4_Num} to its defense against enemy spies.</Text>
+			<Text>{1_RankName} {2_SpyName} guards {3_CityName}.[NEWLINE][NEWLINE]The city's defense against enemy spies: {4_Num}, plus your cultural influence level over the spy's civilization.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_LEVEL_TT">
-			<Text>Next level in {1_Num} turns.</Text>
+			<Text>Next level in {1_Num} turns (every 25 turns in the same city).</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_TP_SCIENCE_FROM_DIPLOMATS">
 			<Text>[ICON_BULLET] {1_Num: number "'[COLOR_POSITIVE_TEXT]+'#.#'[ENDCOLOR]';'[COLOR_NEGATIVE_TEXT]-'#.#'[ENDCOLOR]'"} {2_Icon} from your diplomats in other capitals.</Text>
@@ -120889,6 +120886,105 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_COUP_FORMULA">
 			<Text>Chance = 100 - influence gap x multiplier (+ policies), between 0% and 85%.[NEWLINE]Spy values for levels 1 / 2 / 3 / 4 / 5: 0 / 1.5 / 2.25 / 2.6 / 2.8.[NEWLINE]Your level counts +1 when you are Popular or Influential with the ally's civilization, +2 when Dominant.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_LINE">
+			<Text>{1_Num} {2_Name}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_NONE">
+			<Text>nothing</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_LEVEL">
+			<Text>spy level</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_YOUR_INFLUENCE">
+			<Text>your cultural influence over them</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_DIPLOMAT">
+			<Text>your level 3+ diplomat in their capital</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_POLICY">
+			<Text>Industrial Espionage</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_GUARD">
+			<Text>guarding spy (its level)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_PART_THEIR_INFLUENCE">
+			<Text>their cultural influence over you</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_ATTEMPT">
+			<Text>A steal attempt every {1_Num} turns:</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_SUCCESS">
+			<Text>{1_Num}% success: about {2_Num} [ICON_RESEARCH] Science (8 turns of this city's) toward one of their technologies</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_SUCCESS_TECH">
+			<Text>{1_Num}% success: one whole technology of theirs (Full tech is on)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_CAUGHT">
+			<Text>{1_Num}% caught, success or not</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_NEVER_CAUGHT">
+			<Text>never caught: the city has no defense</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_YOUR_STRENGTH">
+			<Text>Your spy's strength: {1_Num}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_THEIR_DEFENSE">
+			<Text>The city's defense: {1_Num}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_RULE">
+			<Text>Each point of strength above defense makes attempts 2 turns faster (7 turns at best).[NEWLINE]More defense means less success and more catches.[NEWLINE]All the rules: “How spies work” above the agent list.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SETTLING_TT">
+			<Text>{1_RankName} {2_SpyName} is settling in at {3_CityName}.[NEWLINE]After that, the steal timer starts.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SETTLING_CS_TT">
+			<Text>{1_RankName} {2_SpyName} is settling in at {3_CityName}.[NEWLINE]Once settled, it meddles in the City-State and can stage a coup.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_NOTHING_TO_STEAL_TT">
+			<Text>{1_RankName} {2_SpyName} watches {3_CityName}.[NEWLINE]They know no technology you lack, so there is nothing to steal right now.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_STEALING_TT">
+			<Text>{1_RankName} {2_SpyName} is spying in {3_CityName}.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SWEEP_READY">
+			<Text>This spy can sweep the city for enemy spies (Sweep button).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_SWEEP_LATER">
+			<Text>From level 3 this spy can sweep the city for enemy spies.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_CAPITAL_TT">
+			<Text>{1_RankName} {2_SpyName} is your diplomat in {3_CityName}.[NEWLINE][NEWLINE][ICON_BULLET] +{4_X} [ICON_RESEARCH] Science per turn (2% of the city's per level)[NEWLINE][ICON_BULLET] +{5_Num}% [ICON_GOLD] Gold from your trade routes to {3_CityName}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_AT_WAR">
+			<Text>[ICON_BULLET] Science halved: you are at war with them</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_SPY_BONUS">
+			<Text>Your spies in this civilization are 1 stronger</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_SPY_BONUS_LATER">
+			<Text>From level 3: your spies in this civilization are 1 stronger</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_CS_TT">
+			<Text>{1_RankName} {2_SpyName} is your diplomat in {3_CityName}.[NEWLINE][NEWLINE][ICON_BULLET] +{4_X} [ICON_INFLUENCE] Influence per turn (0.33 per level)[NEWLINE][ICON_BULLET] Influence below the resting point recovers {5_Num}% faster (50% per level)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_MAX_LEVEL">
+			<Text>Highest level reached.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_HELP_SPIES_BUTTON">
+			<Text>[ICON_SPY] How spies work</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_HELP_DIPLOMATS_BUTTON">
+			<Text>[ICON_DIPLOMAT] How diplomats work</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_HELP_AGENTS">
+			<Text>Agents[NEWLINE][NEWLINE]You get agents as you advance through the eras (and from some wonders and policies).[NEWLINE]Each agent works as a spy or as a diplomat. You choose when you move it into a capital or City-State.[NEWLINE]Agents have levels 1 to 5.[NEWLINE][NEWLINE]Hover “How spies work” and “How diplomats work” for the rules.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_HELP_SPIES">
+			<Text>[ICON_SPY] Spies[NEWLINE][NEWLINE]In another civilization's city:[NEWLINE][ICON_BULLET] The spy makes a steal attempt on a timer.[NEWLINE][ICON_BULLET] Success: 8 turns of that city's [ICON_RESEARCH] Science toward one of their technologies you pick. They always learn who stole it.[NEWLINE][ICON_BULLET] Every attempt, success or not, can get the spy caught. Its owner then executes or evicts it.[NEWLINE][ICON_BULLET] From level 3 a spy can go for a whole technology instead, at a quarter of the chance.[NEWLINE][NEWLINE]Strength against defense decides how often and how safely:[NEWLINE][ICON_BULLET] Strength: the spy's level, +1 with your level 3+ diplomat in their capital, + your cultural influence level over them, +1 with Industrial Espionage.[NEWLINE][ICON_BULLET] Defense: the level of their spy in the city, +1 each for Constabulary, Police Station and Intelligence Agency, + their cultural influence level over you.[NEWLINE][ICON_BULLET] Time: 15 turns per attempt when strength is 1 above defense, 2 turns less per extra point (7 at best), 5 turns more per point below.[NEWLINE][ICON_BULLET] Success: always against no defense. Otherwise (strength + 1) out of (strength + 1 + defense), e.g. strength 1 against defense 2 = 2 out of 4 = 50%. The rest is the chance to be caught.[NEWLINE][ICON_BULLET] Vision: the tiles around the city, radius strength minus defense.[NEWLINE][NEWLINE]In your own city: the spy adds its level to the city's defense. From level 3 it can sweep the city for enemy spies (costs 5 turns of the city's Science in [ICON_GOLD] Gold).[NEWLINE][NEWLINE]In a City-State: every other civilization's [ICON_INFLUENCE] Influence there changes 0.2 per level less each turn (they don't learn whose spy it is), and the spy can stage a coup.[NEWLINE][NEWLINE]Spies cost 3 [ICON_GOLD] Gold per turn per era from the Renaissance while they are in a city.[NEWLINE]A spy gains a level for each successful steal, coup or caught enemy spy.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_HELP_DIPLOMATS">
+			<Text>[ICON_DIPLOMAT] Diplomats[NEWLINE][NEWLINE]Diplomats go to another civilization's capital or to a City-State.[NEWLINE]They never steal, cost no upkeep and stay through wars.[NEWLINE]They are set up at once with civilizations that give you open borders.[NEWLINE]They gain a level every 25 turns in the same city (moving keeps the level).[NEWLINE][NEWLINE]In a capital, per level:[NEWLINE][ICON_BULLET] [ICON_RESEARCH] Science equal to 2% of the capital's (halved at war)[NEWLINE][ICON_BULLET] +33% [ICON_GOLD] Gold from your trade routes to that city[NEWLINE]From level 3, your spies in that civilization are 1 stronger.[NEWLINE]Two civilizations with diplomats in each other's capitals share what their level 3+ spies see in other civilizations.[NEWLINE][NEWLINE]In a City-State, per level:[NEWLINE][ICON_BULLET] +0.33 [ICON_INFLUENCE] Influence per turn[NEWLINE][ICON_BULLET] Influence below the resting point recovers 50% faster[NEWLINE][NEWLINE]Diplomats see the tiles around their city like spies do (radius strength minus defense).</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
@@ -129399,12 +129495,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_BE_DIPLOMAT"> 
 			<Text>
-				Should this agent be a diplomat?[NEWLINE][NEWLINE]Diplomats go to City-States and capitals. They don't steal, and gain a level every 25 turns in the same city. War doesn't expel them, and they cost no upkeep.[NEWLINE][NEWLINE]In a capital: [ICON_RESEARCH] Science equal to 2% of the capital's per level (halved at war), +33% [ICON_GOLD] Gold per level from your trade routes to it, and from level 3 your spies in that empire are 1 stronger.[NEWLINE][NEWLINE]In a City-State: +0.33 [ICON_INFLUENCE] Influence per turn per level, and Influence below the resting point recovers 50% faster per level.
+				Send this agent as a spy or as a diplomat?[NEWLINE][NEWLINE]Hover “How spies work” and “How diplomats work” above the agent list for what each does.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_BONUS_CITY_STATE"> 
 			<Text>
-				[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Spy is operating {1_SpyBonus} {1_SpyBonus: plural 1?Rank; other?Ranks;} higher than normal since this city state is allied to a civ over which you have strong cultural influence.[ENDCOLOR]
+				[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Counts {1_SpyBonus} {1_SpyBonus: plural 1?level; other?levels;} higher for a coup here: you have strong cultural influence over this City-State's ally.[ENDCOLOR]
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_BONUS_MAJOR_CIV"> 
@@ -132092,7 +132188,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_STATE_MAKING_INTRODUCTIONS_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} is trying to make all the right connections in  {3_CityName} as a diplomat. After they have made their introductions, he will be able to schmooze.[NEWLINE][NEWLINE]A spy can be a diplomat if they are placed in the capital of another civilization. A diplomat will not attempt to steal technology from the other player but will still provide intrigue. Once the World Congress convenes and the diplomat has begun schmoozing, you will be able to determine their opinion on proposals and trade for their support if needed.
+				{1_RankName} {2_SpyName} is setting up as a diplomat in {3_CityName}.[NEWLINE]Its bonuses start once it is established.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_STATE_RIGGING_ELECTION"> 
@@ -132107,7 +132203,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_STATE_SCHMOOZING_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} is schmoozing in {3_CityName} as a diplomat.[NEWLINE][NEWLINE]A spy can be a diplomat if they are placed in the capital of another civilization you are not at war with. (If war is declared, your spy will escape the city.) A diplomat will not attempt to steal technology from the other player but will still provide intrigue. Once the World Congress convenes and the diplomat has begun schmoozing, you will be able to determine their opinion on proposals and trade for their support if needed. Diplomats also conduct propaganda that provides a boost to [ICON_TOURISM] Tourism output to the target civilization.
+				{1_RankName} {2_SpyName} is your diplomat in {3_CityName}.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_SPY_STATE_SURVEILLANCE"> 

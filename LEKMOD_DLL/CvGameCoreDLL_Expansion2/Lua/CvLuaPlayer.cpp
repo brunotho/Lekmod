@@ -11837,8 +11837,35 @@ int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
 	if (iSpy < 0 || iSpy >= (int)pkEspionage->m_aSpyList.size())
 		return 1;
 	CvCity* pCity = pkEspionage->GetCityWithSpy(iSpy);
-	const int iStrength = pCity ? pkEspionage->LekmodGetSpyStrength(iSpy, pCity) : (int)pkEspionage->m_aSpyList[iSpy].m_eRank + 1;
-	const int iDefense = pCity ? pkEspionage->LekmodGetCityDefense(pCity, pkThisPlayer->GetID()) : 0;
+	CvPlayerEspionage::LekmodParts aStrengthParts;
+	CvPlayerEspionage::LekmodParts aDefenseParts;
+	const bool bOwnCity = pCity != NULL && pCity->getOwner() == pkThisPlayer->GetID();
+	const int iStrength = pCity ? pkEspionage->LekmodGetSpyStrength(iSpy, pCity, &aStrengthParts) : (int)pkEspionage->m_aSpyList[iSpy].m_eRank + 1;
+	const int iDefense = pCity ? pkEspionage->LekmodGetCityDefense(pCity, bOwnCity ? NO_PLAYER : pkThisPlayer->GetID(), &aDefenseParts) : 0;
+	for (int iList = 0; iList < 2; iList++)
+	{
+		const CvPlayerEspionage::LekmodParts& aParts = iList == 0 ? aStrengthParts : aDefenseParts;
+		lua_createtable(L, 0, 0);
+		const int tParts = lua_gettop(L);
+		for (uint i = 0; i < aParts.size(); i++)
+		{
+			lua_createtable(L, 0, 0);
+			lua_pushstring(L, aParts[i].first);
+			lua_setfield(L, -2, "Key");
+			lua_pushinteger(L, aParts[i].second);
+			lua_setfield(L, -2, "Value");
+			lua_rawseti(L, tParts, i + 1);
+		}
+		lua_setfield(L, t, iList == 0 ? "StrengthParts" : "DefenseParts");
+	}
+	lua_pushinteger(L, pCity ? pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 8 / 100 : 0);
+	lua_setfield(L, t, "StealAmount");
+	lua_pushinteger(L, pkEspionage->LekmodGetDiplomatScienceTimes100(iSpy));
+	lua_setfield(L, t, "DiplomatScience");
+	lua_pushboolean(L, pCity != NULL && GET_TEAM(pkThisPlayer->getTeam()).isAtWar(pCity->getTeam()));
+	lua_setfield(L, t, "AtWar");
+	lua_pushboolean(L, pCity != NULL && GET_PLAYER(pCity->getOwner()).isMinorCiv());
+	lua_setfield(L, t, "MinorCiv");
 	const int iChance = CvPlayerEspionage::LekmodGetStealChance(iStrength, iDefense);
 	lua_pushinteger(L, iStrength);
 	lua_setfield(L, t, "Strength");

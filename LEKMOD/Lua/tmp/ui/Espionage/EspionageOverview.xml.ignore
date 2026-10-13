@@ -263,7 +263,7 @@
 				<Box Size="479,464" Offset="0,0" Color="0,0,0,0" ID="AgentsListBox" Hidden="0">
 					<Stack Size="479,464" Anchor="L,T" StackGrowth="Bottom">
 						<Box Size="484,22" Color="0,0,0,0">
-							<Label Anchor="C,B" String="TXT_KEY_EO_AGENTS" ColorSet="Beige_Black_Alpha" Font="TwCenMT22" FontStyle="Shadow"/>
+							<!-- LEKMOD: the rules, on demand --><TextButton Anchor="L,B" Offset="12,0" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" String="TXT_KEY_LEKMOD_EO_HELP_SPIES_BUTTON" ToolTip="TXT_KEY_LEKMOD_EO_HELP_SPIES" ID="LekmodHelpSpies"/><TextButton Anchor="C,B" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" String="TXT_KEY_EO_AGENTS" ToolTip="TXT_KEY_LEKMOD_EO_HELP_AGENTS" ID="LekmodHelpAgents"/><TextButton Anchor="R,B" Offset="12,0" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" String="TXT_KEY_LEKMOD_EO_HELP_DIPLOMATS_BUTTON" ToolTip="TXT_KEY_LEKMOD_EO_HELP_DIPLOMATS" ID="LekmodHelpDiplomats"/>
 						</Box>
 						<Box Size="484,20" Color="0,0,0,0">
 							<Stack Size="484,20" StackGrowth="Right">

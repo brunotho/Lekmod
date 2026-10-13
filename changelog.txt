@@ -1887,7 +1887,9 @@ Spies and diplomats are being reworked (in progress).
 - Added: a caught enemy spy is held by the defender, who chooses in the Espionage screen to execute it or evict it (it returns home and keeps its level); without a choice it is executed when the turn ends (computer players always execute)
 - Added: level 3+ spies can switch to full-tech steals: a whole technology instead of Science, at a quarter of the steal chance; the catch chance stays the same
 - Added: a level 3+ spy guarding your own city can sweep it for 5 turns of that city's Science in Gold; every enemy spy there is caught with its usual catch chance
-- Added: the Espionage screen shows each spy's strength, the city's defense, the steal timer and the chances, with the formulas
+- Added: the Espionage screen explains the rules in two hover buttons above the agent list (How spies work, How diplomats work); choosing spy or diplomat for an agent is a short question
+- Changed: agent tooltips describe the current rules: a spying agent shows its steal timer, success and catch chances and what makes up its strength and the city's defense; guards show the city's defense; diplomats show their actual Science, Gold and Influence bonuses
+- Changed: diplomats show a progress bar to their next level; meddling spies no longer show a meaningless election timer
 - Added: diplomats can also be posted in City-States
 - Changed: the spy activity in City-States is now called Meddling
 - Added: the Gold tooltip lists spy upkeep, and the Science tooltip lists diplomat Science

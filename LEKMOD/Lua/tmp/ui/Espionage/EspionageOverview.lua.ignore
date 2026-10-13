@@ -58,6 +58,11 @@ local g_ProgressBarStates = {
 		IconOffset = {x = 45,y = 0},
 		ProgressBarTexture = "MeterBarGreatEspionageBlue.dds",
 	},
+	-- LEKMOD: diplomats: progress to the next level
+	TXT_KEY_SPY_STATE_SCHMOOZING = {
+		IconOffset = {x = 45,y = 0},
+		ProgressBarTexture = "MeterBarGreatPersonGold.dds",
+	},
 }
 	
 -- Agent text color based on agent activity.
@@ -367,6 +372,7 @@ function RelocateAgent(agentID, city)
 	for i,v in ipairs(agents) do
 		if(v.AgentID == g_SelectedAgentID) then
 			agent = v;
+			LekmodAdjustAgent(activePlayer, agent);
 		end	
 	end
 	
@@ -471,6 +477,7 @@ function RelocateAgent(agentID, city)
 		print(agent.AgentActivity);
 	end
 	
+	strActivityTT = LekmodAgentActivityTT(activePlayer, agent, city) or strActivityTT; -- LEKMOD
 	Controls.AgentActivity:SetToolTipString(strActivityTT);
 	Controls.AgentActivityProgressFrame:SetHide(bHideActivityInfo);
 	Controls.AgentActivityProgressFrame:SetToolTipString(strActivityTT);
@@ -541,6 +548,7 @@ function RefreshAgents()
 	Controls.NoMoreSpiesLabel:SetHide(bHasAgents);
 	
 	for i,v in ipairs(agents) do
+		LekmodAdjustAgent(pActivePlayer, v);
 		if (v.State == "TXT_KEY_SPY_STATE_SURVEILLANCE" and v.TurnsLeft < 0) then
 			v.AgentActivity = Locale.Lookup("TXT_KEY_SPY_STATE_ESTABLISHED_SURVEILLANCE");
 		else
@@ -640,18 +648,10 @@ function RefreshAgents()
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_TRAVELLING_TT", v.Rank, v.Name, city:GetName());
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_SURVEILLANCE")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_SURVEILLANCE_TT", v.Rank, v.Name, city:GetName());			
-				if (city ~= nil and not Players[city:GetOwner()]:IsMinorCiv()) then
-					strActivityTT = strActivityTT .. LekmodStealInfoText(pActivePlayer, v.AgentID);
-				end
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_GATHERING_INTEL")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_GATHERING_INTEL_TT", v.Rank, v.Name, city:GetName());	
-				strActivityTT = strActivityTT .. LekmodStealInfoText(pActivePlayer, v.AgentID);
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_RIGGING_ELECTION")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT", v.Rank, v.Name, city:GetName());
-			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_COUNTER_INTEL") and pActivePlayer.LekmodGetSpyStealInfo ~= nil) then
-				-- LEKMOD: the defending spy adds its level to the city's defense
-				local info = pActivePlayer:LekmodGetSpyStealInfo(v.AgentID);
-				strActivityTT = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT", v.Rank, v.Name, city:GetName(), info.Level);
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_COUNTER_INTEL")) then
 				strActivityTT = strActivityTT .. Locale.Lookup("TXT_KEY_EO_SPY_COUNTER_INTEL_TT", v.Rank, v.Name, city:GetName());
 				strActivityTT = strActivityTT .. "[NEWLINE]";
@@ -683,17 +683,12 @@ function RefreshAgents()
 				strActivityTT = Locale.Lookup("TXT_KEY_SPY_STATE_MAKING_INTRODUCTIONS_TT", v.Rank, v.Name, city:GetName());				
 			elseif (v.AgentActivity == Locale.Lookup("TXT_KEY_SPY_STATE_SCHMOOZING")) then
 				strActivityTT = Locale.Lookup("TXT_KEY_SPY_STATE_SCHMOOZING_TT", v.Rank, v.Name, city:GetName());				
-				if (pActivePlayer.LekmodGetSpyStealInfo ~= nil) then
-					local info = pActivePlayer:LekmodGetSpyStealInfo(v.AgentID);
-					if (info.Level < 5) then
-						strActivityTT = strActivityTT .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_LEVEL_TT", 25 - info.TurnsInCity);
-					end
-				end
 			else
 				print("falling out");
 				print(v.AgentActivity);
 			end
 			
+			strActivityTT = LekmodAgentActivityTT(pActivePlayer, v, city) or strActivityTT; -- LEKMOD
 			agentEntry.AgentActivity:SetToolTipString(strActivityTT);
 			agentEntry.AgentActivityProgressFrame:SetHide(bHideActivityInfo);
 			agentEntry.AgentActivityProgressFrame:SetToolTipString(strActivityTT);
@@ -1545,13 +1540,112 @@ function LekmodCoupInfoText(pPlayer, iAgentID)
 	return c.Chance, strText;
 end
 
--- LEKMOD: steal formula for the agent tooltip
-function LekmodStealInfoText(pPlayer, iAgentID)
-	if (pPlayer.LekmodGetSpyStealInfo == nil) then
-		return "";
+-- LEKMOD: agent tooltips from the current rules (nil = keep the base text)
+local function LekmodDec(x100)
+	return (string.gsub(string.format("%.2f", x100 / 100), "%.?0+$", ""));
+end
+
+local function LekmodPartLines(parts)
+	local str = "";
+	for _, part in ipairs(parts) do
+		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_PART_LINE", part.Value, Locale.Lookup(part.Key));
 	end
-	local info = pPlayer:LekmodGetSpyStealInfo(iAgentID);
-	return "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_TT", info.Strength, info.Defense, info.Turns, info.Chance, info.Catch);
+	if (#parts == 0) then
+		str = "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_PART_NONE");
+	end
+	return str;
+end
+
+function LekmodStealInfoText(info)
+	local str = "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_ATTEMPT", info.Turns);
+	if (info.FullTech) then
+		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_SUCCESS_TECH", math.max(1, math.floor(info.Chance / 4)));
+	else
+		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_SUCCESS", info.Chance, info.StealAmount);
+	end
+	if (info.Catch > 0) then
+		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_CAUGHT", info.Catch);
+	else
+		str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_NEVER_CAUGHT");
+	end
+	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_YOUR_STRENGTH", info.Strength) .. LekmodPartLines(info.StrengthParts);
+	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_THEIR_DEFENSE", info.Defense) .. LekmodPartLines(info.DefenseParts);
+	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_RULE");
+	return str;
+end
+
+function LekmodAdjustAgent(pPlayer, agent)
+	if (pPlayer.LekmodGetSpyStealInfo == nil) then
+		return;
+	end
+	if (agent.State == "TXT_KEY_SPY_STATE_RIGGING_ELECTION") then
+		-- no elections any more: meddling works as long as the spy stays
+		agent.PercentComplete = 100;
+		agent.TurnsLeft = -1;
+	elseif (agent.State == "TXT_KEY_SPY_STATE_SCHMOOZING") then
+		local info = pPlayer:LekmodGetSpyStealInfo(agent.AgentID);
+		if (info.Level < 5) then
+			agent.PercentComplete = math.floor(info.TurnsInCity * 100 / 25);
+			agent.TurnsLeft = math.max(1, 25 - info.TurnsInCity);
+		else
+			agent.PercentComplete = 100;
+			agent.TurnsLeft = -1;
+		end
+	end
+end
+
+function LekmodAgentActivityTT(pPlayer, agent, city)
+	if (pPlayer.LekmodGetSpyStealInfo == nil or agent == nil) then
+		return nil;
+	end
+	local state = agent.State;
+	local info = pPlayer:LekmodGetSpyStealInfo(agent.AgentID);
+	local strCity = "";
+	if (city ~= nil) then
+		strCity = city:GetName();
+	end
+	if (state == "TXT_KEY_SPY_STATE_SURVEILLANCE" or state == "TXT_KEY_SPY_STATE_GATHERING_INTEL") then
+		if (city == nil) then
+			return nil;
+		elseif (info.MinorCiv) then
+			return Locale.Lookup("TXT_KEY_LEKMOD_EO_SETTLING_CS_TT", agent.Rank, agent.Name, strCity);
+		elseif (state == "TXT_KEY_SPY_STATE_SURVEILLANCE" and agent.TurnsLeft >= 0) then
+			return Locale.Lookup("TXT_KEY_LEKMOD_EO_SETTLING_TT", agent.Rank, agent.Name, strCity) .. LekmodStealInfoText(info);
+		elseif (state == "TXT_KEY_SPY_STATE_SURVEILLANCE") then
+			return Locale.Lookup("TXT_KEY_LEKMOD_EO_NOTHING_TO_STEAL_TT", agent.Rank, agent.Name, strCity) .. LekmodStealInfoText(info);
+		end
+		return Locale.Lookup("TXT_KEY_LEKMOD_EO_STEALING_TT", agent.Rank, agent.Name, strCity) .. LekmodStealInfoText(info);
+	elseif (state == "TXT_KEY_SPY_STATE_RIGGING_ELECTION") then
+		return Locale.Lookup("TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT", agent.Rank, agent.Name, strCity, LekmodDec(20 * info.Level));
+	elseif (state == "TXT_KEY_SPY_STATE_COUNTER_INTEL") then
+		local str = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT", agent.Rank, agent.Name, strCity, info.Defense) .. LekmodPartLines(info.DefenseParts);
+		if (info.Level >= 3) then
+			return str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_SWEEP_READY");
+		end
+		return str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_SWEEP_LATER");
+	elseif (state == "TXT_KEY_SPY_STATE_MAKING_INTRODUCTIONS") then
+		return Locale.Lookup("TXT_KEY_SPY_STATE_MAKING_INTRODUCTIONS_TT", agent.Rank, agent.Name, strCity);
+	elseif (state == "TXT_KEY_SPY_STATE_SCHMOOZING") then
+		local str;
+		if (info.MinorCiv) then
+			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CS_TT", agent.Rank, agent.Name, strCity, LekmodDec(33 * info.Level), 50 * info.Level);
+		else
+			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CAPITAL_TT", agent.Rank, agent.Name, strCity, LekmodDec(info.DiplomatScience), 33 * info.Level);
+			if (info.AtWar) then
+				str = str .. "[NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_AT_WAR");
+			end
+			if (info.Level >= 3) then
+				str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_SPY_BONUS");
+			else
+				str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_SPY_BONUS_LATER");
+			end
+		end
+		if (info.Level < 5) then
+			return str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_LEVEL_TT", math.max(1, 25 - info.TurnsInCity));
+		end
+		return str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_MAX_LEVEL");
+	end
+	return nil;
 end
 
 -- LEKMOD: enemy spies we caught: Execute / Evict / decide later (Execute when the turn ends)

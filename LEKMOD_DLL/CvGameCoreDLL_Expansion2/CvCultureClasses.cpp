@@ -3064,7 +3064,11 @@ CvString CvPlayerCulture::GetInfluenceSpyRankTooltip(CvString szName, CvString s
 		}
 		else
 		{
+#ifdef LEKMOD_SPY_REWORK
+			iRankBonus = 0; // shown in the steal breakdown
+#else
 			iRankBonus = GetInfluenceMajorCivSpyRankBonus(ePlayer);
+#endif
 
 			if (iRankBonus > 0)
 			{

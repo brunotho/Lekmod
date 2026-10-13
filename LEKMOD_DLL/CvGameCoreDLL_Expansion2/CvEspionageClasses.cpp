@@ -1751,15 +1751,20 @@ void CvPlayerEspionage::CacheSpyStats()
 #ifdef LEKMOD_SPY_REWORK
 /// Spy strength in a city: level + 1 for a level 3+ diplomat in that empire + tourism influence levels over them
 /// + 1 with Industrial Espionage (+ Underground Sect)
-int CvPlayerEspionage::LekmodGetSpyStrength(uint uiSpyIndex, CvCity* pCity)
+int CvPlayerEspionage::LekmodGetSpyStrength(uint uiSpyIndex, CvCity* pCity, LekmodParts* pParts)
 {
 	if (uiSpyIndex >= m_aSpyList.size() || pCity == NULL)
 		return 1;
 	int iStrength = (int)m_aSpyList[uiSpyIndex].m_eRank + 1;
+	if (pParts)
+		pParts->push_back(std::make_pair("TXT_KEY_LEKMOD_EO_PART_LEVEL", iStrength));
 	const PlayerTypes eOwner = pCity->getOwner();
 	if (!GET_PLAYER(eOwner).isMinorCiv())
 	{
-		iStrength += std::max(0, (int)m_pPlayer->GetCulture()->GetInfluenceLevel(eOwner));
+		const int iInfluence = std::max(0, (int)m_pPlayer->GetCulture()->GetInfluenceLevel(eOwner));
+		iStrength += iInfluence;
+		if (pParts && iInfluence > 0)
+			pParts->push_back(std::make_pair("TXT_KEY_LEKMOD_EO_PART_YOUR_INFLUENCE", iInfluence));
 		for (uint i = 0; i < m_aSpyList.size(); i++)
 		{
 			if (i == uiSpyIndex || !m_aSpyList[i].m_bIsDiplomat || (int)m_aSpyList[i].m_eRank < 2)
@@ -1770,12 +1775,18 @@ int CvPlayerEspionage::LekmodGetSpyStrength(uint uiSpyIndex, CvCity* pCity)
 			if (pDiplomatCity != NULL && pDiplomatCity->getOwner() == eOwner)
 			{
 				iStrength++;
+				if (pParts)
+					pParts->push_back(std::make_pair("TXT_KEY_LEKMOD_EO_PART_DIPLOMAT", 1));
 				break;
 			}
 		}
 	}
 	if (m_pPlayer->GetPlayerPolicies()->GetNumericModifier(POLICYMOD_STEAL_TECH_FASTER_MODIFIER) > 0)
+	{
 		iStrength++;
+		if (pParts)
+			pParts->push_back(std::make_pair("TXT_KEY_LEKMOD_EO_PART_POLICY", 1));
+	}
 #ifdef UNDERGROUND_SECT_REWORK
 	iStrength += m_pPlayer->GetReligions()->GetSpyPressure();
 #endif
@@ -1793,7 +1804,7 @@ static bool LekmodCityHasBuildingClass(CvCity* pCity, const char* szClass)
 
 /// Defense of a city against the spies of eSpyOwner: defending spy level + 1 Constabulary + 1 Police Station
 /// + 1 Intelligence Agency + the owner's tourism influence levels over eSpyOwner
-int CvPlayerEspionage::LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner)
+int CvPlayerEspionage::LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner, LekmodParts* pParts)
 {
 	if (pCity == NULL)
 		return 0;
@@ -1805,16 +1816,35 @@ int CvPlayerEspionage::LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner
 		CvPlayerEspionage* pOwnerEspionage = GET_PLAYER(eOwner).GetEspionage();
 		const int iIndex = pOwnerEspionage->GetSpyIndexInCity(pCity);
 		if (iIndex >= 0)
-			iDefense += (int)pOwnerEspionage->m_aSpyList[iIndex].m_eRank + 1;
+		{
+			const int iSpyLevel = (int)pOwnerEspionage->m_aSpyList[iIndex].m_eRank + 1;
+			iDefense += iSpyLevel;
+			if (pParts)
+				pParts->push_back(std::make_pair("TXT_KEY_LEKMOD_EO_PART_GUARD", iSpyLevel));
+		}
 	}
-	if (LekmodCityHasBuildingClass(pCity, "BUILDINGCLASS_CONSTABLE"))
+	const char* aszDefenseClasses[3] = { "BUILDINGCLASS_CONSTABLE", "BUILDINGCLASS_POLICE_STATION", "BUILDINGCLASS_INTELLIGENCE_AGENCY" };
+	for (int iClass = 0; iClass < 3; iClass++)
+	{
+		if (!LekmodCityHasBuildingClass(pCity, aszDefenseClasses[iClass]))
+			continue;
 		iDefense++;
-	if (LekmodCityHasBuildingClass(pCity, "BUILDINGCLASS_POLICE_STATION"))
-		iDefense++;
-	if (LekmodCityHasBuildingClass(pCity, "BUILDINGCLASS_INTELLIGENCE_AGENCY"))
-		iDefense++;
-	if (!GET_PLAYER(eOwner).isMinorCiv() && eSpyOwner != NO_PLAYER)
-		iDefense += std::max(0, (int)GET_PLAYER(eOwner).GetCulture()->GetInfluenceLevel(eSpyOwner));
+		if (pParts)
+		{
+			const BuildingClassTypes eClass = (BuildingClassTypes)GC.getInfoTypeForString(aszDefenseClasses[iClass], true);
+			const BuildingTypes eBuilding = (BuildingTypes)GET_PLAYER(eOwner).getCivilizationInfo().getCivilizationBuildings(eClass);
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo(eBuilding);
+			if (pkBuilding)
+				pParts->push_back(std::make_pair(pkBuilding->GetDescriptionKey(), 1));
+		}
+	}
+	if (!GET_PLAYER(eOwner).isMinorCiv() && eSpyOwner != NO_PLAYER && eSpyOwner != eOwner)
+	{
+		const int iInfluence = std::max(0, (int)GET_PLAYER(eOwner).GetCulture()->GetInfluenceLevel(eSpyOwner));
+		iDefense += iInfluence;
+		if (pParts && iInfluence > 0)
+			pParts->push_back(std::make_pair("TXT_KEY_LEKMOD_EO_PART_THEIR_INFLUENCE", iInfluence));
+	}
 	return iDefense;
 }
 
@@ -2063,15 +2093,23 @@ int CvPlayerEspionage::LekmodGetDiplomatScienceTimes100()
 	{
 		if (!m_aSpyList[i].m_bIsDiplomat || m_aSpyList[i].m_eSpyState != SPY_STATE_SCHMOOZE)
 			continue;
-		CvCity* pCity = GetCityWithSpy(i);
-		if (pCity == NULL || GET_PLAYER(pCity->getOwner()).isMinorCiv())
-			continue;
-		int iValue = pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 2 * ((int)m_aSpyList[i].m_eRank + 1) / 100;
-		if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(pCity->getTeam()))
-			iValue /= 2;
-		iScience += iValue;
+		iScience += LekmodGetDiplomatScienceTimes100(i);
 	}
 	return iScience;
+}
+
+/// Science per turn (x100) from one diplomat: 2% x level of the capital's Science, halved at war
+int CvPlayerEspionage::LekmodGetDiplomatScienceTimes100(uint uiSpyIndex)
+{
+	if (uiSpyIndex >= m_aSpyList.size() || !m_aSpyList[uiSpyIndex].m_bIsDiplomat || m_aSpyList[uiSpyIndex].m_eSpyState != SPY_STATE_SCHMOOZE)
+		return 0;
+	CvCity* pCity = GetCityWithSpy(uiSpyIndex);
+	if (pCity == NULL || GET_PLAYER(pCity->getOwner()).isMinorCiv())
+		return 0;
+	int iValue = pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 2 * ((int)m_aSpyList[uiSpyIndex].m_eRank + 1) / 100;
+	if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(pCity->getTeam()))
+		iValue /= 2;
+	return iValue;
 }
 #endif
 

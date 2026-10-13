@@ -170,8 +170,10 @@ public:
 	bool ExtractSpyFromCity(uint uiSpyIndex);
 	void LevelUpSpy(uint uiSpyIndex);
 #ifdef LEKMOD_SPY_REWORK
-	int LekmodGetSpyStrength(uint uiSpyIndex, CvCity* pCity);
-	int LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner);
+	typedef std::vector< std::pair<const char*, int> > LekmodParts; // (text key, value) for the interface
+	int LekmodGetSpyStrength(uint uiSpyIndex, CvCity* pCity, LekmodParts* pParts = NULL);
+	int LekmodGetCityDefense(CvCity* pCity, PlayerTypes eSpyOwner, LekmodParts* pParts = NULL);
+	int LekmodGetDiplomatScienceTimes100(uint uiSpyIndex);
 	static int LekmodGetStealInterval(int iStrength, int iDefense);
 	static int LekmodGetStealChance(int iStrength, int iDefense);
 	void LekmodSpyCaught(uint uiSpyIndex, CvCity* pCity, bool bExecute);
