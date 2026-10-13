@@ -853,13 +853,22 @@ function RefreshAgents()
 				local info = pActivePlayer:LekmodGetSpyStealInfo(v.AgentID);
 				if (info.Level >= 3 and city:GetOwner() ~= Game.GetActivePlayer() and not Players[city:GetOwner()]:IsMinorCiv()) then
 					agentEntry.LekmodFullTechButton:SetHide(false);
-					if (info.FullTech) then
-						agentEntry.LekmodFullTechButton:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_FULL_TECH_ON");
-					else
-						agentEntry.LekmodFullTechButton:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_FULL_TECH_OFF");
+					-- show the player's latest click at once; the game state catches up when the command arrives
+					local bFullTech = info.FullTech;
+					if (g_LekmodFullTechPending[v.AgentID] ~= nil) then
+						if (g_LekmodFullTechPending[v.AgentID] == info.FullTech) then
+							g_LekmodFullTechPending[v.AgentID] = nil;
+						else
+							bFullTech = g_LekmodFullTechPending[v.AgentID];
+						end
 					end
+					LekmodSetFullTechText(agentEntry.LekmodFullTechButton, bFullTech);
 					agentEntry.LekmodFullTechButton:SetToolTipString(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_FULL_TECH_TT", math.floor(info.Chance / 4), info.Catch)));
-					agentEntry.LekmodFullTechButton:RegisterCallback(Mouse.eLClick, function()
+					local button = agentEntry.LekmodFullTechButton;
+					button:RegisterCallback(Mouse.eLClick, function()
+						bFullTech = not bFullTech;
+						g_LekmodFullTechPending[v.AgentID] = bFullTech;
+						LekmodSetFullTechText(button, bFullTech);
 						Network.SendGiftUnit(v.AgentID, -23);
 					end);
 				elseif (info.Level >= 3 and city:GetOwner() == Game.GetActivePlayer()) then
@@ -1598,6 +1607,16 @@ function LekmodSetActivityIcon(control, progressBarState)
 	end
 end
 
+-- LEKMOD: full tech toggle: the shown state follows each click at once
+g_LekmodFullTechPending = {};
+function LekmodSetFullTechText(button, bFullTech)
+	if (bFullTech) then
+		button:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_FULL_TECH_ON");
+	else
+		button:LocalizeAndSetText("TXT_KEY_LEKMOD_EO_FULL_TECH_OFF");
+	end
+end
+
 -- LEKMOD: agent tooltips from the current rules (nil = keep the base text)
 local function LekmodDec(x100)
 	return (string.gsub(string.format("%.2f", x100 / 100), "%.?0+$", ""));
@@ -1751,7 +1770,8 @@ function LekmodShowRules(page)
 	Controls.IntrigueMessageHeaders:SetHide(true);
 	Controls.IntrigueMessageScrollPanel:SetHide(true);
 	Controls.NoIntrigueAvailable:SetHide(true);
-	Controls.LekmodRulesText:SetText(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_RULES_" .. g_LekmodRulesPage), LEKMOD_RULES_LINE_PIXELS));
+	-- an empty last line keeps a gap between the text and the bottom edge
+	Controls.LekmodRulesText:SetText(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_RULES_" .. g_LekmodRulesPage), LEKMOD_RULES_LINE_PIXELS) .. "[NEWLINE] ");
 	Controls.LekmodRulesStack:CalculateSize();
 	Controls.LekmodRulesStack:ReprocessAnchoring();
 	Controls.LekmodRulesScroll:CalculateInternalSize();

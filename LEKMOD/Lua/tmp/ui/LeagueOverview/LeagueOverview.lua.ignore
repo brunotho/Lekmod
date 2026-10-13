@@ -195,6 +195,16 @@ function Update( bForceViewModel )
 				model.VictorySessionString = Locale.Lookup("TXT_KEY_LEAGUE_OVERVIEW_WORLD_LEADER_INFO_SESSION", pLeague:GetTurnsUntilVictorySession());
 				model.VictoryVotesString = Locale.Lookup("TXT_KEY_LEAGUE_OVERVIEW_WORLD_LEADER_INFO_VOTES", Game.GetVotesNeededForDiploVictory());
 				model.VictoryTooltip = Locale.Lookup("TXT_KEY_LEAGUE_OVERVIEW_WORLD_LEADER_INFO_TT", Game.GetVotesNeededForDiploVictory());
+				-- LEKMOD: the last World Leader vote (Delegates are counted automatically, there is no voting screen)
+				if (pLeague.LekmodGetLastLeaderVote ~= nil) then
+					local last = pLeague:LekmodGetLastLeaderVote();
+					if (last.Turn ~= nil) then
+						model.VictoryTooltip = model.VictoryTooltip .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_WORLD_LEADER_LAST_VOTE", last.Turn, last.Needed);
+						for _, v in ipairs(last.Votes) do
+							model.VictoryTooltip = model.VictoryTooltip .. "[NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_WORLD_LEADER_VOTE_LINE", Players[v.Player]:GetCivilizationShortDescriptionKey(), v.Delegates);
+						end
+					end
+				end
 			end
 		end
 		
@@ -255,6 +265,14 @@ function GetActiveResolutions(league, activePlayerId)
 		local canProposeRepeal = league:CanProposeRepeal(resolutionId, activePlayerId);
 		local text = league:GetResolutionName(resolutionType, resolutionId, proposerDecision, false);
 		local toolTip = league:GetResolutionDetails(resolutionType, activePlayerId, resolutionId, proposerDecision); 
+		-- LEKMOD: timed resolutions show how long they still last
+		local resolutionInfo = GameInfo.Resolutions[resolutionType];
+		local iDuration = resolutionInfo and resolutionInfo.LekmodDurationTurns or 0;
+		if (iDuration > 0 and t.TurnEnacted ~= nil and t.TurnEnacted >= 0) then
+			local iTurnsLeft = math.max(1, t.TurnEnacted + iDuration - Game.GetGameTurn());
+			text = text .. " " .. Locale.Lookup("TXT_KEY_LEKMOD_RESOLUTION_TURNS_LEFT", iTurnsLeft);
+			toolTip = toolTip .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_RESOLUTION_TIMED_TT", t.TurnEnacted, iDuration, t.TurnEnacted + iDuration);
+		end
 		local proposeText = text;
 		local proposeToolTip = toolTip;
 		

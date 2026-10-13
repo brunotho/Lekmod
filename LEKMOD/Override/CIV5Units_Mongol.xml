@@ -97463,7 +97463,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_OVERVIEW_WORLD_LEADER_INFO_TT"> 
 			<Text>
-				Since the World Congress has become the United Nations, Diplomatic Victory is now possible.  To win it, a Civilization must receive the support of {1_DelegatesForWin} or more Delegates on a World Leader proposal.  This number is based on the number of Civilizations and City-States in the game.[NEWLINE][NEWLINE]The World Leader proposal is made to the Congress every other session, alternating with regular sessions about regular proposals.
+				Diplomatic Victory: a civilization wins with {1_DelegatesForWin} or more Delegates at a World Leader vote.[NEWLINE][NEWLINE]World Leader votes happen every 7 turns, starting 7 turns after the first civilization reaches the Atomic Era.[NEWLINE]Nobody votes: every civilization's own Delegates are counted automatically, and the result arrives as a notification.[NEWLINE]First and second place each gain 1 permanent Delegate. A tie for first never wins.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_LEAGUE_OVERVIEW_WORLD_LEADER_INFO_VOTES"> 
@@ -120695,14 +120695,11 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_LEAGUE_VOTES_EMBARGO">
 			<Text>[NEWLINE][ICON_BULLET]{1_NumVotes} from being embargoed</Text>
 		</Row>
-		<Row Tag="TXT_KEY_PRODMOD_LEKMOD_NON_PROLIFERATION">
-			<Text>[NEWLINE][ICON_BULLET]Nuclear Non-Proliferation: {1_Num}%</Text>
-		</Row>
 		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_PAYLOAD_CONTROLS">
 			<Text>Payload Controls</Text>
 		</Row>
 		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_PAYLOAD_CONTROLS_HELP">
-			<Text>Spaceship parts cost 50% more [ICON_PRODUCTION] Production (also for Great Engineers and purchases).[NEWLINE][NEWLINE]Available once the World Congress reaches the Information Era.</Text>
+			<Text>Spaceship parts cost 50% more [ICON_PRODUCTION] Production for all Civilizations (also for Great Engineers and when bought with [ICON_GOLD] Gold).[NEWLINE][NEWLINE]Available once the World Congress reaches the Information Era.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_RESOLUTION_LEKMOD_CLAUSEWITZ_BOOK_CLUB">
 			<Text>Clausewitz Book Club</Text>
@@ -121012,6 +121009,15 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_DEMOGRAPHICS_BLACKOUT">
 			<Text>B  L  A  C  K  O  U  T</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RESOLUTION_TURNS_LEFT">
+			<Text>({1_Num} {1_Num: plural 1?turn; other?turns;} left)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_RESOLUTION_TIMED_TT">
+			<Text>Took effect on turn {1_Num} and lasts {2_Num} turns.[NEWLINE]It ends at the start of turn {3_Num}.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_LAST_VOTE">
+			<Text>Last World Leader vote (turn {1_Num}, {2_Num} Delegates needed):</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>
@@ -124869,7 +124875,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_NUCLEAR_NON_PROLIFERATION_HELP"> 
 			<Text>
-				-50% [ICON_PRODUCTION] Production toward nuclear weapons (Atomic Bomb and Nuclear Missile) for all Civilizations.[NEWLINE][NEWLINE]Available once any Civilization discovers Nuclear Fission.
+				Nuclear weapons (Atomic Bomb and Nuclear Missile) cost twice as much [ICON_PRODUCTION] Production for all Civilizations (also when bought with [ICON_GOLD] Gold).[NEWLINE][NEWLINE]Available once any Civilization discovers Nuclear Fission.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOLUTION_PLAYER_EMBARGO"> 

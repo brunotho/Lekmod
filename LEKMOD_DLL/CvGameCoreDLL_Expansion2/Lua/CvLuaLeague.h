@@ -50,6 +50,7 @@ protected:
 	static int lGetRepealProposals(lua_State* L);
 	static int lGetRepealProposalsOnHold(lua_State* L);
 	static int lGetActiveResolutions(lua_State* L);
+	static int lLekmodGetLastLeaderVote(lua_State* L);
 
 	static int lIsMember(lua_State* L);
 	static int lCanVote(lua_State* L);

@@ -11068,6 +11068,12 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 		iProductionNeeded *= 100 + GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_SPACESHIP_COST);
 		iProductionNeeded /= 100;
 	}
+	// Nuclear Non-Proliferation: nuclear weapons cost more (also for purchases)
+	if (pkUnitEntry->GetNukeDamageLevel() != -1)
+	{
+		iProductionNeeded *= 100 + GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_NUKE_COST);
+		iProductionNeeded /= 100;
+	}
 #endif
 
 	if(isMinorCiv())

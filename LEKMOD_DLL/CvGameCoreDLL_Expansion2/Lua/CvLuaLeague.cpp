@@ -50,6 +50,9 @@ void CvLuaLeague::PushMethods(lua_State* L, int t)
 	Method(GetRepealProposals);
 	Method(GetRepealProposalsOnHold);
 	Method(GetActiveResolutions);
+#ifdef LEKMOD_CONGRESS_CYCLE
+	Method(LekmodGetLastLeaderVote);
+#endif
 
 	Method(IsMember);
 	Method(CanVote);
@@ -437,6 +440,37 @@ int CvLuaLeague::lGetActiveResolutions(lua_State* L)
 
 		lua_rawseti(L, -2, iIndex++);
 	}
+	return 1;
+}
+//------------------------------------------------------------------------------
+// table LekmodGetLastLeaderVote(): {} before the first World Leader vote, else {Turn, Needed, Votes = {{Player, Delegates}, ...}} (most first)
+int CvLuaLeague::lLekmodGetLastLeaderVote(lua_State* L)
+{
+	CvLeague* pLeague = GetInstance(L);
+	lua_createtable(L, 0, 0);
+	const int t = lua_gettop(L);
+#ifdef LEKMOD_CONGRESS_CYCLE
+	const std::vector<int>& v = pLeague->LekmodGetLastLeaderVote();
+	if (v.size() < 2)
+		return 1;
+	lua_pushinteger(L, v[0]);
+	lua_setfield(L, t, "Turn");
+	lua_pushinteger(L, v[1]);
+	lua_setfield(L, t, "Needed");
+	lua_createtable(L, 0, 0);
+	const int tVotes = lua_gettop(L);
+	int iIndex = 1;
+	for (uint i = 2; i + 1 < v.size(); i += 2)
+	{
+		lua_createtable(L, 0, 0);
+		lua_pushinteger(L, v[i]);
+		lua_setfield(L, -2, "Player");
+		lua_pushinteger(L, v[i + 1]);
+		lua_setfield(L, -2, "Delegates");
+		lua_rawseti(L, tVotes, iIndex++);
+	}
+	lua_setfield(L, t, "Votes");
+#endif
 	return 1;
 }
 //------------------------------------------------------------------------------

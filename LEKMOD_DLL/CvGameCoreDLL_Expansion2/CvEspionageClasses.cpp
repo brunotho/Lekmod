@@ -638,6 +638,8 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 					}
 					LevelUpSpy(uiSpyIndex);
 				}
+				// the next steal already uses the new level (a level-up shortens it right away)
+				pCityEspionage->SetActivity(ePlayer, 0, iLekmodRate, CalcRequired(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex));
 				if (bCaught)
 				{
 					LekmodSpyCaught(uiSpyIndex, pCity, /*bExecute*/ true);

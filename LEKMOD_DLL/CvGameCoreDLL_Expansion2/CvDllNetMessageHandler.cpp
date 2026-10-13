@@ -887,15 +887,19 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 	// -20 / -21: Execute / Evict a caught spy (eMinor = entry); -22: sweep (eMinor = city ID); -23: full-tech toggle (eMinor = spy index)
 	case -20:
 		GET_PLAYER(ePlayer).GetEspionage()->LekmodResolveCaughtSpy((int)eMinor, true);
+		GC.GetEngineUserInterface()->setDirty(EspionageScreen_DIRTY_BIT, true);
 		return;
 	case -21:
 		GET_PLAYER(ePlayer).GetEspionage()->LekmodResolveCaughtSpy((int)eMinor, false);
+		GC.GetEngineUserInterface()->setDirty(EspionageScreen_DIRTY_BIT, true);
 		return;
 	case -22:
 		GET_PLAYER(ePlayer).GetEspionage()->LekmodDoSweep(GET_PLAYER(ePlayer).getCity((int)eMinor));
+		GC.GetEngineUserInterface()->setDirty(EspionageScreen_DIRTY_BIT, true);
 		return;
 	case -23:
 		GET_PLAYER(ePlayer).GetEspionage()->LekmodToggleFullTech((uint)eMinor);
+		GC.GetEngineUserInterface()->setDirty(EspionageScreen_DIRTY_BIT, true);
 		return;
 #endif
 	default:

@@ -194682,6 +194682,7 @@
 		<!-- LEKMOD: new proposals (integer flags and values, see LekmodResolutionColumn in CvVotingClasses.h) -->
 		<Column name="LekmodDurationTurns" type="integer" default="0"/>
 		<Column name="LekmodSpaceshipCostModifier" type="integer" default="0"/>
+		<Column name="LekmodNukeCostModifier" type="integer" default="0"/> <!-- LEKMOD: % cost of nuclear weapons while active (Non-Proliferation) -->
 		<Column name="LekmodAttackModifier" type="integer" default="0"/>
 		<Column name="LekmodDevelopmentFund" type="integer" default="0"/>
 		<Column name="LekmodBreakdown" type="integer" default="0"/>
@@ -195383,7 +195384,7 @@
 		</Update>
 		<Update>
 			<Where Type="RESOLUTION_NUCLEAR_NON_PROLIFERATION"/>
-			<Set TechPrereqAnyMember="TECH_NUCLEAR_FISSION" NoTrainingNuclearWeapons="false" LekmodNukeProductionModifier="-50"/>
+			<Set TechPrereqAnyMember="TECH_NUCLEAR_FISSION" NoTrainingNuclearWeapons="false" LekmodNukeCostModifier="100"/>
 		</Update>
 		<Update>
 			<Where Type="RESOLUTION_WORLD_RELIGION"/>

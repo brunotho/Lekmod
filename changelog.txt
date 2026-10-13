@@ -1813,7 +1813,7 @@ WORLD CONGRESS PROPOSALS (RESOLUTIONS)
 Tags: world congress
 Existing proposals reworked for the new Congress.
 - Changed: Embargo City-States: available once the Congress reaches the Industrial Era
-- Changed: Nuclear Non-Proliferation: -50% Production toward nuclear weapons instead of banning them; available once any civilization discovers Nuclear Fission (was Advanced Ballistics)
+- Changed: Nuclear Non-Proliferation: nuclear weapons cost twice as much Production (also when bought with Gold) instead of being banned; available once any civilization discovers Nuclear Fission (was Advanced Ballistics)
 - Changed: World Religion: 3 Delegates (was 2), none once the Congress reaches the Atomic Era; Holy City +50% Tourism stays
 - Removed: World Religion: faster religion spread
 - Changed: World Ideology: a new World Ideology can be proposed while one is active and replaces it
@@ -1831,6 +1831,7 @@ WORLD CONGRESS: NEW PROPOSALS (RESOLUTIONS)
 Tags: world congress
 Fourteen new proposals.
 - Added: Payload Controls (Information Era): spaceship parts cost 50% more Production (also for Great Engineers and purchases)
+- DLL: Resolutions.LekmodNukeCostModifier (cost of nuclear weapons, like LekmodSpaceshipCostModifier); the old LekmodNukeProductionModifier is unused
 - Added: Clausewitz Book Club (Modern Era): +25% attack strength (melee) for everyone for 8 turns; doesn't stack with Clausewitz's Legacy
 - Added: International Development Fund (Modern Era): a free Social Policy for everyone except the civilization(s) with the most policies; everyone not in the most advanced era gets one of the cheapest technologies they can research that another civilization knows
 - Added: Breakdown of International Relations (every human player in the Information Era, Nuclear Fusion known): everyone at war, no peace, all other resolutions end, no further sessions, -33% Tourism, next World Leader vote 3 turns later
@@ -1853,6 +1854,8 @@ WORLD CONGRESS SCREEN (ui)
 Tags: world congress, ui
 - Changed: the proposal lists are sorted alphabetically
 - Removed: Choose Host and World Leader no longer appear among the proposals (they are never proposed)
+- Added: proposals that last a limited time show their turns left in the list of active proposals; their tooltip names the turn they took effect and the turn they end
+- Added: the World Leader line explains how the vote works (Delegates are counted automatically) and lists the last vote: its turn, the Delegates needed and every civilization's Delegates
 - Dev: LeagueOverview.lua is now a Lekmod template (Lua/tmp/ui/LeagueOverview), copied by ui_check.bat; Demographics.xml too (Lua/tmp/ui/Replays)
 
 NUCLEAR FUSION (TECH_NUCLEAR_FUSION)
@@ -1894,6 +1897,7 @@ Spies and diplomats are being reworked (in progress).
 - Removed: tooltip explanations of mechanics that no longer apply (elections, the old Potential and rank rules)
 - Added: trade route tooltips show the Gold bonus from your diplomat in the destination capital
 - Changed: diplomats show a progress bar to their next level (with a level-up arrow icon); meddling spies no longer show a meaningless election timer
+- Changed: after a successful steal the spy's next steal timer already uses its new level; the Full tech button switches on screen at once
 - Added: diplomats can also be posted in City-States
 - Changed: the spy activity in City-States is now called Meddling
 - Added: the Gold tooltip lists spy upkeep, and the Science tooltip lists diplomat Science

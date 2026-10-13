@@ -6049,7 +6049,7 @@ static const char* s_aszLekmodResolutionColumns[NUM_LEKMOD_RESOLUTION_COLUMNS] =
 	"LekmodCapturedCapitalVotes", "LekmodLuxuryHappinessPercent", "LekmodBlackout", "LekmodVoiceForTheVoiceless", "LekmodExperienceModifier",
 	"LekmodAirExperienceModifier", "LekmodTargetVotes", "LekmodTargetCombatModifier", "LekmodTargetNoTrade", "LekmodFirstTechGoldPercent",
 	"LekmodTechDiscountPerCiv", "LekmodClimateReparations", "LekmodHappinessPerFactory", "LekmodTransparency", "LekmodTourismModifier",
-	"LekmodCivilLiberties"
+	"LekmodCivilLiberties", "LekmodNukeCostModifier"
 };
 
 /// Sum of a Lekmod column over the active resolutions (only those whose chosen civ is eTarget, if given)
@@ -6664,6 +6664,16 @@ void CvLeague::LekmodDoWorldLeaderVote()
 					pMember->iExtraVotes = pMember->iExtraVotes + 1;
 			}
 		}
+	}
+
+	// remembered for the Congress screen
+	m_aiLekmodLastLeaderVote.clear();
+	m_aiLekmodLastLeaderVote.push_back(GC.getGame().getGameTurn());
+	m_aiLekmodLastLeaderVote.push_back(iNeeded);
+	for (uint i = 0; i < vVotes.size(); i++)
+	{
+		m_aiLekmodLastLeaderVote.push_back((int)vVotes[i].second);
+		m_aiLekmodLastLeaderVote.push_back(vVotes[i].first);
 	}
 
 	// Results for everyone
@@ -8334,6 +8344,18 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 			writeTo.m_aiLekmodTransparencyVision.push_back(iEntry);
 		}
 	}
+	writeTo.m_aiLekmodLastLeaderVote.clear();
+	if (uiVersion >= 18)
+	{
+		int iNumEntries = 0;
+		loadFrom >> iNumEntries;
+		for (int i = 0; i < iNumEntries; i++)
+		{
+			int iEntry;
+			loadFrom >> iEntry;
+			writeTo.m_aiLekmodLastLeaderVote.push_back(iEntry);
+		}
+	}
 	if (uiVersion < 15)
 	{
 		writeTo.m_iLekmodVoteTurn = (writeTo.m_iTurnsUntilSession == MAX_INT) ? MAX_INT : GC.getGame().getGameTurn() + writeTo.m_iTurnsUntilSession;
@@ -8350,7 +8372,7 @@ FDataStream& operator>>(FDataStream& loadFrom, CvLeague& writeTo)
 FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 {
 #ifdef LEKMOD_CONGRESS_CYCLE
-	uint uiVersion = 17;
+	uint uiVersion = 18;
 #else
 	uint uiVersion = 14;
 #endif
@@ -8452,6 +8474,9 @@ FDataStream& operator<<(FDataStream& saveTo, const CvLeague& readFrom)
 	saveTo << (int)readFrom.m_aiLekmodTransparencyVision.size();
 	for (uint i = 0; i < readFrom.m_aiLekmodTransparencyVision.size(); i++)
 		saveTo << readFrom.m_aiLekmodTransparencyVision[i];
+	saveTo << (int)readFrom.m_aiLekmodLastLeaderVote.size();
+	for (uint i = 0; i < readFrom.m_aiLekmodLastLeaderVote.size(); i++)
+		saveTo << readFrom.m_aiLekmodLastLeaderVote[i];
 #endif
 
 	return saveTo;
