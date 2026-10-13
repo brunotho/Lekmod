@@ -2123,7 +2123,9 @@ Tags: civs, units, buildings
 - Changed: the Maccabee is renamed Gibborim: 13 Strength (was 14), needs 2 Iron, still starts with Zealot
 - Changed: their National College costs 260 Gold (was 201)
 - Removed: their National College's +3 Faith and its Faith when a Great Person is expended
-- Note: open: UA +15% against stronger units and Gibborim +20% next to 3+ enemies (need C++)
+- Added: non-air units have +15% combat strength against units with a higher base strength
+- Added: Gibborim: +20% combat strength when 3 or more enemy units are adjacent
+- DLL: UnitPromotions.StrongerEnemyMod (promotion 383, given by the UA) and AdjacentEnemiesMod/AdjacentEnemiesNeeded (promotion 384)
 
 SIAM (CIVILIZATION_SIAM)
 ------------------------
@@ -2212,7 +2214,9 @@ Tags: civs, units, buildings, naval
 - Changed: Berserker: 17 Strength (was 21), needs 3 Iron (was 2), starts with Fear Aura instead of Amphibious
 - Changed: Longship starts with Swift Transport and Coastal Raider I instead of giving its movement to embarked units
 - Added: Rune Stone, a unique Shrine: costs 32, 2 Faith, units trained in the city start with +5 XP
-- Note: open: Berserker cannot fortify; the new UA (need C++)
+- Changed: Berserker cannot fortify
+- Note: open: the new UA (needs C++)
+- DLL: UnitPromotions.NoFortify (promotion 382)
 - Dev: building ID 279 BUILDING_LEKMOD_RUNESTONE, icon art_sources/buildings/runestone
 
 POLYNESIA (CIVILIZATION_POLYNESIA)
@@ -2240,7 +2244,9 @@ INDIA (CIVILIZATION_INDIA)
 --------------------------
 Tags: civs, buildings
 - Removed: Mughal Fort: +2 Tourism with Flight
-- Note: open: Gajarata and Gajasena (together with Carthage's elephants)
+- Changed: War Elephant renamed Gajarata: costs 50 (was 46), needs 3 Iron, starts with Feared Elephant, upgrades to the Gajasena
+- Added: Gajasena, elephant cavalry that can only be reached by upgrading a Gajarata (Chivalry): 22 Strength, 3 Movement, costs 90, needs 3 Iron, Feared Elephant; upgrades to the Cavalry, which loses Feared Elephant
+- DLL: Units.UpgradeOnly (unit ID 274, class 119)
 
 CHILE (CIVILIZATION_CHILE)
 --------------------------
@@ -2248,7 +2254,9 @@ Tags: civs, units
 - Removed: the UA's combat penalty auras for melee, gunpowder and naval melee units
 - Changed: Cardoen (rebuilt) is a basic Helicopter Gunship: 70 Strength (was 85), 8 Movement (was 10)
 - Removed: Cardoen: +100% defense against ranged attacks
-- Note: open: Stargazing for units trained next to mountains, coast-and-mountain Culture, Cardoen +30 XP (need C++)
+- Added: Cardoen starts with +30 XP
+- Note: open: Stargazing for units trained next to mountains, coast-and-mountain Culture (need C++)
+- DLL: Units.FreeExperience
 
 BRAZIL (CIVILIZATION_BRAZIL)
 ----------------------------
@@ -2261,7 +2269,9 @@ ENGLAND (CIVILIZATION_ENGLAND)
 Tags: civs, units
 - Removed: the extra Spy; faster Constabularies and Police Stations and their Happiness
 - Changed: Longbowman: 20 Ranged Strength (was 18), 8 Strength (was 12), costs 88 (was 80), -20% when attacking cities
-- Note: open: double first Great Writer, Fulling Mill, MI6 (need C++; their icons are built)
+- Added: Fulling Mill, a unique Water Mill: Sheep, Cotton, Dyes and Silk next to the city yield +1 Production
+- Note: open: double first Great Writer, MI6 (need C++; its icon is built)
+- DLL: Building_AdjacentCityPlotYieldChanges (yields on tiles next to the city); building ID 282
 
 INCA (CIVILIZATION_INCA)
 ------------------------
@@ -2283,7 +2293,8 @@ Tags: civs, units, promotions
 - Removed: Amphibious for all land units
 - Changed: Mandekalu Cavalry: costs 80 (was 73), needs 3 Horses and 1 Iron (was 2 and 1), has the usual penalty against cities, pillages without spending movement
 - Changed: free pillaging is lost on upgrade (for every unit that has it)
-- Note: open: +2 moves after a kill, +20% far from own cities (need C++)
+- Added: Mandekalu Cavalry: +2 Movement after killing a unit (kept on upgrade), +20% combat strength when more than 3 tiles from your nearest city (lost on upgrade)
+- DLL: UnitPromotions.MovesAfterKill (promotion 385) and FarFromCityMod/FarFromCityDistance (promotion 386)
 
 YUGOSLAVIA (CIVILIZATION_YUGOSLAVIA)
 ------------------------------------
@@ -2466,4 +2477,27 @@ PRUSSIA (CIVILIZATION_PRUSSIA)
 Tags: civs, promotions
 - Changed: Haerte heals every turn and +5 HP per turn (was +50% defense against ranged attacks)
 - Removed: Zuverlaessigkeit: the Great General bonus
-- Note: open: Zuverlaessigkeit "always fights at full strength" (needs C++)
+- Changed: Zuverlaessigkeit: fights at full strength even when damaged
+- DLL: UnitPromotions.FightWellDamaged
+
+CARTHAGE (CIVILIZATION_CARTHAGE)
+--------------------------------
+Tags: civs, units, buildings
+- Changed: African Forest Elephant renamed Numidian Elephant: needs 3 Iron, upgrades to the Barcid Elephant (keeping Feared Elephant, Hannibal's charge and the Great General bonus)
+- Added: Barcid Elephant, elephant cavalry that can only be reached by upgrading a Numidian Elephant (Chivalry): 21 Strength, 3 Movement, costs 90, needs 3 Iron, Feared Elephant; upgrades to the Cavalry, which loses Feared Elephant
+- Changed: Cothon costs 40 (was 50); its Coast Production no longer needs Construction
+- Removed: Cothon: +1 Food and +1 Production
+- Note: open: Cothon next to lakes (needs C++)
+- Dev: unit ID 273, class 118 (Units.UpgradeOnly)
+
+ZULU (CIVILIZATION_ZULU)
+------------------------
+Tags: civs, units, buildings, promotions
+- Changed: promotions need 20% less XP (was 25%)
+- Removed: melee units' maintenance discount
+- Changed: the Buffalo promotions are an optional line for Zulu melee units: Horns +10% in open terrain, Loins +1 Movement, Chest +10% combat strength (each also +25% flanking and +10% defense against ranged attacks)
+- Changed: Ikanda becomes the Isibaya, a unique Stable: available at Civil Service, costs 80, the Stable's bonuses, Pastures next to the city +2 Food
+- Removed: Ikanda: free Buffalo Horns and XP for trained units
+- Removed: Impi: bonus against gunpowder units
+- Note: open: Impi first strike at 60% for all units with it, -25% Gold while at peace (need C++)
+- Dev: marker promotion PROMOTION_LEKMOD_IKANDA (387) gates the Buffalo line

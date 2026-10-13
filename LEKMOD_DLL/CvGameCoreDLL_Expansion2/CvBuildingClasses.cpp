@@ -1202,6 +1202,37 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 		}
 	}
 #endif
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+	{
+		m_aLekmodAdjacentCityYields.clear();
+		std::string strKey("Building_AdjacentCityPlotYieldChanges");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select coalesce(Improvements.ID, -1), coalesce(Resources.ID, -1), coalesce(Terrains.ID, -1), coalesce(Features.ID, -1), Yields.ID, Yield "
+				"from Building_AdjacentCityPlotYieldChanges "
+				"left join Improvements on Improvements.Type = ImprovementType "
+				"left join Resources on Resources.Type = ResourceType "
+				"left join Terrains on Terrains.Type = TerrainType "
+				"left join Features on Features.Type = FeatureType "
+				"inner join Yields on Yields.Type = YieldType "
+				"where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+		{
+			LekmodBuildingAdjacentYield kEntry;
+			kEntry.m_eImprovement = (ImprovementTypes)pResults->GetInt(0);
+			kEntry.m_eResource = (ResourceTypes)pResults->GetInt(1);
+			kEntry.m_eTerrain = (TerrainTypes)pResults->GetInt(2);
+			kEntry.m_eFeature = (FeatureTypes)pResults->GetInt(3);
+			kEntry.m_eYield = (YieldTypes)pResults->GetInt(4);
+			kEntry.m_iYield = pResults->GetInt(5);
+			m_aLekmodAdjacentCityYields.push_back(kEntry);
+		}
+	}
+#endif
 #ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
 	{
 		m_aLekmodGreatWorkFilledYields.clear();
@@ -3231,6 +3262,13 @@ int CvBuildingEntry::GetDifferentLandMassYieldChange(int i) const
 const std::vector<BuildingFreeTerrainYields>& CvBuildingEntry::GetFreeTerrainYields() const
 {
 	return m_aFreeTerrainYields;
+}
+#endif
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+/// Yields on plots next to the city (Building_AdjacentCityPlotYieldChanges)
+const std::vector<LekmodBuildingAdjacentYield>& CvBuildingEntry::GetLekmodAdjacentCityYields() const
+{
+	return m_aLekmodAdjacentCityYields;
 }
 #endif
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS

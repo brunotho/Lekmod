@@ -244,6 +244,17 @@ public:
 	const char* GetSound() const;
 	void SetSound(const char* szVal);
 
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	bool IsLekmodFightWellDamaged() const;
+	bool IsLekmodNoFortify() const;
+	int GetLekmodStrongerEnemyMod() const;
+	int GetLekmodAdjacentEnemiesMod() const;
+	int GetLekmodAdjacentEnemiesNeeded() const;
+	int GetLekmodMovesAfterKill() const;
+	int GetLekmodFarFromCityMod() const;
+	int GetLekmodFarFromCityDistance() const;
+	bool HasLekmodCivEffect() const;
+#endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	int GetAdjacentRangedAttackMod() const;
 	bool IsNoAdjacentRangedAttack() const;
@@ -535,6 +546,16 @@ protected:
 	int* m_piFeatureAttackPercent;
 	int* m_piFeatureDefensePercent;
 	int* m_piUnitCombatModifierPercent;
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	bool m_bLekmodFightWellDamaged;
+	bool m_bLekmodNoFortify;
+	int m_iLekmodStrongerEnemyMod;
+	int m_iLekmodAdjacentEnemiesMod;
+	int m_iLekmodAdjacentEnemiesNeeded;
+	int m_iLekmodMovesAfterKill;
+	int m_iLekmodFarFromCityMod;
+	int m_iLekmodFarFromCityDistance;
+#endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	int m_iAdjacentRangedAttackMod;
 	bool m_bNoAdjacentRangedAttack;

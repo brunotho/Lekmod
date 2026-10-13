@@ -1438,6 +1438,17 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_FOUNDING_UNIT_EFFECTS
 // Units.PolicyAlternateTech: the tech unlocks the unit without its PolicyType (shared unique Conquistador)
 #define LEKMOD_POLICY_ALTERNATE_TECH
+// Phase 6 civs (2026-10-13)
+// Units.UpgradeOnly: the unit can't be trained or bought, only reached by upgrading (Barcid Elephant, Gajasena)
+#define LEKMOD_UPGRADE_ONLY_UNITS
+// Units.FreeExperience: XP for the unit when it is trained or bought in a city (Cardoen)
+#define LEKMOD_UNIT_FREE_EXPERIENCE
+// UnitPromotions: FightWellDamaged, NoFortify, StrongerEnemyMod, AdjacentEnemiesMod/AdjacentEnemiesNeeded, MovesAfterKill,
+// FarFromCityMod/FarFromCityDistance; looked up from the unit's promotions, no saved unit fields
+#define LEKMOD_CIV_PROMOTION_EFFECTS
+// Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,
+// Terrain and Feature conditions; Fulling Mill, Isibaya, Australia)
+#define LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 // Buildings.TerritoryHealChange: extra healing for the owner's non-air units on all tiles of the city (Field Hospital)
 #define LEKMOD_TERRITORY_HEAL
 // Buildings.CityHealRate/AdjacentEnemyDamage/HillCityStrength/MountainCityStrength/CityAttackRangeChange (Walls, Castle, Arsenal, Command Bunker), Buildings.NukeUnitDamageFixed (Bomb Shelter);

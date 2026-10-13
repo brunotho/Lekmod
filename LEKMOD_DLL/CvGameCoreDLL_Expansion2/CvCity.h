@@ -890,6 +890,9 @@ public:
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 	int GetLekmodBeliefCityConditionYield(const class CvReligion* pReligion, BeliefTypes eSecondaryPantheon, YieldTypes eYield) const;
 #endif
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+	int GetLekmodAdjacentCityPlotYield(const CvPlot* pPlot, YieldTypes eYield, ImprovementTypes eImprovement) const;
+#endif
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 	int GetLekmodTechTerrainYield(const CvPlot* pPlot, YieldTypes eYield) const;
 #endif

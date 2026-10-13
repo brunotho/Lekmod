@@ -3862,7 +3862,7 @@ bool CvUnit::IsAngerFreeUnit() const
 int CvUnit::getWoundedRatio(int iAssumeExtraDamage) const
 {
 	int woundedMultiplier = /*33*/ GC.getWOUNDED_DAMAGE_MULTIPLIER();
-	woundedMultiplier += GET_PLAYER(getOwner()).GetWoundedUnitDamageMod();
+	woundedMultiplier += GetLekmodWoundedDamageMod();
 	int iWoundedRatio = GC.getMAX_HIT_POINTS() - ((getDamage() + iAssumeExtraDamage) * woundedMultiplier / 100);
 	if (getDomainType() == DOMAIN_AIR)
 	{
@@ -3888,7 +3888,7 @@ int CvUnit::getCombatDamage(int iStrength, int iOpponentStrength, int iCurrentDa
 	else
 	{
 		// Mod (Policies, etc.)
-		iWoundedDamageMultiplier += GET_PLAYER(getOwner()).GetWoundedUnitDamageMod();
+		iWoundedDamageMultiplier += GetLekmodWoundedDamageMod();
 
 		iDamageRatio = GC.getMAX_HIT_POINTS() - (iCurrentDamage * iWoundedDamageMultiplier / 100);
 	}
@@ -12989,7 +12989,7 @@ int CvUnit::GetBaseCombatStrengthConsideringDamage() const
 	int iWoundedDamageMultiplier = /*33*/ GC.getWOUNDED_DAMAGE_MULTIPLIER();
 
 	// Mod (Policies, etc.) - lower means Units are less bothered by damage
-	iWoundedDamageMultiplier += GET_PLAYER(getOwner()).GetWoundedUnitDamageMod();
+	iWoundedDamageMultiplier += GetLekmodWoundedDamageMod();
 #if defined(LEKMOD_COMBAT_PREDICTOR_IMPROVEMENTS)
 	CvCombatInfo kCombatInfo;
 	kCombatInfo.setUnit(BATTLE_UNIT_ATTACKER, const_cast<CvUnit*>(this));
@@ -14672,6 +14672,35 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 			}
 		}
 	}
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	// Israel: bonus against units with a higher base strength
+	if (pOtherUnit != NULL)
+	{
+		iTempModifier = GetLekmodStrongerEnemyMod(pOtherUnit);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_STRONGER_ENEMY", iTempModifier);
+		}
+	}
+	// Gibborim: bonus when surrounded by enemies
+	{
+		int iNumEnemies = 0;
+		iTempModifier = GetLekmodAdjacentEnemiesMod(&iNumEnemies);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_ADJACENT_ENEMIES", iTempModifier, iNumEnemies);
+		}
+	}
+	// Mandekalu Cavalry: bonus far from own cities
+	iTempModifier = GetLekmodFarFromCityMod();
+	iModifier += iTempModifier;
+	if (kModifierList && iTempModifier)
+	{
+		GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_FAR_FROM_CITY", iTempModifier);
+	}
+#endif
 	// Both are Known
 	if (kInfo.getPlot() != NULL && pOtherUnit != NULL)
 	{
@@ -15717,7 +15746,7 @@ int CvUnit::GetRangeCombatDamage(const CvUnit* pDefender, CvCity* pCity, bool bI
 
 	// Note, 0 is valid - means we don't do anything
 	int iWoundedDamageMultiplier = /*33*/ GC.getWOUNDED_DAMAGE_MULTIPLIER();
-	iWoundedDamageMultiplier += kPlayer.GetWoundedUnitDamageMod();
+	iWoundedDamageMultiplier += GetLekmodWoundedDamageMod();
 
 
 	int iAttackerDamageRatio = GC.getMAX_HIT_POINTS() - ((getDamage() - iAssumeExtraDamage) * iWoundedDamageMultiplier / 100);
@@ -16160,6 +16189,10 @@ bool CvUnit::isWaiting() const
 bool CvUnit::isFortifyable(bool bCanWaitForNextTurn) const
 {
 	VALIDATE_OBJECT
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	if (IsLekmodNoFortify())
+		return false;
+#endif
 	// Can't fortify if you've already used any moves this turn
 	if(!bCanWaitForNextTurn)
 	{
@@ -17464,6 +17497,128 @@ static const std::vector<PromotionTypes>& LekmodNavalPenaltyPromotions()
 		}
 	}
 	return s_aPromotions;
+}
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+static const std::vector<PromotionTypes>& LekmodCivPromotions()
+{
+	static std::vector<PromotionTypes> s_aPromotions;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		s_bInit = true;
+		for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
+		{
+			CvPromotionEntry* pkPromotion = GC.getPromotionInfo((PromotionTypes)iPromotion);
+			if (pkPromotion && pkPromotion->HasLekmodCivEffect())
+				s_aPromotions.push_back((PromotionTypes)iPromotion);
+		}
+	}
+	return s_aPromotions;
+}
+//	--------------------------------------------------------------------------------
+bool CvUnit::IsLekmodFightWellDamaged() const
+{
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]) && GC.getPromotionInfo(aPromotions[i])->IsLekmodFightWellDamaged())
+			return true;
+	return false;
+}
+//	--------------------------------------------------------------------------------
+bool CvUnit::IsLekmodNoFortify() const
+{
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]) && GC.getPromotionInfo(aPromotions[i])->IsLekmodNoFortify())
+			return true;
+	return false;
+}
+//	--------------------------------------------------------------------------------
+/// Bonus against a unit whose base strength (the higher of melee and ranged) is higher than ours
+int CvUnit::GetLekmodStrongerEnemyMod(const CvUnit* pOtherUnit) const
+{
+	if (pOtherUnit == NULL)
+		return 0;
+	int iMine = std::max(getUnitInfo().GetCombat(), getUnitInfo().GetRangedCombat());
+	int iTheirs = std::max(pOtherUnit->getUnitInfo().GetCombat(), pOtherUnit->getUnitInfo().GetRangedCombat());
+	if (iTheirs <= iMine)
+		return 0;
+	int iMod = 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]))
+			iMod += GC.getPromotionInfo(aPromotions[i])->GetLekmodStrongerEnemyMod();
+	return iMod;
+}
+//	--------------------------------------------------------------------------------
+/// Bonus when enough enemy combat units stand next to this unit
+int CvUnit::GetLekmodAdjacentEnemiesMod(int* piNumEnemies) const
+{
+	int iMod = 0;
+	int iNumEnemies = -1;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+	{
+		if (!isHasPromotion(aPromotions[i]))
+			continue;
+		CvPromotionEntry* pkPromotion = GC.getPromotionInfo(aPromotions[i]);
+		if (pkPromotion->GetLekmodAdjacentEnemiesMod() == 0)
+			continue;
+		if (iNumEnemies < 0)
+			iNumEnemies = GetNumEnemyUnitsAdjacent(NULL);
+		if (iNumEnemies >= std::max(1, pkPromotion->GetLekmodAdjacentEnemiesNeeded()))
+			iMod += pkPromotion->GetLekmodAdjacentEnemiesMod();
+	}
+	if (piNumEnemies)
+		*piNumEnemies = iNumEnemies;
+	return iMod;
+}
+//	--------------------------------------------------------------------------------
+int CvUnit::GetLekmodMovesAfterKill() const
+{
+	int iMoves = 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]))
+			iMoves += GC.getPromotionInfo(aPromotions[i])->GetLekmodMovesAfterKill();
+	return iMoves;
+}
+//	--------------------------------------------------------------------------------
+/// Bonus when more than the promotion's distance away from the nearest city of the owner
+int CvUnit::GetLekmodFarFromCityMod() const
+{
+	int iMod = 0;
+	int iDistance = -1;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+	{
+		if (!isHasPromotion(aPromotions[i]))
+			continue;
+		CvPromotionEntry* pkPromotion = GC.getPromotionInfo(aPromotions[i]);
+		if (pkPromotion->GetLekmodFarFromCityMod() == 0)
+			continue;
+		if (iDistance < 0)
+		{
+			iDistance = MAX_INT;
+			int iLoop;
+			for (const CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
+				iDistance = std::min(iDistance, plotDistance(getX(), getY(), pLoopCity->getX(), pLoopCity->getY()));
+		}
+		if (iDistance > pkPromotion->GetLekmodFarFromCityDistance())
+			iMod += pkPromotion->GetLekmodFarFromCityMod();
+	}
+	return iMod;
+}
+#endif
+//	--------------------------------------------------------------------------------
+/// Player's wounded damage mod; promotions that fight at full strength cancel the wounded penalty
+int CvUnit::GetLekmodWoundedDamageMod() const
+{
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	if (IsLekmodFightWellDamaged())
+		return -GC.getWOUNDED_DAMAGE_MULTIPLIER();
+#endif
+	return GET_PLAYER(getOwner()).GetWoundedUnitDamageMod();
 }
 //	--------------------------------------------------------------------------------
 /// Blind Spot: combat modifier for ranged attacks on an adjacent target

@@ -10007,6 +10007,12 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	{
 		return false;
 	}
+#ifdef LEKMOD_UPGRADE_ONLY_UNITS
+	if (pUnitInfo.IsLekmodUpgradeOnly())
+	{
+		return false;
+	}
+#endif
 
 	// Should we check whether this Unit has been blocked out by the civ XML?
 	if(!bIgnoreUniqueUnitStatus)

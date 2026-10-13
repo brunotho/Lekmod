@@ -147528,13 +147528,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Knight. Higher [ICON_STRENGTH] Combat Strength.[NEWLINE]Starts with Woodsman and Ambush Formation I.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_PROMISED_LAND">
-			<Text>+1 [ICON_PEACE] Faith from [ICON_BUILD_PASTURE] Pastures.</Text>
+			<Text>+1 [ICON_PEACE] Faith from [ICON_BUILD_PASTURE] Pastures.[NEWLINE][NEWLINE]Non-air units have +15% [ICON_STRENGTH] Combat Strength against units with a higher base strength.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_ISRAEL_MACCABEE">
 			<Text>Gibborim</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MACCABEE">
-			<Text>Replaces the Swordsman. Cheaper, but slightly weaker.[NEWLINE]Starts with Zealot.</Text>
+			<Text>Replaces the Swordsman. Cheaper, but slightly weaker.[NEWLINE]Starts with Zealot.[NEWLINE]+20% [ICON_STRENGTH] Combat Strength when 3 or more enemy units are adjacent.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_ISRAEL_MACCABEE_STRATEGY">
 			<Text>The Gibborim is Israel's unique unit, replacing the Swordsman. It is cheap to train, and its kills yield [ICON_PEACE] Faith.</Text>
@@ -147619,7 +147619,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Courthouse. Eliminates extra [ICON_HAPPINESS_4] Unhappiness from an [ICON_OCCUPIED] Occupied City.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_DENMARK_BERSERKER_HELP">
-			<Text>Replaces the Longswordsman and is available earlier, at Metal Casting. Weaker, but has +1 [ICON_MOVES] Movement.[NEWLINE]Starts with Fear Aura (enemies within 1 tile are weaker).[NEWLINE]Needs 3 [ICON_RES_IRON] Iron.</Text>
+			<Text>Replaces the Longswordsman and is available earlier, at Metal Casting. Weaker, but has +1 [ICON_MOVES] Movement.[NEWLINE]Starts with Fear Aura (enemies within 1 tile are weaker).[NEWLINE]Cannot fortify.[NEWLINE]Needs 3 [ICON_RES_IRON] Iron.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_DANISH_LONGSHIP">
 			<Text>Replaces the Trireme. Faster.[NEWLINE]Starts with Swift Transport and Coastal Raider I.</Text>
@@ -147652,7 +147652,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>[ICON_BUILD_FISHING_BOATS] Fishing Boats instantly claim all surrounding Neutral Tiles.[NEWLINE]Receive a free [ICON_GREAT_ADMIRAL] Great Admiral at the [ICON_TECH_COMPASS] [COLOR_CYAN]Compass[ENDCOLOR] technology.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_CARDOEN">
-			<Text>Unique Unit for Chile. Replaces the Helicopter Gunship.</Text>
+			<Text>Unique Unit for Chile. Replaces the Helicopter Gunship.[NEWLINE]Starts with +30 XP.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_BRAZILIAN_PRACINHA">
 			<Text>Replaces the [ICON_UNIT_INFANTRY] Infantry. Can move after attacking.[NEWLINE]+30% [ICON_STRENGTH] Combat Strength outside [COLOR_POSITIVE_TEXT]Friendly[ENDCOLOR] territory.</Text>
@@ -147670,7 +147670,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Receive double [ICON_GOLD] Gold from Barbarian encampments and pillaging Cities.[NEWLINE]Land units ignore terrain costs when traveling along or across rivers.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MUSLIM_CAVALRY">
-			<Text>Replaces the Knight. Needs 3 [ICON_RES_HORSE] Horses and 1 [ICON_RES_IRON] Iron.[NEWLINE]Pillages without spending movement.</Text>
+			<Text>Replaces the Knight. Needs 3 [ICON_RES_HORSE] Horses and 1 [ICON_RES_IRON] Iron.[NEWLINE]Pillages without spending movement.[NEWLINE]+2 [ICON_MOVES] Movement after killing a unit.[NEWLINE]+20% [ICON_STRENGTH] Combat Strength when more than 3 tiles away from your nearest city.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_YUGO_M84_HELP">
 			<Text>Unique Unit for Yugoslavia. Replaces the Tank and is cheaper (costs as much as a Landship).</Text>
@@ -147776,7 +147776,116 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Heals every turn, even after acting.[NEWLINE]+5 HP healing per turn.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_ZUVER_HELP">
-			<Text>Heals every turn, even after acting.</Text>
+			<Text>Heals every turn, even after acting.[NEWLINE]Fights at full strength even when damaged.</Text>
+		</Replace>
+		<!-- Phase 6 C++ batch A -->
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_STRONGER_ENEMY">
+			<Text>Against a Stronger Unit</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_ADJACENT_ENEMIES">
+			<Text>Surrounded ({1_Num} enemies)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_FAR_FROM_CITY">
+			<Text>Far from Own Cities</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_NO_FORTIFY">
+			<Text>Restless</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_NO_FORTIFY_HELP">
+			<Text>Cannot fortify.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_GIANT_SLAYER">
+			<Text>Giant Slayer</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_GIANT_SLAYER_HELP">
+			<Text>+15% [ICON_STRENGTH] Combat Strength against units with a higher base strength.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_SURROUNDED">
+			<Text>Back to Back</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_SURROUNDED_HELP">
+			<Text>+20% [ICON_STRENGTH] Combat Strength when 3 or more enemy units are adjacent.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_PURSUIT">
+			<Text>Pursuit</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_PURSUIT_HELP">
+			<Text>+2 [ICON_MOVES] Movement after killing a unit.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_FAR_RAIDER">
+			<Text>Desert Raider</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_FAR_RAIDER_HELP">
+			<Text>+20% [ICON_STRENGTH] Combat Strength when more than 3 tiles away from your nearest city.[NEWLINE]Lost on upgrade.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_IKANDA">
+			<Text>Ikanda Training</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_IKANDA_HELP">
+			<Text>Can take the Buffalo promotions (Horns, Loins, Chest).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_BARCID_ELEPHANT">
+			<Text>Barcid Elephant</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_BARCID_ELEPHANT_HELP">
+			<Text>Carthaginian elephant cavalry. Cannot be trained: Numidian Elephants upgrade into it from Chivalry.[NEWLINE]Starts with Feared Elephant (adjacent enemies are weaker).[NEWLINE]Upgrades to the Cavalry, which loses Feared Elephant.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_GAJASENA">
+			<Text>Gajasena</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_GAJASENA_HELP">
+			<Text>Indian elephant cavalry. Cannot be trained: Gajaratas upgrade into it from Chivalry.[NEWLINE]Starts with Feared Elephant (adjacent enemies are weaker).[NEWLINE]Upgrades to the Cavalry, which loses Feared Elephant.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_FULLING_MILL">
+			<Text>Fulling Mill</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_FULLING_MILL_HELP">
+			<Text>Replaces the Water Mill. +2 [ICON_FOOD] Food and +1 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE][ICON_RES_SHEEP] Sheep, [ICON_RES_COTTON] Cotton, [ICON_RES_DYE] Dyes and [ICON_RES_SILK] Silk next to the city yield +1 [ICON_PRODUCTION] Production.[NEWLINE][NEWLINE]City must be next to a river.</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_UNIT_CARTHAGINIAN_FOREST_ELEPHANT">
+			<Text>Numidian Elephant</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_CARTHAGINIAN_FOREST_ELEPHANT">
+			<Text>Replaces the Horseman. Stronger but slower, and needs 3 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Feared Elephant (adjacent enemies are weaker), deals more damage when attacking downhill and earns Great General points faster.[NEWLINE]Upgrades to the Barcid Elephant, keeping these.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_CARTHAGINIAN_FOREST_ELEPHANT_STRATEGY">
+			<Text>The Numidian Elephant is a Carthaginian unique unit, replacing the Horseman. It is slower but more powerful than the Horseman, can move after attacking, and weakens adjacent enemies. Success in combat with an Elephant earns Great Generals faster. It later upgrades to the Barcid Elephant.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_INDIAN_WARELEPHANT">
+			<Text>Gajarata</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_INDIAN_WAR_ELEPHANT">
+			<Text>Replaces the Chariot Archer. Stronger [ICON_STRENGTH] Combat and [ICON_RANGE_STRENGTH] Ranged Strength, and needs 3 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Feared Elephant (adjacent enemies are weaker).[NEWLINE]Upgrades to the Gajasena.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_INDIAN_WARELEPHANT_STRATEGY">
+			<Text>The Gajarata is the Indian unique unit, replacing the Chariot Archer. It is more powerful than the Chariot Archer and weakens adjacent enemies. As a mounted unit it is vulnerable to Spearmen. It later upgrades to the Gajasena.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_ZULU_IMPI">
+			<Text>Unique Unit that replaces the Pikemen. Only the Zulu may build it. Performs a first-strike ranged attack before combat.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_COTHON_HELP">
+			<Text>Replaces the [ICON_BUILDING_LIGHTHOUSE] Lighthouse.[NEWLINE][NEWLINE]Each source of [ICON_RES_FISH] Fish worked by this City produces +1 [ICON_FOOD] Food.[NEWLINE]Each source of [ICON_RES_AMBER] Amber and each Atoll worked by this City produces +1 [ICON_CULTURE] Culture.[NEWLINE]Coast tiles worked by this City produce +1 [ICON_PRODUCTION] Production (no Construction needed).[NEWLINE][NEWLINE]Buying tiles in this City costs 33% less [ICON_GOLD] Gold.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_IKANDA_DESC">
+			<Text>Isibaya</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_IKANDA_HELP">
+			<Text>Replaces the [ICON_BUILDING_STABLE] Stable. Available at Civil Service.[NEWLINE]+15% [ICON_PRODUCTION] Production when building Mounted Units.[NEWLINE][ICON_RES_HORSE] Horses, [ICON_RES_SHEEP] Sheep and [ICON_RES_COW] Cattle worked by this City produce +1 [ICON_PRODUCTION] Production, [ICON_RES_MAIZE] Maize +1 [ICON_FOOD] Food.[NEWLINE][NEWLINE]Pastures next to the city yield +2 [ICON_FOOD] Food.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_IKANDA_STRATEGY">
+			<Text>The Isibaya is the Zulu Stable. Besides the Stable's bonuses it makes Pastures next to the city much more productive.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_BUFFALO_HORNS">
+			<Text>All units require 20% less experience to earn their next promotion.[NEWLINE]Melee units can take the Buffalo promotions (Horns, Loins, Chest).</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_BUFFALO_HORNS_HELP">
+			<Text>+10% [ICON_STRENGTH] Combat Strength in [COLOR_POSITIVE_TEXT]open[ENDCOLOR] terrain (no Hills, Forest or Jungle).[NEWLINE]Flank attack bonus increased by 25%.[NEWLINE]+10% [COLOR_POSITIVE_TEXT]Defense[ENDCOLOR] against all [COLOR_POSITIVE_TEXT]Ranged Attacks[ENDCOLOR].</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_BUFFALO_LOINS_HELP">
+			<Text>+1 [ICON_MOVES] Movement.[NEWLINE]Flank attack bonus increased by 25%.[NEWLINE]+10% [COLOR_POSITIVE_TEXT]Defense[ENDCOLOR] against all [COLOR_POSITIVE_TEXT]Ranged Attacks[ENDCOLOR].</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_BUFFALO_CHEST_HELP">
+			<Text>+10% [ICON_STRENGTH] Combat Strength.[NEWLINE]Flank attack bonus increased by 25%.[NEWLINE]+10% [COLOR_POSITIVE_TEXT]Defense[ENDCOLOR] against all [COLOR_POSITIVE_TEXT]Ranged Attacks[ENDCOLOR].</Text>
 		</Replace>
 	</Language_en_US>
 	<Language_de_DE>

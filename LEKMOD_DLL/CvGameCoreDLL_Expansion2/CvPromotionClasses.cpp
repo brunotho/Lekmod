@@ -224,6 +224,16 @@ CvPromotionEntry::CvPromotionEntry():
 	m_piFeatureAttackPercent(NULL),
 	m_piFeatureDefensePercent(NULL),
 	m_piUnitCombatModifierPercent(NULL),
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	m_bLekmodFightWellDamaged(false),
+	m_bLekmodNoFortify(false),
+	m_iLekmodStrongerEnemyMod(0),
+	m_iLekmodAdjacentEnemiesMod(0),
+	m_iLekmodAdjacentEnemiesNeeded(0),
+	m_iLekmodMovesAfterKill(0),
+	m_iLekmodFarFromCityMod(0),
+	m_iLekmodFarFromCityDistance(0),
+#endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod(0),
 	m_bNoAdjacentRangedAttack(false),
@@ -890,6 +900,16 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 #endif
 	}
 
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	m_bLekmodFightWellDamaged = kResults.GetBool("FightWellDamaged");
+	m_bLekmodNoFortify = kResults.GetBool("NoFortify");
+	m_iLekmodStrongerEnemyMod = kResults.GetInt("StrongerEnemyMod");
+	m_iLekmodAdjacentEnemiesMod = kResults.GetInt("AdjacentEnemiesMod");
+	m_iLekmodAdjacentEnemiesNeeded = kResults.GetInt("AdjacentEnemiesNeeded");
+	m_iLekmodMovesAfterKill = kResults.GetInt("MovesAfterKill");
+	m_iLekmodFarFromCityMod = kResults.GetInt("FarFromCityMod");
+	m_iLekmodFarFromCityDistance = kResults.GetInt("FarFromCityDistance");
+#endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod = kResults.GetInt("AdjacentRangedAttackMod");
 	m_bNoAdjacentRangedAttack = kResults.GetBool("NoAdjacentRangedAttack");
@@ -2207,6 +2227,52 @@ int CvPromotionEntry::GetFeatureDefensePercent(int i) const
 	return -1;
 }
 
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+/// Fights at full strength even when damaged (Zuverlaessigkeit)
+bool CvPromotionEntry::IsLekmodFightWellDamaged() const
+{
+	return m_bLekmodFightWellDamaged;
+}
+/// May not fortify (Berserker)
+bool CvPromotionEntry::IsLekmodNoFortify() const
+{
+	return m_bLekmodNoFortify;
+}
+/// Combat modifier against units with a higher base strength (Israel)
+int CvPromotionEntry::GetLekmodStrongerEnemyMod() const
+{
+	return m_iLekmodStrongerEnemyMod;
+}
+/// Combat modifier when at least GetLekmodAdjacentEnemiesNeeded() enemy units are adjacent (Gibborim)
+int CvPromotionEntry::GetLekmodAdjacentEnemiesMod() const
+{
+	return m_iLekmodAdjacentEnemiesMod;
+}
+int CvPromotionEntry::GetLekmodAdjacentEnemiesNeeded() const
+{
+	return m_iLekmodAdjacentEnemiesNeeded;
+}
+/// Extra movement after killing a unit (Mandekalu Cavalry)
+int CvPromotionEntry::GetLekmodMovesAfterKill() const
+{
+	return m_iLekmodMovesAfterKill;
+}
+/// Combat modifier when more than GetLekmodFarFromCityDistance() tiles away from the nearest own city (Mandekalu Cavalry)
+int CvPromotionEntry::GetLekmodFarFromCityMod() const
+{
+	return m_iLekmodFarFromCityMod;
+}
+int CvPromotionEntry::GetLekmodFarFromCityDistance() const
+{
+	return m_iLekmodFarFromCityDistance;
+}
+/// Any of the Phase 6 promotion effects (for the CvUnit lookup list)
+bool CvPromotionEntry::HasLekmodCivEffect() const
+{
+	return m_bLekmodFightWellDamaged || m_bLekmodNoFortify || m_iLekmodStrongerEnemyMod != 0 || m_iLekmodAdjacentEnemiesMod != 0
+		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0;
+}
+#endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 /// Combat modifier for ranged attacks on an adjacent target (Blind Spot)
 int CvPromotionEntry::GetAdjacentRangedAttackMod() const

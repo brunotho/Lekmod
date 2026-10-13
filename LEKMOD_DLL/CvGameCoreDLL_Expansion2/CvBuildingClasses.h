@@ -32,6 +32,19 @@ struct BuildingFreeTerrainYields
 	int m_iMinTerrainRequired;
 	int m_iYieldChange;
 };
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+// Building_AdjacentCityPlotYieldChanges: yield on plots next to the city; each condition is optional (-1 = any)
+struct LekmodBuildingAdjacentYield
+{
+	LekmodBuildingAdjacentYield() : m_eImprovement(NO_IMPROVEMENT), m_eResource(NO_RESOURCE), m_eTerrain(NO_TERRAIN), m_eFeature(NO_FEATURE), m_eYield(NO_YIELD), m_iYield(0) {};
+	ImprovementTypes m_eImprovement;
+	ResourceTypes m_eResource;
+	TerrainTypes m_eTerrain;
+	FeatureTypes m_eFeature;
+	YieldTypes m_eYield;
+	int m_iYield;
+};
+#endif
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 // Building_TechTerrainYieldChanges: worked tiles of a terrain yield more once the owner knows the tech (Lighthouse: Coast +1 Production with Construction)
 struct LekmodBuildingTechTerrainYield
@@ -470,6 +483,9 @@ public:
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 	const std::vector<LekmodBuildingTechTerrainYield>& GetLekmodTechTerrainYields() const;
 #endif
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+	const std::vector<LekmodBuildingAdjacentYield>& GetLekmodAdjacentCityYields() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -819,6 +835,9 @@ private:
 #endif
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 	std::vector<LekmodBuildingTechTerrainYield> m_aLekmodTechTerrainYields;
+#endif
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+	std::vector<LekmodBuildingAdjacentYield> m_aLekmodAdjacentCityYields;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;

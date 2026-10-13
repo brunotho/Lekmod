@@ -3097,6 +3097,13 @@ void CvUnitCombat::ApplyPostCombatTraitEffects(CvUnit* pkWinner, CvUnit* pkLoser
 	}
 #endif
 
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	// Mandekalu Cavalry: extra movement after a kill
+	if (pkWinner->GetLekmodMovesAfterKill() > 0)
+	{
+		pkWinner->changeMoves(pkWinner->GetLekmodMovesAfterKill() * GC.getMOVE_DENOMINATOR());
+	}
+#endif
 	// "Heal if defeat enemy" promotion; doesn't apply if defeat a barbarian
 	if(pkWinner->getHPHealedIfDefeatEnemy() > 0 && (pkLoser->getOwner() != BARBARIAN_PLAYER || !(pkWinner->IsHealIfDefeatExcludeBarbarians())))
 	{

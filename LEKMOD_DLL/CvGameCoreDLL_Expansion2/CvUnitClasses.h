@@ -125,6 +125,12 @@ public:
 #ifdef LEKMOD_POLICY_ALTERNATE_TECH
 	int GetPolicyAlternateTech() const;
 #endif
+#ifdef LEKMOD_UPGRADE_ONLY_UNITS
+	bool IsLekmodUpgradeOnly() const;
+#endif
+#ifdef LEKMOD_UNIT_FREE_EXPERIENCE
+	int GetLekmodFreeExperience() const;
+#endif
 	int GetCultureBombRadius() const;
 	int GetCultureBombRadiusNeutral() const;
 	int GetGoldenAgeTurns() const;
@@ -288,6 +294,12 @@ private:
 #endif
 #ifdef LEKMOD_POLICY_ALTERNATE_TECH
 	int m_iPolicyAlternateTech;
+#endif
+#ifdef LEKMOD_UPGRADE_ONLY_UNITS
+	bool m_bLekmodUpgradeOnly;
+#endif
+#ifdef LEKMOD_UNIT_FREE_EXPERIENCE
+	int m_iLekmodFreeExperience;
 #endif
 	int m_iCultureBombRadius;
 	int m_iCultureBombRadiusNeutral;

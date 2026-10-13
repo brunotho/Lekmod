@@ -122,6 +122,12 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef LEKMOD_POLICY_ALTERNATE_TECH
 	m_iPolicyAlternateTech(NO_TECH),
 #endif
+#ifdef LEKMOD_UPGRADE_ONLY_UNITS
+	m_bLekmodUpgradeOnly(false),
+#endif
+#ifdef LEKMOD_UNIT_FREE_EXPERIENCE
+	m_iLekmodFreeExperience(0),
+#endif
 	m_piPrereqAndTechs(NULL),
 	m_piResourceQuantityRequirements(NULL),
 	m_piProductionTraits(NULL),
@@ -323,6 +329,12 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #ifdef LEKMOD_POLICY_ALTERNATE_TECH
 	szTextVal = kResults.GetText("PolicyAlternateTech");
 	m_iPolicyAlternateTech = GC.getInfoTypeForString(szTextVal, true);
+#endif
+#ifdef LEKMOD_UPGRADE_ONLY_UNITS
+	m_bLekmodUpgradeOnly = kResults.GetBool("UpgradeOnly");
+#endif
+#ifdef LEKMOD_UNIT_FREE_EXPERIENCE
+	m_iLekmodFreeExperience = kResults.GetInt("FreeExperience");
 #endif
 #if defined(MISC_CHANGES) // CvUnitClasses
 	szTextVal = kResults.GetText("PolicyBranchType");
@@ -1078,6 +1090,20 @@ bool CvUnitEntry::IsFoundCityUnitClass(int i) const
 }
 #endif
 
+#ifdef LEKMOD_UPGRADE_ONLY_UNITS
+/// Only reachable by upgrading: can't be trained or bought
+bool CvUnitEntry::IsLekmodUpgradeOnly() const
+{
+	return m_bLekmodUpgradeOnly;
+}
+#endif
+#ifdef LEKMOD_UNIT_FREE_EXPERIENCE
+/// XP when trained or bought in a city
+int CvUnitEntry::GetLekmodFreeExperience() const
+{
+	return m_iLekmodFreeExperience;
+}
+#endif
 #ifdef LEKMOD_POLICY_ALTERNATE_TECH
 /// A tech that unlocks the unit without its PolicyType
 int CvUnitEntry::GetPolicyAlternateTech() const

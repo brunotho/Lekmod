@@ -9315,6 +9315,26 @@ int CvPlot::GetLekmodAdjacentFeatureYield(YieldTypes eYield, ImprovementTypes eI
 #endif
 
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+//	--------------------------------------------------------------------------------
+/// Yield from buildings of ePlayer's cities next to this plot (Building_AdjacentCityPlotYieldChanges)
+int CvPlot::GetLekmodAdjacentCityBuildingYield(YieldTypes eYield, PlayerTypes ePlayer, ImprovementTypes eImprovement) const
+{
+	if (ePlayer == NO_PLAYER || isCity())
+		return 0;
+	int iYield = 0;
+	for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+	{
+		CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+		if (pAdjacentPlot == NULL || !pAdjacentPlot->isCity())
+			continue;
+		CvCity* pAdjacentCity = pAdjacentPlot->getPlotCity();
+		if (pAdjacentCity && pAdjacentCity->getOwner() == ePlayer)
+			iYield += pAdjacentCity->GetLekmodAdjacentCityPlotYield(this, eYield, eImprovement);
+	}
+	return iYield;
+}
+#endif
 int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 {
 	CvCity* pCity = 0;
@@ -9705,6 +9725,9 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 	iYield += GC.getGame().getPlotExtraYield(m_iX, m_iY, eYield);
 #ifdef LEKMOD_NATURAL_WONDER_EFFECTS
 	iYield += GetLekmodAdjacentFeatureYield(eYield, getImprovementType(), getFeatureType());
+#endif
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+	iYield += GetLekmodAdjacentCityBuildingYield(eYield, ePlayer, (IsImprovementPillaged() ? NO_IMPROVEMENT : eImprovement));
 #endif
 
 	if(ePlayer != NO_PLAYER)

@@ -4978,6 +4978,9 @@ int CvCity::getProductionExperience(UnitTypes eUnit)
 			}
 			iExperience += getDomainFreeExperience((DomainTypes)(pkUnitInfo->GetDomainType()));
 			iExperience += getDomainFreeExperienceFromGreatWorks((DomainTypes)(pkUnitInfo->GetDomainType()));
+#ifdef LEKMOD_UNIT_FREE_EXPERIENCE
+			iExperience += pkUnitInfo->GetLekmodFreeExperience();
+#endif
 
 			iExperience += getSpecialistFreeExperience();
 		}
@@ -8771,6 +8774,17 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 			if (eYield == 0 && !pBuildingInfo->GetLekmodTechTerrainYields().empty())
 				updateYield();
+#endif
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+			if (eYield == 0 && !pBuildingInfo->GetLekmodAdjacentCityYields().empty())
+			{
+				for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+				{
+					CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+					if (pAdjacentPlot)
+						pAdjacentPlot->updateYield();
+				}
+			}
 #endif
 #ifdef LEKMOD_POLICY_REWORK
 			if (eYield == 0 && GET_PLAYER(getOwner()).LekmodHasPolicyBuildingTerrainYields())
@@ -15353,6 +15367,51 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 }
 #endif
 
+#ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
+//	--------------------------------------------------------------------------------
+/// Extra yield on pPlot (next to this city) from this city's buildings (Building_AdjacentCityPlotYieldChanges)
+int CvCity::GetLekmodAdjacentCityPlotYield(const CvPlot* pPlot, YieldTypes eYield, ImprovementTypes eImprovement) const
+{
+	static std::vector<int> s_aiBuildings;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding && !pkBuilding->GetLekmodAdjacentCityYields().empty())
+				s_aiBuildings.push_back(iBuilding);
+		}
+		s_bInit = true;
+	}
+	if (pPlot == NULL || s_aiBuildings.empty())
+		return 0;
+	int iYield = 0;
+	ResourceTypes eResource = pPlot->getResourceType(getTeam());
+	for (uint i = 0; i < s_aiBuildings.size(); i++)
+	{
+		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)s_aiBuildings[i]) <= 0)
+			continue;
+		const std::vector<LekmodBuildingAdjacentYield>& aEntries = GC.getBuildingInfo((BuildingTypes)s_aiBuildings[i])->GetLekmodAdjacentCityYields();
+		for (uint j = 0; j < aEntries.size(); j++)
+		{
+			const LekmodBuildingAdjacentYield& kEntry = aEntries[j];
+			if (kEntry.m_eYield != eYield)
+				continue;
+			if (kEntry.m_eImprovement != NO_IMPROVEMENT && kEntry.m_eImprovement != eImprovement)
+				continue;
+			if (kEntry.m_eResource != NO_RESOURCE && kEntry.m_eResource != eResource)
+				continue;
+			if (kEntry.m_eTerrain != NO_TERRAIN && kEntry.m_eTerrain != pPlot->getTerrainType())
+				continue;
+			if (kEntry.m_eFeature != NO_FEATURE && kEntry.m_eFeature != pPlot->getFeatureType())
+				continue;
+			iYield += kEntry.m_iYield;
+		}
+	}
+	return iYield;
+}
+#endif
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 //	--------------------------------------------------------------------------------
 /// Extra yield on pPlot from this city's buildings whose terrain bonus needs a tech (Lighthouse: Coast, not lakes)

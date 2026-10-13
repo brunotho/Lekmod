@@ -711,6 +711,15 @@ public:
 	int GetLekmodUnitCombatAttackDefenseMod(UnitCombatTypes eUnitCombat, bool bAttack) const;
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS
+	bool IsLekmodFightWellDamaged() const;
+	bool IsLekmodNoFortify() const;
+	int GetLekmodStrongerEnemyMod(const CvUnit* pOtherUnit) const;
+	int GetLekmodAdjacentEnemiesMod(int* piNumEnemies = NULL) const;
+	int GetLekmodMovesAfterKill() const;
+	int GetLekmodFarFromCityMod() const;
+#endif
+	int GetLekmodWoundedDamageMod() const;
 	int GetLekmodAdjacentRangedAttackMod() const;
 	bool IsLekmodNoAdjacentRangedAttack() const;
 	bool IsLekmodNoAttackFromCity() const;

@@ -44001,7 +44001,6 @@
 			<HurryCostModifier>25</HurryCostModifier>
 			<FreeStartEra>ERA_INDUSTRIAL</FreeStartEra> 
 			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech> 
-			<TrainedFreePromotion>PROMOTION_BUFFALO_HORNS</TrainedFreePromotion> 
 			<ArtDefineTag>ART_DEF_BUILDING_BARRACKS</ArtDefineTag> 
 			<PortraitIndex>2</PortraitIndex> 
 			<IconAtlas>EXPANSION2_BUILDING_ATLAS</IconAtlas> 
@@ -110070,6 +110069,15 @@
 			<Yield>5</Yield>
 		</Row>
 	</Feature_HolyCityYieldChanges>
+	<Table name="Building_AdjacentCityPlotYieldChanges">
+		<Column name="BuildingType" type="text" reference="Buildings(Type)"/>
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" default="NULL"/>
+		<Column name="ResourceType" type="text" reference="Resources(Type)" default="NULL"/>
+		<Column name="TerrainType" type="text" reference="Terrains(Type)" default="NULL"/>
+		<Column name="FeatureType" type="text" reference="Features(Type)" default="NULL"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+	</Table>
 	<Table name="Feature_AdjacentPlotYieldChanges">
 		<Column name="FeatureType" type="text" reference="Features(Type)"/>
 		<Column name="ImprovementType" type="text" reference="Improvements(Type)" default="NULL"/>
@@ -214801,6 +214809,15 @@
 		<Column name="AdjacentRangedAttackMod" type="integer" default="0"/>
 		<Column name="NoAdjacentRangedAttack" type="boolean" default="false"/>
 		<Column name="NoAttackFromCity" type="boolean" default="false"/>
+		<!-- LEKMOD_CIV_PROMOTION_EFFECTS -->
+		<Column name="FightWellDamaged" type="boolean" default="false"/>
+		<Column name="NoFortify" type="boolean" default="false"/>
+		<Column name="StrongerEnemyMod" type="integer" default="0"/>
+		<Column name="AdjacentEnemiesMod" type="integer" default="0"/>
+		<Column name="AdjacentEnemiesNeeded" type="integer" default="0"/>
+		<Column name="MovesAfterKill" type="integer" default="0"/>
+		<Column name="FarFromCityMod" type="integer" default="0"/>
+		<Column name="FarFromCityDistance" type="integer" default="0"/>
 	</Table>
 	<UnitPromotions>
 		<Delete />
@@ -256679,6 +256696,86 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_FOREIGN_LANDS_30</PediaEntry>
 		</Row>
+		<Row>
+			<ID>382</ID>
+			<Type>PROMOTION_LEKMOD_NO_FORTIFY</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_NO_FORTIFY</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_NO_FORTIFY_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<NoFortify>true</NoFortify>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_NO_FORTIFY</PediaEntry>
+		</Row>
+		<Row>
+			<ID>383</ID>
+			<Type>PROMOTION_LEKMOD_GIANT_SLAYER</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_GIANT_SLAYER</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_GIANT_SLAYER_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<StrongerEnemyMod>15</StrongerEnemyMod>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_GIANT_SLAYER</PediaEntry>
+		</Row>
+		<Row>
+			<ID>384</ID>
+			<Type>PROMOTION_LEKMOD_SURROUNDED</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_SURROUNDED</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_SURROUNDED_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<AdjacentEnemiesMod>20</AdjacentEnemiesMod>
+			<AdjacentEnemiesNeeded>3</AdjacentEnemiesNeeded>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_SURROUNDED</PediaEntry>
+		</Row>
+		<Row>
+			<ID>385</ID>
+			<Type>PROMOTION_LEKMOD_PURSUIT</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_PURSUIT</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_PURSUIT_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<MovesAfterKill>2</MovesAfterKill>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_PURSUIT</PediaEntry>
+		</Row>
+		<Row>
+			<ID>386</ID>
+			<Type>PROMOTION_LEKMOD_FAR_RAIDER</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_FAR_RAIDER</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_FAR_RAIDER_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<FarFromCityMod>20</FarFromCityMod>
+			<FarFromCityDistance>3</FarFromCityDistance>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_FAR_RAIDER</PediaEntry>
+		</Row>
+		<Row>
+			<ID>387</ID>
+			<Type>PROMOTION_LEKMOD_IKANDA</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_IKANDA</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_IKANDA_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_IKANDA</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -272677,6 +272774,8 @@
 		<Column name="FoundCityPopulation" type="integer" default="0"/>
 		<Column name="FoundCityExtraPlots" type="integer" default="0"/>
 		<Column name="PolicyAlternateTech" type="text" reference="Technologies(Type)" default="NULL"/>
+		<Column name="UpgradeOnly" type="boolean" default="false"/>
+		<Column name="FreeExperience" type="integer" default="0"/>
 	</Table> 
 	<Units>
 		<Delete />
@@ -285663,4 +285762,669 @@
 			<Set Help="TXT_KEY_UNIT_HELP_LEKMOD_RCE"/>
 		</Update>
 	</Units>
+	<!-- Phase 6 C++ batch A (2026-10-13) -->
+	<!-- Carthage: Forest Elephant renamed Numidian Elephant, 3 Iron, upgrades to the Barcid Elephant (NEW, upgrade only, Chivalry, 21 strength, 90 Production on quick, 3 moves, 3 Iron, Feared Elephant, Siamese elephant model) which upgrades to Cavalry and loses Feared Elephant there; Cothon 40 Production on quick, no extra Food/Production, its Coast Production without Construction (lake rule needs C++, open) -->
+	<UnitClasses>
+		<Row>
+			<ID>118</ID>
+			<Type>UNITCLASS_LEKMOD_BARCID_ELEPHANT</Type>
+			<Description>TXT_KEY_UNIT_LEKMOD_BARCID_ELEPHANT</Description>
+			<DefaultUnit>UNIT_LEKMOD_BARCID_ELEPHANT</DefaultUnit>
+		</Row>
+		<Row>
+			<ID>119</ID>
+			<Type>UNITCLASS_LEKMOD_GAJASENA</Type>
+			<Description>TXT_KEY_UNIT_LEKMOD_GAJASENA</Description>
+			<DefaultUnit>UNIT_LEKMOD_GAJASENA</DefaultUnit>
+		</Row>
+	</UnitClasses>
+	<Units>
+		<Row>
+			<ID>273</ID>
+			<Type>UNIT_LEKMOD_BARCID_ELEPHANT</Type>
+			<Description>TXT_KEY_UNIT_LEKMOD_BARCID_ELEPHANT</Description>
+			<Civilopedia>TXT_KEY_CIVILOPEDIA_UNITS_MEDIEVAL_KNIGHT_TEXT</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_KNIGHT_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_LEKMOD_BARCID_ELEPHANT_HELP</Help>
+			<Combat>21</Combat>
+			<Cost>135</Cost>
+			<FaithCost>270</FaithCost>
+			<RequiresFaithPurchaseEnabled>true</RequiresFaithPurchaseEnabled>
+			<Moves>3</Moves>
+			<Class>UNITCLASS_LEKMOD_BARCID_ELEPHANT</Class>
+			<CombatClass>UNITCOMBAT_MOUNTED</CombatClass>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_FAST_ATTACK</DefaultUnitAI>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<Pillage>true</Pillage>
+			<PrereqTech>TECH_CHIVALRY</PrereqTech>
+			<ObsoleteTech>TECH_MILITARY_SCIENCE</ObsoleteTech>
+			<GoodyHutUpgradeUnitClass>UNITCLASS_CAVALRY</GoodyHutUpgradeUnitClass>
+			<AdvancedStartCost>25</AdvancedStartCost>
+			<CombatLimit>100</CombatLimit>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>3</XPValueDefense>
+			<UpgradeOnly>true</UpgradeOnly>
+			<UnitArtInfo>ART_DEF_UNIT_U_SIAMESE_WARELEPHANT</UnitArtInfo>
+			<MoveRate>PHANT</MoveRate>
+			<UnitFlagIconOffset>28</UnitFlagIconOffset>
+			<PortraitIndex>29</PortraitIndex>
+			<IconAtlas>UNIT_ATLAS_1</IconAtlas>
+			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
+		</Row>
+		<Row>
+			<ID>274</ID>
+			<Type>UNIT_LEKMOD_GAJASENA</Type>
+			<Description>TXT_KEY_UNIT_LEKMOD_GAJASENA</Description>
+			<Civilopedia>TXT_KEY_CIVILOPEDIA_UNITS_MEDIEVAL_KNIGHT_TEXT</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_KNIGHT_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_LEKMOD_GAJASENA_HELP</Help>
+			<Combat>22</Combat>
+			<Cost>135</Cost>
+			<FaithCost>270</FaithCost>
+			<RequiresFaithPurchaseEnabled>true</RequiresFaithPurchaseEnabled>
+			<Moves>3</Moves>
+			<Class>UNITCLASS_LEKMOD_GAJASENA</Class>
+			<CombatClass>UNITCOMBAT_MOUNTED</CombatClass>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_FAST_ATTACK</DefaultUnitAI>
+			<MilitarySupport>true</MilitarySupport>
+			<MilitaryProduction>true</MilitaryProduction>
+			<Pillage>true</Pillage>
+			<PrereqTech>TECH_CHIVALRY</PrereqTech>
+			<ObsoleteTech>TECH_MILITARY_SCIENCE</ObsoleteTech>
+			<GoodyHutUpgradeUnitClass>UNITCLASS_CAVALRY</GoodyHutUpgradeUnitClass>
+			<AdvancedStartCost>25</AdvancedStartCost>
+			<CombatLimit>100</CombatLimit>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>3</XPValueDefense>
+			<UpgradeOnly>true</UpgradeOnly>
+			<UnitArtInfo>ART_DEF_UNIT_U_SIAMESE_WARELEPHANT</UnitArtInfo>
+			<MoveRate>PHANT</MoveRate>
+			<UnitFlagIconOffset>28</UnitFlagIconOffset>
+			<PortraitIndex>29</PortraitIndex>
+			<IconAtlas>UNIT_ATLAS_1</IconAtlas>
+			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
+		</Row>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_LEKMOD_BARCID_ELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<UnitClassType>UNITCLASS_CAVALRY</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_LEKMOD_BARCID_ELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<PromotionType>PROMOTION_FEARED_ELEPHANT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_AITypes>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<UnitAIType>UNITAI_DEFENSE</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<UnitAIType>UNITAI_FAST_ATTACK</UnitAIType>
+		</Row>
+	</Unit_AITypes>
+	<Unit_Flavors>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<FlavorType>FLAVOR_OFFENSE</FlavorType>
+			<Flavor>9</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<FlavorType>FLAVOR_DEFENSE</FlavorType>
+			<Flavor>3</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<FlavorType>FLAVOR_MOBILE</FlavorType>
+			<Flavor>5</Flavor>
+		</Row>
+	</Unit_Flavors>
+	<UnitGameplay2DScripts>
+		<Row>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+			<SelectionSound>AS2D_SELECT_KNIGHT</SelectionSound>
+			<FirstSelectionSound>AS2D_BIRTH_KNIGHT</FirstSelectionSound>
+		</Row>
+	</UnitGameplay2DScripts>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_LEKMOD_GAJASENA"/>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<UnitClassType>UNITCLASS_CAVALRY</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_LEKMOD_GAJASENA"/>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<PromotionType>PROMOTION_FEARED_ELEPHANT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_AITypes>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<UnitAIType>UNITAI_DEFENSE</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<UnitAIType>UNITAI_FAST_ATTACK</UnitAIType>
+		</Row>
+	</Unit_AITypes>
+	<Unit_Flavors>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<FlavorType>FLAVOR_OFFENSE</FlavorType>
+			<Flavor>9</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<FlavorType>FLAVOR_DEFENSE</FlavorType>
+			<Flavor>3</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<FlavorType>FLAVOR_MOBILE</FlavorType>
+			<Flavor>5</Flavor>
+		</Row>
+	</Unit_Flavors>
+	<UnitGameplay2DScripts>
+		<Row>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+			<SelectionSound>AS2D_SELECT_KNIGHT</SelectionSound>
+			<FirstSelectionSound>AS2D_BIRTH_KNIGHT</FirstSelectionSound>
+		</Row>
+	</UnitGameplay2DScripts>
+	<Civilization_UnitClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_CARTHAGE</CivilizationType>
+			<UnitClassType>UNITCLASS_LEKMOD_BARCID_ELEPHANT</UnitClassType>
+			<UnitType>UNIT_LEKMOD_BARCID_ELEPHANT</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_INDIA</CivilizationType>
+			<UnitClassType>UNITCLASS_LEKMOD_GAJASENA</UnitClassType>
+			<UnitType>UNIT_LEKMOD_GAJASENA</UnitType>
+		</Row>
+	</Civilization_UnitClassOverrides>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_CARTHAGINIAN_FOREST_ELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_CARTHAGINIAN_FOREST_ELEPHANT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_CARTHAGINIAN_FOREST_ELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_CARTHAGINIAN_FOREST_ELEPHANT</UnitType>
+			<UnitClassType>UNITCLASS_LEKMOD_BARCID_ELEPHANT</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_COTHON"/>
+			<Set Cost="60"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_COTHON"/>
+	</Building_YieldChanges>
+	<Building_TechTerrainYieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_COTHON"/>
+			<Set TechType="TECH_AGRICULTURE"/>
+		</Update>
+	</Building_TechTerrainYieldChanges>
+	<!-- India: War Elephant renamed Gajarata, 50 Production on quick, 3 Iron, Feared Elephant, upgrades to the Gajasena (NEW, upgrade only, Chivalry, 22 strength, 90 Production on quick, 3 moves, 3 Iron, Siamese elephant model) which upgrades to Cavalry -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_INDIAN_WARELEPHANT"/>
+			<Set Cost="75" FaithCost="150"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_INDIAN_WARELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_INDIAN_WARELEPHANT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_INDIAN_WARELEPHANT</UnitType>
+			<PromotionType>PROMOTION_FEARED_ELEPHANT</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_INDIAN_WARELEPHANT"/>
+		<Row>
+			<UnitType>UNIT_INDIAN_WARELEPHANT</UnitType>
+			<UnitClassType>UNITCLASS_LEKMOD_GAJASENA</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<!-- Chile: Cardoen starts with +30 XP -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_CARDOEN"/>
+			<Set FreeExperience="30"/>
+		</Update>
+	</Units>
+	<!-- Denmark: Berserker can't fortify -->
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_DANISH_BERSERKER</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_NO_FORTIFY</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Prussia: Zuverlaessigkeit fights at full strength when damaged -->
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_ZUVER"/>
+			<Set FightWellDamaged="true"/>
+		</Update>
+	</UnitPromotions>
+	<!-- Israel: non-air units +15% against units with a higher base strength; Gibborim +20% with 3+ adjacent enemies -->
+	<Trait_FreePromotionUnitCombats>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PROMISED_LAND</TraitType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_GIANT_SLAYER</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_ISRAEL_MACCABEE</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_SURROUNDED</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Songhai: Mandekalu Cavalry +2 moves after a kill (kept on upgrade), +20% when more than 3 tiles from the nearest own city (lost on upgrade) -->
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_PURSUIT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_FAR_RAIDER</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- England: Fulling Mill (NEW water mill UB): Water Mill + Sheep, Cotton, Dyes, Silk next to the city +1 Production -->
+	<Buildings>
+		<Row>
+			<ID>282</ID>
+			<Type>BUILDING_LEKMOD_FULLING_MILL</Type>
+			<BuildingClass>BUILDINGCLASS_WATERMILL</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_FULLING_MILL</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_FULLING_MILL_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_FULLING_MILL_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_FULLING_MILL_HELP</Help>
+			<GoldMaintenance>2</GoldMaintenance>
+			<Sellable>true</Sellable>
+			<River>true</River>
+			<Cost>75</Cost>
+			<HurryCostModifier>25</HurryCostModifier>
+			<MinAreaSize>-1</MinAreaSize>
+			<ConquestProb>66</ConquestProb>
+			<ArtDefineTag>ART_DEF_BUILDING_WATERMILL</ArtDefineTag>
+			<PrereqTech>TECH_THE_WHEEL</PrereqTech>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_FULLING_MILL_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<FlavorType>FLAVOR_GROWTH</FlavorType>
+			<Flavor>25</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<FlavorType>FLAVOR_PRODUCTION</FlavorType>
+			<Flavor>20</Flavor>
+		</Row>
+	</Building_Flavors>
+	<Building_AdjacentCityPlotYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<ResourceType>RESOURCE_SHEEP</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<ResourceType>RESOURCE_COTTON</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<ResourceType>RESOURCE_DYE</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+			<ResourceType>RESOURCE_SILK</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_AdjacentCityPlotYieldChanges>
+	<Civilization_BuildingClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_ENGLAND</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_WATERMILL</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_FULLING_MILL</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<!-- Zulu: Ikanda becomes the Isibaya (stable UB at Civil Service, 80 Production on quick, Stable effects, Pastures next to the city +2 Food); Buffalo promotions become an optional line for Zulu melee units (Horns: +10% in open terrain, Loins: +1 move, Chest: +10% strength; all +25% flanking and +10% vs ranged), via the Ikanda marker; XP for promotions -20% (was -25%), no melee maintenance discount (Impi 60% first strike and the peace Gold penalty need C++, open) -->
+	<Civilization_BuildingClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_ZULU" BuildingType="BUILDING_IKANDA"/>
+			<Set BuildingClassType="BUILDINGCLASS_STABLE"/>
+		</Update>
+	</Civilization_BuildingClassOverrides>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_IKANDA"/>
+			<Set BuildingClass="BUILDINGCLASS_STABLE" PrereqTech="TECH_CIVIL_SERVICE" Cost="120" GoldMaintenance="1" ArtDefineTag="ART_DEF_BUILDING_STABLE"/>
+		</Update>
+	</Buildings>
+	<Building_DomainFreeExperiences>
+		<Delete BuildingType="BUILDING_IKANDA"/>
+	</Building_DomainFreeExperiences>
+	<Building_ResourceYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_MAIZE</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_SHEEP</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_COW</ResourceType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_ResourceYieldChanges>
+	<Building_UnitCombatProductionModifiers>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
+	</Building_UnitCombatProductionModifiers>
+	<Building_LocalResourceOrs>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_MAIZE</ResourceType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_SHEEP</ResourceType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ResourceType>RESOURCE_COW</ResourceType>
+		</Row>
+	</Building_LocalResourceOrs>
+	<Building_AdjacentCityPlotYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_IKANDA</BuildingType>
+			<ImprovementType>IMPROVEMENT_PASTURE</ImprovementType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_AdjacentCityPlotYieldChanges>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_BUFFALO_HORNS"/>
+			<Set LevelExperienceModifier="-20"/>
+		</Update>
+	</Traits>
+	<Trait_MaintenanceModifierUnitCombats>
+		<Delete TraitType="TRAIT_BUFFALO_HORNS"/>
+	</Trait_MaintenanceModifierUnitCombats>
+	<Trait_FreePromotionUnitCombats>
+		<Row>
+			<TraitType>TRAIT_BUFFALO_HORNS</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_LEKMOD_IKANDA</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_BUFFALO_HORNS"/>
+			<Set CannotBeChosen="false" MovesChange="0" OpenAttack="10" OpenDefense="10"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_BUFFALO_LOINS"/>
+			<Set MovesChange="1" OpenAttack="0" OpenDefense="0" RoughAttack="0" RoughDefense="0"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_BUFFALO_CHEST"/>
+			<Set OpenAttack="10" OpenDefense="10" RoughAttack="10" RoughDefense="10"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions_PromotionPrereqOrs>
+		<Delete PromotionType="PROMOTION_BUFFALO_CHEST"/>
+		<Delete PromotionType="PROMOTION_BUFFALO_LOINS"/>
+		<Row>
+			<PromotionType>PROMOTION_BUFFALO_HORNS</PromotionType>
+			<PrerequisitePromotion>PROMOTION_LEKMOD_IKANDA</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_BUFFALO_LOINS</PromotionType>
+			<PrerequisitePromotion>PROMOTION_BUFFALO_HORNS</PrerequisitePromotion>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_BUFFALO_CHEST</PromotionType>
+			<PrerequisitePromotion>PROMOTION_BUFFALO_LOINS</PrerequisitePromotion>
+		</Row>
+	</UnitPromotions_PromotionPrereqOrs>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_ZULU_IMPI" PromotionType="PROMOTION_ANTI_GUNPOWDER"/>
+	</Unit_FreePromotions>
+	<IconTextureAtlases>
+		<Row>
+			<Atlas>LEKMOD_FULLING_MILL_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>fulling_mill_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_FULLING_MILL_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>fulling_mill_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_FULLING_MILL_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>fulling_mill_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_FULLING_MILL_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>fulling_mill_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_FULLING_MILL_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>fulling_mill_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_FULLING_MILL_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>fulling_mill_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_FULLING_MILL_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>fulling_mill_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+	</IconTextureAtlases>
 </GameData>
