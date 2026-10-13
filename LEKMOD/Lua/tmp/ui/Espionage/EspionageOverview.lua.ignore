@@ -325,7 +325,7 @@ function TabSelect(tab)
 	Refresh();
 end
 Controls.TabButtonOverview:RegisterCallback( Mouse.eLClick, function() TabSelect("Overview"); end);
-Controls.TabButtonIntrigue:RegisterCallback( Mouse.eLClick, function() TabSelect("Intrigue"); end );
+Controls.TabButtonIntrigue:RegisterCallback( Mouse.eLClick, function() TabSelect("Intrigue"); if (Controls.LekmodRulesText ~= nil) then LekmodShowRules("AGENTS"); end end ); -- LEKMOD: Rules tab opens on the agents page
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
@@ -1602,9 +1602,16 @@ local function LekmodPartLines(parts)
 	return str;
 end
 
--- catch chance of a spy with this strength (same formula as the DLL: 10% per building + 25% x guard level / strength, at most 100%)
+-- catch chance of a spy with this strength (same formula as the DLL CvPlayerEspionage::LekmodGetCatchChance):
+-- 10% per defense building + 100% x guard level / (guard level + strength + 1), at most 100%
+local function LekmodGuardPart(iGuardLevel, iStrength)
+	if (iGuardLevel <= 0) then
+		return 0;
+	end
+	return math.floor(100 * iGuardLevel / (iGuardLevel + math.max(1, iStrength) + 1));
+end
 local function LekmodCatch(iFromBuildings, iGuardLevel, iStrength)
-	return math.min(100, iFromBuildings + math.floor(25 * iGuardLevel / math.max(1, iStrength)));
+	return math.min(100, iFromBuildings + LekmodGuardPart(iGuardLevel, iStrength));
 end
 
 function LekmodStealInfoText(info)
@@ -1618,7 +1625,7 @@ function LekmodStealInfoText(info)
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_HEADER");
 	str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_BUILDINGS", info.CatchFromBuildings, info.DefenseBuildings);
 	str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_CAUGHT_GUARD",
-		math.floor(25 / math.max(1, info.Strength)), math.floor(50 / math.max(1, info.Strength)), math.floor(75 / math.max(1, info.Strength)));
+		LekmodGuardPart(1, info.Strength), LekmodGuardPart(5, info.Strength));
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_YOUR_STRENGTH", info.Strength) .. LekmodPartLines(info.StrengthParts);
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_THEIR_DEFENSE", info.Defense) .. LekmodPartLines(info.DefenseParts);
 	str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_STEAL_RULE");
@@ -1666,11 +1673,16 @@ local function LekmodAgentActivityRaw(pPlayer, agent, city)
 	elseif (state == "TXT_KEY_SPY_STATE_RIGGING_ELECTION") then
 		return Locale.Lookup("TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT", agent.Rank, agent.Name, strCity, LekmodDec(20 * info.Level));
 	elseif (state == "TXT_KEY_SPY_STATE_COUNTER_INTEL") then
-		local catches = {};
+		local str = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT", agent.Rank, agent.Name, strCity);
 		for s = 1, 5 do
-			catches[s] = LekmodCatch(info.CatchFromBuildings, info.GuardLevel, s);
+			str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_GUARD_CATCH_LINE", s, LekmodCatch(info.CatchFromBuildings, info.GuardLevel, s));
 		end
-		local str = Locale.Lookup("TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT", agent.Rank, agent.Name, strCity, table.concat(catches, " / "));
+		if (info.CatchFromBuildings > 0) then
+			str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_GUARD_BUILDINGS_PART", info.CatchFromBuildings);
+			str = str .. "[NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_GUARD_HIDDEN");
+		else
+			str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_GUARD_HIDDEN");
+		end
 		str = str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_YOUR_DEFENSE", info.Defense) .. LekmodPartLines(info.DefenseParts);
 		if (info.Level >= 3) then
 			return str .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_SWEEP_READY");
@@ -1683,10 +1695,16 @@ local function LekmodAgentActivityRaw(pPlayer, agent, city)
 		if (info.MinorCiv) then
 			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CS_TT", agent.Rank, agent.Name, strCity, LekmodDec(33 * info.Level), 50 * info.Level);
 		else
-			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CAPITAL_TT", agent.Rank, agent.Name, strCity, LekmodDec(info.DiplomatScience), 2 * info.Level, 15 * info.Level);
-			if (info.AtWar) then
-				str = str .. "[NEWLINE]" .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_AT_WAR");
+			str = Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_CAPITAL_TT", agent.Rank, agent.Name, strCity);
+			if (not info.TechGap) then
+				str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_NO_TECH");
+			else
+				str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_SCIENCE_LINE", LekmodDec(info.DiplomatScience), 2 * info.Level, strCity);
+				if (info.AtWar) then
+					str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_AT_WAR");
+				end
 			end
+			str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_GOLD_LINE", 15 * info.Level, strCity);
 			if (info.Level >= 3) then
 				str = str .. "[NEWLINE][ICON_BULLET] " .. Locale.Lookup("TXT_KEY_LEKMOD_EO_DIPLOMAT_SPY_BONUS");
 			else
@@ -1708,17 +1726,26 @@ function LekmodAgentActivityTT(pPlayer, agent, city)
 	return LekmodHangingIndent(LekmodAgentActivityRaw(pPlayer, agent, city));
 end
 
--- LEKMOD: the second tab shows the rules instead of the (AI-only) intrigue messages
-local LEKMOD_RULES_LINE_PIXELS = 380;	-- the rule labels wrap at 440 px; our own wrap stays well below it
-function LekmodShowRules()
+-- LEKMOD: the second tab shows the rules instead of the (AI-only) intrigue messages.
+-- It opens on the agents page; the spy and diplomat icons (top right) switch to their pages.
+local LEKMOD_RULES_LINE_PIXELS = 700;	-- the rules label wraps at 780 px; our own wrap stays below it
+local g_LekmodRulesPage = "AGENTS";
+function LekmodShowRules(page)
+	if (page ~= nil) then
+		g_LekmodRulesPage = page;
+	end
 	Controls.IntrigueMessageHeaders:SetHide(true);
 	Controls.IntrigueMessageScrollPanel:SetHide(true);
 	Controls.NoIntrigueAvailable:SetHide(true);
-	Controls.LekmodRulesLeft:SetText(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_RULES_SPIES"), LEKMOD_RULES_LINE_PIXELS));
-	Controls.LekmodRulesRight:SetText(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS"), LEKMOD_RULES_LINE_PIXELS));
+	Controls.LekmodRulesText:SetText(LekmodHangingIndent(Locale.Lookup("TXT_KEY_LEKMOD_EO_RULES_" .. g_LekmodRulesPage), LEKMOD_RULES_LINE_PIXELS));
 	Controls.LekmodRulesStack:CalculateSize();
 	Controls.LekmodRulesStack:ReprocessAnchoring();
 	Controls.LekmodRulesScroll:CalculateInternalSize();
+	Controls.LekmodRulesScroll:SetScrollValue(0);
+end
+if (Controls.LekmodRulesSpyButton ~= nil) then
+	Controls.LekmodRulesSpyButton:RegisterCallback(Mouse.eLClick, function() LekmodShowRules("SPIES"); end);
+	Controls.LekmodRulesDiplomatButton:RegisterCallback(Mouse.eLClick, function() LekmodShowRules("DIPLOMATS"); end);
 end
 
 -- LEKMOD: enemy spies we caught: Execute / Evict / decide later (Execute when the turn ends)
@@ -1807,7 +1834,7 @@ Controls.No:RegisterCallback( Mouse.eLClick, OnNo );
 
 ----------------------------------------------------------------
 function RefreshIntrigue()
-	if (Controls.LekmodRulesLeft ~= nil) then
+	if (Controls.LekmodRulesText ~= nil) then
 		LekmodShowRules(); -- LEKMOD
 		return;
 	end

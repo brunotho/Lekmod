@@ -11882,6 +11882,8 @@ int CvLuaPlayer::lLekmodGetSpyStealInfo(lua_State* L)
 	lua_setfield(L, t, "StealAmount");
 	lua_pushinteger(L, pkEspionage->LekmodGetDiplomatScienceTimes100(iSpy));
 	lua_setfield(L, t, "DiplomatScience");
+	lua_pushboolean(L, pCity != NULL && pkEspionage->LekmodTheyKnowTechWeLack(pCity->getOwner()));
+	lua_setfield(L, t, "TechGap");
 	lua_pushboolean(L, pCity != NULL && GET_TEAM(pkThisPlayer->getTeam()).isAtWar(pCity->getTeam()));
 	lua_setfield(L, t, "AtWar");
 	lua_pushboolean(L, pCity != NULL && GET_PLAYER(pCity->getOwner()).isMinorCiv());

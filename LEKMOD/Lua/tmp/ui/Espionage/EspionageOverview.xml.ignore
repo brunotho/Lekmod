@@ -77,11 +77,11 @@
 					<Image Anchor="L,C" Texture="Esp_ViewCity20.dds" Offset="22,2" Size="20,20" TextureOffset="0,20" ID="ViewCityIcon"/>
 					<Label ID="CityName" Anchor="L,C" Offset="42,0" TruncateWidth="115" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Box>
-				<Box Size="80,25" Color="0,0,0,0">
+				<Box Size="0,25" Color="0,0,0,0" Hidden="1">
 					<Image ID="PotentialMeterBack" Anchor="L,C" Texture="Esp_CityPotential_Stars_Black.dds" Size="93,20"/>
 					<TextureBar Anchor="L,C" Size="93,20" Texture="Esp_CityPotential_Stars.dds" Direction="Right" ID="PotentialMeterFront"/>
 				</Box>
-				<Box Size="80,25" Color="0,0,0,0">
+				<Box Size="160,25" Color="0,0,0,0">
 					<Label ID="CityPopulation" Anchor="C,C" TruncateWidth="155" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Box>
 			</Stack>
@@ -111,11 +111,11 @@
 						<Image Anchor="L,C" Texture="Esp_ViewCity20.dds" Offset="22,2" Size="20,20" TextureOffset="0,20" ID="ViewCityIcon"/>
 						<Label ID="CityName" Anchor="L,C" Offset="42,0" TruncateWidth="115" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 					</Box>
-					<Box Size="80,25" Color="0,0,0,0">
+					<Box Size="0,25" Color="0,0,0,0" Hidden="1">
 						<Image ID="PotentialMeterBack" Anchor="L,C" Texture="Esp_CityPotential_Stars_Black.dds" Size="93,20"/>
 						<TextureBar Anchor="L,C" Size="93,20" Texture="Esp_CityPotential_Stars.dds" Direction="Right" ID="PotentialMeterFront"/>
 					</Box>
-					<Box Size="80,25" Color="0,0,0,0">
+					<Box Size="160,25" Color="0,0,0,0">
 						<Label ID="CityPopulation" Anchor="C,C" TruncateWidth="155" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 					</Box>
 				</Stack>
@@ -142,7 +142,7 @@
 					<Button Anchor="L,C" Texture="Esp_ViewCity20.dds" Offset="22,2" Size="20,20" TextureOffset="0,20" NoStateChange="1" ID="ViewCityIcon"/>
 					<Label ID="CityName" Anchor="L,C" Offset="42,0" TruncateWidth="115" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Box>
-				<Box Size="80,25" Color="0,0,0,0">
+				<Box Size="0,25" Color="0,0,0,0" Hidden="1">
 					<Image ID="PotentialMeterBack" Anchor="L,C" Texture="Esp_CityPotential_Stars_Black.dds" Size="93,20"/>
 					<TextureBar Anchor="L,C" Size="93,20" Texture="Esp_CityPotential_Stars_Blue.dds" Direction="Right" ID="PotentialMeterGhost"/>
 					<TextureBar Anchor="L,C" Size="93,20" Texture="Esp_CityPotential_Stars.dds" Direction="Right" ID="PotentialMeterFront"/>
@@ -150,7 +150,7 @@
 					<Image ID="RigElectionDisabled" Anchor="C,C" Texture="Esp_Spy_RigginElection22.dds" Hidden="1" TextureOffset="0,44" Size="22,22"/>
 					<Image ID="RigElectionEnabled" Anchor="C,C" Texture="Esp_Spy_RigginElection22.dds" Hidden="1" Size="22,22"/>
 				</Box>
-				<Box Size="80,25" Color="0,0,0,0">
+				<Box Size="160,25" Color="0,0,0,0">
 					<Label ID="CityPopulation" Anchor="C,C" TruncateWidth="155" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 				</Box>
 			</Stack>
@@ -182,7 +182,7 @@
 						<Image Anchor="L,C" Texture="Esp_ViewCity20.dds" Offset="22,2" Size="20,20" TextureOffset="0,20" ID="ViewCityIcon"/>
 						<Label ID="CityName" Anchor="L,C" Offset="42,0" TruncateWidth="115" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 					</Box>
-					<Box Size="80,25" Color="0,0,0,0">
+					<Box Size="0,25" Color="0,0,0,0" Hidden="1">
 						<Image ID="PotentialMeterBack" Anchor="L,C" Texture="Esp_CityPotential_Stars_Black.dds" Size="93,20"/>
 						<TextureBar Anchor="L,C" Size="93,20" Texture="Esp_CityPotential_Stars_Blue.dds" Direction="Right" ID="PotentialMeterGhost"/>
 						<TextureBar Anchor="L,C" Size="93,20" Texture="Esp_CityPotential_Stars.dds" Direction="Right" ID="PotentialMeterFront"/>
@@ -190,7 +190,7 @@
 						<Image ID="RigElectionDisabled" Anchor="C,C" Texture="Esp_Spy_RigginElection22.dds" ToolTip="TXT_KEY_EO_CITY_STATE_POTENTIAL_TT" Hidden="1" TextureOffset="0,44" Size="22,22"/>
 						<Image ID="RigElectionEnabled" Anchor="C,C" Texture="Esp_Spy_RigginElection22.dds" ToolTip="TXT_KEY_EO_CITY_STATE_POTENTIAL_TT" Hidden="1" Size="22,22"/>
 					</Box>
-					<Box Size="80,25" Color="0,0,0,0">
+					<Box Size="160,25" Color="0,0,0,0">
 						<Label ID="CityPopulation" Anchor="C,C" TruncateWidth="155" ColorSet="Beige_Black_Alpha" Font="TwCenMT18" FontStyle="Shadow"/>
 					</Box>
 				</Stack>
@@ -363,12 +363,12 @@
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="YCSortByNameImage"/>
 									</TextButton>
 								</Box>
-								<Box Size="80,18" Color="0,0,0,0">
+								<Box Size="0,18" Color="0,0,0,0" Hidden="1">
 									<TextButton Offset="0,0" Anchor="C,B" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" String="TXT_KEY_EO_POTENTIAL" ToolTip="TXT_KEY_EO_POTENTIAL_SORT_TT" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" ID="YCSortByPotential">
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="YCSortByPotentialImage"/>
 									</TextButton>
 								</Box>
-								<Box Size="80,18" Color="0,0,0,0">
+								<Box Size="160,18" Color="0,0,0,0">
 									<Button Anchor="C,B" Size="32,32" Texture="CitizenWorker.dds" ToolTip="TXT_KEY_EO_POPULATION_SORT_TT" ID="YCSortByPopulation">
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="YCSortByPopulationImage"/>
 									</Button>
@@ -404,12 +404,12 @@
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="OCSortByNameImage"/>
 									</TextButton>
 								</Box>
-								<Box Size="80,18" Color="0,0,0,0">
+								<Box Size="0,18" Color="0,0,0,0" Hidden="1">
 									<TextButton Offset="0,0" Anchor="C,B" Font="TwCenMT20" ColorSet="Beige_Black_Alpha" ToolTip="TXT_KEY_EO_POTENTIAL_SORT_TT" String="TXT_KEY_EO_POTENTIAL" FontStyle="Shadow" MouseOverStyle="SoftShadow" ConsumeMouse="1" ID="OCSortByPotential">
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="OCSortByPotentialImage"/>
 									</TextButton>
 								</Box>
-								<Box Size="80,18" Color="0,0,0,0">
+								<Box Size="160,18" Color="0,0,0,0">
 									<Button Anchor="C,B" Size="32,32" Texture="CitizenWorker.dds" ToolTip="TXT_KEY_EO_POPULATION_SORT_TT" ID="OtherCitiesSortByPopulation">
 										<Image Anchor="L,C" AnchorSide="O.I" Offset="2,0" Texture="assets/UI/Art/Controls/9 Grids/SelectedUp.dds" Size="18,18" ID="OCSortByPopulationImage"/>
 									</Button>
@@ -455,16 +455,19 @@
 					<Stack StackGrowth="Bottom" ID="IntrigueMessageStack"/>
 				</ScrollPanel>
 				<Label Anchor="C,C" Offset="0,10" WrapWidth="440" ID="NoIntrigueAvailable" Hidden="1" String="TXT_KEY_EO_NO_INTRIGUE_AVAILABLE" Font="TwCenMT22" ColorSet="Beige_Black_Alpha" FontStyle="Shadow"/>
-				<!-- LEKMOD: rules (replaces the intrigue messages) -->
-				<ScrollPanel Vertical="1" Size="936,455" Offset="0,4" AutoScrollBar="1" ID="LekmodRulesScroll">
-					<ScrollBar Style="VertSlider" Length="439" Anchor="R,C" AnchorSide="O,I"/>
-					<UpButton Style="ScrollBarUp" Anchor="R,T" AnchorSide="O,I"/>
-					<DownButton Style="ScrollBarDown" Anchor="R,B" AnchorSide="O,I"/>
-					<Stack StackGrowth="Right" Padding="20" Offset="12,6" ID="LekmodRulesStack">
-						<Label WrapWidth="440" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LekmodRulesLeft"/>
-						<Label WrapWidth="440" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LekmodRulesRight"/>
-					</Stack>
-				</ScrollPanel>
+				<!-- LEKMOD: rules (replaces the intrigue messages): plain background, one page at a time -->
+				<Box Size="954,463" Color="12,18,26,255" ID="LekmodRulesBack">
+					<ScrollPanel Vertical="1" Size="830,447" Offset="20,8" AutoScrollBar="1" ID="LekmodRulesScroll">
+						<ScrollBar Style="VertSlider" Length="431" Anchor="R,C" AnchorSide="O,I"/>
+						<UpButton Style="ScrollBarUp" Anchor="R,T" AnchorSide="O,I"/>
+						<DownButton Style="ScrollBarDown" Anchor="R,B" AnchorSide="O,I"/>
+						<Stack StackGrowth="Bottom" Offset="0,4" ID="LekmodRulesStack">
+							<Label WrapWidth="780" Font="TwCenMT18" ColorSet="Beige_Black_Alpha" FontStyle="Shadow" ID="LekmodRulesText"/>
+						</Stack>
+					</ScrollPanel>
+					<Button Anchor="R,T" Offset="62,10" Size="45,45" Texture="Esp_FramedIcons45_Expansion.dds" TextureOffset="0,45" NoStateChange="1" ToolTip="TXT_KEY_LEKMOD_EO_RULES_SPIES_BUTTON" ID="LekmodRulesSpyButton"/>
+					<Button Anchor="R,T" Offset="12,10" Size="45,45" Texture="Esp_Diplomat_FramedIcon45.dds" NoStateChange="1" ToolTip="TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS_BUTTON" ID="LekmodRulesDiplomatButton"/>
+				</Box>
 			</Box>
 		</Box>
 		<Box Anchor="C,B" AnchorSide="I.I" Offset="0,54" Size="927,56" Color="255,255,255,0">

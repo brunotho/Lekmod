@@ -66490,7 +66490,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_RIGGING_ELECTIONS_TT"> 
 			<Text>
-				{1_RankName} {2_SpyName} is meddling in {3_CityName}.[NEWLINE]While the spy stays, every other civilization's [ICON_INFLUENCE] Influence there changes {4_X} less per turn (0.2 per level).[NEWLINE]They don't learn whose spy it is.
+				{1_RankName} {2_SpyName} is meddling in {3_CityName}.[NEWLINE][NEWLINE]While the spy stays, every other civilization's [ICON_INFLUENCE] Influence there gets {4_X} (0.2 per spy level) less per turn, on top of its normal change: above the resting point it falls faster, below it recovers more slowly. One-time gains (quests, gifts) are not affected.[NEWLINE]They don't learn whose spy it is.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_EO_SPY_SURVEILLANCE_TT"> 
@@ -120861,7 +120861,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>We caught {@2_SpyName}, a {@1_CivAdjective} spy, in {@3_CityName}.[NEWLINE][NEWLINE]Execute: the spy dies.[NEWLINE]Evict: the spy returns home and keeps its level.[NEWLINE][NEWLINE]Without a choice the spy is executed when the turn ends.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_COUNTER_INTEL_TT">
-			<Text>{1_RankName} {2_SpyName} guards {3_CityName}.[NEWLINE][NEWLINE]Catch chance per enemy steal attempt, against spy strength 1 / 2 / 3 / 4 / 5: {4_X}%.[NEWLINE]Enemy spies see your defense buildings, but not your guard.</Text>
+			<Text>{1_RankName} {2_SpyName} guards {3_CityName}.[NEWLINE][NEWLINE]Chance to catch an enemy spy on each of its steals:</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_LEVEL_TT">
 			<Text>Next level in {1_Num} turns (every 25 turns in the same city).</Text>
@@ -120936,10 +120936,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>From level 3 this spy can sweep the city for enemy spies.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_CAPITAL_TT">
-			<Text>{1_RankName} {2_SpyName} is your diplomat in {3_CityName}.[NEWLINE][NEWLINE][ICON_BULLET] +{4_X} [ICON_RESEARCH] Science per turn: {5_Num}% of {3_CityName}'s Science (2% per level)[NEWLINE][ICON_BULLET] +{6_Num}% [ICON_GOLD] Gold on your trade routes to {3_CityName} (15% per level)</Text>
+			<Text>{1_RankName} {2_SpyName} is your diplomat in {3_CityName}.[NEWLINE]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_AT_WAR">
-			<Text>[ICON_BULLET] Science halved: you are at war with them</Text>
+			<Text>Science halved: you are at war with them</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_SPY_BONUS">
 			<Text>Your spies in this civilization are 1 stronger</Text>
@@ -120948,7 +120948,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>From level 3: your spies in this civilization are 1 stronger</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_CS_TT">
-			<Text>{1_RankName} {2_SpyName} is your diplomat in {3_CityName}.[NEWLINE][NEWLINE][ICON_BULLET] +{4_X} [ICON_INFLUENCE] Influence per turn (0.33 per level)[NEWLINE][ICON_BULLET] Influence below the resting point recovers {5_Num}% faster (50% per level)</Text>
+			<Text>{1_RankName} {2_SpyName} is your diplomat in {3_CityName}.[NEWLINE][NEWLINE][ICON_BULLET] +{4_X} [ICON_INFLUENCE] Influence per turn on top of its normal change (0.33 per level)[NEWLINE][ICON_BULLET] Influence below the resting point recovers {5_Num}% faster (50% per level)</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_MAX_LEVEL">
 			<Text>Highest level reached.</Text>
@@ -120960,10 +120960,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>How agents, spies and diplomats work.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_SPIES">
-			<Text>[COLOR_POSITIVE_TEXT]SPIES[ENDCOLOR][NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In another civilization's city[ENDCOLOR][NEWLINE][ICON_BULLET] Every few turns the spy steals 8 turns of the city's [ICON_RESEARCH] Science toward one of their technologies you pick. This always succeeds, and they always learn who it was.[NEWLINE][ICON_BULLET] Each steal can get the spy caught. Its owner then executes or evicts it.[NEWLINE][ICON_BULLET] From level 3 you can switch a spy to full tech: it tries for a whole technology instead. That works (100% minus catch chance) / 4 of the time; a failure gives nothing.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]How often: strength against visible defense[ENDCOLOR][NEWLINE][ICON_BULLET] Strength: the spy's level, +1 with your level 3+ diplomat in their capital, + your cultural influence level over them, +1 with Industrial Espionage.[NEWLINE][ICON_BULLET] Visible defense: +1 each for Constabulary, Police Station and Intelligence Agency, + their cultural influence level over you.[NEWLINE][ICON_BULLET] 15 turns per steal when strength is 1 above defense, 2 turns less per extra point (7 at best), 5 turns more per point below.[NEWLINE][ICON_BULLET] The spy sees the tiles around the city, radius strength minus visible defense.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]How safe: catch chance per steal[ENDCOLOR][NEWLINE][ICON_BULLET] 10% for each Constabulary, Police Station and Intelligence Agency.[NEWLINE][ICON_BULLET] A guarding spy adds 25% x its level / your spy's strength. Example: a level 2 guard against strength 1 adds 50%.[NEWLINE][ICON_BULLET] Guards are hidden: you never learn whether a city has one.[NEWLINE][ICON_BULLET] At most 100%.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In your own city (guard)[ENDCOLOR][NEWLINE][ICON_BULLET] Raises the catch chance against every enemy spy there, as above.[NEWLINE][ICON_BULLET] From level 3 it can sweep the city: costs 5 turns of the city's Science in [ICON_GOLD] Gold, and every enemy spy there is caught with its catch chance.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] Every other civilization's [ICON_INFLUENCE] Influence there changes 0.2 per level less each turn. They don't learn whose spy it is.[NEWLINE][ICON_BULLET] The spy can stage a coup.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Upkeep and levels[ENDCOLOR][NEWLINE][ICON_BULLET] 3 [ICON_GOLD] Gold per turn per era from the Renaissance while in a city.[NEWLINE][ICON_BULLET] +1 level for each successful steal, successful coup or caught enemy spy.</Text>
+			<Text>[COLOR_POSITIVE_TEXT]SPIES[ENDCOLOR][NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In another civilization's city[ENDCOLOR][NEWLINE][ICON_BULLET] The spy only works toward a steal while they know a technology you lack. Once you are no longer behind, its timer starts over.[NEWLINE][ICON_BULLET] A steal takes 8 turns of the city's [ICON_RESEARCH] Science toward one of their technologies you pick. It always succeeds, and they always learn who it was.[NEWLINE][ICON_BULLET] Each steal can get the spy caught. Its owner then executes or evicts it.[NEWLINE][ICON_BULLET] From level 3 you can switch a spy to full tech: it tries for a whole technology instead. That works (100% minus catch chance) / 4 of the time; a failure gives nothing.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]How often: strength against visible defense[ENDCOLOR][NEWLINE][ICON_BULLET] Strength: the spy's level, +1 with your level 3+ diplomat in their capital, + your cultural influence level over them, +1 with Industrial Espionage.[NEWLINE][ICON_BULLET] Visible defense: +1 each for Constabulary, Police Station and Intelligence Agency, + their cultural influence level over you.[NEWLINE][ICON_BULLET] 15 turns per steal when strength is 1 above defense, 2 turns less per extra point (7 at best), 5 turns more per point below.[NEWLINE][ICON_BULLET] The spy sees the tiles around the city, radius strength minus visible defense.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]How safe: catch chance per steal[ENDCOLOR][NEWLINE][ICON_BULLET] 10% for each Constabulary, Police Station and Intelligence Agency.[NEWLINE][ICON_BULLET] A guarding spy adds its level / (its level + your spy's strength + 1). Example: a level 2 guard against strength 1: 2 / 4 = 50%.[NEWLINE][ICON_BULLET] Guards are hidden: you never learn whether a city has one.[NEWLINE][ICON_BULLET] At most 100%.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In your own city (guard)[ENDCOLOR][NEWLINE][ICON_BULLET] Raises the catch chance against every enemy spy there, as above.[NEWLINE][ICON_BULLET] From level 3 it can sweep the city: costs 5 turns of the city's Science in [ICON_GOLD] Gold, and every enemy spy there is caught with its catch chance.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In a City-State[ENDCOLOR][NEWLINE][ICON_BULLET] Every other civilization's [ICON_INFLUENCE] Influence there gets 0.2 per spy level less per turn, on top of its normal change: above the resting point it falls faster, below it recovers more slowly. One-time gains (quests, gifts) are not affected.[NEWLINE][ICON_BULLET] They don't learn whose spy it is.[NEWLINE][ICON_BULLET] The spy can stage a coup.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]Upkeep and levels[ENDCOLOR][NEWLINE][ICON_BULLET] 3 [ICON_GOLD] Gold per turn per era from the Renaissance while in a city.[NEWLINE][ICON_BULLET] +1 level for each successful steal, successful coup or caught enemy spy.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS">
-			<Text>[COLOR_POSITIVE_TEXT]AGENTS[ENDCOLOR][NEWLINE][ICON_BULLET] You get agents as you advance through the eras, and from some wonders and policies.[NEWLINE][ICON_BULLET] Each agent works as a spy or as a diplomat. You choose when you send it to another civilization's capital or a City-State.[NEWLINE][ICON_BULLET] Agents have levels 1 to 5. At home they do nothing and cost nothing.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]DIPLOMATS[ENDCOLOR][NEWLINE][ICON_BULLET] They go to another civilization's capital or to a City-State. They never steal, cost no upkeep and stay through wars.[NEWLINE][ICON_BULLET] They are set up at once with civilizations that give you open borders.[NEWLINE][ICON_BULLET] +1 level every 25 turns in the same city. Moving keeps the level.[NEWLINE][ICON_BULLET] They see the tiles around their city like spies do.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In a capital, per level[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_RESEARCH] Science equal to 2% of the capital's (halved at war).[NEWLINE][ICON_BULLET] +15% [ICON_GOLD] Gold on your trade routes to that city.[NEWLINE]From level 3:[NEWLINE][ICON_BULLET] Your spies in that civilization are 1 stronger.[NEWLINE][ICON_BULLET] Two civilizations with diplomats in each other's capitals share what their level 3+ spies see in other civilizations' cities.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In a City-State, per level[ENDCOLOR][NEWLINE][ICON_BULLET] +0.33 [ICON_INFLUENCE] Influence per turn.[NEWLINE][ICON_BULLET] Influence below the resting point recovers 50% faster.</Text>
+			<Text>[COLOR_POSITIVE_TEXT]DIPLOMATS[ENDCOLOR][NEWLINE][ICON_BULLET] They go to another civilization's capital or to a City-State. They never steal, cost no upkeep and stay through wars.[NEWLINE][ICON_BULLET] They are set up at once with civilizations that give you open borders.[NEWLINE][ICON_BULLET] +1 level every 25 turns in the same city. Moving keeps the level.[NEWLINE][ICON_BULLET] They see the tiles around their city like spies do.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In a capital, per level[ENDCOLOR][NEWLINE][ICON_BULLET] [ICON_RESEARCH] Science equal to 2% of the capital's (halved at war), only while they know a technology you lack.[NEWLINE][ICON_BULLET] +15% [ICON_GOLD] Gold on your trade routes to that city.[NEWLINE]From level 3:[NEWLINE][ICON_BULLET] Your spies in that civilization are 1 stronger.[NEWLINE][ICON_BULLET] Two civilizations with diplomats in each other's capitals share what their level 3+ spies see in other civilizations' cities.[NEWLINE][NEWLINE][COLOR_POSITIVE_TEXT]In a City-State, per level[ENDCOLOR][NEWLINE][ICON_BULLET] +0.33 [ICON_INFLUENCE] Influence per turn, on top of its normal change.[NEWLINE][ICON_BULLET] Influence below the resting point recovers 50% faster.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_STEAL_LINE">
 			<Text>Every {1_Num} turns: steals about {2_Num} [ICON_RESEARCH] Science (8 turns of this city's) toward one of their technologies. This always succeeds.</Text>
@@ -120978,10 +120978,37 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>{1_Num}% from their defense buildings ({2_Num} x 10%)</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_CAUGHT_GUARD">
-			<Text>plus a guard you can't see: +{1_Num}% / +{2_Num}% / +{3_Num}% for a level 1 / 2 / 3 guard</Text>
+			<Text>plus a hidden guard, if there is one: +{1_Num}% (level 1) to +{2_Num}% (level 5)</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_EO_YOUR_DEFENSE">
-			<Text>Your visible defense (slows enemy steals): {1_Num}</Text>
+			<Text>Your visible defense (from buildings): {1_Num}</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_AGENTS">
+			<Text>[COLOR_POSITIVE_TEXT]AGENTS[ENDCOLOR][NEWLINE][ICON_BULLET] You get agents as you advance through the eras, and from some wonders and policies.[NEWLINE][ICON_BULLET] Each agent works as a spy or as a diplomat. You choose when you send it to another civilization's capital or a City-State; in any other city it is a spy.[NEWLINE][ICON_BULLET] Agents have levels 1 to 5.[NEWLINE][ICON_BULLET] At home an agent does nothing and costs nothing.[NEWLINE][NEWLINE]Click the spy or the diplomat icon at the top right for their rules.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_SPIES_BUTTON">
+			<Text>Spies</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_RULES_DIPLOMATS_BUTTON">
+			<Text>Diplomats</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_GUARD_CATCH_LINE">
+			<Text>against spy strength {1_Num}: {2_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_GUARD_BUILDINGS_PART">
+			<Text>Your defense buildings add {1_Num}% of this (10% each).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_GUARD_HIDDEN">
+			<Text>Enemy spies see your defense buildings, but not your guard.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_NO_TECH">
+			<Text>No [ICON_RESEARCH] Science right now: they know no technology you lack</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_SCIENCE_LINE">
+			<Text>+{1_X} [ICON_RESEARCH] Science per turn: {2_Num}% of {3_CityName}'s Science (2% per level)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_EO_DIPLOMAT_GOLD_LINE">
+			<Text>+{1_Num}% [ICON_GOLD] Gold on your trade routes to {2_CityName} (15% per level)</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_WORLD_LEADER_FAIL_DETAILS">
 			<Text>No civilization has the {1_NumDelegates} Delegates needed to become World Leader.[NEWLINE]First and second place each gain 1 permanent Delegate.[NEWLINE]</Text>

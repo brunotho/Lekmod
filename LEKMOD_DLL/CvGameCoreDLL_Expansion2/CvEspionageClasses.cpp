@@ -1847,7 +1847,7 @@ int CvPlayerEspionage::LekmodGetStealInterval(int iStrength, int iDefense)
 }
 
 /// % chance a spy of this strength is caught on a steal attempt in pCity: 10% per Constabulary, Police Station and
-/// Intelligence Agency (public) + 25% x guarding spy level / strength (hidden from the attacker), at most 100%
+/// Intelligence Agency (public) + 100% x guard level / (guard level + strength + 1) (hidden from the attacker), at most 100%
 int CvPlayerEspionage::LekmodGetCatchChance(CvCity* pCity, int iStrength, int* piFromBuildings, int* piGuardLevel)
 {
 	if (pCity == NULL)
@@ -1872,7 +1872,8 @@ int CvPlayerEspionage::LekmodGetCatchChance(CvCity* pCity, int iStrength, int* p
 		*piFromBuildings = std::min(100, 10 * iBuildings);
 	if (piGuardLevel)
 		*piGuardLevel = iGuardLevel;
-	return std::min(100, 10 * iBuildings + 25 * iGuardLevel / std::max(1, iStrength));
+	const int iGuardPart = iGuardLevel > 0 ? 100 * iGuardLevel / (iGuardLevel + std::max(1, iStrength) + 1) : 0;
+	return std::min(100, 10 * iBuildings + iGuardPart);
 }
 
 /// A caught spy (this player's): a human defender decides Execute or Evict (Execute when its turn ends); AIs execute at once
@@ -2104,6 +2105,21 @@ int CvPlayerEspionage::LekmodGetDiplomatScienceTimes100()
 	return iScience;
 }
 
+/// eOther's team knows a technology our team doesn't
+bool CvPlayerEspionage::LekmodTheyKnowTechWeLack(PlayerTypes eOther)
+{
+	if (eOther == NO_PLAYER)
+		return false;
+	CvTeamTechs* pTheirTechs = GET_TEAM(GET_PLAYER(eOther).getTeam()).GetTeamTechs();
+	CvTeamTechs* pOurTechs = GET_TEAM(m_pPlayer->getTeam()).GetTeamTechs();
+	for (int iTech = 0; iTech < GC.getNumTechInfos(); iTech++)
+	{
+		if (pTheirTechs->HasTech((TechTypes)iTech) && !pOurTechs->HasTech((TechTypes)iTech))
+			return true;
+	}
+	return false;
+}
+
 /// Science per turn (x100) from one diplomat: 2% x level of the capital's Science, halved at war
 int CvPlayerEspionage::LekmodGetDiplomatScienceTimes100(uint uiSpyIndex)
 {
@@ -2111,6 +2127,8 @@ int CvPlayerEspionage::LekmodGetDiplomatScienceTimes100(uint uiSpyIndex)
 		return 0;
 	CvCity* pCity = GetCityWithSpy(uiSpyIndex);
 	if (pCity == NULL || GET_PLAYER(pCity->getOwner()).isMinorCiv())
+		return 0;
+	if (!LekmodTheyKnowTechWeLack(pCity->getOwner()))
 		return 0;
 	int iValue = pCity->getYieldRateTimes100(YIELD_SCIENCE, false) * 2 * ((int)m_aSpyList[uiSpyIndex].m_eRank + 1) / 100;
 	if (GET_TEAM(m_pPlayer->getTeam()).isAtWar(pCity->getTeam()))
