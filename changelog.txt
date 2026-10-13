@@ -2174,3 +2174,163 @@ Tags: civs, units
 - Changed: Janissary starts with Charge and Zealot, and can always be bought with Faith
 - Removed: Janissary: healing on kills and the attack bonus
 - Note: open: the new UA and the Su Kemeri (needs C++)
+
+KOREA (CIVILIZATION_KOREA)
+--------------------------
+Tags: civs, units, buildings, naval
+- Changed: Turtle Ship: 25 Strength (was 36), 5 Movement (was 4), costs 96 (was 80), needs 1 Iron, starts with Cover I and Sapper
+- Added: Jongmyo Shrine, a unique Temple: needs no Shrine, no Gold maintenance, 2 Faith, 1 slot for a Great Work of Music
+- Note: open: Jongmyo's 7-turn Jaegye festival (needs C++)
+- Dev: building ID 278 BUILDING_LEKMOD_JONGMYO, icon art_sources/buildings/jongmyo_shrine
+
+KONGO (CIVILIZATION_KONGO)
+--------------------------
+Tags: civs, units, buildings
+- Changed: Ngao Mbeba (rebuilt): costs 60 (was 50), needs 4 Iron, starts with Cover I, Amphibious I, Woodsman, Native Tongue and +33% in Forest and Jungle
+- Removed: Ngao Mbeba: +100% defense against ranged attacks and its old abilities
+- Changed: Slave Market gives 4 Production and 4 Gold (was 4 and 5), +3 and +3 with Industrialization (was +3 and +2)
+
+CELTS (CIVILIZATION_CELTS)
+--------------------------
+Tags: civs, units, promotions
+- Changed: Pictish Warrior now replaces the Warrior (so the Celts start with one): 9 Strength, upgrades to the Swordsman, starts with Zealot and Woodsman
+- Removed: Pictish Warrior: foreign lands bonus, free pillaging, bonus against mounted units
+- Changed: Zealot is kept on upgrade (for every unit that has it)
+- Note: open: the new UA (forest Culture and Faith, chopping, roads; needs C++)
+
+JERUSALEM (CIVILIZATION_JERUSALEM)
+----------------------------------
+Tags: civs, units, buildings
+- Changed: Crusader: available at Steel (was Theology), 22 Strength (was 17), costs 80 (was 70), needs 3 Iron (was 2)
+- Removed: Crusader: entering foreign territory in peace
+- Removed: Outremer: 2 Culture, 2 Faith and 2 Happiness
+- Note: open: UA, Outremer religion spread and movement (need C++)
+
+DENMARK (CIVILIZATION_DENMARK)
+------------------------------
+Tags: civs, units, buildings, naval
+- Changed: Berserker: 17 Strength (was 21), needs 3 Iron (was 2), starts with Fear Aura instead of Amphibious
+- Changed: Longship starts with Swift Transport and Coastal Raider I instead of giving its movement to embarked units
+- Added: Rune Stone, a unique Shrine: costs 32, 2 Faith, units trained in the city start with +5 XP
+- Note: open: Berserker cannot fortify; the new UA (need C++)
+- Dev: building ID 279 BUILDING_LEKMOD_RUNESTONE, icon art_sources/buildings/runestone
+
+POLYNESIA (CIVILIZATION_POLYNESIA)
+----------------------------------
+Tags: civs, units
+- Removed: +10% combat strength near a Moai; double defense for embarked units
+- Changed: Koa: available at Guilds (was Steel), 18 Strength (was 23), costs 70 (was 80), starts with Amphibious I and II instead of Amphibious
+
+MACEDONIA (CIVILIZATION_MACEDONIA)
+----------------------------------
+Tags: civs, units
+- Removed: Hetairoi (unique Great General)
+- Changed: Great Generals give +30% (was +15%); Barracks, Armories and Military Academies give +1 Culture
+- Removed: +1 Food and +1 Happiness from Barracks and Armories
+- Changed: Sarissophoroi: available at Civil Service (was Philosophy), 16 Strength (was 14), costs 60 (was 58), the Pikeman's bonus against mounted units (was +100%), needs 2 Iron, starts with Envelopment and Mobility
+- Note: open: XP from Monuments, Amphitheaters and Opera Houses; the Gymnasium (two specialist types; need C++)
+
+VENICE (CIVILIZATION_VENICE)
+----------------------------
+Tags: civs, units
+- Changed: Merchant of Venice: 6 Movement (was 4), Trade Missions give +20% Gold and Influence (was +100%)
+- Note: open: the new UA (needs C++)
+
+INDIA (CIVILIZATION_INDIA)
+--------------------------
+Tags: civs, buildings
+- Removed: Mughal Fort: +2 Tourism with Flight
+- Note: open: Gajarata and Gajasena (together with Carthage's elephants)
+
+CHILE (CIVILIZATION_CHILE)
+--------------------------
+Tags: civs, units
+- Removed: the UA's combat penalty auras for melee, gunpowder and naval melee units
+- Changed: Cardoen (rebuilt) is a basic Helicopter Gunship: 70 Strength (was 85), 8 Movement (was 10)
+- Removed: Cardoen: +100% defense against ranged attacks
+- Note: open: Stargazing for units trained next to mountains, coast-and-mountain Culture, Cardoen +30 XP (need C++)
+
+BRAZIL (CIVILIZATION_BRAZIL)
+----------------------------
+Tags: civs, units, promotions
+- Changed: Pracinha: 72 Strength (was 80), +30% outside friendly territory (was +20%)
+- Note: open: the new UA (needs C++)
+
+ENGLAND (CIVILIZATION_ENGLAND)
+------------------------------
+Tags: civs, units
+- Removed: the extra Spy; faster Constabularies and Police Stations and their Happiness
+- Changed: Longbowman: 20 Ranged Strength (was 18), 8 Strength (was 12), costs 88 (was 80), -20% when attacking cities
+- Note: open: double first Great Writer, Fulling Mill, MI6 (need C++; their icons are built)
+
+INCA (CIVILIZATION_INCA)
+------------------------
+Tags: civs, units
+- Changed: Slinger: available at Agriculture (was Archery), costs 22 (was 26), Range 1 (was 2), 4 Strength and 6 Ranged Strength (was 5 and 7), can move after attacking
+- Removed: Slinger: withdrawing before melee attacks
+- Note: open: the new UA and the Terrace Farm mountain rule (need C++)
+
+TIBET (CIVILIZATION_TIBET)
+--------------------------
+Tags: civs
+- Removed: Monastery: +1 Faith with Theology
+- Note: open: UA, Dalai Lama abilities, Monastery mountain rule and University Science (need C++)
+
+SONGHAI (CIVILIZATION_SONGHAI)
+------------------------------
+Tags: civs, units, promotions
+- Changed: double Gold from encampments and pillaging cities (was triple)
+- Removed: Amphibious for all land units
+- Changed: Mandekalu Cavalry: costs 80 (was 73), needs 3 Horses and 1 Iron (was 2 and 1), has the usual penalty against cities, pillages without spending movement
+- Changed: free pillaging is lost on upgrade (for every unit that has it)
+- Note: open: +2 moves after a kill, +20% far from own cities (need C++)
+
+YUGOSLAVIA (CIVILIZATION_YUGOSLAVIA)
+------------------------------------
+Tags: civs, units
+- Changed: M-84 costs 269 (was 316), the same as a Landship
+- Removed: M-84: ignoring Zones of Control
+- Note: open: ideology promotions (need C++)
+
+NETHERLANDS (CIVILIZATION_NETHERLANDS)
+--------------------------------------
+Tags: civs
+- Changed: Polders give +1 Gold with Economics (was +2 Gold and +1 Production)
+- Note: open: +1 Production for Polders not next to another Polder, the UA changes (need C++)
+
+JAPAN (CIVILIZATION_JAPAN)
+--------------------------
+Tags: civs, units, promotions
+- Removed: +2 Culture from Atolls
+- Changed: Samurai (rebuilt): available at Civil Service (was Steel), 18 Strength (was 21), costs 70 (was 80), needs 3 Iron (was 2), upgrades to the Musketman, starts with Great Generals II, Iaijutsu and Hatamoto
+- Removed: Samurai: Shock I and building Fishing Boats
+- Note: open: the Dojo (needs C++)
+
+GOLDEN HORDE (CIVILIZATION_GOLDEN_HORDE)
+----------------------------------------
+Tags: civs, units
+- Changed: intimidating City-States +33% (was +50%); puppets yield +33% Gold, Science and Culture (was +50% Gold, Science and Production)
+- Changed: Ulan needs 2 Horses and 1 Iron (was 1 Horse)
+- Note: open: tribute keeps pledges, Yam Route (need C++)
+
+GOTHS (CIVILIZATION_GOTH)
+-------------------------
+Tags: civs, units
+- Changed: Gadrauht now replaces the Swordsman: 15 Strength, costs 62, needs 4 Iron, starts with Cover I, still heals on kills
+- Changed: Harjis: +2 Production with Guilds and +2 with Dynamite (was +1 each with Iron Working, Gunpowder and Dynamite); 5 at most (was 4)
+- Note: open: the Gadrauht aura and the new UA (need C++)
+
+MOROCCO (CIVILIZATION_MOROCCO)
+------------------------------
+Tags: civs, units
+- Changed: Berber Cavalry needs 3 Horses (was 2 Horses and 1 Iron), starts with Shock I, Drill I and Mobility
+- Removed: Berber Cavalry: desert and home territory bonuses
+- Note: open: the new UA and Kasbah (need C++)
+
+PHILIPPINES (CIVILIZATION_PHILIPPINES)
+--------------------------------------
+Tags: civs, units
+- Changed: civilians +1 Movement in own territory (was +2); land units start with Amphibious I
+- Changed: Gerilya: 46 Strength (was 55), can move after attacking, starts with Woodsman
+- Removed: Gerilya: Volley
+- Note: open: only the first expansion gets +1 Population, Simbahan (need C++)

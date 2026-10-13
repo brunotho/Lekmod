@@ -45031,7 +45031,6 @@
 			<AllowsRangeStrike>true</AllowsRangeStrike> 
 			<Defense>700</Defense> 
 			<ExtraCityHitPoints>25</ExtraCityHitPoints> 
-			<EnhancedYieldTech>TECH_FLIGHT</EnhancedYieldTech>
 			<PrereqTech>TECH_CHIVALRY</PrereqTech> 
 			<DisplayPosition>1</DisplayPosition> 
 			<ArtDefineTag>ART_DEF_BUILDING_CASTLE</ArtDefineTag> 
@@ -256653,6 +256652,33 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_POINT_BLANK</PediaEntry>
 		</Row>
+		<Row>
+			<ID>380</ID>
+			<Type>PROMOTION_LEKMOD_CITY_PENALTY_20</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_CITY_PENALTY_20</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_CITY_PENALTY_20_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>57</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<CityAttack>-20</CityAttack>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_CITY_PENALTY_20</PediaEntry>
+		</Row>
+		<Row>
+			<ID>381</ID>
+			<Type>PROMOTION_LEKMOD_FOREIGN_LANDS_30</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_FOREIGN_LANDS_30</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_FOREIGN_LANDS_30_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<OutsideFriendlyLandsModifier>30</OutsideFriendlyLandsModifier>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_FOREIGN_LANDS_30</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -275874,7 +275900,6 @@
 			<MilitarySupport>true</MilitarySupport>
 			<MilitaryProduction>true</MilitaryProduction>
 			<Pillage>true</Pillage>
-			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
 			<ObsoleteTech>TECH_CIVIL_SERVICE</ObsoleteTech>
 			<AdvancedStartCost>15</AdvancedStartCost>
 			<XPValueAttack>3</XPValueAttack>
@@ -284187,4 +284212,922 @@
 			<PromotionType>PROMOTION_ZEALOT</PromotionType>
 		</Row>
 	</Unit_FreePromotions>
+	<!-- Phase 6 batch 3 (2026-10-13) -->
+	<!-- Korea: Turtle Ship 5 moves, 25 strength, 96 Production on quick (old Caravel 120 std +20%), 1 Iron, Cover I and Sapper; Jongmyo Shrine (NEW temple UB): no Shrine needed, no maintenance, musician slot (Jaegye needs C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_KOREAN_TURTLE_SHIP"/>
+			<Set Moves="5" Combat="25" Cost="144"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_KOREAN_TURTLE_SHIP"/>
+		<Row>
+			<UnitType>UNIT_KOREAN_TURTLE_SHIP</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_KOREAN_TURTLE_SHIP</UnitType>
+			<PromotionType>PROMOTION_COVER_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_KOREAN_TURTLE_SHIP</UnitType>
+			<PromotionType>PROMOTION_SAPPER</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Buildings>
+		<Row>
+			<ID>278</ID>
+			<Type>BUILDING_LEKMOD_JONGMYO</Type>
+			<BuildingClass>BUILDINGCLASS_TEMPLE</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_JONGMYO</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_JONGMYO_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_JONGMYO_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_JONGMYO_HELP</Help>
+			<GoldMaintenance>0</GoldMaintenance>
+			<Cost>75</Cost>
+			<HurryCostModifier>25</HurryCostModifier>
+			<MinAreaSize>-1</MinAreaSize>
+			<ConquestProb>66</ConquestProb>
+			<GreatWorkSlotType>GREAT_WORK_SLOT_MUSIC</GreatWorkSlotType>
+			<GreatWorkCount>1</GreatWorkCount>
+			<ArtDefineTag>TEMPLE</ArtDefineTag>
+			<MaxStartEra>ERA_RENAISSANCE</MaxStartEra>
+			<PrereqTech>TECH_PHILOSOPHY</PrereqTech>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_JONGMYO_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_JONGMYO</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_JONGMYO</BuildingType>
+			<FlavorType>FLAVOR_RELIGION</FlavorType>
+			<Flavor>40</Flavor>
+		</Row>
+	</Building_Flavors>
+	<Civilization_BuildingClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_KOREA</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_TEMPLE</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_JONGMYO</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<!-- Kongo: Ngao Mbeba (from scratch) Swordsman replacement, 60 Production on quick, 15 strength, 4 Iron, Cover I, Amphibious I, Woodsman, +33% in Forest/Jungle (Jaguar), Native Tongue; Mbanza 4 Production 4 Gold, +3/+3 with Industrialization -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_NGAO"/>
+			<Set Combat="15" Cost="90" FaithCost="180"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_NGAO"/>
+		<Row>
+			<UnitType>UNIT_NGAO</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_NGAO"/>
+		<Row>
+			<UnitType>UNIT_NGAO</UnitType>
+			<PromotionType>PROMOTION_COVER_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NGAO</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NGAO</UnitType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NGAO</UnitType>
+			<PromotionType>PROMOTION_JAGUAR</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_NGAO</UnitType>
+			<PromotionType>PROMOTION_GOODY_HUT_PICKER</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_SLAVE"/>
+		<Row>
+			<BuildingType>BUILDING_SLAVE</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>4</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SLAVE</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>4</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_TechEnhancedYieldChanges>
+		<Delete BuildingType="BUILDING_SLAVE"/>
+		<Row>
+			<BuildingType>BUILDING_SLAVE</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SLAVE</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Building_TechEnhancedYieldChanges>
+	<!-- Celts: Pictish Warrior now replaces the Warrior (start unit): 9 strength, upgrades to Swordsman (Spearman from ruins), Zealot and Woodsman only; Zealot is now kept on upgrade (spec; global flag) -->
+	<Civilization_UnitClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_CELTS" UnitType="UNIT_CELT_PICTISH_WARRIOR"/>
+			<Set UnitClassType="UNITCLASS_WARRIOR"/>
+		</Update>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_CELT_PICTISH_WARRIOR"/>
+			<Set Class="UNITCLASS_WARRIOR" Combat="9" Cost="40" FaithCost="80" ObsoleteTech="TECH_IRON_WORKING" GoodyHutUpgradeUnitClass="UNITCLASS_SPEARMAN"/>
+		</Update>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_CELT_PICTISH_WARRIOR"/>
+		<Row>
+			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType>
+			<UnitClassType>UNITCLASS_SWORDSMAN</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_CELT_PICTISH_WARRIOR"/>
+		<Row>
+			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CELT_PICTISH_WARRIOR</UnitType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_ZEALOT"/>
+			<Set LostWithUpgrade="false"/>
+		</Update>
+	</UnitPromotions>
+	<!-- Jerusalem: Crusader at Steel, Longswordsman cost, 22 strength, 3 Iron, no entering rival territory ability; Outremer without yields and Happiness (its new effects need C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_CRUSADER"/>
+			<Set PrereqTech="TECH_STEEL" Combat="22" Cost="120" FaithCost="240"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_CRUSADER"/>
+		<Row>
+			<UnitType>UNIT_CRUSADER</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_CRUSADER" PromotionType="PROMOTION_RIVAL_TERRITORY"/>
+	</Unit_FreePromotions>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_OUTREMER"/>
+			<Set Happiness="0"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_OUTREMER"/>
+	</Building_YieldChanges>
+	<!-- Denmark: Berserker 17 strength, 3 Iron, Fear Aura instead of Amphibious (no fortifying needs C++, open); Longship Swift Transport + Coastal Raider I instead of the embarked-movement ability; Rune Stone (NEW shrine UB) 32 Production on quick, 2 Faith, +5 XP for trained units -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_DANISH_BERSERKER"/>
+			<Set Combat="17"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_DANISH_BERSERKER"/>
+		<Row>
+			<UnitType>UNIT_DANISH_BERSERKER</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_DANISH_BERSERKER" PromotionType="PROMOTION_AMPHIBIOUS"/>
+		<Row>
+			<UnitType>UNIT_DANISH_BERSERKER</UnitType>
+			<PromotionType>PROMOTION_FEAR_AURA</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_DANISH_LONGSHIP" PromotionType="PROMOTION_MOVEMENT_TO_EMBARKED"/>
+		<Row>
+			<UnitType>UNIT_DANISH_LONGSHIP</UnitType>
+			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DANISH_LONGSHIP</UnitType>
+			<PromotionType>PROMOTION_COASTAL_RAIDER_1</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Buildings>
+		<Row>
+			<ID>279</ID>
+			<Type>BUILDING_LEKMOD_RUNESTONE</Type>
+			<BuildingClass>BUILDINGCLASS_SHRINE</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_RUNESTONE</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_RUNESTONE_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_RUNESTONE_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_RUNESTONE_HELP</Help>
+			<GoldMaintenance>1</GoldMaintenance>
+			<Cost>48</Cost>
+			<HurryCostModifier>25</HurryCostModifier>
+			<MinAreaSize>-1</MinAreaSize>
+			<ConquestProb>66</ConquestProb>
+			<ArtDefineTag>TEMPLE</ArtDefineTag>
+			<FreeStartEra>ERA_MEDIEVAL</FreeStartEra>
+			<MaxStartEra>ERA_RENAISSANCE</MaxStartEra>
+			<PrereqTech>TECH_POTTERY</PrereqTech>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_RUNESTONE_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_RUNESTONE</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_DomainFreeExperiences>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_RUNESTONE</BuildingType>
+			<DomainType>DOMAIN_LAND</DomainType>
+			<Experience>5</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_RUNESTONE</BuildingType>
+			<DomainType>DOMAIN_SEA</DomainType>
+			<Experience>5</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_RUNESTONE</BuildingType>
+			<DomainType>DOMAIN_AIR</DomainType>
+			<Experience>5</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_RUNESTONE</BuildingType>
+			<DomainType>DOMAIN_HOVER</DomainType>
+			<Experience>5</Experience>
+		</Row>
+	</Building_DomainFreeExperiences>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_RUNESTONE</BuildingType>
+			<FlavorType>FLAVOR_RELIGION</FlavorType>
+			<Flavor>25</Flavor>
+		</Row>
+	</Building_Flavors>
+	<Civilization_BuildingClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_DENMARK</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_SHRINE</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_RUNESTONE</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<!-- Polynesia: no combat bonus near Moai, no double defense for embarked units; Koa (longswordsman) 70 Production on quick, no resource, Guilds, obsolete Rifling, 18 strength, Amphibious I and II instead of Amphibious -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_WAYFINDING"/>
+			<Set NearbyImprovementCombatBonus="0"/>
+		</Update>
+	</Traits>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_WAR_CANOES"/>
+			<Set EmbarkDefenseModifier="0"/>
+		</Update>
+	</UnitPromotions>
+	<Units>
+		<Update>
+			<Where Type="UNIT_MC_HAWAIIAN_KOA"/>
+			<Set Combat="18" Cost="105" FaithCost="210" PrereqTech="TECH_GUILDS" ObsoleteTech="TECH_RIFLING"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_MC_HAWAIIAN_KOA"/>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_MC_HAWAIIAN_KOA" PromotionType="PROMOTION_AMPHIBIOUS"/>
+		<Row>
+			<UnitType>UNIT_MC_HAWAIIAN_KOA</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MC_HAWAIIAN_KOA</UnitType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_2</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Macedonia: Hetairoi removed; new UA so far: Great Generals +30% (base 15 + 15), +1 Culture from Barracks, Armory, Military Academy (old Food/Happiness removed; XP from culture buildings needs C++, open); Sarissophoroi at Civil Service with Pikeman strength, cost and anti-mounted bonus, 2 Iron, Envelopment, Mobility (Gymnasium needs two specialist types: C++, open) -->
+	<Civilization_UnitClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_MACEDONIA" UnitType="UNIT_HETAIROI"/>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_HETAIROI"/>
+			<Set ShowInPedia="0"/>
+		</Update>
+	</Units>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_MACEDON"/>
+			<Set GreatGeneralExtraBonus="15"/>
+		</Update>
+	</Traits>
+	<Trait_BuildingClassHappinessChanges>
+		<Delete TraitType="TRAIT_MACEDON"/>
+	</Trait_BuildingClassHappinessChanges>
+	<Trait_BuildingClassYieldChanges>
+		<Delete TraitType="TRAIT_MACEDON"/>
+		<Row>
+			<TraitType>TRAIT_MACEDON</TraitType>
+			<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_MACEDON</TraitType>
+			<BuildingClassType>BUILDINGCLASS_ARMORY</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_MACEDON</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MILITARY_ACADEMY</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_BuildingClassYieldChanges>
+	<Units>
+		<Update>
+			<Where Type="UNIT_SARISSO"/>
+			<Set PrereqTech="TECH_CIVIL_SERVICE" Combat="16" Cost="90" FaithCost="180"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_SARISSO"/>
+		<Row>
+			<UnitType>UNIT_SARISSO</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_SARISSO"/>
+		<Row>
+			<UnitType>UNIT_SARISSO</UnitType>
+			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SARISSO</UnitType>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SARISSO</UnitType>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Venice: Great Merchant of Venice +2 moves, Trade Mission bonus +20% instead of +100% (new UA needs C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_VENETIAN_MERCHANT"/>
+			<Set Moves="6"/>
+		</Update>
+	</Units>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_TRADE_MISSION_BONUS"/>
+			<Set TradeMissionInfluenceModifier="20" TradeMissionGoldModifier="20"/>
+		</Update>
+	</UnitPromotions>
+	<!-- India: Mughal Fort without Tourism at Flight (EnhancedYieldTech removed in the row); elephant line pending (with Carthage) -->
+	<Building_TechEnhancedYieldChanges>
+		<Delete BuildingType="BUILDING_MUGHAL_FORT"/>
+	</Building_TechEnhancedYieldChanges>
+	<!-- Chile: UA combat promotions removed (Stargazing and coast/mountain Culture need C++, open); Cardoen (from scratch) = a basic Helicopter Gunship (+30 XP needs C++, open) -->
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_BY_REASON"/>
+	</Trait_FreePromotionUnitCombats>
+	<Units>
+		<Update>
+			<Where Type="UNIT_CARDOEN"/>
+			<Set Combat="70" Moves="8"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_CARDOEN"/>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<PromotionType>PROMOTION_FLAT_MOVEMENT_COST</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<PromotionType>PROMOTION_HOVERING_UNIT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<PromotionType>PROMOTION_ANTI_TANK</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<PromotionType>PROMOTION_NO_CAPTURE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CARDOEN</UnitType>
+			<PromotionType>PROMOTION_MOVE_ALL_TERRAIN</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Brazil: Pracinha 72 strength, +30% outside friendly territory (own promotion) instead of +20% (new UA needs C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_BRAZILIAN_PRACINHA"/>
+			<Set Combat="72"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_BRAZILIAN_PRACINHA" PromotionType="PROMOTION_FOREIGN_LANDS"/>
+		<Row>
+			<UnitType>UNIT_BRAZILIAN_PRACINHA</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_FOREIGN_LANDS_30</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- England: no Constabulary/Police Station bonuses, no extra spy (first Great Writer bulb, Fulling Mill, MI6 need C++, open); Longbowman 20 ranged / 8 melee, Crossbowman cost +10%, -20% against cities -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_OCEAN_MOVEMENT"/>
+			<Set ExtraSpies="0"/>
+		</Update>
+	</Traits>
+	<Trait_BuildingClassProductionModifiers>
+		<Delete TraitType="TRAIT_OCEAN_MOVEMENT"/>
+	</Trait_BuildingClassProductionModifiers>
+	<Trait_BuildingClassHappinessChanges>
+		<Delete TraitType="TRAIT_OCEAN_MOVEMENT"/>
+	</Trait_BuildingClassHappinessChanges>
+	<Units>
+		<Update>
+			<Where Type="UNIT_ENGLISH_LONGBOWMAN"/>
+			<Set Combat="8" RangedCombat="20" Cost="132" FaithCost="264"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_ENGLISH_LONGBOWMAN</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_CITY_PENALTY_20</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Inca: Slinger at Agriculture, 15% cheaper, range 1, -1 strength (4 / 6), can move after attacking, no withdraw (new UA and Terrace Farm mountain rule need C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_INCAN_SLINGER"/>
+			<Set PrereqTech="TECH_AGRICULTURE" Cost="34" FaithCost="68" Range="1" Combat="4" RangedCombat="6"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_INCAN_SLINGER" PromotionType="PROMOTION_WITHDRAW_BEFORE_MELEE"/>
+		<Row>
+			<UnitType>UNIT_INCAN_SLINGER</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Tibet: Tibetan stupa without Theology Faith (mountain rule, University Science, UA, Dalai Lama need C++, open) -->
+	<Improvement_TechYieldChanges>
+		<Delete ImprovementType="IMPROVEMENT_TIBET" TechType="TECH_THEOLOGY"/>
+	</Improvement_TechYieldChanges>
+	<!-- Songhai: plunder bonus double instead of triple, no Amphibious for units; Mandekalu: 3 Horses 1 Iron, Knight cost, usual city penalty (kill moves and distance bonus need C++, open); free pillage now lost on upgrade (global flag) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_AMPHIB_WARLORD"/>
+			<Set PlunderModifier="100"/>
+		</Update>
+	</Traits>
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_AMPHIB_WARLORD"/>
+	</Trait_FreePromotionUnitCombats>
+	<Units>
+		<Update>
+			<Where Type="UNIT_SONGHAI_MUSLIMCAVALRY"/>
+			<Set Cost="120" FaithCost="240"/>
+		</Update>
+	</Units>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_SONGHAI_MUSLIMCAVALRY"/>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SONGHAI_MUSLIMCAVALRY</UnitType>
+			<PromotionType>PROMOTION_FREE_PILLAGE_MOVES</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_FREE_PILLAGE_MOVES"/>
+			<Set LostWithUpgrade="true"/>
+		</Update>
+	</UnitPromotions>
+	<!-- Yugoslavia: M-84 costs as much as a Landship, no ignore-ZOC (ideology promotions need C++, open) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_YUGO_M84"/>
+			<Set Cost="402" FaithCost="780"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_YUGO_M84" PromotionType="PROMOTION_YUGO_ZOC"/>
+	</Unit_FreePromotions>
+	<!-- Netherlands: Polders +1 Gold with Economics instead of +2 Gold +1 Production (Production if not next to another Polder, UA parts need C++, open) -->
+	<Improvement_TechYieldChanges>
+		<Delete ImprovementType="IMPROVEMENT_POLDER" TechType="TECH_ECONOMICS"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_POLDER</ImprovementType>
+			<TechType>TECH_ECONOMICS</TechType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_TechYieldChanges>
+	<Improvement_TechYieldChanges>
+		<Delete ImprovementType="IMPROVEMENT_WATER_POLDER" TechType="TECH_ECONOMICS"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_WATER_POLDER</ImprovementType>
+			<TechType>TECH_ECONOMICS</TechType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_TechYieldChanges>
+	<!-- Japan: no Culture from Atolls; Samurai (from scratch) at Civil Service, 70 Production on quick, 18 strength, 3 Iron, upgrades to Musketman, Great Generals II, Iaijutsu, Hatamoto (Dojo needs C++, open) -->
+	<Trait_FeatureYieldChanges>
+		<Delete TraitType="TRAIT_FIGHT_WELL_DAMAGED" FeatureType="FEATURE_ATOLL"/>
+	</Trait_FeatureYieldChanges>
+	<Units>
+		<Update>
+			<Where Type="UNIT_JAPANESE_SAMURAI"/>
+			<Set PrereqTech="TECH_CIVIL_SERVICE" ObsoleteTech="TECH_RIFLING" Combat="18" Cost="105" FaithCost="210" GoodyHutUpgradeUnitClass="UNITCLASS_MUSKETMAN" WorkRate="0"/>
+		</Update>
+	</Units>
+	<Unit_Builds>
+		<Delete UnitType="UNIT_JAPANESE_SAMURAI"/>
+	</Unit_Builds>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_JAPANESE_SAMURAI"/>
+		<Row>
+			<UnitType>UNIT_JAPANESE_SAMURAI</UnitType>
+			<UnitClassType>UNITCLASS_MUSKETMAN</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_JAPANESE_SAMURAI"/>
+		<Row>
+			<UnitType>UNIT_JAPANESE_SAMURAI</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_JAPANESE_SAMURAI"/>
+		<Row>
+			<UnitType>UNIT_JAPANESE_SAMURAI</UnitType>
+			<PromotionType>PROMOTION_SPAWN_GENERALS_II</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_JAPANESE_SAMURAI</UnitType>
+			<PromotionType>PROMOTION_IAIJUTSU</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_JAPANESE_SAMURAI</UnitType>
+			<PromotionType>PROMOTION_HATAMOTO</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Golden Horde: puppets +33% Science/Gold/Culture (no Production), tribute +33%; Ulan 2 Horses 1 Iron (pledge rule and Yam Route need C++, open) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_HORDE"/>
+			<Set MinorBullyModifier="33"/>
+		</Update>
+	</Traits>
+	<Trait_PuppetYieldModifiers>
+		<Delete TraitType="TRAIT_HORDE"/>
+		<Row>
+			<TraitType>TRAIT_HORDE</TraitType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>33</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_HORDE</TraitType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>33</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_HORDE</TraitType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>33</Yield>
+		</Row>
+	</Trait_PuppetYieldModifiers>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_ULAN"/>
+		<Row>
+			<UnitType>UNIT_ULAN</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+		<Row>
+			<UnitType>UNIT_ULAN</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<!-- Goths: Gadraught now replaces the Swordsman: 62 Production on quick, 15 strength, 4 Iron, Cover I (aura and UA need C++, open); Harjis +2 Production at Guilds and Dynamite instead of +1 at Iron Working, Gunpowder, Dynamite (1 -> 5) -->
+	<Civilization_UnitClassOverrides>
+		<Update>
+			<Where CivilizationType="CIVILIZATION_GOTH" UnitType="UNIT_GADRAUGHT"/>
+			<Set UnitClassType="UNITCLASS_SWORDSMAN"/>
+		</Update>
+	</Civilization_UnitClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_GADRAUGHT"/>
+			<Set Class="UNITCLASS_SWORDSMAN" PrereqTech="TECH_IRON_WORKING" ObsoleteTech="TECH_STEEL" GoodyHutUpgradeUnitClass="UNITCLASS_LONGSWORDSMAN" Combat="15" Cost="93" FaithCost="186"/>
+		</Update>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_GADRAUGHT"/>
+		<Row>
+			<UnitType>UNIT_GADRAUGHT</UnitType>
+			<UnitClassType>UNITCLASS_LONGSWORDSMAN</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_GADRAUGHT"/>
+		<Row>
+			<UnitType>UNIT_GADRAUGHT</UnitType>
+			<ResourceType>RESOURCE_IRON</ResourceType>
+			<Cost>4</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_GADRAUGHT</UnitType>
+			<PromotionType>PROMOTION_COVER_1</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Improvement_TechYieldChanges>
+		<Delete ImprovementType="IMPROVEMENT_GOTH"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_GOTH</ImprovementType>
+			<TechType>TECH_GUILDS</TechType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_GOTH</ImprovementType>
+			<TechType>TECH_DYNAMITE</TechType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Improvement_TechYieldChanges>
+	<!-- Morocco: Berber Cavalry 3 Horses, Shock I, Drill I, Mobility instead of its desert and home bonuses (new UA and Kasbah need C++, open) -->
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_BERBER_CAVALRY"/>
+		<Row>
+			<UnitType>UNIT_BERBER_CAVALRY</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>3</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_BERBER_CAVALRY" PromotionType="PROMOTION_DESERT_WARRIOR"/>
+		<Delete UnitType="UNIT_BERBER_CAVALRY" PromotionType="PROMOTION_HOMELAND_GUARDIAN"/>
+		<Row>
+			<UnitType>UNIT_BERBER_CAVALRY</UnitType>
+			<PromotionType>PROMOTION_SHOCK_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BERBER_CAVALRY</UnitType>
+			<PromotionType>PROMOTION_DRILL_1</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_BERBER_CAVALRY</UnitType>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Philippines: civilians +1 move (was +2), land units start with Amphibious I (first expansion rule, Simbahan need C++, open); Philippine Scout 46 strength, no Volley, can move after attacking, Woodsman -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_GOOD_FIGHT"/>
+			<Set FriendlyLandsCitizenMoveChange="1"/>
+		</Update>
+	</Traits>
+	<Trait_FreePromotionUnitCombats>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GOOD_FIGHT</TraitType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+			<PromotionType>PROMOTION_AMPHIBIOUS_1</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<Units>
+		<Update>
+			<Where Type="UNIT_PHILIPINO_MARINE"/>
+			<Set Combat="46"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_PHILIPINO_MARINE" PromotionType="PROMOTION_VOLLEY"/>
+		<Row>
+			<UnitType>UNIT_PHILIPINO_MARINE</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PHILIPINO_MARINE</UnitType>
+			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<IconTextureAtlases>
+		<Row>
+			<Atlas>LEKMOD_JONGMYO_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>jongmyo_shrine_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_JONGMYO_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>jongmyo_shrine_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_JONGMYO_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>jongmyo_shrine_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_JONGMYO_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>jongmyo_shrine_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_JONGMYO_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>jongmyo_shrine_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_JONGMYO_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>jongmyo_shrine_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_JONGMYO_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>jongmyo_shrine_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_RUNESTONE_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>runestone_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_RUNESTONE_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>runestone_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_RUNESTONE_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>runestone_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_RUNESTONE_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>runestone_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_RUNESTONE_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>runestone_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_RUNESTONE_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>runestone_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_RUNESTONE_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>runestone_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+	</IconTextureAtlases>
 </GameData>
