@@ -289417,4 +289417,11 @@
 			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
 	</IconTextureAtlases>
+	<!-- LEKMOD: India: Swift Charge (Gajarata) is lost when it upgrades to the Gajasena (user 2026-10-14) -->
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_ANTI_MELEE_I"/>
+			<Set LostWithUpgrade="true"/>
+		</Update>
+	</UnitPromotions>
 </GameData>

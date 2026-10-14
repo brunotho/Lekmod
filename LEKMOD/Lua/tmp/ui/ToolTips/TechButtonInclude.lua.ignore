@@ -53,6 +53,20 @@ function GatherInfoAboutUniqueStuff( civType )
  		end
 	end
 
+	-- LEKMOD: upgrade-only units (Units.UpgradeOnly) show only when one of this civ's own units upgrades into them
+	for thisUnit in GameInfo.Units("UpgradeOnly = 1") do
+		local bReachable = false;
+		for row in GameInfo.Unit_ClassUpgrades{ UnitClassType = thisUnit.Class } do
+			local fromUnit = GameInfo.Units[row.UnitType];
+			if fromUnit and validUnitBuilds[fromUnit.Class] == fromUnit.Type then
+				bReachable = true;
+			end
+		end
+		if not bReachable and validUnitBuilds[thisUnit.Class] == thisUnit.Type then
+			validUnitBuilds[thisUnit.Class] = nil;
+		end
+	end
+
 	-- put in the default buildings for any civ
 	for thisBuildingClass in GameInfo.BuildingClasses() do
 		validBuildingBuilds[thisBuildingClass.Type]	= thisBuildingClass.DefaultBuilding;	
