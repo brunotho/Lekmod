@@ -154,6 +154,10 @@ CvTraitEntry::CvTraitEntry() :
 	m_bLekmodTributeKeepsPledge(false),
 	m_iLekmodUnhappinessCap(0),
 	m_iLekmodGoldModifierAtPeace(0),
+	m_bLekmodGoldenAgeHappinessYields(false),
+	m_bLekmodGoldenAgeGreatPeople(false),
+	m_bLekmodGoldenAgeWLTKD(false),
+	m_iLekmodExcessHappinessGAModifier(0),
 #endif
 	m_bNoHillsImprovementMaintenance(false),
 	m_bTechBoostFromCapitalScienceBuildings(false),
@@ -1005,6 +1009,33 @@ const std::vector<std::pair<int, int> >& CvTraitEntry::GetLekmodTrainedPromotion
 {
 	return m_aLekmodTrainedPromotions;
 }
+/// Golden ages: Culture and Gold equal to excess Happiness (Brazil)
+bool CvTraitEntry::IsLekmodGoldenAgeHappinessYields() const
+{
+	return m_bLekmodGoldenAgeHappinessYields;
+}
+/// Golden age end: a Great Musician, then a Great Writer, alternating (Brazil)
+bool CvTraitEntry::IsLekmodGoldenAgeGreatPeople() const
+{
+	return m_bLekmodGoldenAgeGreatPeople;
+}
+/// Golden age start: every city gets a full We Love the King Day (Brazil)
+bool CvTraitEntry::IsLekmodGoldenAgeWLTKD() const
+{
+	return m_bLekmodGoldenAgeWLTKD;
+}
+/// % extra Golden Age points from excess Happiness (Mughals: 100 = double)
+int CvTraitEntry::GetLekmodExcessHappinessGAModifier() const
+{
+	return m_iLekmodExcessHappinessGAModifier;
+}
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+/// Tile yields with conditions (Trait_LekmodPlotYields)
+const std::vector<CvTraitEntry::LekmodPlotYield>& CvTraitEntry::GetLekmodPlotYields() const
+{
+	return m_aLekmodPlotYields;
+}
+#endif
 /// XP for units trained in a city with a building of the class
 const std::vector<std::pair<int, int> >& CvTraitEntry::GetLekmodBuildingClassFreeExperience() const
 {
@@ -1934,6 +1965,10 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	m_bLekmodTributeKeepsPledge = kResults.GetBool("TributeKeepsPledge");
 	m_iLekmodUnhappinessCap = kResults.GetInt("LekmodUnhappinessCap");
 	m_iLekmodGoldModifierAtPeace = kResults.GetInt("LekmodGoldModifierAtPeace");
+	m_bLekmodGoldenAgeHappinessYields = kResults.GetBool("LekmodGoldenAgeHappinessYields");
+	m_bLekmodGoldenAgeGreatPeople = kResults.GetBool("LekmodGoldenAgeGreatPeople");
+	m_bLekmodGoldenAgeWLTKD = kResults.GetBool("LekmodGoldenAgeWLTKD");
+	m_iLekmodExcessHappinessGAModifier = kResults.GetInt("LekmodExcessHappinessGAModifier");
 #endif
 	m_bNoHillsImprovementMaintenance = kResults.GetBool("NoHillsImprovementMaintenance");
 	m_bTechBoostFromCapitalScienceBuildings = kResults.GetBool("TechBoostFromCapitalScienceBuildings");
@@ -2974,6 +3009,48 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 	}
 #endif
 
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+	{
+		m_aLekmodPlotYields.clear();
+		std::string strKey("Trait_LekmodPlotYields");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"SELECT Yields.ID, Yield, coalesce(Terrains.ID, -1), coalesce(Features.ID, -1), coalesce(ResourceClasses.ID, -1), coalesce(Improvements.ID, -1), "
+				"coalesce(Technologies.ID, -1), coalesce(BuildingClasses.ID, -1), NoImprovement, AdjacentNaturalWonder, AdjacentOwnCity, RequiresPantheon, RequiresReligion "
+				"FROM Trait_LekmodPlotYields "
+				"INNER JOIN Yields ON Yields.Type = YieldType "
+				"LEFT JOIN Terrains ON Terrains.Type = TerrainType "
+				"LEFT JOIN Features ON Features.Type = FeatureType "
+				"LEFT JOIN ResourceClasses ON ResourceClasses.Type = ResourceClassType "
+				"LEFT JOIN Improvements ON Improvements.Type = ImprovementType "
+				"LEFT JOIN Technologies ON Technologies.Type = TechType "
+				"LEFT JOIN BuildingClasses ON BuildingClasses.Type = RequiresBuildingClass "
+				"WHERE TraitType = ?");
+		}
+		pResults->Bind(1, szTraitType);
+		while (pResults->Step())
+		{
+			LekmodPlotYield kRow;
+			kRow.m_eYield = pResults->GetInt(0);
+			kRow.m_iYield = pResults->GetInt(1);
+			kRow.m_eTerrain = pResults->GetInt(2);
+			kRow.m_eFeature = pResults->GetInt(3);
+			kRow.m_eResourceClass = pResults->GetInt(4);
+			kRow.m_eImprovement = pResults->GetInt(5);
+			kRow.m_eTech = pResults->GetInt(6);
+			kRow.m_eBuildingClass = pResults->GetInt(7);
+			kRow.m_bNoImprovement = pResults->GetInt(8) != 0;
+			kRow.m_bAdjacentNaturalWonder = pResults->GetInt(9) != 0;
+			kRow.m_bAdjacentOwnCity = pResults->GetInt(10) != 0;
+			kRow.m_bPantheon = pResults->GetInt(11) != 0;
+			kRow.m_bReligion = pResults->GetInt(12) != 0;
+			m_aLekmodPlotYields.push_back(kRow);
+		}
+		pResults->Reset();
+	}
+#endif
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	{
 		m_aLekmodTrainedPromotions.clear();
@@ -5364,6 +5441,105 @@ void CvPlayerTraits::LekmodApplyTrainedUnitEffects(const CvCity* pCity, CvUnit* 
 		}
 	}
 }
+bool CvPlayerTraits::IsLekmodTraitFlag(int iFlag) const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		if((iFlag == 0 && pkTraitInfo->IsLekmodGoldenAgeHappinessYields()) || (iFlag == 1 && pkTraitInfo->IsLekmodGoldenAgeGreatPeople())
+			|| (iFlag == 2 && pkTraitInfo->IsLekmodGoldenAgeWLTKD()))
+			return true;
+	}
+	return false;
+}
+int CvPlayerTraits::GetLekmodExcessHappinessGAModifier() const
+{
+	int iMod = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			iMod += pkTraitInfo->GetLekmodExcessHappinessGAModifier();
+	}
+	return iMod;
+}
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+bool CvPlayerTraits::HasLekmodPlotYields() const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && !pkTraitInfo->GetLekmodPlotYields().empty())
+			return true;
+	}
+	return false;
+}
+/// Tile yield from the player's traits (Trait_LekmodPlotYields); all conditions of a row must hold
+int CvPlayerTraits::GetLekmodTraitPlotYield(const CvPlot* pPlot, YieldTypes eYield, ImprovementTypes eImprovement) const
+{
+	if(pPlot == NULL)
+		return 0;
+	int iTotal = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<CvTraitEntry::LekmodPlotYield>& aRows = pkTraitInfo->GetLekmodPlotYields();
+		for(uint j = 0; j < aRows.size(); j++)
+		{
+			const CvTraitEntry::LekmodPlotYield& kRow = aRows[j];
+			if(kRow.m_eYield != eYield)
+				continue;
+			if(kRow.m_eTerrain != -1 && pPlot->getTerrainType() != kRow.m_eTerrain)
+				continue;
+			if(kRow.m_eFeature != -1 && pPlot->getFeatureType() != kRow.m_eFeature)
+				continue;
+			if(kRow.m_eImprovement != -1 && eImprovement != kRow.m_eImprovement)
+				continue;
+			if(kRow.m_bNoImprovement && eImprovement != NO_IMPROVEMENT)
+				continue;
+			if(kRow.m_eResourceClass != -1)
+			{
+				const ResourceTypes eResource = pPlot->getResourceType(m_pPlayer->getTeam());
+				CvResourceInfo* pkResource = (eResource != NO_RESOURCE) ? GC.getResourceInfo(eResource) : NULL;
+				if(pkResource == NULL || pkResource->getResourceClassType() != kRow.m_eResourceClass)
+					continue;
+			}
+			if(kRow.m_eTech != -1 && !GET_TEAM(m_pPlayer->getTeam()).GetTeamTechs()->HasTech((TechTypes)kRow.m_eTech))
+				continue;
+			if(kRow.m_eBuildingClass != -1 && m_pPlayer->getBuildingClassCount((BuildingClassTypes)kRow.m_eBuildingClass) <= 0)
+				continue;
+			if(kRow.m_bPantheon && !GC.getGame().GetGameReligions()->HasCreatedPantheon(m_pPlayer->GetID()))
+				continue;
+			if(kRow.m_bReligion && !GC.getGame().GetGameReligions()->HasCreatedReligion(m_pPlayer->GetID()))
+				continue;
+			if(kRow.m_bAdjacentNaturalWonder || kRow.m_bAdjacentOwnCity)
+			{
+				bool bWonder = false, bCity = false;
+				for(int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+				{
+					CvPlot* pAdjacentPlot = plotDirection(pPlot->getX(), pPlot->getY(), (DirectionTypes)iDirection);
+					if(pAdjacentPlot == NULL)
+						continue;
+					if(pAdjacentPlot->IsNaturalWonder())
+						bWonder = true;
+					if(pAdjacentPlot->isCity() && pAdjacentPlot->getOwner() == m_pPlayer->GetID())
+						bCity = true;
+				}
+				if(kRow.m_bAdjacentNaturalWonder && !bWonder)
+					continue;
+				if(kRow.m_bAdjacentOwnCity && !bCity)
+					continue;
+			}
+			iTotal += kRow.m_iYield;
+		}
+	}
+	return iTotal;
+}
+#endif
 /// Trait XP for units trained in pCity from building classes there (Macedonia)
 int CvPlayerTraits::GetLekmodTrainedUnitExperience(const CvCity* pCity) const
 {

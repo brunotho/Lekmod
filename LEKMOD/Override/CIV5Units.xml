@@ -43415,6 +43415,7 @@
 		<Column name="GreatWorkMilitaryProductionModifier" type="integer" default="0"/> <!-- Military production from GreatWorks inside this building -->
 		<Column name="FirstPurchaseDiscount" type="integer" default="0"/> <!-- Faith and Gold Discount if the city has purchased nothing this turn -->
     	<Column name="StartTurnMovesMountedCivilian" type="integer" default="0"/>
+    	<Column name="RequiredCivilization" type="text" reference="Civilizations(Type)" default="NULL"/>
     	<Column name="LekmodPolicyGranted" type="boolean" default="false"/> <!-- LEKMOD: given and removed by Policy_BuildingClassFreeBuildings -->
 	</Table>
 	<!-- NOTE: This table is organized, but don't feel like you need to follow it as it uses manually assigned IDs which can be combersome to change. Just add to the end. 
@@ -110070,6 +110071,22 @@
 			<Yield>5</Yield>
 		</Row>
 	</Feature_HolyCityYieldChanges>
+	<Table name="Trait_LekmodPlotYields">
+		<Column name="TraitType" type="text" reference="Traits(Type)"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+		<Column name="TerrainType" type="text" reference="Terrains(Type)" default="NULL"/>
+		<Column name="FeatureType" type="text" reference="Features(Type)" default="NULL"/>
+		<Column name="ResourceClassType" type="text" reference="ResourceClasses(Type)" default="NULL"/>
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)" default="NULL"/>
+		<Column name="NoImprovement" type="boolean" default="false"/>
+		<Column name="AdjacentNaturalWonder" type="boolean" default="false"/>
+		<Column name="AdjacentOwnCity" type="boolean" default="false"/>
+		<Column name="TechType" type="text" reference="Technologies(Type)" default="NULL"/>
+		<Column name="RequiresPantheon" type="boolean" default="false"/>
+		<Column name="RequiresReligion" type="boolean" default="false"/>
+		<Column name="RequiresBuildingClass" type="text" reference="BuildingClasses(Type)" default="NULL"/>
+	</Table>
 	<Table name="Trait_LekmodTrainedPromotions">
 		<Column name="TraitType" type="text" reference="Traits(Type)"/>
 		<Column name="PromotionType" type="text" reference="UnitPromotions(Type)"/>
@@ -110108,6 +110125,8 @@
 		<Column name="IncomingTradeDomain" type="text" reference="Domains(Type)" default="NULL"/>
 		<Column name="RequiresEra" type="text" reference="Eras(Type)" default="NULL"/>
 		<Column name="RequiresAllTechsOfEra" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="BordersForeignTerritory" type="boolean" default="false"/>
+		<Column name="BordersForeignCityOtherReligion" type="boolean" default="false"/>
 	</Table>
 	<Table name="Building_AdjacentCityPlotYieldChanges">
 		<Column name="BuildingType" type="text" reference="Buildings(Type)"/>
@@ -211444,6 +211463,10 @@
 		<Column name="TributeKeepsPledge" type="boolean" default="false"/>
 		<Column name="LekmodUnhappinessCap" type="integer" default="0"/>
 		<Column name="LekmodGoldModifierAtPeace" type="integer" default="0"/>
+		<Column name="LekmodGoldenAgeHappinessYields" type="boolean" default="false"/>
+		<Column name="LekmodGoldenAgeGreatPeople" type="boolean" default="false"/>
+		<Column name="LekmodGoldenAgeWLTKD" type="boolean" default="false"/>
+		<Column name="LekmodExcessHappinessGAModifier" type="integer" default="0"/>
 		<Column name="FirstProphetCostMod" type="integer" default="0"/>
 		<Column name="EmbarkedUnitsFullStrength" type="boolean" default="false"/>
 		<Column name="CityStateUnitGiftExtraExperience" type="integer"  default="0"/>
@@ -287142,4 +287165,296 @@
 			<Yield>1</Yield>
 		</Row>
 	</Improvement_LekmodIsolatedYields>
+	<!-- Phase 6 C++ batch D (2026-10-14) -->
+	<!-- Australia (new UA): tiles next to a natural wonder +1 Food +1 Faith -->
+	<Trait_YieldChangesNaturalWonder>
+		<Delete TraitType="TRAIT_AUSTRALIA"/>
+	</Trait_YieldChangesNaturalWonder>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_AUSTRALIA"/>
+			<Set NaturalWonderFirstFinderFaith="0" NaturalWonderSubsequentFinderFaith="0"/>
+		</Update>
+	</Traits>
+	<Trait_LekmodPlotYields>
+		<Row>
+			<TraitType>TRAIT_AUSTRALIA</TraitType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+			<AdjacentNaturalWonder>true</AdjacentNaturalWonder>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_AUSTRALIA</TraitType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+			<AdjacentNaturalWonder>true</AdjacentNaturalWonder>
+		</Row>
+	</Trait_LekmodPlotYields>
+	<!-- Australia UB (from scratch, no longer a Constabulary): Machinery, cost 100 (quick), max 2, no maintenance; adjacent mines +1/+1, +2/+2 per adjacent mountain -->
+	<BuildingClasses>
+		<Row>
+			<ID>192</ID>
+			<Type>BUILDINGCLASS_LEKMOD_AUSTRALIA</Type>
+			<DefaultBuilding>BUILDING_AUSTRALIA_CONSTABULARY</DefaultBuilding>
+			<Description>TXT_KEY_BUILDING_AUSTRALIA_CONSTABULARY</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>2</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Civilization_BuildingClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_AUSTRALIA" BuildingClassType="BUILDINGCLASS_CONSTABLE"/>
+	</Civilization_BuildingClassOverrides>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_AUSTRALIA_CONSTABULARY"/>
+			<Set BuildingClass="BUILDINGCLASS_LEKMOD_AUSTRALIA" Cost="150" GoldMaintenance="0" Espionage="false" EspionageModifier="0" Help="TXT_KEY_BUILDING_LEKMOD_AUSTRALIA_UB_HELP" RequiredCivilization="CIVILIZATION_AUSTRALIA"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_AUSTRALIA_CONSTABULARY"/>
+	</Building_YieldChanges>
+	<Building_YieldModifiers>
+		<Delete BuildingType="BUILDING_AUSTRALIA_CONSTABULARY"/>
+	</Building_YieldModifiers>
+	<Building_AdjacentCityPlotYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<ImprovementType>IMPROVEMENT_MINE</ImprovementType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<ImprovementType>IMPROVEMENT_MINE</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_AdjacentCityPlotYieldChanges>
+	<Building_LekmodConditionalYields>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>1</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>1</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>2</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>2</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>3</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>3</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>4</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>4</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>5</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>5</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>6</AdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_AUSTRALIA_CONSTABULARY</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+			<AdjacentCount>6</AdjacentCount>
+		</Row>
+	</Building_LekmodConditionalYields>
+	<!-- Sweden: strategic resources on snow +3 Production -->
+	<Trait_LekmodPlotYields>
+		<Row>
+			<TraitType>TRAIT_DIPLOMACY_GREAT_PEOPLE</TraitType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<ResourceClassType>RESOURCECLASS_RUSH</ResourceClassType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_DIPLOMACY_GREAT_PEOPLE</TraitType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<ResourceClassType>RESOURCECLASS_MODERN</ResourceClassType>
+		</Row>
+	</Trait_LekmodPlotYields>
+	<!-- Celts (first part of the new UA): unimproved forest next to own cities +1 Culture each for pantheon, religion, Drama, National Epic -->
+	<Trait_LekmodPlotYields>
+		<Row>
+			<TraitType>TRAIT_FAITH_FROM_NATURE</TraitType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<FeatureType>FEATURE_FOREST</FeatureType>
+			<NoImprovement>true</NoImprovement>
+			<AdjacentOwnCity>true</AdjacentOwnCity>
+			<RequiresPantheon>true</RequiresPantheon>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_FAITH_FROM_NATURE</TraitType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<FeatureType>FEATURE_FOREST</FeatureType>
+			<NoImprovement>true</NoImprovement>
+			<AdjacentOwnCity>true</AdjacentOwnCity>
+			<RequiresReligion>true</RequiresReligion>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_FAITH_FROM_NATURE</TraitType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<FeatureType>FEATURE_FOREST</FeatureType>
+			<NoImprovement>true</NoImprovement>
+			<AdjacentOwnCity>true</AdjacentOwnCity>
+			<TechType>TECH_DRAMA</TechType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_FAITH_FROM_NATURE</TraitType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<FeatureType>FEATURE_FOREST</FeatureType>
+			<NoImprovement>true</NoImprovement>
+			<AdjacentOwnCity>true</AdjacentOwnCity>
+			<RequiresBuildingClass>BUILDINGCLASS_NATIONAL_EPIC</RequiresBuildingClass>
+		</Row>
+	</Trait_LekmodPlotYields>
+	<!-- Brazil (new UA): golden age Culture and Gold from excess Happiness, a Musician/Writer when a golden age ends, WLTKD in all cities when one starts -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_CARNIVAL"/>
+			<Set GoldenAgeGreatArtistRateModifier="0" GoldenAgeGreatMusicianRateModifier="0" GoldenAgeGreatWriterRateModifier="0" LekmodGoldenAgeHappinessYields="true" LekmodGoldenAgeGreatPeople="true" LekmodGoldenAgeWLTKD="true"/>
+		</Update>
+	</Traits>
+	<Trait_GoldenAgeYieldModifiers>
+		<Delete TraitType="TRAIT_CARNIVAL"/>
+	</Trait_GoldenAgeYieldModifiers>
+	<Trait_YieldFromKills>
+		<Delete TraitType="TRAIT_CARNIVAL"/>
+	</Trait_YieldFromKills>
+	<!-- Mughals (new UA): border yields, double golden age points from excess Happiness; the old Lua UA is switched off -->
+	<WorldWonderYieldChanges>
+		<Delete TraitType="TRAIT_MUGHALS"/>
+	</WorldWonderYieldChanges>
+	<BuildingClasses>
+		<Row>
+			<ID>191</ID>
+			<Type>BUILDINGCLASS_LEKMOD_MUGHALS_TRAIT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_MUGHALS_TRAIT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>288</ID>
+			<Type>BUILDING_LEKMOD_MUGHALS_TRAIT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_MUGHALS_TRAIT</BuildingClass>
+			<Description>Trait Mughals</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_MUGHALS"/>
+			<Set FreeBuilding="BUILDING_LEKMOD_MUGHALS_TRAIT" LekmodExcessHappinessGAModifier="100"/>
+		</Update>
+	</Traits>
+	<Building_LekmodConditionalYields>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MUGHALS_TRAIT</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+			<BordersForeignTerritory>true</BordersForeignTerritory>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MUGHALS_TRAIT</BuildingType>
+			<YieldType>YIELD_GOLDEN_AGE_POINTS</YieldType>
+			<Yield>2</Yield>
+			<BordersForeignTerritory>true</BordersForeignTerritory>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MUGHALS_TRAIT</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>4</Yield>
+			<BordersForeignCityOtherReligion>true</BordersForeignCityOtherReligion>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MUGHALS_TRAIT</BuildingType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>4</Yield>
+			<BordersForeignCityOtherReligion>true</BordersForeignCityOtherReligion>
+		</Row>
+	</Building_LekmodConditionalYields>
 </GameData>

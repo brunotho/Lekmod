@@ -2101,7 +2101,11 @@ MUGHALS (CIVILIZATION_MUGHALS)
 Tags: civs, buildings
 - Changed: their Caravansary costs 67 (was 60); with a garrison it gives +2 Culture (was +3) and +1 Gold (was +2)
 - Note: "gold down to 3" read as 3 Gold in total with a garrison (on Specs to refine)
-- Note: open: the new UA (border and religion yields; needs C++)
+- Changed: new UA: cities whose tiles border another civilization or a City-State +2 Culture and +2 Golden Age points; bordering a foreign city with a different religion +4 Faith and +4 Science
+- Added: excess Happiness gives double Golden Age points
+- Removed: the foreign religion yields (Science, Culture, Gold per 5 population, also for holy cities) and +2 Golden Age points from World Wonders
+- DLL: Building_LekmodConditionalYields (BordersForeignTerritory, BordersForeignCityOtherReligion), Traits.LekmodExcessHappinessGAModifier
+- Dev: per-city dummy building 288 (class 191); the old UA's Lua (Lekmod_mughals.lua) is switched off
 
 MOORS (CIVILIZATION_MOORS)
 --------------------------
@@ -2206,7 +2210,9 @@ Tags: civs, units, promotions
 - Changed: Pictish Warrior now replaces the Warrior (so the Celts start with one): 9 Strength, upgrades to the Swordsman, starts with Zealot and Woodsman
 - Removed: Pictish Warrior: foreign lands bonus, free pillaging, bonus against mounted units
 - Changed: Zealot is kept on upgrade (for every unit that has it)
-- Note: open: the new UA (forest Culture and Faith, chopping, roads; needs C++)
+- Added: unimproved Forest next to your cities +1 Culture each for a pantheon, a religion, Drama and Poetry and the National Epic (first part of the new UA)
+- Note: open: the rest of the new UA (chopping costs Faith, no roads in Forest, Classical Era forest rules; needs C++); the old forest Faith stays until then
+- DLL: Trait_LekmodPlotYields
 
 JERUSALEM (CIVILIZATION_JERUSALEM)
 ----------------------------------
@@ -2275,7 +2281,11 @@ BRAZIL (CIVILIZATION_BRAZIL)
 ----------------------------
 Tags: civs, units, promotions
 - Changed: Pracinha: 72 Strength (was 80), +30% outside friendly territory (was +20%)
-- Note: open: the new UA (needs C++)
+- Changed: new UA: during a golden age, Culture and Gold equal to your excess Happiness
+- Added: a Great Musician when a golden age ends, a Great Writer the next time, alternating
+- Added: when a golden age starts, every city starts a full We Love the King Day
+- Removed: golden age points from kills, +100% Tourism and faster Great Artists, Musicians and Writers during golden ages
+- DLL: Traits.LekmodGoldenAgeHappinessYields, LekmodGoldenAgeGreatPeople, LekmodGoldenAgeWLTKD
 
 ENGLAND (CIVILIZATION_ENGLAND)
 ------------------------------
@@ -2432,7 +2442,8 @@ Tags: civs, buildings
 - Changed: Falu Gruva works like a regular Ironworks: 8 Iron, +8 Production, +2 Production from Mountains
 - Removed: Falu Gruva: +1 Production from Hills, +6 Tourism with Flight
 - Changed: start bias avoids jungle instead of desert (tundra bias kept)
-- Note: open: UA Production from strategic resources in snow (needs C++)
+- Added: strategic resources on Snow +3 Production
+- DLL: Trait_LekmodPlotYields
 
 MAURYA (CIVILIZATION_MAURYA)
 ----------------------------
@@ -2554,3 +2565,13 @@ MEXICO (CIVILIZATION_MEXICO)
 Tags: civs
 - Added: demanding tribute does not break your own pledge of protection
 - Note: open: the rest of the new UA (+10 Gold for meeting City-States, tribute for Influence; needs C++/UI)
+
+AUSTRALIA (CIVILIZATION_AUSTRALIA)
+----------------------------------
+Tags: civs, buildings
+- Changed: new UA: tiles next to a natural wonder +1 Food and +1 Faith
+- Removed: +5 Faith from natural wonders and the Faith for discovering them
+- Changed: Convict Penitentiary (rebuilt) no longer replaces the Constabulary: Machinery, costs 100, at most 2 per empire, no maintenance; mines next to the city +1 Production and +1 Gold, +2 Production and +2 Gold per mountain next to the city (not natural wonders)
+- Removed: Convict Penitentiary: its flat and % Production and Gold, spy effects
+- DLL: Trait_LekmodPlotYields, Buildings.RequiredCivilization (a civ-only building with its own class)
+- Dev: new building class 192

@@ -5217,6 +5217,10 @@ void CvPlayer::doTurn()
 #if defined(LEKMOD_RUIN_CHOICE)
 	LekmodResolvePendingRuins();
 #endif
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+	if (GetPlayerTraits()->HasLekmodPlotYields())
+		updateYield();
+#endif
 
 	doUpdateCacheOnTurn();
 
@@ -10385,6 +10389,10 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 	int iI;
 #endif
 	CvTeam& currentTeam = GET_TEAM(getTeam());
+#ifdef LEKMOD_CIV_ONLY_BUILDINGS
+	if(pBuildingInfo.GetLekmodRequiredCivilization() != -1 && pBuildingInfo.GetLekmodRequiredCivilization() != (int)getCivilizationType())
+		return false;
+#endif
 
 	const BuildingClassTypes eBuildingClass = ((BuildingClassTypes)(pBuildingInfo.GetBuildingClassType()));
 	const CvBuildingClassInfo& kBuildingClass = pkBuildingInfo->GetBuildingClassInfo();
@@ -18241,6 +18249,11 @@ int CvPlayer::GetTotalGoldenAgePointsInEmpire()
 
 	// Get Excess Happiness, currently converted 1:1 to Golden Age Points
 	iGoldenAgePoints += GetExcessHappiness();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Mughals: excess Happiness counts more
+	if (GetExcessHappiness() > 0 && GetPlayerTraits()->GetLekmodExcessHappinessGAModifier() != 0)
+		iGoldenAgePoints += GetExcessHappiness() * GetPlayerTraits()->GetLekmodExcessHappinessGAModifier() / 100;
+#endif
 	// Get the amount being made by cities
 	iGoldenAgePoints += GetGoldenAgePointsFromCities();
 
@@ -18588,6 +18601,16 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 						pLoopCity->LekmodOnGoldenAgeStart();
 				}
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				// Brazil: every city gets a full We Love the King Day
+				if (GetPlayerTraits()->IsLekmodTraitFlag(2))
+				{
+					int iTurns = GC.getCITY_RESOURCE_WLTKD_TURNS() * GC.getGame().getGameSpeedInfo().getCulturePercent() / 100;
+					int iLoop;
+					for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+						pLoopCity->SetWeLoveTheKingDayCounter(iTurns);
+				}
+#endif
 
 				locString = Localization::Lookup("TXT_KEY_NOTIFICATION_GOLDEN_AGE_BEGUN");
 				locString << getCivilizationAdjectiveKey();
@@ -18598,6 +18621,20 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 			else
 			{
 				gDLL->GameplayGoldenAgeEnded();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				// Brazil: a Great Musician after the 1st, 3rd... golden age, a Great Writer after the 2nd, 4th...
+				if (GetPlayerTraits()->IsLekmodTraitFlag(1))
+				{
+					const bool bMusician = (GetNumGoldenAges() % 2) == 1;
+					const UnitClassTypes eClass = (UnitClassTypes)GC.getInfoTypeForString(bMusician ? "UNITCLASS_MUSICIAN" : "UNITCLASS_WRITER", true);
+					if (eClass != NO_UNITCLASS)
+					{
+						const UnitTypes eUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(eClass);
+						if (eUnit != NO_UNIT)
+							addFreeUnit(eUnit, (UnitAITypes)GC.getUnitInfo(eUnit)->GetDefaultUnitAIType());
+					}
+				}
+#endif
 			}
 
 			CvNotifications* pNotifications = GetNotifications();
@@ -23503,6 +23540,11 @@ int CvPlayer::getYieldFromTraitsTimes100(YieldTypes eYield) const
 		iYield += GetPlayerTraits()->GetTradePartnerYieldFlatBonusPerEra(eYield) * GetCurrentEra();
 		iYield *= GetTrade()->GetNumDifferentTradingPartners();
 	}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Brazil: golden ages give Culture and Gold equal to excess Happiness
+	if ((eYield == YIELD_CULTURE || eYield == YIELD_GOLD) && isGoldenAge() && GetExcessHappiness() > 0 && GetPlayerTraits()->IsLekmodTraitFlag(0))
+		iYield += GetExcessHappiness() * 100;
+#endif
 	return iYield;
 }
 int CvPlayer::getYieldFromReligionTimes100(YieldTypes eYield, int iPrevTotal) const

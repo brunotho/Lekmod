@@ -9768,6 +9768,10 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 	iYield += GetLekmodAdjacentCityBuildingYield(eYield, ePlayer, (IsImprovementPillaged() ? NO_IMPROVEMENT : eImprovement));
 #endif
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+	if (ePlayer != NO_PLAYER && getOwner() == ePlayer && !isCity())
+		iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitPlotYield(this, eYield, (IsImprovementPillaged() ? NO_IMPROVEMENT : eImprovement));
+#endif
 
 	if(ePlayer != NO_PLAYER)
 	{

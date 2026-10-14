@@ -147940,6 +147940,25 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_TRAIT_CL_UC_REVOLUTION">
 			<Text>Unaffected by [ICON_HAPPINESS_4] Unhappiness from Ideology pressure.[NEWLINE]Unhappiness never acts worse than 9 (the penalties stop growing there; the shown number is real).[NEWLINE]One [ICON_RES_TOBACCO] Tobacco appears near the [ICON_CAPITAL] Capital when it is founded.</Text>
 		</Replace>
+		<!-- Phase 6 C++ batch D -->
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_AUSTRALIA_UB_HELP">
+			<Text>Unique to Australia; does not replace a building. At most 2 in your empire. No maintenance.[NEWLINE][NEWLINE]Mines next to the city yield +1 [ICON_PRODUCTION] Production and +1 [ICON_GOLD] Gold.[NEWLINE]+2 [ICON_PRODUCTION] Production and +2 [ICON_GOLD] Gold for every mountain next to the city (not natural wonders).</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_TRAIT_AUSTRALIA">
+			<Text>Tiles next to a [COLOR_GREEN]Natural Wonder[ENDCOLOR] yield +1 [ICON_FOOD] Food and +1 [ICON_PEACE] Faith.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_DIPLOMACY_GREAT_PEOPLE">
+			<Text>+20% [ICON_GREAT_PEOPLE] Great Person points in all Cities. Gifting a [ICON_GREAT_PEOPLE] Great Person to a [ICON_CITY_STATE] City-State yields 100 [ICON_INFLUENCE] Influence and 200 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Strategic resources on Snow yield +3 [ICON_PRODUCTION] Production.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_FAITH_FROM_NATURE">
+			<Text>+1 [ICON_PEACE] Faith per city with an adjacent [COLOR_GREEN]unimproved Forest[ENDCOLOR]. Bonus increases to +2 [ICON_PEACE] Faith in Cities with 3 or more adjacent [COLOR_GREEN]unimproved Forest[ENDCOLOR] tiles.[NEWLINE][NEWLINE]Unimproved Forest next to your cities yields +1 [ICON_CULTURE] Culture for each of these you have: a Pantheon, a Religion, [ICON_TECH_DRAMA] Drama and Poetry, the National Epic.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_CARNIVAL">
+			<Text>During a [ICON_GOLDEN_AGE] Golden Age, gain [ICON_CULTURE] Culture and [ICON_GOLD] Gold equal to your excess [ICON_HAPPINESS_1] Happiness.[NEWLINE]When a [ICON_GOLDEN_AGE] Golden Age ends, gain a [ICON_GREAT_MUSICIAN] Great Musician, the next time a [ICON_GREAT_WRITER] Great Writer, and so on.[NEWLINE]When a [ICON_GOLDEN_AGE] Golden Age starts, every city starts a full 'We Love the King Day'.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_MUGHALS_DESC">
+			<Text>Cities whose tiles border another civilization or a [ICON_CITY_STATE] City-State yield +2 [ICON_CULTURE] Culture and +2 [ICON_GOLDEN_AGE] Golden Age points.[NEWLINE]Cities whose tiles border a foreign city with a different [ICON_RELIGION] Religion yield +4 [ICON_PEACE] Faith and +4 [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]Excess [ICON_HAPPINESS_1] Happiness gives double [ICON_GOLDEN_AGE] Golden Age points.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

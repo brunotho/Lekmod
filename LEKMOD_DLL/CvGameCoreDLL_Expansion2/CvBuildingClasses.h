@@ -39,7 +39,7 @@ struct LekmodBuildingConditionalYield
 	LekmodBuildingConditionalYield() : m_eYield(NO_YIELD), m_iYield(0), m_eRequiredClass(NO_BUILDINGCLASS), m_bCoastal(false), m_bFreshWater(false),
 		m_bConnected(false), m_bCapital(false), m_bPerConnectedCity(false), m_eAdjacentTerrain(NO_TERRAIN), m_eAdjacentFeature(NO_FEATURE),
 		m_iAdjacentCount(1), m_iOwnCitiesRange(0), m_iOwnCitiesNeeded(0), m_iPerForeignCityRange(0), m_iPerSameBuildingRange(0),
-		m_iNoSameBuildingRange(0), m_iPerPopulation(0), m_eIncomingDomain(NO_DOMAIN), m_eEra(NO_ERA), m_eAllTechsOfEra(NO_ERA) {};
+		m_iNoSameBuildingRange(0), m_iPerPopulation(0), m_eIncomingDomain(NO_DOMAIN), m_eEra(NO_ERA), m_eAllTechsOfEra(NO_ERA), m_bBordersForeign(false), m_bBordersForeignCityOtherReligion(false) {};
 	YieldTypes m_eYield;
 	int m_iYield;
 	BuildingClassTypes m_eRequiredClass;
@@ -60,6 +60,8 @@ struct LekmodBuildingConditionalYield
 	DomainTypes m_eIncomingDomain;
 	EraTypes m_eEra;
 	EraTypes m_eAllTechsOfEra;
+	bool m_bBordersForeign;
+	bool m_bBordersForeignCityOtherReligion;
 };
 #endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
@@ -522,6 +524,9 @@ public:
 #ifdef LEKMOD_BUILDING_START_TURN_MOVES
 	int GetLekmodStartTurnMovesMountedCivilian() const;
 #endif
+#ifdef LEKMOD_CIV_ONLY_BUILDINGS
+	int GetLekmodRequiredCivilization() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -880,6 +885,9 @@ private:
 #endif
 #ifdef LEKMOD_BUILDING_START_TURN_MOVES
 	int m_iLekmodStartTurnMovesMountedCivilian;
+#endif
+#ifdef LEKMOD_CIV_ONLY_BUILDINGS
+	int m_iLekmodRequiredCivilization;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;

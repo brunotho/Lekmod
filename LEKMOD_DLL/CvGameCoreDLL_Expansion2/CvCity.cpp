@@ -15486,6 +15486,34 @@ int CvCity::GetLekmodConditionalBuildingYield(YieldTypes eYield) const
 				if (iCount < kRow.m_iAdjacentCount)
 					continue;
 			}
+			if (kRow.m_bBordersForeign || kRow.m_bBordersForeignCityOtherReligion)
+			{
+				// this city's tiles touch tiles of another player (major or City-State); optionally a city of theirs with a different religion
+				bool bBorders = false, bOtherReligion = false;
+				const ReligionTypes eMyReligion = GetCityReligions()->GetReligiousMajority();
+				for (int iPlot = 0; iPlot < NUM_CITY_PLOTS && !(bBorders && (bOtherReligion || !kRow.m_bBordersForeignCityOtherReligion)); iPlot++)
+				{
+					CvPlot* pCityPlot = GetCityCitizens()->GetCityPlotFromIndex(iPlot);
+					if (pCityPlot == NULL || pCityPlot->getOwner() != getOwner() || pCityPlot->getWorkingCity() != this)
+						continue;
+					for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+					{
+						CvPlot* pAdjacentPlot = plotDirection(pCityPlot->getX(), pCityPlot->getY(), (DirectionTypes)iDirection);
+						if (pAdjacentPlot == NULL || pAdjacentPlot->getOwner() == NO_PLAYER || pAdjacentPlot->getOwner() == getOwner() || pAdjacentPlot->getOwner() == BARBARIAN_PLAYER)
+							continue;
+						bBorders = true;
+						CvCity* pTheirCity = pAdjacentPlot->getWorkingCity();
+						if (pTheirCity && eMyReligion != NO_RELIGION)
+						{
+							const ReligionTypes eTheirReligion = pTheirCity->GetCityReligions()->GetReligiousMajority();
+							if (eTheirReligion != NO_RELIGION && eTheirReligion != eMyReligion)
+								bOtherReligion = true;
+						}
+					}
+				}
+				if (!bBorders || (kRow.m_bBordersForeignCityOtherReligion && !bOtherReligion))
+					continue;
+			}
 			if (kRow.m_eIncomingDomain != NO_DOMAIN)
 			{
 				bool bFound = false;

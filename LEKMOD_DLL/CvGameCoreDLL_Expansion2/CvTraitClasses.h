@@ -221,6 +221,18 @@ public:
 	int GetLekmodGoldModifierAtPeace() const;
 	const std::vector<std::pair<int, int> >& GetLekmodTrainedPromotions() const;
 	const std::vector<std::pair<int, int> >& GetLekmodBuildingClassFreeExperience() const;
+	bool IsLekmodGoldenAgeHappinessYields() const;
+	bool IsLekmodGoldenAgeGreatPeople() const;
+	bool IsLekmodGoldenAgeWLTKD() const;
+	int GetLekmodExcessHappinessGAModifier() const;
+#endif
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+	struct LekmodPlotYield
+	{
+		int m_eYield, m_iYield, m_eTerrain, m_eFeature, m_eResourceClass, m_eImprovement, m_eTech, m_eBuildingClass;
+		bool m_bNoImprovement, m_bAdjacentNaturalWonder, m_bAdjacentOwnCity, m_bPantheon, m_bReligion;
+	};
+	const std::vector<LekmodPlotYield>& GetLekmodPlotYields() const;
 #endif
 	bool IsNoHillsImprovementMaintenance() const;
 	bool IsTechBoostFromCapitalScienceBuildings() const;
@@ -515,6 +527,13 @@ protected:
 	int m_iLekmodGoldModifierAtPeace;
 	std::vector<std::pair<int, int> > m_aLekmodTrainedPromotions; // promotion, adjacent terrain (-1 = any city)
 	std::vector<std::pair<int, int> > m_aLekmodBuildingClassFreeExperience; // building class, XP
+	bool m_bLekmodGoldenAgeHappinessYields;
+	bool m_bLekmodGoldenAgeGreatPeople;
+	bool m_bLekmodGoldenAgeWLTKD;
+	int m_iLekmodExcessHappinessGAModifier;
+#endif
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+	std::vector<LekmodPlotYield> m_aLekmodPlotYields;
 #endif
 	bool m_bNoHillsImprovementMaintenance;
 	bool m_bTechBoostFromCapitalScienceBuildings;
@@ -726,6 +745,12 @@ public:
 	int GetLekmodGoldModifierAtPeace() const;
 	void LekmodApplyTrainedUnitEffects(const CvCity* pCity, CvUnit* pUnit) const;
 	int GetLekmodTrainedUnitExperience(const CvCity* pCity) const;
+	bool IsLekmodTraitFlag(int iFlag) const; // 0 GA happiness yields, 1 GA great people, 2 GA WLTKD
+	int GetLekmodExcessHappinessGAModifier() const;
+#ifdef LEKMOD_TRAIT_PLOT_YIELDS
+	bool HasLekmodPlotYields() const;
+	int GetLekmodTraitPlotYield(const CvPlot* pPlot, YieldTypes eYield, ImprovementTypes eImprovement) const;
+#endif
 #endif
 	int GetGreatPeopleRateModifier() const
 	{

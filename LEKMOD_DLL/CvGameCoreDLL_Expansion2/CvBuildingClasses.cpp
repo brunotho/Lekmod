@@ -1205,6 +1205,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef LEKMOD_BUILDING_START_TURN_MOVES
 	m_iLekmodStartTurnMovesMountedCivilian = kResults.GetInt("StartTurnMovesMountedCivilian");
 #endif
+#ifdef LEKMOD_CIV_ONLY_BUILDINGS
+	m_iLekmodRequiredCivilization = GC.getInfoTypeForString(kResults.GetText("RequiredCivilization"), true);
+#endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 	{
 		m_aLekmodConditionalYields.clear();
@@ -1215,7 +1218,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 			pResults = kUtility.PrepareResults(strKey,
 				"select Yields.ID, Yield, coalesce(BuildingClasses.ID, -1), RequiresCoastal, RequiresFreshWater, ConnectedToCapital, RequiresCapital, PerConnectedCity, "
 				"coalesce(Terrains.ID, -1), coalesce(Features.ID, -1), AdjacentCount, OtherOwnCitiesRange, OtherOwnCitiesNeeded, PerForeignMajorCityRange, "
-				"PerSameBuildingRange, NoSameBuildingRange, PerPopulation, coalesce(Domains.ID, -1), coalesce(Eras.ID, -1), coalesce(TechEras.ID, -1) "
+				"PerSameBuildingRange, NoSameBuildingRange, PerPopulation, coalesce(Domains.ID, -1), coalesce(Eras.ID, -1), coalesce(TechEras.ID, -1), BordersForeignTerritory, BordersForeignCityOtherReligion "
 				"from Building_LekmodConditionalYields "
 				"inner join Yields on Yields.Type = YieldType "
 				"left join BuildingClasses on BuildingClasses.Type = RequiresBuildingClass "
@@ -1250,6 +1253,8 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 			kEntry.m_eIncomingDomain = (DomainTypes)pResults->GetInt(17);
 			kEntry.m_eEra = (EraTypes)pResults->GetInt(18);
 			kEntry.m_eAllTechsOfEra = (EraTypes)pResults->GetInt(19);
+			kEntry.m_bBordersForeign = pResults->GetInt(20) != 0;
+			kEntry.m_bBordersForeignCityOtherReligion = pResults->GetInt(21) != 0;
 			m_aLekmodConditionalYields.push_back(kEntry);
 		}
 	}
@@ -3314,6 +3319,13 @@ int CvBuildingEntry::GetDifferentLandMassYieldChange(int i) const
 const std::vector<BuildingFreeTerrainYields>& CvBuildingEntry::GetFreeTerrainYields() const
 {
 	return m_aFreeTerrainYields;
+}
+#endif
+#ifdef LEKMOD_CIV_ONLY_BUILDINGS
+/// Only this civilization can build it (-1: everyone)
+int CvBuildingEntry::GetLekmodRequiredCivilization() const
+{
+	return m_iLekmodRequiredCivilization;
 }
 #endif
 #ifdef LEKMOD_BUILDING_START_TURN_MOVES

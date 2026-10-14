@@ -1466,6 +1466,10 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_BUILDING_START_TURN_MOVES
 // Improvement_LekmodIsolatedYields: yield when no adjacent plot has the same improvement, optionally needs a tech (Polder)
 #define LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
+// Phase 6 C++ batch D: Trait_LekmodPlotYields (tile yields from traits with conditions: Australia, Sweden, Celts)
+#define LEKMOD_TRAIT_PLOT_YIELDS
+// Buildings.RequiredCivilization: only that civilization can build it (civ-only building classes: Australia, Japan)
+#define LEKMOD_CIV_ONLY_BUILDINGS
 // Buildings.TerritoryHealChange: extra healing for the owner's non-air units on all tiles of the city (Field Hospital)
 #define LEKMOD_TERRITORY_HEAL
 // Buildings.CityHealRate/AdjacentEnemyDamage/HillCityStrength/MountainCityStrength/CityAttackRangeChange (Walls, Castle, Arsenal, Command Bunker), Buildings.NukeUnitDamageFixed (Bomb Shelter);

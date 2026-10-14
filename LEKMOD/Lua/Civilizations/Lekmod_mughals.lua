@@ -88,7 +88,8 @@ function lekmod_ua_mughals_city_acquired(old_owner_id, new_owner_id, city_id)
 end
 
 -- Register events if Mughal civilization is active
-if is_active then
+-- Old UA, replaced by the DLL trait (Phase 6 batch D, 2026-10-14)
+if false and is_active then
    GameEvents.PlayerDoTurn.Add(lekmod_ua_mughals_turn_start)
    GameEvents.CityReligionChanged.Add(lekmod_ua_mughals_religion_changed)
    GameEvents.CityCaptureComplete.Add(lekmod_ua_mughals_city_acquired)
