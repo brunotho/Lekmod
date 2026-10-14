@@ -125,6 +125,7 @@ enum LekmodTraitInt
 	LTI_GROWTH_IMPROVEMENT_RANGE,		// ... on the closest owned water tile within this range
 	LTI_GROWTH_IMPROVEMENT_CAPITAL_RANGE,	// ... (capital)
 	LTI_FIRST_UNIT_CLASS_DOUBLE,			// type: the first unit of this class gives a second one (Brunei: Nelayan)
+	LTI_TRIBUTE_INFLUENCE,				// extra tribute option: this much Influence instead of Gold (Mexico)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

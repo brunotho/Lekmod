@@ -147911,7 +147911,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Receive a free [ICON_GREAT_SCIENTIST] Great Scientist once you know both [ICON_TECH_PHILOSOPHY] Philosophy and [ICON_TECH_MATHEMATICS] Mathematics.[NEWLINE]Earn [ICON_GREAT_SCIENTIST] Great Scientists 25% faster.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_MEXICO">
-			<Text>Receive a free [ICON_WORKER] Worker upon researching [ICON_TECH_POTTERY] Pottery. Gain +6 [ICON_INFLUENCE] Influence per turn from [ICON_CITY_STATE] City-States that you could demand tribute from but do not. At the start of the first turn, discover the location of any nearby [ICON_CITY_STATE] City-States.[NEWLINE][NEWLINE]Demanding tribute does not break your own pledge of protection.[NEWLINE]+10 [ICON_GOLD] Gold when meeting a [ICON_CITY_STATE] City-State.</Text>
+			<Text>Receive a free [ICON_WORKER] Worker upon researching [ICON_TECH_POTTERY] Pottery.[NEWLINE]+10 [ICON_GOLD] Gold when meeting a [ICON_CITY_STATE] City-State.[NEWLINE][NEWLINE]Demanding tribute does not break your own pledge of protection.[NEWLINE]When demanding tribute you may take +30 [ICON_INFLUENCE] Influence instead of [ICON_GOLD] Gold (counts as a tribute).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_TERRACE_FARM_HELP">
 			<Text>The Terrace Farm can only be built on hills next to a mountain, and does not need a source of fresh water. It provides additional food next to mountains.</Text>
@@ -148142,6 +148142,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_BRUNEI_CONNECTION">
 			<Text>Abode of Peace (connection yields)</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_POPUP_MINOR_BULLY_INFLUENCE">
+			<Text>Take +{1_Num} [ICON_INFLUENCE] Influence instead of [ICON_GOLD] Gold</Text>
 		</Row>
 	</Language_en_US>
 	<Language_de_DE>

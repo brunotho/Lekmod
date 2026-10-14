@@ -515,6 +515,9 @@ public:
 	CvString GetMajorBullyUnitDetails(PlayerTypes ePlayer);
 
 	void DoMajorBullyGold(PlayerTypes eBully, int iGold);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	void LekmodDoMajorTributeInfluence(PlayerTypes eBully);
+#endif
 	void DoMajorBullyUnit(PlayerTypes eBully, UnitTypes eUnitType);
 	
 #ifdef NQ_MINOR_FRIENDSHIP_GAIN_BULLY_GOLD_SUCCESS_FROM_POLICIES

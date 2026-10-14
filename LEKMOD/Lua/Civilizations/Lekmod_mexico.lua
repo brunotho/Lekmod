@@ -39,6 +39,7 @@ function lekmod_mexico_ua(player_id)
 
 end
 ------------------------------------------------------------------------------------------------------------------------
-if is_active then
+-- 2026-10-14: the City-State discovery is not part of the new UA
+if false and is_active then
 	GameEvents.PlayerDoTurn.Add(lekmod_mexico_ua)
 end

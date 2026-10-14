@@ -45,6 +45,7 @@ IF EXIST "%euifolder%\CityBanners\CityBannerManager.lua" (
 REM --------------------------------------------------------------------------------------------------
 IF NOT EXIST "%euifolder%\CityStatePopup\CityStateDiploPopup.lua" (
   copy /y "%patchfolder%\Lua\tmp\ui\CityStatePopup\CityStateDiploPopup.lua.ignore" "%patchfolder%\Lua\UI\CityStateDiploPopup.lua" > nul
+  copy /y "%patchfolder%\Lua\tmp\ui\CityStatePopup\CityStateDiploPopup.xml.ignore" "%patchfolder%\Lua\UI\CityStateDiploPopup.xml" > nul
 ) ELSE (
   copy /y "%patchfolder%\Lua\tmp\eui\CityStatePopup\CityStateDiploPopup.lua.ignore" "%patchfolder%\Lua\UI\CityStateDiploPopup.lua" > nul
 )

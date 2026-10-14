@@ -211573,6 +211573,7 @@
 		<Column name="LekmodGrowthImprovementRange" type="integer" default="0"/>
 		<Column name="LekmodGrowthImprovementCapitalRange" type="integer" default="0"/>
 		<Column name="LekmodFirstUnitClassDouble" type="text"/>
+		<Column name="LekmodTributeInfluence" type="integer" default="0"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -289901,4 +289902,11 @@
 			<BuildingType/>
 		</Row>
 	</Civilization_BuildingClassOverrides>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Mexico tribute for Influence; old Influence per turn removed -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_MEXICO"/>
+			<Set LekmodTributeInfluence="30" AfraidMinorPerTurnInfluence="0"/>
+		</Update>
+	</Traits>
 </GameData>

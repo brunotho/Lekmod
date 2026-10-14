@@ -2641,11 +2641,13 @@ Tags: civs, buildings
 
 MEXICO (CIVILIZATION_MEXICO)
 ----------------------------
-Tags: civs
+Tags: civs, ui
 - Added: demanding tribute does not break your own pledge of protection
 - Added: +10 Gold for meeting a City-State (40 as the first civilization, 25 otherwise)
-- Note: open: tribute for Influence (needs C++/UI); the old +6 Influence per turn stays until then
-- DLL: Traits.LekmodMeetMinorGold
+- Added: when demanding tribute, a third option takes +30 Influence instead of Gold (same conditions; counts as a tribute)
+- Removed: +6 Influence per turn from City-States you could demand tribute from; revealing nearby City-States at the start
+- Note: the Influence option is in the standard UI only (EUI keeps its own City-State screen)
+- DLL: Traits.LekmodMeetMinorGold, LekmodTributeInfluence; network command -24; Lua Player:LekmodGetTributeInfluence()
 
 CHINA (CIVILIZATION_CHINA)
 --------------------------

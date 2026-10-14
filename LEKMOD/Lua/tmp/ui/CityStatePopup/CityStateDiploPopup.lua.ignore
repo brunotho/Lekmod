@@ -30,6 +30,7 @@ local kiNoAction = 0;
 local kiMadePeace = 1;
 local kiBulliedGold = 2;
 local kiBulliedUnit = 3;
+local kiLekmodBulliedInfluence = 103; -- LEKMOD: Mexico's tribute for Influence
 local kiGiftedGold = 4;
 local kiPledgedToProtect = 5;
 local kiDeclaredWar = 6;
@@ -408,6 +409,8 @@ function OnDisplay()
 		-- Did we just bully a worker?
 		elseif (m_iLastAction == kiBulliedUnit) then
 			strText = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_DIPLO_JUST_BULLIED_WORKER");
+		elseif (m_iLastAction == kiLekmodBulliedInfluence) then
+			strText = Locale.ConvertTextKey("TXT_KEY_CITY_STATE_DIPLO_JUST_BULLIED");
 		
 		-- Did we just give gold?
 		elseif (m_iLastAction == kiGiftedGold) then
@@ -1179,6 +1182,25 @@ function PopulateTakeChoices()
 	Controls.UnitTributeButton:SetToolTipString(ttText);
 	SetButtonSize(Controls.UnitTributeLabel, Controls.UnitTributeButton, Controls.UnitTributeAnim, Controls.UnitTributeButtonHL);
 	
+	-- LEKMOD: Mexico may take Influence instead of Gold (same conditions as the Gold tribute)
+	if (Controls.InfluenceTributeButton ~= nil) then
+		local iTributeInfluence = pActivePlayer:LekmodGetTributeInfluence();
+		Controls.InfluenceTributeButton:SetHide(iTributeInfluence <= 0);
+		if (iTributeInfluence > 0) then
+			buttonText = Locale.Lookup("TXT_KEY_LEKMOD_POPUP_MINOR_BULLY_INFLUENCE", iTributeInfluence);
+			if (not pPlayer:CanMajorBullyGold(iActivePlayer)) then
+				buttonText = "[COLOR_WARNING_TEXT]" .. buttonText .. "[ENDCOLOR]";
+				Controls.InfluenceTributeAnim:SetHide(true);
+			else
+				buttonText = "[COLOR_POSITIVE_TEXT]" .. buttonText .. "[ENDCOLOR]";
+				Controls.InfluenceTributeAnim:SetHide(false);
+			end
+			Controls.InfluenceTributeLabel:SetText(buttonText);
+			Controls.InfluenceTributeButton:SetToolTipString(pPlayer:GetMajorBullyGoldDetails(iActivePlayer));
+			SetButtonSize(Controls.InfluenceTributeLabel, Controls.InfluenceTributeButton, Controls.InfluenceTributeAnim, Controls.InfluenceTributeButtonHL);
+		end
+	end
+	
 	UpdateButtonStack();
 end
 
@@ -1256,6 +1278,22 @@ end
 Controls.UnitTributeButton:RegisterCallback( Mouse.eLClick, OnUnitTributeButtonClicked );
 
 ----------------------------------------------------------------
+-- LEKMOD: Take Influence (Mexico)
+----------------------------------------------------------------
+function OnInfluenceTributeButtonClicked()
+	local pPlayer = Players[g_iMinorCivID];
+	local iActivePlayer = Game.GetActivePlayer();
+	if (pPlayer:CanMajorBullyGold(iActivePlayer) and Players[iActivePlayer]:LekmodGetTributeInfluence() > 0) then
+		m_iPendingAction = kiLekmodBulliedInfluence;
+		OnBullyButtonClicked();
+		OnCloseTake();
+	end
+end
+if (Controls.InfluenceTributeButton ~= nil) then
+	Controls.InfluenceTributeButton:RegisterCallback( Mouse.eLClick, OnInfluenceTributeButtonClicked );
+end
+
+----------------------------------------------------------------
 -- Close Take Submenu
 ----------------------------------------------------------------
 function OnCloseTake()
@@ -1282,6 +1320,10 @@ function OnYesBully( )
 		Game.DoMinorBullyUnit(iActivePlayer, g_iMinorCivID);
 		m_iPendingAction = kiNoAction;
 		m_iLastAction = kiBulliedUnit;
+	elseif (m_iPendingAction == kiLekmodBulliedInfluence) then
+		Network.SendGiftUnit(g_iMinorCivID, -24); -- LEKMOD: handled in CvDllNetMessageHandler::ResponseGiftUnit
+		m_iPendingAction = kiNoAction;
+		m_iLastAction = kiLekmodBulliedInfluence;
 	else
 		print("Scripting error - Selected Yes for bully confrirmation dialog, but invalid PendingAction type");
 	end

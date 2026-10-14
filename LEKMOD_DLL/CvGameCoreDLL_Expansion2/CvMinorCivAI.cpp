@@ -10117,6 +10117,26 @@ void CvMinorCivAI::DoMajorBullyGold(PlayerTypes eBully, int iGold)
 	GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
 }
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// Mexico: demand tribute and take Influence instead of Gold (same rules as the Gold tribute: needs to be allowed, counts as a recent tribute)
+void CvMinorCivAI::LekmodDoMajorTributeInfluence(PlayerTypes eBully)
+{
+	if (eBully < 0 || eBully >= MAX_MAJOR_CIVS)
+		return;
+	const int iInfluence = GET_PLAYER(eBully).GetPlayerTraits()->GetLekmodTraitInt(LTI_TRIBUTE_INFLUENCE);
+	if (iInfluence <= 0)
+		return;
+	const int iBullyMetric = CalculateBullyMetric(eBully, /*bForUnit*/false);
+	if (!CanMajorBullyGold(eBully, iBullyMetric))
+		return;
+	DoBulliedByMajorReaction(eBully, iInfluence * 100, false);
+#ifdef LEKMOD_PLEDGE_REWORK
+	DoPledgeTributeConsequences(eBully);
+#endif
+	GC.GetEngineUserInterface()->setDirty(GameData_DIRTY_BIT, true);
+}
+#endif
+
 void CvMinorCivAI::DoMajorBullyUnit(PlayerTypes eBully, UnitTypes eUnitType)
 {
 	CvAssertMsg(eBully >= 0, "eBully is expected to be non-negative (invalid Index)");

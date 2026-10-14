@@ -902,6 +902,12 @@ void CvDllNetMessageHandler::ResponseGiftUnit(PlayerTypes ePlayer, PlayerTypes e
 		GC.GetEngineUserInterface()->setDirty(EspionageScreen_DIRTY_BIT, true);
 		return;
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	case -24: // Mexico: tribute for Influence (eMinor = the City-State)
+		if (eMinor >= MAX_MAJOR_CIVS && eMinor < MAX_CIV_PLAYERS && GET_PLAYER(eMinor).isMinorCiv())
+			GET_PLAYER(eMinor).GetMinorCivAI()->LekmodDoMajorTributeInfluence(ePlayer);
+		return;
+#endif
 	default:
 		break;
 	}

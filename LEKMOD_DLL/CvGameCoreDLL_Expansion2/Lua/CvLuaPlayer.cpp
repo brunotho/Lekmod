@@ -1042,6 +1042,7 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(LekmodGetTradeRangePreview);
 	Method(LekmodIsPolicyPickPending);
 #endif
+	Method(LekmodGetTributeInfluence);
 #if !defined(TRADE_REFACTOR)
 	Method(GetInternationalTradeRouteBaseBonus);
 	Method(GetInternationalTradeRouteGPTBonus);
@@ -3494,6 +3495,17 @@ int CvLuaPlayer::lGetNumInternationalTradeRoutesAvailable(lua_State* L)
 //------------------------------------------------------------------------------
 // Destinations the unit's origin city could reach only with a range building it doesn't have yet.
 // Returns { {X, Y, BuildingType}, ... } (one entry per city and building).
+/// LEKMOD: Influence of the extra tribute option (Mexico), 0 = none
+int CvLuaPlayer::lLekmodGetTributeInfluence(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	lua_pushinteger(L, pkPlayer->GetPlayerTraits()->GetLekmodTraitInt(LTI_TRIBUTE_INFLUENCE));
+#else
+	lua_pushinteger(L, 0);
+#endif
+	return 1;
+}
 /// LEKMOD: is a policy pick pending (yields freeze at turn end until it is made)?
 int CvLuaPlayer::lLekmodIsPolicyPickPending(lua_State* L)
 {
