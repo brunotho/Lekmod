@@ -287616,4 +287616,74 @@
 			<PromotionType>PROMOTION_DRILL_1</PromotionType>
 		</Row>
 	</Unit_LekmodIdeologyPromotions>
+	<!-- Specs to refine answers (2026-10-14) -->
+	<!-- Mughals Caravansary: +3 Gold always, +3 Culture with a garrison (from turn 80 without one) -->
+	<Building_YieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_MUGHALS_CARAVANSARY" YieldType="YIELD_GOLD"/>
+			<Set Yield="3"/>
+		</Update>
+	</Building_YieldChanges>
+	<Building_GarrisonYieldChanges>
+		<Delete BuildingType="BUILDING_MUGHALS_CARAVANSARY" YieldType="YIELD_GOLD"/>
+	</Building_GarrisonYieldChanges>
+	<Building_GarrisonYieldChanges>
+		<Update>
+			<Where BuildingType="BUILDING_MUGHALS_CARAVANSARY" YieldType="YIELD_CULTURE"/>
+			<Set Yield="3"/>
+		</Update>
+	</Building_GarrisonYieldChanges>
+	<!-- Finland: no flanking bonus from the UA -->
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_FINLAND" PromotionType="PROMOTION_FLANK_ATTACK_BONUS"/>
+	</Trait_FreePromotionUnitCombats>
+	<!-- Zealot and Point Blank lost on upgrade -->
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_ZEALOT"/>
+			<Set LostWithUpgrade="true"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_LEKMOD_POINT_BLANK"/>
+			<Set LostWithUpgrade="true"/>
+		</Update>
+	</UnitPromotions>
+	<!-- Slinger can't move after attacking; Gadrauht no heal on kills -->
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_INCAN_SLINGER" PromotionType="PROMOTION_CAN_MOVE_AFTER_ATTACKING"/>
+	</Unit_FreePromotions>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_GADRAUGHT" PromotionType="PROMOTION_PARTIAL_HEAL_IF_DESTROY_ENEMY"/>
+	</Unit_FreePromotions>
+	<!-- Harjis: base 1, +1 each at Iron Working, Gunpowder, Dynamite -->
+	<Improvement_TechYieldChanges>
+		<Delete ImprovementType="IMPROVEMENT_GOTH"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_GOTH</ImprovementType>
+			<TechType>TECH_IRON_WORKING</TechType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_GOTH</ImprovementType>
+			<TechType>TECH_GUNPOWDER</TechType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_GOTH</ImprovementType>
+			<TechType>TECH_DYNAMITE</TechType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_TechYieldChanges>
+	<!-- Cuba Dance Hall: the filled slot gives only the Tourism modifier -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_DANCE_HALL"/>
+			<Set GreatWorkMilitaryProductionModifier="0"/>
+		</Update>
+	</Buildings>
 </GameData>

@@ -2093,14 +2093,13 @@ MAYA (CIVILIZATION_MAYA)
 Tags: civs, units, buildings, promotions
 - Changed: Pyramid gives +1 Science (was +2)
 - Changed: Atlatlist now replaces the Composite Bowman (with its strength, cost and Construction requirement) instead of the Archer
-- Added: Atlatlist starts with Woodsman and Point Blank (+30% Ranged Strength when attacking an adjacent target)
+- Added: Atlatlist starts with Woodsman and Point Blank (+30% Ranged Strength when attacking an adjacent target; lost on upgrade)
 - Dev: new promotion PROMOTION_LEKMOD_POINT_BLANK (ID 379, AdjacentRangedAttackMod 30, the Blind Spot mechanism)
 
 MUGHALS (CIVILIZATION_MUGHALS)
 ------------------------------
 Tags: civs, buildings
-- Changed: their Caravansary costs 67 (was 60); with a garrison it gives +2 Culture (was +3) and +1 Gold (was +2)
-- Note: "gold down to 3" read as 3 Gold in total with a garrison (on Specs to refine)
+- Changed: their Caravansary costs 67 (was 60) and gives +3 Gold (was +2); with a garrison +3 Culture (no more garrison Gold, was +2); from turn 80 the Culture needs no garrison
 - Changed: new UA: cities whose tiles border another civilization or a City-State +2 Culture and +2 Golden Age points; bordering a foreign city with a different religion +4 Faith and +4 Science
 - Added: excess Happiness gives double Golden Age points
 - Removed: the foreign religion yields (Science, Culture, Gold per 5 population, also for holy cities) and +2 Golden Age points from World Wonders
@@ -2210,7 +2209,6 @@ CELTS (CIVILIZATION_CELTS)
 Tags: civs, units, promotions
 - Changed: Pictish Warrior now replaces the Warrior (so the Celts start with one): 9 Strength, upgrades to the Swordsman, starts with Zealot and Woodsman
 - Removed: Pictish Warrior: foreign lands bonus, free pillaging, bonus against mounted units
-- Changed: Zealot is kept on upgrade (for every unit that has it)
 - Added: unimproved Forest next to your cities +1 Culture each for a pantheon, a religion, Drama and Poetry and the National Epic (first part of the new UA)
 - Note: open: the rest of the new UA (chopping costs Faith, no roads in Forest, Classical Era forest rules; needs C++); the old forest Faith stays until then
 - DLL: Trait_LekmodPlotYields
@@ -2301,7 +2299,7 @@ Tags: civs, units
 INCA (CIVILIZATION_INCA)
 ------------------------
 Tags: civs, units
-- Changed: Slinger: available at Agriculture (was Archery), costs 22 (was 26), Range 1 (was 2), 4 Strength and 6 Ranged Strength (was 5 and 7), can move after attacking
+- Changed: Slinger: available at Agriculture (was Archery), costs 22 (was 26), Range 1 (was 2), 4 Strength and 6 Ranged Strength (was 5 and 7)
 - Removed: Slinger: withdrawing before melee attacks
 - Changed: Terrace Farms can only be built next to a mountain
 - Changed: new UA: military land units start with Altitude Training; only civilians still ignore movement costs into Hills; cities with a Quarry +20% Production towards Ancient Era buildings
@@ -2369,8 +2367,8 @@ Tags: civs, units
 GOTHS (CIVILIZATION_GOTH)
 -------------------------
 Tags: civs, units
-- Changed: Gadrauht now replaces the Swordsman: 15 Strength, costs 62, needs 4 Iron, starts with Cover I, still heals on kills
-- Changed: Harjis: +2 Production with Guilds and +2 with Dynamite (was +1 each with Iron Working, Gunpowder and Dynamite); 5 at most (was 4)
+- Changed: Gadrauht now replaces the Swordsman: 15 Strength, costs 62, needs 4 Iron, starts with Cover I
+- Removed: Gadrauht: healing on kills
 - Note: open: the Gadrauht aura and the new UA (need C++)
 
 MOROCCO (CIVILIZATION_MOROCCO)
@@ -2488,7 +2486,7 @@ CUBA (CIVILIZATION_CUBA)
 ------------------------
 Tags: civs, buildings
 - Changed: Dance Hall: 3 Culture (was 2), units trained in the city start with +15 XP
-- Removed: Dance Hall: +1 Happiness and +4 Culture when its slot is filled
+- Removed: Dance Hall: +1 Happiness, +4 Culture and +15% military Production when its slot is filled
 - Changed: new UA: unaffected by unhappiness from ideological pressure (was -50%), unhappiness never acts worse than 9 (penalties stop growing there), one Tobacco near the capital when it is founded
 - Removed: Culture from other civilizations' capitals; free Guerrilleros with the first tenet
 - Added: Dance Hall: +20% Tourism in the city while its slot is filled
@@ -2588,3 +2586,14 @@ BELGIUM (CIVILIZATION_BELGIUM)
 Tags: civs
 - Changed: strategic resources give their +1 Gold only once the East India Company is built
 - DLL: Trait_LekmodPlotYields (RequiresBuildingClass)
+
+FINLAND (CIVILIZATION_FINLAND)
+------------------------------
+Tags: civs
+- Removed: the 50% stronger flanking bonus for melee, gunpowder, mounted, armor, recon, naval melee and paratrooper units
+- Note: open: the new shared Hakkapeliitta unit (later spec)
+
+GARRISON YIELDS FROM BUILDINGS
+------------------------------
+Tags: game mechanics, buildings
+- Changed: from turn 80, building yields that need a garrison (Mughal Caravansary, Tunisian Castle) count in every city, like the policy garrison effects

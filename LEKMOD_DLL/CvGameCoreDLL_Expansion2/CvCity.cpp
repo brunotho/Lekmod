@@ -13844,19 +13844,8 @@ int CvCity::GetBaseYieldRateFromGarrison(YieldTypes eIndex) const
 #if defined(LEKMOD_POLICY_GARRISON_ATTACH_TURN)
 	if (GetGarrisonedUnit() == NULL && IsPolicyGarrisonAttached())
 	{
-		// No garrison: only the policies' part of the garrison bonus
-		const CvPlayer& kPlayer = GET_PLAYER(getOwner());
-		int iValue = 0;
-		for (int iPolicy = 0; iPolicy < GC.getNumPolicyInfos(); iPolicy++)
-		{
-			CvPolicyEntry* pkPolicy = GC.getPolicyInfo((PolicyTypes)iPolicy);
-			if (pkPolicy == NULL || !kPlayer.GetPlayerPolicies()->HasPolicy((PolicyTypes)iPolicy) || kPlayer.GetPlayerPolicies()->IsPolicyBlocked((PolicyTypes)iPolicy))
-				continue;
-			if (eIndex == YIELD_CULTURE)
-				iValue += pkPolicy->GetCulturePerGarrisonedUnit();
-			else if (eIndex == YIELD_PRODUCTION)
-				iValue += pkPolicy->GetProductionFromGarrison();
-		}
+		// No garrison: from the attach turn the whole garrison bonus counts (policies and buildings, e.g. the Mughal Caravansary)
+		int iValue = GetGarrisonYieldBonus(eIndex);
 #ifdef LEKMOD_POLICY_REWORK
 		iValue += GetLekmodPolicyGarrisonYield(eIndex);
 #endif

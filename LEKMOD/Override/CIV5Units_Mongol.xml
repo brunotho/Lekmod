@@ -147987,6 +147987,25 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_YUGO_M84_HELP">
 			<Text>Unique Unit for Yugoslavia. Replaces the Tank and is cheaper (costs as much as a Landship).[NEWLINE][NEWLINE]When trained, it gets a promotion from your Ideology: Freedom: Foreign Lands. Autocracy: Mobility. Order: Drill I.</Text>
 		</Replace>
+		<!-- Specs to refine answers 2026-10-14 -->
+		<Replace Tag="TXT_KEY_BUILDING_MUGHALS_CARAVANSARY_HELP">
+			<Text>Replaces the Caravansary. Available at Currency (instead of Horseback Riding).[NEWLINE]+3 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]With a garrison: +10 City [ICON_STRENGTH] Strength and +3 [ICON_CULTURE] Culture.[NEWLINE]From turn 80 the [ICON_CULTURE] Culture needs no garrison.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_FINLAND">
+			<Text>+1 [ICON_CULTURE] Culture from [COLOR_GREEN]unimproved Forest[ENDCOLOR] tiles.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_CIV5_INCA_SLINGER_HELP">
+			<Text>Replaces the Archer. Available at Agriculture and 15% cheaper.[NEWLINE]Range 1 and slightly weaker.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_GOTH_GADRAUGHT">
+			<Text>Replaces the [ICON_UNIT_SWORDSMAN] Swordsman. Stronger, but needs 4 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Cover I.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_MAYAN_ATLATLIST">
+			<Text>Replaces the Composite Bowman.[NEWLINE]+30% [ICON_RANGE_STRENGTH] Ranged Combat Strength when attacking an adjacent target (Point Blank, lost on upgrade).[NEWLINE]Starts with Woodsman.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_CL_UC_DANCE_HALL_HELP">
+			<Text>Unique building for Cuba. Replaces the Opera House. It is cheaper.[NEWLINE]+3 [ICON_CULTURE] Culture.[NEWLINE]Units trained in this city start with +15 XP.[NEWLINE][NEWLINE]When its Great Work slot is filled: +20% [ICON_TOURISM] Tourism in the city.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>
