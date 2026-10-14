@@ -2558,7 +2558,7 @@ Tags: civs, units, buildings, air
 - Removed: Qasimi Raider
 - Changed: Burj Al Arab: +7 Gold and +7 Culture
 - Removed: Burj Al Arab: yields on Great Person improvements, desert and natural wonder tiles
-- Changed: new UA: founding the capital and the second city places Pearls on the closest free Coast tile; may trade strategic resources; Oil is revealed with Archaeology, which also places an Oil node (8) in the capital; from the Modern Era luxury tiles -2 Gold (not below 0) and cities +30% Gold
+- Changed: new UA: founding the capital and the second city places Pearls on the closest free Coast tile; may trade strategic resources; Oil is revealed with Archaeology, which also places a large Oil node (18) in the capital; from the Modern Era luxury tiles -2 Gold (not below 0) and cities +30% Gold
 - Removed: the old UA (Gold from trade routes, wonder bonuses)
 - Added: Desert Falcon, a unique Jet Fighter: needs only 1 Aluminum, starts with Range (+2), Charge and Evasion (-50% damage when intercepted), upgrades to the Stealth Bomber
 - DLL: Traits.LekmodFoundWaterResource*, LekmodStrategicTrade, LekmodTechReveal*, LekmodEra*; unit 275
@@ -2612,7 +2612,7 @@ Tags: civs, units
 - Changed: Pathfinder now replaces the Warrior (so the Shoshone start with one): 9 Strength (was 8), upgrades to the Swordsman (Composite Bowman from ruins), keeps Native Tongue and ignoring terrain on upgrade
 - Changed: Comanche Riders cost 150 (was 134), need 3 Horses (was 2 Horses and 1 Iron)
 - Removed: Comanche Riders: +1 Movement
-- Added: Comanche Riders: Plains Rider (flat terrain costs 33% less movement; heals every turn in friendly territory, even after acting), lost on upgrade
+- Added: Comanche Riders: Plains Rider (open terrain costs 33% less movement; heals every turn in friendly territory, even after acting), lost on upgrade
 - DLL: UnitPromotions.FlatMoveCostMod, AlwaysHealFriendly (promotion 389)
 
 PRUSSIA (CIVILIZATION_PRUSSIA)

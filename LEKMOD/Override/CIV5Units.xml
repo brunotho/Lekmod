@@ -290361,7 +290361,7 @@
 	<Traits>
 		<Update>
 			<Where Type="TRAIT_YALLAH_HABIBI"/>
-			<Set LekmodFoundWaterResource="RESOURCE_PEARLS" LekmodFoundWaterResourceCities="2" LekmodStrategicTrade="1" LekmodTechRevealTech="TECH_ARCHAEOLOGY" LekmodTechRevealResource="RESOURCE_OIL" LekmodTechRevealCapitalAmount="8" LekmodEraBonusEra="ERA_MODERN" LekmodEraLuxuryGold="-2" LekmodEraGoldMod="30"/>
+			<Set LekmodFoundWaterResource="RESOURCE_PEARLS" LekmodFoundWaterResourceCities="2" LekmodStrategicTrade="1" LekmodTechRevealTech="TECH_ARCHAEOLOGY" LekmodTechRevealResource="RESOURCE_OIL" LekmodTechRevealCapitalAmount="18" LekmodEraBonusEra="ERA_MODERN" LekmodEraLuxuryGold="-2" LekmodEraGoldMod="30"/>
 		</Update>
 	</Traits>
 	<Units>

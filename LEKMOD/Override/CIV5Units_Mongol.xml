@@ -147730,7 +147730,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Warrior, also as a starting unit. Stronger.[NEWLINE]Ignores terrain movement costs and chooses its reward from ancient ruins (Native Tongue). Keeps both on upgrade.[NEWLINE]Upgrades to the Swordsman (Composite Bowman from ruins).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_SHOSHONE_COMANCHE_RIDERS">
-			<Text>Replaces the Cavalry. Needs 3 [ICON_RES_HORSE] Horses.[NEWLINE][NEWLINE]Flat terrain costs 33% less movement.[NEWLINE]Heals every turn in friendly territory, even after acting.[NEWLINE]Both are lost on upgrade.</Text>
+			<Text>Replaces the Cavalry. Needs 3 [ICON_RES_HORSE] Horses.[NEWLINE][NEWLINE]Open terrain costs 33% less movement.[NEWLINE]Heals every turn in friendly territory, even after acting.[NEWLINE]Both are lost on upgrade.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_HARTE_HELP">
 			<Text>Heals every turn, even after acting.[NEWLINE]+5 HP healing per turn.</Text>
@@ -148088,7 +148088,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Plains Rider</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_PLAINS_RIDER_HELP">
-			<Text>Flat terrain costs 33% less movement.[NEWLINE][NEWLINE]Heals every turn in friendly territory, even after acting.</Text>
+			<Text>Open terrain costs 33% less movement.[NEWLINE][NEWLINE]Heals every turn in friendly territory, even after acting.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_CORSAIR">
 			<Text>Corsair</Text>
