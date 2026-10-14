@@ -309,7 +309,7 @@ Read `art_sources/README.md` before touching any icon, portrait, flag or menu ba
 
 ## 9. Status (update as things change)
 ### Current state (2026-10-14, second session: handoff snapshot)
-- `dev` = v35.4 (`201df6c5`) + ~450 of our commits. **Not pushed** (the user hasn't asked). The installed DLL is the build committed in `46d485df` (md5 `ba869fab...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
+- `dev` = v35.4 (`201df6c5`) + ~450 of our commits. **Not pushed** (the user hasn't asked). The installed DLL is the build committed in the last `Rebuild CvGameCore_Expansion2.dll` commit (2026-10-14, Sioux fix). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
 - **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start. Audited and synced on 2026-10-13.
 - **Phases 1–4 done** (left: Cyrillic and 6/7/8-player lobby, postponed; Mandate of God belief).
@@ -354,6 +354,7 @@ All in `_Defines.h` under the switches named here; grep the column name to find 
 - **Crash before the main menu (2026-10-14):** `Database.log` ended with `ambiguous column name: NoImprovement`: the `Trait_LekmodPlotYields` query (batch F) joined `Features`, which has a column of the same name. A failing live DLL query kills the game at load. Qualify every column in JOIN queries with its table, and run `tools/dev/sqlcheck.py` after changing any query. Batches F-I were never launched before this was found.
 - **Pitfalls:** with `cpp_edit` mode "after", a block ending in `#endif` after an anchor ending in `#endif` leaves an extra one (C1070): always `balance()`. Never edit sources while a build compiles (locked file, half-edited headers break the build). Heredocs in Bash break backslashes and apostrophes: write scripts with the Write tool.
 - **Edit scripts stop at the first failing anchor, with the earlier edits already written** (2026-10-14, twice). Before rerunning, check `git diff` and run only the remaining edits. An anchor that exists in two functions (e.g. the end of `CvPlayer::initUnit` and `initUnitWithNameOffset`) needs more context or `count=2`.
+- **Turn-0 start units don't get the first turn's `DoUnitReset`** (Sioux settler stayed at 2/2): first-turn move bonuses must also be applied in `CvPlayer::initUnit` (both variants), idempotently (`setMoves(max + bonus)`).
 - **Game running:** build the DLL but don't install it; commit data and Lua anyway (the old DLL ignores new columns). Lua that calls new DLL functions must check they exist (`p.X ~= nil`) so a game started before the install doesn't break the screen.
 - **Art:** unit portraits can be made from a building-style square picture with `round_icon.py units <name>` (Desert Falcon); file the source as `art_sources/units/<name>/<descriptive>_v1.png`.
 - **Playtest flow that worked this session:** the user tests a batch while Claude builds the next one; their notes go at the top of "Civ tests (Phase 6)"; Claude fixes them first, ticks/removes passed items, and sets rows Playtested.
