@@ -131,6 +131,12 @@ public:
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE
 	int GetLekmodFreeExperience() const;
 #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	int GetLekmodMinorConvertInfluence() const;
+	int GetLekmodBlessPromotion() const;
+	int GetLekmodBlessSpreadCost() const;
+	int GetLekmodGoldenAgeSpreadCost() const;
+#endif
 #ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
 	const std::vector<std::pair<int, int> >& GetLekmodIdeologyPromotions() const;
 #endif
@@ -303,6 +309,12 @@ private:
 #endif
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE
 	int m_iLekmodFreeExperience;
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	int m_iLekmodMinorConvertInfluence;
+	int m_iLekmodBlessPromotion;
+	int m_iLekmodBlessSpreadCost;
+	int m_iLekmodGoldenAgeSpreadCost;
 #endif
 #ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
 	std::vector<std::pair<int, int> > m_aLekmodIdeologyPromotions; // policy branch, promotion

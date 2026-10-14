@@ -1143,6 +1143,10 @@ public:
 #ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
 	bool IsLekmodAlwaysVisible() const { return m_bLekmodAlwaysVisible; }
 #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	int GetLekmodSpreadCost() const { return m_iLekmodSpreadCost; }
+	bool IsLekmodClaimAdjacent() const { return m_bLekmodClaimAdjacent; }
+#endif
 
 	// Arrays
 	int getFeatureTech(int i) const;
@@ -1175,6 +1179,10 @@ protected:
 	bool m_bRepair;
 #ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
 	bool m_bLekmodAlwaysVisible;
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	int m_iLekmodSpreadCost;
+	bool m_bLekmodClaimAdjacent;
 #endif
 	bool m_bRemoveRoute;
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)

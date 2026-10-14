@@ -148174,6 +148174,42 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_HIDDEN_GOLD">
 			<Text>?</Text>
 		</Row>
+		<Replace Tag="TXT_KEY_UNIT_DALAILAMA_HELP">
+			<Text>The Tibetan replacement for the [ICON_PROPHET] Great Prophet. It can found a city, or found or enhance a [ICON_RELIGION] Religion, and arrives with 5 [ICON_MISSION_SPREAD_RELIGION] Religion Spreads.[NEWLINE][NEWLINE]Instead of spreading the Religion, it can spend its spreads on:[NEWLINE][ICON_BULLET]Monastery, built at once: 1 spread[NEWLINE][ICON_BULLET]Bless a unit on its tile (double healing): 2 spreads[NEWLINE][ICON_BULLET]Holy Site, built at once, claims the tiles around it: 3 spreads[NEWLINE][ICON_BULLET]Start a [ICON_GOLDEN_AGE] Golden Age: 4 spreads[NEWLINE]It is used up with its last spread.[NEWLINE][NEWLINE]Converting a City-State with it gives +10 [ICON_INFLUENCE] Influence there.</Text>
+		</Replace>
+		<Row Tag="TXT_KEY_MISSION_LEKMOD_BLESS">
+			<Text>Bless</Text>
+		</Row>
+		<Row Tag="TXT_KEY_MISSION_LEKMOD_BLESS_HELP">
+			<Text>A unit on this tile (not an air unit) is blessed: it heals twice as fast.[NEWLINE]The most damaged unit is blessed first.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_MISSION_LEKMOD_BLESS_DISABLED_HELP">
+			<Text>Needs 2 [ICON_MISSION_SPREAD_RELIGION] Religion Spreads left and one of your units on this tile that isn't blessed yet (not an air unit).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_BLESSED">
+			<Text>Blessed</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_BLESSED_HELP">
+			<Text>Heals twice as fast.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILD_LEKMOD_DALAI_MONASTERY">
+			<Text>Build a Monastery</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILD_LEKMOD_DALAI_MONASTERY_HELP">
+			<Text>Builds a Monastery at once.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILD_LEKMOD_DALAI_HOLY_SITE">
+			<Text>Build a Holy Site</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILD_LEKMOD_DALAI_HOLY_SITE_HELP">
+			<Text>Builds a Holy Site at once and claims the tiles around it for your territory.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BLESS_FLOAT">
+			<Text>[COLOR_WHITE]Blessed[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPREADS_LEFT">
+			<Text>[NEWLINE][NEWLINE]Uses {1_Num} [ICON_MISSION_SPREAD_RELIGION] Religion Spreads ({2_Num} left).</Text>
+		</Row>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

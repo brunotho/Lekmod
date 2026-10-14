@@ -1443,6 +1443,20 @@ Controls.UnitNameButton:RegisterCallback( Mouse.eRClick, OnEditNameClick )
 ------------------------------------------------------
 local tipControlTable = {}
 TTManager:GetTypeControlTable( "TypeUnitAction", tipControlTable )
+-- LEKMOD: religion spreads an action costs (Dalai Lama), 0 otherwise
+function LekmodSpreadCost( unit, action )
+	if unit == nil or action == nil then return 0 end
+	local info = GameInfo.Units[unit:GetUnitType()]
+	if info == nil then return 0 end
+	if action.Type == "MISSION_GOLDEN_AGE" then return info.LekmodGoldenAgeSpreadCost or 0 end
+	if action.Type == "MISSION_LEKMOD_BLESS" then return info.LekmodBlessSpreadCost or 0 end
+	if action.SubType == ActionSubTypes.ACTIONSUBTYPE_BUILD then
+		local build = GameInfo.Builds[action.MissionData]
+		if build ~= nil and build.LekmodSpreadCost ~= nil then return build.LekmodSpreadCost end
+	end
+	return 0
+end
+
 function ActionToolTipHandler( control )
 
 	local unit = UI_GetHeadSelectedUnit()
@@ -1754,6 +1768,12 @@ function ActionToolTipHandler( control )
 	if action.Type == "COMMAND_DELETE" then
 
 		toolTip:insertLocalized( "TXT_KEY_SCRAP_HELP", unit:GetScrapGold() )
+	end
+
+	-- LEKMOD: abilities that cost religion spreads
+	local iLekmodSpreadCost = LekmodSpreadCost( unit, action )
+	if iLekmodSpreadCost > 0 then
+		toolTip:insert( ( Locale.ConvertTextKey( "TXT_KEY_LEKMOD_SPREADS_LEFT", iLekmodSpreadCost, unit:GetSpreadsLeft() ):gsub( "^%[NEWLINE%]%[NEWLINE%]", "" ) ) )
 	end
 
 	-- Not able to perform action

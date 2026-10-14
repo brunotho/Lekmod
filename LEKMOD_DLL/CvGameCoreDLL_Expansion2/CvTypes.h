@@ -78,6 +78,9 @@ const MissionTypes getMISSION_SURFACE();
 #if defined(LEKMOD_RETRAIN_MISSION)
 const MissionTypes getMISSION_RETRAIN();
 #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+const MissionTypes getMISSION_LEKMOD_BLESS();
+#endif
 const unsigned int getNUM_MISSION_TYPES();
 
 const GreatWorkArtifactClass getARTIFACT_ANCIENT_RUIN();

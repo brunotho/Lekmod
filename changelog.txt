@@ -2365,7 +2365,10 @@ Tags: civs
 - Added: start bias towards hills
 - Removed: the yield bonus for the first city founded by the Dalai Lama (the capital keeps it)
 - Added: units trained in a city next to a mountain start with Altitude Training
-- Note: open: Dalai Lama abilities (need C++)
+- Changed: the Dalai Lama can spend its 5 Religion Spreads on abilities instead of being used up: build a Monastery at once (1 spread), bless a unit on its tile so it heals twice as fast (2), build a Holy Site at once that claims the tiles around it (3), start a Golden Age (4); it is used up with its last spread, and the tooltips show the cost and the spreads left
+- Added: converting a City-State with the Dalai Lama gives +10 Influence there
+- DLL: LEKMOD_SPREAD_ABILITIES: Builds.LekmodSpreadCost/LekmodClaimAdjacent, Units.LekmodMinorConvertInfluence/LekmodBlessPromotion/LekmodBlessSpreadCost/LekmodGoldenAgeSpreadCost, UnitPromotions.LekmodHealRateMod; MISSION_LEKMOD_BLESS (mission 59), PROMOTION_LEKMOD_BLESSED (391), builds 73/74
+- Dev: MISSION_RETRAIN now also counts as a one-step mission (it was only listed in a compiled-out branch)
 
 SONGHAI (CIVILIZATION_SONGHAI)
 ------------------------------

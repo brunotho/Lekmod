@@ -1469,6 +1469,11 @@ Diversify Spain and Australia's NW Discovery bonus
 // (the secondary religion's pantheon of the Religious Tolerance policy, and for Traits.LekmodAllPantheons (Ottomans) the pantheon
 // of every religion with followers in the city); every former GetSecondaryReligionPantheonBelief() user loops over the list (2026-10-15)
 #define LEKMOD_EXTRA_PANTHEONS
+// Abilities of religion-spreading units that cost spreads instead of the unit (Tibet's Dalai Lama, 2026-10-15):
+// Builds.LekmodSpreadCost (instant, the unit stays; Builds.LekmodClaimAdjacent claims the 6 tiles around), Units.LekmodGoldenAgeSpreadCost,
+// Units.LekmodBlessPromotion/LekmodBlessSpreadCost (MISSION_LEKMOD_BLESS: a unit on the same tile gets the promotion),
+// Units.LekmodMinorConvertInfluence (Influence when a spread converts a City-State), UnitPromotions.LekmodHealRateMod (% healing)
+#define LEKMOD_SPREAD_ABILITIES
 // Improvements.LekmodNoFeature: can't be built on a feature unless Improvement_ValidFeatures lists it (Kasbah: Flood Plains only)
 #define LEKMOD_IMPROVEMENT_NO_FEATURE
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,

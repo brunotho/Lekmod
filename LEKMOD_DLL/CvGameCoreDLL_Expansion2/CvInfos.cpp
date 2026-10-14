@@ -3722,6 +3722,10 @@ CvBuildInfo::CvBuildInfo() :
 #ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
 	m_bLekmodAlwaysVisible(false),
 #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	m_iLekmodSpreadCost(0),
+	m_bLekmodClaimAdjacent(false),
+#endif
 	m_bWater(false),
 	m_bCanBeEmbarked(false),
 	m_paiFeatureTech(NULL),
@@ -3915,6 +3919,10 @@ bool CvBuildInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 	m_bWater = kResults.GetBool("Water");
 #ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
 	m_bLekmodAlwaysVisible = kResults.GetBool("LekmodAlwaysVisible");
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	m_iLekmodSpreadCost = kResults.GetInt("LekmodSpreadCost");
+	m_bLekmodClaimAdjacent = kResults.GetBool("LekmodClaimAdjacent");
 #endif
 	m_bCanBeEmbarked = kResults.GetBool("CanBeEmbarked");
 	//EAP: Adding Civ req to builds as well

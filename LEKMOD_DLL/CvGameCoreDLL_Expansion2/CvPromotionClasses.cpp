@@ -236,6 +236,9 @@ CvPromotionEntry::CvPromotionEntry():
 	m_iLekmodAuraVsWoundedMod(0),
 #endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+#ifdef LEKMOD_SPREAD_ABILITIES
+	m_iLekmodHealRateMod(0),
+#endif
 	m_iLekmodFlatMoveCostMod(0),
 	m_iLekmodCoastMoveCostMod(0),
 	m_iLekmodCoastAttackMod(0),
@@ -923,6 +926,9 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_iLekmodAuraVsWoundedMod = kResults.GetInt("AuraVsWoundedMod");
 #endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+#ifdef LEKMOD_SPREAD_ABILITIES
+	m_iLekmodHealRateMod = kResults.GetInt("LekmodHealRateMod");
+#endif
 	m_iLekmodFlatMoveCostMod = kResults.GetInt("FlatMoveCostMod");
 	m_iLekmodCoastMoveCostMod = kResults.GetInt("CoastMoveCostMod");
 	m_iLekmodCoastAttackMod = kResults.GetInt("CoastAttackMod");
@@ -2295,6 +2301,12 @@ int CvPromotionEntry::GetLekmodAuraVsWoundedMod() const
 }
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 /// % change of the move cost into flat land without a rough feature (Comanche Riders)
+#ifdef LEKMOD_SPREAD_ABILITIES
+int CvPromotionEntry::GetLekmodHealRateMod() const
+{
+	return m_iLekmodHealRateMod;
+}
+#endif
 int CvPromotionEntry::GetLekmodFlatMoveCostMod() const
 {
 	return m_iLekmodFlatMoveCostMod;
@@ -2332,6 +2344,9 @@ bool CvPromotionEntry::HasLekmodCivEffect() const
 		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0 || m_iLekmodAuraVsWoundedMod != 0
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 		|| m_iLekmodFlatMoveCostMod != 0 || m_iLekmodCoastMoveCostMod != 0 || m_iLekmodCoastAttackMod != 0 || m_bLekmodAlwaysHealFriendly || m_iLekmodAttackFullHPMod != 0
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+		|| m_iLekmodHealRateMod != 0
 #endif
 		;
 }

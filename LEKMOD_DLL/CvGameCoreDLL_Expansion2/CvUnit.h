@@ -403,6 +403,13 @@ public:
 	void PerformNeutralCultureBomb(int iRadius);
 
 	bool canGoldenAge(const CvPlot* pPlot, bool bTestVisible = false) const;
+#ifdef LEKMOD_SPREAD_ABILITIES
+	bool canLekmodBless(const CvPlot* pPlot, bool bTestVisible = false) const;
+	bool lekmodBless();
+	CvUnit* LekmodGetBlessTarget() const;
+	void LekmodUseSpreads(int iSpreads);
+	int GetLekmodHealRateMod() const;
+#endif
 	bool goldenAge();
 	int GetGoldenAgeTurns() const;
 

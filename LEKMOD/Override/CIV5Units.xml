@@ -50297,6 +50297,8 @@
 		<Column name="RemoveWaterCrossing" type="boolean" default="false" />
 		<Column name="PrereqBuildingClass" type="text" default="NULL" /> <!-- LEKMOD: the player must own a building of this class (Great Engineer canal: Canal Project) -->
 		<Column name="LekmodAlwaysVisible" type="boolean" default="false" /> <!-- LEKMOD: the button shows on every tile, greyed out with the reason where it can't be built -->
+		<Column name="LekmodSpreadCost" type="integer" default="0"/> <!-- LEKMOD: costs this many religion spreads, instant, the unit stays -->
+		<Column name="LekmodClaimAdjacent" type="boolean" default="false"/> <!-- LEKMOD: claims the 6 tiles around when built -->
 	</Table>
 	<Builds>
 		<Delete />
@@ -215032,6 +215034,7 @@
 		<Column name="AuraVsWoundedMod" type="integer" default="0"/>
 		<!-- LEKMOD_CIV_PROMOTION_EFFECTS_J -->
 		<Column name="FlatMoveCostMod" type="integer" default="0"/>
+		<Column name="LekmodHealRateMod" type="integer" default="0"/>
 		<Column name="CoastMoveCostMod" type="integer" default="0"/>
 		<Column name="CoastAttackMod" type="integer" default="0"/>
 		<Column name="AlwaysHealFriendly" type="boolean" default="false"/>
@@ -273039,6 +273042,10 @@
 		<Column name="PolicyAlternateTech" type="text" reference="Technologies(Type)" default="NULL"/>
 		<Column name="UpgradeOnly" type="boolean" default="false"/>
 		<Column name="FreeExperience" type="integer" default="0"/>
+		<Column name="LekmodMinorConvertInfluence" type="integer" default="0"/>
+		<Column name="LekmodBlessPromotion" type="text" default="NULL"/>
+		<Column name="LekmodBlessSpreadCost" type="integer" default="0"/>
+		<Column name="LekmodGoldenAgeSpreadCost" type="integer" default="0"/>
 	</Table> 
 	<Units>
 		<Delete />
@@ -290837,4 +290844,112 @@
 	<Building_ClassesNeededInCity>
 		<Delete BuildingType="BUILDING_SWISS_SKI_RESORT"/>
 	</Building_ClassesNeededInCity>
+	<!-- LEKMOD: Phase 6 Tibet (2026-10-15): Dalai Lama abilities that cost spreads -->
+	<Missions>
+		<Row>
+			<ID>59</ID>
+			<Type>MISSION_LEKMOD_BLESS</Type>
+			<Description>TXT_KEY_MISSION_LEKMOD_BLESS</Description>
+			<Help>TXT_KEY_MISSION_LEKMOD_BLESS_HELP</Help>
+			<DisabledHelp>TXT_KEY_MISSION_LEKMOD_BLESS_DISABLED_HELP</DisabledHelp>
+			<OrderPriority>198</OrderPriority>
+			<Visible>true</Visible>
+			<Time>10</Time>
+			<Target>false</Target>
+			<Build>false</Build>
+			<Sound>true</Sound>
+			<IconIndex>3</IconIndex>
+			<IconAtlas>UNIT_ACTION_ATLAS</IconAtlas>
+		</Row>
+	</Missions>
+	<UnitPromotions>
+		<Row>
+			<ID>391</ID>
+			<Type>PROMOTION_LEKMOD_BLESSED</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_BLESSED</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_BLESSED_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>32</PortraitIndex>
+			<IconAtlas>PROMOTION_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LekmodHealRateMod>100</LekmodHealRateMod>
+			<PediaType>PEDIA_HEAL</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_BLESSED</PediaEntry>
+		</Row>
+	</UnitPromotions>
+	<Builds>
+		<Row>
+			<ID>73</ID>
+			<Type>BUILD_LEKMOD_DALAI_MONASTERY</Type>
+			<Description>TXT_KEY_BUILD_LEKMOD_DALAI_MONASTERY</Description>
+			<Help>TXT_KEY_BUILD_LEKMOD_DALAI_MONASTERY_HELP</Help>
+			<OrderPriority>96</OrderPriority>
+			<Kill>false</Kill>
+			<ImprovementType>IMPROVEMENT_TIBET</ImprovementType>
+			<PrereqTech>TECH_CALENDAR</PrereqTech>
+			<EntityEvent>ENTITY_EVENT_MINE</EntityEvent>
+			<IconIndex>4</IconIndex>
+			<IconAtlas>MC_LITE_NUBIA_ATLAS</IconAtlas>
+			<ShowInTechTree>false</ShowInTechTree>
+			<LekmodSpreadCost>1</LekmodSpreadCost>
+			<LekmodClaimAdjacent>false</LekmodClaimAdjacent>
+			<LekmodAlwaysVisible>true</LekmodAlwaysVisible>
+		</Row>
+		<Row>
+			<ID>74</ID>
+			<Type>BUILD_LEKMOD_DALAI_HOLY_SITE</Type>
+			<Description>TXT_KEY_BUILD_LEKMOD_DALAI_HOLY_SITE</Description>
+			<Help>TXT_KEY_BUILD_LEKMOD_DALAI_HOLY_SITE_HELP</Help>
+			<OrderPriority>96</OrderPriority>
+			<Kill>false</Kill>
+			<ImprovementType>IMPROVEMENT_HOLY_SITE</ImprovementType>
+			<EntityEvent>ENTITY_EVENT_MINE</EntityEvent>
+			<IconIndex>1</IconIndex>
+			<IconAtlas>EXPANSION_UNIT_ACTION_ATLAS</IconAtlas>
+			<ShowInTechTree>false</ShowInTechTree>
+			<LekmodSpreadCost>3</LekmodSpreadCost>
+			<LekmodClaimAdjacent>true</LekmodClaimAdjacent>
+			<LekmodAlwaysVisible>true</LekmodAlwaysVisible>
+		</Row>
+	</Builds>
+	<BuildFeatures>
+		<Row>
+			<BuildType>BUILD_LEKMOD_DALAI_HOLY_SITE</BuildType>
+			<FeatureType>FEATURE_JUNGLE</FeatureType>
+			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
+			<Production>20</Production>
+			<Remove>true</Remove>
+		</Row>
+		<Row>
+			<BuildType>BUILD_LEKMOD_DALAI_HOLY_SITE</BuildType>
+			<FeatureType>FEATURE_FOREST</FeatureType>
+			<PrereqTech>TECH_MINING</PrereqTech>
+			<Production>20</Production>
+			<Remove>true</Remove>
+		</Row>
+		<Row>
+			<BuildType>BUILD_LEKMOD_DALAI_HOLY_SITE</BuildType>
+			<FeatureType>FEATURE_MARSH</FeatureType>
+			<PrereqTech>TECH_MASONRY</PrereqTech>
+			<Remove>true</Remove>
+			<Food>20</Food>
+		</Row>
+	</BuildFeatures>
+	<Unit_Builds>
+		<Delete UnitType="UNIT_DALAILAMA" BuildType="BUILD_HOLY_SITE"/>
+		<Row>
+			<UnitType>UNIT_DALAILAMA</UnitType>
+			<BuildType>BUILD_LEKMOD_DALAI_MONASTERY</BuildType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_DALAILAMA</UnitType>
+			<BuildType>BUILD_LEKMOD_DALAI_HOLY_SITE</BuildType>
+		</Row>
+	</Unit_Builds>
+	<Units>
+		<Update>
+			<Where Type="UNIT_DALAILAMA"/>
+			<Set ReligionSpreads="5" LekmodMinorConvertInfluence="10" LekmodBlessPromotion="PROMOTION_LEKMOD_BLESSED" LekmodBlessSpreadCost="2" LekmodGoldenAgeSpreadCost="4"/>
+		</Update>
+	</Units>
 </GameData>

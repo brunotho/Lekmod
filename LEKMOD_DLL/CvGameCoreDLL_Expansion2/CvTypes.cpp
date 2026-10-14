@@ -89,6 +89,9 @@ MissionTypes s_eMISSION_SURFACE = NO_MISSION;
 #if defined(LEKMOD_RETRAIN_MISSION)
 MissionTypes s_eMISSION_RETRAIN = NO_MISSION;
 #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+MissionTypes s_eMISSION_LEKMOD_BLESS = NO_MISSION;
+#endif
 unsigned int s_uiNUM_MISSION_TYPES = 0;
 
 void CvTypes::AcquireTypes(Database::Connection& db)
@@ -235,6 +238,9 @@ void CvTypes::AcquireTypes(Database::Connection& db)
 #endif
 #if defined(LEKMOD_RETRAIN_MISSION)
 		kMissionTypesLookupTable.insert(make_pair(std::string("MISSION_RETRAIN"), &s_eMISSION_RETRAIN));
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+		kMissionTypesLookupTable.insert(make_pair(std::string("MISSION_LEKMOD_BLESS"), &s_eMISSION_LEKMOD_BLESS));
 #endif
 
 		Database::Results kResults;
@@ -574,6 +580,12 @@ const MissionTypes CvTypes::getMISSION_SURFACE()
 const MissionTypes CvTypes::getMISSION_RETRAIN()
 {
 	return s_eMISSION_RETRAIN;
+}
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+const MissionTypes CvTypes::getMISSION_LEKMOD_BLESS()
+{
+	return s_eMISSION_LEKMOD_BLESS;
 }
 #endif
 //-------------------------------------------------------------------------

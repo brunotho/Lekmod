@@ -255,6 +255,9 @@ public:
 	int GetLekmodFarFromCityDistance() const;
 	int GetLekmodAuraVsWoundedMod() const;
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+#ifdef LEKMOD_SPREAD_ABILITIES
+	int GetLekmodHealRateMod() const;
+#endif
 	int GetLekmodFlatMoveCostMod() const;
 	int GetLekmodCoastMoveCostMod() const;
 	int GetLekmodCoastAttackMod() const;
@@ -566,6 +569,9 @@ protected:
 	int m_iLekmodFarFromCityDistance;
 	int m_iLekmodAuraVsWoundedMod;
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+#ifdef LEKMOD_SPREAD_ABILITIES
+	int m_iLekmodHealRateMod;
+#endif
 	int m_iLekmodFlatMoveCostMod;
 	int m_iLekmodCoastMoveCostMod;
 	int m_iLekmodCoastAttackMod;

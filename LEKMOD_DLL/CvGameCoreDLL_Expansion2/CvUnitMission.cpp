@@ -799,7 +799,14 @@ void CvUnitMission::ContinueMission(UnitHandle hUnit, int iSteps, int iETA)
 					kMissionData.eMissionType == CvTypes::getMISSION_GIVE_POLICIES() ||
 					kMissionData.eMissionType == CvTypes::getMISSION_ONE_SHOT_TOURISM() ||
 #if !defined(LEKMOD_SUBMERGE_MISSION)
-					kMissionData.eMissionType == CvTypes::getMISSION_CHANGE_ADMIRAL_PORT())
+					kMissionData.eMissionType == CvTypes::getMISSION_CHANGE_ADMIRAL_PORT()
+#if defined(LEKMOD_RETRAIN_MISSION)
+					|| kMissionData.eMissionType == CvTypes::getMISSION_RETRAIN()
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+					|| kMissionData.eMissionType == CvTypes::getMISSION_LEKMOD_BLESS()
+#endif
+					)
 #else
 					kMissionData.eMissionType == CvTypes::getMISSION_CHANGE_ADMIRAL_PORT() ||
 					kMissionData.eMissionType == CvTypes::getMISSION_SUBMERGE() ||
@@ -1346,6 +1353,15 @@ bool CvUnitMission::CanStartMission(UnitHandle hUnit, int iMission, int iData1, 
 		}
 	}
 #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	else if (iMission == CvTypes::getMISSION_LEKMOD_BLESS())
+	{
+		if (hUnit->canLekmodBless(pPlot, bTestVisible))
+		{
+			return true;
+		}
+	}
+#endif
 	return false;
 }
 
@@ -1835,6 +1851,15 @@ void CvUnitMission::StartMission(UnitHandle hUnit)
 			{
 				hUnit->retrain();
 				bAction = true;
+			}
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+			else if (pkQueueData->eMissionType == CvTypes::getMISSION_LEKMOD_BLESS())
+			{
+				if (hUnit->lekmodBless())
+				{
+					bAction = true;
+				}
 			}
 #endif
 		}

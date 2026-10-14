@@ -6638,6 +6638,12 @@ int CvUnit::healRate(const CvPlot* pPlot) const
 	CvAssertMsg(iBaseHeal >= 0, "Base healing rate not expected to be negative!");
 
 	int iTotalHeal = iBaseHeal + iExtraHeal;
+#ifdef LEKMOD_SPREAD_ABILITIES
+	// Blessed by the Dalai Lama: % more healing
+	const int iLekmodHealMod = GetLekmodHealRateMod();
+	if (iLekmodHealMod != 0)
+		iTotalHeal = iTotalHeal * (100 + iLekmodHealMod) / 100;
+#endif
 
 	return iTotalHeal;
 }
@@ -9186,6 +9192,9 @@ bool CvUnit::DoSpreadReligion()
             int iFollowersBefore = pCity->GetCityReligions()->GetNumFollowers(eReligion);
             ReligionTypes eMajorityBefore = pCity->GetCityReligions()->GetReligiousMajority();
             #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+			const ReligionTypes eLekmodMajorityBefore = pCity->GetCityReligions()->GetReligiousMajority();
+#endif
 #ifdef LEKMOD_JUST_WAR_MISSIONARIES
             if(IsGreatPerson() || GetLekmodMissionaryBeliefValue(0) > 0)
 #else
@@ -9211,6 +9220,14 @@ bool CvUnit::DoSpreadReligion()
 				kPlayer.DoYieldsFromConversion(this, pCity, iDeltaFollowers, bMajorityConversion, getX(), getY(), 0);
             }
             #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+			// Dalai Lama: Influence for converting a City-State
+			if (m_pUnitInfo->GetLekmodMinorConvertInfluence() != 0 && GET_PLAYER(pCity->getOwner()).isMinorCiv()
+				&& eLekmodMajorityBefore != eReligion && pCity->GetCityReligions()->GetReligiousMajority() == eReligion)
+			{
+				GET_PLAYER(pCity->getOwner()).GetMinorCivAI()->ChangeFriendshipWithMajor(getOwner(), m_pUnitInfo->GetLekmodMinorConvertInfluence());
+			}
+#endif
 			GetReligionData()->SetSpreadsLeft(GetReligionData()->GetSpreadsLeft() - 1);
 
 			if (pCity->plot() && pCity->plot()->GetActiveFogOfWarMode() == FOGOFWARMODE_OFF)
@@ -10786,6 +10803,15 @@ bool CvUnit::canGoldenAge(const CvPlot* pPlot, bool bTestVisible) const
 		return false;
 	}
 
+#ifdef LEKMOD_SPREAD_ABILITIES
+	// Dalai Lama: the golden age costs spreads instead of the unit
+	if (m_pUnitInfo->GetLekmodGoldenAgeSpreadCost() > 0)
+	{
+		if (GetReligionData()->GetSpreadsLeft() < m_pUnitInfo->GetLekmodGoldenAgeSpreadCost())
+			return false;
+	}
+	else
+#endif
 	// If prophet has  started spreading religion, can't do other functions
 	if(m_pUnitInfo->IsSpreadReligion())
 	{
@@ -10834,6 +10860,13 @@ bool CvUnit::goldenAge()
 #endif
 	}
 
+#ifdef LEKMOD_SPREAD_ABILITIES
+	if (m_pUnitInfo->GetLekmodGoldenAgeSpreadCost() > 0)
+	{
+		LekmodUseSpreads(m_pUnitInfo->GetLekmodGoldenAgeSpreadCost());
+		return true;
+	}
+#endif
 	if(IsGreatPerson())
 	{
 #ifdef AUI_DLLNETMESSAGEHANDLER_FIX_RESPAWN_PROPHET_IF_BEATEN_TO_LAST_RELIGION
@@ -11179,6 +11212,15 @@ bool CvUnit::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisible,
 		return false;
 	}
 
+#ifdef LEKMOD_SPREAD_ABILITIES
+	// Dalai Lama: builds that cost spreads need enough of them, also after spreading
+	if (pkBuildInfo->GetLekmodSpreadCost() > 0)
+	{
+		if (GetReligionData()->GetSpreadsLeft() < pkBuildInfo->GetLekmodSpreadCost())
+			return false;
+	}
+	else
+#endif
 	// If prophet has  started spreading religion, can't do other functions
 	if(m_pUnitInfo->IsSpreadReligion())
 	{
@@ -11366,6 +11408,12 @@ bool CvUnit::build(BuildTypes eBuild)
 				}
 			}
 
+#ifdef LEKMOD_SPREAD_ABILITIES
+			if (pkBuildInfo->IsLekmodClaimAdjacent())
+				PerformCultureBomb(1);
+			if (pkBuildInfo->GetLekmodSpreadCost() > 0)
+				LekmodUseSpreads(pkBuildInfo->GetLekmodSpreadCost());
+#endif
 			if(pkBuildInfo->isKill())
 			{
 				if (pPlot->isActiveVisible(false))
@@ -17617,6 +17665,82 @@ bool CvUnit::IsLekmodNoFortify() const
 			return true;
 	return false;
 }
+#ifdef LEKMOD_SPREAD_ABILITIES
+//	--------------------------------------------------------------------------------
+/// % more healing from promotions (Dalai Lama's blessing)
+int CvUnit::GetLekmodHealRateMod() const
+{
+	int iMod = 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]))
+			iMod += GC.getPromotionInfo(aPromotions[i])->GetLekmodHealRateMod();
+	return iMod;
+}
+//	--------------------------------------------------------------------------------
+/// Spend spreads on an ability; the unit is used up with its last spread
+void CvUnit::LekmodUseSpreads(int iSpreads)
+{
+	const int iLeft = std::max(0, GetReligionData()->GetSpreadsLeft() - iSpreads);
+	GetReligionData()->SetSpreadsLeft(iLeft);
+	if (iLeft <= 0)
+	{
+		if (IsGreatPerson())
+			GET_PLAYER(getOwner()).DoGreatPersonExpended(getUnitType());
+		kill(true);
+	}
+}
+//	--------------------------------------------------------------------------------
+/// The unit on our tile that a blessing goes to: own, not air, not this one, without the promotion yet; the most damaged first
+CvUnit* CvUnit::LekmodGetBlessTarget() const
+{
+	const PromotionTypes ePromotion = (PromotionTypes)m_pUnitInfo->GetLekmodBlessPromotion();
+	CvPlot* pPlot = plot();
+	if (ePromotion == NO_PROMOTION || pPlot == NULL)
+		return NULL;
+	CvUnit* pBest = NULL;
+	const IDInfo* pNode = pPlot->headUnitNode();
+	while (pNode != NULL)
+	{
+		CvUnit* pLoopUnit = ::getUnit(*pNode);
+		pNode = pPlot->nextUnitNode(pNode);
+		if (pLoopUnit == NULL || pLoopUnit == this || pLoopUnit->getOwner() != getOwner() || pLoopUnit->getDomainType() == DOMAIN_AIR
+			|| pLoopUnit->isHasPromotion(ePromotion) || pLoopUnit->isDelayedDeath())
+			continue;
+		if (pBest == NULL || pLoopUnit->getDamage() > pBest->getDamage())
+			pBest = pLoopUnit;
+	}
+	return pBest;
+}
+//	--------------------------------------------------------------------------------
+bool CvUnit::canLekmodBless(const CvPlot* pPlot, bool bTestVisible) const
+{
+	if (m_pUnitInfo->GetLekmodBlessPromotion() == NO_PROMOTION || pPlot == NULL)
+		return false;
+	if (bTestVisible)
+		return true;
+	if (GetReligionData()->GetSpreadsLeft() < m_pUnitInfo->GetLekmodBlessSpreadCost())
+		return false;
+	return LekmodGetBlessTarget() != NULL;
+}
+//	--------------------------------------------------------------------------------
+bool CvUnit::lekmodBless()
+{
+	if (!canLekmodBless(plot()))
+		return false;
+	CvUnit* pTarget = LekmodGetBlessTarget();
+	if (pTarget == NULL)
+		return false;
+	pTarget->setHasPromotion((PromotionTypes)m_pUnitInfo->GetLekmodBlessPromotion(), true);
+	if (plot()->isActiveVisible(false))
+	{
+		Localization::String strText = Localization::Lookup("TXT_KEY_LEKMOD_BLESS_FLOAT");
+		DLLUI->AddPopupText(getX(), getY(), strText.toUTF8(), 0.0f);
+	}
+	LekmodUseSpreads(m_pUnitInfo->GetLekmodBlessSpreadCost());
+	return true;
+}
+#endif
 //	--------------------------------------------------------------------------------
 /// Bonus against a unit whose base strength (the higher of melee and ranged) is higher than ours
 int CvUnit::GetLekmodStrongerEnemyMod(const CvUnit* pOtherUnit) const

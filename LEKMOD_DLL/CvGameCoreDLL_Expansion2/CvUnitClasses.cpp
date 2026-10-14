@@ -128,6 +128,12 @@ CvUnitEntry::CvUnitEntry(void) :
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE
 	m_iLekmodFreeExperience(0),
 #endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	m_iLekmodMinorConvertInfluence(0),
+	m_iLekmodBlessPromotion(NO_PROMOTION),
+	m_iLekmodBlessSpreadCost(0),
+	m_iLekmodGoldenAgeSpreadCost(0),
+#endif
 	m_piPrereqAndTechs(NULL),
 	m_piResourceQuantityRequirements(NULL),
 	m_piProductionTraits(NULL),
@@ -335,6 +341,12 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 #endif
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE
 	m_iLekmodFreeExperience = kResults.GetInt("FreeExperience");
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+	m_iLekmodMinorConvertInfluence = kResults.GetInt("LekmodMinorConvertInfluence");
+	m_iLekmodBlessPromotion = GC.getInfoTypeForString(kResults.GetText("LekmodBlessPromotion"), true);
+	m_iLekmodBlessSpreadCost = kResults.GetInt("LekmodBlessSpreadCost");
+	m_iLekmodGoldenAgeSpreadCost = kResults.GetInt("LekmodGoldenAgeSpreadCost");
 #endif
 #if defined(MISC_CHANGES) // CvUnitClasses
 	szTextVal = kResults.GetText("PolicyBranchType");
@@ -1126,6 +1138,24 @@ const std::vector<std::pair<int, int> >& CvUnitEntry::GetLekmodIdeologyPromotion
 int CvUnitEntry::GetLekmodFreeExperience() const
 {
 	return m_iLekmodFreeExperience;
+}
+#endif
+#ifdef LEKMOD_SPREAD_ABILITIES
+int CvUnitEntry::GetLekmodMinorConvertInfluence() const
+{
+	return m_iLekmodMinorConvertInfluence;
+}
+int CvUnitEntry::GetLekmodBlessPromotion() const
+{
+	return m_iLekmodBlessPromotion;
+}
+int CvUnitEntry::GetLekmodBlessSpreadCost() const
+{
+	return m_iLekmodBlessSpreadCost;
+}
+int CvUnitEntry::GetLekmodGoldenAgeSpreadCost() const
+{
+	return m_iLekmodGoldenAgeSpreadCost;
 }
 #endif
 #ifdef LEKMOD_POLICY_ALTERNATE_TECH
