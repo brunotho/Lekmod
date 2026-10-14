@@ -9780,6 +9780,27 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 	if (ePlayer != NO_PLAYER && getOwner() == ePlayer)
 		iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitPlotYield(this, eYield, (IsImprovementPillaged() ? NO_IMPROVEMENT : eImprovement));
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Celts: from their era, unimproved forest next to an own city yields Faith (on the tile, user 2026-10-14)
+	if (eYield == YIELD_FAITH && ePlayer != NO_PLAYER && getOwner() == ePlayer && getFeatureType() == FEATURE_FOREST && getImprovementType() == NO_IMPROVEMENT)
+	{
+		const CvPlayerTraits* pTraits = GET_PLAYER(ePlayer).GetPlayerTraits();
+		const int iPerForest = pTraits->GetLekmodTraitInt(LTI_FOREST_CITY_FAITH_PER_FOREST);
+		const int eEra = pTraits->GetLekmodTraitType(LTI_FOREST_CITY_ERA);
+		if (iPerForest != 0 && eEra != -1 && (int)GET_PLAYER(ePlayer).GetCurrentEra() >= eEra)
+		{
+			for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+			{
+				CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+				if (pAdjacentPlot && pAdjacentPlot->isCity() && pAdjacentPlot->getOwner() == ePlayer)
+				{
+					iYield += iPerForest;
+					break;
+				}
+			}
+		}
+	}
+#endif
 
 	if(ePlayer != NO_PLAYER)
 	{

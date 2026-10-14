@@ -687,6 +687,13 @@ public:
 
 	// Base Yield
 	int getBaseYieldRate(YieldTypes eIndex) const;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	int GetLekmodBaseYieldBeforeTraitDelta(YieldTypes eIndex) const;
+	int GetLekmodTraitYieldDelta(YieldTypes eIndex, int iOtherBase) const;
+#endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	int GetLekmodLocalSpecialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) const;
+#endif
 #ifdef LEKMOD_MARITIME_FOOD_CITY_YIELD
 	int GetYieldFromMinorCivsTimes100(YieldTypes eIndex) const;
 #endif

@@ -13338,6 +13338,10 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	int iValue = GetLekmodBaseYieldBeforeTraitDelta(eIndex);
+	iValue += GetLekmodTraitYieldDelta(eIndex, iValue);
+#else
 	int iValue = 0;
 	iValue += GetBaseYieldRateFromTerrain(eIndex);
 	iValue += GetBaseYieldRateFromBuildings(eIndex);
@@ -13354,8 +13358,39 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 	iValue += GetBaseYieldRateFromPolicies(eIndex);
 	iValue += GetBaseYieldRateFromThemedBuildings(eIndex);
 #endif
+#endif
+	iValue += m_pCityBuildings->GetYieldFromLandmarks(eIndex);
+
+	return iValue;
+}
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
-	// Spain: expansions +Production, the capital loses Production per expansion (not below 0 from this)
+//	--------------------------------------------------------------------------------
+/// Base yield without the trait changes that depend on the city's own total (Spain) and without landmarks
+int CvCity::GetLekmodBaseYieldBeforeTraitDelta(YieldTypes eIndex) const
+{
+	int iValue = 0;
+	iValue += GetBaseYieldRateFromTerrain(eIndex);
+	iValue += GetBaseYieldRateFromBuildings(eIndex);
+	iValue += GetBaseYieldRateFromSpecialists(eIndex);
+	iValue += GetBaseYieldRateFromMisc(eIndex);
+	iValue += GetBaseYieldRateFromReligion(eIndex);
+	iValue += GetBaseYieldRateFromGreatWorks(eIndex); // NQMP GJS - Artistic Genius fix to add science to Great Works
+#if defined(LEKMOD_GARRISON_YIELD_EFFECTS)
+	iValue += GetBaseYieldRateFromGarrison(eIndex);
+#endif
+#if defined(STANDARDIZE_YIELDS) // New Yield collectors :)
+	iValue += GetBaseYieldRateFromTraits(eIndex);
+	iValue += GetBaseYieldRateFromLeagues(eIndex);
+	iValue += GetBaseYieldRateFromPolicies(eIndex);
+	iValue += GetBaseYieldRateFromThemedBuildings(eIndex);
+#endif
+	return iValue;
+}
+//	--------------------------------------------------------------------------------
+/// Spain: expansions +Production, the capital loses Production per expansion (not below 0 from this)
+int CvCity::GetLekmodTraitYieldDelta(YieldTypes eIndex, int iOtherBase) const
+{
+	int iValue = iOtherBase;
 	if (eIndex == YIELD_PRODUCTION)
 	{
 		const CvPlayerTraits* pTraits = GET_PLAYER(getOwner()).GetPlayerTraits();
@@ -13376,11 +13411,9 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 				iValue = std::max(iValue + iPenalty, std::min(iValue, 0));
 		}
 	}
-#endif
-	iValue += m_pCityBuildings->GetYieldFromLandmarks(eIndex);
-
-	return iValue;
+	return iValue - iOtherBase;
 }
+#endif
 
 // NQMP GJS - Artistic Genius fix to add science to Great Works
 //	--------------------------------------------------------------------------------
@@ -13620,6 +13653,25 @@ void CvCity::ChangeBaseYieldRateFromBuildings(YieldTypes eIndex, int iChange)
 	}
 }
 
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+//	--------------------------------------------------------------------------------
+/// Extra yield of one specialist of this type in this city (Building_LekmodLocalSpecialistYields), for the specialist tooltips
+int CvCity::GetLekmodLocalSpecialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) const
+{
+	int iYield = 0;
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding == NULL || pkBuilding->GetLekmodLocalSpecialistYields().empty() || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
+			continue;
+		const std::vector<std::pair<int, std::pair<int, int> > >& aRows = pkBuilding->GetLekmodLocalSpecialistYields();
+		for (uint j = 0; j < aRows.size(); j++)
+			if (aRows[j].first == (int)eSpecialist && aRows[j].second.first == (int)eYield)
+				iYield += aRows[j].second.second;
+	}
+	return iYield;
+}
+#endif
 //	--------------------------------------------------------------------------------
 /// Base yield rate from Specialists
 int CvCity::GetBaseYieldRateFromSpecialists(YieldTypes eIndex) const
@@ -13886,7 +13938,7 @@ int CvCity::GetBaseYieldRateFromTraits(YieldTypes eIndex) const
 		}
 	}
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
-	if (eIndex == YIELD_FAITH) // Celts (new): Faith per adjacent unimproved forest from an era
+	if (false && eIndex == YIELD_FAITH) // Celts: moved onto the forest tiles (CvPlot::calculateYield, user 2026-10-14)
 	{
 		const int iPerForest = GET_PLAYER(m_eOwner).GetPlayerTraits()->GetLekmodTraitInt(LTI_FOREST_CITY_FAITH_PER_FOREST);
 		if (iPerForest != 0)
@@ -15959,7 +16011,7 @@ int CvCity::GetLekmodAdjacentCityPlotYield(const CvPlot* pPlot, YieldTypes eYiel
 		}
 		s_bInit = true;
 	}
-	if (pPlot == NULL || s_aiBuildings.empty())
+	if (pPlot == NULL || s_aiBuildings.empty() || pPlot->IsNaturalWonder())
 		return 0;
 	int iYield = 0;
 	ResourceTypes eResource = pPlot->getResourceType(getTeam());

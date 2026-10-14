@@ -2192,7 +2192,7 @@ Tags: civs, units
 - Removed: doubled Happiness from natural wonders
 - Added: +10% Production towards Settlers and Conquistadors
 - Added: founding a city (not the capital) reveals the tiles within 6 and gives a free Scout
-- Added: cities other than the capital +1 Production; the capital -1 Production per other city that is not a puppet (not below 0)
+- Added: cities other than the capital +1 Production; the capital -1 Production per other city that is not a puppet (not below 0); shown in the city's Production tooltip as the civilization ability line
 - DLL: Traits.LekmodNaturalWonderFinderGoldPerEra, LekmodFoundCity*, LekmodExpansionProduction, LekmodCapitalProductionPerExpansion; Trait_LekmodPlotYields.NaturalWonder
 
 OTTOMANS (CIVILIZATION_OTTOMAN)
@@ -2228,7 +2228,8 @@ Tags: civs, units, promotions
 - Removed: Pictish Warrior: foreign lands bonus, free pillaging, bonus against mounted units
 - Added: unimproved Forest next to your cities +1 Culture each for a pantheon, a religion, Drama and Poetry and the National Epic (first part of the new UA)
 - Added: chopping Forest costs Faith equal to the Production gained; no Roads or Railroads on Forest
-- Changed: from the Classical Era, cities get +1 Faith per adjacent unimproved Forest (was +1 Faith with any adjacent unimproved Forest, +2 with 3 or more, from the start)
+- Changed: from the Classical Era, unimproved Forest next to your cities yields +1 Faith on the tile (was +1 Faith in the city with any adjacent unimproved Forest, +2 with 3 or more, from the start)
+- Dev: the Faith was first a city yield; moved onto the forest tiles (user, 2026-10-14)
 - Added: from the Classical Era, cities with 3 or more adjacent unimproved Forest tiles have -20% Production towards buildings and wonders
 - DLL: Traits.LekmodChopFaithCost, LekmodNoRouteFeature, LekmodForestCity*
 - DLL: Trait_LekmodPlotYields
@@ -2481,6 +2482,7 @@ Tags: civs, units
 - Removed: Serai: Gold per population, airlift and air unit slot
 - Added: Serai: borders grow 15% faster while no other Serai is within 5 tiles
 - Changed: new UA Twin Courts: in the capital, Great Works and writer, artist and musician specialists +1 Culture +1 Gold, +10% Production towards buildings; in the second city, Great Works and those specialists +1 Science, Great Person improvements and world wonders +2 Science; both stay with their cities when captured
+- Dev: the specialist slot tooltips now include the courts' specialist yields (they were only in the city totals)
 - Removed: +15% Science, Culture and Gold and +5 Strength in the original capital
 - DLL: Building_LekmodLocalSpecialistYields, Traits.LekmodSecondCityBuilding (dummy 295, class 198), Traits.LekmodFirstCityBuilding (the capital court BUILDING_ULUG), Buildings.LekmodIsolatedPlotCultureCostMod/Range
 - Dev: the capital court was first given by the Lua dummy script, which removed it from a captured capital; now a real building of the first city
@@ -2652,7 +2654,8 @@ AUSTRALIA (CIVILIZATION_AUSTRALIA)
 Tags: civs, buildings
 - Changed: new UA: tiles next to a natural wonder +1 Food and +1 Faith
 - Removed: +5 Faith from natural wonders and the Faith for discovering them
-- Changed: Convict Penitentiary (rebuilt) no longer replaces the Constabulary: Machinery, costs 100, at most 2 per empire, no maintenance; mines next to the city +1 Production and +1 Gold, +2 Production and +2 Gold per mountain next to the city (not natural wonders)
+- Changed: Convict Penitentiary (rebuilt) no longer replaces the Constabulary: Machinery, costs 100, at most 2 per empire, no maintenance; mines next to the city +1 Production and +1 Gold, mountains next to the city +2 Production and +2 Gold (not natural wonders)
+- Dev: the mountain yields were first a city yield per adjacent mountain; moved onto the mountain tiles (user, 2026-10-14)
 - Removed: Convict Penitentiary: its flat and % Production and Gold, spy effects
 - DLL: Trait_LekmodPlotYields, Buildings.RequiredCivilization (a civ-only building with its own class)
 - Dev: new building class 192

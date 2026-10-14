@@ -147942,7 +147942,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<!-- Phase 6 C++ batch D -->
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_AUSTRALIA_UB_HELP">
-			<Text>Unique to Australia; does not replace a building. At most 2 in your empire. No maintenance.[NEWLINE][NEWLINE]Mines next to the city yield +1 [ICON_PRODUCTION] Production and +1 [ICON_GOLD] Gold.[NEWLINE]+2 [ICON_PRODUCTION] Production and +2 [ICON_GOLD] Gold for every mountain next to the city (not natural wonders).</Text>
+			<Text>Unique to Australia; does not replace a building. At most 2 in your empire. No maintenance.[NEWLINE][NEWLINE]Mines next to the city yield +1 [ICON_PRODUCTION] Production and +1 [ICON_GOLD] Gold.[NEWLINE]Mountains next to the city yield +2 [ICON_PRODUCTION] Production and +2 [ICON_GOLD] Gold (not natural wonders).</Text>
 		</Row>
 		<Replace Tag="TXT_KEY_TRAIT_AUSTRALIA">
 			<Text>Tiles next to a [COLOR_GREEN]Natural Wonder[ENDCOLOR] yield +1 [ICON_FOOD] Food and +1 [ICON_PEACE] Faith.</Text>
@@ -148020,7 +148020,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>[NEWLINE][ICON_BULLET]Surrounded by forest: {1_Num}%</Text>
 		</Row>
 		<Replace Tag="TXT_KEY_TRAIT_FAITH_FROM_NATURE">
-			<Text>Unimproved Forest next to your cities yields +1 [ICON_CULTURE] Culture for each of these you have: a Pantheon, a Religion, [ICON_TECH_DRAMA] Drama and Poetry, the National Epic.[NEWLINE][NEWLINE]Chopping Forest costs [ICON_PEACE] Faith equal to the [ICON_PRODUCTION] Production gained (not below 0).[NEWLINE]Roads and Railroads can't be built on Forest.[NEWLINE][NEWLINE]From the Classical Era:[NEWLINE]Cities yield +1 [ICON_PEACE] Faith for each adjacent unimproved Forest.[NEWLINE]Cities with 3 or more adjacent unimproved Forest tiles have -20% [ICON_PRODUCTION] Production towards buildings and wonders.</Text>
+			<Text>Unimproved Forest next to your cities yields +1 [ICON_CULTURE] Culture for each of these you have: a Pantheon, a Religion, [ICON_TECH_DRAMA] Drama and Poetry, the National Epic.[NEWLINE][NEWLINE]Chopping Forest costs [ICON_PEACE] Faith equal to the [ICON_PRODUCTION] Production gained (not below 0).[NEWLINE]Roads and Railroads can't be built on Forest.[NEWLINE][NEWLINE]From the Classical Era:[NEWLINE]Unimproved Forest next to your cities yields +1 [ICON_PEACE] Faith.[NEWLINE]Cities with 3 or more adjacent unimproved Forest tiles have -20% [ICON_PRODUCTION] Production towards buildings and wonders.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_SEVEN_CITIES">
 			<Text>[COLOR_GREEN]Natural Wonders[ENDCOLOR] yield +3 [ICON_CULTURE] Culture.[NEWLINE]Discovering a [COLOR_GREEN]Natural Wonder[ENDCOLOR] gives 50 [ICON_GOLD] Gold per Era.[NEWLINE][NEWLINE]+10% [ICON_PRODUCTION] Production towards Settlers and Conquistadors.[NEWLINE]Founding a city (not the capital) reveals the tiles within 6 and gives a free Scout.[NEWLINE][NEWLINE]Cities other than the [ICON_CAPITAL] Capital yield +1 [ICON_PRODUCTION] Production.[NEWLINE]The [ICON_CAPITAL] Capital yields -1 [ICON_PRODUCTION] Production for each other city that is not a puppet (not below 0).</Text>

@@ -3105,7 +3105,16 @@ int CvLuaCity::lChangeBaseYieldRateFromReligion(lua_State* L)
 //------------------------------------------------------------------------------
 int CvLuaCity::lGetBaseYieldRateFromTraits(lua_State* L)
 {
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// includes Spain's expansion/capital Production so the tooltip lines add up
+	CvCity* pkCity = GetInstance(L);
+	const YieldTypes eYield = (YieldTypes)lua_tointeger(L, 2);
+	const int iResult = pkCity->GetBaseYieldRateFromTraits(eYield) + pkCity->GetLekmodTraitYieldDelta(eYield, pkCity->GetLekmodBaseYieldBeforeTraitDelta(eYield));
+	lua_pushinteger(L, iResult);
+	return 1;
+#else
 	return BasicLuaMethod(L, &CvCity::GetBaseYieldRateFromTraits);
+#endif
 }
 //------------------------------------------------------------------------------
 int CvLuaCity::lGetBaseYieldRateFromLeagues(lua_State* L)
@@ -4225,7 +4234,11 @@ int CvLuaCity::lGetSpecialistYield(lua_State* L)
 
 	const PlayerTypes ePlayer = pkCity->getOwner();
 
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	const int iValue = GET_PLAYER(ePlayer).specialistYield(eSpecialist, eYield) + pkCity->GetLekmodLocalSpecialistYield(eSpecialist, eYield);
+#else
 	const int iValue = GET_PLAYER(ePlayer).specialistYield(eSpecialist, eYield);
+#endif
 
 	lua_pushinteger(L, iValue);
 
