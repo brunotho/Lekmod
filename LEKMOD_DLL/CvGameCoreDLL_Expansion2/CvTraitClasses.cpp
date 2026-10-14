@@ -2036,7 +2036,9 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 			"LekmodMinorUUFriendPurchase", "LekmodEarlyMilitaryPurchaseDiscount", "LekmodEarlyMilitaryPurchaseEra", "LekmodForeignFaithConquestHalf",
 			"LekmodDoFOwnBonus", "LekmodDoFPartnerBonus", "LekmodDoFBetrayalCombat", "LekmodNoStartWar",
 			"LekmodRingImprovement", "LekmodRingImprovementCulture", "LekmodImprovementHillsOnly", "LekmodBuildingFreeUnitBuilding", "LekmodBuildingFreeUnitClass",
-			"LekmodDesertFoundFood", "LekmodDesertFoundFoodTech" };
+			"LekmodDesertFoundFood", "LekmodDesertFoundFoodTech", "LekmodFoundWaterResource", "LekmodFoundWaterResourceCities",
+			"LekmodStrategicTrade", "LekmodTechRevealTech", "LekmodTechRevealResource", "LekmodTechRevealCapitalAmount",
+			"LekmodEraBonusEra", "LekmodEraLuxuryGold", "LekmodEraGoldMod" };
 		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false,
 			true, false, false, true, true, false, true, false, false, false, true, false, false, false, false,
 			false, true, true, false, false, true, true, true, true,
@@ -2045,7 +2047,9 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 			false, false, true, false,
 			false, false, false, false,
 			true, false, true, true, true,
-			false, true };
+			false, true, true, false,
+			false, true, true, false,
+			true, false, false };
 		for (int i = 0; i < NUM_LEKMOD_TRAIT_INTS; i++)
 			m_aiLekmodTraitInts[i] = s_abType[i] ? GC.getInfoTypeForString(kResults.GetText(s_aszNames[i]), true) : kResults.GetInt(s_aszNames[i]);
 	}

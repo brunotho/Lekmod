@@ -9875,6 +9875,18 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 		}
 	}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// UAE: from the Modern Era luxury tiles yield less Gold (not below 0)
+	if (eYield == YIELD_GOLD && ePlayer != NO_PLAYER && getOwner() == ePlayer)
+	{
+		const CvPlayerTraits* pTraits = GET_PLAYER(ePlayer).GetPlayerTraits();
+		const int eEra = pTraits->GetLekmodTraitType(LTI_ERA_BONUS_ERA);
+		const ResourceTypes eLux = getResourceType(GET_PLAYER(ePlayer).getTeam());
+		if (eEra != -1 && pTraits->GetLekmodTraitInt(LTI_ERA_LUXURY_GOLD) != 0 && (int)GET_PLAYER(ePlayer).GetCurrentEra() >= eEra
+			&& eLux != NO_RESOURCE && GC.getResourceInfo(eLux)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
+			iYield = std::max(0, iYield + pTraits->GetLekmodTraitInt(LTI_ERA_LUXURY_GOLD));
+	}
+#endif
 	return std::max(0, iYield);
 }
 

@@ -211589,6 +211589,15 @@
 		<Column name="LekmodBuildingFreeUnitClass" type="text"/>
 		<Column name="LekmodDesertFoundFood" type="integer" default="0"/>
 		<Column name="LekmodDesertFoundFoodTech" type="text"/>
+		<Column name="LekmodFoundWaterResource" type="text"/>
+		<Column name="LekmodFoundWaterResourceCities" type="integer" default="0"/>
+		<Column name="LekmodStrategicTrade" type="integer" default="0"/>
+		<Column name="LekmodTechRevealTech" type="text"/>
+		<Column name="LekmodTechRevealResource" type="text"/>
+		<Column name="LekmodTechRevealCapitalAmount" type="integer" default="0"/>
+		<Column name="LekmodEraBonusEra" type="text"/>
+		<Column name="LekmodEraLuxuryGold" type="integer" default="0"/>
+		<Column name="LekmodEraGoldMod" type="integer" default="0"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -290345,4 +290354,184 @@
 			<Set GreatWorkCount="0" Help="TXT_KEY_BUILDING_LEKMOD_PORT_OF_ADULIS_HELP" Civilopedia="TXT_KEY_BUILDING_LEKMOD_PORT_OF_ADULIS_HELP" IconAtlas="BW_ATLAS_1" PortraitIndex="26"/>
 		</Update>
 	</Buildings>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): UAE UA (new) and Desert Falcon (unit 275) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_YALLAH_HABIBI"/>
+			<Set LekmodFoundWaterResource="RESOURCE_PEARLS" LekmodFoundWaterResourceCities="2" LekmodStrategicTrade="1" LekmodTechRevealTech="TECH_ARCHAEOLOGY" LekmodTechRevealResource="RESOURCE_OIL" LekmodTechRevealCapitalAmount="8" LekmodEraBonusEra="ERA_MODERN" LekmodEraLuxuryGold="-2" LekmodEraGoldMod="30"/>
+		</Update>
+	</Traits>
+	<Units>
+		<Row>
+			<ID>275</ID>
+			<Type>UNIT_LEKMOD_DESERT_FALCON</Type>
+			<Description>TXT_KEY_UNIT_LEKMOD_DESERT_FALCON</Description>
+			<Civilopedia>TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_STRATEGY</Strategy>
+			<Help>TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_HELP</Help>
+			<RangedCombat>75</RangedCombat>
+			<Cost>540</Cost>
+			<Moves>2</Moves>
+			<Immobile>1</Immobile>
+			<Range>10</Range>
+			<Class>UNITCLASS_JET_FIGHTER</Class>
+			<Special>SPECIALUNIT_FIGHTER</Special>
+			<CombatClass>UNITCOMBAT_FIGHTER</CombatClass>
+			<Domain>DOMAIN_AIR</Domain>
+			<DefaultUnitAI>UNITAI_DEFENSE_AIR</DefaultUnitAI>
+			<MilitarySupport>1</MilitarySupport>
+			<MilitaryProduction>1</MilitaryProduction>
+			<Mechanized>1</Mechanized>
+			<PrereqTech>TECH_LASERS</PrereqTech>
+			<AdvancedStartCost>70</AdvancedStartCost>
+			<AirInterceptRange>10</AirInterceptRange>
+			<AirUnitCap>1</AirUnitCap>
+			<CombatLimit>0</CombatLimit>
+			<RangedCombatLimit>100</RangedCombatLimit>
+			<XPValueAttack>3</XPValueAttack>
+			<XPValueDefense>2</XPValueDefense>
+			<UnitArtInfo>ART_DEF_UNIT_JET_FIGHTER</UnitArtInfo>
+			<MoveRate>AIR_REBASE</MoveRate>
+			<UnitFlagIconOffset>78</UnitFlagIconOffset>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_DESERT_FALCON_ATLAS</IconAtlas>
+		</Row>
+	</Units>
+	<UnitGameplay2DScripts>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<SelectionSound>AS2D_SELECT_JET_FIGHTER</SelectionSound>
+			<FirstSelectionSound>AS2D_BIRTH_JET_FIGHTER</FirstSelectionSound>
+		</Row>
+	</UnitGameplay2DScripts>
+	<Unit_AITypes>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<UnitAIType>UNITAI_DEFENSE_AIR</UnitAIType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<UnitAIType>UNITAI_CARRIER_AIR</UnitAIType>
+		</Row>
+	</Unit_AITypes>
+	<Unit_Flavors>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<FlavorType>FLAVOR_OFFENSE</FlavorType>
+			<Flavor>10</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<FlavorType>FLAVOR_DEFENSE</FlavorType>
+			<Flavor>10</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<FlavorType>FLAVOR_AIR</FlavorType>
+			<Flavor>20</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<FlavorType>FLAVOR_ANTIAIR</FlavorType>
+			<Flavor>15</Flavor>
+		</Row>
+	</Unit_Flavors>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<PromotionType>PROMOTION_INTERCEPTION_IV</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<PromotionType>PROMOTION_AIR_SWEEP</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<PromotionType>PROMOTION_AIR_RECON</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<PromotionType>PROMOTION_ANTI_AIR_II</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<PromotionType>PROMOTION_AIR_RANGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<PromotionType>PROMOTION_CHARGE</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<PromotionType>PROMOTION_EVASION_I</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_LEKMOD_DESERT_FALCON"/>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<ResourceType>RESOURCE_ALUMINUM</ResourceType>
+			<Cost>1</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_LEKMOD_DESERT_FALCON"/>
+		<Row>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+			<UnitClassType>UNITCLASS_STEALTH_BOMBER</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Civilization_UnitClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_UAE</CivilizationType>
+			<UnitClassType>UNITCLASS_JET_FIGHTER</UnitClassType>
+			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
+		</Row>
+	</Civilization_UnitClassOverrides>
+	<IconTextureAtlases>
+		<Row>
+			<Atlas>LEKMOD_DESERT_FALCON_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>desert_falcon_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_DESERT_FALCON_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>desert_falcon_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_DESERT_FALCON_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>desert_falcon_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_DESERT_FALCON_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>desert_falcon_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_DESERT_FALCON_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>desert_falcon_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_DESERT_FALCON_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>desert_falcon_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+	</IconTextureAtlases>
 </GameData>

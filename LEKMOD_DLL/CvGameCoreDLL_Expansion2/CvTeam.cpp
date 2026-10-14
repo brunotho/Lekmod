@@ -5971,6 +5971,45 @@ void CvTeam::setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, b
 			}
 		}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		// UAE: Archaeology reveals Oil and places a node in the capital
+		if (bNewValue)
+		{
+			for (int iPlayer = 0; iPlayer < MAX_MAJOR_CIVS; iPlayer++)
+			{
+				CvPlayer& kMember = GET_PLAYER((PlayerTypes)iPlayer);
+				if (!kMember.isAlive() || kMember.getTeam() != GetID() || kMember.GetPlayerTraits()->GetLekmodTraitType(LTI_TECH_REVEAL_TECH) != (int)eIndex)
+					continue;
+				const int eResource = kMember.GetPlayerTraits()->GetLekmodTraitType(LTI_TECH_REVEAL_RESOURCE);
+				if (eResource == -1)
+					continue;
+				setForceRevealedResource((ResourceTypes)eResource, true);
+				CvCity* pCapital = kMember.getCapitalCity();
+				const int iAmount = kMember.GetPlayerTraits()->GetLekmodTraitInt(LTI_TECH_REVEAL_CAPITAL_AMOUNT);
+				if (pCapital == NULL || iAmount <= 0)
+					continue;
+				// the capital's tile, else its closest own land tile without a resource (no mountains or natural wonders)
+				CvPlot* pTarget = NULL;
+				int iBestDistance = MAX_INT;
+				for (int iDX = -3; iDX <= 3; iDX++)
+					for (int iDY = -3; iDY <= 3; iDY++)
+					{
+						CvPlot* pLoopPlot = plotXYWithRangeCheck(pCapital->getX(), pCapital->getY(), iDX, iDY, 3);
+						if (pLoopPlot == NULL || pLoopPlot->getOwner() != kMember.GetID() || pLoopPlot->isWater() || pLoopPlot->isMountain()
+							|| pLoopPlot->IsNaturalWonder() || pLoopPlot->getResourceType() != NO_RESOURCE)
+							continue;
+						const int iDistance = plotDistance(pCapital->getX(), pCapital->getY(), pLoopPlot->getX(), pLoopPlot->getY());
+						if (iDistance < iBestDistance)
+						{
+							iBestDistance = iDistance;
+							pTarget = pLoopPlot;
+						}
+					}
+				if (pTarget != NULL)
+					pTarget->setResourceType((ResourceTypes)eResource, iAmount);
+			}
+		}
+#endif
 		processTech(eIndex, ((bNewValue) ? 1 : -1));
 
 		//Antiquity site notifications.

@@ -9922,6 +9922,29 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 	// Timurids: the first city gets a building too (both are real buildings, so they stay with the city when captured)
 	if (getNumCities() == 1 && GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING) != -1)
 		pCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING), 1);
+	// UAE: the first cities get Pearls on the closest free water tile (Coast, no resource or feature, within 3 tiles)
+	if (GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_WATER_RESOURCE) != -1 && getNumCities() <= GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_WATER_RESOURCE_CITIES))
+	{
+		std::vector<CvPlot*> apBest;
+		int iBestDistance = MAX_INT;
+		for (int iDX = -3; iDX <= 3; iDX++)
+			for (int iDY = -3; iDY <= 3; iDY++)
+			{
+				CvPlot* pLoopPlot = plotXYWithRangeCheck(iX, iY, iDX, iDY, 3);
+				if (pLoopPlot == NULL || !pLoopPlot->isShallowWater() || pLoopPlot->getResourceType() != NO_RESOURCE || pLoopPlot->getFeatureType() != NO_FEATURE)
+					continue;
+				const int iDistance = plotDistance(iX, iY, pLoopPlot->getX(), pLoopPlot->getY());
+				if (iDistance < iBestDistance)
+				{
+					iBestDistance = iDistance;
+					apBest.clear();
+				}
+				if (iDistance == iBestDistance)
+					apBest.push_back(pLoopPlot);
+			}
+		if (!apBest.empty())
+			apBest[GC.getGame().getJonRandNum((int)apBest.size(), "Lekmod found water resource")]->setResourceType((ResourceTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_WATER_RESOURCE), 1);
+	}
 	// Aksum: the first coastal city gets the Port of Adulis, its name, and reveals the coast around it
 	if (GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_COASTAL_CITY_BUILDING) != -1 && pCity->isCoastal())
 	{

@@ -12985,6 +12985,18 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_RESOURCES", iTempMod);
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// UAE: more Gold from the Modern Era
+	if (eIndex == YIELD_GOLD)
+	{
+		const int eEra = kPlayer.GetPlayerTraits()->GetLekmodTraitType(LTI_ERA_BONUS_ERA);
+		iTempMod = kPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_ERA_GOLD_MOD);
+		if (eEra != -1 && iTempMod != 0 && (int)kPlayer.GetCurrentEra() >= eEra)
+		{
+			iModifier += iTempMod;
+			if(toolTipSink)
+				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_GOLD_MODERN_ERA", iTempMod);
+		}
+	}
 	// Zulu: less Gold while not at war with another major civ
 	if (eIndex == YIELD_GOLD)
 	{

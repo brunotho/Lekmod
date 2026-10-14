@@ -2552,11 +2552,14 @@ Tags: civs, buildings, naval
 
 UAE (CIVILIZATION_UAE)
 ----------------------
-Tags: civs, units, buildings
+Tags: civs, units, buildings, air
 - Removed: Qasimi Raider
 - Changed: Burj Al Arab: +7 Gold and +7 Culture
 - Removed: Burj Al Arab: yields on Great Person improvements, desert and natural wonder tiles
-- Note: open: the new UA and the Desert Falcon (need C++ and a new unit)
+- Changed: new UA: founding the capital and the second city places Pearls on the closest free Coast tile; may trade strategic resources; Oil is revealed with Archaeology, which also places an Oil node (8) in the capital; from the Modern Era luxury tiles -2 Gold (not below 0) and cities +30% Gold
+- Removed: the old UA (Gold from trade routes, wonder bonuses)
+- Added: Desert Falcon, a unique Jet Fighter: needs only 1 Aluminum, starts with Range (+2), Charge and Evasion I, upgrades to the Stealth Bomber
+- DLL: Traits.LekmodFoundWaterResource*, LekmodStrategicTrade, LekmodTechReveal*, LekmodEra*; unit 275
 
 CUBA (CIVILIZATION_CUBA)
 ------------------------

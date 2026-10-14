@@ -5078,7 +5078,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Yallah Habibi</Text>
 		</Row>
 		<Row Tag="TXT_KEY_TRAIT_YALLAH_HABIBI">
-			<Text>Upon completing a [COLOR_GREEN]World Wonder[ENDCOLOR], receive 100 [ICON_GOLD] Gold and start a [COLOR_GREEN]We Love The King Day[ENDCOLOR] in the city where it is built. All Military Units gain 3 [ICON_GOLD] Gold per turn and +1 Experience on tiles with a Trade Route.</Text>
+			<Text>Founding the [ICON_CAPITAL] Capital and the second city places [ICON_RES_PEARLS] Pearls on the closest free Coast tile.[NEWLINE][NEWLINE]May trade strategic resources.[NEWLINE][NEWLINE][ICON_RES_OIL] Oil is revealed with Archaeology, which also places an [ICON_RES_OIL] Oil node in the [ICON_CAPITAL] Capital.[NEWLINE][NEWLINE]From the Modern Era: luxury resource tiles yield -2 [ICON_GOLD] Gold (not below 0), and cities yield +30% [ICON_GOLD] Gold.</Text>
 		</Row>
 		<!--Spy Names-->
 		<Row Tag="TXT_KEY_SPY_NAME_UAE_0">
@@ -148151,6 +148151,21 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_UNIT_LEKMOD_MPIAMBINA_STRATEGY">
 			<Text>Use it like a Great General, or spend it on a Holy Site (Hills only for the Malagasy), to found a religion or to enhance it.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_DESERT_FALCON">
+			<Text>Desert Falcon</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_HELP">
+			<Text>Replaces the Jet Fighter. Needs only 1 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE]Starts with Range (+2), Charge and Evasion I (50% chance to avoid interception).[NEWLINE]Upgrades to the Stealth Bomber.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_PEDIA">
+			<Text>The U.A.E.'s unique Jet Fighter: longer range, stronger against wounded units and harder to intercept.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_STRATEGY">
+			<Text>Use its extra range to strike deep, and finish off damaged units with Charge.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_GOLD_MODERN_ERA">
+			<Text>[NEWLINE][ICON_BULLET]Modern Era: {1_Num}%</Text>
 		</Row>
 	</Language_en_US>
 	<Language_de_DE>

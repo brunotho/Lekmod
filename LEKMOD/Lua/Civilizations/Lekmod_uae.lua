@@ -82,7 +82,8 @@ function lekmod_uae_qasimi_raider_pillage(player_id, unit_id, plot_x, plot_y)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
-if is_active then
+-- 2026-10-14: replaced by the new UA (C++)
+if false and is_active then
    GameEvents.CityConstructed.Add(lekmod_uae_wonder_ua)
    GameEvents.PlayerDoTurn.Add(lekmod_uae_trade_route_gold)
 end

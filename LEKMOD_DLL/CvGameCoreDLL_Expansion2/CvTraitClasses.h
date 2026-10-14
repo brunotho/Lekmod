@@ -141,6 +141,15 @@ enum LekmodTraitInt
 	LTI_BUILDING_FREE_UNIT_CLASS,		// type: ... gives the civ's unit of this class
 	LTI_DESERT_FOUND_FOOD,				// cities founded on Desert (they have the desert building) yield this much Food ... (Morocco)
 	LTI_DESERT_FOUND_FOOD_TECH,			// type: ... with this tech (shown as the civilization ability line)
+	LTI_FOUND_WATER_RESOURCE,			// type: founding one of the first N cities spawns this resource on the closest free water tile (UAE: Pearls)
+	LTI_FOUND_WATER_RESOURCE_CITIES,	// ... N
+	LTI_STRATEGIC_TRADE,				// may trade strategic resources even when the lobby option forbids it (UAE)
+	LTI_TECH_REVEAL_TECH,				// type: this tech reveals the resource below early (UAE: Archaeology)
+	LTI_TECH_REVEAL_RESOURCE,			// type: ... (Oil)
+	LTI_TECH_REVEAL_CAPITAL_AMOUNT,		// ... and places a node of this size in the capital
+	LTI_ERA_BONUS_ERA,					// type: from this era ... (UAE: Modern)
+	LTI_ERA_LUXURY_GOLD,				// ... luxury resource tiles yield this much Gold more (negative; not below 0)
+	LTI_ERA_GOLD_MOD,					// ... and cities this % more Gold
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

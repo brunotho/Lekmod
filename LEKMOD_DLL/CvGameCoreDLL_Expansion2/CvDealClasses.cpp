@@ -543,7 +543,11 @@ bool CvDeal::IsPossibleToTradeItem(PlayerTypes ePlayer, PlayerTypes eToPlayer, T
 
 #ifdef LEKMOD_DISABLE_STRATEGIC_TRADING_OPTION
 			// Lobby setting: strategic resources can't be traded at all
-			if (eUsage == RESOURCEUSAGE_STRATEGIC && GC.getGame().isOption("GAMEOPTION_DISABLE_STRATEGIC_TRADING"))
+			if (eUsage == RESOURCEUSAGE_STRATEGIC && GC.getGame().isOption("GAMEOPTION_DISABLE_STRATEGIC_TRADING")
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				&& pFromPlayer->GetPlayerTraits()->GetLekmodTraitInt(LTI_STRATEGIC_TRADE) == 0 && pToPlayer->GetPlayerTraits()->GetLekmodTraitInt(LTI_STRATEGIC_TRADE) == 0 // UAE
+#endif
+				)
 				return false;
 #endif
 #ifdef TECH_RESTRICTION_FOR_STRATEGIC_DEAL
