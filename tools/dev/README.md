@@ -6,7 +6,8 @@ Run them from this folder (`python tools/dev/q.py ...` also works for the standa
 | Script | What |
 |---|---|
 | `cpp_edit.py` | `edit(file, anchor, text, mode='after'/'before'/'replace', count=1)`: byte-safe C++ edits (keeps CRLF and non-UTF-8 bytes; the anchor must match exactly `count` times, written with `\n`). `balance(files)`: checks `#if`/`#endif` counts. **Not transactional**: a failing anchor stops the script after earlier edits were written, so start from a clean tree and check `git diff`. Never run while a build is compiling (locked files). |
-| `ifstack.py` | `python ifstack.py "CvCity.cpp:pattern" ...`: prints the `#if` stack of every matching line and whether each condition is LIVE or DEAD (from `_Defines.h`). Run after every C++ batch. |
+| `ifstack.py` | `python ifstack.py "CvCity.cpp:pattern" ...`: prints the `#if` stack of every matching line and whether each condition is LIVE or DEAD (from `_Defines.h`). Run after every C++ batch. Ignores `#define`s inside comments (`AUI_CONSTIFY`, `AUI_WARNING_FIXES`, `NQM_PRUNING` are OFF). |
+| `deadcode.py [pattern...]` | Every line with `Lekmod`/`LEKMOD_`/`LTI_` (or the given patterns) that sits in a compiled-out branch, and the branch that kills it. Run after every C++ batch; most hits are old upstream duplicates with a live twin. |
 | `helpers.py` | Data-script helpers for `CIV5Units.xml`: `P` (the file), `rows(table, *dicts, delete=)`, `upd(table, where, sets)`, `unit(...)`, `res(unit, (res, n)...)`, `promos(unit, add, remove)`, `upgrade(unit, cls)`, `atlas(name, file)` (7-size icon atlas), `dummy(...)` (hidden dummy building + class), `LAND` (land combat classes). |
 | `xmlcheck.py` | Parses both Override files: repeated columns inside one `<Row>` (that drops the whole file in game) and duplicate text tags. |
 | `refcheck.py` | Every `TYPE_NAME` added in the uncommitted `CIV5Units.xml` diff exists in the loaded DB or is defined in the diff. |

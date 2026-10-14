@@ -5615,7 +5615,15 @@ void CvPlayer::doTurnPostDiplomacy()
 #endif
 	{
 #else
+#ifdef LEKMOD_POLICY_PICK_FREEZE
+	// (live branch: NQM_PRUNING is only mentioned inside a comment in _Defines.h)
+	if(m_bLekmodYieldsFrozen)
+	{
+	}
+	else if(kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
+#else
 	if(kGame.isOption(GAMEOPTION_END_TURN_TIMER_ENABLED))
+#endif
 	{
 #ifdef AI_CULTURE_RESTRICTION
 		if (getJONSCulture() < getNextPolicyCost())
@@ -12485,10 +12493,18 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 			CvTechEntry* pTechInfo = GC.getTechInfo((TechTypes)pBuildInfo->getTechPrereq());
 			if ((!bTestEra && !bTestVisible) || (pTechInfo && (GetCurrentEra() + 1) < pTechInfo->GetEra()))
 #else
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// (this is the live branch: AUI_WARNING_FIXES is only mentioned inside a comment in _Defines.h)
+	if(GC.getBuildInfo(eBuild)->getTechPrereq() != NO_TECH && GetPlayerTraits()->GetLekmodTraitType(LTI_NO_TECH_BUILD) != (int)eBuild)
+	{
+		if(!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getTechPrereq())) && !LekmodHasEarlyBuildTech(eBuild))
+		{
+#else
 	if(GC.getBuildInfo(eBuild)->getTechPrereq() != NO_TECH)
 	{
 		if(!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getBuildInfo(eBuild)->getTechPrereq())))
 		{
+#endif
 			if((!bTestEra && !bTestVisible) || ((GetCurrentEra() + 1) < GC.getTechInfo((TechTypes) GC.getBuildInfo(eBuild)->getTechPrereq())->GetEra()))
 #endif
 			{
