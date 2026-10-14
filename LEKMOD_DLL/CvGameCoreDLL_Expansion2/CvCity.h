@@ -890,6 +890,9 @@ public:
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 	int GetLekmodBeliefCityConditionYield(const class CvReligion* pReligion, BeliefTypes eSecondaryPantheon, YieldTypes eYield) const;
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	void LekmodProphetSpread(ReligionTypes eReligion, PlayerTypes eResponsiblePlayer);
+#endif
 #ifdef LEKMOD_CITY_TIMED_BUILDINGS
 	void LekmodOnBuildingAdded(const CvBuildingEntry* pkBuilding);
 	void LekmodDoTimedBuildings();

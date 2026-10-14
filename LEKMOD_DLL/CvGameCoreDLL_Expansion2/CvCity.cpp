@@ -10546,6 +10546,25 @@ int CvCity::GetJONSCultureThreshold() const
 	}
 
 	// -50 = 50% cost
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	// Serai: cheaper tiles while no other one of the owner is within range
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding == NULL || pkBuilding->GetLekmodIsolatedPlotCultureCostMod() == 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
+			continue;
+		bool bIsolated = true;
+		int iCityLoop;
+		for (const CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iCityLoop); pLoopCity != NULL && bIsolated; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iCityLoop))
+		{
+			if (pLoopCity != this && pLoopCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding) > 0
+				&& plotDistance(getX(), getY(), pLoopCity->getX(), pLoopCity->getY()) <= pkBuilding->GetLekmodIsolatedRange())
+				bIsolated = false;
+		}
+		if (bIsolated)
+			iReligionMod += pkBuilding->GetLekmodIsolatedPlotCultureCostMod();
+	}
+#endif
 	int iModifier = GET_PLAYER(getOwner()).GetPlotCultureCostModifier() + m_iPlotCultureCostModifier + iReligionMod;
 	if(iModifier != 0)
 	{
@@ -13587,7 +13606,34 @@ int CvCity::GetBaseYieldRateFromSpecialists(YieldTypes eIndex) const
 	CvAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	CvAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
 
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	// Building_LekmodLocalSpecialistYields: specialists of this city only
+	static std::vector<int> s_aiLocalSpecialistBuildings;
+	static bool s_bLocalSpecialistInit = false;
+	if (!s_bLocalSpecialistInit)
+	{
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding && !pkBuilding->GetLekmodLocalSpecialistYields().empty())
+				s_aiLocalSpecialistBuildings.push_back(iBuilding);
+		}
+		s_bLocalSpecialistInit = true;
+	}
+	int iLocal = 0;
+	for (uint i = 0; i < s_aiLocalSpecialistBuildings.size(); i++)
+	{
+		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)s_aiLocalSpecialistBuildings[i]) <= 0)
+			continue;
+		const std::vector<std::pair<int, std::pair<int, int> > >& aRows = GC.getBuildingInfo((BuildingTypes)s_aiLocalSpecialistBuildings[i])->GetLekmodLocalSpecialistYields();
+		for (uint j = 0; j < aRows.size(); j++)
+			if (aRows[j].second.first == (int)eIndex)
+				iLocal += aRows[j].second.second * GetCityCitizens()->GetSpecialistCount((SpecialistTypes)aRows[j].first);
+	}
+	return m_aiBaseYieldRateFromSpecialists[eIndex] + iLocal;
+#else
 	return m_aiBaseYieldRateFromSpecialists[eIndex];
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -15482,6 +15528,18 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 }
 #endif
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+//	--------------------------------------------------------------------------------
+/// Spread a religion here with the strength of a Great Prophet (Arabia's trade routes, Outremer)
+void CvCity::LekmodProphetSpread(ReligionTypes eReligion, PlayerTypes eResponsiblePlayer)
+{
+	if (eReligion <= RELIGION_PANTHEON)
+		return;
+	const UnitTypes eProphet = (UnitTypes)GC.getInfoTypeForString("UNIT_PROPHET", true);
+	const int iStrength = (eProphet != NO_UNIT && GC.getUnitInfo(eProphet)) ? GC.getUnitInfo(eProphet)->GetReligiousStrength() : 1000;
+	GetCityReligions()->AddProphetSpread(eReligion, GC.getRELIGION_MISSIONARY_PRESSURE_MULTIPLIER() * iStrength, eResponsiblePlayer);
+}
+#endif
 #ifdef LEKMOD_CITY_TIMED_BUILDINGS
 //	--------------------------------------------------------------------------------
 /// A building was added: start its timed dummy building and/or We Love the King Day (turn columns are standard speed)
@@ -15508,6 +15566,10 @@ void CvCity::LekmodOnBuildingAdded(const CvBuildingEntry* pkBuilding)
 		if (m_pCityBuildings->GetNumRealBuilding(eTimed) <= 0)
 			m_pCityBuildings->SetNumRealBuilding(eTimed, 1);
 	}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if (pkBuilding->IsLekmodSpreadCapitalReligionOnBuild() && GET_PLAYER(getOwner()).getCapitalCity() != NULL)
+		LekmodProphetSpread(GET_PLAYER(getOwner()).getCapitalCity()->GetCityReligions()->GetReligiousMajority(), getOwner());
+#endif
 	if (pkBuilding->GetLekmodWLTKDTurnsOnBuild() > 0)
 	{
 		const int iTurns = std::max(1, pkBuilding->GetLekmodWLTKDTurnsOnBuild() * iSpeed / 100);

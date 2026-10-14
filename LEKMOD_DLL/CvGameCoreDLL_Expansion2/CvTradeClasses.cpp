@@ -4177,6 +4177,17 @@ bool CvPlayerTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Dom
 		}
 	}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Arabia: a route to an own city or a City-State spreads the origin city's religion there like a Great Prophet
+	if (pOriginCity && pDestCity && m_pPlayer->GetPlayerTraits()->GetLekmodTraitInt(LTI_TRADE_ROUTE_RELIGION_SPREAD) > 0
+		&& (pDestCity->getOwner() == pOriginCity->getOwner() || GET_PLAYER(pDestCity->getOwner()).isMinorCiv()))
+	{
+		const ReligionTypes eOriginReligion = pOriginCity->GetCityReligions()->GetReligiousMajority();
+		if (eOriginReligion > RELIGION_PANTHEON)
+			pDestCity->LekmodProphetSpread(eOriginReligion, m_pPlayer->GetID());
+	}
+#endif
+
 	return true;
 }
 

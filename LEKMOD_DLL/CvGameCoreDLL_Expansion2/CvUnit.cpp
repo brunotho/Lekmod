@@ -692,7 +692,11 @@ void CvUnit::initWithNameOffset(int iID, UnitTypes eUnit, int iNameOffset, UnitA
 	}
 
 	// Strip off Ocean Impassable promotion because of trait?
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if(kPlayer.GetPlayerTraits()->IsEmbarkedAllWater() || kPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_OCEAN_WITHOUT_ASTRONOMY) > 0)
+#else
 	if(kPlayer.GetPlayerTraits()->IsEmbarkedAllWater())
+#endif
 	{
 		PromotionTypes ePromotionOceanImpassable = (PromotionTypes)GC.getPROMOTION_OCEAN_IMPASSABLE();
 		if(isHasPromotion(ePromotionOceanImpassable))
@@ -14695,6 +14699,26 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 		if (kModifierList && iTempModifier)
 		{
 			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_ADJACENT_ENEMIES", iTempModifier, iNumEnemies);
+		}
+	}
+	// Jerusalem: inside the territory of an enemy city that follows your religion
+	{
+		const int iReligiousMod = GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodTraitInt(LTI_RELIGIOUS_ENEMY_TERRITORY_COMBAT);
+		const CvPlot* pMyPlot = plot();
+		if (iReligiousMod != 0 && pMyPlot && pMyPlot->getOwner() != NO_PLAYER && GET_TEAM(getTeam()).isAtWar(GET_PLAYER(pMyPlot->getOwner()).getTeam()))
+		{
+			ReligionTypes eMyReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
+			if (eMyReligion <= RELIGION_PANTHEON && GET_PLAYER(getOwner()).getCapitalCity() != NULL)
+				eMyReligion = GET_PLAYER(getOwner()).getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+			const CvCity* pTerritoryCity = pMyPlot->getWorkingCity();
+			if (eMyReligion > RELIGION_PANTHEON && pTerritoryCity && pTerritoryCity->GetCityReligions()->GetReligiousMajority() == eMyReligion)
+			{
+				iModifier += iReligiousMod;
+				if (kModifierList)
+				{
+					GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_RELIGIOUS_TERRITORY", iReligiousMod);
+				}
+			}
 		}
 	}
 	// Gadrauht: bonus for adjacent melee/gunpowder units attacking a wounded unit

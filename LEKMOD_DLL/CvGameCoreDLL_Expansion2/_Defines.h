@@ -1480,6 +1480,10 @@ Diversify Spain and Australia's NW Discovery bonus
 // per city, city save version 7), LekmodWLTKDTurnsOnBuild (Maurya), LekmodTrainedUnitStackBuilding/Max (one more dummy per
 // military unit trained, up to Max: Japan Dojo)
 #define LEKMOD_CITY_TIMED_BUILDINGS
+// Batch H: Buildings.LekmodIsolatedPlotCultureCostMod/Range (Serai), LekmodSpreadCapitalReligionOnBuild and LekmodStartTurnMovesAround
+// (Outremer), trait ints for the second city's building (Timurids), ocean before Astronomy and fish claims (Denmark), trade route
+// religion spread (Arabia), combat in enemy territory of your religion (Jerusalem); all part of LEKMOD_CITY_TIMED_BUILDINGS /
+// LEKMOD_CIV_TRAIT_FLAGS
 // Batch G trait additions (LEKMOD_CIV_TRAIT_FLAGS): Trait_LekmodBuildingClassOverrides (tech and needed buildings per class: Oman),
 // Trait_LekmodFreeUnits (free units at a tech: Oman), LTI_NO_TECH_BUILD (Maurya roads), LTI_START_MOVES_ROUTE_WORKER (Maurya),
 // LTI_START_TURN_FOUNDER_MOVES and LTI_START_MELEE_PROMOTION (Sioux)

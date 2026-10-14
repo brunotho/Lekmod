@@ -555,6 +555,11 @@ public:
 	bool IsLekmodFreePlotPurchase() const;
 #endif
 #ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	const std::vector<std::pair<int, std::pair<int, int> > >& GetLekmodLocalSpecialistYields() const; // specialist, (yield, value)
+	bool IsLekmodSpreadCapitalReligionOnBuild() const;
+	int GetLekmodStartTurnMovesAround() const;
+	int GetLekmodIsolatedPlotCultureCostMod() const;
+	int GetLekmodIsolatedRange() const;
 	int GetLekmodTimedBuilding() const;
 	int GetLekmodTimedBuildingTurns() const;
 	int GetLekmodWLTKDTurnsOnBuild() const;
@@ -933,6 +938,11 @@ private:
 	bool m_bLekmodFreePlotPurchase;
 #endif
 #ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	std::vector<std::pair<int, std::pair<int, int> > > m_aLekmodLocalSpecialistYields;
+	bool m_bLekmodSpreadCapitalReligionOnBuild;
+	int m_iLekmodStartTurnMovesAround;
+	int m_iLekmodIsolatedPlotCultureCostMod;
+	int m_iLekmodIsolatedRange;
 	int m_iLekmodTimedBuilding;
 	int m_iLekmodTimedBuildingTurns;
 	int m_iLekmodWLTKDTurnsOnBuild;

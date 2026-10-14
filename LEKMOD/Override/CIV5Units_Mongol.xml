@@ -148072,6 +148072,31 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_TRAIT_PRAIRIE">
 			<Text>Your starting Settler has +1 [ICON_MOVES] Movement on the first turn.[NEWLINE]Your starting Warrior and all Recon and Archer units start with Scouting I (+1 Sight).</Text>
 		</Replace>
+		<!-- Phase 6 C++ batch H -->
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_TIMURID_SECOND_COURT">
+			<Text>Second Court</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_RELIGIOUS_TERRITORY">
+			<Text>In enemy lands of your faith: {1_Num}%</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_TRAIT_ULUG">
+			<Text>Twin Courts.[NEWLINE][NEWLINE]In the [ICON_CAPITAL] Capital: Great Works and Writer, Artist and Musician specialists yield +1 [ICON_CULTURE] Culture and +1 [ICON_GOLD] Gold; +10% [ICON_PRODUCTION] Production towards buildings.[NEWLINE][NEWLINE]In your second city: Great Works and Writer, Artist and Musician specialists yield +1 [ICON_RESEARCH] Science; Great Person improvements and World Wonders +2 [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]Both courts stay with their cities, also when they are captured.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_SERAI_HELP">
+			<Text>Replaces the Caravansary. Available at the Wheel and cheaper.[NEWLINE]+2 [ICON_GOLD] Gold; Caravans from this city reach 50% farther and give +2 [ICON_GOLD] Gold to international routes.[NEWLINE][NEWLINE]+1 [ICON_FOOD] Food for every other Serai of yours within 4 tiles.[NEWLINE]If no other Serai of yours is within 5 tiles: +3 [ICON_CULTURE] Culture and borders grow 15% faster.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_VIKING_FURY">
+			<Text>Land units start with Amphibious I and pillage without spending movement.[NEWLINE]Naval and embarked units may enter Ocean tiles before Astronomy.[NEWLINE][NEWLINE]New cities claim the Fish tiles within 2 tiles.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_LAND_TRADE_GOLD2">
+			<Text>Double quantity of [ICON_RES_OIL] Oil.[NEWLINE]Trade routes to your own cities and to [ICON_CITY_STATE] City-States spread the origin city's [ICON_RELIGION] Religion there like a Great Prophet.[NEWLINE]Oases yield +2 [ICON_PEACE] Faith once you know [ICON_TECH_CALENDAR] Calendar.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_HOLYLAND">
+			<Text>+1 [ICON_PEACE] Faith from [COLOR_GREEN]Luxury Resources[ENDCOLOR].[NEWLINE][NEWLINE]Units get +15% [ICON_STRENGTH] Combat Strength inside the territory of an enemy city that follows your [ICON_RELIGION] Religion.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_OUTREMER_HELP">
+			<Text>Replaces the Courthouse. Eliminates extra [ICON_HAPPINESS_4] Unhappiness from an [ICON_OCCUPIED] Occupied City.[NEWLINE][NEWLINE]When built: spreads your [ICON_CAPITAL] Capital's [ICON_RELIGION] Religion here like a Great Prophet, and units in or next to the city get +2 [ICON_MOVES] Movement for one turn.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

@@ -6049,6 +6049,28 @@ void CvPlayer::DoUnitReset()
 				pLoopUnit->changeMoves(GetPlayerTraits()->GetLekmodTraitInt(LTI_START_MOVES_IMPROVEMENT_CHANGE) * GC.getMOVE_DENOMINATOR());
 			}
 		}
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+		// Outremer: units starting the turn in or next to a city with the (1-turn) muster building
+		if (pLoopUnit->plot() && pLoopUnit->getDomainType() != DOMAIN_AIR)
+		{
+			int iAround = 0;
+			for (int iDirection = -1; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+			{
+				CvPlot* pNear = (iDirection < 0) ? pLoopUnit->plot() : plotDirection(pLoopUnit->getX(), pLoopUnit->getY(), (DirectionTypes)iDirection);
+				CvCity* pNearCity = pNear ? pNear->getPlotCity() : NULL;
+				if (pNearCity == NULL || pNearCity->getOwner() != GetID())
+					continue;
+				for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+				{
+					CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+					if (pkBuilding && pkBuilding->GetLekmodStartTurnMovesAround() > 0 && pNearCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding) > 0)
+						iAround = std::max(iAround, pkBuilding->GetLekmodStartTurnMovesAround());
+				}
+			}
+			if (iAround > 0)
+				pLoopUnit->changeMoves(iAround * GC.getMOVE_DENOMINATOR());
+		}
+#endif
 		// Maurya: workers starting the turn on a road or railroad
 		if (pLoopUnit->getUnitInfo().GetWorkRate() > 0 && !pLoopUnit->IsCombatUnit() && pLoopUnit->plot() && pLoopUnit->plot()->getRouteType() != NO_ROUTE && !pLoopUnit->plot()->IsRoutePillaged())
 		{
@@ -6150,6 +6172,23 @@ void CvPlayer::DoUnitReset()
 			}
 		}
 	}
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	// one-shot muster buildings (Outremer): their extra moves were given above, remove them now
+	{
+		int iCityLoop;
+		for (CvCity* pLoopCity = firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = nextCity(&iCityLoop))
+		{
+			for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+			{
+				CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+				if (pkBuilding == NULL || pkBuilding->GetLekmodStartTurnMovesAround() <= 0 || pLoopCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
+					continue;
+				pLoopCity->GetCityBuildings()->SetNumFreeBuilding((BuildingTypes)iBuilding, 0);
+				pLoopCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)iBuilding, 0);
+			}
+		}
+	}
+#endif
 }
 
 //	--------------------------------------------------------------------------------
@@ -9830,6 +9869,23 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 #endif
 
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Denmark: claim tiles with a resource (Fish) within a range
+	{
+		const int eClaimResource = GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_CLAIM_RESOURCE);
+		const int iClaimRange = GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_CLAIM_RESOURCE_RANGE);
+		for (int iDX = -iClaimRange; iDX <= iClaimRange && eClaimResource != -1; iDX++)
+		{
+			for (int iDY = -iClaimRange; iDY <= iClaimRange; iDY++)
+			{
+				CvPlot* pClaimPlot = plotXYWithRangeCheck(iX, iY, iDX, iDY, iClaimRange);
+				if (pClaimPlot && pClaimPlot->getOwner() == NO_PLAYER && pClaimPlot->getResourceType(getTeam()) == (ResourceTypes)eClaimResource)
+					pCity->DoAcquirePlot(pClaimPlot->getX(), pClaimPlot->getY());
+			}
+		}
+	}
+	// Timurids: the second city gets a building
+	if (getNumCities() == 2 && GetPlayerTraits()->GetLekmodTraitType(LTI_SECOND_CITY_BUILDING) != -1)
+		pCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_SECOND_CITY_BUILDING), 1);
 	// Spain: founding a city other than the first reveals the area and gives a free unit
 	if (getNumCities() > 1)
 	{
@@ -33328,6 +33384,12 @@ PromotionTypes CvPlayer::GetEmbarkationPromotion() const
 			return (PromotionTypes)GC.getPROMOTION_ALLWATER_EMBARKATION();
 		}
 	}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if(m_pTraits && m_pTraits->GetLekmodTraitInt(LTI_OCEAN_WITHOUT_ASTRONOMY) > 0)
+	{
+		return (PromotionTypes)GC.getPROMOTION_ALLWATER_EMBARKATION();
+	}
+#endif
 
 	return (PromotionTypes)GC.getPROMOTION_EMBARKATION();
 }

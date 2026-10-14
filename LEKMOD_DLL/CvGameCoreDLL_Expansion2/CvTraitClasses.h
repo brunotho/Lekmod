@@ -94,6 +94,12 @@ enum LekmodTraitInt
 	LTI_START_MOVES_ROUTE_WORKER,		// workers starting the turn on a route get extra moves (Maurya)
 	LTI_START_TURN_FOUNDER_MOVES,		// city founders get extra moves on the first turn (Sioux)
 	LTI_START_MELEE_PROMOTION,			// type: starting melee units get this promotion (Sioux: Scouting I)
+	LTI_SECOND_CITY_BUILDING,			// type: the second city founded gets this building (Timurids)
+	LTI_OCEAN_WITHOUT_ASTRONOMY,		// naval and embarked units may enter Ocean before Astronomy (Denmark)
+	LTI_FOUND_CLAIM_RESOURCE,			// type: founding a city claims tiles with this resource ... (Denmark: Fish)
+	LTI_FOUND_CLAIM_RESOURCE_RANGE,		// ... within this range
+	LTI_TRADE_ROUTE_RELIGION_SPREAD,	// trade routes to own cities and City-States spread the origin's religion like a prophet (Arabia)
+	LTI_RELIGIOUS_ENEMY_TERRITORY_COMBAT,	// % combat strength inside enemy cities' territory that follow your religion (Jerusalem)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

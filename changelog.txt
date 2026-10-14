@@ -2156,7 +2156,9 @@ ARABIA (CIVILIZATION_ARABIA)
 ----------------------------
 Tags: civs, units
 - Changed: Camel Archer: 21 Ranged Strength (was 20), 13 Strength (was 14), needs 4 Horses (was 2 Horses and 1 Iron), has the usual mounted penalty against cities
-- Note: open: the new UA (trade route conversion, Oasis Faith; needs C++)
+- Changed: new UA: trade routes to your own cities and City-States spread the origin city's religion like a Great Prophet; Oases +2 Faith with Calendar; double Oil kept
+- Removed: faster luxury improvements and +2 Culture +2 Gold from luxury buildings
+- DLL: Traits.LekmodTradeRouteReligionSpread
 
 SIOUX (CIVILIZATION_SIOUX)
 --------------------------
@@ -2230,7 +2232,9 @@ Tags: civs, units, buildings
 - Changed: Crusader: available at Steel (was Theology), 22 Strength (was 17), costs 80 (was 70), needs 3 Iron (was 2)
 - Removed: Crusader: entering foreign territory in peace
 - Removed: Outremer: 2 Culture, 2 Faith and 2 Happiness
-- Note: open: UA, Outremer religion spread and movement (need C++)
+- Added: units +15% inside the territory of an enemy city that follows your religion
+- Added: Outremer: when built, spreads the capital's religion like a Great Prophet; units in or next to the city +2 Movement for one turn
+- DLL: Traits.LekmodReligiousEnemyTerritoryCombat; Buildings.LekmodSpreadCapitalReligionOnBuild, LekmodStartTurnMovesAround (one-shot dummy 296, class 199, removed after the next unit reset)
 
 DENMARK (CIVILIZATION_DENMARK)
 ------------------------------
@@ -2239,7 +2243,9 @@ Tags: civs, units, buildings, naval
 - Changed: Longship starts with Swift Transport and Coastal Raider I instead of giving its movement to embarked units
 - Added: Rune Stone, a unique Shrine: costs 32, 2 Faith, units trained in the city start with +5 XP
 - Changed: Berserker cannot fortify
-- Note: open: the new UA (needs C++)
+- Changed: new UA: all land units start with Amphibious I and pillage without spending movement; naval and embarked units may enter Ocean before Astronomy; new cities claim Fish within 2 tiles
+- Removed: +1 Movement for embarked units, the 1-movement disembark for every unit, civilians embarking for 1 movement
+- DLL: Traits.LekmodOceanWithoutAstronomy, LekmodFoundClaimResource/Range
 - DLL: UnitPromotions.NoFortify (promotion 382)
 - Dev: building ID 279 BUILDING_LEKMOD_RUNESTONE, icon art_sources/buildings/runestone
 
@@ -2452,7 +2458,10 @@ Tags: civs, units
 - Dev: rebuilt from the UNIT_MARATHI row (Sipahi model)
 - Changed: Serai: available at the Wheel, costs 60 (was 67), +1 Food per other Serai within 4 tiles, +3 Culture if no other Serai is within 5
 - Removed: Serai: Gold per population, airlift and air unit slot
-- Note: open: the Serai's faster border growth, the new UA (need C++)
+- Added: Serai: borders grow 15% faster while no other Serai is within 5 tiles
+- Changed: new UA Twin Courts: in the capital, Great Works and writer, artist and musician specialists +1 Culture +1 Gold, +10% Production towards buildings; in the second city, Great Works and those specialists +1 Science, Great Person improvements and world wonders +2 Science; both stay with their cities when captured
+- Removed: +15% Science, Culture and Gold and +5 Strength in the original capital
+- DLL: Building_LekmodLocalSpecialistYields, Traits.LekmodSecondCityBuilding (dummy 295, class 198), Buildings.LekmodIsolatedPlotCultureCostMod/Range
 
 OMAN (CIVILIZATION_OMAN)
 ------------------------

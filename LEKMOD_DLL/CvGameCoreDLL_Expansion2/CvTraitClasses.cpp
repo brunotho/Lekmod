@@ -2024,9 +2024,10 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 			"LekmodForestCityProductionMod", "LekmodForestCityCount", "LekmodForestCityFaithPerForest", "LekmodNaturalWonderFinderGoldPerEra",
 			"LekmodFoundCityRevealRadius", "LekmodFoundCityFreeUnitClass", "LekmodExpansionProduction", "LekmodCapitalProductionPerExpansion",
 			"LekmodStartMovesImprovement", "LekmodStartMovesImprovementChange", "LekmodNoTechBuild", "LekmodStartMovesRouteWorker",
-			"LekmodStartTurnFounderMoves", "LekmodStartMeleePromotion" };
+			"LekmodStartTurnFounderMoves", "LekmodStartMeleePromotion", "LekmodSecondCityBuilding", "LekmodOceanWithoutAstronomy",
+			"LekmodFoundClaimResource", "LekmodFoundClaimResourceRange", "LekmodTradeRouteReligionSpread", "LekmodReligiousEnemyTerritoryCombat" };
 		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false,
-			true, false, false, true };
+			true, false, false, true, true, false, true, false, false, false };
 		for (int i = 0; i < NUM_LEKMOD_TRAIT_INTS; i++)
 			m_aiLekmodTraitInts[i] = s_abType[i] ? GC.getInfoTypeForString(kResults.GetText(s_aszNames[i]), true) : kResults.GetInt(s_aszNames[i]);
 	}

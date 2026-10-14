@@ -1215,6 +1215,24 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bLekmodFreePlotPurchase = kResults.GetBool("FreePlotPurchase");
 #endif
 #ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	{
+		m_aLekmodLocalSpecialistYields.clear();
+		std::string strKey("Building_LekmodLocalSpecialistYields");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "select Specialists.ID, Yields.ID, Yield from Building_LekmodLocalSpecialistYields "
+				"inner join Specialists on Specialists.Type = SpecialistType inner join Yields on Yields.Type = YieldType where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+			m_aLekmodLocalSpecialistYields.push_back(std::make_pair(pResults->GetInt(0), std::make_pair(pResults->GetInt(1), pResults->GetInt(2))));
+		pResults->Reset();
+	}
+	m_bLekmodSpreadCapitalReligionOnBuild = kResults.GetBool("LekmodSpreadCapitalReligionOnBuild");
+	m_iLekmodStartTurnMovesAround = kResults.GetInt("LekmodStartTurnMovesAround");
+	m_iLekmodIsolatedPlotCultureCostMod = kResults.GetInt("LekmodIsolatedPlotCultureCostMod");
+	m_iLekmodIsolatedRange = kResults.GetInt("LekmodIsolatedRange");
 	m_iLekmodTimedBuilding = GC.getInfoTypeForString(kResults.GetText("LekmodTimedBuilding"), true);
 	m_iLekmodTimedBuildingTurns = kResults.GetInt("LekmodTimedBuildingTurns");
 	m_iLekmodWLTKDTurnsOnBuild = kResults.GetInt("LekmodWLTKDTurnsOnBuild");
@@ -3399,6 +3417,30 @@ const std::vector<LekmodBuildingPlotYield>& CvBuildingEntry::GetLekmodPlotYields
 }
 #endif
 #ifdef LEKMOD_CITY_TIMED_BUILDINGS
+/// Yields of specialists in this city only (Building_LekmodLocalSpecialistYields: Timurids' Twin Courts)
+const std::vector<std::pair<int, std::pair<int, int> > >& CvBuildingEntry::GetLekmodLocalSpecialistYields() const
+{
+	return m_aLekmodLocalSpecialistYields;
+}
+/// When built, spread the capital's religion here like a Great Prophet (Outremer)
+bool CvBuildingEntry::IsLekmodSpreadCapitalReligionOnBuild() const
+{
+	return m_bLekmodSpreadCapitalReligionOnBuild;
+}
+/// Units starting the turn in or next to the city get extra moves (Outremer's 1-turn dummy)
+int CvBuildingEntry::GetLekmodStartTurnMovesAround() const
+{
+	return m_iLekmodStartTurnMovesAround;
+}
+/// % plot culture cost while no other building of this class of the owner is within GetLekmodIsolatedRange() (Serai)
+int CvBuildingEntry::GetLekmodIsolatedPlotCultureCostMod() const
+{
+	return m_iLekmodIsolatedPlotCultureCostMod;
+}
+int CvBuildingEntry::GetLekmodIsolatedRange() const
+{
+	return m_iLekmodIsolatedRange;
+}
 /// A dummy building the city gets for GetLekmodTimedBuildingTurns() (standard speed) turns after this one is built (Jongmyo: Jaegye)
 int CvBuildingEntry::GetLekmodTimedBuilding() const
 {
