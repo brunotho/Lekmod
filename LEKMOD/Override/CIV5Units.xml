@@ -43298,7 +43298,10 @@
 		<Column name="ExecuteCaughtSpies" type="boolean" default="false" /> <!-- LEKMOD: spies caught by the owner are executed without the Execute/Evict choice (Kremlin) -->
 		<Column name="BlockForeignSpies" type="boolean" default="false" /> <!-- LEKMOD: other civs' spies and diplomats are sent home from this city and can't enter it (Great Firewall) -->
 		<Column name="FastSpyEstablish" type="boolean" default="false" /> <!-- LEKMOD: the owner's spies and diplomats are established when they arrive (Ministry of Truth) -->
-		<Column name="DemographicsBlackout" type="boolean" default="false" /> <!-- LEKMOD: other players see BLACKOUT in the Demographics (Ministry of Truth) -->
+		<Column name="DemographicsBlackout" type="boolean" default="false" />
+		<Column name="SpyReviveTurnsChange" type="integer" default="0" /> <!-- LEKMOD: dead spies return this many turns sooner (MI6: -1) -->
+		<Column name="StolenScienceGold" type="boolean" default="false" /> <!-- LEKMOD: Science stolen by spies is also paid out as Gold (MI6) -->
+		<Column name="CoupGoldPerEra" type="integer" default="0" /> <!-- LEKMOD: Gold x (era + 1) for the first successful coup in each City-State (MI6) --> <!-- LEKMOD: other players see BLACKOUT in the Demographics (Ministry of Truth) -->
 		<Column name="ExtraWorldLeaderVote" type="boolean" default="false" /> <!-- LEKMOD: when built, an extra World Leader vote 2 turns later (Extraordinary Session) -->
 		<Column name="GoldenAgePopulationChange" type="integer" default="0" /> <!-- LEKMOD: city population change when the owner starts a golden age (never below 1) --> <!-- LEKMOD: one-time influence with the closest coastal city-state at peace, when built -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0" /> <!-- LEKMOD: % more yield from great works held in this building (Museum) -->
@@ -289297,4 +289300,121 @@
 			<Set LekmodTradeRecipientGoldPerEra="2" LekmodInternalTradePerPartnerMod="50"/>
 		</Update>
 	</Buildings>
+	<!-- LEKMOD: England MI6 (2026-10-14): National Intelligence Agency replacement (building 299) -->
+	<Buildings>
+		<Row>
+			<ID>299</ID>
+			<Type>BUILDING_LEKMOD_MI6</Type>
+			<Description>TXT_KEY_BUILDING_LEKMOD_MI6</Description>
+			<Civilopedia>TXT_KEY_BUILDING_INTELLIGENCE_AGENCY_TEXT</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_INTELLIGENCE_AGENCY_STRATEGY</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_MI6_HELP</Help>
+			<NeverCapture>1</NeverCapture>
+			<NukeImmune>1</NukeImmune>
+			<Cost>125</Cost>
+			<NumCityCostMod>30</NumCityCostMod>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<Espionage>1</Espionage>
+			<GlobalEspionageModifier>-15</GlobalEspionageModifier>
+			<ExtraSpies>1</ExtraSpies>
+			<SpyRankChange>1</SpyRankChange>
+			<InstantSpyRankChange>1</InstantSpyRankChange>
+			<BuildingClass>BUILDINGCLASS_INTELLIGENCE_AGENCY</BuildingClass>
+			<ArtDefineTag>ART_DEF_BUILDING_INTELLIGENCE_AGENCY</ArtDefineTag>
+			<PrereqTech>TECH_RADIO</PrereqTech>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_MI6_ATLAS</IconAtlas>
+			<SpyReviveTurnsChange>-1</SpyReviveTurnsChange>
+			<StolenScienceGold>true</StolenScienceGold>
+			<CoupGoldPerEra>150</CoupGoldPerEra>
+		</Row>
+	</Buildings>
+	<Building_ClassesNeededInCity>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MI6</BuildingType>
+			<BuildingClassType>BUILDINGCLASS_CONSTABLE</BuildingClassType>
+		</Row>
+	</Building_ClassesNeededInCity>
+	<Building_PrereqBuildingClasses>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MI6</BuildingType>
+			<BuildingClassType>BUILDINGCLASS_CONSTABLE</BuildingClassType>
+			<NumBuildingNeeded>-1</NumBuildingNeeded>
+		</Row>
+	</Building_PrereqBuildingClasses>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MI6</BuildingType>
+			<FlavorType>FLAVOR_SCIENCE</FlavorType>
+			<Flavor>50</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MI6</BuildingType>
+			<FlavorType>FLAVOR_DIPLOMACY</FlavorType>
+			<Flavor>50</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MI6</BuildingType>
+			<FlavorType>FLAVOR_ESPIONAGE</FlavorType>
+			<Flavor>10</Flavor>
+		</Row>
+	</Building_Flavors>
+	<Civilization_BuildingClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_ENGLAND</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_INTELLIGENCE_AGENCY</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_MI6</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<IconTextureAtlases>
+		<Row>
+			<Atlas>LEKMOD_MI6_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>mi6_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MI6_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>mi6_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MI6_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>mi6_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MI6_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>mi6_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MI6_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>mi6_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MI6_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>mi6_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_MI6_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>mi6_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+	</IconTextureAtlases>
 </GameData>

@@ -1420,6 +1420,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iLekmodGoldGreatPeoplePurchased = 0;
 	m_iLekmodCivFlags = 0;
 	m_iLekmodFirstPledgeMinor = -1;
+	m_iLekmodCoupGoldUsed0 = 0;
+	m_iLekmodCoupGoldUsed1 = 0;
 #endif
 	m_iLekmodGoodyForcedRoll = -1;
 	m_iLekmodGoodyPay = -1;
@@ -31350,6 +31352,8 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iLekmodGoldGreatPeoplePurchased;
 	kStream >> m_iLekmodCivFlags;
 	kStream >> m_iLekmodFirstPledgeMinor;
+	kStream >> m_iLekmodCoupGoldUsed0;
+	kStream >> m_iLekmodCoupGoldUsed1;
 	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
 #endif
 #endif
@@ -31933,6 +31937,8 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iLekmodGoldGreatPeoplePurchased;
 	kStream << m_iLekmodCivFlags;
 	kStream << m_iLekmodFirstPledgeMinor;
+	kStream << m_iLekmodCoupGoldUsed0;
+	kStream << m_iLekmodCoupGoldUsed1;
 #endif
 #endif
 }

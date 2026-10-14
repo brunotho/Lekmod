@@ -280,7 +280,15 @@ void CvPlayerEspionage::DoTurn()
 				{
 					if (m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() > 0)
 					{
+#ifdef LEKMOD_SPY_WONDERS
+						const int iLekmodStolen = std::min(m_pPlayer->GetPlayerTechs()->GetResearchCost(eTech) - kTeam.GetTeamTechs()->GetResearchProgress(eTech), m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom][m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() - 1]);
+						kTeam.GetTeamTechs()->ChangeResearchProgress(eTech, iLekmodStolen, m_pPlayer->GetID());
+						// MI6: the same amount as Gold
+						if (iLekmodStolen > 0 && LekmodPlayerBuildingValue(m_pPlayer->GetID(), LSB_STOLEN_SCIENCE_GOLD) > 0)
+							m_pPlayer->GetTreasury()->ChangeGold(iLekmodStolen);
+#else
 						kTeam.GetTeamTechs()->ChangeResearchProgress(eTech, std::min(m_pPlayer->GetPlayerTechs()->GetResearchCost(eTech) - kTeam.GetTeamTechs()->GetResearchProgress(eTech), m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom][m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() - 1]), m_pPlayer->GetID());
+#endif
 					}
 				}
 				if (m_pPlayer->GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() > 0)
@@ -1068,7 +1076,11 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 			return; // captured, waiting for the defender's choice
 #endif
 		pSpy->m_iReviveCounter++;
+#ifdef LEKMOD_SPY_WONDERS
+		if(pSpy->m_iReviveCounter >= std::max(1, iSpyTurnsToRevive + LekmodPlayerBuildingValue(m_pPlayer->GetID(), LSB_REVIVE_TURNS)))
+#else
 		if(pSpy->m_iReviveCounter >= iSpyTurnsToRevive)
+#endif
 		{
 			pSpy->m_iName = GetNextSpyName();
 #ifdef AUI_YIELDS_APPLIED_AFTER_TURN_NOT_BEFORE
@@ -2111,6 +2123,9 @@ int CvPlayerEspionage::LekmodPlayerBuildingValue(PlayerTypes ePlayer, LekmodSpyB
 		case LSB_EXECUTE_CAUGHT: iValue = pkBuilding->IsExecuteCaughtSpies() ? 1 : 0; break;
 		case LSB_FAST_ESTABLISH: iValue = pkBuilding->IsFastSpyEstablish() ? 1 : 0; break;
 		case LSB_DEMOGRAPHICS_BLACKOUT: iValue = pkBuilding->IsDemographicsBlackout() ? 1 : 0; break;
+		case LSB_REVIVE_TURNS: iValue = pkBuilding->GetSpyReviveTurnsChange(); break;
+		case LSB_STOLEN_SCIENCE_GOLD: iValue = pkBuilding->IsStolenScienceGold() ? 1 : 0; break;
+		case LSB_COUP_GOLD_PER_ERA: iValue = pkBuilding->GetCoupGoldPerEra(); break;
 		}
 		if (iValue != 0)
 			iTotal += iValue * kPlayer.countNumBuildings((BuildingTypes)iBuilding);
@@ -3083,6 +3098,17 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 		}
 
 		bAttemptSuccess = true;
+#ifdef LEKMOD_SPY_WONDERS
+		// MI6: Gold x (era + 1) for the first successful coup in each City-State
+		{
+			const int iCoupGold = LekmodPlayerBuildingValue(m_pPlayer->GetID(), LSB_COUP_GOLD_PER_ERA);
+			if (iCoupGold > 0 && !m_pPlayer->IsLekmodCoupGoldUsed(eCityOwner))
+			{
+				m_pPlayer->SetLekmodCoupGoldUsed(eCityOwner);
+				m_pPlayer->GetTreasury()->ChangeGold(iCoupGold * (GET_TEAM(m_pPlayer->getTeam()).GetCurrentEra() + 1));
+			}
+		}
+#endif
 	}
 	else
 	{

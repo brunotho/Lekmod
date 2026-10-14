@@ -2321,7 +2321,8 @@ Tags: civs, units
 - Added: Fulling Mill, a unique Water Mill: Sheep, Cotton, Dyes and Silk next to the city yield +1 Production
 - Added: start bias towards rivers (coast already)
 - Added: the first Political Treatise of a Great Writer gives double Culture
-- Note: open: MI6 (needs C++; its icon is built)
+- Added: MI6 (unique National Intelligence Agency): a dead Spy is replaced 1 turn sooner; Science stolen by your spies also gives the same amount of Gold; the first successful coup in each City-State gives 150 Gold per era (150 in the Ancient Era)
+- DLL: Buildings.SpyReviveTurnsChange, StolenScienceGold, CoupGoldPerEra; saved player fields m_iLekmodCoupGoldUsed0/1 (building 299)
 - DLL: Traits.LekmodFirstWriterDouble; saved player flags m_iLekmodCivFlags
 - DLL: Building_AdjacentCityPlotYieldChanges (yields on tiles next to the city); building ID 282
 

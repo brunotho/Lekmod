@@ -321,6 +321,9 @@ public:
 	bool IsBlockForeignSpies() const { return m_bLekmodBlockForeignSpies; }
 	bool IsFastSpyEstablish() const { return m_bLekmodFastSpyEstablish; }
 	bool IsDemographicsBlackout() const { return m_bLekmodDemographicsBlackout; }
+	int GetSpyReviveTurnsChange() const { return m_iLekmodSpyReviveTurnsChange; }
+	bool IsStolenScienceGold() const { return m_bLekmodStolenScienceGold; }
+	int GetCoupGoldPerEra() const { return m_iLekmodCoupGoldPerEra; }
 	bool IsExtraWorldLeaderVote() const { return m_bLekmodExtraWorldLeaderVote; }
 #endif
 	const std::vector<LekmodFreshWaterImprovementYield>& GetLekmodFreshWaterImprovementYields() const { return m_aLekmodFreshWaterImprovementYields; }
@@ -728,6 +731,9 @@ private:
 	bool m_bLekmodBlockForeignSpies;
 	bool m_bLekmodFastSpyEstablish;
 	bool m_bLekmodDemographicsBlackout;
+	int m_iLekmodSpyReviveTurnsChange; // MI6: dead spies return this many turns sooner (negative)
+	bool m_bLekmodStolenScienceGold; // MI6: stolen Science also paid out as Gold
+	int m_iLekmodCoupGoldPerEra; // MI6: Gold x (era + 1) for the first successful coup in each City-State
 	bool m_bLekmodExtraWorldLeaderVote;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL

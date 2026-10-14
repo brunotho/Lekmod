@@ -129,6 +129,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_bLekmodBlockForeignSpies(false),
 	m_bLekmodFastSpyEstablish(false),
 	m_bLekmodDemographicsBlackout(false),
+	m_iLekmodSpyReviveTurnsChange(0),
+	m_bLekmodStolenScienceGold(false),
+	m_iLekmodCoupGoldPerEra(0),
 	m_bLekmodExtraWorldLeaderVote(false),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
@@ -553,6 +556,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bLekmodBlockForeignSpies = kResults.GetBool("BlockForeignSpies");
 	m_bLekmodFastSpyEstablish = kResults.GetBool("FastSpyEstablish");
 	m_bLekmodDemographicsBlackout = kResults.GetBool("DemographicsBlackout");
+	m_iLekmodSpyReviveTurnsChange = kResults.GetInt("SpyReviveTurnsChange");
+	m_bLekmodStolenScienceGold = kResults.GetBool("StolenScienceGold");
+	m_iLekmodCoupGoldPerEra = kResults.GetInt("CoupGoldPerEra");
 	m_bLekmodExtraWorldLeaderVote = kResults.GetBool("ExtraWorldLeaderVote");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL

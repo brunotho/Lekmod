@@ -214,7 +214,7 @@ public:
 	int LekmodGetSweepCost(CvCity* pCity);
 	bool LekmodDoSweep(CvCity* pCity);
 #ifdef LEKMOD_SPY_WONDERS
-	enum LekmodSpyBuildingStat { LSB_STEAL_SLOWER, LSB_GUARD_LEVEL, LSB_EXECUTE_CAUGHT, LSB_FAST_ESTABLISH, LSB_DEMOGRAPHICS_BLACKOUT };
+	enum LekmodSpyBuildingStat { LSB_STEAL_SLOWER, LSB_GUARD_LEVEL, LSB_EXECUTE_CAUGHT, LSB_FAST_ESTABLISH, LSB_DEMOGRAPHICS_BLACKOUT, LSB_REVIVE_TURNS, LSB_STOLEN_SCIENCE_GOLD, LSB_COUP_GOLD_PER_ERA };
 	static int LekmodPlayerBuildingValue(PlayerTypes ePlayer, LekmodSpyBuildingStat eStat);
 	static bool LekmodCityBlocksSpies(CvCity* pCity);
 	static int LekmodGetStealSlower(CvCity* pCity, LekmodParts* pParts = NULL);

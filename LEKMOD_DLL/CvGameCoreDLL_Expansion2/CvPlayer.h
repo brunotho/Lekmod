@@ -291,6 +291,8 @@ public:
 	void SetLekmodCivFlag(int iFlag) { m_iLekmodCivFlags |= iFlag; }
 	int GetLekmodFirstPledgeMinor() const { return m_iLekmodFirstPledgeMinor; }
 	void SetLekmodFirstPledgeMinor(int iMinor) { m_iLekmodFirstPledgeMinor = iMinor; }
+	bool IsLekmodCoupGoldUsed(PlayerTypes eMinor) const { const int i = (int)eMinor - MAX_MAJOR_CIVS; if (i < 0 || i >= 64) return true; return ((i < 32 ? m_iLekmodCoupGoldUsed0 : m_iLekmodCoupGoldUsed1) & (1 << (i % 32))) != 0; }
+	void SetLekmodCoupGoldUsed(PlayerTypes eMinor) { const int i = (int)eMinor - MAX_MAJOR_CIVS; if (i < 0 || i >= 64) return; if (i < 32) m_iLekmodCoupGoldUsed0 |= (1 << i); else m_iLekmodCoupGoldUsed1 |= (1 << (i - 32)); }
 	void SetLekmodIdeologyTurn(int iTurn) { m_iLekmodIdeologyTurn = iTurn; }
 #endif
 #endif
@@ -2450,6 +2452,8 @@ protected:
 	int m_iLekmodGoldGreatPeoplePurchased; // Great People bought with Gold (Policy_GoldPurchaseUnitClasses)
 	int m_iLekmodCivFlags; // one-time civ events (LEKMOD_CIV_FLAG_*)
 	int m_iLekmodFirstPledgeMinor; // first City-State pledged to (Tonga): -1 none yet, -2 lost by war
+	int m_iLekmodCoupGoldUsed0; // MI6 coup Gold already paid: bit per City-State (minor index 0-31)
+	int m_iLekmodCoupGoldUsed1; // minor index 32-63
 #endif
 	std::vector<int> m_aiGreatWorkYieldChange;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)

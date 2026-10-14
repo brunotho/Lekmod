@@ -148116,6 +148116,13 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_HANSE_HELP">
 			<Text>Replaces the Bank. +5% [ICON_PRODUCTION] Production for each Trade Route your civilization has with a City-State.[NEWLINE]Trade routes other players make to a city with a Hanse will generate an extra 1 [ICON_GOLD] Gold for the city owner and the trade route owner gains an additional 1 [ICON_GOLD] Gold for the trade route.[NEWLINE][NEWLINE]Whoever receives a [ICON_INTERNATIONAL_TRADE] Trade Route from this city gets +2 [ICON_GOLD] Gold per Era (2 in the Ancient Era).[NEWLINE][NEWLINE][ICON_INTERNATIONAL_TRADE] Trade Routes from this city to your own cities yield +50% for each foreign civilization or City-State that receives a Trade Route from one of your cities with a Hanse.</Text>
 		</Replace>
+		<!-- LEKMOD: England MI6 (2026-10-14) -->
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_MI6">
+			<Text>MI6</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_MI6_HELP">
+			<Text>[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]Replaces the National Intelligence Agency.[NEWLINE]Provides an additional spy and levels up all your existing spies.[NEWLINE]Also provides a 15% reduction in enemy spy effectiveness.[NEWLINE]Must have a Constabulary in all cities.[NEWLINE][NEWLINE]A dead [ICON_SPY] Spy is replaced 1 turn sooner.[NEWLINE][NEWLINE][ICON_RESEARCH] Science stolen by your spies also gives the same amount of [ICON_GOLD] Gold.[NEWLINE][NEWLINE]The first successful coup in each [ICON_CITY_STATE] City-State gives 150 [ICON_GOLD] Gold per Era (150 in the Ancient Era, 300 in the Classical Era, ...).</Text>
+		</Row>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>
