@@ -2496,6 +2496,7 @@ Tags: civs, units
 - Removed: +15% Science, Culture and Gold and +5 Strength in the original capital
 - DLL: Building_LekmodLocalSpecialistYields, Traits.LekmodSecondCityBuilding (dummy 295, class 198), Traits.LekmodFirstCityBuilding (the capital court BUILDING_ULUG), Buildings.LekmodIsolatedPlotCultureCostMod/Range
 - Dev: the capital court was first given by the Lua dummy script, which removed it from a captured capital; now a real building of the first city
+- Dev: the UA's name Twin Courts is now its title (was the first words of the description; user, 2026-10-14)
 
 OMAN (CIVILIZATION_OMAN)
 ------------------------
@@ -2558,7 +2559,7 @@ Tags: civs, units, buildings, air
 - Removed: Burj Al Arab: yields on Great Person improvements, desert and natural wonder tiles
 - Changed: new UA: founding the capital and the second city places Pearls on the closest free Coast tile; may trade strategic resources; Oil is revealed with Archaeology, which also places an Oil node (8) in the capital; from the Modern Era luxury tiles -2 Gold (not below 0) and cities +30% Gold
 - Removed: the old UA (Gold from trade routes, wonder bonuses)
-- Added: Desert Falcon, a unique Jet Fighter: needs only 1 Aluminum, starts with Range (+2), Charge and Evasion I, upgrades to the Stealth Bomber
+- Added: Desert Falcon, a unique Jet Fighter: needs only 1 Aluminum, starts with Range (+2), Charge and Evasion (-50% damage when intercepted), upgrades to the Stealth Bomber
 - DLL: Traits.LekmodFoundWaterResource*, LekmodStrategicTrade, LekmodTechReveal*, LekmodEra*; unit 275
 
 CUBA (CIVILIZATION_CUBA)

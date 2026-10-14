@@ -139717,7 +139717,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_ULUG_SHORT"> 
 			<Text>
-				Ulugh Beg's Observatory
+				Twin Courts
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_VATICAN"> 
@@ -148040,7 +148040,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>In enemy lands of your faith: {1_Num}%</Text>
 		</Row>
 		<Replace Tag="TXT_KEY_TRAIT_ULUG">
-			<Text>Twin Courts.[NEWLINE][NEWLINE]In the [ICON_CAPITAL] Capital: Great Works and Writer, Artist and Musician specialists yield +1 [ICON_CULTURE] Culture and +1 [ICON_GOLD] Gold; +10% [ICON_PRODUCTION] Production towards buildings.[NEWLINE][NEWLINE]In your second city: Great Works and Writer, Artist and Musician specialists yield +1 [ICON_RESEARCH] Science; Great Person improvements and World Wonders +2 [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]Both courts stay with their cities, also when they are captured.</Text>
+			<Text>In the [ICON_CAPITAL] Capital: Great Works and Writer, Artist and Musician specialists yield +1 [ICON_CULTURE] Culture and +1 [ICON_GOLD] Gold; +10% [ICON_PRODUCTION] Production towards buildings.[NEWLINE][NEWLINE]In your second city: Great Works and Writer, Artist and Musician specialists yield +1 [ICON_RESEARCH] Science; Great Person improvements and World Wonders +2 [ICON_RESEARCH] Science.[NEWLINE][NEWLINE]Both courts stay with their cities, also when they are captured.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_SERAI_HELP">
 			<Text>Replaces the Caravansary. Available at the Wheel and cheaper.[NEWLINE]+2 [ICON_GOLD] Gold; Caravans from this city reach 50% farther and give +2 [ICON_GOLD] Gold to international routes.[NEWLINE][NEWLINE]+1 [ICON_FOOD] Food for every other Serai of yours within 4 tiles.[NEWLINE]If no other Serai of yours is within 5 tiles: +3 [ICON_CULTURE] Culture and borders grow 15% faster.</Text>
@@ -148136,7 +148136,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Desert Falcon</Text>
 		</Row>
 		<Row Tag="TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_HELP">
-			<Text>Replaces the Jet Fighter. Needs only 1 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE]Starts with Range (+2), Charge and Evasion I (50% chance to avoid interception).[NEWLINE]Upgrades to the Stealth Bomber.</Text>
+			<Text>Replaces the Jet Fighter. Needs only 1 [ICON_RES_ALUMINUM] Aluminum.[NEWLINE]Starts with Range (+2), Charge and Evasion (-50% damage when intercepted).[NEWLINE]Upgrades to the Stealth Bomber.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_UNIT_LEKMOD_DESERT_FALCON_PEDIA">
 			<Text>The U.A.E.'s unique Jet Fighter: longer range, stronger against wounded units and harder to intercept.</Text>

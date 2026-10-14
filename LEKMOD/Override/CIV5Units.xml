@@ -290468,7 +290468,7 @@
 		</Row>
 		<Row>
 			<UnitType>UNIT_LEKMOD_DESERT_FALCON</UnitType>
-			<PromotionType>PROMOTION_EVASION_I</PromotionType>
+			<PromotionType>PROMOTION_EVASION</PromotionType>
 		</Row>
 	</Unit_FreePromotions>
 	<Unit_ResourceQuantityRequirements>
