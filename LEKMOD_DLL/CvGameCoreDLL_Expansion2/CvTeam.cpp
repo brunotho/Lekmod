@@ -6998,6 +6998,19 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 			kPlayer.GetPlayerTraits()->InitPlayerTraits();
 			kPlayer.recomputePolicyCostModifier();
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+			// Trait_LekmodFreeUnits: more free units at this tech (Oman: Worker and Baghlah at Sailing)
+			{
+				std::vector<int> aiLekmodFreeClasses;
+				kPlayer.GetPlayerTraits()->LekmodGetFreeUnitsForTech(eTech, aiLekmodFreeClasses);
+				for (uint iFree = 0; iFree < aiLekmodFreeClasses.size(); iFree++)
+				{
+					const UnitTypes eFreeUnit = (UnitTypes)kPlayer.getCivilizationInfo().getCivilizationUnits(aiLekmodFreeClasses[iFree]);
+					if (eFreeUnit != NO_UNIT && kPlayer.getCapitalCity() != NULL)
+						kPlayer.addFreeUnit(eFreeUnit, (UnitAITypes)GC.GetGameUnits()->GetEntry(eFreeUnit)->GetDefaultUnitAIType());
+				}
+			}
+#endif
 			// Does our trait give us a new unit when we reach this tech?
 			UnitTypes eLoopUnit;
 			int iDefaultAI;

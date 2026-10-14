@@ -1893,6 +1893,20 @@ void CvPlayer::initFreeUnits(CvGameInitialItemsOverrides& /*kOverrides*/)
 	if(iFreeCount > 0 && !isMinorCiv())
 		addFreeUnitAI(UNITAI_DEFENSE, iFreeCount);
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Sioux: starting melee units get a promotion (Scouting I)
+	{
+		const int eStartPromotion = GetPlayerTraits()->GetLekmodTraitType(LTI_START_MELEE_PROMOTION);
+		const UnitCombatTypes eMelee = (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_MELEE", true);
+		if (eStartPromotion != -1)
+		{
+			int iUnitLoop;
+			for (CvUnit* pStartUnit = firstUnit(&iUnitLoop); pStartUnit != NULL; pStartUnit = nextUnit(&iUnitLoop))
+				if (pStartUnit->getUnitCombatType() == eMelee)
+					pStartUnit->setHasPromotion((PromotionTypes)eStartPromotion, true);
+		}
+	}
+#endif
 	// Worker units
 	iFreeCount = gameStartEra.getStartingWorkerUnits();
 	iFreeCount += playerHandicap.getStartingWorkerUnits();
@@ -6034,6 +6048,20 @@ void CvPlayer::DoUnitReset()
 			{
 				pLoopUnit->changeMoves(GetPlayerTraits()->GetLekmodTraitInt(LTI_START_MOVES_IMPROVEMENT_CHANGE) * GC.getMOVE_DENOMINATOR());
 			}
+		}
+		// Maurya: workers starting the turn on a road or railroad
+		if (pLoopUnit->getUnitInfo().GetWorkRate() > 0 && !pLoopUnit->IsCombatUnit() && pLoopUnit->plot() && pLoopUnit->plot()->getRouteType() != NO_ROUTE && !pLoopUnit->plot()->IsRoutePillaged())
+		{
+			const int iRouteMoves = GetPlayerTraits()->GetLekmodTraitInt(LTI_START_MOVES_ROUTE_WORKER);
+			if (iRouteMoves != 0)
+				pLoopUnit->changeMoves(iRouteMoves * GC.getMOVE_DENOMINATOR());
+		}
+		// Sioux: city founders on the first turn
+		if (pLoopUnit->isFound() && GC.getGame().getGameTurn() == GC.getGame().getStartTurn())
+		{
+			const int iFounderMoves = GetPlayerTraits()->GetLekmodTraitInt(LTI_START_TURN_FOUNDER_MOVES);
+			if (iFounderMoves != 0)
+				pLoopUnit->changeMoves(iFounderMoves * GC.getMOVE_DENOMINATOR());
 		}
 #endif
 #endif
@@ -10486,7 +10514,13 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 		}
 	}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// trait: another tech for this building class (Oman: Harbor at Optics, Seaport at Compass)
+	const int eLekmodClassTech = GetPlayerTraits()->GetLekmodBuildingClassTech((BuildingClassTypes)pBuildingInfo.GetBuildingClassType());
+	if(eLekmodClassTech != -1 ? !currentTeam.GetTeamTechs()->HasTech((TechTypes)eLekmodClassTech) : !(currentTeam.GetTeamTechs()->HasTech((TechTypes)(pBuildingInfo.GetPrereqAndTech()))))
+#else
 	if(!(currentTeam.GetTeamTechs()->HasTech((TechTypes)(pBuildingInfo.GetPrereqAndTech()))))
+#endif
 	{
 		return false;
 	}
@@ -12139,7 +12173,11 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 	if (!pBuildInfo)
 		return false;
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if (pBuildInfo->getTechPrereq() != NO_TECH && GetPlayerTraits()->GetLekmodTraitType(LTI_NO_TECH_BUILD) != (int)eBuild)
+#else
 	if (pBuildInfo->getTechPrereq() != NO_TECH)
+#endif
 	{
 		if (!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)pBuildInfo->getTechPrereq())))
 		{

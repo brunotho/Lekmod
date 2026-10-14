@@ -1233,6 +1233,9 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 #if defined(LEKMOD_BUILDING_EXCESS_GROWTH)
 	m_iExcessGrowthModifier = 0;
 #endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	m_aLekmodTimedBuildings.clear();
+#endif
 	m_iOverflowProduction = 0;
 	m_iFeatureProduction = 0;
 	m_iMilitaryProductionModifier = 0;
@@ -2205,6 +2208,9 @@ void CvCity::doTurn()
 {
 #ifdef LEKMOD_POLICY_REWORK
 	LekmodUpdatePolicyFreeBuildings();
+#endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	LekmodDoTimedBuildings();
 #endif
 #ifdef AUI_PERF_LOGGING_FORMATTING_TWEAKS
 	AI_PERF_FORMAT("City-AI-perf.csv", ("CvCity::doTurn, Turn %03d, %s, %s", GC.getGame().getElapsedGameTurns(), GetPlayer()->getCivilizationShortDescription(), getName().c_str()));
@@ -3593,7 +3599,11 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 			continue;
 		}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		if(pkBuildingInfo->IsBuildingClassNeededInCity(iI) && !GET_PLAYER(getOwner()).GetPlayerTraits()->IsLekmodBuildingNoClassesNeeded((BuildingClassTypes)pkBuildingInfo->GetBuildingClassType()))
+#else
 		if(pkBuildingInfo->IsBuildingClassNeededInCity(iI))
+#endif
 		{
 			ePrereqBuilding = ((BuildingTypes)(thisCivInfo.getCivilizationBuildings(iI)));
 
@@ -5049,6 +5059,9 @@ void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
 	}
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	GET_PLAYER(getOwner()).GetPlayerTraits()->LekmodApplyTrainedUnitEffects(this, pUnit);
+#endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	LekmodOnUnitTrained(pUnit);
 #endif
 #ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
 	{
@@ -8977,6 +8990,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		m_pCityBuildings->ChangeBuildingDefense(pBuildingInfo->GetDefenseModifier() * iChange);
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 		m_pCityBuildings->ChangeBuildingDefense(GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodBuildingClassDefense((BuildingClassTypes)pBuildingInfo->GetBuildingClassType()) * iChange);
+#endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+		if (iChange > 0)
+			LekmodOnBuildingAdded(pBuildingInfo);
 #endif
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS) // Add the garrison strength bonus NOTE: this is not inside of a if(GetGarrisonedUnit()) since that would make it only apply if the city is garrisoned on construction
 		m_pCityBuildings->ChangeGarrisonStrengthBonus(pBuildingInfo->GetGarrisonStrengthBonus() * iChange);
@@ -15465,6 +15482,71 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 }
 #endif
 
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+//	--------------------------------------------------------------------------------
+/// A building was added: start its timed dummy building and/or We Love the King Day (turn columns are standard speed)
+void CvCity::LekmodOnBuildingAdded(const CvBuildingEntry* pkBuilding)
+{
+	if (pkBuilding == NULL)
+		return;
+	const int iSpeed = GC.getGame().getGameSpeedInfo().getTrainPercent();
+	if (pkBuilding->GetLekmodTimedBuilding() != -1 && pkBuilding->GetLekmodTimedBuildingTurns() > 0)
+	{
+		const BuildingTypes eTimed = (BuildingTypes)pkBuilding->GetLekmodTimedBuilding();
+		const int iTurns = std::max(1, pkBuilding->GetLekmodTimedBuildingTurns() * iSpeed / 100);
+		bool bFound = false;
+		for (uint i = 0; i < m_aLekmodTimedBuildings.size(); i++)
+		{
+			if (m_aLekmodTimedBuildings[i].first == (int)eTimed)
+			{
+				m_aLekmodTimedBuildings[i].second = std::max(m_aLekmodTimedBuildings[i].second, iTurns);
+				bFound = true;
+			}
+		}
+		if (!bFound)
+			m_aLekmodTimedBuildings.push_back(std::make_pair((int)eTimed, iTurns));
+		if (m_pCityBuildings->GetNumRealBuilding(eTimed) <= 0)
+			m_pCityBuildings->SetNumRealBuilding(eTimed, 1);
+	}
+	if (pkBuilding->GetLekmodWLTKDTurnsOnBuild() > 0)
+	{
+		const int iTurns = std::max(1, pkBuilding->GetLekmodWLTKDTurnsOnBuild() * iSpeed / 100);
+		if (GetWeLoveTheKingDayCounter() < iTurns)
+			SetWeLoveTheKingDayCounter(iTurns);
+	}
+}
+/// Count down the timed dummy buildings; remove them when their time is up
+void CvCity::LekmodDoTimedBuildings()
+{
+	for (int i = (int)m_aLekmodTimedBuildings.size() - 1; i >= 0; i--)
+	{
+		m_aLekmodTimedBuildings[i].second--;
+		if (m_aLekmodTimedBuildings[i].second <= 0)
+		{
+			const BuildingTypes eTimed = (BuildingTypes)m_aLekmodTimedBuildings[i].first;
+			m_aLekmodTimedBuildings.erase(m_aLekmodTimedBuildings.begin() + i);
+			if (eTimed != NO_BUILDING && m_pCityBuildings->GetNumRealBuilding(eTimed) > 0)
+				m_pCityBuildings->SetNumRealBuilding(eTimed, 0);
+		}
+	}
+}
+/// A unit was trained here: stack dummy buildings for military units (not recon; Dojo)
+void CvCity::LekmodOnUnitTrained(const CvUnit* pUnit)
+{
+	if (pUnit == NULL || !pUnit->IsCombatUnit() || pUnit->getUnitCombatType() == (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_RECON", true))
+		return;
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding == NULL || pkBuilding->GetLekmodTrainedUnitStackBuilding() == -1 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
+			continue;
+		const BuildingTypes eStack = (BuildingTypes)pkBuilding->GetLekmodTrainedUnitStackBuilding();
+		const int iHave = m_pCityBuildings->GetNumRealBuilding(eStack);
+		if (iHave < pkBuilding->GetLekmodTrainedUnitStackMax())
+			m_pCityBuildings->SetNumRealBuilding(eStack, iHave + 1);
+	}
+}
+#endif
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 //	--------------------------------------------------------------------------------
 /// Adjacent unimproved forest tiles once the owner's forest city rules are active (Celts); -1 when they are not
@@ -19108,7 +19190,11 @@ bool CvCity::IsCanPurchase(bool bTestPurchaseCost, bool bTestTrainable, UnitType
 					continue;
 				}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				if(pkBuildingInfo->IsBuildingClassNeededInCity(iI) && !GET_PLAYER(getOwner()).GetPlayerTraits()->IsLekmodBuildingNoClassesNeeded((BuildingClassTypes)pkBuildingInfo->GetBuildingClassType()))
+#else
 				if(pkBuildingInfo->IsBuildingClassNeededInCity(iI))
+#endif
 				{
 					CvCivilizationInfo& thisCivInfo = getCivilizationInfo();
 					ePrereqBuilding = ((BuildingTypes)(thisCivInfo.getCivilizationBuildings(iI)));
@@ -20661,7 +20747,21 @@ void CvCity::read(FDataStream& kStream)
 
 	kStream >> m_yieldChanges;
 
-
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	m_aLekmodTimedBuildings.clear();
+	if (uiVersion >= 7)
+	{
+		int iNumTimed = 0;
+		kStream >> iNumTimed;
+		for (int iTimed = 0; iTimed < iNumTimed; iTimed++)
+		{
+			int iBuilding = 0, iTurns = 0;
+			kStream >> iBuilding;
+			kStream >> iTurns;
+			m_aLekmodTimedBuildings.push_back(std::make_pair(iBuilding, iTurns));
+		}
+	}
+#endif
 
 	CvCityManager::OnCityCreated(this);
 }
@@ -20672,7 +20772,11 @@ void CvCity::write(FDataStream& kStream) const
 	VALIDATE_OBJECT
 
 	// Current version number
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	uint uiVersion = 7;
+#else
 	uint uiVersion = 6;
+#endif
 	kStream << uiVersion;
 
 	kStream << m_iID;
@@ -20915,6 +21019,14 @@ void CvCity::write(FDataStream& kStream) const
 	kStream << m_iExtraHitPoints;
 
 	kStream << m_yieldChanges;
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	kStream << (int)m_aLekmodTimedBuildings.size();
+	for (uint iTimed = 0; iTimed < m_aLekmodTimedBuildings.size(); iTimed++)
+	{
+		kStream << m_aLekmodTimedBuildings[iTimed].first;
+		kStream << m_aLekmodTimedBuildings[iTimed].second;
+	}
+#endif
 }
 
 

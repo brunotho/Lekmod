@@ -1035,6 +1035,16 @@ int CvTraitEntry::GetLekmodExcessHappinessGAModifier() const
 {
 	return m_iLekmodExcessHappinessGAModifier;
 }
+/// Per building class: other tech and/or no needed buildings (Trait_LekmodBuildingClassOverrides: Oman)
+const std::vector<CvTraitEntry::LekmodBuildingClassOverride>& CvTraitEntry::GetLekmodBuildingClassOverrides() const
+{
+	return m_aLekmodBuildingClassOverrides;
+}
+/// Free units when a tech is reached (Trait_LekmodFreeUnits: unit class, tech)
+const std::vector<std::pair<int, int> >& CvTraitEntry::GetLekmodFreeUnits() const
+{
+	return m_aLekmodFreeUnits;
+}
 /// Traits.Lekmod* integer / type column (see LekmodTraitInt)
 int CvTraitEntry::GetLekmodTraitInt(LekmodTraitInt eCol) const
 {
@@ -2013,8 +2023,10 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 		static const char* s_aszNames[NUM_LEKMOD_TRAIT_INTS] = { "LekmodChopFaithCost", "LekmodNoRouteFeature", "LekmodForestCityEra",
 			"LekmodForestCityProductionMod", "LekmodForestCityCount", "LekmodForestCityFaithPerForest", "LekmodNaturalWonderFinderGoldPerEra",
 			"LekmodFoundCityRevealRadius", "LekmodFoundCityFreeUnitClass", "LekmodExpansionProduction", "LekmodCapitalProductionPerExpansion",
-			"LekmodStartMovesImprovement", "LekmodStartMovesImprovementChange" };
-		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false };
+			"LekmodStartMovesImprovement", "LekmodStartMovesImprovementChange", "LekmodNoTechBuild", "LekmodStartMovesRouteWorker",
+			"LekmodStartTurnFounderMoves", "LekmodStartMeleePromotion" };
+		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false,
+			true, false, false, true };
 		for (int i = 0; i < NUM_LEKMOD_TRAIT_INTS; i++)
 			m_aiLekmodTraitInts[i] = s_abType[i] ? GC.getInfoTypeForString(kResults.GetText(s_aszNames[i]), true) : kResults.GetInt(s_aszNames[i]);
 	}
@@ -3103,6 +3115,42 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 			kRow.m_bNaturalWonder = pResults->GetInt(13) != 0;
 			m_aLekmodPlotYields.push_back(kRow);
 		}
+		pResults->Reset();
+	}
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	{
+		m_aLekmodBuildingClassOverrides.clear();
+		std::string strKey("Trait_LekmodBuildingClassOverrides");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "SELECT BuildingClasses.ID, coalesce(Technologies.ID, -1), NoClassesNeeded FROM Trait_LekmodBuildingClassOverrides "
+				"INNER JOIN BuildingClasses ON BuildingClasses.Type = BuildingClassType LEFT JOIN Technologies ON Technologies.Type = PrereqTech WHERE TraitType = ?");
+		}
+		pResults->Bind(1, szTraitType);
+		while (pResults->Step())
+		{
+			LekmodBuildingClassOverride kRow;
+			kRow.m_eClass = pResults->GetInt(0);
+			kRow.m_eTech = pResults->GetInt(1);
+			kRow.m_bNoClassesNeeded = pResults->GetInt(2) != 0;
+			m_aLekmodBuildingClassOverrides.push_back(kRow);
+		}
+		pResults->Reset();
+	}
+	{
+		m_aLekmodFreeUnits.clear();
+		std::string strKey("Trait_LekmodFreeUnits");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "SELECT UnitClasses.ID, Technologies.ID FROM Trait_LekmodFreeUnits "
+				"INNER JOIN UnitClasses ON UnitClasses.Type = UnitClassType INNER JOIN Technologies ON Technologies.Type = TechType WHERE TraitType = ?");
+		}
+		pResults->Bind(1, szTraitType);
+		while (pResults->Step())
+			m_aLekmodFreeUnits.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
 		pResults->Reset();
 	}
 #endif
@@ -5535,6 +5583,47 @@ int CvPlayerTraits::GetLekmodExcessHappinessGAModifier() const
 			iMod += pkTraitInfo->GetLekmodExcessHappinessGAModifier();
 	}
 	return iMod;
+}
+int CvPlayerTraits::GetLekmodBuildingClassTech(BuildingClassTypes eClass) const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<CvTraitEntry::LekmodBuildingClassOverride>& aRows = pkTraitInfo->GetLekmodBuildingClassOverrides();
+		for(uint j = 0; j < aRows.size(); j++)
+			if(aRows[j].m_eClass == (int)eClass && aRows[j].m_eTech != -1)
+				return aRows[j].m_eTech;
+	}
+	return -1;
+}
+bool CvPlayerTraits::IsLekmodBuildingNoClassesNeeded(BuildingClassTypes eClass) const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<CvTraitEntry::LekmodBuildingClassOverride>& aRows = pkTraitInfo->GetLekmodBuildingClassOverrides();
+		for(uint j = 0; j < aRows.size(); j++)
+			if(aRows[j].m_eClass == (int)eClass && aRows[j].m_bNoClassesNeeded)
+				return true;
+	}
+	return false;
+}
+void CvPlayerTraits::LekmodGetFreeUnitsForTech(TechTypes eTech, std::vector<int>& aiUnitClasses) const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<std::pair<int, int> >& aRows = pkTraitInfo->GetLekmodFreeUnits();
+		for(uint j = 0; j < aRows.size(); j++)
+			if(aRows[j].second == (int)eTech)
+				aiUnitClasses.push_back(aRows[j].first);
+	}
 }
 int CvPlayerTraits::GetLekmodTraitInt(LekmodTraitInt eCol) const
 {

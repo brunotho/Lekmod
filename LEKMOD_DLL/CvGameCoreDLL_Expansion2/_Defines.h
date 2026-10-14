@@ -1476,6 +1476,13 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
 // Phase 6 C++ batch F: Building_LekmodPlotYields (yields on the city's tiles with plot and city conditions: Finland Sauna, Tonga)
 #define LEKMOD_BUILDING_PLOT_YIELDS
+// Phase 6 C++ batch G: Buildings.LekmodTimedBuilding/Turns (a dummy building for N turns after construction: Korea Jaegye; saved
+// per city, city save version 7), LekmodWLTKDTurnsOnBuild (Maurya), LekmodTrainedUnitStackBuilding/Max (one more dummy per
+// military unit trained, up to Max: Japan Dojo)
+#define LEKMOD_CITY_TIMED_BUILDINGS
+// Batch G trait additions (LEKMOD_CIV_TRAIT_FLAGS): Trait_LekmodBuildingClassOverrides (tech and needed buildings per class: Oman),
+// Trait_LekmodFreeUnits (free units at a tech: Oman), LTI_NO_TECH_BUILD (Maurya roads), LTI_START_MOVES_ROUTE_WORKER (Maurya),
+// LTI_START_TURN_FOUNDER_MOVES and LTI_START_MELEE_PROMOTION (Sioux)
 // Batch F trait ints (Traits.Lekmod*, generic list LekmodTraitInt in CvTraitClasses.h; part of LEKMOD_CIV_TRAIT_FLAGS):
 // Celts forest rules, Spain founding/production/natural wonder gold, Goths start-turn moves on an improvement;
 // Buildings.FreePlotPurchase (Goths: the city's first tile purchase is free; the marker building is removed after it),

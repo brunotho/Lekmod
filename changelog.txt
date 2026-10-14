@@ -2164,7 +2164,9 @@ Tags: civs, units
 - Changed: Buffalo Hunter: 7 Strength (was 8)
 - Changed: Tipi: +1 Gold with Economics
 - Removed: Tipi: +1 Gold next to rivers and +1 Faith with Theology
-- Note: open: the new UA (needs C++)
+- Changed: new UA: the starting Settler +1 Movement on the first turn; the starting Warrior and all recon and archer units start with Scouting I
+- Removed: the combat bonus (Prairie promotion)
+- DLL: Traits.LekmodStartTurnFounderMoves, LekmodStartMeleePromotion
 
 GREECE (CIVILIZATION_GREECE)
 ----------------------------
@@ -2199,7 +2201,8 @@ KOREA (CIVILIZATION_KOREA)
 Tags: civs, units, buildings, naval
 - Changed: Turtle Ship: 25 Strength (was 36), 5 Movement (was 4), costs 96 (was 80), needs 1 Iron, starts with Cover I and Sapper
 - Added: Jongmyo Shrine, a unique Temple: needs no Shrine, no Gold maintenance, 2 Faith, 1 slot for a Great Work of Music
-- Note: open: Jongmyo's 7-turn Jaegye festival (needs C++)
+- Added: Jongmyo Shrine: when built, the city holds Jaegye for 7 turns: -50% excess Food, +4 Culture, +4 Faith
+- DLL: Buildings.LekmodTimedBuilding/Turns (dummy 293, class 197); timed buildings are saved per city (city save version 7)
 - Dev: building ID 278 BUILDING_LEKMOD_JONGMYO, icon art_sources/buildings/jongmyo_shrine
 
 KONGO (CIVILIZATION_KONGO)
@@ -2254,7 +2257,8 @@ Tags: civs, units
 - Removed: +1 Food and +1 Happiness from Barracks and Armories
 - Changed: Sarissophoroi: available at Civil Service (was Philosophy), 16 Strength (was 14), costs 60 (was 58), the Pikeman's bonus against mounted units (was +100%), needs 2 Iron, starts with Envelopment and Mobility
 - Added: units trained in a city get +5 XP each for a Monument, an Amphitheater and an Opera House there
-- Note: open: the Gymnasium (two specialist types; needs C++)
+- Added: Gymnasium, a unique Aqueduct with a Merchant slot and an Artist slot
+- Dev: buildings 290 (Gymnasium) and 291 (free dummy with the Artist slot, class 194, via FreeBuildingThisCity); icon art_sources/buildings/gymnasium
 - DLL: Trait_LekmodBuildingClassFreeExperience
 
 VENICE (CIVILIZATION_VENICE)
@@ -2358,7 +2362,9 @@ Tags: civs, units, promotions
 - Removed: +2 Culture from Atolls
 - Changed: Samurai (rebuilt): available at Civil Service (was Steel), 18 Strength (was 21), costs 70 (was 80), needs 3 Iron (was 2), upgrades to the Musketman, starts with Great Generals II, Iaijutsu and Hatamoto
 - Removed: Samurai: Shock I and building Fishing Boats
-- Note: open: the Dojo (needs C++)
+- Changed: Dojo (rebuilt) no longer replaces the Barracks: Philosophy, costs 75, +1 Culture and +1 Faith for each military unit trained in the city (not recon, up to 3), always destroyed on capture
+- Removed: Dojo: +2 Science, +15 XP and the Way of the Warrior promotion
+- DLL: Buildings.LekmodTrainedUnitStackBuilding/Max (dummy 292, class 196); own building class 195
 
 GOLDEN HORDE (CIVILIZATION_GOLDEN_HORDE)
 ----------------------------------------
@@ -2453,7 +2459,9 @@ OMAN (CIVILIZATION_OMAN)
 Tags: civs, units, naval
 - Changed: Baghlah: 7 Strength and 9 Ranged Strength (was 8 and 12; the Galley +1 each), starts with Supply Ship and Swift Transport
 - Changed: Minaa now replaces the Caravansary (was the Harbor): the Wheel, costs 60, +2 Food when connected to the capital, +4 Culture while a Caravan's route ends there, +4 Gold while a Cargo Ship's route ends there
-- Note: open: the new UA (needs C++)
+- Changed: new UA: Harbors at Optics; Seaports at Compass without a Harbor; +25% Production towards both; a free Worker and Baghlah at Sailing
+- Removed: a free Seaport in captured cities, the naval promotion, and the Minaa's 30 damage to enemy ships next to the city
+- DLL: Trait_LekmodBuildingClassOverrides, Trait_LekmodFreeUnits; the old UB Lua (Lekmod_oman.lua) is switched off
 
 SWEDEN (CIVILIZATION_SWEDEN)
 ----------------------------
@@ -2468,8 +2476,11 @@ MAURYA (CIVILIZATION_MAURYA)
 ----------------------------
 Tags: civs, units
 - Removed: unique Missionary
-- Added: cities connected to the capital +1 Culture (first part of the new UA; the old defense bonus stays until the rest is done)
-- Note: open: roads from the start, Worker movement on roads, the Mahamatras' Office (need C++)
+- Changed: new UA: Roads can be built from the start; Workers starting their turn on a Road or Railroad +1 Movement; cities connected to the capital +1 Culture
+- Removed: +20% defense for most land and naval units
+- Added: Mahamatras' Office, a unique Amphitheater: costs 80, +2 Food, +1 Happiness, an 8-turn We Love the King Day when built
+- Note: no own icon yet (uses the Amphitheater's)
+- DLL: Traits.LekmodNoTechBuild, LekmodStartMovesRouteWorker; Buildings.LekmodWLTKDTurnsOnBuild (building 294)
 - Dev: per-city dummy building 286 (class 189)
 
 NEW ZEALAND (CIVILIZATION_NEW_ZEALAND)

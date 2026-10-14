@@ -43418,6 +43418,11 @@
     	<Column name="RequiredCivilization" type="text" reference="Civilizations(Type)" default="NULL"/>
     	<Column name="GreatWorkFilledTourismModifier" type="integer" default="0"/>
     	<Column name="FreePlotPurchase" type="boolean" default="false"/>
+    	<Column name="LekmodTimedBuilding" type="text" reference="Buildings(Type)" default="NULL"/>
+    	<Column name="LekmodTimedBuildingTurns" type="integer" default="0"/>
+    	<Column name="LekmodWLTKDTurnsOnBuild" type="integer" default="0"/>
+    	<Column name="LekmodTrainedUnitStackBuilding" type="text" reference="Buildings(Type)" default="NULL"/>
+    	<Column name="LekmodTrainedUnitStackMax" type="integer" default="0"/>
     	<Column name="LekmodPolicyGranted" type="boolean" default="false"/> <!-- LEKMOD: given and removed by Policy_BuildingClassFreeBuildings -->
 	</Table>
 	<!-- NOTE: This table is organized, but don't feel like you need to follow it as it uses manually assigned IDs which can be combersome to change. Just add to the end. 
@@ -43986,7 +43991,6 @@
 			<HurryCostModifier>25</HurryCostModifier>
 			<FreeStartEra>ERA_INDUSTRIAL</FreeStartEra>
 			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech>  
-			<TrainedFreePromotion>PROMOTION_WAY_OF_THE_WARRIOR</TrainedFreePromotion> 
 			<ArtDefineTag>ART_DEF_BUILDING_DOJO</ArtDefineTag> 
 			<PortraitIndex>3</PortraitIndex> 
 			<IconAtlas>LEKMOD_BUILDING_ATLAS</IconAtlas> 
@@ -110101,6 +110105,17 @@
 		<Column name="CityAdjacentTerrainType" type="text" reference="Terrains(Type)" default="NULL"/>
 		<Column name="CityAdjacentFeatureType" type="text" reference="Features(Type)" default="NULL"/>
 		<Column name="CityAdjacentCount" type="integer" default="1"/>
+	</Table>
+	<Table name="Trait_LekmodBuildingClassOverrides">
+		<Column name="TraitType" type="text" reference="Traits(Type)"/>
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)"/>
+		<Column name="PrereqTech" type="text" reference="Technologies(Type)" default="NULL"/>
+		<Column name="NoClassesNeeded" type="boolean" default="false"/>
+	</Table>
+	<Table name="Trait_LekmodFreeUnits">
+		<Column name="TraitType" type="text" reference="Traits(Type)"/>
+		<Column name="UnitClassType" type="text" reference="UnitClasses(Type)"/>
+		<Column name="TechType" type="text" reference="Technologies(Type)"/>
 	</Table>
 	<Table name="Trait_LekmodBuildingClassDefense">
 		<Column name="TraitType" type="text" reference="Traits(Type)"/>
@@ -211510,6 +211525,10 @@
 		<Column name="LekmodCapitalProductionPerExpansion" type="integer" default="0"/>
 		<Column name="LekmodStartMovesImprovement" type="text" reference="Improvements(Type)" default="NULL"/>
 		<Column name="LekmodStartMovesImprovementChange" type="integer" default="0"/>
+		<Column name="LekmodNoTechBuild" type="text" reference="Builds(Type)" default="NULL"/>
+		<Column name="LekmodStartMovesRouteWorker" type="integer" default="0"/>
+		<Column name="LekmodStartTurnFounderMoves" type="integer" default="0"/>
+		<Column name="LekmodStartMeleePromotion" type="text" reference="UnitPromotions(Type)" default="NULL"/>
 		<Column name="FirstProphetCostMod" type="integer" default="0"/>
 		<Column name="EmbarkedUnitsFullStrength" type="boolean" default="false"/>
 		<Column name="CityStateUnitGiftExtraExperience" type="integer"  default="0"/>
@@ -212330,9 +212349,7 @@
 			<Type>TRAIT_MC_CHAIN_OF_THE_EARTH</Type>
 			<Description>TXT_KEY_TRAIT_MC_CHAIN_OF_THE_EARTH</Description>
 			<ShortDescription>TXT_KEY_TRAIT_MC_CHAIN_OF_THE_EARTH_SHORT</ShortDescription>
-			<FreeBuildingOnConquest>BUILDING_SEAPORT</FreeBuildingOnConquest>
-			<!-- Trait_FreePromotionUnitCombats -->
-			<!-- Has Nontrait related code in Lua\Civilizations\Lekmod_oman.lua -->
+			<!-- Lekmod: old UA (free Seaport on conquest, naval promotion) removed in Phase 6 batch G; see the LEKMOD: Phase 6 block -->
 		</Row>
 		<Row> 
 			<ID>99</ID> 
@@ -287927,4 +287944,381 @@
 			<CityAdjacentCount>3</CityAdjacentCount>
 		</Row>
 	</Building_LekmodPlotYields>
+	<!-- Phase 6 C++ batch G (2026-10-14) -->
+	<!-- Macedonia: Gymnasium (Aqueduct UB) with a Merchant slot and (through a free dummy building) an Artist slot -->
+	<BuildingClasses>
+		<Row>
+			<ID>194</ID>
+			<Type>BUILDINGCLASS_LEKMOD_GYMNASIUM_ARTIST</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_GYMNASIUM_ARTIST</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>291</ID>
+			<Type>BUILDING_LEKMOD_GYMNASIUM_ARTIST</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_GYMNASIUM_ARTIST</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_GYMNASIUM</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+			<SpecialistType>SPECIALIST_ARTIST</SpecialistType>
+			<SpecialistCount>1</SpecialistCount>
+		</Row>
+	</Buildings>
+	<Buildings>
+		<Row>
+			<ID>290</ID>
+			<Type>BUILDING_LEKMOD_GYMNASIUM</Type>
+			<BuildingClass>BUILDINGCLASS_AQUEDUCT</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_GYMNASIUM</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_GYMNASIUM_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_GYMNASIUM_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_GYMNASIUM_HELP</Help>
+			<GoldMaintenance>1</GoldMaintenance>
+			<Cost>100</Cost>
+			<HurryCostModifier>25</HurryCostModifier>
+			<MinAreaSize>-1</MinAreaSize>
+			<ConquestProb>66</ConquestProb>
+			<FoodKept>40</FoodKept>
+			<ArtDefineTag>ART_DEF_BUILDING_HOSPITAL</ArtDefineTag>
+			<PrereqTech>TECH_ENGINEERING</PrereqTech>
+			<SpecialistType>SPECIALIST_MERCHANT</SpecialistType>
+			<SpecialistCount>1</SpecialistCount>
+			<FreeBuildingThisCity>BUILDINGCLASS_LEKMOD_GYMNASIUM_ARTIST</FreeBuildingThisCity>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_GYMNASIUM_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_GYMNASIUM</BuildingType>
+			<FlavorType>FLAVOR_GROWTH</FlavorType>
+			<Flavor>40</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_GYMNASIUM</BuildingType>
+			<FlavorType>FLAVOR_CULTURE</FlavorType>
+			<Flavor>10</Flavor>
+		</Row>
+	</Building_Flavors>
+	<Civilization_BuildingClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_MACEDONIA</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_AQUEDUCT</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_GYMNASIUM</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<IconTextureAtlases>
+		<Row>
+			<Atlas>LEKMOD_GYMNASIUM_ATLAS</Atlas>
+			<IconSize>256</IconSize>
+			<Filename>gymnasium_256.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_GYMNASIUM_ATLAS</Atlas>
+			<IconSize>214</IconSize>
+			<Filename>gymnasium_214.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_GYMNASIUM_ATLAS</Atlas>
+			<IconSize>128</IconSize>
+			<Filename>gymnasium_128.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_GYMNASIUM_ATLAS</Atlas>
+			<IconSize>80</IconSize>
+			<Filename>gymnasium_80.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_GYMNASIUM_ATLAS</Atlas>
+			<IconSize>64</IconSize>
+			<Filename>gymnasium_64.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_GYMNASIUM_ATLAS</Atlas>
+			<IconSize>45</IconSize>
+			<Filename>gymnasium_45.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+		<Row>
+			<Atlas>LEKMOD_GYMNASIUM_ATLAS</Atlas>
+			<IconSize>32</IconSize>
+			<Filename>gymnasium_32.dds</Filename>
+			<IconsPerRow>1</IconsPerRow>
+			<IconsPerColumn>1</IconsPerColumn>
+		</Row>
+	</IconTextureAtlases>
+	<!-- Japan: Dojo (from scratch, its own building, Japan only): Philosophy, 75 on quick, +1 Culture +1 Faith per military unit trained (not recon, max 3) -->
+	<BuildingClasses>
+		<Row>
+			<ID>195</ID>
+			<Type>BUILDINGCLASS_LEKMOD_DOJO</Type>
+			<DefaultBuilding>BUILDING_DOJO</DefaultBuilding>
+			<Description>TXT_KEY_BUILDING_DOJO</Description>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Civilization_BuildingClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_JAPAN" BuildingClassType="BUILDINGCLASS_BARRACKS"/>
+	</Civilization_BuildingClassOverrides>
+	<BuildingClasses>
+		<Row>
+			<ID>196</ID>
+			<Type>BUILDINGCLASS_LEKMOD_DOJO_TRAINED</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_DOJO_TRAINED</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>292</ID>
+			<Type>BUILDING_LEKMOD_DOJO_TRAINED</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_DOJO_TRAINED</BuildingClass>
+			<Description>TXT_KEY_BUILDING_DOJO</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_DOJO_TRAINED</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_DOJO_TRAINED</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_DOJO"/>
+			<Set BuildingClass="BUILDINGCLASS_LEKMOD_DOJO" PrereqTech="TECH_PHILOSOPHY" Cost="112" ConquestProb="0" RequiredCivilization="CIVILIZATION_JAPAN" LekmodTrainedUnitStackBuilding="BUILDING_LEKMOD_DOJO_TRAINED" LekmodTrainedUnitStackMax="3" Sellable="false"/>
+		</Update>
+	</Buildings>
+	<Building_DomainFreeExperiences>
+		<Delete BuildingType="BUILDING_DOJO"/>
+	</Building_DomainFreeExperiences>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_DOJO"/>
+	</Building_YieldChanges>
+	<!-- Korea: Jongmyo Shrine starts Jaegye for 7 turns (quick): -50% excess Food, +4 Culture +4 Faith -->
+	<BuildingClasses>
+		<Row>
+			<ID>197</ID>
+			<Type>BUILDINGCLASS_LEKMOD_JAEGYE</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_JAEGYE</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>293</ID>
+			<Type>BUILDING_LEKMOD_JAEGYE</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_JAEGYE</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_JAEGYE</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+			<ExcessGrowth>-50</ExcessGrowth>
+		</Row>
+	</Buildings>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_JAEGYE</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>4</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_JAEGYE</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>4</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_LEKMOD_JONGMYO"/>
+			<Set LekmodTimedBuilding="BUILDING_LEKMOD_JAEGYE" LekmodTimedBuildingTurns="11"/>
+		</Update>
+	</Buildings>
+	<!-- Maurya (rest of the new UA): roads without a tech, Workers starting the turn on a road +1 move, no more +20% defense; Mahamatras' Office (NEW Amphitheater UB): 80 on quick, +2 Food, +1 Happiness, 8-turn We Love the King Day when built -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_INSCRIPTIONS"/>
+			<Set LekmodNoTechBuild="BUILD_ROAD" LekmodStartMovesRouteWorker="1"/>
+		</Update>
+	</Traits>
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_INSCRIPTIONS"/>
+	</Trait_FreePromotionUnitCombats>
+	<Buildings>
+		<Row>
+			<ID>294</ID>
+			<Type>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</Type>
+			<BuildingClass>BUILDINGCLASS_AMPHITHEATER</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_MAHAMATRAS_OFFICE</Description>
+			<Civilopedia>TXT_KEY_BUILDING_LEKMOD_MAHAMATRAS_OFFICE_HELP</Civilopedia>
+			<Strategy>TXT_KEY_BUILDING_LEKMOD_MAHAMATRAS_OFFICE_HELP</Strategy>
+			<Help>TXT_KEY_BUILDING_LEKMOD_MAHAMATRAS_OFFICE_HELP</Help>
+			<GoldMaintenance>1</GoldMaintenance>
+			<Cost>120</Cost>
+			<HurryCostModifier>25</HurryCostModifier>
+			<MinAreaSize>-1</MinAreaSize>
+			<ConquestProb>66</ConquestProb>
+			<Happiness>1</Happiness>
+			<LekmodWLTKDTurnsOnBuild>12</LekmodWLTKDTurnsOnBuild>
+			<ArtDefineTag>COLESSEUM</ArtDefineTag>
+			<PrereqTech>TECH_DRAMA</PrereqTech>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>EXPANSION_BW_ATLAS_1</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_Flavors>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
+			<FlavorType>FLAVOR_GROWTH</FlavorType>
+			<Flavor>20</Flavor>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
+			<FlavorType>FLAVOR_HAPPINESS</FlavorType>
+			<Flavor>20</Flavor>
+		</Row>
+	</Building_Flavors>
+	<Civilization_BuildingClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_MAURYA</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_AMPHITHEATER</BuildingClassType>
+			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<!-- Oman (new UA): Seaports at Compass without a Harbor, Harbors at Optics, +25% Production for both, a free Worker and Baghlah at Sailing -->
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_MC_CHAIN_OF_THE_EARTH"/>
+	</Trait_FreePromotionUnitCombats>
+	<Trait_LekmodBuildingClassOverrides>
+		<Row>
+			<TraitType>TRAIT_MC_CHAIN_OF_THE_EARTH</TraitType>
+			<BuildingClassType>BUILDINGCLASS_HARBOR</BuildingClassType>
+			<PrereqTech>TECH_OPTICS</PrereqTech>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_MC_CHAIN_OF_THE_EARTH</TraitType>
+			<BuildingClassType>BUILDINGCLASS_SEAPORT</BuildingClassType>
+			<PrereqTech>TECH_COMPASS</PrereqTech>
+			<NoClassesNeeded>true</NoClassesNeeded>
+		</Row>
+	</Trait_LekmodBuildingClassOverrides>
+	<Trait_BuildingClassProductionModifiers>
+		<Row>
+			<TraitType>TRAIT_MC_CHAIN_OF_THE_EARTH</TraitType>
+			<BuildingClassType>BUILDINGCLASS_HARBOR</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_MC_CHAIN_OF_THE_EARTH</TraitType>
+			<BuildingClassType>BUILDINGCLASS_SEAPORT</BuildingClassType>
+			<ProductionModifier>25</ProductionModifier>
+		</Row>
+	</Trait_BuildingClassProductionModifiers>
+	<Trait_LekmodFreeUnits>
+		<Row>
+			<TraitType>TRAIT_MC_CHAIN_OF_THE_EARTH</TraitType>
+			<UnitClassType>UNITCLASS_WORKER</UnitClassType>
+			<TechType>TECH_SAILING</TechType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_MC_CHAIN_OF_THE_EARTH</TraitType>
+			<UnitClassType>UNITCLASS_GALLEY</UnitClassType>
+			<TechType>TECH_SAILING</TechType>
+		</Row>
+	</Trait_LekmodFreeUnits>
+	<!-- Sioux (new UA): no combat bonus; the starting Settler +1 move on the first turn; the starting Warrior, recon and archer units get Scouting I -->
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_PRAIRIE"/>
+	</Trait_FreePromotionUnitCombats>
+	<Trait_FreePromotionUnitCombats>
+		<Row>
+			<TraitType>TRAIT_PRAIRIE</TraitType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+			<PromotionType>PROMOTION_SCOUTING_1</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_PRAIRIE</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<PromotionType>PROMOTION_SCOUTING_1</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_PRAIRIE"/>
+			<Set LekmodStartTurnFounderMoves="1" LekmodStartMeleePromotion="PROMOTION_SCOUTING_1"/>
+		</Update>
+	</Traits>
 </GameData>

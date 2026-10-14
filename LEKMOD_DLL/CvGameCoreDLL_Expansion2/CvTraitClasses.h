@@ -90,6 +90,10 @@ enum LekmodTraitInt
 	LTI_CAPITAL_PRODUCTION_PER_EXPANSION,	// capital Production per other city (negative; can't push the capital below 0) (Spain)
 	LTI_START_MOVES_IMPROVEMENT,		// type: melee/gunpowder units starting the turn on this improvement get extra moves (Goths: Harjis)
 	LTI_START_MOVES_IMPROVEMENT_CHANGE,	// those extra moves
+	LTI_NO_TECH_BUILD,					// type: this build needs no tech (Maurya: roads)
+	LTI_START_MOVES_ROUTE_WORKER,		// workers starting the turn on a route get extra moves (Maurya)
+	LTI_START_TURN_FOUNDER_MOVES,		// city founders get extra moves on the first turn (Sioux)
+	LTI_START_MELEE_PROMOTION,			// type: starting melee units get this promotion (Sioux: Scouting I)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif
@@ -245,6 +249,13 @@ public:
 	bool IsLekmodGoldenAgeGreatPeople() const;
 	bool IsLekmodGoldenAgeWLTKD() const;
 	int GetLekmodExcessHappinessGAModifier() const;
+	struct LekmodBuildingClassOverride
+	{
+		int m_eClass, m_eTech;
+		bool m_bNoClassesNeeded;
+	};
+	const std::vector<LekmodBuildingClassOverride>& GetLekmodBuildingClassOverrides() const;
+	const std::vector<std::pair<int, int> >& GetLekmodFreeUnits() const; // unit class, tech
 	int GetLekmodTraitInt(LekmodTraitInt eCol) const;
 	bool IsLekmodFasterInHillsCiviliansOnly() const;
 	int GetLekmodEarlyBuildingImprovement() const;
@@ -559,6 +570,8 @@ protected:
 	bool m_bLekmodGoldenAgeWLTKD;
 	int m_iLekmodExcessHappinessGAModifier;
 	int m_aiLekmodTraitInts[NUM_LEKMOD_TRAIT_INTS];
+	std::vector<LekmodBuildingClassOverride> m_aLekmodBuildingClassOverrides;
+	std::vector<std::pair<int, int> > m_aLekmodFreeUnits;
 	bool m_bLekmodFasterInHillsCiviliansOnly;
 	int m_iLekmodEarlyBuildingImprovement;
 	int m_iLekmodEarlyBuildingProductionMod;
@@ -781,6 +794,9 @@ public:
 	int GetLekmodTrainedUnitExperience(const CvCity* pCity) const;
 	bool IsLekmodTraitFlag(int iFlag) const; // 0 GA happiness yields, 1 GA great people, 2 GA WLTKD
 	int GetLekmodExcessHappinessGAModifier() const;
+	int GetLekmodBuildingClassTech(BuildingClassTypes eClass) const; // -1: no override
+	bool IsLekmodBuildingNoClassesNeeded(BuildingClassTypes eClass) const;
+	void LekmodGetFreeUnitsForTech(TechTypes eTech, std::vector<int>& aiUnitClasses) const;
 	int GetLekmodTraitInt(LekmodTraitInt eCol) const; // sum over active traits
 	int GetLekmodTraitType(LekmodTraitInt eCol) const; // first active trait's type, -1 = none
 	bool IsLekmodFasterInHillsCiviliansOnly() const;

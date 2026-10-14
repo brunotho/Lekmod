@@ -1214,6 +1214,13 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	m_bLekmodFreePlotPurchase = kResults.GetBool("FreePlotPurchase");
 #endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	m_iLekmodTimedBuilding = GC.getInfoTypeForString(kResults.GetText("LekmodTimedBuilding"), true);
+	m_iLekmodTimedBuildingTurns = kResults.GetInt("LekmodTimedBuildingTurns");
+	m_iLekmodWLTKDTurnsOnBuild = kResults.GetInt("LekmodWLTKDTurnsOnBuild");
+	m_iLekmodTrainedUnitStackBuilding = GC.getInfoTypeForString(kResults.GetText("LekmodTrainedUnitStackBuilding"), true);
+	m_iLekmodTrainedUnitStackMax = kResults.GetInt("LekmodTrainedUnitStackMax");
+#endif
 #ifdef LEKMOD_BUILDING_PLOT_YIELDS
 	{
 		m_aLekmodPlotYields.clear();
@@ -3389,6 +3396,31 @@ int CvBuildingEntry::GetLekmodStartTurnMovesMountedCivilian() const
 const std::vector<LekmodBuildingPlotYield>& CvBuildingEntry::GetLekmodPlotYields() const
 {
 	return m_aLekmodPlotYields;
+}
+#endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+/// A dummy building the city gets for GetLekmodTimedBuildingTurns() (standard speed) turns after this one is built (Jongmyo: Jaegye)
+int CvBuildingEntry::GetLekmodTimedBuilding() const
+{
+	return m_iLekmodTimedBuilding;
+}
+int CvBuildingEntry::GetLekmodTimedBuildingTurns() const
+{
+	return m_iLekmodTimedBuildingTurns;
+}
+/// We Love the King Day turns (standard speed) when built (Mahamatras' Office)
+int CvBuildingEntry::GetLekmodWLTKDTurnsOnBuild() const
+{
+	return m_iLekmodWLTKDTurnsOnBuild;
+}
+/// One more of this dummy building per military unit trained in the city, up to GetLekmodTrainedUnitStackMax() (Dojo)
+int CvBuildingEntry::GetLekmodTrainedUnitStackBuilding() const
+{
+	return m_iLekmodTrainedUnitStackBuilding;
+}
+int CvBuildingEntry::GetLekmodTrainedUnitStackMax() const
+{
+	return m_iLekmodTrainedUnitStackMax;
 }
 #endif
 #ifdef LEKMOD_CIV_TRAIT_FLAGS

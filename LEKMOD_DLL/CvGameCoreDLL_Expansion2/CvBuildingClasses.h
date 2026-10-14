@@ -554,6 +554,13 @@ public:
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	bool IsLekmodFreePlotPurchase() const;
 #endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	int GetLekmodTimedBuilding() const;
+	int GetLekmodTimedBuildingTurns() const;
+	int GetLekmodWLTKDTurnsOnBuild() const;
+	int GetLekmodTrainedUnitStackBuilding() const;
+	int GetLekmodTrainedUnitStackMax() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -924,6 +931,13 @@ private:
 #endif
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	bool m_bLekmodFreePlotPurchase;
+#endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	int m_iLekmodTimedBuilding;
+	int m_iLekmodTimedBuildingTurns;
+	int m_iLekmodWLTKDTurnsOnBuild;
+	int m_iLekmodTrainedUnitStackBuilding;
+	int m_iLekmodTrainedUnitStackMax;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;

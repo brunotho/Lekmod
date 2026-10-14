@@ -890,6 +890,11 @@ public:
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 	int GetLekmodBeliefCityConditionYield(const class CvReligion* pReligion, BeliefTypes eSecondaryPantheon, YieldTypes eYield) const;
 #endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	void LekmodOnBuildingAdded(const CvBuildingEntry* pkBuilding);
+	void LekmodDoTimedBuildings();
+	void LekmodOnUnitTrained(const CvUnit* pUnit);
+#endif
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	int GetLekmodForestCityCount() const;
 	BuildingTypes GetLekmodFreePlotPurchaseBuilding() const;
@@ -1130,6 +1135,9 @@ protected:
 	FAutoVariable<int, CvCity> m_iMaxFoodKeptPercent;
 #if defined(LEKMOD_BUILDING_EXCESS_GROWTH)
 	FAutoVariable<int, CvCity> m_iExcessGrowthModifier;
+#endif
+#ifdef LEKMOD_CITY_TIMED_BUILDINGS
+	std::vector<std::pair<int, int> > m_aLekmodTimedBuildings; // building, turns left
 #endif
 	FAutoVariable<int, CvCity> m_iOverflowProduction;
 	FAutoVariable<int, CvCity> m_iFeatureProduction;

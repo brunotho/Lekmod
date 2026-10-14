@@ -35,7 +35,8 @@ function lekmod_oman_ub_damage(player_id)
 
 end
 ------------------------------------------------------------------------------------------------------------------------
-if is_active then
+-- Old harbor-UB effect, switched off: the Minaa is a Caravansary UB now (Phase 6 batch G, 2026-10-14)
+if false and is_active then
     GameEvents.PlayerDoTurn.Add(lekmod_oman_ub_damage)
 end
 
