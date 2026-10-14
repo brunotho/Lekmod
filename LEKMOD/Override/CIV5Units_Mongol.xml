@@ -18681,9 +18681,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Gender>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CANDI_HELP"> 
-			<Text>
-				Unique Indonesian Garden replacement. +20% [ICON_GREAT_PEOPLE] Great People generation in this City, and +2 [ICON_PEACE] Faith for each World Religion that has at least 1 follower in the city.[NEWLINE][NEWLINE]Unlike the Garden the Candi does not have to be built next to a River or Lake and is significantly cheaper to construct.
-			</Text>
+			<Text>Unique Indonesian Watermill replacement. Available with Masonry; needs any fresh water (river, lake or oasis) instead of a river.[NEWLINE]+2 [ICON_FOOD] Food, +2 [ICON_PEACE] Faith and +2 [ICON_CULTURE] Culture. No maintenance.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_CANDI_STRATEGY"> 
 			<Text>
@@ -121676,9 +121674,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AMBITION_HELP"> 
-			<Text>
-				+50% Combat Bonus when attacking. -20% penalty when defending
-			</Text>
+			<Text>+50% [ICON_STRENGTH] Combat Strength when attacking a unit at full health.[NEWLINE]May move after attacking.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_AMBOHIMANAMBOLA"> 
 			<Text>
@@ -122917,9 +122913,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_INVULNERABIILITY_HELP"> 
-			<Text>
-				+30% Combat Bonus when defending. +20 Hit Points when healing
-			</Text>
+			<Text>+25% [ICON_STRENGTH] Combat Strength when defending.[NEWLINE]Heals 25 HP when it destroys an enemy unit.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_JAGUAR"> 
 			<Text>
@@ -123145,9 +123139,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_MYSTIC_BLADE_HELP"> 
-			<Text>
-				Promotion is replaced with a randomly chosen new promotion after the unit completes its first combat
-			</Text>
+			<Text>Replaced by a random blade promotion when the unit is created.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_NATIONALISM"> 
 			<Text>
@@ -123425,14 +123417,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_RECRUITMENT"> 
-			<Text>
-				Recruitment
-			</Text>
+			<Text>Cursed Blade</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_RECRUITMENT_HELP"> 
-			<Text>
-				Heals All Damage If Kills Non-Barbarian Unit
-			</Text>
+			<Text>Adjacent enemy units have -15% [ICON_STRENGTH] Combat Strength.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_RECRUITMENT_OFFICER"> 
 			<Text>
@@ -123460,9 +123448,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_RESTLESSNESS_HELP"> 
-			<Text>
-				May Attack Twice. 1 Extra Movement
-			</Text>
+			<Text>May attack twice per turn.[NEWLINE]+1 [ICON_MOVES] Movement.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_RIVAL_TERRITORY"> 
 			<Text>
@@ -123675,9 +123661,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_SNEAK_ATTACK_HELP"> 
-			<Text>
-				Flank attack bonus increased by 50%.
-			</Text>
+			<Text>Ignores terrain movement costs.[NEWLINE]Ignores Zones of Control.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_SORTIE"> 
 			<Text>
@@ -139579,9 +139563,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_SPICE"> 
-			<Text>
-				The first 3 coastal cities founded on a different landmass than the [ICON_CAPITAL] Capital each provide 2 unique Luxury Resources and +2 [ICON_GOLD] Gold (and can never be razed).
-			</Text>
+			<Text>Your next 2 cities after the [ICON_CAPITAL] Capital that are coastal or on a different landmass each provide a unique Luxury Resource (Cloves, then Nutmeg): 1 copy on the Capital's landmass, 2 copies on a new landmass. These cities can never be razed.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_SPICE_SHORT"> 
 			<Text>
@@ -141795,9 +141777,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_INDONESIAN_KRIS_SWORDSMAN"> 
-			<Text>
-				Classical Era Melee unit that has a mystical weapon whose abilities will be discovered the first time it is used in combat. May only be build by Indonesia.
-			</Text>
+			<Text>Replaces the Swordsman. Needs 2 [ICON_RES_IRON] Iron. Obsolete with Gunpowder.[NEWLINE][NEWLINE]Starts with one random blade promotion: Restlessness, Sneak Attack, Ambition, Invulnerability or Cursed Blade.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_INFANTRY"> 
 			<Text>
@@ -148166,6 +148146,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_GOLD_MODERN_ERA">
 			<Text>[NEWLINE][ICON_BULLET]Modern Era: {1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_ATTACK_FULL_HP">
+			<Text>Attacking a Healthy Unit</Text>
 		</Row>
 	</Language_en_US>
 	<Language_de_DE>

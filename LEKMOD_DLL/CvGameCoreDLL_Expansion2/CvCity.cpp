@@ -621,6 +621,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 		
 		const std::vector<FreeResourceCities>& vRules = trait->GetFreeResourceCities();
 		std::vector<const FreeResourceCities*> vRulesToPlace;
+		std::map<const FreeResourceCities*, int> mapLekmodQuantity; // Indonesia: smaller grants for coastal cities on a used landmass
 		std::map<int, std::vector<const FreeResourceCities*> > groupedRules;
 
 		for (size_t i = 0; i < vRules.size(); ++i)
@@ -657,7 +658,13 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 				}
 
 				if (bAlreadyUsedArea)
-					continue;
+				{
+					// a coastal city other than the first may still get the smaller grant
+					if (kRule.m_iLekmodCoastalQuantity > 0 && isCoastal() && owningPlayer.GetNumCitiesFounded() > 1)
+						mapLekmodQuantity[&kRule] = kRule.m_iLekmodCoastalQuantity;
+					else
+						continue;
+				}
 			}
 
 			if (kRule.m_bCycleGroup)
@@ -733,12 +740,13 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 			const FreeResourceCities* pRule = vRulesToPlace[i];
 			if (!pRule)
 				continue;
+			const int iLekmodQuantity = (mapLekmodQuantity.find(pRule) != mapLekmodQuantity.end()) ? mapLekmodQuantity[pRule] : pRule->m_iResourceQuantity;
 
 			if (pRule->m_bCity)
 			{
 #ifdef LEKMOD_FREE_RESOURCE_CITY_GRANT
 				// Free copies tied to the city (like buildings), do not overwrite the city-tile resource.
-				GrantFreeResourceFromTrait(pRule->m_eResource, pRule->m_iResourceQuantity);
+				GrantFreeResourceFromTrait(pRule->m_eResource, iLekmodQuantity);
 #else
 				// Resource is placed under the city and overrides any existing resource.
 				// Cities already claim their founding plot, so no claim check is needed here.
@@ -749,7 +757,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 			}
 			else
 			{
-				CvPlot* pTargetPlot = addResourceLocally(NULL, pRule->m_eResource, pRule->m_iResourceQuantity);
+				CvPlot* pTargetPlot = addResourceLocally(NULL, pRule->m_eResource, iLekmodQuantity);
 				if (pTargetPlot)
 				{
 					if (pRule->m_bClaimPlot && pTargetPlot->getOwner() == NO_PLAYER)

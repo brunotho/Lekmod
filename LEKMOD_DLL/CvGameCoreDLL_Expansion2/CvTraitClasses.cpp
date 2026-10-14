@@ -3379,7 +3379,7 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 		{
 			const char* szSQL =
 				"SELECT Resources.ID, ResourceQuantity, COALESCE(Technologies.ID, -1), "
-				"NumCities, City, Found, Tech, UniqueArea, ClaimPlot, ResourceGroup, Priority, CycleGroup "
+				"NumCities, City, Found, Tech, UniqueArea, ClaimPlot, ResourceGroup, Priority, CycleGroup, Trait_FreeResourceCities.LekmodCoastalQuantity "
 				"FROM Trait_FreeResourceCities "
 				"INNER JOIN Resources ON Resources.Type = ResourceType "
 				"LEFT JOIN Technologies ON Technologies.Type = TechType "
@@ -3406,6 +3406,7 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 			temp.m_iGroup = pResults->GetInt(9);
 			temp.m_iPriority = pResults->GetInt(10);
 			temp.m_bCycleGroup = pResults->GetBool(11);
+			temp.m_iLekmodCoastalQuantity = pResults->GetInt(12);
 
 			if (temp.m_eResource != NO_RESOURCE && temp.m_iResourceQuantity > 0)
 			{

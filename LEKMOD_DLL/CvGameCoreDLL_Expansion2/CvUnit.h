@@ -723,6 +723,8 @@ public:
 	int GetLekmodMoveCostMod(const CvPlot* pToPlot) const;
 	int GetLekmodCoastAttackMod(const CvPlot* pTargetPlot) const;
 	bool IsLekmodAlwaysHealFriendly() const;
+	int GetLekmodAttackFullHPMod(const CvUnit* pDefender) const;
+	void LekmodApplySpawnRandomPromotions();
 #endif
 #endif
 	int GetLekmodWoundedDamageMod() const;

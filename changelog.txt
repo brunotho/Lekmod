@@ -2670,6 +2670,17 @@ Tags: civs, units, religion
 - Changed: Mpiambina (rebuilt) replaces the Great General (was a ranged Inquisitor): all Great General abilities, and it can build a Holy Site, found a religion or enhance it
 - DLL: Traits.LekmodRingImprovement*, LekmodImprovementHillsOnly, LekmodBuildingFreeUnit*
 
+INDONESIA (CIVILIZATION_INDONESIA)
+----------------------------------
+Tags: civs, units, buildings, promotions
+- Changed: unique luxuries go to the next 2 cities (was 3) that are coastal or on another landmass: 1 copy on the capital's landmass, 2 on a new landmass (Cloves, then Nutmeg; Pepper no longer given); those cities +1 Gold (was +2)
+- Changed: Candi now replaces the Watermill (was the Garden): Masonry, needs any fresh water, costs 55, +2 Food +2 Faith +2 Culture, no maintenance
+- Removed: Candi: +20% Great People, Faith per religion
+- Changed: Kris Swordsman: 14 Strength, obsolete with Gunpowder, gets its random blade promotion when created (was after its first fight); Heroism no longer in the pool
+- Changed: Restlessness: two attacks and +1 Movement (no longer moves after attacking); Sneak Attack: ignores terrain costs and Zones of Control (was +50% flanking); Ambition: +50% attacking a unit at full health, may move after attacking (was +50% attack, -20% defense); Invulnerability: +25% defense, heals 25 HP on a kill (was faster healing, +30% defense)
+- Changed: Recruitment renamed Cursed Blade: adjacent enemies -15% (was healing on kills)
+- DLL: Trait_FreeResourceCities.LekmodCoastalQuantity; UnitPromotions.AttackFullHPMod, PostCombatPromotionOnSpawn
+
 CHINA (CIVILIZATION_CHINA)
 --------------------------
 Tags: civs

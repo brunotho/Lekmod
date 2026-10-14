@@ -2141,6 +2141,7 @@
 		<Column name="ResourceGroup" type="integer" default="0" /> <!-- Allows for multiple entires for a trait, sets groups to cycle through -->
 		<Column name="Priority" type="integer" default="0" /> <!-- the order resources in a group are placed, starts at 0 -->
 		<Column name="CycleGroup" type="boolean" default="false" /> <!-- cycle through the group, or not! -->
+		<Column name="LekmodCoastalQuantity" type="integer" default="0"/> <!-- LEKMOD: copies for coastal cities on an already used landmass (Indonesia) -->
 	</Table>
 
 	<!-- V35: no longer places the resource under the city as a tile and grants it to the city itself -->
@@ -215027,6 +215028,8 @@
 		<Column name="CoastMoveCostMod" type="integer" default="0"/>
 		<Column name="CoastAttackMod" type="integer" default="0"/>
 		<Column name="AlwaysHealFriendly" type="boolean" default="false"/>
+		<Column name="AttackFullHPMod" type="integer" default="0"/>
+		<Column name="PostCombatPromotionOnSpawn" type="boolean" default="false"/>
 	</Table>
 	<UnitPromotions>
 		<Delete />
@@ -290534,4 +290537,100 @@
 			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
 	</IconTextureAtlases>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Indonesia UA, Candi (watermill), Kris Swordsman -->
+	<Trait_FreeResourceCities>
+		<Delete TraitType="TRAIT_SPICE" ResourceType="RESOURCE_PEPPER"/>
+	</Trait_FreeResourceCities>
+	<Trait_FreeResourceCities>
+		<Update>
+			<Where TraitType="TRAIT_SPICE"/>
+			<Set LekmodCoastalQuantity="1"/>
+		</Update>
+	</Trait_FreeResourceCities>
+	<Trait_FreeResourceCityYieldChanges>
+		<Update>
+			<Where TraitType="TRAIT_SPICE" YieldType="YIELD_GOLD"/>
+			<Set Yield="1"/>
+		</Update>
+	</Trait_FreeResourceCityYieldChanges>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_CANDI"/>
+			<Set BuildingClass="BUILDINGCLASS_WATERMILL" PrereqTech="TECH_MASONRY" Cost="83" GoldMaintenance="0" GreatPeopleRateModifier="0" FreshWater="1" ArtDefineTag="ART_DEF_BUILDING_WATERMILL"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_CANDI"/>
+		<Row>
+			<BuildingType>BUILDING_CANDI</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_CANDI</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_CANDI</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_YieldChangesPerReligion>
+		<Delete BuildingType="BUILDING_CANDI"/>
+	</Building_YieldChangesPerReligion>
+	<Civilization_BuildingClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_INDONESIA" BuildingClassType="BUILDINGCLASS_GARDEN"/>
+		<Row>
+			<CivilizationType>CIVILIZATION_INDONESIA</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_WATERMILL</BuildingClassType>
+			<BuildingType>BUILDING_CANDI</BuildingType>
+		</Row>
+	</Civilization_BuildingClassOverrides>
+	<Units>
+		<Update>
+			<Where Type="UNIT_KRIS_SWORDSMAN"/>
+			<Set ObsoleteTech="TECH_GUNPOWDER" Combat="14"/>
+		</Update>
+	</Units>
+	<UnitPromotions_PostCombatRandomPromotion>
+		<Delete PromotionType="PROMOTION_MYSTIC_BLADE" NewPromotion="PROMOTION_HEROISM"/>
+	</UnitPromotions_PostCombatRandomPromotion>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_MYSTIC_BLADE"/>
+			<Set PostCombatPromotionOnSpawn="1"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_RESTLESSNESS"/>
+			<Set CanMoveAfterAttacking="0"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_SNEAK_ATTACK"/>
+			<Set FlankAttackModifier="0" IgnoreTerrainCost="1" IgnoreZOC="1"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_AMBITION"/>
+			<Set OpenAttack="0" OpenDefense="0" RoughAttack="0" RoughDefense="0" AttackFullHPMod="50" CanMoveAfterAttacking="1"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_INVULNERABIILITY"/>
+			<Set EnemyHealChange="0" NeutralHealChange="0" FriendlyHealChange="0" OpenDefense="0" RoughDefense="0" DefenseMod="25" HPHealedIfDestroyEnemy="25"/>
+		</Update>
+	</UnitPromotions>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_RECRUITMENT"/>
+			<Set HPHealedIfDestroyEnemy="0" HealIfDestroyExcludesBarbarians="0" NearbyEnemyCombatMod="-15" NearbyEnemyCombatRange="1" GiveDomain="DOMAIN_LAND"/>
+		</Update>
+	</UnitPromotions>
 </GameData>

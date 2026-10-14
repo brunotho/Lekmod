@@ -259,6 +259,8 @@ public:
 	int GetLekmodCoastMoveCostMod() const;
 	int GetLekmodCoastAttackMod() const;
 	bool IsLekmodAlwaysHealFriendly() const;
+	int GetLekmodAttackFullHPMod() const;
+	bool IsLekmodPostCombatOnSpawn() const;
 #endif
 	bool HasLekmodCivEffect() const;
 #endif
@@ -568,6 +570,8 @@ protected:
 	int m_iLekmodCoastMoveCostMod;
 	int m_iLekmodCoastAttackMod;
 	bool m_bLekmodAlwaysHealFriendly;
+	int m_iLekmodAttackFullHPMod;
+	bool m_bLekmodPostCombatOnSpawn;
 #endif
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS

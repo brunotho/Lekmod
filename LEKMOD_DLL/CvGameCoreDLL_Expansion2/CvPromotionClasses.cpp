@@ -241,6 +241,10 @@ CvPromotionEntry::CvPromotionEntry():
 	m_iLekmodCoastAttackMod(0),
 	m_bLekmodAlwaysHealFriendly(false),
 #endif
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	m_iLekmodAttackFullHPMod(0),
+	m_bLekmodPostCombatOnSpawn(false),
+#endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod(0),
 	m_bNoAdjacentRangedAttack(false),
@@ -923,6 +927,10 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_iLekmodCoastMoveCostMod = kResults.GetInt("CoastMoveCostMod");
 	m_iLekmodCoastAttackMod = kResults.GetInt("CoastAttackMod");
 	m_bLekmodAlwaysHealFriendly = kResults.GetBool("AlwaysHealFriendly");
+#endif
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	m_iLekmodAttackFullHPMod = kResults.GetInt("AttackFullHPMod");
+	m_bLekmodPostCombatOnSpawn = kResults.GetBool("PostCombatPromotionOnSpawn");
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod = kResults.GetInt("AdjacentRangedAttackMod");
@@ -2306,6 +2314,16 @@ bool CvPromotionEntry::IsLekmodAlwaysHealFriendly() const
 {
 	return m_bLekmodAlwaysHealFriendly;
 }
+/// Combat modifier attacking a unit at full health (Kris Swordsman: Ambition)
+int CvPromotionEntry::GetLekmodAttackFullHPMod() const
+{
+	return m_iLekmodAttackFullHPMod;
+}
+/// The post-combat random promotion is picked when the unit is created (Kris Swordsman)
+bool CvPromotionEntry::IsLekmodPostCombatOnSpawn() const
+{
+	return m_bLekmodPostCombatOnSpawn;
+}
 #endif
 /// Any of the Phase 6 promotion effects (for the CvUnit lookup list)
 bool CvPromotionEntry::HasLekmodCivEffect() const
@@ -2313,7 +2331,7 @@ bool CvPromotionEntry::HasLekmodCivEffect() const
 	return m_bLekmodFightWellDamaged || m_bLekmodNoFortify || m_iLekmodStrongerEnemyMod != 0 || m_iLekmodAdjacentEnemiesMod != 0
 		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0 || m_iLekmodAuraVsWoundedMod != 0
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
-		|| m_iLekmodFlatMoveCostMod != 0 || m_iLekmodCoastMoveCostMod != 0 || m_iLekmodCoastAttackMod != 0 || m_bLekmodAlwaysHealFriendly
+		|| m_iLekmodFlatMoveCostMod != 0 || m_iLekmodCoastMoveCostMod != 0 || m_iLekmodCoastAttackMod != 0 || m_bLekmodAlwaysHealFriendly || m_iLekmodAttackFullHPMod != 0
 #endif
 		;
 }

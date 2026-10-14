@@ -14750,6 +14750,14 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 	}
 #endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	// Kris Swordsman (Ambition): bonus attacking a unit at full health
+	if (bIsAttacker)
+	{
+		iTempModifier = GetLekmodAttackFullHPMod(pOtherUnit);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_ATTACK_FULL_HP", iTempModifier);
+	}
 	// Tunisian Privateer: bonus attacking a target on a Coast tile
 	if (bIsAttacker)
 	{
@@ -17715,6 +17723,35 @@ int CvUnit::GetLekmodCoastAttackMod(const CvPlot* pTargetPlot) const
 		if (isHasPromotion(aPromotions[i]))
 			iMod += GC.getPromotionInfo(aPromotions[i])->GetLekmodCoastAttackMod();
 	return iMod;
+}
+//	--------------------------------------------------------------------------------
+/// Bonus attacking a unit at full health
+int CvUnit::GetLekmodAttackFullHPMod(const CvUnit* pDefender) const
+{
+	if (pDefender == NULL || pDefender->getDamage() > 0)
+		return 0;
+	int iMod = 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]))
+			iMod += GC.getPromotionInfo(aPromotions[i])->GetLekmodAttackFullHPMod();
+	return iMod;
+}
+//	--------------------------------------------------------------------------------
+/// Random promotions that are normally picked after the first combat are picked now (Kris Swordsman)
+void CvUnit::LekmodApplySpawnRandomPromotions()
+{
+	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	{
+		const PromotionTypes ePromotion = (PromotionTypes)iI;
+		CvPromotionEntry* pkPromotion = GC.getPromotionInfo(ePromotion);
+		if (pkPromotion == NULL || !pkPromotion->HasPostCombatPromotions() || !pkPromotion->IsLekmodPostCombatOnSpawn() || !m_Promotions.HasPromotion(ePromotion))
+			continue;
+		const PromotionTypes eNew = m_Promotions.ChangePromotionAfterCombat(ePromotion);
+		setHasPromotion(ePromotion, false);
+		if (eNew != NO_PROMOTION)
+			setHasPromotion(eNew, true);
+	}
 }
 //	--------------------------------------------------------------------------------
 bool CvUnit::IsLekmodAlwaysHealFriendly() const

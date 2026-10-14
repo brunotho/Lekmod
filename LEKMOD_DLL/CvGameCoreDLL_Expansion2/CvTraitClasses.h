@@ -25,6 +25,7 @@ struct FreeResourceCities
 		, m_bUniqueArea(false)
 		, m_bCycleGroup(false)
 		, m_bClaimPlot(false)
+		, m_iLekmodCoastalQuantity(0)
 	{
 	};
 
@@ -45,6 +46,7 @@ struct FreeResourceCities
 	bool m_bTech;
 	bool m_bUniqueArea;
 	bool m_bClaimPlot;
+	int m_iLekmodCoastalQuantity; // Indonesia: coastal cities on an already used landmass get this many copies (0 = none)
 };
 
 struct MayaBonusChoice
