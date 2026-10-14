@@ -55,6 +55,7 @@ This file records what has been **verified** about how this mod works, and how t
    - **Keep the page lean (user, 2026-10-13):** once an answer is applied, remove the question; the page holds only what still needs the user. Record what was decided in the tracker row's Notes and the changelog instead.
    - Map/Lekmap items are done by the user in a separate folder, so they are Dropped from the tracker.
 8. **Multiplayer test sessions** (agreed 2026-10-08): tests that need a second human player (or a special setup) go on the Notion page **"Multiplayer test sessions"** (sub-page of the checklist), with concrete steps and expected results. Add to it whenever such an item is implemented, and remove items the user reports as passed.
+8b. **Civ tests page** (user, 2026-10-14): the Notion page **"Civ tests (Phase 6)"** (sub-page of the checklist) lists what the user must test by hand for the civ changes: only mechanics, conditions and tooltips; plain numbers Claude checks in the DB. Add an item whenever a civ behaviour is implemented; remove/tick per the user's results, then set the row Playtested.
 9. **The tracker is the single source of item status** (set up 2026-10-07):
    - Notion database **"Tracker (v35.4 port)"**, a sub-page of the checklist. Data source: `collection://311b2761-ecf0-448c-9f6b-81d808f4361c` (query it with the Notion tools).
    - One row per spec item. Columns: Item, ID (LEK-n), Section, **Status**, **Phase**, Where (Mod / Lekmap / Website), Old code, Commits, Notes, Spec (link to the section page).
