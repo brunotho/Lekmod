@@ -50738,10 +50738,10 @@ Nebuchadnezzar II died in Babylon in 562 BC. He is remembered as a successful mi
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_HELP">
-			<Text>Available with the Exploration opener.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Defends itself when embarked; disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
+			<Text>Available with the Exploration opener.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_STRATEGY">
-			<Text>Available to everyone with the Exploration opener; Spain, Portugal, the Netherlands, France and Belgium get it already with Civil Service.[NEWLINE]17 [ICON_STRENGTH] Combat Strength, 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Defends itself when embarked; disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
+			<Text>Available to everyone with the Exploration opener; Spain, Portugal, the Netherlands, France and Belgium get it already with Civil Service.[NEWLINE]17 [ICON_STRENGTH] Combat Strength, 4 [ICON_MOVES] Movement.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_SPAIN_CONQUISTADOR_TEXT"> 
 			<Text>
@@ -101669,7 +101669,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Given to cities founded by a Vanguard Corps.[NEWLINE][NEWLINE]+4 [ICON_HAPPINESS_1] Happiness.[NEWLINE]Your non-air units on this city's tiles heal 5 more HP per turn.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_UNIT_HELP_CONQUISTADOR_SHARED">
-			<Text>Unique Conquistador of Spain, Portugal, the Netherlands, France and Belgium: available with Civil Service or the Exploration opener.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Defends itself when embarked; disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
+			<Text>Unique Conquistador of Spain, Portugal, the Netherlands, France and Belgium: available with Civil Service or the Exploration opener.[NEWLINE][NEWLINE]Founds cities, also on other continents; the new city starts with 2 more [ICON_CITIZEN] Population.[NEWLINE]Needs 2 Horses and 1 Iron.[NEWLINE][NEWLINE]Can move after attacking, gets no defensive terrain bonuses and is weaker when attacking cities.[NEWLINE]Disembarking costs only 1 [ICON_MOVES] Movement (Amphibious II).[NEWLINE][NEWLINE]Becomes obsolete with Railroad and upgrades to the Vanguard Corps.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_UNITCOMBAT_LEKMOD_SPACESHIP">
 			<Text>Spaceship Parts</Text>
@@ -148210,6 +148210,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_LEKMOD_SPREADS_LEFT">
 			<Text>[NEWLINE][NEWLINE]Uses {1_Num} [ICON_MISSION_SPREAD_RELIGION] Religion Spreads ({2_Num} left).</Text>
 		</Row>
+		<Replace Tag="TXT_KEY_PROMOTION_AMBUSH_FORMATION_1_HELP">
+			<Text>+25% [ICON_STRENGTH] Combat Strength VS [COLOR_POSITIVE_TEXT]Mounted[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Armor[ENDCOLOR] units.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_PROMOTION_AMBUSH_FORMATION_2_HELP">
+			<Text>+25% [ICON_STRENGTH] Combat Strength VS [COLOR_POSITIVE_TEXT]Mounted[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Armor[ENDCOLOR] units.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

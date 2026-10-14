@@ -290952,4 +290952,32 @@
 			<Set ReligionSpreads="5" LekmodMinorConvertInfluence="10" LekmodBlessPromotion="PROMOTION_LEKMOD_BLESSED" LekmodBlessSpreadCost="2" LekmodGoldenAgeSpreadCost="4"/>
 		</Update>
 	</Units>
+	<!-- LEKMOD: POST items (2026-10-15): Ambush Formation 25%, Whales -1 Food +1 Production, no Embarkation with Defense -->
+	<UnitPromotions_UnitCombatMods>
+		<Update>
+			<Where PromotionType="PROMOTION_AMBUSH_FORMATION_1"/>
+			<Set Modifier="25"/>
+		</Update>
+		<Update>
+			<Where PromotionType="PROMOTION_AMBUSH_FORMATION_2"/>
+			<Set Modifier="25"/>
+		</Update>
+	</UnitPromotions_UnitCombatMods>
+	<Resource_YieldChanges>
+		<Update>
+			<Where ResourceType="RESOURCE_WHALE" YieldType="YIELD_PRODUCTION"/>
+			<Set Yield="2"/>
+		</Update>
+		<Row>
+			<ResourceType>RESOURCE_WHALE</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>-1</Yield>
+		</Row>
+	</Resource_YieldChanges>
+	<Unit_FreePromotions>
+		<Delete PromotionType="PROMOTION_DEFENSIVE_EMBARKATION"/>
+	</Unit_FreePromotions>
+	<UnitPromotions_UnitCombats>
+		<Delete PromotionType="PROMOTION_DEFENSIVE_EMBARKATION"/>
+	</UnitPromotions_UnitCombats>
 </GameData>

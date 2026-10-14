@@ -791,6 +791,21 @@ Tags: ui
 - Added: build buttons of unique improvements (Kasbah, Chateau, Moai, Terrace Farm...) and Great Person improvements (Academy, Holy Site, Citadel...) show on every tile for units that can build them, greyed out where they can't be built; the tooltip says why and shows the improvement's rules
 - DLL: LEKMOD_BUILD_ALWAYS_VISIBLE (CvPlayer::canBuild skips the tile conditions for the visible test)
 
+AMBUSH FORMATION (PROMOTION_AMBUSH_FORMATION_1, PROMOTION_AMBUSH_FORMATION_2)
+----------------------------------------------------------------------------
+Tags: promotions, combat
+- Changed: Ambush Formation I and II: +25% against Mounted and Armor units (was +33%)
+
+WHALES (RESOURCE_WHALE)
+-----------------------
+Tags: game mechanics
+- Changed: Whales: -1 Food, +1 Production on the tile (the base tile now yields 0 Food, 2 Production, 1 Gold before improvements)
+
+EMBARKATION WITH DEFENSE (PROMOTION_DEFENSIVE_EMBARKATION)
+----------------------------------------------------------
+Tags: promotions, units
+- Removed: Embarkation with Defense: no unit starts with it (Conquistadors) and it can no longer be picked
+
 ANCIENT RUINS OVERHAUL (GOODY_*)
 ---------------------------------
 Tags: ruins, religion, game mechanics
