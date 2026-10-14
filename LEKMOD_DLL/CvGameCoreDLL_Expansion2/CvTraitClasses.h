@@ -101,6 +101,10 @@ enum LekmodTraitInt
 	LTI_TRADE_ROUTE_RELIGION_SPREAD,	// trade routes to own cities and City-States spread the origin's religion like a prophet (Arabia)
 	LTI_RELIGIOUS_ENEMY_TERRITORY_COMBAT,	// % combat strength inside enemy cities' territory that follow your religion (Jerusalem)
 	LTI_FIRST_CITY_BUILDING,			// type: the first city founded gets this building as a real building, kept on capture (Timurids)
+	LTI_FIRST_WRITER_DOUBLE,			// the first Great Writer treatise gives double Culture (England)
+	LTI_GREAT_ARTS_RATE,				// % faster Great Writers, Artists and Musicians (Venice)
+	LTI_MEET_MINOR_GOLD,				// extra Gold for meeting a City-State (Mexico)
+	LTI_FIRST_PLEDGE_ANCHOR,			// resting Influence with the first City-State pledged to, lost for good on war with it (Tonga)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif
@@ -260,6 +264,7 @@ public:
 	{
 		int m_eClass, m_eTech;
 		bool m_bNoClassesNeeded;
+		bool m_bNoPolicyNeeded;
 	};
 	const std::vector<LekmodBuildingClassOverride>& GetLekmodBuildingClassOverrides() const;
 	const std::vector<std::pair<int, int> >& GetLekmodFreeUnits() const; // unit class, tech
@@ -803,6 +808,7 @@ public:
 	int GetLekmodExcessHappinessGAModifier() const;
 	int GetLekmodBuildingClassTech(BuildingClassTypes eClass) const; // -1: no override
 	bool IsLekmodBuildingNoClassesNeeded(BuildingClassTypes eClass) const;
+	bool IsLekmodBuildingNoPolicyNeeded(BuildingClassTypes eClass) const;
 	void LekmodGetFreeUnitsForTech(TechTypes eTech, std::vector<int>& aiUnitClasses) const;
 	int GetLekmodTraitInt(LekmodTraitInt eCol) const; // sum over active traits
 	int GetLekmodTraitType(LekmodTraitInt eCol) const; // first active trait's type, -1 = none

@@ -1438,6 +1438,11 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_FOUNDING_UNIT_EFFECTS
 // Units.PolicyAlternateTech: the tech unlocks the unit without its PolicyType (shared unique Conquistador)
 #define LEKMOD_POLICY_ALTERNATE_TECH
+#define LEKMOD_CIV_FLAG_FIRST_WRITER_USED 1
+// Batch I (LEKMOD_CIV_TRAIT_FLAGS): trait ints for England's first Great Writer treatise (doubled), Venice's Writer/Artist/
+// Musician rate, Mexico's Gold for meeting City-States, Tonga's resting Influence with the first City-State pledged to;
+// saved player fields m_iLekmodCivFlags / m_iLekmodFirstPledgeMinor; Trait_LekmodBuildingClassOverrides.NoPolicyNeeded (China);
+// Buildings.LekmodTradeRecipientGoldPerEra / LekmodInternalTradePerPartnerMod (Hanse; part of LEKMOD_CANAL_PROJECT)
 // Buildings.LekmodPrereqTechOr: the building is also available with this tech instead of its PrereqTech (Tonga's Fale Koloa:
 // Sailing or Bronze Working). Part of LEKMOD_CIV_ONLY_BUILDINGS.
 // Non-Proliferation (LRC_NUKE_COST active): launching a nuke declares war on every met civilization and City-State, except

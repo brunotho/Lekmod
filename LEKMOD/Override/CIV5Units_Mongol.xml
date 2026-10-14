@@ -147658,7 +147658,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the [ICON_UNIT_INFANTRY] Infantry. Can move after attacking.[NEWLINE]+30% [ICON_STRENGTH] Combat Strength outside [COLOR_POSITIVE_TEXT]Friendly[ENDCOLOR] territory.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_OCEAN_MOVEMENT">
-			<Text>+2 [ICON_MOVES] Movement for all naval units.</Text>
+			<Text>+2 [ICON_MOVES] Movement for all naval units.[NEWLINE][NEWLINE]Your first [ICON_GREAT_WRITER] Great Writer to Write a Political Treatise gives double [ICON_CULTURE] Culture.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_LONGBOWMAN">
 			<Text>Replaces the Crossbowman. Stronger [ICON_RANGE_STRENGTH] Ranged attack and +1 Range, but weaker in melee and 10% more expensive.[NEWLINE]-20% when attacking Cities.</Text>
@@ -147755,7 +147755,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>[COLOR_CULTURE_STORED]* Unique National Wonder (only a specific civ may build one)[ENDCOLOR][NEWLINE][NEWLINE]Unique to Aksum. Replaces the National Epic. The cost goes up the more cities there are in the empire. Must have built a [ICON_BUILDING_MONUMENT] Monument in all cities.[NEWLINE]+4 [ICON_PEACE] Faith.[NEWLINE]All [ICON_BUILDING_MONUMENT] Monuments in the empire provide an additional +1 [ICON_FOOD] Food, +1 [ICON_PRODUCTION] Production, +1 [ICON_PEACE] Faith, and +1 [ICON_GOLD] Gold.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_ENHANCED_CULTURE">
-			<Text>+1 [ICON_CULTURE] Culture in the [ICON_CAPITAL] Capital. +2 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]World Wonders[ENDCOLOR].</Text>
+			<Text>+1 [ICON_CULTURE] Culture in the [ICON_CAPITAL] Capital. +2 [ICON_CULTURE] Culture from [COLOR_POSITIVE_TEXT]World Wonders[ENDCOLOR].[NEWLINE]Great Works in the [ICON_CAPITAL] Capital yield +1 [ICON_CULTURE] Culture and +1 [ICON_TOURISM] Tourism.[NEWLINE][NEWLINE]The Eiffel Tower yields twice as much for France.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_GAELIC">
 			<Text>Great Works yield +3 [ICON_PEACE] Faith.[NEWLINE][ICON_PRODUCTION] Production towards [COLOR_GREEN]buildings[ENDCOLOR] required for National Wonders increased by 15%.</Text>
@@ -147925,7 +147925,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Receive a free [ICON_GREAT_SCIENTIST] Great Scientist once you know both [ICON_TECH_PHILOSOPHY] Philosophy and [ICON_TECH_MATHEMATICS] Mathematics.[NEWLINE]Earn [ICON_GREAT_SCIENTIST] Great Scientists 25% faster.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_MEXICO">
-			<Text>Receive a free [ICON_WORKER] Worker upon researching [ICON_TECH_POTTERY] Pottery. Gain +6 [ICON_INFLUENCE] Influence per turn from [ICON_CITY_STATE] City-States that you could demand tribute from but do not. At the start of the first turn, discover the location of any nearby [ICON_CITY_STATE] City-States.[NEWLINE][NEWLINE]Demanding tribute does not break your own pledge of protection.</Text>
+			<Text>Receive a free [ICON_WORKER] Worker upon researching [ICON_TECH_POTTERY] Pottery. Gain +6 [ICON_INFLUENCE] Influence per turn from [ICON_CITY_STATE] City-States that you could demand tribute from but do not. At the start of the first turn, discover the location of any nearby [ICON_CITY_STATE] City-States.[NEWLINE][NEWLINE]Demanding tribute does not break your own pledge of protection.[NEWLINE]+10 [ICON_GOLD] Gold when meeting a [ICON_CITY_STATE] City-State.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_TERRACE_FARM_HELP">
 			<Text>The Terrace Farm can only be built on hills next to a mountain, and does not need a source of fresh water. It provides additional food next to mountains.</Text>
@@ -148042,7 +148042,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Granary. Available with Sailing or Bronze Working instead of Pottery.[NEWLINE]+2 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture. +1 [ICON_FOOD] Food from Wheat, Bananas, Deer and Bison.[NEWLINE][NEWLINE]If 3 or more Coast tiles are next to the city: Fish yield +1 [ICON_GOLD] Gold, +1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith.[NEWLINE]If 3 or more Jungle tiles are next to the city: Jungle yields +1 [ICON_PRODUCTION] Production.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_ISLANDS">
-			<Text>Start the game with Coast tiles and Islands within 6 tiles already explored.</Text>
+			<Text>Start the game with Coast tiles and Islands within 6 tiles already explored.[NEWLINE][NEWLINE]+20 resting [ICON_INFLUENCE] Influence with the first [ICON_CITY_STATE] City-State you pledge to protect.[NEWLINE]Lost for good once you are at war with it.</Text>
 		</Replace>
 		<!-- Phase 6 C++ batch G -->
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_GYMNASIUM">
@@ -148096,6 +148096,25 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_OUTREMER_HELP">
 			<Text>Replaces the Courthouse. Eliminates extra [ICON_HAPPINESS_4] Unhappiness from an [ICON_OCCUPIED] Occupied City.[NEWLINE][NEWLINE]When built: spreads your [ICON_CAPITAL] Capital's [ICON_RELIGION] Religion here like a Great Prophet, and units in or next to the city get +2 [ICON_MOVES] Movement for one turn.</Text>
+		</Replace>
+		<!-- LEKMOD: Phase 6 C++ batch I (2026-10-14) -->
+		<Replace Tag="TXT_KEY_TRAIT_ART_OF_WAR">
+			<Text>Earn [ICON_GREAT_GENERAL] Great Generals 50% faster.[NEWLINE]Units move faster on [ICON_BUILD_ROAD] Roads and [ICON_BUILD_RAILROAD] Railroads.[NEWLINE][NEWLINE]May build the Forbidden Palace and the Porcelain Tower without their Social Policy branch.</Text>
+		</Replace>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_FRANCE_TRAIT">
+			<Text>Capital of France</Text>
+		</Row>
+		<Row Tag="TXT_KEY_WONDER_LEKMOD_EIFFEL_TOWER_FRANCE_HELP">
+			<Text>France's Eiffel Tower: double yields.[NEWLINE]+2 [ICON_CULTURE] Culture.[NEWLINE]+30 [ICON_TOURISM] Tourism and +6 [ICON_HAPPINESS_1] Happiness in the Modern Era.[NEWLINE]+60 [ICON_TOURISM] Tourism and +12 [ICON_HAPPINESS_1] Happiness in the Atomic Era.[NEWLINE]+120 [ICON_TOURISM] Tourism and +24 [ICON_HAPPINESS_1] Happiness in the Information Era.</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_TRAIT_SUPER_CITY_STATE">
+			<Text>Earn [ICON_GREAT_MERCHANT] Great Merchants, [ICON_GREAT_WRITER] Writers, [ICON_GREAT_ARTIST] Artists and [ICON_GREAT_MUSICIAN] Musicians 20% faster.[NEWLINE]A Merchant of Venice appears after researching [ICON_TECH_CURRENCY] Currency.[NEWLINE][NEWLINE]Great Works yield +2 [ICON_GOLD] Gold and +1 [ICON_TOURISM] Tourism.[NEWLINE][NEWLINE]One extra [ICON_SPY] Spy when entering the Renaissance.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_ROYAL_LIBRARY_HELP">
+			<Text>Replaces the Library.[NEWLINE]+1 [ICON_RESEARCH] Science for every 2 [ICON_CITIZEN] Citizens in this City.[NEWLINE]Has a slot for a Great Work.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_HANSE_HELP">
+			<Text>Replaces the Bank. +5% [ICON_PRODUCTION] Production for each Trade Route your civilization has with a City-State.[NEWLINE]Trade routes other players make to a city with a Hanse will generate an extra 1 [ICON_GOLD] Gold for the city owner and the trade route owner gains an additional 1 [ICON_GOLD] Gold for the trade route.[NEWLINE][NEWLINE]Whoever receives a [ICON_INTERNATIONAL_TRADE] Trade Route from this city gets +2 [ICON_GOLD] Gold per Era (2 in the Ancient Era).[NEWLINE][NEWLINE][ICON_INTERNATIONAL_TRADE] Trade Routes from this city to your own cities yield +50% for each foreign civilization or City-State that receives a Trade Route from one of your cities with a Hanse.</Text>
 		</Replace>
 	</Language_en_US>
 	<Language_de_DE>

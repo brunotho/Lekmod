@@ -292,6 +292,8 @@ public:
 	bool IsAirportRebase() const;
 #ifdef LEKMOD_CANAL_PROJECT
 	int GetTradeRouteOriginYieldModifier() const;
+	int GetLekmodTradeRecipientGoldPerEra() const;
+	int GetLekmodInternalTradePerPartnerMod() const;
 #endif
 	bool IsNearRiver() const;
 	bool IsNoMaintenanceOnRiver() const;
@@ -695,6 +697,8 @@ private:
 	bool m_bAirportRebase;
 #ifdef LEKMOD_CANAL_PROJECT
 	int m_iTradeRouteOriginYieldModifier;
+	int m_iLekmodTradeRecipientGoldPerEra;
+	int m_iLekmodInternalTradePerPartnerMod;
 #endif
 	bool m_bNearRiver;
 	bool m_bNoMaintenanceOnRiver;

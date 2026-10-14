@@ -10929,6 +10929,11 @@ int CvUnit::getGivePoliciesCulture()
 		// Modify based on game speed
 		iValue *= GC.getGame().getGameSpeedInfo().getCulturePercent();
 		iValue /= 100;
+#if defined(LEKMOD_CIV_TRAIT_FLAGS) && defined(LEKMOD_POLICY_REWORK)
+		// England: the first treatise gives double Culture
+		if (kPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_FIRST_WRITER_DOUBLE) > 0 && !kPlayer.IsLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_WRITER_USED))
+			iValue *= 2;
+#endif
 	}
 	return iValue;
 }
@@ -10950,6 +10955,10 @@ bool CvUnit::givePolicies()
 	if (iCultureBonus != 0)
 	{
 		kPlayer.changeJONSCulture(iCultureBonus);
+#if defined(LEKMOD_CIV_TRAIT_FLAGS) && defined(LEKMOD_POLICY_REWORK)
+	if (iCultureBonus != 0)
+		kPlayer.SetLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_WRITER_USED);
+#endif
 		// Refresh - we might get to pick a policy this turn
 #ifdef UPDATE_CULTURE_NOTIFICATION_DURING_TURN
 		// if this is the human player, have the popup come up so that he can choose a new policy

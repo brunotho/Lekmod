@@ -2278,7 +2278,9 @@ VENICE (CIVILIZATION_VENICE)
 ----------------------------
 Tags: civs, units
 - Changed: Merchant of Venice: 6 Movement (was 4), Trade Missions give +20% Gold and Influence (was +100%)
-- Note: open: the new UA (needs C++)
+- Changed: new UA Masks and Mirrors: Great Merchants, Writers, Artists and Musicians 20% faster; the Merchant of Venice appears at Currency (was Optics); Great Works +2 Gold +1 Tourism; one extra Spy in the Renaissance
+- Removed: double trade routes, no Settlers, no annexing, buying in puppets and full puppet yields
+- DLL: Traits.LekmodGreatArtsRateModifier (Writer/Artist/Musician rate)
 
 INDIA (CIVILIZATION_INDIA)
 --------------------------
@@ -2318,7 +2320,9 @@ Tags: civs, units
 - Changed: Longbowman: 20 Ranged Strength (was 18), 8 Strength (was 12), costs 88 (was 80), -20% when attacking cities
 - Added: Fulling Mill, a unique Water Mill: Sheep, Cotton, Dyes and Silk next to the city yield +1 Production
 - Added: start bias towards rivers (coast already)
-- Note: open: double first Great Writer, MI6 (need C++; its icon is built)
+- Added: the first Political Treatise of a Great Writer gives double Culture
+- Note: open: MI6 (needs C++; its icon is built)
+- DLL: Traits.LekmodFirstWriterDouble; saved player flags m_iLekmodCivFlags
 - DLL: Building_AdjacentCityPlotYieldChanges (yields on tiles next to the city); building ID 282
 
 INCA (CIVILIZATION_INCA)
@@ -2430,7 +2434,9 @@ GERMANY (CIVILIZATION_GERMANY)
 ------------------------------
 Tags: civs
 - Added: upgrading units costs 10% less Gold
-- Note: open: Hanse trade route effects (need C++)
+- Added: Hanse: whoever receives a Trade Route from a Hanse city gets +2 Gold per era (2 in the Ancient Era)
+- Added: Hanse: Trade Routes from a Hanse city to your own cities +50% for each foreign civilization or City-State that receives a Trade Route from one of your Hanse cities
+- DLL: Buildings.LekmodTradeRecipientGoldPerEra, LekmodInternalTradePerPartnerMod
 - Dev: capital dummy building BUILDING_LEKMOD_GERMANY_TRAIT (ID 280, class 185, UnitUpgradeCostMod -10)
 
 CANADA (CIVILIZATION_CANADA)
@@ -2447,7 +2453,8 @@ Tags: civs
 - Changed: the coast and islands explored at the start reach 6 tiles (was 12)
 - Changed: Fale Koloa (rebuilt, replaces the Granary): available with Sailing or Bronze Working, +2 Food and +1 Culture, the Granary's resource Food; with 3+ Coast tiles next to the city Fish +1 Gold +1 Culture +1 Faith; with 3+ Jungle tiles next to the city Jungle +1 Production
 - Removed: Malae: +1 Faith and the coast Food/Culture
-- Note: open: +20 resting Influence with the first City-State you pledge to (needs C++)
+- Added: +20 resting Influence with the first City-State you pledge to protect, lost for good once you are at war with it
+- DLL: Traits.LekmodFirstPledgeAnchor; saved player field m_iLekmodFirstPledgeMinor
 - DLL: Building_LekmodPlotYields (CityAdjacent conditions), Buildings.LekmodPrereqTechOr (alternative tech)
 
 TUNISIA (CIVILIZATION_TUNISIA)
@@ -2546,7 +2553,9 @@ FRANCE (CIVILIZATION_FRANCE)
 ----------------------------
 Tags: civs
 - Removed: doubled theming bonuses in the capital
-- Note: open: Great Works in the capital, double Eiffel Tower (need C++)
+- Added: Great Works in the capital +1 Culture +1 Tourism
+- Added: France's Eiffel Tower yields double: +2 Culture; +30 Tourism and +6 Happiness in the Modern Era, +60 and +12 in the Atomic Era, +120 and +24 in the Information Era
+- Dev: capital dummy BUILDING_LEKMOD_FRANCE_TRAIT (ID 298, class 200); BUILDING_LEKMOD_EIFFEL_TOWER_FRANCE (ID 297) overrides the Eiffel Tower class
 
 IRELAND (CIVILIZATION_IRELAND)
 ------------------------------
@@ -2612,7 +2621,22 @@ MEXICO (CIVILIZATION_MEXICO)
 ----------------------------
 Tags: civs
 - Added: demanding tribute does not break your own pledge of protection
-- Note: open: the rest of the new UA (+10 Gold for meeting City-States, tribute for Influence; needs C++/UI)
+- Added: +10 Gold for meeting a City-State (40 as the first civilization, 25 otherwise)
+- Note: open: tribute for Influence (needs C++/UI); the old +6 Influence per turn stays until then
+- DLL: Traits.LekmodMeetMinorGold
+
+CHINA (CIVILIZATION_CHINA)
+--------------------------
+Tags: civs
+- Removed: +15% Great General combat bonus
+- Added: units move faster on Roads and Railroads (like the Franks)
+- Added: the Forbidden Palace and the Porcelain Tower need no Social Policy branch
+- DLL: Trait_LekmodBuildingClassOverrides.NoPolicyNeeded
+
+ASSYRIA (CIVILIZATION_ASSYRIA)
+------------------------------
+Tags: civs, buildings
+- Removed: Royal Library: +15 XP for trained units from a filled Great Work slot (its slot takes any Great Work)
 
 AUSTRALIA (CIVILIZATION_AUSTRALIA)
 ----------------------------------

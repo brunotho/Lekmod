@@ -2659,7 +2659,13 @@ void CvMinorCivAI::DoFirstContactWithMajor(TeamTypes eTeam, bool bSuppressMessag
 			if(GET_PLAYER(ePlayer).getTeam() == eTeam)
 			{
 				// Gold gift
-				GET_PLAYER(ePlayer).GetTreasury()->ChangeGold(iGoldGift);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				// trait: extra Gold for meeting a City-State (Mexico), only when there is a gift at all
+				const int iPlayerGoldGift = iGoldGift > 0 ? iGoldGift + GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitInt(LTI_MEET_MINOR_GOLD) : iGoldGift;
+#else
+				const int iPlayerGoldGift = iGoldGift;
+#endif
+				GET_PLAYER(ePlayer).GetTreasury()->ChangeGold(iPlayerGoldGift);
 
 				// Faith gift
 				if(iFaithGift > 0)
@@ -2688,7 +2694,7 @@ void CvMinorCivAI::DoFirstContactWithMajor(TeamTypes eTeam, bool bSuppressMessag
 				{
 					if(!GC.getGame().isNetworkMultiPlayer())	// KWG: Should this be !GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS)
 					{
-						CvPopupInfo kPopupInfo(BUTTONPOPUP_CITY_STATE_GREETING, GetPlayer()->GetID(), iGoldGift, iFaithGift, 0, bFirstMajorCiv);
+						CvPopupInfo kPopupInfo(BUTTONPOPUP_CITY_STATE_GREETING, GetPlayer()->GetID(), iPlayerGoldGift, iFaithGift, 0, bFirstMajorCiv);
 						GC.GetEngineUserInterface()->AddPopup(kPopupInfo);
 						// We are adding a popup that the player must make a choice in, make sure they are not in the end-turn phase.
 						CancelActivePlayerEndTurn();
@@ -6470,6 +6476,11 @@ int CvMinorCivAI::GetFriendshipAnchorWithMajor(PlayerTypes eMajor)
 	}
 #endif
 
+#if defined(LEKMOD_CIV_TRAIT_FLAGS) && defined(LEKMOD_POLICY_REWORK)
+	// Tonga: resting point with the first City-State pledged to (lost for good after a war with it)
+	if (pMajor->GetLekmodFirstPledgeMinor() == GetPlayer()->GetID())
+		iAnchor += pMajor->GetPlayerTraits()->GetLekmodTraitInt(LTI_FIRST_PLEDGE_ANCHOR);
+#endif
 #ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
 	// Statue of Zeus: higher resting point with city-states near the wonder
 	iAnchor += CvCity::LekmodNearbyMinorRestingInfluence(eMajor, GetPlayer()->getCapitalCity());
@@ -7634,6 +7645,11 @@ void CvMinorCivAI::DoChangeProtectionFromMajor(PlayerTypes eMajor, bool bProtect
 			return;
 		}
 		SetTurnLastPledgedProtectionByMajor(eMajor, GC.getGame().getGameTurn());
+#if defined(LEKMOD_CIV_TRAIT_FLAGS) && defined(LEKMOD_POLICY_REWORK)
+		// Tonga: remember the first City-State pledged to
+		if (GET_PLAYER(eMajor).GetPlayerTraits()->GetLekmodTraitInt(LTI_FIRST_PLEDGE_ANCHOR) != 0 && GET_PLAYER(eMajor).GetLekmodFirstPledgeMinor() == -1)
+			GET_PLAYER(eMajor).SetLekmodFirstPledgeMinor(GetPlayer()->GetID());
+#endif
 	}
 	else
 	{
@@ -10938,6 +10954,10 @@ void CvMinorCivAI::DoNowAtWarWithTeam(TeamTypes eTeam)
 			// Friendship change
 			iOldFriendship = GetBaseFriendshipWithMajor(ePlayer);
 			DoFriendshipChangeEffects(ePlayer, iOldFriendship, iWarFriendship);
+#if defined(LEKMOD_CIV_TRAIT_FLAGS) && defined(LEKMOD_POLICY_REWORK)
+			if (GET_PLAYER(ePlayer).GetLekmodFirstPledgeMinor() == GetPlayer()->GetID())
+				GET_PLAYER(ePlayer).SetLekmodFirstPledgeMinor(-2);
+#endif
 
 			// Revoke PtP is there was one
 			if(IsProtectedByMajor(ePlayer))

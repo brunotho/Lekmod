@@ -2989,6 +2989,29 @@ int CvPlayerTrade::GetTradeConnectionOriginBuildingValueModifierTimes100(const T
 	return pOriginCity ? pOriginCity->GetLekmodBuildingStat(7, false) : 0;
 }
 #endif
+#ifdef LEKMOD_CANAL_PROJECT
+/// Hanse: unique foreign partners (civilizations and City-States) of ePlayer's trade routes that start in a city with LekmodInternalTradePerPartnerMod
+int CvPlayerTrade::LekmodGetHansePartnerCount(PlayerTypes ePlayer)
+{
+	CvGameTrade* pTrade = GC.getGame().GetGameTrade();
+	bool abPartner[MAX_CIV_PLAYERS] = {};
+	int iCount = 0;
+	for (uint ui = 0; ui < pTrade->m_aTradeConnections.size(); ui++)
+	{
+		if (pTrade->IsTradeRouteIndexEmpty((int)ui))
+			continue;
+		const TradeConnection& kConnection = pTrade->m_aTradeConnections[ui];
+		if (kConnection.m_eOriginOwner != ePlayer || kConnection.m_eDestOwner == ePlayer || kConnection.m_eDestOwner < 0 || kConnection.m_eDestOwner >= MAX_CIV_PLAYERS)
+			continue;
+		CvCity* pOrigin = CvGameTrade::GetOriginCity(kConnection);
+		if (pOrigin == NULL || pOrigin->GetLekmodBuildingStat(9, false) == 0 || abPartner[kConnection.m_eDestOwner])
+			continue;
+		abPartner[kConnection.m_eDestOwner] = true;
+		iCount++;
+	}
+	return iCount;
+}
+#endif
 int CvPlayerTrade::GetTradeConnectionValueTimes100(const TradeConnection& kTradeConnection, YieldTypes eYield, bool bAsOriginPlayer, bool bIncludeModifiers)
 {
 	// If you put yield cases in this function, I will bite you. Put them in the Helpers or make a better yield grabber.
@@ -3015,6 +3038,16 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100(const TradeConnection& kTrade
 	iTotalValue += iPolicyValue;
 	iTotalValue += iTraitValue;
 	iTotalValue += iReligionValue;
+#ifdef LEKMOD_CANAL_PROJECT
+	// Hanse: the receiver of a foreign trade route from this city gets Gold per era of the route's owner
+	if (eYield == YIELD_GOLD && !bAsOriginPlayer && GC.getGame().GetGameTrade()->IsConnectionInternational(kTradeConnection))
+	{
+		CvCity* pHanseCity = CvGameTrade::GetOriginCity(kTradeConnection);
+		const int iPerEra = pHanseCity ? pHanseCity->GetLekmodBuildingStat(8, false) : 0;
+		if (iPerEra != 0)
+			iTotalValue += iPerEra * (GET_PLAYER(kTradeConnection.m_eOriginOwner).GetCurrentEra() + 1) * 100;
+	}
+#endif
 	// Modifiers
 	if (bIncludeModifiers)
 	{
@@ -3040,6 +3073,16 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100(const TradeConnection& kTrade
 #endif
 #ifdef LEKMOD_CANAL_PROJECT
 		iModifier += GetTradeConnectionOriginBuildingValueModifierTimes100(kTradeConnection, eYield, bAsOriginPlayer);
+#endif
+#ifdef LEKMOD_CANAL_PROJECT
+		// Hanse: internal routes +X% per unique foreign partner of the owner's trade routes from cities with that building
+		if (!GC.getGame().GetGameTrade()->IsConnectionInternational(kTradeConnection))
+		{
+			CvCity* pHanseCity = CvGameTrade::GetOriginCity(kTradeConnection);
+			const int iPerPartner = pHanseCity ? pHanseCity->GetLekmodBuildingStat(9, false) : 0;
+			if (iPerPartner != 0)
+				iModifier += iPerPartner * LekmodGetHansePartnerCount(kTradeConnection.m_eOriginOwner);
+		}
 #endif
 
 		iTotalValue *= iModifier;

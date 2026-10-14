@@ -287,6 +287,10 @@ public:
 	int GetLekmodExternalTradeRangeModifier() const;
 	int GetLekmodPolicyFreeBuildingMaintenance() const;
 	void ChangeLekmodGoldGreatPeoplePurchased(int iChange);
+	bool IsLekmodCivFlag(int iFlag) const { return (m_iLekmodCivFlags & iFlag) != 0; }
+	void SetLekmodCivFlag(int iFlag) { m_iLekmodCivFlags |= iFlag; }
+	int GetLekmodFirstPledgeMinor() const { return m_iLekmodFirstPledgeMinor; }
+	void SetLekmodFirstPledgeMinor(int iMinor) { m_iLekmodFirstPledgeMinor = iMinor; }
 	void SetLekmodIdeologyTurn(int iTurn) { m_iLekmodIdeologyTurn = iTurn; }
 #endif
 #endif
@@ -2444,6 +2448,8 @@ protected:
 	int m_iLekmodTempScienceEndTurn; // the temporary Science applies while the game turn is lower
 	PolicyTypes m_eLekmodExtractionIgnorePolicy; // not saved: only set inside LekmodApplyPolicyExtraction
 	int m_iLekmodGoldGreatPeoplePurchased; // Great People bought with Gold (Policy_GoldPurchaseUnitClasses)
+	int m_iLekmodCivFlags; // one-time civ events (LEKMOD_CIV_FLAG_*)
+	int m_iLekmodFirstPledgeMinor; // first City-State pledged to (Tonga): -1 none yet, -2 lost by war
 #endif
 	std::vector<int> m_aiGreatWorkYieldChange;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)

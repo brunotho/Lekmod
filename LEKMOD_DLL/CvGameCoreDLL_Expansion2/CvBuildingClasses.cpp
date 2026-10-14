@@ -101,6 +101,8 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_bAirportRebase(false),
 #ifdef LEKMOD_CANAL_PROJECT
 	m_iTradeRouteOriginYieldModifier(0),
+	m_iLekmodTradeRecipientGoldPerEra(0),
+	m_iLekmodInternalTradePerPartnerMod(0),
 #endif
 	m_bNearRiver(false),
 	m_bNoMaintenanceOnRiver(false),
@@ -523,6 +525,8 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_bAirportRebase = kResults.GetBool("AirportRebase");
 #ifdef LEKMOD_CANAL_PROJECT
 	m_iTradeRouteOriginYieldModifier = kResults.GetInt("TradeRouteOriginYieldModifier");
+	m_iLekmodTradeRecipientGoldPerEra = kResults.GetInt("LekmodTradeRecipientGoldPerEra");
+	m_iLekmodInternalTradePerPartnerMod = kResults.GetInt("LekmodInternalTradePerPartnerMod");
 #endif
 	m_bNearRiver = kResults.GetBool("NearRiver");
 	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
@@ -2136,6 +2140,18 @@ bool CvBuildingEntry::IsAirportRebase() const
 int CvBuildingEntry::GetTradeRouteOriginYieldModifier() const
 {
 	return m_iTradeRouteOriginYieldModifier;
+}
+
+/// Gold per era (Ancient = 1) for the receiver of each foreign trade route from this city (Hanse)
+int CvBuildingEntry::GetLekmodTradeRecipientGoldPerEra() const
+{
+	return m_iLekmodTradeRecipientGoldPerEra;
+}
+
+/// % more yield on internal trade routes from this city per unique foreign partner of such cities (Hanse)
+int CvBuildingEntry::GetLekmodInternalTradePerPartnerMod() const
+{
+	return m_iLekmodInternalTradePerPartnerMod;
 }
 #endif
 

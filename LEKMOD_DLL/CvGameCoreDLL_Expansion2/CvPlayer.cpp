@@ -1418,6 +1418,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iLekmodTempScienceEndTurn = -1;
 	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
 	m_iLekmodGoldGreatPeoplePurchased = 0;
+	m_iLekmodCivFlags = 0;
+	m_iLekmodFirstPledgeMinor = -1;
 #endif
 	m_iLekmodGoodyForcedRoll = -1;
 	m_iLekmodGoodyPay = -1;
@@ -10565,6 +10567,11 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 #endif
 
 	PolicyBranchTypes eBranch = (PolicyBranchTypes)pBuildingInfo.GetPolicyBranchType();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// trait: this building class needs no policy branch (China: Forbidden Palace, Porcelain Tower)
+	if (eBranch != NO_POLICY_BRANCH_TYPE && GetPlayerTraits()->IsLekmodBuildingNoPolicyNeeded((BuildingClassTypes)pBuildingInfo.GetBuildingClassType()))
+		eBranch = NO_POLICY_BRANCH_TYPE;
+#endif
 	if (eBranch != NO_POLICY_BRANCH_TYPE)
 	{
 		if (!GetPlayerPolicies()->IsPolicyBranchUnlocked(eBranch))
@@ -19479,6 +19486,14 @@ void CvPlayer::recomputeGreatPeopleModifiers()
 	m_iGreatWriterRateModifier += m_pPlayerPolicies->GetNumericModifier(POLICYMOD_GREAT_WRITER_RATE);
 	m_iGreatArtistRateModifier += m_pPlayerPolicies->GetNumericModifier(POLICYMOD_GREAT_ARTIST_RATE);
 	m_iGreatMusicianRateModifier += m_pPlayerPolicies->GetNumericModifier(POLICYMOD_GREAT_MUSICIAN_RATE);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	{
+		const int iArtsTraitMod = m_pTraits->GetLekmodTraitInt(LTI_GREAT_ARTS_RATE);
+		m_iGreatWriterRateModifier += iArtsTraitMod;
+		m_iGreatArtistRateModifier += iArtsTraitMod;
+		m_iGreatMusicianRateModifier += iArtsTraitMod;
+	}
+#endif
 	m_iGreatMerchantRateModifier += m_pPlayerPolicies->GetNumericModifier(POLICYMOD_GREAT_MERCHANT_RATE);
 	m_iGreatScientistRateModifier += m_pPlayerPolicies->GetNumericModifier(POLICYMOD_GREAT_SCIENTIST_RATE);
 	m_iDomesticGreatGeneralRateModifier += m_pPlayerPolicies->GetNumericModifier(POLICYMOD_DOMESTIC_GREAT_GENERAL_RATE);
@@ -31333,6 +31348,8 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iLekmodTempScienceMod;
 	kStream >> m_iLekmodTempScienceEndTurn;
 	kStream >> m_iLekmodGoldGreatPeoplePurchased;
+	kStream >> m_iLekmodCivFlags;
+	kStream >> m_iLekmodFirstPledgeMinor;
 	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
 #endif
 #endif
@@ -31914,6 +31931,8 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iLekmodTempScienceMod;
 	kStream << m_iLekmodTempScienceEndTurn;
 	kStream << m_iLekmodGoldGreatPeoplePurchased;
+	kStream << m_iLekmodCivFlags;
+	kStream << m_iLekmodFirstPledgeMinor;
 #endif
 #endif
 }

@@ -15394,6 +15394,8 @@ int CvCity::GetLekmodBuildingStat(int iStat, bool bMax) const
 		case 6: iValue = pkBuilding->IsAirportRebase() ? 1 : 0; break;
 #ifdef LEKMOD_CANAL_PROJECT
 		case 7: iValue = pkBuilding->GetTradeRouteOriginYieldModifier(); break;
+		case 8: iValue = pkBuilding->GetLekmodTradeRecipientGoldPerEra(); break;
+		case 9: iValue = pkBuilding->GetLekmodInternalTradePerPartnerMod(); break;
 #endif
 		}
 		if (iValue == 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)

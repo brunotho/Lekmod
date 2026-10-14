@@ -2026,9 +2026,10 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 			"LekmodStartMovesImprovement", "LekmodStartMovesImprovementChange", "LekmodNoTechBuild", "LekmodStartMovesRouteWorker",
 			"LekmodStartTurnFounderMoves", "LekmodStartMeleePromotion", "LekmodSecondCityBuilding", "LekmodOceanWithoutAstronomy",
 			"LekmodFoundClaimResource", "LekmodFoundClaimResourceRange", "LekmodTradeRouteReligionSpread", "LekmodReligiousEnemyTerritoryCombat",
-			"LekmodFirstCityBuilding" };
+			"LekmodFirstCityBuilding", "LekmodFirstWriterDouble", "LekmodGreatArtsRateModifier", "LekmodMeetMinorGold",
+			"LekmodFirstPledgeAnchor" };
 		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false,
-			true, false, false, true, true, false, true, false, false, false, true };
+			true, false, false, true, true, false, true, false, false, false, true, false, false, false, false };
 		for (int i = 0; i < NUM_LEKMOD_TRAIT_INTS; i++)
 			m_aiLekmodTraitInts[i] = s_abType[i] ? GC.getInfoTypeForString(kResults.GetText(s_aszNames[i]), true) : kResults.GetInt(s_aszNames[i]);
 	}
@@ -3127,7 +3128,7 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 		Database::Results* pResults = kUtility.GetResults(strKey);
 		if (pResults == NULL)
 		{
-			pResults = kUtility.PrepareResults(strKey, "SELECT BuildingClasses.ID, coalesce(Technologies.ID, -1), NoClassesNeeded FROM Trait_LekmodBuildingClassOverrides "
+			pResults = kUtility.PrepareResults(strKey, "SELECT BuildingClasses.ID, coalesce(Technologies.ID, -1), NoClassesNeeded, NoPolicyNeeded FROM Trait_LekmodBuildingClassOverrides "
 				"INNER JOIN BuildingClasses ON BuildingClasses.Type = BuildingClassType LEFT JOIN Technologies ON Technologies.Type = PrereqTech WHERE TraitType = ?");
 		}
 		pResults->Bind(1, szTraitType);
@@ -3137,6 +3138,7 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 			kRow.m_eClass = pResults->GetInt(0);
 			kRow.m_eTech = pResults->GetInt(1);
 			kRow.m_bNoClassesNeeded = pResults->GetInt(2) != 0;
+			kRow.m_bNoPolicyNeeded = pResults->GetInt(3) != 0;
 			m_aLekmodBuildingClassOverrides.push_back(kRow);
 		}
 		pResults->Reset();
@@ -5610,6 +5612,20 @@ bool CvPlayerTraits::IsLekmodBuildingNoClassesNeeded(BuildingClassTypes eClass) 
 		const std::vector<CvTraitEntry::LekmodBuildingClassOverride>& aRows = pkTraitInfo->GetLekmodBuildingClassOverrides();
 		for(uint j = 0; j < aRows.size(); j++)
 			if(aRows[j].m_eClass == (int)eClass && aRows[j].m_bNoClassesNeeded)
+				return true;
+	}
+	return false;
+}
+bool CvPlayerTraits::IsLekmodBuildingNoPolicyNeeded(BuildingClassTypes eClass) const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<CvTraitEntry::LekmodBuildingClassOverride>& aRows = pkTraitInfo->GetLekmodBuildingClassOverrides();
+		for(uint j = 0; j < aRows.size(); j++)
+			if(aRows[j].m_eClass == (int)eClass && aRows[j].m_bNoPolicyNeeded)
 				return true;
 	}
 	return false;
