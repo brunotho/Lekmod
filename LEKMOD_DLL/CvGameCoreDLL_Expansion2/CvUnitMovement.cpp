@@ -95,6 +95,12 @@ void CvUnitMovement::GetCostsForMove(const CvUnit* pUnit, const CvPlot* pFromPlo
 		{
 			iRegularCost = iRegularCost * (100 - pUnit->getHillsMovementDiscountPercent()) / 100;
 		}
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+		// Comanche Riders (flat land), Tunisian Privateer (Coast)
+		const int iLekmodMoveCostMod = pUnit->GetLekmodMoveCostMod(pToPlot);
+		if (iLekmodMoveCostMod != 0)
+			iRegularCost = std::max(1, iRegularCost * (100 + iLekmodMoveCostMod) / 100);
+#endif
 	}
 
 	if(pFromPlot->isValidRoute(pUnit) && pToPlot->isValidRoute(pUnit) && (kUnitTeam.isBridgeBuilding() || !bRiverCrossing))

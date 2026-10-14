@@ -132,6 +132,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iLekmodSpyReviveTurnsChange(0),
 	m_bLekmodStolenScienceGold(false),
 	m_iLekmodCoupGoldPerEra(0),
+#ifdef LEKMOD_CITY_VISION_BUILDINGS
+	m_iLekmodCityVisionChange(0),
+#endif
 	m_bLekmodExtraWorldLeaderVote(false),
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL
@@ -559,6 +562,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iLekmodSpyReviveTurnsChange = kResults.GetInt("SpyReviveTurnsChange");
 	m_bLekmodStolenScienceGold = kResults.GetBool("StolenScienceGold");
 	m_iLekmodCoupGoldPerEra = kResults.GetInt("CoupGoldPerEra");
+#ifdef LEKMOD_CITY_VISION_BUILDINGS
+	m_iLekmodCityVisionChange = kResults.GetInt("CityVisionChange");
+#endif
 	m_bLekmodExtraWorldLeaderVote = kResults.GetBool("ExtraWorldLeaderVote");
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL

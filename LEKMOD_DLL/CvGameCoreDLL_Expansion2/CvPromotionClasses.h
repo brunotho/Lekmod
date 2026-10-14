@@ -254,6 +254,12 @@ public:
 	int GetLekmodFarFromCityMod() const;
 	int GetLekmodFarFromCityDistance() const;
 	int GetLekmodAuraVsWoundedMod() const;
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	int GetLekmodFlatMoveCostMod() const;
+	int GetLekmodCoastMoveCostMod() const;
+	int GetLekmodCoastAttackMod() const;
+	bool IsLekmodAlwaysHealFriendly() const;
+#endif
 	bool HasLekmodCivEffect() const;
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
@@ -557,6 +563,12 @@ protected:
 	int m_iLekmodFarFromCityMod;
 	int m_iLekmodFarFromCityDistance;
 	int m_iLekmodAuraVsWoundedMod;
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	int m_iLekmodFlatMoveCostMod;
+	int m_iLekmodCoastMoveCostMod;
+	int m_iLekmodCoastAttackMod;
+	bool m_bLekmodAlwaysHealFriendly;
+#endif
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	int m_iAdjacentRangedAttackMod;

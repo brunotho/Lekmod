@@ -1455,6 +1455,11 @@ Diversify Spain and Australia's NW Discovery bonus
 // UnitPromotions: FightWellDamaged, NoFortify, StrongerEnemyMod, AdjacentEnemiesMod/AdjacentEnemiesNeeded, MovesAfterKill,
 // FarFromCityMod/FarFromCityDistance; looked up from the unit's promotions, no saved unit fields
 #define LEKMOD_CIV_PROMOTION_EFFECTS
+// UnitPromotions (batch J): FlatMoveCostMod / CoastMoveCostMod (% on the move cost into flat land / Coast tiles; Comanche, Privateer),
+// CoastAttackMod (% attacking a target on a Coast tile; Privateer), AlwaysHealFriendly (heals every turn in friendly territory; Comanche)
+#define LEKMOD_CIV_PROMOTION_EFFECTS_J
+// Buildings.CityVisionChange: the city sees this many tiles further, ignoring terrain (Tunisia's Castle)
+#define LEKMOD_CITY_VISION_BUILDINGS
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,
 // Terrain and Feature conditions; Fulling Mill, Isibaya, Australia)
 #define LEKMOD_BUILDING_ADJACENT_CITY_YIELDS

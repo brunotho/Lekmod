@@ -324,6 +324,9 @@ public:
 	int GetSpyReviveTurnsChange() const { return m_iLekmodSpyReviveTurnsChange; }
 	bool IsStolenScienceGold() const { return m_bLekmodStolenScienceGold; }
 	int GetCoupGoldPerEra() const { return m_iLekmodCoupGoldPerEra; }
+#ifdef LEKMOD_CITY_VISION_BUILDINGS
+	int GetCityVisionChange() const { return m_iLekmodCityVisionChange; }
+#endif
 	bool IsExtraWorldLeaderVote() const { return m_bLekmodExtraWorldLeaderVote; }
 #endif
 	const std::vector<LekmodFreshWaterImprovementYield>& GetLekmodFreshWaterImprovementYields() const { return m_aLekmodFreshWaterImprovementYields; }
@@ -734,6 +737,9 @@ private:
 	int m_iLekmodSpyReviveTurnsChange; // MI6: dead spies return this many turns sooner (negative)
 	bool m_bLekmodStolenScienceGold; // MI6: stolen Science also paid out as Gold
 	int m_iLekmodCoupGoldPerEra; // MI6: Gold x (era + 1) for the first successful coup in each City-State
+#ifdef LEKMOD_CITY_VISION_BUILDINGS
+	int m_iLekmodCityVisionChange; // the city sees this many tiles further, ignoring terrain (Tunisia's Castle)
+#endif
 	bool m_bLekmodExtraWorldLeaderVote;
 #endif
 #ifdef LEKMOD_TERRITORY_HEAL

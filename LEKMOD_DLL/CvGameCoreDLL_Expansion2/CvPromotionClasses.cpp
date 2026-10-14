@@ -235,6 +235,12 @@ CvPromotionEntry::CvPromotionEntry():
 	m_iLekmodFarFromCityDistance(0),
 	m_iLekmodAuraVsWoundedMod(0),
 #endif
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	m_iLekmodFlatMoveCostMod(0),
+	m_iLekmodCoastMoveCostMod(0),
+	m_iLekmodCoastAttackMod(0),
+	m_bLekmodAlwaysHealFriendly(false),
+#endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod(0),
 	m_bNoAdjacentRangedAttack(false),
@@ -911,6 +917,12 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_iLekmodFarFromCityMod = kResults.GetInt("FarFromCityMod");
 	m_iLekmodFarFromCityDistance = kResults.GetInt("FarFromCityDistance");
 	m_iLekmodAuraVsWoundedMod = kResults.GetInt("AuraVsWoundedMod");
+#endif
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	m_iLekmodFlatMoveCostMod = kResults.GetInt("FlatMoveCostMod");
+	m_iLekmodCoastMoveCostMod = kResults.GetInt("CoastMoveCostMod");
+	m_iLekmodCoastAttackMod = kResults.GetInt("CoastAttackMod");
+	m_bLekmodAlwaysHealFriendly = kResults.GetBool("AlwaysHealFriendly");
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod = kResults.GetInt("AdjacentRangedAttackMod");
@@ -2273,11 +2285,37 @@ int CvPromotionEntry::GetLekmodAuraVsWoundedMod() const
 {
 	return m_iLekmodAuraVsWoundedMod;
 }
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+/// % change of the move cost into flat land without a rough feature (Comanche Riders)
+int CvPromotionEntry::GetLekmodFlatMoveCostMod() const
+{
+	return m_iLekmodFlatMoveCostMod;
+}
+/// % change of the move cost into Coast tiles (Tunisian Privateer)
+int CvPromotionEntry::GetLekmodCoastMoveCostMod() const
+{
+	return m_iLekmodCoastMoveCostMod;
+}
+/// Combat modifier attacking a target on a Coast tile (Tunisian Privateer)
+int CvPromotionEntry::GetLekmodCoastAttackMod() const
+{
+	return m_iLekmodCoastAttackMod;
+}
+/// Heals every turn in friendly territory, even after acting (Comanche Riders)
+bool CvPromotionEntry::IsLekmodAlwaysHealFriendly() const
+{
+	return m_bLekmodAlwaysHealFriendly;
+}
+#endif
 /// Any of the Phase 6 promotion effects (for the CvUnit lookup list)
 bool CvPromotionEntry::HasLekmodCivEffect() const
 {
 	return m_bLekmodFightWellDamaged || m_bLekmodNoFortify || m_iLekmodStrongerEnemyMod != 0 || m_iLekmodAdjacentEnemiesMod != 0
-		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0 || m_iLekmodAuraVsWoundedMod != 0;
+		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0 || m_iLekmodAuraVsWoundedMod != 0
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+		|| m_iLekmodFlatMoveCostMod != 0 || m_iLekmodCoastMoveCostMod != 0 || m_iLekmodCoastAttackMod != 0 || m_bLekmodAlwaysHealFriendly
+#endif
+		;
 }
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS

@@ -5978,7 +5978,11 @@ void CvPlayer::DoUnitReset()
 		{
 			if (pLoopUnit->hasMoved())
 			{
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+				if (pLoopUnit->isAlwaysHeal() || (pLoopUnit->IsLekmodAlwaysHealFriendly() && pLoopUnit->plot()->IsFriendlyTerritory(pLoopUnit->getOwner())))
+#else
 				if (pLoopUnit->isAlwaysHeal())
+#endif
 				{
 					pLoopUnit->doHeal();
 				}

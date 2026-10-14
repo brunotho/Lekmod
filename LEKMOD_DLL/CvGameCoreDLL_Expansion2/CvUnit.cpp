@@ -14739,6 +14739,16 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_AURA_VS_WOUNDED", iTempModifier);
 		}
 	}
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	// Tunisian Privateer: bonus attacking a target on a Coast tile
+	if (bIsAttacker)
+	{
+		iTempModifier = GetLekmodCoastAttackMod(kInfo.getPlot());
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_COAST_ATTACK", iTempModifier);
+	}
+#endif
 	// Mandekalu Cavalry: bonus far from own cities
 	iTempModifier = GetLekmodFarFromCityMod();
 	iModifier += iTempModifier;
@@ -17662,6 +17672,50 @@ int CvUnit::GetLekmodAuraVsWoundedMod(const CvUnit* pDefender) const
 	}
 	return iBest;
 }
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+//	--------------------------------------------------------------------------------
+/// % change of the move cost into this plot: flat land without a rough feature, or Coast
+int CvUnit::GetLekmodMoveCostMod(const CvPlot* pToPlot) const
+{
+	if (pToPlot == NULL)
+		return 0;
+	const bool bFlat = !pToPlot->isWater() && pToPlot->isFlatlands() && !pToPlot->isRoughGround();
+	const bool bCoast = pToPlot->isShallowWater();
+	if (!bFlat && !bCoast)
+		return 0;
+	int iMod = 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+	{
+		if (!isHasPromotion(aPromotions[i]))
+			continue;
+		CvPromotionEntry* pkPromotion = GC.getPromotionInfo(aPromotions[i]);
+		iMod += bFlat ? pkPromotion->GetLekmodFlatMoveCostMod() : pkPromotion->GetLekmodCoastMoveCostMod();
+	}
+	return iMod;
+}
+//	--------------------------------------------------------------------------------
+int CvUnit::GetLekmodCoastAttackMod(const CvPlot* pTargetPlot) const
+{
+	if (pTargetPlot == NULL || !pTargetPlot->isShallowWater())
+		return 0;
+	int iMod = 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]))
+			iMod += GC.getPromotionInfo(aPromotions[i])->GetLekmodCoastAttackMod();
+	return iMod;
+}
+//	--------------------------------------------------------------------------------
+bool CvUnit::IsLekmodAlwaysHealFriendly() const
+{
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]) && GC.getPromotionInfo(aPromotions[i])->IsLekmodAlwaysHealFriendly())
+			return true;
+	return false;
+}
+#endif
 //	--------------------------------------------------------------------------------
 int CvUnit::GetLekmodFarFromCityMod() const
 {

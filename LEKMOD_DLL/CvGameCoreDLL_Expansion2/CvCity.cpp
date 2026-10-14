@@ -7804,6 +7804,20 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 	if(pBuildingInfo == NULL)
 		return;
 
+#ifdef LEKMOD_CITY_VISION_BUILDINGS
+	// Extra city vision, ignoring terrain: every plot within the range counts as seen while the building stands
+	if (pBuildingInfo->GetCityVisionChange() > 0 && iChange != 0)
+	{
+		const int iRange = GC.getPLOT_VISIBILITY_RANGE() + pBuildingInfo->GetCityVisionChange();
+		for (int iDX = -iRange; iDX <= iRange; iDX++)
+			for (int iDY = -iRange; iDY <= iRange; iDY++)
+			{
+				CvPlot* pLoopPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iRange);
+				if (pLoopPlot != NULL)
+					pLoopPlot->changeVisibilityCount(getTeam(), iChange, NO_INVISIBLE, true, false);
+			}
+	}
+#endif
 	BuildingClassTypes eBuildingClass = (BuildingClassTypes) pBuildingInfo->GetBuildingClassType();
 
 #ifdef LEKMOD_DEFENSE_BUILDINGS

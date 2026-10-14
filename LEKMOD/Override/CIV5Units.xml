@@ -43301,7 +43301,8 @@
 		<Column name="DemographicsBlackout" type="boolean" default="false" />
 		<Column name="SpyReviveTurnsChange" type="integer" default="0" /> <!-- LEKMOD: dead spies return this many turns sooner (MI6: -1) -->
 		<Column name="StolenScienceGold" type="boolean" default="false" /> <!-- LEKMOD: Science stolen by spies is also paid out as Gold (MI6) -->
-		<Column name="CoupGoldPerEra" type="integer" default="0" /> <!-- LEKMOD: Gold x (era + 1) for the first successful coup in each City-State (MI6) --> <!-- LEKMOD: other players see BLACKOUT in the Demographics (Ministry of Truth) -->
+		<Column name="CoupGoldPerEra" type="integer" default="0" />
+		<Column name="CityVisionChange" type="integer" default="0" /> <!-- LEKMOD: the city sees this many tiles further, ignoring terrain (Tunisia Castle: 2) --> <!-- LEKMOD: Gold x (era + 1) for the first successful coup in each City-State (MI6) --> <!-- LEKMOD: other players see BLACKOUT in the Demographics (Ministry of Truth) -->
 		<Column name="ExtraWorldLeaderVote" type="boolean" default="false" /> <!-- LEKMOD: when built, an extra World Leader vote 2 turns later (Extraordinary Session) -->
 		<Column name="GoldenAgePopulationChange" type="integer" default="0" /> <!-- LEKMOD: city population change when the owner starts a golden age (never below 1) --> <!-- LEKMOD: one-time influence with the closest coastal city-state at peace, when built -->
 		<Column name="GreatWorkYieldModifier" type="integer" default="0" /> <!-- LEKMOD: % more yield from great works held in this building (Museum) -->
@@ -214972,6 +214973,11 @@
 		<Column name="FarFromCityMod" type="integer" default="0"/>
 		<Column name="FarFromCityDistance" type="integer" default="0"/>
 		<Column name="AuraVsWoundedMod" type="integer" default="0"/>
+		<!-- LEKMOD_CIV_PROMOTION_EFFECTS_J -->
+		<Column name="FlatMoveCostMod" type="integer" default="0"/>
+		<Column name="CoastMoveCostMod" type="integer" default="0"/>
+		<Column name="CoastAttackMod" type="integer" default="0"/>
+		<Column name="AlwaysHealFriendly" type="boolean" default="false"/>
 	</Table>
 	<UnitPromotions>
 		<Delete />
@@ -256944,6 +256950,36 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_GADRAUHT_AURA</PediaEntry>
 		</Row>
+		<Row>
+			<ID>389</ID>
+			<Type>PROMOTION_LEKMOD_PLAINS_RIDER</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_PLAINS_RIDER</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_PLAINS_RIDER_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<FlatMoveCostMod>-33</FlatMoveCostMod>
+			<AlwaysHealFriendly>true</AlwaysHealFriendly>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_PLAINS_RIDER</PediaEntry>
+		</Row>
+		<Row>
+			<ID>390</ID>
+			<Type>PROMOTION_LEKMOD_CORSAIR</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_CORSAIR</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_CORSAIR_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<CoastMoveCostMod>-33</CoastMoveCostMod>
+			<CoastAttackMod>20</CoastAttackMod>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_CORSAIR</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -289417,4 +289453,31 @@
 			<IconsPerColumn>1</IconsPerColumn>
 		</Row>
 	</IconTextureAtlases>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Comanche Riders, Tunisian Privateer (from scratch), Tunisian Castle vision -->
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_SHOSHONE_COMANCHE_RIDERS</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_PLAINS_RIDER</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Units>
+		<Update>
+			<Where Type="UNIT_TUNISIA_PRIVATEER"/>
+			<Set Combat="24" Cost="128"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_TUNISIA_PRIVATEER" PromotionType="PROMOTION_TUNISIA_PRIVATEER_CAPTURE_SHIP"/>
+		<Delete UnitType="UNIT_TUNISIA_PRIVATEER" PromotionType="PROMOTION_FREE_PILLAGE_MOVES"/>
+		<Row>
+			<UnitType>UNIT_TUNISIA_PRIVATEER</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_CORSAIR</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_TUNISIA_CASTLE"/>
+			<Set CityVisionChange="2"/>
+		</Update>
+	</Buildings>
 </GameData>

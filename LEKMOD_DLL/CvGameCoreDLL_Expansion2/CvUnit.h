@@ -719,6 +719,11 @@ public:
 	int GetLekmodMovesAfterKill() const;
 	int GetLekmodFarFromCityMod() const;
 	int GetLekmodAuraVsWoundedMod(const CvUnit* pDefender) const;
+#ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
+	int GetLekmodMoveCostMod(const CvPlot* pToPlot) const;
+	int GetLekmodCoastAttackMod(const CvPlot* pTargetPlot) const;
+	bool IsLekmodAlwaysHealFriendly() const;
+#endif
 #endif
 	int GetLekmodWoundedDamageMod() const;
 	int GetLekmodAdjacentRangedAttackMod() const;

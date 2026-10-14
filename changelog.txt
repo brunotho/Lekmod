@@ -2461,10 +2461,15 @@ Tags: civs
 
 TUNISIA (CIVILIZATION_TUNISIA)
 ------------------------------
-Tags: civs, buildings
+Tags: civs, buildings, units, naval
 - Changed: their Castle (rebuilt) costs 85 (was 53), 4 Gold maintenance, +4 Faith and +4 Culture with a garrison, still needs no Walls
 - Removed: their Castle's +2 Gold, +2 Faith and +4 Golden Age points
-- Note: open: the Castle's vision, the new UA and the Privateer (need C++)
+- Added: their Castle: the city sees 2 tiles further, and terrain does not block its view
+- Changed: Privateer (rebuilt): same Strength and cost as the regular Privateer (24, was 26; cost 85, was 102)
+- Removed: Privateer: capturing enemy ships and pillaging without movement cost
+- Added: Privateer: Corsair (Coast tiles cost 33% less movement; +20% Combat Strength attacking a target on a Coast tile), lost on upgrade
+- DLL: Buildings.CityVisionChange; UnitPromotions.CoastMoveCostMod, CoastAttackMod (promotion 390)
+- Note: open: the new UA (needs C++)
 
 TIMURIDS (CIVILIZATION_TIMURIDS)
 --------------------------------
@@ -2578,7 +2583,9 @@ Tags: civs, units
 - Changed: Pathfinder now replaces the Warrior (so the Shoshone start with one): 9 Strength (was 8), upgrades to the Swordsman (Composite Bowman from ruins), keeps Native Tongue and ignoring terrain on upgrade
 - Changed: Comanche Riders cost 150 (was 134), need 3 Horses (was 2 Horses and 1 Iron)
 - Removed: Comanche Riders: +1 Movement
-- Note: open: Comanche flat-terrain movement and healing, Native Tongue menu values (need C++/Lua)
+- Added: Comanche Riders: Plains Rider (flat terrain costs 33% less movement; heals every turn in friendly territory, even after acting), lost on upgrade
+- DLL: UnitPromotions.FlatMoveCostMod, AlwaysHealFriendly (promotion 389)
+- Note: open: Native Tongue menu values (needs Lua)
 
 PRUSSIA (CIVILIZATION_PRUSSIA)
 ------------------------------

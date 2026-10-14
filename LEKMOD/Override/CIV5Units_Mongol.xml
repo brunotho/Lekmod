@@ -147716,7 +147716,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Start the game with nearby Coastal tiles and Islands already explored.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_TUNISIA_CASTLE_HELP">
-			<Text>Tunisian replacement for the [ICON_BUILDING_CASTLE] Castle. 20% cheaper and does not require [ICON_BUILDING_WALLS] Walls.[NEWLINE]4 [ICON_GOLD] Gold maintenance.[NEWLINE][NEWLINE]With a garrison: +4 [ICON_PEACE] Faith and +4 [ICON_CULTURE] Culture.</Text>
+			<Text>Tunisian replacement for the [ICON_BUILDING_CASTLE] Castle. 20% cheaper and does not require [ICON_BUILDING_WALLS] Walls.[NEWLINE]4 [ICON_GOLD] Gold maintenance.[NEWLINE][NEWLINE]With a garrison: +4 [ICON_PEACE] Faith and +4 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE]The city sees 2 tiles further, and terrain does not block its view.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_BARLAS_CAVALRY">
 			<Text>Barlas Cavalry</Text>
@@ -147770,7 +147770,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Warrior, also as a starting unit. Stronger.[NEWLINE]Ignores terrain movement costs and chooses its reward from ancient ruins (Native Tongue). Keeps both on upgrade.[NEWLINE]Upgrades to the Swordsman (Composite Bowman from ruins).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_SHOSHONE_COMANCHE_RIDERS">
-			<Text>Replaces the Cavalry. Needs 3 [ICON_RES_HORSE] Horses.</Text>
+			<Text>Replaces the Cavalry. Needs 3 [ICON_RES_HORSE] Horses.[NEWLINE][NEWLINE]Flat terrain costs 33% less movement.[NEWLINE]Heals every turn in friendly territory, even after acting.[NEWLINE]Both are lost on upgrade.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_PROMOTION_HARTE_HELP">
 			<Text>Heals every turn, even after acting.[NEWLINE]+5 HP healing per turn.</Text>
@@ -148123,6 +148123,28 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_MI6_HELP">
 			<Text>[COLOR_CYAN]* National Wonder (each player may build one)[ENDCOLOR][NEWLINE][NEWLINE]Replaces the National Intelligence Agency.[NEWLINE]Provides an additional spy and levels up all your existing spies.[NEWLINE]Also provides a 15% reduction in enemy spy effectiveness.[NEWLINE]Must have a Constabulary in all cities.[NEWLINE][NEWLINE]A dead [ICON_SPY] Spy is replaced 1 turn sooner.[NEWLINE][NEWLINE][ICON_RESEARCH] Science stolen by your spies also gives the same amount of [ICON_GOLD] Gold.[NEWLINE][NEWLINE]The first successful coup in each [ICON_CITY_STATE] City-State gives 150 [ICON_GOLD] Gold per Era (150 in the Ancient Era, 300 in the Classical Era, ...).</Text>
 		</Row>
+		<!-- Phase 6 C++ batch J -->
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_PLAINS_RIDER">
+			<Text>Plains Rider</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_PLAINS_RIDER_HELP">
+			<Text>Flat terrain costs 33% less movement.[NEWLINE][NEWLINE]Heals every turn in friendly territory, even after acting.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_CORSAIR">
+			<Text>Corsair</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_CORSAIR_HELP">
+			<Text>Coast tiles cost 33% less movement.[NEWLINE][NEWLINE]+20% [ICON_STRENGTH] Combat Strength when attacking a target on a Coast tile.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_COAST_ATTACK">
+			<Text>Attacking on the Coast</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_UNIT_TUNISIA_PRIVATEER_HELP">
+			<Text>Replaces the Privateer.[NEWLINE][NEWLINE]Coast tiles cost 33% less movement.[NEWLINE]+20% [ICON_STRENGTH] Combat Strength when attacking a target on a Coast tile.[NEWLINE]Both are lost on upgrade.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_TUNISIA_PRIVATEER_STRATEGY">
+			<Text>Tunisia's Privateer moves faster along the Coast and hits harder there. Use it to raid coastal waters and trade routes close to land.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>
