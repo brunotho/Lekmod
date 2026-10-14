@@ -291068,11 +291068,6 @@
 			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
 			<Experience>15</Experience>
 		</Row>
-		<Row>
-			<BuildingType>BUILDING_HUBBLE</BuildingType>
-			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
-			<Experience>15</Experience>
-		</Row>
 	</Building_UnitCombatFreeExperiences>
 	<Building_UnitCombatProductionModifiers>
 		<Delete BuildingType="BUILDING_TEMPLE_ARTEMIS"/>
@@ -291168,4 +291163,16 @@
 			<Set ImprovementIgnoresFreshWater="true"/>
 		</Update>
 	</Resources>
+	<Table name="Building_LekmodGlobalUnitCombatFreeExperiences">
+		<Column name="BuildingType" type="text" reference="Buildings(Type)"/>
+		<Column name="UnitCombatType" type="text" reference="UnitCombatInfos(Type)"/>
+		<Column name="Experience" type="integer" default="0"/>
+	</Table>
+	<Building_LekmodGlobalUnitCombatFreeExperiences>
+		<Row>
+			<BuildingType>BUILDING_HUBBLE</BuildingType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+			<Experience>15</Experience>
+		</Row>
+	</Building_LekmodGlobalUnitCombatFreeExperiences>
 </GameData>

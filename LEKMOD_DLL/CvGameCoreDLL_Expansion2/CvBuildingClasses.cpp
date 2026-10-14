@@ -268,6 +268,9 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_ppiEraEnhancedYieldChange(NULL),
 #endif
 	m_piUnitCombatFreeExperience(NULL),
+#ifdef LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
+	m_piLekmodGlobalUnitCombatFreeExperience(NULL),
+#endif
 	m_piUnitCombatProductionModifiers(NULL),
 #ifdef LEKMOD_v34
 	m_piUnitCombatProductionCostModifiers(NULL),
@@ -376,6 +379,9 @@ CvBuildingEntry::~CvBuildingEntry(void)
 	CvDatabaseUtility::SafeDelete2DArray(m_ppiEraEnhancedYieldChange);
 #endif
 	SAFE_DELETE_ARRAY(m_piUnitCombatFreeExperience);
+#ifdef LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
+	SAFE_DELETE_ARRAY(m_piLekmodGlobalUnitCombatFreeExperience);
+#endif
 	SAFE_DELETE_ARRAY(m_piUnitCombatProductionModifiers);
 #ifdef LEKMOD_v34
 	SAFE_DELETE_ARRAY(m_piUnitCombatProductionCostModifiers);
@@ -812,6 +818,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	//kUtility.PopulateArrayByValue(m_piProductionTraits, "Traits", "Building_ProductionTraits", "TraitType", "BuildingType", szBuildingType, "Trait");
 
 	kUtility.PopulateArrayByValue(m_piUnitCombatFreeExperience, "UnitCombatInfos", "Building_UnitCombatFreeExperiences", "UnitCombatType", "BuildingType", szBuildingType, "Experience");
+#ifdef LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
+	kUtility.PopulateArrayByValue(m_piLekmodGlobalUnitCombatFreeExperience, "UnitCombatInfos", "Building_LekmodGlobalUnitCombatFreeExperiences", "UnitCombatType", "BuildingType", szBuildingType, "Experience");
+#endif
 	kUtility.PopulateArrayByValue(m_piUnitCombatProductionModifiers, "UnitCombatInfos", "Building_UnitCombatProductionModifiers", "UnitCombatType", "BuildingType", szBuildingType, "Modifier");
 	kUtility.PopulateArrayByValue(m_piDomainFreeExperience, "Domains", "Building_DomainFreeExperiences", "DomainType", "BuildingType", szBuildingType, "Experience", 0, NUM_DOMAIN_TYPES);
 	kUtility.PopulateArrayByValue(m_piDomainFreeExperiencePerGreatWork, "Domains", "Building_DomainFreeExperiencePerGreatWork", "DomainType", "BuildingType", szBuildingType, "Experience", 0, NUM_DOMAIN_TYPES);
@@ -2946,6 +2955,14 @@ int CvBuildingEntry::GetUnitCombatFreeExperience(int i) const
 	CvAssertMsg(i > -1, "Index out of bounds");
 	return m_piUnitCombatFreeExperience ? m_piUnitCombatFreeExperience[i] : -1;
 }
+#ifdef LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
+int CvBuildingEntry::GetLekmodGlobalUnitCombatFreeExperience(int i) const
+{
+	CvAssertMsg(i < GC.getNumUnitCombatClassInfos(), "Index out of bounds");
+	CvAssertMsg(i > -1, "Index out of bounds");
+	return m_piLekmodGlobalUnitCombatFreeExperience ? m_piLekmodGlobalUnitCombatFreeExperience[i] : 0;
+}
+#endif
 
 /// Free combat experience by unit combat type
 int CvBuildingEntry::GetUnitCombatProductionModifier(int i) const

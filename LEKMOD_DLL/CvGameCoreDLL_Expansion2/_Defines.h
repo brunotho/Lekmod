@@ -930,6 +930,8 @@
 // FoundCity* (one-time effects for a city founded on the resource, with FoundCityTech known) and
 // CityCenter* (production bonuses while a city stands on the resource)
 #define LEKMOD_RESOURCE_CITY_EFFECTS
+// Table Building_LekmodGlobalUnitCombatFreeExperiences: XP for a unit combat class trained in any city of the owner (Hubble: Spaceship Parts)
+#define LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
 // CvPlot::getYieldWithBuild counts the resource for the asking player's team, not the plot owner's
 // (on unowned plots the resource's own yields were missing, e.g. in the resource tile tooltip)
 #define LEKMOD_YIELD_WITH_BUILD_VIEWER_TEAM

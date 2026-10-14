@@ -486,6 +486,9 @@ public:
 	int GetSpecialistCount(int i) const;
 	int GetFreeSpecialistCount(int i) const;
 	int GetUnitCombatFreeExperience(int i) const;
+#ifdef LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
+	int GetLekmodGlobalUnitCombatFreeExperience(int i) const;
+#endif
 	int GetUnitCombatProductionModifier(int i) const;
 #ifdef LEKMOD_v34
 	int GetUnitCombatProductionCostModifier(int i) const;
@@ -888,6 +891,9 @@ private:
 	int** m_ppiEraEnhancedYieldChange;
 #endif
 	int* m_piUnitCombatFreeExperience;
+#ifdef LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
+	int* m_piLekmodGlobalUnitCombatFreeExperience;
+#endif
 	int* m_piUnitCombatProductionModifiers;
 #ifdef LEKMOD_v34
 	int* m_piUnitCombatProductionCostModifiers;

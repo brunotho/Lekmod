@@ -1535,7 +1535,7 @@ Tags: buildings
 WORLD WONDERS (BUILDING_HUBBLE, BUILDING_GREAT_LIGHTHOUSE, BUILDING_ANGKOR_WAT, BUILDING_CHICHEN_ITZA, BUILDING_ALTHING, BUILDING_ARSENAL_OF_VENICE)
 ------------------------------------------------------------------------------------------------------------------------------------------------
 Tags: buildings
-- Changed: Hubble Space Telescope: costs 1050 (was 837); 5 Scientist points (was 3); no Science and no free Recycling Center; keeps +100% Production toward Spaceship Parts; Spaceship Parts built in its city start with 15 XP
+- Changed: Hubble Space Telescope: costs 1050 (was 837); 5 Scientist points (was 3); no Science and no free Recycling Center; keeps +100% Production toward Spaceship Parts; Spaceship Parts built in any of your cities start with 15 XP
 - Changed: Great Lighthouse: naval units trained in the city start with +15 XP; when built, the closest coastal city-state that could give you a trade route quest (met, at peace, reachable by a trade route, not yet connected) asks you for one. Removed: +1 movement and +1 sight for naval units, the free Quinquereme. Keeps the free Lighthouse and +1 Gold on water tiles
 - Changed: Angkor Wat (rebuilt): 1 Culture, 1 Engineer point, a free Garden, farms with fresh water worked by the city yield +1 Faith, 2 Great Work slots that come filled. Removed: the free University, 5 Culture and 5 Science, the Scientist point
 - Changed: Chichen Itza: its city loses 1 Population whenever you enter a Golden Age; 1 Scientist point instead of 1 Engineer point. Removed: its 4 Happiness
@@ -1543,6 +1543,7 @@ Tags: buildings
 - Removed: Arsenal of Venice (can no longer be built)
 - Note: Althing had no Tourism to remove
 - DLL: Buildings.ClosestCoastalMinorTradeQuest, GoldenAgePopulationChange, Building_FreshWaterImprovementYieldChanges (LEKMOD_GREAT_WORK_WONDER_EFFECTS)
+- DLL: Building_LekmodGlobalUnitCombatFreeExperiences (LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS; adds to the player-wide per-unit-type XP that policies use)
 
 TOWER OF BELEM (BUILDING_TOWER_OF_BELEM)
 ---------------------------------------

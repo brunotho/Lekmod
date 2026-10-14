@@ -145043,7 +145043,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_HUBBLE_HELP"> 
-			<Text>+100% [ICON_PRODUCTION] Production when building Spaceship Parts.[NEWLINE]Spaceship Parts built in this city start with 15 Experience.</Text>
+			<Text>+100% [ICON_PRODUCTION] Production when building Spaceship Parts.[NEWLINE]Spaceship Parts built in any of your cities start with 15 Experience.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_HUBBLE_QUOTE"> 
 			<Text>

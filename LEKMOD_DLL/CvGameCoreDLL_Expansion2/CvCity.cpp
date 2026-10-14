@@ -9036,6 +9036,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			if(pkUnitCombatClassInfo)
 			{
 				changeUnitCombatFreeExperience(eUnitCombatClass, pBuildingInfo->GetUnitCombatFreeExperience(iI) * iChange);
+#ifdef LEKMOD_GLOBAL_UNITCOMBAT_XP_BUILDINGS
+				if(pBuildingInfo->GetLekmodGlobalUnitCombatFreeExperience(iI) != 0)
+					GET_PLAYER(getOwner()).changeUnitCombatFreeExperiences(eUnitCombatClass, pBuildingInfo->GetLekmodGlobalUnitCombatFreeExperience(iI) * iChange);
+#endif
 				changeUnitCombatProductionModifier(eUnitCombatClass, pBuildingInfo->GetUnitCombatProductionModifier(iI) * iChange);
 			}
 		}
