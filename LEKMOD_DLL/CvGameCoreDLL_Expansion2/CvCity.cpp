@@ -10136,6 +10136,49 @@ int CvCity::getPopulation() const
 //	Be very careful with setting bReassignPop to false.  This assumes that the caller
 //  is manually adjusting the worker assignments *and* handling the setting of
 //  the CityCitizens unassigned worker value.
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+//	--------------------------------------------------------------------------------
+/// Brunei: a Kampong Ayer on the closest owned water tile for every new population step (Drydocks and Offshore Platforms stay)
+void CvCity::LekmodDoGrowthImprovement(int iOldHighest, int iNewPopulation)
+{
+	const CvPlayerTraits* pTraits = GET_PLAYER(getOwner()).GetPlayerTraits();
+	const int eImprovement = pTraits->GetLekmodTraitType(LTI_GROWTH_IMPROVEMENT);
+	const int iStep = pTraits->GetLekmodTraitInt(LTI_GROWTH_IMPROVEMENT_POP);
+	if (eImprovement == -1 || iStep <= 0)
+		return;
+	const int iRange = isCapital() ? pTraits->GetLekmodTraitInt(LTI_GROWTH_IMPROVEMENT_CAPITAL_RANGE) : pTraits->GetLekmodTraitInt(LTI_GROWTH_IMPROVEMENT_RANGE);
+	const ImprovementTypes eDock = (ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_DOCK", true);
+	const ImprovementTypes ePlatform = (ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_OFFSHORE_PLATFORM", true);
+	for (int iSteps = iNewPopulation / iStep - iOldHighest / iStep; iSteps > 0; iSteps--)
+	{
+		std::vector<CvPlot*> apBest;
+		int iBestDistance = MAX_INT;
+		for (int iDX = -iRange; iDX <= iRange; iDX++)
+			for (int iDY = -iRange; iDY <= iRange; iDY++)
+			{
+				CvPlot* pLoopPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iRange);
+				if (pLoopPlot == NULL || !pLoopPlot->isWater() || pLoopPlot->getOwner() != getOwner())
+					continue;
+				const ImprovementTypes eHere = pLoopPlot->getImprovementType();
+				if (eHere == (ImprovementTypes)eImprovement || (eHere != NO_IMPROVEMENT && (eHere == eDock || eHere == ePlatform)))
+					continue;
+				const int iDistance = plotDistance(getX(), getY(), pLoopPlot->getX(), pLoopPlot->getY());
+				if (iDistance < iBestDistance)
+				{
+					iBestDistance = iDistance;
+					apBest.clear();
+				}
+				if (iDistance == iBestDistance)
+					apBest.push_back(pLoopPlot);
+			}
+		if (apBest.empty())
+			return;
+		CvPlot* pTarget = apBest[GC.getGame().getJonRandNum((int)apBest.size(), "Lekmod growth improvement")];
+		pTarget->setImprovementType((ImprovementTypes)eImprovement);
+		pTarget->SetImprovementPillaged(false);
+	}
+}
+#endif
 void CvCity::setPopulation(int iNewValue, bool bReassignPop /* = true */)
 {
 	VALIDATE_OBJECT
@@ -10172,6 +10215,9 @@ void CvCity::setPopulation(int iNewValue, bool bReassignPop /* = true */)
 
 		if(getPopulation() > getHighestPopulation())
 		{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+			LekmodDoGrowthImprovement(getHighestPopulation(), getPopulation());
+#endif
 			setHighestPopulation(getPopulation());
 		}
 

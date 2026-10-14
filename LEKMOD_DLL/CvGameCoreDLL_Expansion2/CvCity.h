@@ -407,6 +407,9 @@ public:
 
 	int getPopulation() const;
 	void setPopulation(int iNewValue, bool bReassignPop = true);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	void LekmodDoGrowthImprovement(int iOldHighest, int iNewPopulation);
+#endif
 	void changePopulation(int iChange, bool bReassignPop = true);
 
 	long getRealPopulation() const;

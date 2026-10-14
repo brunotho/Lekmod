@@ -4390,6 +4390,16 @@ CvUnit* CvPlayer::initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI,
 		// end added for the tutorial
 	}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Brunei: the first Nelayan comes with a second one
+	if (pUnit != NULL && !IsLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_UNIT_DOUBLED) && GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_UNIT_CLASS_DOUBLE) == (int)pkUnitDef->GetUnitClassType())
+	{
+		SetLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_UNIT_DOUBLED);
+		CvUnit* pExtra = initUnit(eUnit, iX, iY, eUnitAI, eFacingDirection, bNoMove, bSetupGraphical, iMapLayer);
+		if (pExtra != NULL && !pExtra->jumpToNearestValidPlot())
+			pExtra->kill(false);
+	}
+#endif
 	m_kPlayerAchievements.AddUnit(pUnit);
 
 	return pUnit;

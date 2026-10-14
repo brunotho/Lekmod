@@ -138828,14 +138828,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_BRUNEI"> 
-			<Text>
-				All Naval units may heal outside of friendly territory and all Naval Melee units may build improvements on water tiles. Pay 33% less [ICON_GOLD] Gold for Naval Unit Maintenance.
-			</Text>
+			<Text>Your first Nelayan comes with a second one.[NEWLINE][NEWLINE]Every time a city reaches 5, 10, 15... [ICON_CITIZEN] Population, a Kampong Ayer is built on its closest water tile (the capital: up to 4 tiles away, other cities: next to the city). Drydocks and Offshore Platforms are never replaced.[NEWLINE][NEWLINE]Cities connected to the [ICON_CAPITAL] Capital yield +1 [ICON_CULTURE] Culture; the [ICON_CAPITAL] Capital yields +1 [ICON_GOLD] Gold for each of them.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_BRUNEI_SHORT"> 
-			<Text>
-				Sea Nomads
-			</Text>
+			<Text>Abode of Peace</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_BUFFALO_HORNS"> 
 			<Text>
@@ -147730,10 +147726,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces Infantry. Only New Zealand may train it.[NEWLINE]Starts with Haka War Dance (adjacent enemies -10% [ICON_STRENGTH] Combat Strength), Amphibious I, Charge and Mobility.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BRUNEI_REFINERY_HELP">
-			<Text>Unique Building for Brunei. Replaces the [ICON_BUILDING_REFINERY] Oil Refinery.[NEWLINE]Provides 6 [ICON_RES_OIL] Oil, +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold, and +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold from [ICON_RES_OIL] Oil.[NEWLINE]+2 [ICON_HAPPINESS_1] Happiness.</Text>
+			<Text>Unique Building for Brunei. Replaces the [ICON_BUILDING_REFINERY] Oil Refinery and has no limit per empire.[NEWLINE]Provides 6 [ICON_RES_OIL] Oil, +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold, and +3 [ICON_PRODUCTION] Production and +3 [ICON_GOLD] Gold from [ICON_RES_OIL] Oil.[NEWLINE]+2 [ICON_HAPPINESS_1] Happiness.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_AYER_HELP">
-			<Text>Kampong Ayer: +1 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture.[NEWLINE]+1 [ICON_CULTURE] Culture and +2 [ICON_GOLD] Gold with Flight.</Text>
+			<Text>Kampong Ayer: +1 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture.[NEWLINE]+1 [ICON_CULTURE] Culture and +2 [ICON_GOLD] Gold with Flight.[NEWLINE][NEWLINE]Connects a luxury resource or Oil on its tile. Built only by Brunei's growing cities, never by units.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_BURJ_HELP">
 			<Text>Unique Hotel Replacement for the U.A.E. Available at the Radio Technology.[NEWLINE]50% of the [ICON_CULTURE] Culture from World Wonders, Natural Wonders, and Improvements (Landmarks, Moai, Chateau) is added to the [ICON_TOURISM] Tourism output of the city.[NEWLINE][ICON_TOURISM] Tourism output from Great Works +50%.[NEWLINE][NEWLINE]+7 [ICON_GOLD] Gold and +7 [ICON_CULTURE] Culture.</Text>
@@ -148143,6 +148139,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_CITY_NAME_LEKMOD_ADULIS">
 			<Text>Adulis</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_BRUNEI_CONNECTION">
+			<Text>Abode of Peace (connection yields)</Text>
 		</Row>
 	</Language_en_US>
 	<Language_de_DE>

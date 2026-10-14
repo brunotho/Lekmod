@@ -120,6 +120,11 @@ enum LekmodTraitInt
 	LTI_FOUND_RESOURCE,					// type: settling on this resource ... (Aksum: Stone)
 	LTI_FOUND_RESOURCE_TECH,			// type: ... with this tech ...
 	LTI_FOUND_RESOURCE_BUILDING_CLASS,	// type: ... gives the civ's building of this class for free
+	LTI_GROWTH_IMPROVEMENT,				// type: cities place this improvement on a water tile when they reach a new population step (Brunei: Kampong Ayer)
+	LTI_GROWTH_IMPROVEMENT_POP,			// ... every this many citizens
+	LTI_GROWTH_IMPROVEMENT_RANGE,		// ... on the closest owned water tile within this range
+	LTI_GROWTH_IMPROVEMENT_CAPITAL_RANGE,	// ... (capital)
+	LTI_FIRST_UNIT_CLASS_DOUBLE,			// type: the first unit of this class gives a second one (Brunei: Nelayan)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

@@ -211568,6 +211568,11 @@
 		<Column name="LekmodFoundResource" type="text"/>
 		<Column name="LekmodFoundResourceTech" type="text"/>
 		<Column name="LekmodFoundResourceBuildingClass" type="text"/>
+		<Column name="LekmodGrowthImprovement" type="text"/>
+		<Column name="LekmodGrowthImprovementPop" type="integer" default="0"/>
+		<Column name="LekmodGrowthImprovementRange" type="integer" default="0"/>
+		<Column name="LekmodGrowthImprovementCapitalRange" type="integer" default="0"/>
+		<Column name="LekmodFirstUnitClassDouble" type="text"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -289753,4 +289758,147 @@
 			<Food>20</Food>
 		</Row>
 	</BuildFeatures>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Brunei UA Abode of Peace, Kampong Ayer (from scratch), refinery without limit -->
+	<BuildingClasses>
+		<Row>
+			<ID>203</ID>
+			<Type>BUILDINGCLASS_LEKMOD_BRUNEI_CONNECTION</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_BRUNEI_CONNECTION</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>302</ID>
+			<Type>BUILDING_LEKMOD_BRUNEI_CONNECTION</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_BRUNEI_CONNECTION</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_BRUNEI_CONNECTION</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+		</Row>
+	</Buildings>
+	<Building_LekmodConditionalYields>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_BRUNEI_CONNECTION</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<ConnectedToCapital>true</ConnectedToCapital>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_BRUNEI_CONNECTION</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+			<RequiresCapital>true</RequiresCapital>
+			<PerConnectedCity>true</PerConnectedCity>
+		</Row>
+	</Building_LekmodConditionalYields>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_BRUNEI"/>
+			<Set NavalUnitMaintenanceModifier="0" FreeBuilding="BUILDING_LEKMOD_BRUNEI_CONNECTION" LekmodGrowthImprovement="IMPROVEMENT_AYER" LekmodGrowthImprovementPop="5" LekmodGrowthImprovementRange="1" LekmodGrowthImprovementCapitalRange="4" LekmodFirstUnitClassDouble="UNITCLASS_SKIFF"/>
+		</Update>
+	</Traits>
+	<Trait_UnitCombatWorkRateChange>
+		<Delete TraitType="TRAIT_BRUNEI"/>
+	</Trait_UnitCombatWorkRateChange>
+	<Trait_UnitCombatBuilds>
+		<Delete TraitType="TRAIT_BRUNEI"/>
+	</Trait_UnitCombatBuilds>
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_BRUNEI"/>
+	</Trait_FreePromotionUnitCombats>
+	<Unit_Builds>
+		<Delete BuildType="BUILD_AYER"/>
+	</Unit_Builds>
+	<Improvement_ValidTerrains>
+		<Delete ImprovementType="IMPROVEMENT_AYER"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<TerrainType>TERRAIN_COAST</TerrainType>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<TerrainType>TERRAIN_OCEAN</TerrainType>
+		</Row>
+	</Improvement_ValidTerrains>
+	<Improvement_ResourceTypes>
+		<Delete ImprovementType="IMPROVEMENT_AYER"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<ResourceType>RESOURCE_WHALE</ResourceType>
+			<ResourceMakesValid>1</ResourceMakesValid>
+			<ResourceTrade>1</ResourceTrade>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<ResourceType>RESOURCE_PEARLS</ResourceType>
+			<ResourceMakesValid>1</ResourceMakesValid>
+			<ResourceTrade>1</ResourceTrade>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<ResourceType>RESOURCE_OIL</ResourceType>
+			<ResourceMakesValid>1</ResourceMakesValid>
+			<ResourceTrade>1</ResourceTrade>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<ResourceType>RESOURCE_CRAB</ResourceType>
+			<ResourceMakesValid>1</ResourceMakesValid>
+			<ResourceTrade>1</ResourceTrade>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_AYER</ImprovementType>
+			<ResourceType>RESOURCE_CORAL</ResourceType>
+			<ResourceMakesValid>1</ResourceMakesValid>
+			<ResourceTrade>1</ResourceTrade>
+		</Row>
+	</Improvement_ResourceTypes>
+	<Improvements>
+		<Update>
+			<Where Type="IMPROVEMENT_AYER"/>
+			<Set RequiresXAdjacentLand="-1"/>
+		</Update>
+	</Improvements>
+	<BuildingClasses>
+		<Row>
+			<ID>204</ID>
+			<Type>BUILDINGCLASS_LEKMOD_BRUNEI_REFINERY</Type>
+			<DefaultBuilding>BUILDING_BRUNEI_REFINERY</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_BRUNEI_REFINERY"/>
+			<Set BuildingClass="BUILDINGCLASS_LEKMOD_BRUNEI_REFINERY" RequiredCivilization="CIVILIZATION_BRUNEI"/>
+		</Update>
+	</Buildings>
+	<Civilization_BuildingClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_BRUNEI" BuildingClassType="BUILDINGCLASS_REFINERY"/>
+		<Row>
+			<CivilizationType>CIVILIZATION_BRUNEI</CivilizationType>
+			<BuildingClassType>BUILDINGCLASS_REFINERY</BuildingClassType>
+			<BuildingType/>
+		</Row>
+	</Civilization_BuildingClassOverrides>
 </GameData>

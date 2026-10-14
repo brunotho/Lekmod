@@ -2031,11 +2031,13 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 			"LekmodFoundOnImprovementPop", "LekmodFoundOnImprovementGold", "LekmodFoundOnImprovementUnitClass",
 			"LekmodFoundOnImprovementBuildingClass1", "LekmodFoundOnImprovementBuildingClass2", "LekmodFastRouteImprovement",
 			"LekmodFirstCoastalCityBuilding", "LekmodFirstCoastalCityReveal", "LekmodFoundReligionFaith", "LekmodFoundResource",
-			"LekmodFoundResourceTech", "LekmodFoundResourceBuildingClass" };
+			"LekmodFoundResourceTech", "LekmodFoundResourceBuildingClass", "LekmodGrowthImprovement", "LekmodGrowthImprovementPop",
+			"LekmodGrowthImprovementRange", "LekmodGrowthImprovementCapitalRange", "LekmodFirstUnitClassDouble" };
 		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false,
 			true, false, false, true, true, false, true, false, false, false, true, false, false, false, false,
 			false, true, true, false, false, true, true, true, true,
-			true, false, false, true, true, true };
+			true, false, false, true, true, true,
+			true, false, false, false, true };
 		for (int i = 0; i < NUM_LEKMOD_TRAIT_INTS; i++)
 			m_aiLekmodTraitInts[i] = s_abType[i] ? GC.getInfoTypeForString(kResults.GetText(s_aszNames[i]), true) : kResults.GetInt(s_aszNames[i]);
 	}

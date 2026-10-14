@@ -2531,11 +2531,15 @@ Tags: civs, units, naval
 
 BRUNEI (CIVILIZATION_BRUNEI)
 ----------------------------
-Tags: civs, buildings
+Tags: civs, buildings, naval
 - Changed: their Oil Refinery provides 6 Oil (was 2), +3 Production and +3 Gold (was +5 and +3), +2 Happiness
 - Changed: Kampong Ayer: 1 Food and 1 Culture, +1 Culture and +2 Gold with Flight (was 1 Food, 1 Gold, 1 Culture, +1 Culture with Flight, +1 Production with Navigation)
 - Added: start bias towards rivers (coast already)
-- Note: open: the UA rework (incl. Kampong Ayer placement), no refinery limit, the Nelayan (need C++)
+- Changed: their Oil Refinery has no limit per empire
+- Changed: UA Abode of Peace (was Sea Nomads): the first Nelayan comes with a second one; whenever a city reaches 5, 10, 15... Population a Kampong Ayer is built on its closest water tile (capital: within 4 tiles, other cities: next to the city; Drydocks and Offshore Platforms are never replaced); cities connected to the capital +1 Culture, the capital +1 Gold per connected city
+- Removed: naval units healing outside friendly territory, naval melee units building improvements, -33% naval unit maintenance
+- Changed: Kampong Ayer can no longer be built by units; it connects luxuries and Oil on its tile and may stand on Ocean
+- DLL: Traits.LekmodGrowthImprovement*, LekmodFirstUnitClassDouble; dummy building 302 (class 203); refinery class 204
 
 UAE (CIVILIZATION_UAE)
 ----------------------
