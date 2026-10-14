@@ -2227,6 +2227,10 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 #endif
 	if(pkImprovementInfo->IsRequiresFlatlandsOrFreshWater() && !isFlatlands() && !bIsFreshWater)
 	{
+#ifdef LEKMOD_RESOURCE_CITY_EFFECTS
+		// The resource lets its improvement skip the flatland / fresh water rule (Maize: farms on hills)
+		if(!(thisResource != NO_RESOURCE && pkImprovementInfo->IsImprovementResourceMakesValid(thisResource) && GC.getResourceInfo(thisResource)->isImprovementIgnoresFreshWater()))
+#endif
 		return false;
 	}
 

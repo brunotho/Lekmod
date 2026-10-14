@@ -801,6 +801,30 @@ WHALES (RESOURCE_WHALE)
 Tags: game mechanics
 - Changed: Whales: -1 Food, +1 Production on the tile (the base tile now yields 0 Food, 2 Production, 1 Gold before improvements)
 
+TEMPLE AND SHRINE (BUILDING_TEMPLE, BUILDING_SHRINE)
+----------------------------------------------------
+Tags: buildings, religion
+- Changed: Temple: cost 50 -> 67; Shrine: cost 20 -> 26 (the v34.11 costs)
+- Note: unique Temples and Shrines keep their costs
+TEMPLE OF ARTEMIS (BUILDING_TEMPLE_ARTEMIS)
+-------------------------------------------
+Tags: buildings
+Back to its v34.11 version.
+- Changed: needs Honor (the Statue of Zeus no longer does)
+- Changed: +3 Production, +3 Gold, +3 Culture (was +1 Culture) and +1 Great Engineer point
+- Changed: +15% Production and +15 XP for ranged units now also covers naval ranged units and submarines
+- Removed: +15% Growth in the city; +1 Faith from worked Camps
+ZIMBABWE: STONE MASON (BUILDING_STONE_MASON)
+--------------------------------------------
+Tags: civs, buildings
+- Changed: needs an improved Stone, Marble or Obsidian, like the Stone Works
+- Added: +2 City Defense; Stone, Marble and Obsidian +2 Culture
+- Removed: +2 Culture with Masonry
+MAIZE (RESOURCE_MAIZE)
+----------------------
+Tags: game mechanics
+- Changed: Farms can be built on Maize on Hills without fresh water
+- DLL: Resources.ImprovementIgnoresFreshWater (LEKMOD_RESOURCE_CITY_EFFECTS, CvPlot::canHaveImprovement)
 EMBARKATION WITH DEFENSE (PROMOTION_DEFENSIVE_EMBARKATION)
 ----------------------------------------------------------
 Tags: promotions, units
@@ -816,7 +840,7 @@ Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshon
 - Changed: a Trade offer never pays or gains something another offer of the same ruin gives (no "Mobility" next to "Trade 50 Gold for Mobility", no "+13 Food" next to a trade paying Food); if no such trade fits, another reward is offered instead
 - Added: new reward "Free technology": a random ancient era technology you can research
 - Changed: if you don't choose before the turn ends, one of the offers is picked at random
-- Changed: Food: 7 + 2.2 x era x capital population food in the capital; the unit gets Glutton (-10% combat strength, lost on upgrade)
+- Changed: Food: 7 + 2.2 x era x capital population food in the capital; the unit gets Glutton (-30% combat strength, lost on upgrade)
 - Changed: Upgrade: from turn 6; the unit loses 20 HP
 - Changed: Tech: no more free tech; 20-30 x era science instead (max 90); plus half as much gold (rounded to 5); the unit loses three times that much HP (keeps at least 1)
 - Changed: Map: reveals a patchy area of radius 6 and gives 6 experience; until turn 10
@@ -836,7 +860,7 @@ Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshon
 GLUTTON (PROMOTION_GLUTTON)
 ----------------------------
 Tags: promotions, ruins
-NEW. Given by the food ruin. -10% combat strength. Lost on upgrade.
+NEW. Given by the food ruin. -30% combat strength. Lost on upgrade.
 - Dev: icon ABILITY_ATLAS 57 (same as "May Not Melee Attack")
 
 
@@ -1225,8 +1249,8 @@ Several buildings cost more or less to build and keep.
 - Note: the Swiss Ski Resort (Stadium replacement) keeps its cost
 - DLL: Buildings.NukeUnitDamageFixed (LEKMOD_DEFENSE_BUILDINGS); a GDR's Nuke Resistance (20) still wins when lower
 
-RESOURCE BUILDINGS (BUILDING_GROCER, BUILDING_BREWERY, BUILDING_GEMCUTTER, BUILDING_TEXTILE, BUILDING_MINT, BUILDING_FORGE)
-------------------------------------------------------------------------------------------------------------------------
+RESOURCE BUILDINGS (BUILDING_GROCER, BUILDING_BREWERY, BUILDING_GEMCUTTER, BUILDING_TEXTILE, BUILDING_MINT, BUILDING_FORGE, BUILDING_CENSER)
+-------------------------------------------------------------------------------------------------------------------------------------------
 Tags: buildings
 Salt moves to the Grocer, and the Mint, Gem Cutter and Forge make Mountains workable.
 - Changed: Grocer: +2 Food on the building (was 1), no Gold maintenance (was 1), Salt gives +1 Food
@@ -1237,6 +1261,8 @@ Salt moves to the Grocer, and the Mint, Gem Cutter and Forge make Mountains work
 - Added: Mint (and unique replacements): Mountains +2 Gold
 - Added: Forge (and Nubia's Blast Furnace): Mountains +1 Production
 - Note: the Mountain bonuses never apply to natural wonders
+- Changed: Censer Maker and Gem Cutter: cost 50 -> 67, like the other luxury buildings (Brewery, Grocer, Textile Mill, Mint)
+- Note: unique replacements keep their costs (Silversmith, Czech Mint: 50)
 
 RESEARCH LAB, CARAVANSARY, HOTEL (BUILDING_LABORATORY, BUILDING_CARAVANSARY, BUILDING_HOTEL)
 -----------------------------------------------------------------------------------------
@@ -1296,9 +1322,10 @@ New national wonder.
 - DLL: Buildings.RevealResource uses the team's saved force-revealed resource list (building ID 271, class 178)
 - Dev: icon sources in art_sources/buildings/uranium_mapping_project (user art via the Notion page "ART FOR CLAUDE")
 
-REMOVED BELIEFS (BELIEF_SACRED_PATHS, BELIEF_GOD_SEA, BELIEF_WALLS, BELIEF_PROMISED_LAND, BELIEF_GOD_FESTIVALS)
--------------------------------------------------------------------------------------------------------------
+REMOVED BELIEFS (BELIEF_SACRED_PATHS, BELIEF_GOD_SEA, BELIEF_WALLS, BELIEF_PROMISED_LAND, BELIEF_GOD_FESTIVALS, BELIEF_DEVOUT_PERFORMERS, BELIEF_RELIGIOUS_FART)
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 Tags: religion
+- Removed: beliefs Devout Performers and Religious Art
 - Removed: pantheons Spirit Trees, God of the Sea, Goddess of Protection and Goddess of Festivals
 - Removed: founder belief Promised Land
 - Note: Initiation Rites was already gone in v35.4 (only its text was left)
@@ -1478,7 +1505,7 @@ Many wonders get Great Work slots, some come with Great Works already inside, an
 - Changed: Great Library: no Science of its own; each Great Work in it gives +3 Science and +3 Tourism (2 slots)
 - Changed: Great Mosque of Djenne: no Culture or Faith; 2 Happiness (was 3); a free Mosque in the city; 3 slots, 1 comes filled; all filled: +10 Tourism
 - Changed: Hagia Sophia: no free Temple and no Faith; 3 slots, 1 comes filled; all filled: +10 Faith
-- Changed: Statue of Zeus (rebuilt): +10 resting Influence with city-states within 8 tiles; enemy units within 5 tiles of the city have -10% Combat Strength (Fear Aura); 1 slot that comes filled. Removed: its yields, Engineer points, +10% military production and the +15% against cities for all units
+- Changed: Statue of Zeus (rebuilt): no longer needs Honor; +10 resting Influence with city-states within 8 tiles; enemy units within 5 tiles of the city have -10% Combat Strength (Fear Aura); 1 slot that comes filled. Removed: its yields, Engineer points, +10% military production and the +15% against cities for all units
 - Changed: Colossus: costs 250 (like the Oracle, was 185); 1 slot, filled: +4 Gold; when built, +30 Influence with the closest coastal city-state you are at peace with
 - Changed: Hanging Gardens: 2 slots, both filled: +2 Food
 - Changed: Parthenon: 2 slots (the Frieze in one), both filled: +3 Culture
@@ -1508,7 +1535,7 @@ Tags: buildings
 WORLD WONDERS (BUILDING_HUBBLE, BUILDING_GREAT_LIGHTHOUSE, BUILDING_ANGKOR_WAT, BUILDING_CHICHEN_ITZA, BUILDING_ALTHING, BUILDING_ARSENAL_OF_VENICE)
 ------------------------------------------------------------------------------------------------------------------------------------------------
 Tags: buildings
-- Changed: Hubble Space Telescope: costs 1050 (was 837); 5 Scientist points (was 3); no Science and no free Recycling Center; keeps +100% Production toward Spaceship Parts
+- Changed: Hubble Space Telescope: costs 1050 (was 837); 5 Scientist points (was 3); no Science and no free Recycling Center; keeps +100% Production toward Spaceship Parts; Spaceship Parts built in its city start with 15 XP
 - Changed: Great Lighthouse: naval units trained in the city start with +15 XP; when built, the closest coastal city-state that could give you a trade route quest (met, at peace, reachable by a trade route, not yet connected) asks you for one. Removed: +1 movement and +1 sight for naval units, the free Quinquereme. Keeps the free Lighthouse and +1 Gold on water tiles
 - Changed: Angkor Wat (rebuilt): 1 Culture, 1 Engineer point, a free Garden, farms with fresh water worked by the city yield +1 Faith, 2 Great Work slots that come filled. Removed: the free University, 5 Culture and 5 Science, the Scientist point
 - Changed: Chichen Itza: its city loses 1 Population whenever you enter a Golden Age; 1 Scientist point instead of 1 Engineer point. Removed: its 4 Happiness
@@ -2546,6 +2573,7 @@ Tags: civs, buildings
 - Removed: Falu Gruva: +1 Production from Hills, +6 Tourism with Flight
 - Changed: start bias avoids jungle instead of desert (tundra bias kept)
 - Added: strategic resources on Snow +3 Production
+- Removed: gifting a Great Person to a City-State no longer gives 100 Influence and 200 Gold
 - DLL: Trait_LekmodPlotYields
 
 MAURYA (CIVILIZATION_MAURYA)
@@ -2638,7 +2666,7 @@ Tags: civs, buildings
 - Changed: Reislaeufer Post: trained units start with Altitude Training instead of the mountain combat promotion
 - Changed: new UA: other players can't see your Gold ("?" in the trade screen, left out of the Gold row of their Demographics); each of your World Congress proposals that passed gives 2 Delegates (others 1); no unit maintenance while not at war with any civilization or City-State; Mints, Markets, Banks and Stock Exchanges +1 Culture +1 Science
 - Removed: Merchant specialists +2 Production +2 Science
-- Changed: Ski Resort (rebuilt): costs 165 (was 167), +3 Happiness, +5 Culture +5 Gold +5 Tourism for each Mountain the city owns within its working range (was +5 Tourism +2 Gold per nearby Mountain), still needs no Zoo
+- Changed: Ski Resort (rebuilt): costs 165 (was 167), +3 Happiness, Mountain tiles worked by the city +5 Culture +5 Gold, +5 Tourism for each Mountain the city owns within its working range (was +5 Tourism +2 Gold per nearby Mountain), still needs no Zoo
 - Removed: Ski Resort: the flat +5 Tourism and +3 Culture
 - DLL: Traits.LekmodPassedProposalExtraVotes, LekmodNoUnitCostAtPeace; LekmodHiddenGold (read by Lua: Demographics.lua, TradeLogic.lua)
 

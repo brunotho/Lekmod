@@ -4736,6 +4736,7 @@ CvResourceInfo::CvResourceInfo() :
 	m_eWonderProductionModObsoleteEra(NO_ERA),
 #ifdef LEKMOD_RESOURCE_CITY_EFFECTS
 	m_iImprovementBuildTimeChange(0),
+	m_bImprovementIgnoresFreshWater(false),
 	m_eFoundCityTech(NO_TECH),
 	m_iFoundCityPopulation(0),
 	m_iFoundCityFood(0),
@@ -4887,6 +4888,11 @@ EraTypes CvResourceInfo::getWonderProductionModObsoleteEra() const
 int CvResourceInfo::getImprovementBuildTimeChange() const
 {
 	return m_iImprovementBuildTimeChange;
+}
+//------------------------------------------------------------------------------
+bool CvResourceInfo::isImprovementIgnoresFreshWater() const
+{
+	return m_bImprovementIgnoresFreshWater;
 }
 //------------------------------------------------------------------------------
 TechTypes CvResourceInfo::getFoundCityTech() const
@@ -5305,6 +5311,7 @@ bool CvResourceInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility
 	m_eWonderProductionModObsoleteEra = (EraTypes)GC.getInfoTypeForString(szEraType, true);
 #ifdef LEKMOD_RESOURCE_CITY_EFFECTS
 	m_iImprovementBuildTimeChange = kResults.GetInt("ImprovementBuildTimeChange");
+	m_bImprovementIgnoresFreshWater = kResults.GetBool("ImprovementIgnoresFreshWater");
 	m_eFoundCityTech = (TechTypes)GC.getInfoTypeForString(kResults.GetText("FoundCityTech"), true);
 	m_iFoundCityPopulation = kResults.GetInt("FoundCityPopulation");
 	m_iFoundCityFood = kResults.GetInt("FoundCityFood");

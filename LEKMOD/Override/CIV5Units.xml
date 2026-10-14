@@ -46967,8 +46967,7 @@
 			<ConquestProb>100</ConquestProb> 
 			<MaxStartEra>ERA_CLASSICAL</MaxStartEra> 
 			<PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
-			<PolicyBranchType>POLICY_BRANCH_HONOR</PolicyBranchType> 
-			<GreatPeopleRateChange>1</GreatPeopleRateChange> 
+			<GreatPeopleRateChange>1</GreatPeopleRateChange>
 			<ArtDefineTag>STATUE ZEUS</ArtDefineTag> 
 			<DisplayPosition>4</DisplayPosition> 
 			<PortraitIndex>2</PortraitIndex> 
@@ -197436,6 +197435,7 @@
 		<Column name="Special" type="boolean"  default="false"/>
 		<!-- LEKMOD_RESOURCE_CITY_EFFECTS -->
 		<Column name="ImprovementBuildTimeChange" type="integer" default="0"/>
+		<Column name="ImprovementIgnoresFreshWater" type="boolean" default="false"/>
 		<Column name="FoundCityTech" type="text" reference="Technologies(Type)" default="NULL"/>
 		<Column name="FoundCityPopulation" type="integer" default="0"/>
 		<Column name="FoundCityFood" type="integer" default="0"/>
@@ -290980,4 +290980,192 @@
 	<UnitPromotions_UnitCombats>
 		<Delete PromotionType="PROMOTION_DEFENSIVE_EMBARKATION"/>
 	</UnitPromotions_UnitCombats>
+	<!-- LEKMOD: POST items (2026-10-15, batch 2): Ski Resort tiles, beliefs, Hubble, costs, Artemis/Zeus, Stone Mason, Sweden, Glutton -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_CENSER"/>
+			<Set Cost="100"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_GEMCUTTER"/>
+			<Set Cost="100"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_TEMPLE"/>
+			<Set Cost="100"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_SHRINE"/>
+			<Set Cost="40"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_TEMPLE_ARTEMIS"/>
+			<Set PolicyBranchType="POLICY_BRANCH_HONOR" ExcessGrowth="0" GreatPeopleRateChange="1" SpecialistType="SPECIALIST_ENGINEER"/>
+		</Update>
+		<Update>
+			<Where Type="BUILDING_STONE_MASON"/>
+			<Set Defense="200"/>
+		</Update>
+	</Buildings>
+	<Building_NearbyTerrainFreeYields>
+		<Delete BuildingType="BUILDING_SWISS_SKI_RESORT" YieldType="YIELD_CULTURE"/>
+		<Delete BuildingType="BUILDING_SWISS_SKI_RESORT" YieldType="YIELD_GOLD"/>
+	</Building_NearbyTerrainFreeYields>
+	<Building_TerrainYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_SWISS_SKI_RESORT</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SWISS_SKI_RESORT</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>5</Yield>
+		</Row>
+	</Building_TerrainYieldChanges>
+	<Building_ImprovementYieldChanges>
+		<Delete BuildingType="BUILDING_TEMPLE_ARTEMIS"/>
+	</Building_ImprovementYieldChanges>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_TEMPLE_ARTEMIS"/>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>3</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_UnitCombatFreeExperiences>
+		<Delete BuildingType="BUILDING_TEMPLE_ARTEMIS"/>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<Experience>15</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<Experience>15</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+			<Experience>15</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
+			<Experience>15</Experience>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_HUBBLE</BuildingType>
+			<UnitCombatType>UNITCOMBAT_SPACESHIP</UnitCombatType>
+			<Experience>15</Experience>
+		</Row>
+	</Building_UnitCombatFreeExperiences>
+	<Building_UnitCombatProductionModifiers>
+		<Delete BuildingType="BUILDING_TEMPLE_ARTEMIS"/>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_TEMPLE_ARTEMIS</BuildingType>
+			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
+			<Modifier>15</Modifier>
+		</Row>
+	</Building_UnitCombatProductionModifiers>
+	<Building_TechEnhancedYieldChanges>
+		<Delete BuildingType="BUILDING_STONE_MASON"/>
+	</Building_TechEnhancedYieldChanges>
+	<Building_LocalResourceOrs>
+		<Row>
+			<BuildingType>BUILDING_STONE_MASON</BuildingType>
+			<ResourceType>RESOURCE_MARBLE</ResourceType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_STONE_MASON</BuildingType>
+			<ResourceType>RESOURCE_STONE</ResourceType>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_STONE_MASON</BuildingType>
+			<ResourceType>RESOURCE_OBSIDIAN</ResourceType>
+		</Row>
+	</Building_LocalResourceOrs>
+	<Building_ResourceYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_STONE_MASON</BuildingType>
+			<ResourceType>RESOURCE_MARBLE</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_STONE_MASON</BuildingType>
+			<ResourceType>RESOURCE_STONE</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_STONE_MASON</BuildingType>
+			<ResourceType>RESOURCE_OBSIDIAN</ResourceType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+		</Row>
+	</Building_ResourceYieldChanges>
+	<Beliefs>
+		<Delete Type="BELIEF_DEVOUT_PERFORMERS"/>
+		<Delete Type="BELIEF_RELIGIOUS_FART"/>
+	</Beliefs>
+	<Belief_BuildingClassHappiness>
+		<Delete BeliefType="BELIEF_DEVOUT_PERFORMERS"/>
+		<Delete BeliefType="BELIEF_RELIGIOUS_FART"/>
+	</Belief_BuildingClassHappiness>
+	<Belief_BuildingClassTourism>
+		<Delete BeliefType="BELIEF_DEVOUT_PERFORMERS"/>
+		<Delete BeliefType="BELIEF_RELIGIOUS_FART"/>
+	</Belief_BuildingClassTourism>
+	<Belief_BuildingClassYieldChanges>
+		<Delete BeliefType="BELIEF_DEVOUT_PERFORMERS"/>
+		<Delete BeliefType="BELIEF_RELIGIOUS_FART"/>
+	</Belief_BuildingClassYieldChanges>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_DIPLOMACY_GREAT_PEOPLE"/>
+			<Set GreatPersonGiftInfluence="0"/>
+		</Update>
+	</Traits>
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_GLUTTON"/>
+			<Set CombatPercent="-30"/>
+		</Update>
+	</UnitPromotions>
+	<Resources>
+		<Update>
+			<Where Type="RESOURCE_MAIZE"/>
+			<Set ImprovementIgnoresFreshWater="true"/>
+		</Update>
+	</Resources>
 </GameData>

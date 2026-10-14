@@ -1491,6 +1491,7 @@ public:
 	EraTypes getWonderProductionModObsoleteEra() const;
 #ifdef LEKMOD_RESOURCE_CITY_EFFECTS
 	int getImprovementBuildTimeChange() const;
+	bool isImprovementIgnoresFreshWater() const;
 	TechTypes getFoundCityTech() const;
 	int getFoundCityPopulation() const;
 	int getFoundCityFood() const;
@@ -1587,6 +1588,7 @@ protected:
 	int m_iWonderProductionMod;
 #ifdef LEKMOD_RESOURCE_CITY_EFFECTS
 	int m_iImprovementBuildTimeChange;
+	bool m_bImprovementIgnoresFreshWater;
 	TechTypes m_eFoundCityTech;
 	int m_iFoundCityPopulation;
 	int m_iFoundCityFood;
