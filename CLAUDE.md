@@ -309,7 +309,7 @@ Read `art_sources/README.md` before touching any icon, portrait, flag or menu ba
 
 ## 9. Status (update as things change)
 ### Current state (2026-10-14, second session: handoff snapshot)
-- `dev` = v35.4 (`201df6c5`) + ~450 of our commits. **Not pushed** (the user hasn't asked). The installed DLL is the build committed in `68937713` (md5 `e6be4585...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
+- `dev` = v35.4 (`201df6c5`) + ~450 of our commits. **Not pushed** (the user hasn't asked). The installed DLL is the build committed in `30c457c5` (md5 `6484dc58...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
 - **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start. Audited and synced on 2026-10-13.
 - **Phases 1–4 done** (left: Cyrillic and 6/7/8-player lobby, postponed; Mandate of God belief).
