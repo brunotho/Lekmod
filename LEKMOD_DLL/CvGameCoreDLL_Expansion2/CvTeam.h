@@ -410,6 +410,10 @@ public:
 
 	void setForceRevealedResource(ResourceTypes eResource, bool bRevealed);
 	bool isForceRevealedResource(ResourceTypes eResource) const;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// the team may connect / improve this resource: its TechCityTrade, or a member's early tech for it (UAE: Oil with Archaeology)
+	bool LekmodHasResourceTradeTech(ResourceTypes eResource) const;
+#endif
 
 	bool IsResourceObsolete(ResourceTypes eResource);
 

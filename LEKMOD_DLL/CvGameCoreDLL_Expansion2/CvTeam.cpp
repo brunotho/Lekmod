@@ -7679,6 +7679,26 @@ void CvTeam::setForceRevealedResource(ResourceTypes eResource, bool bRevealed)
 }
 
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+bool CvTeam::LekmodHasResourceTradeTech(ResourceTypes eResource) const
+{
+	CvResourceInfo* pkResource = GC.getResourceInfo(eResource);
+	if (pkResource == NULL)
+		return false;
+	if (GetTeamTechs()->HasTech((TechTypes)pkResource->getTechCityTrade()))
+		return true;
+	for (int iPlayer = 0; iPlayer < MAX_MAJOR_CIVS; iPlayer++)
+	{
+		CvPlayer& kMember = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kMember.isAlive() || kMember.getTeam() != GetID())
+			continue;
+		const int eTech = kMember.GetPlayerTraits()->GetLekmodTraitType(LTI_TECH_REVEAL_TECH);
+		if (eTech != -1 && kMember.GetPlayerTraits()->GetLekmodTraitType(LTI_TECH_REVEAL_RESOURCE) == (int)eResource && GetTeamTechs()->HasTech((TechTypes)eTech))
+			return true;
+	}
+	return false;
+}
+#endif
 bool CvTeam::isForceRevealedResource(ResourceTypes eResource) const
 {
 	std::vector<ResourceTypes>::const_iterator it;

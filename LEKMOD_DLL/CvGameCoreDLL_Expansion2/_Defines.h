@@ -1462,6 +1462,9 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_CIV_PROMOTION_EFFECTS_J
 // Buildings.CityVisionChange: the city sees this many tiles further, ignoring terrain (Tunisia's Castle)
 #define LEKMOD_CITY_VISION_BUILDINGS
+// Builds.LekmodAlwaysVisible: the build button shows on every tile for units that have the build (greyed out where it can't be built,
+// the unit panel lists why); unique and Great Person improvements (2026-10-15)
+#define LEKMOD_BUILD_ALWAYS_VISIBLE
 // Improvements.LekmodNoFeature: can't be built on a feature unless Improvement_ValidFeatures lists it (Kasbah: Flood Plains only)
 #define LEKMOD_IMPROVEMENT_NO_FEATURE
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,

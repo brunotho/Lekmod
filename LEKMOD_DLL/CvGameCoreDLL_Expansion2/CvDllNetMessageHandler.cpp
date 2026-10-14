@@ -1402,7 +1402,15 @@ void CvDllNetMessageHandler::ResponseResearch(PlayerTypes ePlayer, TechTypes eTe
 				{
 					if (kPlayer.GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() > 0)
 					{
+#ifdef LEKMOD_SPY_WONDERS
+						const int iLekmodStolen = std::min(kPlayer.GetPlayerTechs()->GetResearchCost(eTech) - kTeam.GetTeamTechs()->GetResearchProgress(eTech), kPlayer.GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom][kPlayer.GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() - 1]);
+						kTeam.GetTeamTechs()->ChangeResearchProgress(eTech, iLekmodStolen, ePlayer);
+						// MI6: the same amount as Gold (the player picked the tech; the automatic pick is in CvPlayerEspionage::DoTurn)
+						if (iLekmodStolen > 0 && CvPlayerEspionage::LekmodPlayerBuildingValue(ePlayer, CvPlayerEspionage::LSB_STOLEN_SCIENCE_GOLD) > 0)
+							kPlayer.GetTreasury()->ChangeGold(iLekmodStolen);
+#else
 						kTeam.GetTeamTechs()->ChangeResearchProgress(eTech, std::min(kPlayer.GetPlayerTechs()->GetResearchCost(eTech) - kTeam.GetTeamTechs()->GetResearchProgress(eTech), kPlayer.GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom][kPlayer.GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() - 1]), ePlayer);
+#endif
 					}
 				}
 				if (kPlayer.GetEspionage()->m_aaPlayerScienceToStealList[ePlayerToStealFrom].size() > 0)

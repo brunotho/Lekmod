@@ -9346,6 +9346,34 @@ bool CvPlayer::LekmodCanGainRuinTrade(int iGain, CvPlot* pPlot, CvUnit* pUnit) c
 	return false;
 }
 
+// What a ruin reward gives, as a bit mask (Food 1, Gold 2, Culture 4, Science 8, Mobility 16); the science ruin also gives Gold
+static int LekmodRuinGoodyMask(GoodyTypes eGoody)
+{
+	CvGoodyInfo kGoodyInfo;
+	if (eGoody == NO_GOODY || !LekmodLoadGoodyInfo(eGoody, kGoodyInfo))
+		return 0;
+	int iMask = 0;
+	if (kGoodyInfo.isFoodEraScale())
+		iMask |= 1;
+	if (kGoodyInfo.getGoldEraFactor() > 0)
+		iMask |= 2;
+	if (kGoodyInfo.isCultureEraTurn())
+		iMask |= 4;
+	if (kGoodyInfo.isScienceEraRuin())
+		iMask |= 8 | 2;
+	if (kGoodyInfo.getFreePromotion() != NO_PROMOTION && kGoodyInfo.getFreePromotion() == GC.getInfoTypeForString("PROMOTION_MOBILITY", true))
+		iMask |= 16;
+	return iMask;
+}
+
+// The same mask for a trade's pay kind (0 Food, 1 Gold, 2 Culture) and gain kind (0 Gold, 1 Science, 2 Culture, 3 city-states, 4 Mobility)
+static int LekmodRuinTradeMask(int iPay, int iGain)
+{
+	static const int s_aiPay[3] = { 1, 2, 4 };
+	static const int s_aiGain[5] = { 2, 8, 4, 0, 16 };
+	return ((iPay >= 0 && iPay < 3) ? s_aiPay[iPay] : 0) | ((iGain >= 0 && iGain < 5) ? s_aiGain[iGain] : 0);
+}
+
 // Valid (pay, gain) pairs for a roll; gold for gold and culture for culture don't count
 void CvPlayer::LekmodGetRuinTradePairs(CvPlot* pPlot, CvUnit* pUnit, int iRoll, std::vector<int>& aiPairs) const
 {
@@ -9569,10 +9597,11 @@ void CvPlayer::LekmodCreateRuinOffers(CvPlot* pPlot, CvUnit* pUnit, const std::v
 	aiRecord.push_back(pUnit != NULL ? pUnit->GetID() : -1);
 	aiRecord.push_back(0);
 
-	while ((int)aiRecord[2] < iWanted && !aePool.empty())
+	// Draw the reward types without replacement (one offer per type)
+	std::vector<GoodyTypes> aeChosen;
+	while ((int)aeChosen.size() < iWanted && !aePool.empty())
 	{
 		GoodyTypes eGoody = aePool[GC.getGame().getJonRandNum(aePool.size(), "Lekmod ruin offer")];
-		// Draw without replacement: one offer per reward type
 		std::vector<GoodyTypes> aeRest;
 		for (uint i = 0; i < aePool.size(); i++)
 		{
@@ -9580,21 +9609,50 @@ void CvPlayer::LekmodCreateRuinOffers(CvPlot* pPlot, CvUnit* pUnit, const std::v
 				aeRest.push_back(aePool[i]);
 		}
 		aePool = aeRest;
+		aeChosen.push_back(eGoody);
+	}
 
+	for (uint iChosen = 0; iChosen < aeChosen.size(); iChosen++)
+	{
+		GoodyTypes eGoody = aeChosen[iChosen];
 		int iRoll = GC.getGame().getJonRandNum(1000, "Lekmod ruin roll");
 		int iPay = -1;
 		int iGain = -1;
 		if (eGoody == eTradeGoody)
 		{
+			// No no-brainer pairs (user, 2026-10-14): the trade neither pays nor gains anything another offer here gives
+			int iOtherMask = 0;
+			for (uint iOther = 0; iOther < aeChosen.size(); iOther++)
+				if (iOther != iChosen)
+					iOtherMask |= LekmodRuinGoodyMask(aeChosen[iOther]);
 			std::vector<int> aiPairs;
-			LekmodGetRuinTradePairs(pPlot, pUnit, iRoll, aiPairs);
-			if (aiPairs.empty())
+			for (int iAttempt = 0; iAttempt < 2 && aiPairs.empty(); iAttempt++)
 			{
-				iRoll = 0;
-				LekmodGetRuinTradePairs(pPlot, pUnit, iRoll, aiPairs);
+				if (iAttempt == 1)
+					iRoll = 0;
+				std::vector<int> aiAll;
+				LekmodGetRuinTradePairs(pPlot, pUnit, iRoll, aiAll);
+				for (uint iPair = 0; iPair < aiAll.size(); iPair++)
+					if ((LekmodRuinTradeMask(aiAll[iPair] / 10, aiAll[iPair] % 10) & iOtherMask) == 0)
+						aiPairs.push_back(aiAll[iPair]);
 			}
 			if (aiPairs.empty())
+			{
+				// no fitting trade: offer another reward instead, if one is left
+				if (!aePool.empty())
+				{
+					aeChosen[iChosen] = aePool[GC.getGame().getJonRandNum(aePool.size(), "Lekmod ruin offer")];
+					std::vector<GoodyTypes> aeRest;
+					for (uint i = 0; i < aePool.size(); i++)
+					{
+						if (aePool[i] != aeChosen[iChosen])
+							aeRest.push_back(aePool[i]);
+					}
+					aePool = aeRest;
+					iChosen--;
+				}
 				continue;
+			}
 			int iPair = aiPairs[GC.getGame().getJonRandNum(aiPairs.size(), "Lekmod ruin trade")];
 			iPay = iPair / 10;
 			iGain = iPair % 10;
@@ -12372,6 +12430,21 @@ bool CvPlayer::IsLekmodImprovementReplaced(ImprovementTypes eImprovement) const
 	return false;
 }
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// UAE: the improvements of the early-revealed resource (Oil: Well, Offshore Platform) can be built with the early tech
+bool CvPlayer::LekmodHasEarlyBuildTech(BuildTypes eBuild) const
+{
+	const int eTech = GetPlayerTraits()->GetLekmodTraitType(LTI_TECH_REVEAL_TECH);
+	const int eResource = GetPlayerTraits()->GetLekmodTraitType(LTI_TECH_REVEAL_RESOURCE);
+	if (eTech == -1 || eResource == -1 || !GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)eTech))
+		return false;
+	CvBuildInfo* pBuildInfo = GC.getBuildInfo(eBuild);
+	if (pBuildInfo == NULL || pBuildInfo->getImprovement() == NO_IMPROVEMENT)
+		return false;
+	CvImprovementEntry* pkImprovement = GC.getImprovementInfo((ImprovementTypes)pBuildInfo->getImprovement());
+	return pkImprovement != NULL && pkImprovement->IsImprovementResourceTrade((ResourceTypes)eResource);
+}
+#endif
 bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, bool bTestVisible, bool bTestGold, bool bTestPlotOwner) const
 {
 #ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
@@ -12385,7 +12458,13 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 		return getBuildingClassCount((BuildingClassTypes)GC.getBuildInfo(eBuild)->getPrereqBuildingClass()) > 0;
 	}
 #endif
+#ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
+	// the visible test skips the tile's conditions for these builds (tech and civilization still count)
+	const bool bLekmodAlwaysVisible = bTestVisible && GC.getBuildInfo(eBuild) && GC.getBuildInfo(eBuild)->IsLekmodAlwaysVisible();
+	if(!bLekmodAlwaysVisible && !(pPlot->canBuild(eBuild, GetID(), bTestVisible, bTestPlotOwner)))
+#else
 	if(!(pPlot->canBuild(eBuild, GetID(), bTestVisible, bTestPlotOwner)))
+#endif
 	{
 		return false;
 	}
@@ -12401,7 +12480,7 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 	if (pBuildInfo->getTechPrereq() != NO_TECH)
 #endif
 	{
-		if (!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)pBuildInfo->getTechPrereq())))
+		if (!(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)pBuildInfo->getTechPrereq())) && !LekmodHasEarlyBuildTech(eBuild))
 		{
 			CvTechEntry* pTechInfo = GC.getTechInfo((TechTypes)pBuildInfo->getTechPrereq());
 			if ((!bTestEra && !bTestVisible) || (pTechInfo && (GetCurrentEra() + 1) < pTechInfo->GetEra()))
@@ -28796,7 +28875,7 @@ void CvPlayer::LekmodApplyPolicyExtraction(PolicyTypes ePolicy)
 		CvResourceInfo* pkResource = (eResource != NO_RESOURCE) ? GC.getResourceInfo(eResource) : NULL;
 		if (pkResource == NULL || pkResource->getResourceUsage() != RESOURCEUSAGE_STRATEGIC)
 			continue;
-		if (!GC.getImprovementInfo(eImprovement)->IsImprovementResourceTrade(eResource) || !GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)pkResource->getTechCityTrade()))
+		if (!GC.getImprovementInfo(eImprovement)->IsImprovementResourceTrade(eResource) || !GET_TEAM(getTeam()).LekmodHasResourceTradeTech(eResource))
 			continue;
 		m_eLekmodExtractionIgnorePolicy = ePolicy;
 		const int iOld = pPlot->getNumResourceForPlayer(GetID());

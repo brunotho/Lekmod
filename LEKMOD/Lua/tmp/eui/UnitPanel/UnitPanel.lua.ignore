@@ -1851,6 +1851,16 @@ function ActionToolTipHandler( control )
 				disabledTip:insertLocalized( "TXT_KEY_LEKMOD_BUILD_BLOCKED_CANAL" )
 			end
 
+			-- LEKMOD: unique and Great Person improvements show on every tile; without a listed reason say so, and show the improvement's rules
+			if build and build.LekmodAlwaysVisible and improvement then
+				if #disabledTip == 0 then
+					disabledTip:insertLocalized( "TXT_KEY_LEKMOD_BUILD_BLOCKED_HERE", strImpRouteKey )
+				end
+				if improvement.Help then
+					disabledTip:insertLocalized( improvement.Help )
+				end
+			end
+
 		-- Not a Worker build, use normal disabled help from XML
 		else
 

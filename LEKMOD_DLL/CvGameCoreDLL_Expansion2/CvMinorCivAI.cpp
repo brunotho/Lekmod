@@ -7653,6 +7653,11 @@ void CvMinorCivAI::DoChangeProtectionFromMajor(PlayerTypes eMajor, bool bProtect
 	}
 	else
 	{
+#if defined(LEKMOD_CIV_TRAIT_FLAGS) && defined(LEKMOD_POLICY_REWORK)
+		// Tonga: the bonus with the first City-State is lost for good when that pledge ends for any reason
+		if (GET_PLAYER(eMajor).GetLekmodFirstPledgeMinor() == GetPlayer()->GetID())
+			GET_PLAYER(eMajor).SetLekmodFirstPledgeMinor(-2);
+#endif
 		if(bPledgeNowBroken)
 		{
 			SetTurnLastPledgeBrokenByMajor(eMajor, GC.getGame().getGameTurn());

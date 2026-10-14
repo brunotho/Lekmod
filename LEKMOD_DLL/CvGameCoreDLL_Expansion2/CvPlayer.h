@@ -363,6 +363,9 @@ public:
 	int GetBuildingClassYieldChange(BuildingClassTypes eBuildingClass, YieldTypes eYieldType);
 
 	bool canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra = false, bool bTestVisible = false, bool bTestGold = true, bool bTestPlotOwner = true) const;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	bool LekmodHasEarlyBuildTech(BuildTypes eBuild) const;
+#endif
 #ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
 	bool IsLekmodImprovementReplaced(ImprovementTypes eImprovement) const;
 #endif
@@ -2461,7 +2464,7 @@ protected:
 	PolicyTypes m_eLekmodExtractionIgnorePolicy; // not saved: only set inside LekmodApplyPolicyExtraction
 	int m_iLekmodGoldGreatPeoplePurchased; // Great People bought with Gold (Policy_GoldPurchaseUnitClasses)
 	int m_iLekmodCivFlags; // one-time civ events (LEKMOD_CIV_FLAG_*)
-	int m_iLekmodFirstPledgeMinor; // first City-State pledged to (Tonga): -1 none yet, -2 lost by war
+	int m_iLekmodFirstPledgeMinor; // first City-State pledged to (Tonga): -1 none yet, -2 lost (that pledge ended)
 	int m_iLekmodCoupGoldUsed0; // MI6 coup Gold already paid: bit per City-State (minor index 0-31)
 	int m_iLekmodCoupGoldUsed1; // minor index 32-63
 	int m_iLekmodDoFBetrayers; // New Zealand: bit per major player who declared war on us during a Declaration of Friendship

@@ -6044,7 +6044,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, int iAcquiringCityID, bool bCheckUn
 						SetResourceLinkedCity(NULL);
 					}
 
-					if(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes) GC.getResourceInfo(getResourceType())->getTechCityTrade()))
+					if(GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType()))
 					{
 #ifdef LEKMOD_PRESERVE_UNDISCOVERED_RESOURCES_ON_REMOVE_IMPROVEMENT
 						if(getImprovementType() != NO_IMPROVEMENT && DoesImprovementConnectResource(getResourceType()))
@@ -6223,7 +6223,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, int iAcquiringCityID, bool bCheckUn
 				if(getResourceType() != NO_RESOURCE)
 				{
 					// Add Resource Quantity to total
-					if(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes) GC.getResourceInfo(getResourceType())->getTechCityTrade()))
+					if(GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType()))
 					{
 #ifdef LEKMOD_PRESERVE_UNDISCOVERED_RESOURCES_ON_REMOVE_IMPROVEMENT
 						if(getImprovementType() != NO_IMPROVEMENT && DoesImprovementConnectResource(getResourceType()))
@@ -7415,11 +7415,11 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue, PlayerTypes eBuilder
 					bool bBuilderHasTech = false;
 					if (eBuilder != NO_PLAYER)
 					{
-						bBuilderHasTech = GET_TEAM(GET_PLAYER(eBuilder).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getResourceInfo(getResourceType())->getTechCityTrade());
+						bBuilderHasTech = GET_TEAM(GET_PLAYER(eBuilder).getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType());
 					}
-					if (bIgnoreResourceTechPrereq && bBuilderHasTech || GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getResourceInfo(getResourceType())->getTechCityTrade()))
+					if (bIgnoreResourceTechPrereq && bBuilderHasTech || GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType()))
 #else
-					if (bIgnoreResourceTechPrereq || GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getResourceInfo(getResourceType())->getTechCityTrade()))
+					if (bIgnoreResourceTechPrereq || GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType()))
 #endif
 					{
 						if(newImprovementEntry.IsImprovementResourceTrade(getResourceType()))
@@ -7466,12 +7466,12 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue, PlayerTypes eBuilder
 					bool bBuilderHasTech = false;
 					if (eBuilder != NO_PLAYER)
 					{
-						bBuilderHasTech = GET_TEAM(GET_PLAYER(eBuilder).getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getResourceInfo(getResourceType())->getTechCityTrade());
+						bBuilderHasTech = GET_TEAM(GET_PLAYER(eBuilder).getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType());
 					}
-					if (IsImprovedByGiftFromMajor() && bBuilderHasTech || GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getResourceInfo(getResourceType())->getTechCityTrade()))
+					if (IsImprovedByGiftFromMajor() && bBuilderHasTech || GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType()))
 #else
 					if (IsImprovedByGiftFromMajor() || // If old improvement was a gift, it ignored our tech limits, so be sure to remove resources properly
-						GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getResourceInfo(getResourceType())->getTechCityTrade()))
+						GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType()))
 #endif
 					{
 						if(GC.getImprovementInfo(eOldImprovement)->IsImprovementResourceTrade(getResourceType()))
@@ -7649,7 +7649,7 @@ void CvPlot::SetImprovementPillaged(bool bPillaged)
 		{
 			if(getTeam() != NO_TEAM)
 			{
-				if(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes) GC.getResourceInfo(getResourceType())->getTechCityTrade()))
+				if(GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)getResourceType()))
 				{
 #ifdef LEKMOD_PRESERVE_UNDISCOVERED_RESOURCES_ON_REMOVE_IMPROVEMENT
 					if(DoesImprovementConnectResource(getResourceType()))

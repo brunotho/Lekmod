@@ -697,6 +697,23 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 				}
 			}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+			// Indonesia: one rule of the group is left out for the whole game (picked from the starting plot, the same on every machine)
+			if (owningPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_CYCLE_GROUP_SKIP_ONE) > 0 && owningPlayer.getStartingPlot() != NULL)
+			{
+				int iGroupSize = 0;
+				for (size_t iAll = 0; iAll < vRules.size(); ++iAll)
+					if (vRules[iAll].m_bCycleGroup && vRules[iAll].m_iGroup == iGroup)
+						iGroupSize++;
+				if (iGroupSize > 1)
+				{
+					const unsigned int uiHash = (unsigned int)owningPlayer.getStartingPlot()->GetPlotIndex() * 2654435761u;
+					const int iSkip = (int)((uiHash >> 13) % (unsigned int)iGroupSize);
+					if (iWantedPriority == iSkip)
+						iWantedPriority++;
+				}
+			}
+#endif
 			const FreeResourceCities* pChosen = NULL;
 
 			for (size_t iRule = 0; iRule < vGroupRules.size(); ++iRule)
@@ -745,6 +762,28 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 			if (pRule->m_bCity)
 			{
 #ifdef LEKMOD_FREE_RESOURCE_CITY_GRANT
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				if (owningPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_FREE_RESOURCE_ON_CITY_TILE) > 0)
+				{
+					// Indonesia: the resource replaces the city tile's resource (kept by the tile on capture);
+					// the city yields of Trait_FreeResourceCityYieldChanges still apply once per city
+					bool bLekmodHasYield = false;
+					for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+						if (GetYieldFromFreeResourceCity((YieldTypes)iYield) != 0)
+							bLekmodHasYield = true;
+					plot()->setResourceType(NO_RESOURCE, 0);
+					plot()->setResourceType(pRule->m_eResource, iLekmodQuantity);
+					if (!bLekmodHasYield)
+						for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+						{
+							const int iYieldChange = owningPlayer.GetPlayerTraits()->GetFreeResourceCityYieldChange((YieldTypes)iYield);
+							if (iYieldChange != 0)
+								ChangeYieldFromFreeResourceCity((YieldTypes)iYield, iYieldChange);
+						}
+					plot()->updateYield();
+				}
+				else
+#endif
 				// Free copies tied to the city (like buildings), do not overwrite the city-tile resource.
 				GrantFreeResourceFromTrait(pRule->m_eResource, iLekmodQuantity);
 #else
@@ -814,7 +853,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	// Add Resource Quantity to total (placed early to make sure policies can handle the resources located on the city tile)
 	if (plot()->getResourceType() != NO_RESOURCE)
 	{
-		if (GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)GC.getResourceInfo(plot()->getResourceType())->getTechCityTrade()))
+		if (GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)plot()->getResourceType()))
 		{
 			owningPlayer.changeNumResourceTotal(plot()->getResourceType(), plot()->getNumResourceForPlayer(getOwner()));
 		}
@@ -880,7 +919,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	// Add Resource Quantity to total
 	if(plot()->getResourceType() != NO_RESOURCE)
 	{
-		if(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes) GC.getResourceInfo(plot()->getResourceType())->getTechCityTrade()))
+		if(GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)plot()->getResourceType()))
 		{
 			owningPlayer.changeNumResourceTotal(plot()->getResourceType(), plot()->getNumResourceForPlayer(getOwner()));
 		}
@@ -1925,7 +1964,7 @@ void CvCity::PreKill()
 	// If this city was built on a Resource, remove its Quantity from total
 	if(pPlot->getResourceType() != NO_RESOURCE)
 	{
-		if(GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes) GC.getResourceInfo(pPlot->getResourceType())->getTechCityTrade()))
+		if(GET_TEAM(getTeam()).LekmodHasResourceTradeTech((ResourceTypes)pPlot->getResourceType()))
 		{
 			GET_PLAYER(getOwner()).changeNumResourceTotal(pPlot->getResourceType(), -pPlot->getNumResourceForPlayer(getOwner()));
 		}
@@ -8694,7 +8733,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 					ResourceTypes eLoopResource = pLoopPlot->getResourceType();
 					if(eLoopResource != NO_RESOURCE && GC.getResourceInfo(eLoopResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 					{
-						if(owningTeam.GetTeamTechs()->HasTech((TechTypes) GC.getResourceInfo(eLoopResource)->getTechCityTrade()))
+						if(owningTeam.LekmodHasResourceTradeTech((ResourceTypes)eLoopResource))
 						{
 							if(pLoopPlot == plot() || (pLoopPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsImprovementResourceTrade(eLoopResource)))
 							{
@@ -8720,7 +8759,7 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 					ResourceTypes eLoopResource = pLoopPlot->getResourceType();
 					if(eLoopResource != NO_RESOURCE && GC.getResourceInfo(eLoopResource)->getResourceUsage() == RESOURCEUSAGE_LUXURY)
 					{
-						if(owningTeam.GetTeamTechs()->HasTech((TechTypes) GC.getResourceInfo(eLoopResource)->getTechCityTrade()))
+						if(owningTeam.LekmodHasResourceTradeTech((ResourceTypes)eLoopResource))
 						{
 							if(pLoopPlot == plot() || (pLoopPlot->getImprovementType() != NO_IMPROVEMENT && GC.getImprovementInfo(pLoopPlot->getImprovementType())->IsImprovementResourceTrade(eLoopResource)))
 							{
@@ -13664,7 +13703,7 @@ int CvCity::GetLekmodPolicyBuildingTerrainYield(const CvPlot* pPlot, YieldTypes 
 		for (uint i = 0; i < aRows.size(); i++)
 		{
 			const LekmodPolicyBuildingTerrainYield& kRow = aRows[i];
-			if (kRow.iYield != eYield || kRow.iTerrain != pPlot->getTerrainType())
+			if (kRow.iYield != eYield || !pPlot->LekmodIsTerrain((TerrainTypes)kRow.iTerrain))
 				continue;
 			if (kRow.bExcludeLakes && pPlot->isLake())
 				continue;
@@ -15866,7 +15905,7 @@ int CvCity::GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) c
 			const LekmodBuildingPlotYield& kRow = aRows[j];
 			if (kRow.m_eYield != eYield)
 				continue;
-			if (kRow.m_eTerrain != NO_TERRAIN && pPlot->getTerrainType() != kRow.m_eTerrain)
+			if (kRow.m_eTerrain != NO_TERRAIN && !pPlot->LekmodIsTerrain(kRow.m_eTerrain))
 				continue;
 			if (kRow.m_eFeature != NO_FEATURE && pPlot->getFeatureType() != kRow.m_eFeature)
 				continue;
@@ -15900,7 +15939,7 @@ int CvCity::GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) c
 					CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
 					if (pAdjacentPlot == NULL)
 						continue;
-					if (kRow.m_eCityAdjacentTerrain != NO_TERRAIN && pAdjacentPlot->getTerrainType() != kRow.m_eCityAdjacentTerrain)
+					if (kRow.m_eCityAdjacentTerrain != NO_TERRAIN && !pAdjacentPlot->LekmodIsTerrain(kRow.m_eCityAdjacentTerrain))
 						continue;
 					if (kRow.m_eCityAdjacentFeature != NO_FEATURE && pAdjacentPlot->getFeatureType() != kRow.m_eCityAdjacentFeature)
 						continue;
@@ -15994,7 +16033,7 @@ int CvCity::GetLekmodConditionalBuildingYield(YieldTypes eYield) const
 					CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
 					if (pAdjacentPlot == NULL || pAdjacentPlot->IsNaturalWonder())
 						continue;
-					if (kRow.m_eAdjacentTerrain != NO_TERRAIN && pAdjacentPlot->getTerrainType() != kRow.m_eAdjacentTerrain)
+					if (kRow.m_eAdjacentTerrain != NO_TERRAIN && !pAdjacentPlot->LekmodIsTerrain(kRow.m_eAdjacentTerrain))
 						continue;
 					if (kRow.m_eAdjacentFeature != NO_FEATURE && pAdjacentPlot->getFeatureType() != kRow.m_eAdjacentFeature)
 						continue;
@@ -16133,7 +16172,7 @@ int CvCity::GetLekmodAdjacentCityPlotYield(const CvPlot* pPlot, YieldTypes eYiel
 				continue;
 			if (kEntry.m_eResource != NO_RESOURCE && kEntry.m_eResource != eResource)
 				continue;
-			if (kEntry.m_eTerrain != NO_TERRAIN && kEntry.m_eTerrain != pPlot->getTerrainType())
+			if (kEntry.m_eTerrain != NO_TERRAIN && !pPlot->LekmodIsTerrain(kEntry.m_eTerrain))
 				continue;
 			if (kEntry.m_eFeature != NO_FEATURE && kEntry.m_eFeature != pPlot->getFeatureType())
 				continue;
@@ -16171,7 +16210,7 @@ int CvCity::GetLekmodTechTerrainYield(const CvPlot* pPlot, YieldTypes eYield) co
 		const std::vector<LekmodBuildingTechTerrainYield>& aEntries = GC.getBuildingInfo((BuildingTypes)s_aiBuildings[i])->GetLekmodTechTerrainYields();
 		for (uint j = 0; j < aEntries.size(); j++)
 		{
-			if (aEntries[j].m_eYield == eYield && aEntries[j].m_eTerrain == pPlot->getTerrainType() && pTechs->HasTech(aEntries[j].m_eTech))
+			if (aEntries[j].m_eYield == eYield && pPlot->LekmodIsTerrain(aEntries[j].m_eTerrain) && pTechs->HasTech(aEntries[j].m_eTech))
 				iYield += aEntries[j].m_iYield;
 		}
 	}

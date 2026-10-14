@@ -3719,6 +3719,9 @@ CvBuildInfo::CvBuildInfo() :
 	m_bSpecificCivRequired(false),
 	m_eRequiredCivilization(NO_CIVILIZATION),
 //
+#ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
+	m_bLekmodAlwaysVisible(false),
+#endif
 	m_bWater(false),
 	m_bCanBeEmbarked(false),
 	m_paiFeatureTech(NULL),
@@ -3910,6 +3913,9 @@ bool CvBuildInfo::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 	m_bRemoveWaterCrossing = kResults.GetBool("RemoveWaterCrossing");
 #endif
 	m_bWater = kResults.GetBool("Water");
+#ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
+	m_bLekmodAlwaysVisible = kResults.GetBool("LekmodAlwaysVisible");
+#endif
 	m_bCanBeEmbarked = kResults.GetBool("CanBeEmbarked");
 	//EAP: Adding Civ req to builds as well
 	m_bSpecificCivRequired = kResults.GetBool("SpecificCivRequired");

@@ -10956,6 +10956,13 @@ bool CvUnit::givePolicies()
 	{
 		kPlayer.changeJONSCulture(iCultureBonus);
 #if defined(LEKMOD_CIV_TRAIT_FLAGS) && defined(LEKMOD_POLICY_REWORK)
+		// floating Culture over the writer for its owner; England's first treatise says it was doubled
+		if (getOwner() == GC.getGame().getActivePlayer())
+		{
+			const bool bLekmodDoubled = kPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_FIRST_WRITER_DOUBLE) > 0 && !kPlayer.IsLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_WRITER_USED);
+			CvString strFloat = GetLocalizedText(bLekmodDoubled ? "TXT_KEY_LEKMOD_TREATISE_FLOAT_DOUBLED" : "TXT_KEY_LEKMOD_TREATISE_FLOAT", iCultureBonus);
+			DLLUI->AddPopupText(getX(), getY(), strFloat.c_str(), 0.0f);
+		}
 	if (iCultureBonus != 0)
 		kPlayer.SetLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_WRITER_USED);
 #endif

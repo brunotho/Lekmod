@@ -1140,6 +1140,9 @@ public:
 
 	bool IsWater() const;
 	bool IsCanBeEmbarked() const;
+#ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
+	bool IsLekmodAlwaysVisible() const { return m_bLekmodAlwaysVisible; }
+#endif
 
 	// Arrays
 	int getFeatureTech(int i) const;
@@ -1170,6 +1173,9 @@ protected:
 
 	bool m_bKill;
 	bool m_bRepair;
+#ifdef LEKMOD_BUILD_ALWAYS_VISIBLE
+	bool m_bLekmodAlwaysVisible;
+#endif
 	bool m_bRemoveRoute;
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
 	bool m_bRemoveWaterCrossing;

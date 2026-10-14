@@ -5078,7 +5078,7 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 			<Text>Yallah Habibi</Text>
 		</Row>
 		<Row Tag="TXT_KEY_TRAIT_YALLAH_HABIBI">
-			<Text>Founding the [ICON_CAPITAL] Capital and the second city places [ICON_RES_PEARLS] Pearls on the closest free Coast tile.[NEWLINE][NEWLINE]May trade strategic resources.[NEWLINE][NEWLINE][ICON_RES_OIL] Oil is revealed with Archaeology, which also places an [ICON_RES_OIL] Oil node in the [ICON_CAPITAL] Capital.[NEWLINE][NEWLINE]From the Modern Era: luxury resource tiles yield -2 [ICON_GOLD] Gold (not below 0), and cities yield +30% [ICON_GOLD] Gold.</Text>
+			<Text>Founding the [ICON_CAPITAL] Capital and the second city places [ICON_RES_PEARLS] Pearls on the closest free Coast tile.[NEWLINE][NEWLINE]May trade strategic resources.[NEWLINE][NEWLINE][ICON_RES_OIL] Oil is revealed with Archaeology, which also places an [ICON_RES_OIL] Oil node in the [ICON_CAPITAL] Capital.[NEWLINE]From then on you can build Oil Wells and Offshore Platforms, and your [ICON_RES_OIL] Oil counts, without Biology.[NEWLINE][NEWLINE]From the Modern Era: luxury resource tiles yield -2 [ICON_GOLD] Gold (not below 0), and cities yield +30% [ICON_GOLD] Gold.</Text>
 		</Row>
 		<!--Spy Names-->
 		<Row Tag="TXT_KEY_SPY_NAME_UAE_0">
@@ -139563,7 +139563,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_SPICE"> 
-			<Text>Your next 2 cities after the [ICON_CAPITAL] Capital that are coastal or on a different landmass each provide a unique Luxury Resource (Cloves, then Nutmeg): 1 copy on the Capital's landmass, 2 copies on a new landmass. These cities can never be razed.</Text>
+			<Text>Your next 2 cities after the [ICON_CAPITAL] Capital that are coastal or on a different landmass each get a unique Luxury Resource on their city tile, replacing the resource there.[NEWLINE]1 copy on the Capital's landmass, 2 copies on a new landmass.[NEWLINE]Which 2 of Cloves, Nutmeg and Pepper you get changes from game to game.[NEWLINE][NEWLINE]These cities yield +1 [ICON_GOLD] Gold and can never be razed.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_SPICE_SHORT"> 
 			<Text>
@@ -148002,7 +148002,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Replaces the Granary. Available with Sailing or Bronze Working instead of Pottery.[NEWLINE]+2 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture. +1 [ICON_FOOD] Food from Wheat, Bananas, Deer and Bison.[NEWLINE][NEWLINE]If 3 or more Coast tiles are next to the city: Fish yield +1 [ICON_GOLD] Gold, +1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith.[NEWLINE]If 3 or more Jungle tiles are next to the city: Jungle yields +1 [ICON_PRODUCTION] Production.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_ISLANDS">
-			<Text>Start the game with Coast tiles and Islands within 6 tiles already explored.[NEWLINE][NEWLINE]+20 resting [ICON_INFLUENCE] Influence with the first [ICON_CITY_STATE] City-State you pledge to protect.[NEWLINE]Lost for good once you are at war with it.</Text>
+			<Text>Start the game with Coast tiles and Islands within 6 tiles already explored.[NEWLINE][NEWLINE]+20 resting [ICON_INFLUENCE] Influence with the first [ICON_CITY_STATE] City-State you pledge to protect.[NEWLINE]Lost for good once that pledge ends for any reason (it runs out, you demand tribute, or war).</Text>
 		</Replace>
 		<!-- Phase 6 C++ batch G -->
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_GYMNASIUM">
@@ -148149,6 +148149,21 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_ATTACK_FULL_HP">
 			<Text>Attacking a Healthy Unit</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_FULL_TECH_FAILED_S">
+			<Text>Whole technology steal failed</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_SPY_FULL_TECH_FAILED">
+			<Text>{1_SpyRank} {2_SpyName} tried to steal a whole technology in {3_CityName} and failed.[NEWLINE]Nothing was stolen, and the spy gains no level.[NEWLINE]The next steal starts now.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_TREATISE_FLOAT">
+			<Text>[COLOR_MAGENTA]+{1_Num} [ICON_CULTURE][ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_TREATISE_FLOAT_DOUBLED">
+			<Text>[COLOR_MAGENTA]+{1_Num} [ICON_CULTURE] (doubled)[ENDCOLOR]</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_BUILD_BLOCKED_HERE">
+			<Text>{1_Improvement} can't be built on this tile.</Text>
 		</Row>
 	</Language_en_US>
 	<Language_de_DE>

@@ -2038,7 +2038,7 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 			"LekmodRingImprovement", "LekmodRingImprovementCulture", "LekmodImprovementHillsOnly", "LekmodBuildingFreeUnitBuilding", "LekmodBuildingFreeUnitClass",
 			"LekmodDesertFoundFood", "LekmodDesertFoundFoodTech", "LekmodFoundWaterResource", "LekmodFoundWaterResourceCities",
 			"LekmodStrategicTrade", "LekmodTechRevealTech", "LekmodTechRevealResource", "LekmodTechRevealCapitalAmount",
-			"LekmodEraBonusEra", "LekmodEraLuxuryGold", "LekmodEraGoldMod" };
+			"LekmodEraBonusEra", "LekmodEraLuxuryGold", "LekmodEraGoldMod", "LekmodFreeResourceOnCityTile", "LekmodCycleGroupSkipOne" };
 		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false,
 			true, false, false, true, true, false, true, false, false, false, true, false, false, false, false,
 			false, true, true, false, false, true, true, true, true,
@@ -2049,7 +2049,7 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 			true, false, true, true, true,
 			false, true, true, false,
 			false, true, true, false,
-			true, false, false };
+			true, false, false, false, false };
 		for (int i = 0; i < NUM_LEKMOD_TRAIT_INTS; i++)
 			m_aiLekmodTraitInts[i] = s_abType[i] ? GC.getInfoTypeForString(kResults.GetText(s_aszNames[i]), true) : kResults.GetInt(s_aszNames[i]);
 	}
@@ -5575,7 +5575,7 @@ void CvPlayerTraits::LekmodApplyTrainedUnitEffects(const CvCity* pCity, CvUnit* 
 				for(int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && !bNext; iDirection++)
 				{
 					CvPlot* pAdjacentPlot = plotDirection(pCity->getX(), pCity->getY(), (DirectionTypes)iDirection);
-					if(pAdjacentPlot != NULL && pAdjacentPlot->getTerrainType() == eTerrain && !pAdjacentPlot->IsNaturalWonder())
+					if(pAdjacentPlot != NULL && pAdjacentPlot->LekmodIsTerrain(eTerrain) && !pAdjacentPlot->IsNaturalWonder())
 						bNext = true;
 				}
 				if(!bNext)
@@ -5787,7 +5787,7 @@ int CvPlayerTraits::GetLekmodTraitPlotYield(const CvPlot* pPlot, YieldTypes eYie
 			const CvTraitEntry::LekmodPlotYield& kRow = aRows[j];
 			if(kRow.m_eYield != eYield)
 				continue;
-			if(kRow.m_eTerrain != -1 && pPlot->getTerrainType() != kRow.m_eTerrain)
+			if(kRow.m_eTerrain != -1 && !pPlot->LekmodIsTerrain((TerrainTypes)kRow.m_eTerrain))
 				continue;
 			if(kRow.m_eFeature != -1 && pPlot->getFeatureType() != kRow.m_eFeature)
 				continue;

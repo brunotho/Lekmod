@@ -425,6 +425,16 @@ public:
 	{
 		return (PlotTypes)m_ePlotType == PLOT_MOUNTAIN;
 	};
+	// Lekmod: terrain test for data rows. Mountains and hills are plot types (a mountain keeps its grass/plains/... terrain),
+	// so TERRAIN_MOUNTAIN / TERRAIN_HILL match the plot type, and a mountain matches no other terrain.
+	bool LekmodIsTerrain(TerrainTypes eTerrain) const
+	{
+		if(eTerrain == TERRAIN_MOUNTAIN)
+			return isMountain();
+		if(eTerrain == TERRAIN_HILL)
+			return isHills();
+		return (TerrainTypes)m_eTerrainType == eTerrain && !isMountain();
+	};
 	bool isRiver()          const
 	{
 		return m_iRiverCrossingCount > 0;

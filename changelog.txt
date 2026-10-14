@@ -785,6 +785,12 @@ Double movement and +15% combat strength in forest and jungle.
 - Changed: requirement was Shock II or Drill II, now Drill I
 
 
+ALWAYS-VISIBLE BUILD BUTTONS (Builds.LekmodAlwaysVisible)
+----------------------------------------------------------
+Tags: ui
+- Added: build buttons of unique improvements (Kasbah, Chateau, Moai, Terrace Farm...) and Great Person improvements (Academy, Holy Site, Citadel...) show on every tile for units that can build them, greyed out where they can't be built; the tooltip says why and shows the improvement's rules
+- DLL: LEKMOD_BUILD_ALWAYS_VISIBLE (CvPlayer::canBuild skips the tile conditions for the visible test)
+
 ANCIENT RUINS OVERHAUL (GOODY_*)
 ---------------------------------
 Tags: ruins, religion, game mechanics
@@ -792,6 +798,7 @@ Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshon
 - Added: popping a ruin offers 2 different random rewards to choose from (3 with Native Tongue); the reward you chose at your previous ruin is not offered again, and rewards you can't use right now are left out
 - Changed: the choices show Food, Culture, Gold and Science amounts in their yield colors
 - Added: new reward "Trade": pay 5-8 Food from your capital, 40-70 Gold or 5-8 Culture for 70-100 Gold, 25-35 Science, (turn + 8-12) Culture, the location of the 3 nearest city-states you haven't seen, or Mobility for the unit; a bigger price comes with a bigger reward; only offered when you can pay. Gold for Gold and Culture for Culture never come up. All amounts x era
+- Changed: a Trade offer never pays or gains something another offer of the same ruin gives (no "Mobility" next to "Trade 50 Gold for Mobility", no "+13 Food" next to a trade paying Food); if no such trade fits, another reward is offered instead
 - Added: new reward "Free technology": a random ancient era technology you can research
 - Changed: if you don't choose before the turn ends, one of the offers is picked at random
 - Changed: Food: 7 + 2.2 x era x capital population food in the capital; the unit gets Glutton (-10% combat strength, lost on upgrade)
@@ -1921,6 +1928,8 @@ Spies and diplomats are reworked: spies steal on a timer and risk getting caught
 - Fixed: a Tourism influence bonus over a City-State's ally could make the coup chance worse instead of better (high spy levels counted like the lowest one)
 - DLL: LEKMOD_SPY_REWORK (CvPlayerEspionage::LekmodGetSpyStrength/LekmodGetCityDefense/LekmodGetStealInterval/LekmodGetCatchChance/LekmodSpyCaught), LEKMOD_DIPLOMAT_TRADE_GOLD_PER_LEVEL; LEKMOD_SPY_WONDERS (LekmodGetStealSlower, LekmodEvictBlockedAgents, LekmodInterrogate, LekmodPlayerBuildingValue)
 - Dev: EspionageOverview.lua is now a Lekmod template (Lua/tmp/ui/Espionage), copied by ui_check.bat
+- Added: a failed full-tech steal shows a notification (nothing stolen, no level)
+- Dev: fixed: a successful coup gave no level, although the rules said so
 
 KREMLIN (BUILDING_KREMLIN)
 --------------------------
@@ -2309,6 +2318,7 @@ Tags: civs, units
 - DLL: Trait_LekmodTrainedPromotions
 - Dev: per-city dummy building 285 (class 188)
 - DLL: Units.FreeExperience
+- Dev: fixed: the mountain checks never matched (a mountain keeps its grass/plains terrain; mountain is the plot type), so the coast+mountain Culture and Stargazing never applied; same fix for Greece, Tibet, Australia and the Su Kemeri (CvPlot::LekmodIsTerrain)
 
 BRAZIL (CIVILIZATION_BRAZIL)
 ----------------------------
@@ -2331,6 +2341,8 @@ Tags: civs, units
 - Added: MI6 (unique National Intelligence Agency): a dead Spy is replaced 1 turn sooner; Science stolen by your spies also gives the same amount of Gold; the first successful coup in each City-State gives 150 Gold per era (150 in the Ancient Era)
 - DLL: Buildings.SpyReviveTurnsChange, StolenScienceGold, CoupGoldPerEra; saved player fields m_iLekmodCoupGoldUsed0/1 (building 299)
 - DLL: Traits.LekmodFirstWriterDouble; saved player flags m_iLekmodCivFlags
+- Added: writing a Political Treatise shows the Culture gained over the Great Writer; England's first one is marked "(doubled)"
+- Dev: fixed: MI6 paid no Gold when the player picked the technology for stolen Science (only the automatic pick paid)
 - DLL: Building_AdjacentCityPlotYieldChanges (yields on tiles next to the city); building ID 282
 
 INCA (CIVILIZATION_INCA)
@@ -2465,7 +2477,7 @@ Tags: civs
 - Changed: the coast and islands explored at the start reach 6 tiles (was 12)
 - Changed: Fale Koloa (rebuilt, replaces the Granary): available with Sailing or Bronze Working, +2 Food and +1 Culture, the Granary's resource Food; with 3+ Coast tiles next to the city Fish +1 Gold +1 Culture +1 Faith; with 3+ Jungle tiles next to the city Jungle +1 Production
 - Removed: Malae: +1 Faith and the coast Food/Culture
-- Added: +20 resting Influence with the first City-State you pledge to protect, lost for good once you are at war with it
+- Added: +20 resting Influence with the first City-State you pledge to protect, lost for good once that pledge ends for any reason (it runs out, tribute, war)
 - DLL: Traits.LekmodFirstPledgeAnchor; saved player field m_iLekmodFirstPledgeMinor
 - DLL: Building_LekmodPlotYields (CityAdjacent conditions), Buildings.LekmodPrereqTechOr (alternative tech)
 
@@ -2558,10 +2570,11 @@ Tags: civs, units, buildings, air
 - Removed: Qasimi Raider
 - Changed: Burj Al Arab: +7 Gold and +7 Culture
 - Removed: Burj Al Arab: yields on Great Person improvements, desert and natural wonder tiles
-- Changed: new UA: founding the capital and the second city places Pearls on the closest free Coast tile; may trade strategic resources; Oil is revealed with Archaeology, which also places a large Oil node (18) in the capital; from the Modern Era luxury tiles -2 Gold (not below 0) and cities +30% Gold
+- Changed: new UA: founding the capital and the second city places Pearls on the closest free Coast tile; may trade strategic resources; Oil is revealed with Archaeology, which also places a large Oil node (18) in the capital, and from then on Oil can be improved and used without Biology; from the Modern Era luxury tiles -2 Gold (not below 0) and cities +30% Gold
 - Removed: the old UA (Gold from trade routes, wonder bonuses)
 - Added: Desert Falcon, a unique Jet Fighter: needs only 1 Aluminum, starts with Range (+2), Charge and Evasion (-50% damage when intercepted), upgrades to the Stealth Bomber
 - DLL: Traits.LekmodFoundWaterResource*, LekmodStrategicTrade, LekmodTechReveal*, LekmodEra*; unit 275
+- DLL: CvTeam::LekmodHasResourceTradeTech (replaces the TechCityTrade checks of resource connection), CvPlayer::LekmodHasEarlyBuildTech
 
 CUBA (CIVILIZATION_CUBA)
 ------------------------
@@ -2675,13 +2688,16 @@ Tags: civs, units, religion
 INDONESIA (CIVILIZATION_INDONESIA)
 ----------------------------------
 Tags: civs, units, buildings, promotions
-- Changed: unique luxuries go to the next 2 cities (was 3) that are coastal or on another landmass: 1 copy on the capital's landmass, 2 on a new landmass (Cloves, then Nutmeg; Pepper no longer given); those cities +1 Gold (was +2)
+- Changed: unique luxuries go to the next 2 cities (was 3) that are coastal or on another landmass: 1 copy on the capital's landmass, 2 on a new landmass; those cities +1 Gold (was +2)
+- Changed: the luxury is placed on the city tile again, replacing the resource there (as before v35), so it stays with the tile when the city is captured
+- Changed: which 2 of Cloves, Nutmeg and Pepper you get changes from game to game (was all 3 in order)
 - Changed: Candi now replaces the Watermill (was the Garden): Masonry, needs any fresh water, costs 55, +2 Food +2 Faith +2 Culture, no maintenance
 - Removed: Candi: +20% Great People, Faith per religion
 - Changed: Kris Swordsman: 14 Strength, obsolete with Gunpowder, gets its random blade promotion when created (was after its first fight); Heroism no longer in the pool
 - Changed: Restlessness: two attacks and +1 Movement (no longer moves after attacking); Sneak Attack: ignores terrain costs and Zones of Control (was +50% flanking); Ambition: +50% attacking a unit at full health, may move after attacking (was +50% attack, -20% defense); Invulnerability: +25% defense, heals 25 HP on a kill (was faster healing, +30% defense)
 - Changed: Recruitment renamed Cursed Blade: adjacent enemies -15% (was healing on kills)
 - DLL: Trait_FreeResourceCities.LekmodCoastalQuantity; UnitPromotions.AttackFullHPMod, PostCombatPromotionOnSpawn
+- DLL: Traits.LekmodFreeResourceOnCityTile, LekmodCycleGroupSkipOne (the left-out spice is picked from the starting plot, no saved field)
 
 CHINA (CIVILIZATION_CHINA)
 --------------------------

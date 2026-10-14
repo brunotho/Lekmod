@@ -1669,6 +1669,18 @@ function TipHandler( control )
 				strDisabledString = strDisabledString .. "[NEWLINE]";
 				strDisabledString = strDisabledString .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILD_BLOCKED_CANAL");
 			end
+
+			-- LEKMOD: unique and Great Person improvements show on every tile; without a listed reason say so, and show the improvement's rules
+			if (pBuild and pBuild.LekmodAlwaysVisible and pImprovement) then
+				if (bFirstEntry) then
+					bFirstEntry = false;
+					strDisabledString = strDisabledString .. "[NEWLINE]";
+					strDisabledString = strDisabledString .. Locale.ConvertTextKey("TXT_KEY_LEKMOD_BUILD_BLOCKED_HERE", strImpRouteKey);
+				end
+				if (pImprovement.Help) then
+					strDisabledString = strDisabledString .. "[NEWLINE][NEWLINE][ENDCOLOR]" .. Locale.ConvertTextKey(pImprovement.Help) .. "[COLOR_WARNING_TEXT]";
+				end
+			end
 			
 		-- Not a Worker build, use normal disabled help from XML
 		else

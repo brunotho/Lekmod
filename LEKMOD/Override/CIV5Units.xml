@@ -50296,6 +50296,7 @@
 		<Column name="CivilizationType" type="text" default="NULL" />
 		<Column name="RemoveWaterCrossing" type="boolean" default="false" />
 		<Column name="PrereqBuildingClass" type="text" default="NULL" /> <!-- LEKMOD: the player must own a building of this class (Great Engineer canal: Canal Project) -->
+		<Column name="LekmodAlwaysVisible" type="boolean" default="false" /> <!-- LEKMOD: the button shows on every tile, greyed out with the reason where it can't be built -->
 	</Table>
 	<Builds>
 		<Delete />
@@ -211599,6 +211600,8 @@
 		<Column name="LekmodEraBonusEra" type="text"/>
 		<Column name="LekmodEraLuxuryGold" type="integer" default="0"/>
 		<Column name="LekmodEraGoldMod" type="integer" default="0"/>
+		<Column name="LekmodFreeResourceOnCityTile" type="integer" default="0"/>
+		<Column name="LekmodCycleGroupSkipOne" type="integer" default="0"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -290539,14 +290542,17 @@
 	</IconTextureAtlases>
 	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Indonesia UA, Candi (watermill), Kris Swordsman -->
 	<Trait_FreeResourceCities>
-		<Delete TraitType="TRAIT_SPICE" ResourceType="RESOURCE_PEPPER"/>
-	</Trait_FreeResourceCities>
-	<Trait_FreeResourceCities>
 		<Update>
 			<Where TraitType="TRAIT_SPICE"/>
 			<Set LekmodCoastalQuantity="1"/>
 		</Update>
 	</Trait_FreeResourceCities>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_SPICE"/>
+			<Set LekmodFreeResourceOnCityTile="1" LekmodCycleGroupSkipOne="1"/>
+		</Update>
+	</Traits>
 	<Trait_FreeResourceCityYieldChanges>
 		<Update>
 			<Where TraitType="TRAIT_SPICE" YieldType="YIELD_GOLD"/>
@@ -290633,4 +290639,99 @@
 			<Set HPHealedIfDestroyEnemy="0" HealIfDestroyExcludesBarbarians="0" NearbyEnemyCombatMod="-15" NearbyEnemyCombatRange="1" GiveDomain="DOMAIN_LAND"/>
 		</Update>
 	</UnitPromotions>
+	<!-- LEKMOD: build buttons of unique and Great Person improvements always visible (2026-10-15); not Kampong Ayer (no unit builds it) -->
+	<Builds>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_ACADEMY"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_BRAZILWOOD_CAMP"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_BUGANDA_LAKE"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_CHATEAU"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_CITADEL"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_CONCERT"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_CUSTOMS_HOUSE"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_DOCK"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_GOTH"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_HOLY_SITE"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_KASBAH"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_MANUFACTORY"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_MC_MAORI_PA"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_MC_SCOTTISH_CLAN_CASTLE"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_MOAI"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_MOTTE"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_POLDER"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_AKSUM"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_SACRED_GROVE"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_TEPE"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_TERRACE_FARM"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_TIBET"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+		<Update>
+			<Where ImprovementType="IMPROVEMENT_WATER_POLDER"/>
+			<Set LekmodAlwaysVisible="1"/>
+		</Update>
+	</Builds>
 </GameData>

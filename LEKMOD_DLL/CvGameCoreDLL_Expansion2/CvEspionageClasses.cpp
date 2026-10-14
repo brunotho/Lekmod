@@ -640,6 +640,19 @@ void CvPlayerEspionage::ProcessSpy(uint uiSpyIndex)
 					}
 					LevelUpSpy(uiSpyIndex);
 				}
+				else
+				{
+					CvNotifications* pNotifications = m_pPlayer->GetNotifications();
+					if (pNotifications)
+					{
+						Localization::String strSummary = Localization::Lookup("TXT_KEY_LEKMOD_SPY_FULL_TECH_FAILED_S");
+						Localization::String strNotification = Localization::Lookup("TXT_KEY_LEKMOD_SPY_FULL_TECH_FAILED");
+						strNotification << GetSpyRankName(pSpy->m_eRank);
+						strNotification << m_pPlayer->getCivilizationInfo().getSpyNames(pSpy->m_iName);
+						strNotification << pCity->getNameKey();
+						pNotifications->Add(NOTIFICATION_GENERIC, strNotification.toUTF8(), strSummary.toUTF8(), pCity->getX(), pCity->getY(), -1);
+					}
+				}
 				// the next steal already uses the new level (a level-up shortens it right away)
 				pCityEspionage->SetActivity(ePlayer, 0, iLekmodRate, CalcRequired(SPY_STATE_GATHERING_INTEL, pCity, uiSpyIndex));
 				if (bCaught)
@@ -3236,6 +3249,11 @@ bool CvPlayerEspionage::AttemptCoup(uint uiSpyIndex)
 		}
 		pNotifications->Add(eNotification, strNotification.toUTF8(), strSummary.toUTF8(), pCity->getX(), pCity->getY(), -1);
 	}
+#ifdef LEKMOD_SPY_REWORK
+	// a successful coup levels the spy up (after the notification, which names the old level)
+	if(bAttemptSuccess)
+		LevelUpSpy(uiSpyIndex);
+#endif
 
 #ifdef CS_ALLYING_WAR_RESCTRICTION
 	CvGame& kGame = GC.getGame();

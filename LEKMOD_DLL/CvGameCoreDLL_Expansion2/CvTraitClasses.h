@@ -152,6 +152,8 @@ enum LekmodTraitInt
 	LTI_ERA_BONUS_ERA,					// type: from this era ... (UAE: Modern)
 	LTI_ERA_LUXURY_GOLD,				// ... luxury resource tiles yield this much Gold more (negative; not below 0)
 	LTI_ERA_GOLD_MOD,					// ... and cities this % more Gold
+	LTI_FREE_RESOURCE_ON_CITY_TILE,		// Trait_FreeResourceCities City=1 resources replace the city tile's resource instead of free copies (Indonesia)
+	LTI_CYCLE_GROUP_SKIP_ONE,			// one rule of each cycle group is left out per game, picked from the starting plot (Indonesia: 2 of 3 spices)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif
