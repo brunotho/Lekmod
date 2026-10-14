@@ -6119,8 +6119,7 @@ void CvPlayer::DoUnitReset()
 			if (iRouteMoves != 0)
 				pLoopUnit->changeMoves(iRouteMoves * GC.getMOVE_DENOMINATOR());
 		}
-		// Sioux: city founders on the first turn
-		LekmodApplyFounderStartMoves(pLoopUnit);
+		// Sioux: the first-turn Settler move is given in initUnit only (the reset for turn 1 still runs with game turn 0)
 #endif
 #endif
 		if (pLoopUnit->IsGreatGeneral())
