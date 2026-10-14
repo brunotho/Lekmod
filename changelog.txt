@@ -2474,7 +2474,9 @@ Tags: civs, buildings, units, naval
 - Removed: Privateer: capturing enemy ships and pillaging without movement cost
 - Added: Privateer: Corsair (Coast tiles cost 33% less movement; +20% Combat Strength attacking a target on a Coast tile), lost on upgrade
 - DLL: Buildings.CityVisionChange; UnitPromotions.CoastMoveCostMod, CoastAttackMod (promotion 390)
-- Note: open: the new UA (needs C++)
+- Changed: new UA Soldiers of Fortune: buying Ancient, Classical and Medieval military units costs 30% less Gold; may buy the unique units of Militaristic City-States you are Friends or Allies with; all units start with Marauder
+- Removed: Mediterranean Crossroads (+100% from land trade routes, melee units losing less movement attacking cities)
+- DLL: Traits.LekmodMinorUUFriendPurchase, LekmodEarlyMilitaryPurchaseDiscount/Era (City-State unique units reuse the Treaty of Arms purchase)
 
 TIMURIDS (CIVILIZATION_TIMURIDS)
 --------------------------------

@@ -1928,10 +1928,10 @@
 		</Row>
 		
 		<Row Tag="TXT_KEY_TRAIT_TUNISIA_DESC">			
-			<Text>+100% [ICON_FOOD] Food, [ICON_PRODUCTION] Production, and [ICON_GOLD] Gold from land-based [ICON_INTERNATIONAL_TRADE] Trade Routes. [COLOR_POSITIVE_TEXT]Melee[ENDCOLOR] units spend one less [ICON_MOVES] movement point when attacking a city.</Text>
+			<Text>Buying military units from the Ancient, Classical and Medieval Eras costs 30% less [ICON_GOLD] Gold.[NEWLINE][NEWLINE]May buy the unique units of [COLOR_POSITIVE_TEXT]Militaristic[ENDCOLOR] [ICON_CITY_STATE] City-States you are Friends or Allies with, in any of your cities.[NEWLINE][NEWLINE]All units start with Marauder (+50% [ICON_GOLD] Gold from pillaging).</Text>
 		</Row>
 		<Row Tag="TXT_KEY_TRAIT_TUNISIA_SHORT_DESC">			
-			<Text>Mediterranean Crossroads</Text>
+			<Text>Soldiers of Fortune</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEADER_TUNISIA">			
 			<Text>Farhat Hached</Text>

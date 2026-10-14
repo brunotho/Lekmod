@@ -29265,8 +29265,15 @@ int CvPlayer::GetLekmodAllyUUPurchaseMod() const
 /// Is this the unique unit of an allied Militaristic City-State that we may buy (Treaty of Arms)?
 bool CvPlayer::LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const
 {
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	const bool bLekmodPolicy = GetLekmodAllyUUPurchaseMod() != 0;
+	const bool bLekmodFriends = GetPlayerTraits()->GetLekmodTraitInt(LTI_MINOR_UU_FRIEND_PURCHASE) > 0; // Tunisia
+	if (eUnit == NO_UNIT || (!bLekmodPolicy && !bLekmodFriends))
+		return false;
+#else
 	if (eUnit == NO_UNIT || GetLekmodAllyUUPurchaseMod() == 0)
 		return false;
+#endif
 	CvUnitEntry* pkUnit = GC.getUnitInfo(eUnit);
 	if (pkUnit == NULL)
 		return false;
@@ -29281,11 +29288,33 @@ bool CvPlayer::LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const
 		if (!kMinor.isAlive() || !kMinor.isMinorCiv())
 			continue;
 		CvMinorCivAI* pMinorAI = kMinor.GetMinorCivAI();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		if (pMinorAI->GetTrait() == MINOR_CIV_TRAIT_MILITARISTIC && pMinorAI->GetUniqueUnit() == eUnit
+			&& ((bLekmodPolicy && pMinorAI->IsAllies(GetID())) || (bLekmodFriends && pMinorAI->IsFriends(GetID()))))
+			return true;
+#else
 		if (pMinorAI->GetTrait() == MINOR_CIV_TRAIT_MILITARISTIC && pMinorAI->IsAllies(GetID()) && pMinorAI->GetUniqueUnit() == eUnit)
 			return true;
+#endif
 	}
 	return false;
 }
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// Tunisia: % discount on buying a military unit from an era before the trait's era
+int CvPlayer::GetLekmodEarlyMilitaryPurchaseDiscount(UnitTypes eUnit) const
+{
+	const int iDiscount = GetPlayerTraits()->GetLekmodTraitInt(LTI_EARLY_MILITARY_PURCHASE_DISCOUNT);
+	const int eEra = GetPlayerTraits()->GetLekmodTraitType(LTI_EARLY_MILITARY_PURCHASE_ERA);
+	CvUnitEntry* pkUnit = (eUnit != NO_UNIT) ? GC.getUnitInfo(eUnit) : NULL;
+	if (iDiscount <= 0 || eEra == -1 || pkUnit == NULL)
+		return 0;
+	if (pkUnit->GetCombat() <= 0 && pkUnit->GetRangedCombat() <= 0)
+		return 0;
+	const int eTech = pkUnit->GetPrereqAndTech();
+	const int iUnitEra = (eTech != NO_TECH && GC.getTechInfo((TechTypes)eTech)) ? GC.getTechInfo((TechTypes)eTech)->GetEra() : 0;
+	return (iUnitEra < eEra) ? iDiscount : 0;
+}
+#endif
 /// May we buy this Great Person with Gold (Patronage finisher: Policy_GoldPurchaseUnitClasses)?
 bool CvPlayer::LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const
 {

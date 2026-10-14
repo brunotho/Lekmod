@@ -126,6 +126,9 @@ enum LekmodTraitInt
 	LTI_GROWTH_IMPROVEMENT_CAPITAL_RANGE,	// ... (capital)
 	LTI_FIRST_UNIT_CLASS_DOUBLE,			// type: the first unit of this class gives a second one (Brunei: Nelayan)
 	LTI_TRIBUTE_INFLUENCE,				// extra tribute option: this much Influence instead of Gold (Mexico)
+	LTI_MINOR_UU_FRIEND_PURCHASE,		// may buy the unique units of friendly and allied Militaristic City-States (Tunisia)
+	LTI_EARLY_MILITARY_PURCHASE_DISCOUNT,	// % cheaper Gold purchase of military units from eras before the one below (Tunisia)
+	LTI_EARLY_MILITARY_PURCHASE_ERA,	// type: ... (Renaissance)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

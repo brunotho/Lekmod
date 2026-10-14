@@ -281,6 +281,9 @@ public:
 	void LekmodDoPolicyWaterUnits(PolicyTypes ePolicy);
 	int GetLekmodBuildingClassHappinessUntilIdeology(BuildingClassTypes eClass) const;
 	int GetLekmodAllyUUPurchaseMod() const;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	int GetLekmodEarlyMilitaryPurchaseDiscount(UnitTypes eUnit) const;
+#endif
 	bool LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const;
 	bool LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const;
 	int GetLekmodGreatPersonGoldCost() const;

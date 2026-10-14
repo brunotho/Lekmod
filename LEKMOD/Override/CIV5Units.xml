@@ -211574,6 +211574,9 @@
 		<Column name="LekmodGrowthImprovementCapitalRange" type="integer" default="0"/>
 		<Column name="LekmodFirstUnitClassDouble" type="text"/>
 		<Column name="LekmodTributeInfluence" type="integer" default="0"/>
+		<Column name="LekmodMinorUUFriendPurchase" type="integer" default="0"/>
+		<Column name="LekmodEarlyMilitaryPurchaseDiscount" type="integer" default="0"/>
+		<Column name="LekmodEarlyMilitaryPurchaseEra" type="text"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -289909,4 +289912,97 @@
 			<Set LekmodTributeInfluence="30" AfraidMinorPerTurnInfluence="0"/>
 		</Update>
 	</Traits>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Tunisia UA Soldiers of Fortune (new) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_TUNISIA"/>
+			<Set LekmodMinorUUFriendPurchase="1" LekmodEarlyMilitaryPurchaseDiscount="30" LekmodEarlyMilitaryPurchaseEra="ERA_RENAISSANCE"/>
+		</Update>
+	</Traits>
+	<Trait_TradeConnectionYieldModifier>
+		<Delete TraitType="TRAIT_TUNISIA"/>
+	</Trait_TradeConnectionYieldModifier>
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_TUNISIA"/>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_BOMBER</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_FIGHTER</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TUNISIA</TraitType>
+			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
+			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
 </GameData>

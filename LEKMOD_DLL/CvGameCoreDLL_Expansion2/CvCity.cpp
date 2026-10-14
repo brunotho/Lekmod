@@ -6080,6 +6080,9 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 		int iUUCost = GetPurchaseCostFromProduction(getProductionNeeded(eUnit));
 		iUUCost *= (100 + GET_PLAYER(getOwner()).GetLekmodAllyUUPurchaseMod());
 		iUUCost /= 100;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		iUUCost = iUUCost * (100 - GET_PLAYER(getOwner()).GetLekmodEarlyMilitaryPurchaseDiscount(eUnit)) / 100;
+#endif
 		const int iUUDivisor = GC.getGOLD_PURCHASE_VISIBLE_DIVISOR();
 		iUUCost /= iUUDivisor;
 		iUUCost *= iUUDivisor;
@@ -6102,6 +6105,10 @@ int CvCity::GetPurchaseCost(UnitTypes eUnit)
 	// Cost of purchasing units modified?
 	iCost *= (100 + GET_PLAYER(getOwner()).GetUnitPurchaseCostModifier());
 	iCost /= 100;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Tunisia: cheaper early military units
+	iCost = iCost * (100 - GET_PLAYER(getOwner()).GetLekmodEarlyMilitaryPurchaseDiscount(eUnit)) / 100;
+#endif
 #if defined(LEKMOD_BUILDING_FIRST_PURCHASE_DISCOUNT)
 	if (GetNumThingsPurchasedThisTurn() == 0)
 	{
