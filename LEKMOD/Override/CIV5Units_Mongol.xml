@@ -138922,9 +138922,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_OTTOMANS"> 
-			<Text>
-				Your Cities gain +1 [ICON_HAPPINESS_1] Happiness for each [ICON_RELIGION] World Religion in that City. Promoting Units provides [ICON_PEACE] Faith.
-			</Text>
+			<Text>Trade routes carry twice the [ICON_RELIGION] religious pressure (both directions).[NEWLINE][NEWLINE]Captured cities whose majority religion is not yours are in resistance half as long, and their occupation causes half the usual [ICON_HAPPINESS_4] Unhappiness.[NEWLINE][NEWLINE]Melee and Gunpowder units start with Siege.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_OTTOMANS_SHORT"> 
 			<Text>

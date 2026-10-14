@@ -3610,6 +3610,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bGift, bool bP
 				if (GetLekmodResistanceTimeModifier() != 0 && iResistanceTurns > 0)
 					iResistanceTurns = (iResistanceTurns * (100 + GetLekmodResistanceTimeModifier()) + 99) / 100;
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				// Ottomans: half resistance in cities of another faith (rounded up)
+				if (IsLekmodForeignFaithConquestHalf(pNewCity) && iResistanceTurns > 0)
+					iResistanceTurns = (iResistanceTurns + 1) / 2;
+#endif
 #ifdef LEKMOD_RESISTANCE_TURNS_MIN_ONE
 				// Reductions (tourism influence; later: policies that halve resistance, applied above this line)
 				// never remove resistance completely
@@ -17241,6 +17246,13 @@ int CvPlayer::GetUnhappinessFromCityForUI(CvCity* pCity) const
 			iPopulationUnhappinessTimes100 *= (100 + GetOccupiedPopulationUnhappinessMod());
 			iPopulationUnhappinessTimes100 /= 100;
 		}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		if (IsLekmodForeignFaithConquestHalf(pCity))
+		{
+			iNumCitiesUnhappinessTimes100 /= 2;
+			iPopulationUnhappinessTimes100 /= 2;
+		}
+#endif
 	}
 	// Normal City
 	else
@@ -17363,7 +17375,11 @@ int CvPlayer::GetUnhappinessFromCapturedCityCount(CvCity* pAssumeCityAnnexed, Cv
 
 		// Extra Unhappiness from Occupied Cities
 		if(bCityValid)
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+			iUnhappiness += IsLekmodForeignFaithConquestHalf(pLoopCity) ? iUnhappinessPerCapturedCity / 2 : iUnhappinessPerCapturedCity;
+#else
 			iUnhappiness += iUnhappinessPerCapturedCity;
+#endif
 	}
 
 	// Player count mod
@@ -17696,6 +17712,10 @@ int CvPlayer::GetUnhappinessFromOccupiedCities(CvCity* pAssumeCityAnnexed, CvCit
 				iUnhappinessFromThisCity *= (100 + GetOccupiedPopulationUnhappinessMod());
 				iUnhappinessFromThisCity /= 100;
 			}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+			if (IsLekmodForeignFaithConquestHalf(pLoopCity))
+				iUnhappinessFromThisCity /= 2;
+#endif
 
 			iUnhappiness += iUnhappinessFromThisCity;
 		}
@@ -29300,6 +29320,19 @@ bool CvPlayer::LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const
 	return false;
 }
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// Ottomans: the city's majority religion is not ours (the one we founded, else our capital's majority)
+bool CvPlayer::IsLekmodForeignFaithConquestHalf(const CvCity* pCity) const
+{
+	if (pCity == NULL || GetPlayerTraits()->GetLekmodTraitInt(LTI_FOREIGN_FAITH_CONQUEST_HALF) <= 0)
+		return false;
+	const ReligionTypes eCityReligion = pCity->GetCityReligions()->GetReligiousMajority();
+	if (eCityReligion == NO_RELIGION)
+		return false;
+	ReligionTypes eOurs = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(GetID());
+	if (eOurs == NO_RELIGION && getCapitalCity() != NULL)
+		eOurs = getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+	return eCityReligion != eOurs;
+}
 /// Tunisia: % discount on buying a military unit from an era before the trait's era
 int CvPlayer::GetLekmodEarlyMilitaryPurchaseDiscount(UnitTypes eUnit) const
 {

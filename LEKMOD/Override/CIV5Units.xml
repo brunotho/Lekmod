@@ -211577,6 +211577,7 @@
 		<Column name="LekmodMinorUUFriendPurchase" type="integer" default="0"/>
 		<Column name="LekmodEarlyMilitaryPurchaseDiscount" type="integer" default="0"/>
 		<Column name="LekmodEarlyMilitaryPurchaseEra" type="text"/>
+		<Column name="LekmodForeignFaithConquestHalf" type="integer" default="0"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -290003,6 +290004,26 @@
 			<TraitType>TRAIT_TUNISIA</TraitType>
 			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
 			<PromotionType>PROMOTION_MARAUDER</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Ottoman UA (new), all parts but the pantheons of other religions -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_OTTOMANS"/>
+			<Set HappinessPerReligion="0" TradeReligionModifier="100" LekmodForeignFaithConquestHalf="1"/>
+		</Update>
+	</Traits>
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_OTTOMANS"/>
+		<Row>
+			<TraitType>TRAIT_OTTOMANS</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_SIEGE</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_OTTOMANS</TraitType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<PromotionType>PROMOTION_SIEGE</PromotionType>
 		</Row>
 	</Trait_FreePromotionUnitCombats>
 </GameData>

@@ -2203,7 +2203,10 @@ Tags: civs, units
 - Changed: Janissary starts with Charge and Zealot, and can always be bought with Faith
 - Removed: Janissary: healing on kills and the attack bonus
 - Added: Su Kemeri, a unique Aqueduct: +1 Faith and +1 Science next to fresh water or a mountain, +3 and +3 next to both
-- Note: open: the new UA (needs C++)
+- Changed: new UA: trade routes carry twice the religious pressure (both directions); captured cities whose majority religion isn't yours are in resistance half as long and cause half the occupation Unhappiness; Melee and Gunpowder units start with Siege
+- Removed: Millets (+1 Happiness per religion in a city, Faith for promotions)
+- Note: open: cities get the pantheon effects of every religion with followers there (needs C++)
+- DLL: Traits.LekmodForeignFaithConquestHalf; Traits.TradeReligionModifier now also counts for incoming routes
 - Dev: building 283, icon art_sources/buildings/su_kemeri
 
 KOREA (CIVILIZATION_KOREA)

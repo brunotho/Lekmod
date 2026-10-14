@@ -283,6 +283,7 @@ public:
 	int GetLekmodAllyUUPurchaseMod() const;
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	int GetLekmodEarlyMilitaryPurchaseDiscount(UnitTypes eUnit) const;
+	bool IsLekmodForeignFaithConquestHalf(const CvCity* pCity) const;
 #endif
 	bool LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const;
 	bool LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const;

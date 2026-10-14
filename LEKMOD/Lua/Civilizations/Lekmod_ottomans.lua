@@ -27,6 +27,7 @@ function lekmod_ottoman_ua_promotion_faith(player_id, unit_id)
 
 end
 ------------------------------------------------------------------------------------------------------------------------
-if is_active then
+-- 2026-10-14: not part of the new UA
+if false and is_active then
    GameEvents.UnitPromoted.Add(lekmod_ottoman_ua_promotion_faith)
 end

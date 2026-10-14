@@ -129,6 +129,7 @@ enum LekmodTraitInt
 	LTI_MINOR_UU_FRIEND_PURCHASE,		// may buy the unique units of friendly and allied Militaristic City-States (Tunisia)
 	LTI_EARLY_MILITARY_PURCHASE_DISCOUNT,	// % cheaper Gold purchase of military units from eras before the one below (Tunisia)
 	LTI_EARLY_MILITARY_PURCHASE_ERA,	// type: ... (Renaissance)
+	LTI_FOREIGN_FAITH_CONQUEST_HALF,	// conquered cities whose majority religion isn't yours: half resistance and occupation unhappiness (Ottomans)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

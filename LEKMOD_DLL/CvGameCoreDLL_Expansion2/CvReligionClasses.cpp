@@ -2371,7 +2371,13 @@ int CvGameReligions::GetAdjacentCityReligiousPressure (ReligionTypes eReligion, 
 		{
 			if (GC.getGame().GetGameTrade()->IsCityConnectedFromCityToCity(pFromCity, pToCity))
 			{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+				// Ottomans: the bonus also applies to pressure coming into their cities (the higher of both sides, no stacking)
+				int iTradeReligionModifer = std::max(GET_PLAYER(pFromCity->getOwner()).GetPlayerTraits()->GetTradeReligionModifier(),
+					GET_PLAYER(pToCity->getOwner()).GetPlayerTraits()->GetTradeReligionModifier());
+#else
 				int iTradeReligionModifer = GET_PLAYER(pFromCity->getOwner()).GetPlayerTraits()->GetTradeReligionModifier();
+#endif
 				if (iTradeReligionModifer != 0)
 				{
 					iPressure *= 100 + iTradeReligionModifer;
