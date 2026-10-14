@@ -544,6 +544,7 @@ public:
 #endif
 #ifdef LEKMOD_CIV_ONLY_BUILDINGS
 	int GetLekmodRequiredCivilization() const;
+	int GetLekmodPrereqTechOr() const;
 #endif
 #ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
 	int GetLekmodGreatWorkFilledTourismModifier() const;
@@ -927,6 +928,7 @@ private:
 #endif
 #ifdef LEKMOD_CIV_ONLY_BUILDINGS
 	int m_iLekmodRequiredCivilization;
+	int m_iLekmodPrereqTechOr;
 #endif
 #ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
 	int m_iLekmodGreatWorkFilledTourismModifier;

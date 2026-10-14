@@ -3005,6 +3005,23 @@ CvUnitCombat::ATTACK_RESULT CvUnitCombat::AttackNuclear(CvUnit& kAttacker, int i
 {
 	ATTACK_RESULT eResult = ATTACK_ABORTED;
 
+#ifdef LEKMOD_CONGRESS_CYCLE
+	// Non-Proliferation: launching a nuke declares war on every met civilization and City-State, except your City-State allies
+	if (GC.getMap().plot(iX, iY) != NULL && GC.getGame().GetGameLeagues()->LekmodSumActive(LRC_NUKE_COST) > 0 && !GC.getGame().isOption(GAMEOPTION_ALWAYS_PEACE))
+	{
+		CvTeam& kAttackerTeam = GET_TEAM(kAttacker.getTeam());
+		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; iPlayer++)
+		{
+			CvPlayer& kOther = GET_PLAYER((PlayerTypes)iPlayer);
+			const TeamTypes eOtherTeam = kOther.getTeam();
+			if (!kOther.isAlive() || eOtherTeam == kAttacker.getTeam() || kAttackerTeam.isAtWar(eOtherTeam) || !kAttackerTeam.isHasMet(eOtherTeam))
+				continue;
+			if (kOther.isMinorCiv() && kOther.GetMinorCivAI()->IsAllies(kAttacker.getOwner()))
+				continue;
+			kAttackerTeam.declareWar(eOtherTeam);
+		}
+	}
+#endif
 	CvPlot* pPlot = GC.getMap().plot(iX, iY);
 	if(NULL == pPlot)
 		return eResult;

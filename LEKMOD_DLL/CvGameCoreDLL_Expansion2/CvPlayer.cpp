@@ -9886,6 +9886,9 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 	// Timurids: the second city gets a building
 	if (getNumCities() == 2 && GetPlayerTraits()->GetLekmodTraitType(LTI_SECOND_CITY_BUILDING) != -1)
 		pCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_SECOND_CITY_BUILDING), 1);
+	// Timurids: the first city gets a building too (both are real buildings, so they stay with the city when captured)
+	if (getNumCities() == 1 && GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING) != -1)
+		pCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING), 1);
 	// Spain: founding a city other than the first reveals the area and gives a free unit
 	if (getNumCities() > 1)
 	{
@@ -10573,7 +10576,11 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	// trait: another tech for this building class (Oman: Harbor at Optics, Seaport at Compass)
 	const int eLekmodClassTech = GetPlayerTraits()->GetLekmodBuildingClassTech((BuildingClassTypes)pBuildingInfo.GetBuildingClassType());
-	if(eLekmodClassTech != -1 ? !currentTeam.GetTeamTechs()->HasTech((TechTypes)eLekmodClassTech) : !(currentTeam.GetTeamTechs()->HasTech((TechTypes)(pBuildingInfo.GetPrereqAndTech()))))
+	if((eLekmodClassTech != -1 ? !currentTeam.GetTeamTechs()->HasTech((TechTypes)eLekmodClassTech) : !(currentTeam.GetTeamTechs()->HasTech((TechTypes)(pBuildingInfo.GetPrereqAndTech()))))
+#ifdef LEKMOD_CIV_ONLY_BUILDINGS
+		&& (pBuildingInfo.GetLekmodPrereqTechOr() == -1 || !currentTeam.GetTeamTechs()->HasTech((TechTypes)pBuildingInfo.GetLekmodPrereqTechOr()))
+#endif
+		)
 #else
 	if(!(currentTeam.GetTeamTechs()->HasTech((TechTypes)(pBuildingInfo.GetPrereqAndTech()))))
 #endif

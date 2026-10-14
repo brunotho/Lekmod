@@ -3117,11 +3117,7 @@
 			<TechType>TECH_THE_WHEEL</TechType>
 			<IsCapitalOnly>true</IsCapitalOnly>
 		</Row>
-		<Row> 
-			<BuildingType>BUILDING_ULUG</BuildingType>
-			<CivilizationType>CIVILIZATION_TIMURIDS</CivilizationType> 
-			<IsCapitalOnly>true</IsCapitalOnly>
-		</Row>
+		<!-- BUILDING_ULUG (Timurid capital court) is given by Traits.LekmodFirstCityBuilding since 2026-10-14, so it stays with the city when captured -->
 		<Row>  
 			<BuildingType>BUILDING_COLOMBIA_TRAIT</BuildingType>
 			<CivilizationType>CIVILIZATION_COLOMBIA</CivilizationType>
@@ -43416,6 +43412,7 @@
 		<Column name="FirstPurchaseDiscount" type="integer" default="0"/> <!-- Faith and Gold Discount if the city has purchased nothing this turn -->
     	<Column name="StartTurnMovesMountedCivilian" type="integer" default="0"/>
     	<Column name="RequiredCivilization" type="text" reference="Civilizations(Type)" default="NULL"/>
+    	<Column name="LekmodPrereqTechOr" type="text" reference="Technologies(Type)" default="NULL"/>
     	<Column name="GreatWorkFilledTourismModifier" type="integer" default="0"/>
     	<Column name="FreePlotPurchase" type="boolean" default="false"/>
     	<Column name="LekmodTimedBuilding" type="text" reference="Buildings(Type)" default="NULL"/>
@@ -211540,6 +211537,7 @@
 		<Column name="LekmodStartTurnFounderMoves" type="integer" default="0"/>
 		<Column name="LekmodStartMeleePromotion" type="text" reference="UnitPromotions(Type)" default="NULL"/>
 		<Column name="LekmodSecondCityBuilding" type="text" reference="Buildings(Type)" default="NULL"/>
+		<Column name="LekmodFirstCityBuilding" type="text" reference="Buildings(Type)" default="NULL"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -287863,11 +287861,11 @@
 			<AdjacentLake>true</AdjacentLake>
 		</Row>
 	</Building_LekmodPlotYields>
-	<!-- Tonga (2026-10-14): Fale Koloa (from scratch, Granary UB): Granary effects, Sailing + Bronze Working, +1 Culture; 3+ coast next to the city: Fish +1 Gold +1 Culture +1 Faith; 3+ jungle next to the city: Jungle +1 Production -->
+	<!-- Tonga (2026-10-14): Fale Koloa (from scratch, Granary UB): Granary effects, Sailing or Bronze Working, +1 Culture; 3+ coast next to the city: Fish +1 Gold +1 Culture +1 Faith; 3+ jungle next to the city: Jungle +1 Production -->
 	<Buildings>
 		<Update>
 			<Where Type="BUILDING_MC_TONGAN_MALAE"/>
-			<Set PrereqTech="TECH_SAILING" Cost="60" GoldMaintenance="1"/>
+			<Set PrereqTech="TECH_SAILING" LekmodPrereqTechOr="TECH_BRONZE_WORKING" Cost="60" GoldMaintenance="1"/>
 		</Update>
 	</Buildings>
 	<Building_YieldChanges>
@@ -287920,12 +287918,6 @@
 			<Yield>1</Yield>
 		</Row>
 	</Building_ResourceYieldChanges>
-	<Building_TechAndPrereqs>
-		<Row>
-			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
-			<TechType>TECH_BRONZE_WORKING</TechType>
-		</Row>
-	</Building_TechAndPrereqs>
 	<Building_LekmodPlotYields>
 		<Row>
 			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
@@ -288216,7 +288208,7 @@
 			<Set LekmodTimedBuilding="BUILDING_LEKMOD_JAEGYE" LekmodTimedBuildingTurns="11"/>
 		</Update>
 	</Buildings>
-	<!-- Maurya (rest of the new UA): roads without a tech, Workers starting the turn on a road +1 move, no more +20% defense; Mahamatras' Office (NEW Amphitheater UB): 80 on quick, +2 Food, +1 Happiness, 8-turn We Love the King Day when built -->
+	<!-- Maurya (rest of the new UA): roads without a tech, Workers starting the turn on a road +1 move, no more +20% defense; Mahamatras' Office (NEW Amphitheater UB): Amphitheater effects (+2 Culture, 1 Art/Artifact slot) plus +2 Food, +1 Happiness, 8-turn We Love the King Day when built; 80 on quick -->
 	<Traits>
 		<Update>
 			<Where Type="TRAIT_INSCRIPTIONS"/>
@@ -288244,6 +288236,9 @@
 			<LekmodWLTKDTurnsOnBuild>12</LekmodWLTKDTurnsOnBuild>
 			<ArtDefineTag>COLESSEUM</ArtDefineTag>
 			<PrereqTech>TECH_DRAMA</PrereqTech>
+			<FreeStartEra>ERA_INDUSTRIAL</FreeStartEra>
+			<GreatWorkSlotType>GREAT_WORK_SLOT_ART_ARTIFACT</GreatWorkSlotType>
+			<GreatWorkCount>1</GreatWorkCount>
 			<PortraitIndex>0</PortraitIndex>
 			<IconAtlas>EXPANSION_BW_ATLAS_1</IconAtlas>
 		</Row>
@@ -288252,6 +288247,11 @@
 		<Row>
 			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
 			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
 			<Yield>2</Yield>
 		</Row>
 	</Building_YieldChanges>
@@ -288266,7 +288266,19 @@
 			<FlavorType>FLAVOR_HAPPINESS</FlavorType>
 			<Flavor>20</Flavor>
 		</Row>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
+			<FlavorType>FLAVOR_CULTURE</FlavorType>
+			<Flavor>20</Flavor>
+		</Row>
 	</Building_Flavors>
+	<Building_GreatWorkYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MAHAMATRAS_OFFICE</BuildingType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+	</Building_GreatWorkYieldChanges>
 	<Civilization_BuildingClassOverrides>
 		<Row>
 			<CivilizationType>CIVILIZATION_MAURYA</CivilizationType>
@@ -288836,7 +288848,7 @@
 	<Traits>
 		<Update>
 			<Where Type="TRAIT_ULUG"/>
-			<Set LekmodSecondCityBuilding="BUILDING_LEKMOD_TIMURID_SECOND_COURT"/>
+			<Set LekmodSecondCityBuilding="BUILDING_LEKMOD_TIMURID_SECOND_COURT" LekmodFirstCityBuilding="BUILDING_ULUG"/>
 		</Update>
 	</Traits>
 	<!-- Timurids: Serai -15% tile culture cost (faster border growth) while no other Serai is within 5 tiles -->

@@ -1438,6 +1438,10 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_FOUNDING_UNIT_EFFECTS
 // Units.PolicyAlternateTech: the tech unlocks the unit without its PolicyType (shared unique Conquistador)
 #define LEKMOD_POLICY_ALTERNATE_TECH
+// Buildings.LekmodPrereqTechOr: the building is also available with this tech instead of its PrereqTech (Tonga's Fale Koloa:
+// Sailing or Bronze Working). Part of LEKMOD_CIV_ONLY_BUILDINGS.
+// Non-Proliferation (LRC_NUKE_COST active): launching a nuke declares war on every met civilization and City-State, except
+// your City-State allies (CvUnitCombat::AttackNuclear). Part of LEKMOD_CONGRESS_CYCLE.
 // Phase 6 civs (2026-10-13)
 // Units.UpgradeOnly: the unit can't be trained or bought, only reached by upgrading (Barcid Elephant, Gajasena)
 #define LEKMOD_UPGRADE_ONLY_UNITS

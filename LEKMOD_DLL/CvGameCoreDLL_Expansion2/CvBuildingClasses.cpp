@@ -1207,6 +1207,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #endif
 #ifdef LEKMOD_CIV_ONLY_BUILDINGS
 	m_iLekmodRequiredCivilization = GC.getInfoTypeForString(kResults.GetText("RequiredCivilization"), true);
+	m_iLekmodPrereqTechOr = GC.getInfoTypeForString(kResults.GetText("LekmodPrereqTechOr"), true);
 #endif
 #ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
 	m_iLekmodGreatWorkFilledTourismModifier = kResults.GetInt("GreatWorkFilledTourismModifier");
@@ -3400,6 +3401,12 @@ int CvBuildingEntry::GetLekmodGreatWorkFilledTourismModifier() const
 int CvBuildingEntry::GetLekmodRequiredCivilization() const
 {
 	return m_iLekmodRequiredCivilization;
+}
+
+/// Alternative tech: the building is also available with this tech instead of its PrereqTech (-1 = none)
+int CvBuildingEntry::GetLekmodPrereqTechOr() const
+{
+	return m_iLekmodPrereqTechOr;
 }
 #endif
 #ifdef LEKMOD_BUILDING_START_TURN_MOVES

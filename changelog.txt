@@ -1820,6 +1820,7 @@ Tags: world congress
 Existing proposals reworked for the new Congress.
 - Changed: Embargo City-States: available once the Congress reaches the Industrial Era
 - Changed: Nuclear Non-Proliferation: nuclear weapons cost twice as much Production instead of being banned; available once any civilization discovers Nuclear Fission (was Advanced Ballistics)
+- Added: Nuclear Non-Proliferation: launching a nuclear weapon declares war on every civilization and City-State you have met, except your City-State allies
 - Changed: World Religion: 3 Delegates (was 2), none once the Congress reaches the Atomic Era; Holy City +50% Tourism stays
 - Removed: World Religion: faster religion spread
 - Changed: World Ideology: a new World Ideology can be proposed while one is active and replaces it
@@ -2191,7 +2192,7 @@ Tags: civs, units
 - Removed: doubled Happiness from natural wonders
 - Added: +10% Production towards Settlers and Conquistadors
 - Added: founding a city (not the capital) reveals the tiles within 6 and gives a free Scout
-- Added: cities other than the capital +1 Production; the capital -1 Production per other city (not below 0)
+- Added: cities other than the capital +1 Production; the capital -1 Production per other city that is not a puppet (not below 0)
 - DLL: Traits.LekmodNaturalWonderFinderGoldPerEra, LekmodFoundCity*, LekmodExpansionProduction, LekmodCapitalProductionPerExpansion; Trait_LekmodPlotYields.NaturalWonder
 
 OTTOMANS (CIVILIZATION_OTTOMAN)
@@ -2238,7 +2239,7 @@ Tags: civs, units, buildings
 - Changed: Crusader: available at Steel (was Theology), 22 Strength (was 17), costs 80 (was 70), needs 3 Iron (was 2)
 - Removed: Crusader: entering foreign territory in peace
 - Removed: Outremer: 2 Culture, 2 Faith and 2 Happiness
-- Added: units +15% inside the territory of an enemy city that follows your religion
+- Added: units +15% inside the territory of an enemy city that follows the religion you founded
 - Added: Outremer: when built, spreads the capital's religion like a Great Prophet; units in or next to the city +2 Movement for one turn
 - DLL: Traits.LekmodReligiousEnemyTerritoryCombat; Buildings.LekmodSpreadCapitalReligionOnBuild, LekmodStartTurnMovesAround (one-shot dummy 296, class 199, removed after the next unit reset)
 
@@ -2444,10 +2445,10 @@ TONGA (CIVILIZATION_TONGA)
 Tags: civs
 - Removed: +5 resting Influence with City-States
 - Changed: the coast and islands explored at the start reach 6 tiles (was 12)
-- Changed: Fale Koloa (rebuilt, replaces the Granary): needs Sailing and Bronze Working, +2 Food and +1 Culture, the Granary's resource Food; with 3+ Coast tiles next to the city Fish +1 Gold +1 Culture +1 Faith; with 3+ Jungle tiles next to the city Jungle +1 Production
+- Changed: Fale Koloa (rebuilt, replaces the Granary): available with Sailing or Bronze Working, +2 Food and +1 Culture, the Granary's resource Food; with 3+ Coast tiles next to the city Fish +1 Gold +1 Culture +1 Faith; with 3+ Jungle tiles next to the city Jungle +1 Production
 - Removed: Malae: +1 Faith and the coast Food/Culture
 - Note: open: +20 resting Influence with the first City-State you pledge to (needs C++)
-- DLL: Building_LekmodPlotYields (CityAdjacent conditions)
+- DLL: Building_LekmodPlotYields (CityAdjacent conditions), Buildings.LekmodPrereqTechOr (alternative tech)
 
 TUNISIA (CIVILIZATION_TUNISIA)
 ------------------------------
@@ -2467,7 +2468,8 @@ Tags: civs, units
 - Added: Serai: borders grow 15% faster while no other Serai is within 5 tiles
 - Changed: new UA Twin Courts: in the capital, Great Works and writer, artist and musician specialists +1 Culture +1 Gold, +10% Production towards buildings; in the second city, Great Works and those specialists +1 Science, Great Person improvements and world wonders +2 Science; both stay with their cities when captured
 - Removed: +15% Science, Culture and Gold and +5 Strength in the original capital
-- DLL: Building_LekmodLocalSpecialistYields, Traits.LekmodSecondCityBuilding (dummy 295, class 198), Buildings.LekmodIsolatedPlotCultureCostMod/Range
+- DLL: Building_LekmodLocalSpecialistYields, Traits.LekmodSecondCityBuilding (dummy 295, class 198), Traits.LekmodFirstCityBuilding (the capital court BUILDING_ULUG), Buildings.LekmodIsolatedPlotCultureCostMod/Range
+- Dev: the capital court was first given by the Lua dummy script, which removed it from a captured capital; now a real building of the first city
 
 OMAN (CIVILIZATION_OMAN)
 ------------------------
@@ -2493,7 +2495,7 @@ Tags: civs, units
 - Removed: unique Missionary
 - Changed: new UA: Roads can be built from the start; Workers starting their turn on a Road or Railroad +1 Movement; cities connected to the capital +1 Culture
 - Removed: +20% defense for most land and naval units
-- Added: Mahamatras' Office, a unique Amphitheater: costs 80, +2 Food, +1 Happiness, an 8-turn We Love the King Day when built
+- Added: Mahamatras' Office, a unique Amphitheater: costs 80; the Amphitheater's effects (+2 Culture, a Great Work of Art or Artifact slot, +1 Tourism from Great Works in the city) plus +2 Food, +1 Happiness and an 8-turn We Love the King Day when built
 - Note: no own icon yet (uses the Amphitheater's)
 - DLL: Traits.LekmodNoTechBuild, LekmodStartMovesRouteWorker; Buildings.LekmodWLTKDTurnsOnBuild (building 294)
 - Dev: per-city dummy building 286 (class 189)

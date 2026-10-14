@@ -100,6 +100,7 @@ enum LekmodTraitInt
 	LTI_FOUND_CLAIM_RESOURCE_RANGE,		// ... within this range
 	LTI_TRADE_ROUTE_RELIGION_SPREAD,	// trade routes to own cities and City-States spread the origin's religion like a prophet (Arabia)
 	LTI_RELIGIOUS_ENEMY_TERRITORY_COMBAT,	// % combat strength inside enemy cities' territory that follow your religion (Jerusalem)
+	LTI_FIRST_CITY_BUILDING,			// type: the first city founded gets this building as a real building, kept on capture (Timurids)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

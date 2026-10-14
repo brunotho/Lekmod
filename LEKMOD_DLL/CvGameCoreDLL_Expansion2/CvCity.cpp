@@ -13349,7 +13349,15 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 			iValue += pTraits->GetLekmodTraitInt(LTI_EXPANSION_PRODUCTION);
 		else
 		{
-			const int iPenalty = pTraits->GetLekmodTraitInt(LTI_CAPITAL_PRODUCTION_PER_EXPANSION) * (GET_PLAYER(getOwner()).getNumCities() - 1);
+			// every other city counts (founded or captured), puppets don't (user, 2026-10-14)
+			int iExpansions = 0;
+			int iCityLoop;
+			for (const CvCity* pLoopCity = GET_PLAYER(getOwner()).firstCity(&iCityLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iCityLoop))
+			{
+				if (pLoopCity != this && !pLoopCity->IsPuppet())
+					iExpansions++;
+			}
+			const int iPenalty = pTraits->GetLekmodTraitInt(LTI_CAPITAL_PRODUCTION_PER_EXPANSION) * iExpansions;
 			if (iPenalty < 0)
 				iValue = std::max(iValue + iPenalty, std::min(iValue, 0));
 		}

@@ -14707,9 +14707,8 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 		const CvPlot* pMyPlot = plot();
 		if (iReligiousMod != 0 && pMyPlot && pMyPlot->getOwner() != NO_PLAYER && GET_TEAM(getTeam()).isAtWar(GET_PLAYER(pMyPlot->getOwner()).getTeam()))
 		{
-			ReligionTypes eMyReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
-			if (eMyReligion <= RELIGION_PANTHEON && GET_PLAYER(getOwner()).getCapitalCity() != NULL)
-				eMyReligion = GET_PLAYER(getOwner()).getCapitalCity()->GetCityReligions()->GetReligiousMajority();
+			// only the religion you founded (user, 2026-10-14)
+			const ReligionTypes eMyReligion = GC.getGame().GetGameReligions()->GetReligionCreatedByPlayer(getOwner());
 			const CvCity* pTerritoryCity = pMyPlot->getWorkingCity();
 			if (eMyReligion > RELIGION_PANTHEON && pTerritoryCity && pTerritoryCity->GetCityReligions()->GetReligiousMajority() == eMyReligion)
 			{
