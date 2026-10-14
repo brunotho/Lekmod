@@ -296,6 +296,8 @@ public:
 	int GetLekmodFirstPledgeMinor() const { return m_iLekmodFirstPledgeMinor; }
 	void SetLekmodFirstPledgeMinor(int iMinor) { m_iLekmodFirstPledgeMinor = iMinor; }
 	bool IsLekmodCoupGoldUsed(PlayerTypes eMinor) const { const int i = (int)eMinor - MAX_MAJOR_CIVS; if (i < 0 || i >= 64) return true; return ((i < 32 ? m_iLekmodCoupGoldUsed0 : m_iLekmodCoupGoldUsed1) & (1 << (i % 32))) != 0; }
+	bool IsLekmodDoFBetrayer(PlayerTypes ePlayer) const { return ePlayer >= 0 && ePlayer < MAX_MAJOR_CIVS && (m_iLekmodDoFBetrayers & (1 << (int)ePlayer)) != 0; }
+	void SetLekmodDoFBetrayer(PlayerTypes ePlayer) { if (ePlayer >= 0 && ePlayer < MAX_MAJOR_CIVS) m_iLekmodDoFBetrayers |= (1 << (int)ePlayer); }
 	void SetLekmodCoupGoldUsed(PlayerTypes eMinor) { const int i = (int)eMinor - MAX_MAJOR_CIVS; if (i < 0 || i >= 64) return; if (i < 32) m_iLekmodCoupGoldUsed0 |= (1 << i); else m_iLekmodCoupGoldUsed1 |= (1 << (i - 32)); }
 	void SetLekmodIdeologyTurn(int iTurn) { m_iLekmodIdeologyTurn = iTurn; }
 #endif
@@ -2461,6 +2463,7 @@ protected:
 	int m_iLekmodFirstPledgeMinor; // first City-State pledged to (Tonga): -1 none yet, -2 lost by war
 	int m_iLekmodCoupGoldUsed0; // MI6 coup Gold already paid: bit per City-State (minor index 0-31)
 	int m_iLekmodCoupGoldUsed1; // minor index 32-63
+	int m_iLekmodDoFBetrayers; // New Zealand: bit per major player who declared war on us during a Declaration of Friendship
 #endif
 	std::vector<int> m_aiGreatWorkYieldChange;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)

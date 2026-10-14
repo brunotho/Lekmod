@@ -54,6 +54,9 @@ public:
 	bool canChangeWarPeace(TeamTypes eTeam) const;
 	bool canDeclareWar(TeamTypes eTeam) const;
 	void declareWar(TeamTypes eTeam, bool bDefensivePact = false);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	bool LekmodHasNoStartWarPlayer() const;
+#endif
 	void makePeace(TeamTypes eTeam, bool bBumpUnits = true, bool bSuppressNotification = false);
 
 	int GetTurnMadePeaceTreatyWithTeam(TeamTypes eTeam) const;

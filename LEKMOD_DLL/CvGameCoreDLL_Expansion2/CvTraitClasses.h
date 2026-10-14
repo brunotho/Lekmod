@@ -130,6 +130,10 @@ enum LekmodTraitInt
 	LTI_EARLY_MILITARY_PURCHASE_DISCOUNT,	// % cheaper Gold purchase of military units from eras before the one below (Tunisia)
 	LTI_EARLY_MILITARY_PURCHASE_ERA,	// type: ... (Renaissance)
 	LTI_FOREIGN_FAITH_CONQUEST_HALF,	// conquered cities whose majority religion isn't yours: half resistance and occupation unhappiness (Ottomans)
+	LTI_DOF_OWN_BONUS,					// a new Declaration of Friendship gives us this much Faith and Culture and 10x Gold (New Zealand: 5)
+	LTI_DOF_PARTNER_BONUS,				// ... and the partner this much (7)
+	LTI_DOF_BETRAYAL_COMBAT,			// % combat strength against players who declared war on us during a Declaration of Friendship
+	LTI_NO_START_WAR,					// not included in the 'start at war' lobby option (New Zealand)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

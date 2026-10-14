@@ -1208,6 +1208,19 @@ bool CvTeam::canDeclareWar(TeamTypes eTeam) const
 }
 
 //	-----------------------------------------------------------------------------------------------
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// A member of this team is left out of the 'start at war' option (New Zealand)
+bool CvTeam::LekmodHasNoStartWarPlayer() const
+{
+	for (int iPlayer = 0; iPlayer < MAX_MAJOR_CIVS; iPlayer++)
+	{
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (kPlayer.isAlive() && kPlayer.getTeam() == GetID() && kPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_NO_START_WAR) > 0)
+			return true;
+	}
+	return false;
+}
+#endif
 void CvTeam::declareWar(TeamTypes eTeam, bool bDefensivePact)
 {
 	DoDeclareWar(eTeam, bDefensivePact);
@@ -1229,6 +1242,21 @@ void CvTeam::DoDeclareWar(TeamTypes eTeam, bool bDefensivePact, bool bMinorAllyP
 		return;
 	}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// New Zealand: remember who declared war on us while we had a Declaration of Friendship with them
+	for (int iVictim = 0; iVictim < MAX_MAJOR_CIVS; iVictim++)
+	{
+		CvPlayer& kVictim = GET_PLAYER((PlayerTypes)iVictim);
+		if (!kVictim.isAlive() || kVictim.getTeam() != eTeam || kVictim.GetPlayerTraits()->GetLekmodTraitInt(LTI_DOF_BETRAYAL_COMBAT) == 0)
+			continue;
+		for (int iAttacker = 0; iAttacker < MAX_MAJOR_CIVS; iAttacker++)
+		{
+			CvPlayer& kAttacker = GET_PLAYER((PlayerTypes)iAttacker);
+			if (kAttacker.isAlive() && kAttacker.getTeam() == GetID() && kVictim.GetDiplomacyAI()->IsDoFAccepted((PlayerTypes)iAttacker))
+				kVictim.SetLekmodDoFBetrayer((PlayerTypes)iAttacker);
+		}
+	}
+#endif
 	CvAssertMsg(eTeam != GetID(), "eTeam is not expected to be equal with GetID()");
 	if (!isBarbarian())
 	{
@@ -3765,7 +3793,11 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bSuppressMessages)
 		// Start at war: major civs go to war when they meet (peace possible from turn LEKMOD_WAR_START_PEACE_TURN)
 		if(GC.getGame().isOption("GAMEOPTION_LEKMOD_WAR_START") && GetID() != eIndex && !isAtWar(eIndex)
 			&& !isMinorCiv() && !isBarbarian() && !isObserver()
-			&& !GET_TEAM(eIndex).isMinorCiv() && !GET_TEAM(eIndex).isBarbarian() && !GET_TEAM(eIndex).isObserver())
+			&& !GET_TEAM(eIndex).isMinorCiv() && !GET_TEAM(eIndex).isBarbarian() && !GET_TEAM(eIndex).isObserver()
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+			&& !LekmodHasNoStartWarPlayer() && !GET_TEAM(eIndex).LekmodHasNoStartWarPlayer()
+#endif
+			)
 		{
 			declareWar(eIndex);
 		}

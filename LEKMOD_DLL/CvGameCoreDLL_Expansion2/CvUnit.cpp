@@ -14739,6 +14739,16 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_AURA_VS_WOUNDED", iTempModifier);
 		}
 	}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// New Zealand: bonus against players who broke a Declaration of Friendship with a war
+	if (pOtherUnit != NULL && kPlayer.IsLekmodDoFBetrayer(pOtherUnit->getOwner()))
+	{
+		iTempModifier = kPlayer.GetPlayerTraits()->GetLekmodTraitInt(LTI_DOF_BETRAYAL_COMBAT);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_DOF_BETRAYAL", iTempModifier);
+	}
+#endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 	// Tunisian Privateer: bonus attacking a target on a Coast tile
 	if (bIsAttacker)

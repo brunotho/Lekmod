@@ -7532,10 +7532,10 @@ Many individual cacicazgos have been studied in colonial Mexico, showing that en
 		
 		<!-- Trait -->
 		<Row Tag="TXT_KEY_TRAIT_WHERE_SHE_GOES_SHORT">
-			<Text>Where She Goes</Text>
+			<Text>Fair Go</Text>
 		</Row>
 		<Row Tag="TXT_KEY_TRAIT_WHERE_SHE_GOES">
-			<Text>Whenever you first meet a Civilization or a [ICON_CITY_STATE] City-State earn a random [ICON_PEACE] Faith, [ICON_CULTURE] Culture, [ICON_GOLD] Gold or [ICON_RESEARCH] Science bonus. </Text>
+			<Text>Declaring friendship with another civilization gives you 5 [ICON_PEACE] Faith, 5 [ICON_CULTURE] Culture and 50 [ICON_GOLD] Gold, and them 7 [ICON_PEACE] Faith, 7 [ICON_CULTURE] Culture and 70 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]+10% [ICON_STRENGTH] Combat Strength against civilizations that declared war on you while you were friends.[NEWLINE][NEWLINE]Never starts at war with the other civilizations (lobby option "start at war").</Text>
 		</Row>
 		
 		<!-- names and stuff -->
@@ -148143,6 +148143,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_POPUP_MINOR_BULLY_INFLUENCE">
 			<Text>Take +{1_Num} [ICON_INFLUENCE] Influence instead of [ICON_GOLD] Gold</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_DOF_BETRAYAL">
+			<Text>Broken Friendship</Text>
 		</Row>
 	</Language_en_US>
 	<Language_de_DE>

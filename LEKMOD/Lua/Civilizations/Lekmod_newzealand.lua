@@ -54,6 +54,7 @@ function lekmod_new_zealand_ua_on_meet(team_met_id, player_team_id)
 
 end
 ------------------------------------------------------------------------------------------------------------------------
-if is_active then
+-- 2026-10-14: replaced by the new UA Fair Go (C++)
+if false and is_active then
 	GameEvents.TeamMeet.Add(lekmod_new_zealand_ua_on_meet)
 end

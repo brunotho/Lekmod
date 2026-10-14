@@ -2729,6 +2729,32 @@ bool CvGameDeals::FinalizeDeal(PlayerTypes eFromPlayer, PlayerTypes eToPlayer, b
 				}
 				else if(it->m_eItemType == TRADE_ITEM_DECLARATION_OF_FRIENDSHIP)
 				{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+					// New Zealand: a new Declaration of Friendship gives Faith, Culture and Gold to both sides
+					if (!GET_PLAYER(eAcceptedFromPlayer).GetDiplomacyAI()->IsDoFAccepted(eAcceptedToPlayer) || !GET_PLAYER(eAcceptedToPlayer).GetDiplomacyAI()->IsDoFAccepted(eAcceptedFromPlayer))
+					{
+						const PlayerTypes aeSides[2] = { eAcceptedFromPlayer, eAcceptedToPlayer };
+						for (int iSide = 0; iSide < 2; iSide++)
+						{
+							CvPlayer& kOwner = GET_PLAYER(aeSides[iSide]);
+							CvPlayer& kPartner = GET_PLAYER(aeSides[1 - iSide]);
+							const int iOwn = kOwner.GetPlayerTraits()->GetLekmodTraitInt(LTI_DOF_OWN_BONUS);
+							const int iPartner = kOwner.GetPlayerTraits()->GetLekmodTraitInt(LTI_DOF_PARTNER_BONUS);
+							if (iOwn > 0)
+							{
+								kOwner.ChangeFaith(iOwn);
+								kOwner.changeJONSCulture(iOwn);
+								kOwner.GetTreasury()->ChangeGold(iOwn * 10);
+							}
+							if (iPartner > 0)
+							{
+								kPartner.ChangeFaith(iPartner);
+								kPartner.changeJONSCulture(iPartner);
+								kPartner.GetTreasury()->ChangeGold(iPartner * 10);
+							}
+						}
+					}
+#endif
 					// Declaration of friendship always goes both ways.  We will most likely have two entries in the deal for this
 					// but just in case, set both anyway.
 					GET_PLAYER(eAcceptedFromPlayer).GetDiplomacyAI()->SetDoFAccepted(eAcceptedToPlayer, true);

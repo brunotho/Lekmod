@@ -2532,7 +2532,9 @@ Tags: civs, units, naval
 - Removed: Defender: ignoring Zones of Control near friendly cities
 - Changed: Maori Battalion starts with Haka War Dance, Amphibious I, Charge and Mobility
 - Removed: Maori Battalion: Amphibious, double embarked defense, the bonus far from the capital, Influence in City-State territory
-- Note: open: the new UA (needs C++)
+- Changed: new UA Fair Go: a Declaration of Friendship gives New Zealand 5 Faith, 5 Culture and 50 Gold and the partner 7 Faith, 7 Culture and 70 Gold; +10% combat strength against civilizations that declared war on New Zealand during a friendship (also via a trade deal; not when New Zealand declares); not included in the start-at-war lobby option
+- Removed: Where She Goes (random bonus when meeting a civilization or City-State)
+- DLL: Traits.LekmodDoFOwnBonus/PartnerBonus/BetrayalCombat/NoStartWar; saved CvPlayer field m_iLekmodDoFBetrayers
 
 BRUNEI (CIVILIZATION_BRUNEI)
 ----------------------------
