@@ -393,6 +393,23 @@ bool CvUnitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& k
 		pResults->Reset();
 	}
 	kUtility.PopulateArrayByExistence(m_pbFreePromotions, "UnitPromotions", "Unit_FreePromotions", "PromotionType", "UnitType", szUnitType);
+#ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
+	{
+		m_aLekmodIdeologyPromotions.clear();
+		std::string strKey("Unit_LekmodIdeologyPromotions");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "SELECT PolicyBranchTypes.ID, UnitPromotions.ID FROM Unit_LekmodIdeologyPromotions "
+				"INNER JOIN PolicyBranchTypes ON PolicyBranchTypes.Type = PolicyBranchType "
+				"INNER JOIN UnitPromotions ON UnitPromotions.Type = PromotionType WHERE UnitType = ?");
+		}
+		pResults->Bind(1, szUnitType);
+		while (pResults->Step())
+			m_aLekmodIdeologyPromotions.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
+		pResults->Reset();
+	}
+#endif
 
 	kUtility.PopulateArrayByExistence(m_pbUpgradeUnitClass, "UnitClasses", "Unit_ClassUpgrades", "UnitClassType", "UnitType", szUnitType);
 
@@ -1095,6 +1112,13 @@ bool CvUnitEntry::IsFoundCityUnitClass(int i) const
 bool CvUnitEntry::IsLekmodUpgradeOnly() const
 {
 	return m_bLekmodUpgradeOnly;
+}
+#endif
+#ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
+/// Promotions by the owner's ideology, given when the unit is trained or bought (policy branch, promotion)
+const std::vector<std::pair<int, int> >& CvUnitEntry::GetLekmodIdeologyPromotions() const
+{
+	return m_aLekmodIdeologyPromotions;
 }
 #endif
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE

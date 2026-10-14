@@ -131,6 +131,9 @@ public:
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE
 	int GetLekmodFreeExperience() const;
 #endif
+#ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
+	const std::vector<std::pair<int, int> >& GetLekmodIdeologyPromotions() const;
+#endif
 	int GetCultureBombRadius() const;
 	int GetCultureBombRadiusNeutral() const;
 	int GetGoldenAgeTurns() const;
@@ -300,6 +303,9 @@ private:
 #endif
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE
 	int m_iLekmodFreeExperience;
+#endif
+#ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
+	std::vector<std::pair<int, int> > m_aLekmodIdeologyPromotions; // policy branch, promotion
 #endif
 	int m_iCultureBombRadius;
 	int m_iCultureBombRadiusNeutral;

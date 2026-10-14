@@ -1470,6 +1470,12 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_TRAIT_PLOT_YIELDS
 // Buildings.RequiredCivilization: only that civilization can build it (civ-only building classes: Australia, Japan)
 #define LEKMOD_CIV_ONLY_BUILDINGS
+// Phase 6 C++ batch E: Buildings.GreatWorkFilledTourismModifier (% Tourism in the city while all the building's slots are filled: Cuba)
+#define LEKMOD_BUILDING_FILLED_SLOT_TOURISM
+// Unit_LekmodIdeologyPromotions: promotions for the unit when trained, by the owner's ideology (Yugoslavia)
+#define LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
+// Batch E trait columns (part of LEKMOD_CIV_TRAIT_FLAGS): LekmodFasterInHillsCiviliansOnly, LekmodEarlyBuilding* (Inca),
+// LekmodClosestMinorAnchor (Siam), table Trait_LekmodBuildingClassDefense (Normandy)
 // Buildings.TerritoryHealChange: extra healing for the owner's non-air units on all tiles of the city (Field Hospital)
 #define LEKMOD_TERRITORY_HEAL
 // Buildings.CityHealRate/AdjacentEnemyDamage/HillCityStrength/MountainCityStrength/CityAttackRangeChange (Walls, Castle, Arsenal, Command Bunker), Buildings.NukeUnitDamageFixed (Bomb Shelter);

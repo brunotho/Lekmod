@@ -9,6 +9,7 @@
 #include "CvGameCoreDLLUtil.h"
 #include "ICvDLLUserInterface.h"
 #include "CvGameCoreUtils.h"
+#include "CvInternalGameCoreUtils.h"
 #include "CvInfosSerializationHelper.h"
 #include "CvDiplomacyAI.h"
 #include "CvGrandStrategyAI.h"
@@ -158,6 +159,11 @@ CvTraitEntry::CvTraitEntry() :
 	m_bLekmodGoldenAgeGreatPeople(false),
 	m_bLekmodGoldenAgeWLTKD(false),
 	m_iLekmodExcessHappinessGAModifier(0),
+	m_bLekmodFasterInHillsCiviliansOnly(false),
+	m_iLekmodEarlyBuildingImprovement(-1),
+	m_iLekmodEarlyBuildingProductionMod(0),
+	m_iLekmodEarlyBuildingEra(-1),
+	m_iLekmodClosestMinorAnchor(0),
 #endif
 	m_bNoHillsImprovementMaintenance(false),
 	m_bTechBoostFromCapitalScienceBuildings(false),
@@ -1028,6 +1034,34 @@ bool CvTraitEntry::IsLekmodGoldenAgeWLTKD() const
 int CvTraitEntry::GetLekmodExcessHappinessGAModifier() const
 {
 	return m_iLekmodExcessHappinessGAModifier;
+}
+/// Only civilians ignore the hill movement cost (Inca; military units get Altitude Training instead)
+bool CvTraitEntry::IsLekmodFasterInHillsCiviliansOnly() const
+{
+	return m_bLekmodFasterInHillsCiviliansOnly;
+}
+/// Cities with this improvement get LekmodEarlyBuildingProductionMod % towards buildings from before LekmodEarlyBuildingEra (Inca)
+int CvTraitEntry::GetLekmodEarlyBuildingImprovement() const
+{
+	return m_iLekmodEarlyBuildingImprovement;
+}
+int CvTraitEntry::GetLekmodEarlyBuildingProductionMod() const
+{
+	return m_iLekmodEarlyBuildingProductionMod;
+}
+int CvTraitEntry::GetLekmodEarlyBuildingEra() const
+{
+	return m_iLekmodEarlyBuildingEra;
+}
+/// Extra resting Influence with the closest City-State you are at peace with (Siam)
+int CvTraitEntry::GetLekmodClosestMinorAnchor() const
+{
+	return m_iLekmodClosestMinorAnchor;
+}
+/// Extra city strength (hundredths) from buildings of the class (Normandy)
+const std::vector<std::pair<int, int> >& CvTraitEntry::GetLekmodBuildingClassDefense() const
+{
+	return m_aLekmodBuildingClassDefense;
 }
 #ifdef LEKMOD_TRAIT_PLOT_YIELDS
 /// Tile yields with conditions (Trait_LekmodPlotYields)
@@ -1969,6 +2003,11 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	m_bLekmodGoldenAgeGreatPeople = kResults.GetBool("LekmodGoldenAgeGreatPeople");
 	m_bLekmodGoldenAgeWLTKD = kResults.GetBool("LekmodGoldenAgeWLTKD");
 	m_iLekmodExcessHappinessGAModifier = kResults.GetInt("LekmodExcessHappinessGAModifier");
+	m_bLekmodFasterInHillsCiviliansOnly = kResults.GetBool("LekmodFasterInHillsCiviliansOnly");
+	m_iLekmodEarlyBuildingImprovement = GC.getInfoTypeForString(kResults.GetText("LekmodEarlyBuildingImprovement"), true);
+	m_iLekmodEarlyBuildingProductionMod = kResults.GetInt("LekmodEarlyBuildingProductionMod");
+	m_iLekmodEarlyBuildingEra = GC.getInfoTypeForString(kResults.GetText("LekmodEarlyBuildingEra"), true);
+	m_iLekmodClosestMinorAnchor = kResults.GetInt("LekmodClosestMinorAnchor");
 #endif
 	m_bNoHillsImprovementMaintenance = kResults.GetBool("NoHillsImprovementMaintenance");
 	m_bTechBoostFromCapitalScienceBuildings = kResults.GetBool("TechBoostFromCapitalScienceBuildings");
@@ -3048,6 +3087,22 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 			kRow.m_bReligion = pResults->GetInt(12) != 0;
 			m_aLekmodPlotYields.push_back(kRow);
 		}
+		pResults->Reset();
+	}
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	{
+		m_aLekmodBuildingClassDefense.clear();
+		std::string strKey("Trait_LekmodBuildingClassDefense");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "SELECT BuildingClasses.ID, Defense FROM Trait_LekmodBuildingClassDefense "
+				"INNER JOIN BuildingClasses ON BuildingClasses.Type = BuildingClassType WHERE TraitType = ?");
+		}
+		pResults->Bind(1, szTraitType);
+		while (pResults->Step())
+			m_aLekmodBuildingClassDefense.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
 		pResults->Reset();
 	}
 #endif
@@ -5464,6 +5519,79 @@ int CvPlayerTraits::GetLekmodExcessHappinessGAModifier() const
 			iMod += pkTraitInfo->GetLekmodExcessHappinessGAModifier();
 	}
 	return iMod;
+}
+bool CvPlayerTraits::IsLekmodFasterInHillsCiviliansOnly() const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && pkTraitInfo->IsLekmodFasterInHillsCiviliansOnly())
+			return true;
+	}
+	return false;
+}
+/// % Production towards eBuilding in pCity from LekmodEarlyBuilding* (non-wonder buildings whose tech is before the era; needs the improvement on a city tile)
+int CvPlayerTraits::GetLekmodEarlyBuildingProductionMod(const CvCity* pCity, BuildingTypes eBuilding) const
+{
+	CvBuildingEntry* pkBuilding = GC.getBuildingInfo(eBuilding);
+	if(pCity == NULL || pkBuilding == NULL)
+		return 0;
+	const CvBuildingClassInfo& kClass = pkBuilding->GetBuildingClassInfo();
+	if(::isWorldWonderClass(kClass) || ::isTeamWonderClass(kClass) || ::isNationalWonderClass(kClass))
+		return 0;
+	const TechTypes eTech = (TechTypes)pkBuilding->GetPrereqAndTech();
+	const int iBuildingEra = (eTech != NO_TECH && GC.getTechInfo(eTech)) ? GC.getTechInfo(eTech)->GetEra() : 0;
+	int iMod = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) || pkTraitInfo->GetLekmodEarlyBuildingProductionMod() == 0)
+			continue;
+		if(pkTraitInfo->GetLekmodEarlyBuildingEra() != -1 && iBuildingEra >= pkTraitInfo->GetLekmodEarlyBuildingEra())
+			continue;
+		const ImprovementTypes eImprovement = (ImprovementTypes)pkTraitInfo->GetLekmodEarlyBuildingImprovement();
+		if(eImprovement != NO_IMPROVEMENT)
+		{
+			bool bFound = false;
+			for(int iPlot = 0; iPlot < NUM_CITY_PLOTS && !bFound; iPlot++)
+			{
+				CvPlot* pPlot = pCity->GetCityCitizens()->GetCityPlotFromIndex(iPlot);
+				if(pPlot && pPlot->getOwner() == pCity->getOwner() && pPlot->getWorkingCity() == pCity
+					&& pPlot->getImprovementType() == eImprovement && !pPlot->IsImprovementPillaged())
+					bFound = true;
+			}
+			if(!bFound)
+				continue;
+		}
+		iMod += pkTraitInfo->GetLekmodEarlyBuildingProductionMod();
+	}
+	return iMod;
+}
+int CvPlayerTraits::GetLekmodClosestMinorAnchor() const
+{
+	int iValue = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			iValue += pkTraitInfo->GetLekmodClosestMinorAnchor();
+	}
+	return iValue;
+}
+int CvPlayerTraits::GetLekmodBuildingClassDefense(BuildingClassTypes eClass) const
+{
+	int iValue = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<std::pair<int, int> >& aRows = pkTraitInfo->GetLekmodBuildingClassDefense();
+		for(uint j = 0; j < aRows.size(); j++)
+			if(aRows[j].first == (int)eClass)
+				iValue += aRows[j].second;
+	}
+	return iValue;
 }
 #ifdef LEKMOD_TRAIT_PLOT_YIELDS
 bool CvPlayerTraits::HasLekmodPlotYields() const

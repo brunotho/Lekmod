@@ -23,6 +23,10 @@ void CvUnitMovement::GetCostsForMove(const CvUnit* pUnit, const CvPlot* pFromPlo
 	CvPlayerTraits* pTraits = kPlayer.GetPlayerTraits();
 	bool bFasterAlongRiver = pTraits->IsFasterAlongRiver();
 	bool bFasterInHills = pTraits->IsFasterInHills();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if (bFasterInHills && pUnit->IsCombatUnit() && pTraits->IsLekmodFasterInHillsCiviliansOnly())
+		bFasterInHills = false;
+#endif
 	bool bIgnoreTerrainCost = pUnit->ignoreTerrainCost();
 	//int iBaseMoves = pUnit->baseMoves(isWater()?DOMAIN_SEA:NO_DOMAIN);
 	TeamTypes eUnitTeam = pUnit->getTeam();

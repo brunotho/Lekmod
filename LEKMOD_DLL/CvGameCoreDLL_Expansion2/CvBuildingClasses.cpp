@@ -1208,6 +1208,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef LEKMOD_CIV_ONLY_BUILDINGS
 	m_iLekmodRequiredCivilization = GC.getInfoTypeForString(kResults.GetText("RequiredCivilization"), true);
 #endif
+#ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
+	m_iLekmodGreatWorkFilledTourismModifier = kResults.GetInt("GreatWorkFilledTourismModifier");
+#endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 	{
 		m_aLekmodConditionalYields.clear();
@@ -3319,6 +3322,13 @@ int CvBuildingEntry::GetDifferentLandMassYieldChange(int i) const
 const std::vector<BuildingFreeTerrainYields>& CvBuildingEntry::GetFreeTerrainYields() const
 {
 	return m_aFreeTerrainYields;
+}
+#endif
+#ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
+/// % Tourism in the city while all of this building's Great Work slots are filled (Dance Hall)
+int CvBuildingEntry::GetLekmodGreatWorkFilledTourismModifier() const
+{
+	return m_iLekmodGreatWorkFilledTourismModifier;
 }
 #endif
 #ifdef LEKMOD_CIV_ONLY_BUILDINGS

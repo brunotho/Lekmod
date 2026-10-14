@@ -6446,6 +6446,30 @@ int CvMinorCivAI::GetFriendshipAnchorWithMajor(PlayerTypes eMajor)
 	// Social Policies
 	iAnchor += pMajor->GetMinorFriendshipAnchorMod();
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// trait: extra resting point with the closest City-State the major is at peace with (Siam)
+	if (pMajor->GetPlayerTraits()->GetLekmodClosestMinorAnchor() != 0 && pMajor->getCapitalCity() != NULL && GetPlayer()->getCapitalCity() != NULL
+		&& !GET_TEAM(pMajor->getTeam()).isAtWar(GetPlayer()->getTeam()))
+	{
+		CvCity* pMajorCapital = pMajor->getCapitalCity();
+		const int iMyDistance = plotDistance(pMajorCapital->getX(), pMajorCapital->getY(), GetPlayer()->getCapitalCity()->getX(), GetPlayer()->getCapitalCity()->getY());
+		bool bClosest = true;
+		for (int iMinor = MAX_MAJOR_CIVS; iMinor < MAX_CIV_PLAYERS && bClosest; iMinor++)
+		{
+			CvPlayer& kMinor = GET_PLAYER((PlayerTypes)iMinor);
+			if (iMinor == GetPlayer()->GetID() || !kMinor.isAlive() || !kMinor.isMinorCiv() || kMinor.getCapitalCity() == NULL)
+				continue;
+			if (GET_TEAM(pMajor->getTeam()).isAtWar(kMinor.getTeam()) || !GET_TEAM(pMajor->getTeam()).isHasMet(kMinor.getTeam()))
+				continue;
+			const int iDistance = plotDistance(pMajorCapital->getX(), pMajorCapital->getY(), kMinor.getCapitalCity()->getX(), kMinor.getCapitalCity()->getY());
+			if (iDistance < iMyDistance || (iDistance == iMyDistance && iMinor < GetPlayer()->GetID()))
+				bClosest = false;
+		}
+		if (bClosest)
+			iAnchor += pMajor->GetPlayerTraits()->GetLekmodClosestMinorAnchor();
+	}
+#endif
+
 #ifdef LEKMOD_GREAT_WORK_WONDER_EFFECTS
 	// Statue of Zeus: higher resting point with city-states near the wonder
 	iAnchor += CvCity::LekmodNearbyMinorRestingInfluence(eMajor, GetPlayer()->getCapitalCity());

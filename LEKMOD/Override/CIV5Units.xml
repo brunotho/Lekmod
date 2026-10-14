@@ -43416,6 +43416,7 @@
 		<Column name="FirstPurchaseDiscount" type="integer" default="0"/> <!-- Faith and Gold Discount if the city has purchased nothing this turn -->
     	<Column name="StartTurnMovesMountedCivilian" type="integer" default="0"/>
     	<Column name="RequiredCivilization" type="text" reference="Civilizations(Type)" default="NULL"/>
+    	<Column name="GreatWorkFilledTourismModifier" type="integer" default="0"/>
     	<Column name="LekmodPolicyGranted" type="boolean" default="false"/> <!-- LEKMOD: given and removed by Policy_BuildingClassFreeBuildings -->
 	</Table>
 	<!-- NOTE: This table is organized, but don't feel like you need to follow it as it uses manually assigned IDs which can be combersome to change. Just add to the end. 
@@ -110086,6 +110087,16 @@
 		<Column name="RequiresPantheon" type="boolean" default="false"/>
 		<Column name="RequiresReligion" type="boolean" default="false"/>
 		<Column name="RequiresBuildingClass" type="text" reference="BuildingClasses(Type)" default="NULL"/>
+	</Table>
+	<Table name="Trait_LekmodBuildingClassDefense">
+		<Column name="TraitType" type="text" reference="Traits(Type)"/>
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)"/>
+		<Column name="Defense" type="integer" default="0"/>
+	</Table>
+	<Table name="Unit_LekmodIdeologyPromotions">
+		<Column name="UnitType" type="text" reference="Units(Type)"/>
+		<Column name="PolicyBranchType" type="text" reference="PolicyBranchTypes(Type)"/>
+		<Column name="PromotionType" type="text" reference="UnitPromotions(Type)"/>
 	</Table>
 	<Table name="Trait_LekmodTrainedPromotions">
 		<Column name="TraitType" type="text" reference="Traits(Type)"/>
@@ -211467,6 +211478,11 @@
 		<Column name="LekmodGoldenAgeGreatPeople" type="boolean" default="false"/>
 		<Column name="LekmodGoldenAgeWLTKD" type="boolean" default="false"/>
 		<Column name="LekmodExcessHappinessGAModifier" type="integer" default="0"/>
+		<Column name="LekmodFasterInHillsCiviliansOnly" type="boolean" default="false"/>
+		<Column name="LekmodEarlyBuildingImprovement" type="text" reference="Improvements(Type)" default="NULL"/>
+		<Column name="LekmodEarlyBuildingProductionMod" type="integer" default="0"/>
+		<Column name="LekmodEarlyBuildingEra" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="LekmodClosestMinorAnchor" type="integer" default="0"/>
 		<Column name="FirstProphetCostMod" type="integer" default="0"/>
 		<Column name="EmbarkedUnitsFullStrength" type="boolean" default="false"/>
 		<Column name="CityStateUnitGiftExtraExperience" type="integer"  default="0"/>
@@ -287457,4 +287473,147 @@
 			<BordersForeignCityOtherReligion>true</BordersForeignCityOtherReligion>
 		</Row>
 	</Building_LekmodConditionalYields>
+	<!-- Phase 6 C++ batch E (2026-10-14) -->
+	<!-- Inca (new UA): military land units get Altitude Training, only civilians ignore hill movement costs, cities with a Quarry +20% Production towards Ancient Era buildings -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_GREAT_ANDEAN_ROAD"/>
+			<Set ImprovementMaintenanceModifier="0" NoHillsImprovementMaintenance="false" LekmodFasterInHillsCiviliansOnly="true" LekmodEarlyBuildingImprovement="IMPROVEMENT_QUARRY" LekmodEarlyBuildingProductionMod="20" LekmodEarlyBuildingEra="ERA_CLASSICAL"/>
+		</Update>
+	</Traits>
+	<Trait_FreePromotionUnitCombats>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_GREAT_ANDEAN_ROAD</TraitType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<!-- Normandy: Walls, Castles, Arsenals and Military Bases +2 city strength -->
+	<Trait_LekmodBuildingClassDefense>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_WALLS</BuildingClassType>
+			<Defense>200</Defense>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_CASTLE</BuildingClassType>
+			<Defense>200</Defense>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_ARSENAL</BuildingClassType>
+			<Defense>200</Defense>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_WIRR</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MILITARY_BASE</BuildingClassType>
+			<Defense>200</Defense>
+		</Row>
+	</Trait_LekmodBuildingClassDefense>
+	<!-- Siam: +20 resting Influence with the closest City-State at peace -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_CITY_STATE_BONUSES"/>
+			<Set LekmodClosestMinorAnchor="20"/>
+		</Update>
+	</Traits>
+	<!-- Netherlands / Belgium: the luxury / strategic Gold needs the East India Company -->
+	<Trait_ResourceClassYieldChange>
+		<Delete TraitType="TRAIT_LUXURY_RETENTION"/>
+		<Delete TraitType="TRAIT_BELGIUM"/>
+	</Trait_ResourceClassYieldChange>
+	<Trait_LekmodPlotYields>
+		<Row>
+			<TraitType>TRAIT_LUXURY_RETENTION</TraitType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+			<ResourceClassType>RESOURCECLASS_LUXURY</ResourceClassType>
+			<RequiresBuildingClass>BUILDINGCLASS_NATIONAL_TREASURY</RequiresBuildingClass>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_BELGIUM</TraitType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+			<ResourceClassType>RESOURCECLASS_RUSH</ResourceClassType>
+			<RequiresBuildingClass>BUILDINGCLASS_NATIONAL_TREASURY</RequiresBuildingClass>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_BELGIUM</TraitType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+			<ResourceClassType>RESOURCECLASS_MODERN</ResourceClassType>
+			<RequiresBuildingClass>BUILDINGCLASS_NATIONAL_TREASURY</RequiresBuildingClass>
+		</Row>
+	</Trait_LekmodPlotYields>
+	<!-- Cuba: Dance Hall +20% Tourism in the city while its slot is filled -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_DANCE_HALL"/>
+			<Set GreatWorkFilledTourismModifier="20"/>
+		</Update>
+	</Buildings>
+	<!-- Yugoslavia: M-84 promotion by ideology when trained -->
+	<Unit_LekmodIdeologyPromotions>
+		<Row>
+			<UnitType>UNIT_YUGO_M84</UnitType>
+			<PolicyBranchType>POLICY_BRANCH_FREEDOM</PolicyBranchType>
+			<PromotionType>PROMOTION_FOREIGN_LANDS</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_YUGO_M84</UnitType>
+			<PolicyBranchType>POLICY_BRANCH_AUTOCRACY</PolicyBranchType>
+			<PromotionType>PROMOTION_MOBILITY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_YUGO_M84</UnitType>
+			<PolicyBranchType>POLICY_BRANCH_ORDER</PolicyBranchType>
+			<PromotionType>PROMOTION_DRILL_1</PromotionType>
+		</Row>
+	</Unit_LekmodIdeologyPromotions>
 </GameData>

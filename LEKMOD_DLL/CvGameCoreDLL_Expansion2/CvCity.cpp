@@ -5050,6 +5050,15 @@ void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	GET_PLAYER(getOwner()).GetPlayerTraits()->LekmodApplyTrainedUnitEffects(this, pUnit);
 #endif
+#ifdef LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
+	{
+		const PolicyBranchTypes eIdeology = GET_PLAYER(getOwner()).GetPlayerPolicies()->GetLateGamePolicyTree();
+		const std::vector<std::pair<int, int> >& aIdeologyPromotions = pUnit->getUnitInfo().GetLekmodIdeologyPromotions();
+		for (uint i = 0; i < aIdeologyPromotions.size() && eIdeology != NO_POLICY_BRANCH_TYPE; i++)
+			if (aIdeologyPromotions[i].first == (int)eIdeology)
+				pUnit->setHasPromotion((PromotionTypes)aIdeologyPromotions[i].second, true);
+	}
+#endif
 
 #ifndef AUI_UNIT_TEST_PROMOTION_READY_MOVED
 	pUnit->testPromotionReady();
@@ -7008,6 +7017,15 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 
 	int iTempMod;
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// trait: % Production towards early buildings in cities with an improvement (Inca: Quarry, Ancient Era buildings)
+	iTempMod = GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodEarlyBuildingProductionMod(this, eBuilding);
+	if (iTempMod != 0)
+	{
+		iMultiplier += iTempMod;
+		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_BUILDING_TRAIT", iTempMod);
+	}
+#endif
 #ifdef LEKMOD_CONGRESS_CYCLE
 	// World Congress (Climate Change Reparations: power plants)
 	iTempMod = GC.getGame().GetGameLeagues()->LekmodBuildingProductionModifier((BuildingClassTypes)thisBuildingEntry->GetBuildingClassType());
@@ -8943,6 +8961,9 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 	if(!bObsolete)
 	{
 		m_pCityBuildings->ChangeBuildingDefense(pBuildingInfo->GetDefenseModifier() * iChange);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		m_pCityBuildings->ChangeBuildingDefense(GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodBuildingClassDefense((BuildingClassTypes)pBuildingInfo->GetBuildingClassType()) * iChange);
+#endif
 #if defined(LEKMOD_GARRISON_YIELD_EFFECTS) // Add the garrison strength bonus NOTE: this is not inside of a if(GetGarrisonedUnit()) since that would make it only apply if the city is garrisoned on construction
 		m_pCityBuildings->ChangeGarrisonStrengthBonus(pBuildingInfo->GetGarrisonStrengthBonus() * iChange);
 		m_pCityBuildings->ChangeGarrisonMaintenanceFreeCount(pBuildingInfo->IsGarrisonMaintenanceFree() * iChange);
@@ -12920,6 +12941,26 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	iModifier += iTempMod;
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_WORLD_RELIGION", iTempMod);
+#ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
+	// buildings with all Great Work slots filled (Dance Hall)
+	if (YIELD_TOURISM == eIndex)
+	{
+		iTempMod = 0;
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding == NULL || pkBuilding->GetLekmodGreatWorkFilledTourismModifier() == 0 || pkBuilding->GetGreatWorkCount() <= 0)
+				continue;
+			if (m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
+				continue;
+			if ((int)m_pCityBuildings->GetNumGreatWorksInBuilding((BuildingClassTypes)pkBuilding->GetBuildingClassType()) >= (int)pkBuilding->GetGreatWorkCount())
+				iTempMod += pkBuilding->GetLekmodGreatWorkFilledTourismModifier();
+		}
+		iModifier += iTempMod;
+		if (toolTipSink && iTempMod != 0)
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_FILLED_SLOT_TOURISM", iTempMod);
+	}
+#endif
 
 #ifdef LEKMOD_POLICY_REWORK
 	if (YIELD_TOURISM == eIndex)

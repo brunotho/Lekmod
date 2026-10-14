@@ -527,6 +527,9 @@ public:
 #ifdef LEKMOD_CIV_ONLY_BUILDINGS
 	int GetLekmodRequiredCivilization() const;
 #endif
+#ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
+	int GetLekmodGreatWorkFilledTourismModifier() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -888,6 +891,9 @@ private:
 #endif
 #ifdef LEKMOD_CIV_ONLY_BUILDINGS
 	int m_iLekmodRequiredCivilization;
+#endif
+#ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
+	int m_iLekmodGreatWorkFilledTourismModifier;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;

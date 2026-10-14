@@ -9,7 +9,7 @@ local is_active = LekmodUtilities:is_civilization_active(this_civ)
 -- Philippines UA. Add a building to a new city that gives +1 population to the city until the maximum is reached.
 ------------------------------------------------------------------------------------------------------------------------
 local dummy_building = GameInfoTypes["BUILDING_PHILIPPINES_TRAIT"]
-local bonus_cities_amount = 2
+local bonus_cities_amount = 1
 
 function lekmod_philippine_expand_population(player_id, iX, iY)
    local player = Players[player_id]

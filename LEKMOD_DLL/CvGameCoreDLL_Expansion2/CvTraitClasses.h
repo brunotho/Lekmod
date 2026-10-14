@@ -225,6 +225,12 @@ public:
 	bool IsLekmodGoldenAgeGreatPeople() const;
 	bool IsLekmodGoldenAgeWLTKD() const;
 	int GetLekmodExcessHappinessGAModifier() const;
+	bool IsLekmodFasterInHillsCiviliansOnly() const;
+	int GetLekmodEarlyBuildingImprovement() const;
+	int GetLekmodEarlyBuildingProductionMod() const;
+	int GetLekmodEarlyBuildingEra() const;
+	int GetLekmodClosestMinorAnchor() const;
+	const std::vector<std::pair<int, int> >& GetLekmodBuildingClassDefense() const;
 #endif
 #ifdef LEKMOD_TRAIT_PLOT_YIELDS
 	struct LekmodPlotYield
@@ -531,6 +537,12 @@ protected:
 	bool m_bLekmodGoldenAgeGreatPeople;
 	bool m_bLekmodGoldenAgeWLTKD;
 	int m_iLekmodExcessHappinessGAModifier;
+	bool m_bLekmodFasterInHillsCiviliansOnly;
+	int m_iLekmodEarlyBuildingImprovement;
+	int m_iLekmodEarlyBuildingProductionMod;
+	int m_iLekmodEarlyBuildingEra;
+	int m_iLekmodClosestMinorAnchor;
+	std::vector<std::pair<int, int> > m_aLekmodBuildingClassDefense; // building class, city strength (hundredths)
 #endif
 #ifdef LEKMOD_TRAIT_PLOT_YIELDS
 	std::vector<LekmodPlotYield> m_aLekmodPlotYields;
@@ -747,6 +759,10 @@ public:
 	int GetLekmodTrainedUnitExperience(const CvCity* pCity) const;
 	bool IsLekmodTraitFlag(int iFlag) const; // 0 GA happiness yields, 1 GA great people, 2 GA WLTKD
 	int GetLekmodExcessHappinessGAModifier() const;
+	bool IsLekmodFasterInHillsCiviliansOnly() const;
+	int GetLekmodEarlyBuildingProductionMod(const CvCity* pCity, BuildingTypes eBuilding) const;
+	int GetLekmodClosestMinorAnchor() const;
+	int GetLekmodBuildingClassDefense(BuildingClassTypes eClass) const;
 #ifdef LEKMOD_TRAIT_PLOT_YIELDS
 	bool HasLekmodPlotYields() const;
 	int GetLekmodTraitPlotYield(const CvPlot* pPlot, YieldTypes eYield, ImprovementTypes eImprovement) const;

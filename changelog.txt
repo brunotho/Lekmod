@@ -2140,7 +2140,8 @@ Tags: civs, units
 - Removed: +15 XP for units gifted by City-States
 - Added: starts along a river
 - Changed: Naresuan's Elephant costs 90 (was 80), needs 3 Iron and starts with Feared Elephant
-- Note: open: +20 resting Influence with the closest City-State (needs C++)
+- Added: +20 resting Influence with the City-State closest to your capital that you are at peace with
+- DLL: Traits.LekmodClosestMinorAnchor
 
 MONGOLIA (CIVILIZATION_MONGOL)
 ------------------------------
@@ -2303,7 +2304,9 @@ Tags: civs, units
 - Changed: Slinger: available at Agriculture (was Archery), costs 22 (was 26), Range 1 (was 2), 4 Strength and 6 Ranged Strength (was 5 and 7), can move after attacking
 - Removed: Slinger: withdrawing before melee attacks
 - Changed: Terrace Farms can only be built next to a mountain
-- Note: open: the new UA (needs C++)
+- Changed: new UA: military land units start with Altitude Training; only civilians still ignore movement costs into Hills; cities with a Quarry +20% Production towards Ancient Era buildings
+- Removed: no maintenance for improvements on Hills and half maintenance elsewhere
+- DLL: Traits.LekmodFasterInHillsCiviliansOnly, LekmodEarlyBuildingImprovement/ProductionMod/Era
 - DLL: Improvements.RequiresAdjacentMountain
 
 TIBET (CIVILIZATION_TIBET)
@@ -2331,14 +2334,16 @@ YUGOSLAVIA (CIVILIZATION_YUGOSLAVIA)
 Tags: civs, units
 - Changed: M-84 costs 269 (was 316), the same as a Landship
 - Removed: M-84: ignoring Zones of Control
-- Note: open: ideology promotions (need C++)
+- Added: M-84 gets a promotion from your ideology when trained: Freedom Foreign Lands, Autocracy Mobility, Order Drill I
+- DLL: Unit_LekmodIdeologyPromotions
 
 NETHERLANDS (CIVILIZATION_NETHERLANDS)
 --------------------------------------
 Tags: civs
 - Changed: Polders give +1 Gold with Economics (was +2 Gold and +1 Production)
 - Added: Polders +1 Production with Economics when no other Polder is next to them
-- Note: open: the UA changes (need C++)
+- Changed: luxury tiles give their +1 Gold only once the East India Company is built
+- DLL: Trait_LekmodPlotYields (RequiresBuildingClass)
 - DLL: Improvement_LekmodIsolatedYields
 
 JAPAN (CIVILIZATION_JAPAN)
@@ -2383,14 +2388,15 @@ Tags: civs, units
 - Removed: Gerilya: Volley
 - Changed: Simbahan (rebuilt) now replaces the Colosseum: costs 60, +2 Happiness, +2 Faith with another own city within 4 tiles, +2 Production with two
 - Removed: Simbahan: its Culture, Faith and XP as a Zoo replacement
-- Note: open: only the first expansion gets +1 Population (needs C++)
+- Changed: only the first expansion gets +1 Population (was the first two)
 
 NORMANDY (CIVILIZATION_NORMANDY)
 --------------------------------
 Tags: civs
 - Removed: +5 city strength in all cities
 - Added: +25% Production towards Walls, Castles, Arsenals and Military Bases
-- Note: open: +2 city strength from those buildings (needs C++)
+- Added: those buildings give the city +2 Defense each
+- DLL: Trait_LekmodBuildingClassDefense
 
 GERMANY (CIVILIZATION_GERMANY)
 ------------------------------
@@ -2485,7 +2491,8 @@ Tags: civs, buildings
 - Removed: Dance Hall: +1 Happiness and +4 Culture when its slot is filled
 - Changed: new UA: unaffected by unhappiness from ideological pressure (was -50%), unhappiness never acts worse than 9 (penalties stop growing there), one Tobacco near the capital when it is founded
 - Removed: Culture from other civilizations' capitals; free Guerrilleros with the first tenet
-- Note: open: Dance Hall +20% city Tourism when filled (needs C++)
+- Added: Dance Hall: +20% Tourism in the city while its slot is filled
+- DLL: Buildings.GreatWorkFilledTourismModifier
 - DLL: Traits.LekmodUnhappinessCap; old UA Lua (Lekmod_cuba.lua) no longer registered
 
 AKSUM (CIVILIZATION_AKSUM)
@@ -2575,3 +2582,9 @@ Tags: civs, buildings
 - Removed: Convict Penitentiary: its flat and % Production and Gold, spy effects
 - DLL: Trait_LekmodPlotYields, Buildings.RequiredCivilization (a civ-only building with its own class)
 - Dev: new building class 192
+
+BELGIUM (CIVILIZATION_BELGIUM)
+------------------------------
+Tags: civs
+- Changed: strategic resources give their +1 Gold only once the East India Company is built
+- DLL: Trait_LekmodPlotYields (RequiresBuildingClass)
