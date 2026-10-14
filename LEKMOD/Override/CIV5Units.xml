@@ -43414,6 +43414,7 @@
 		<Column name="GreatWorkHappiness" type="integer" default="0"/> <!-- Happiness to GreatWorks inside this building -->
 		<Column name="GreatWorkMilitaryProductionModifier" type="integer" default="0"/> <!-- Military production from GreatWorks inside this building -->
 		<Column name="FirstPurchaseDiscount" type="integer" default="0"/> <!-- Faith and Gold Discount if the city has purchased nothing this turn -->
+    	<Column name="StartTurnMovesMountedCivilian" type="integer" default="0"/>
     	<Column name="LekmodPolicyGranted" type="boolean" default="false"/> <!-- LEKMOD: given and removed by Policy_BuildingClassFreeBuildings -->
 	</Table>
 	<!-- NOTE: This table is organized, but don't feel like you need to follow it as it uses manually assigned IDs which can be combersome to change. Just add to the end. 
@@ -110069,6 +110070,22 @@
 			<Yield>5</Yield>
 		</Row>
 	</Feature_HolyCityYieldChanges>
+	<Table name="Trait_LekmodTrainedPromotions">
+		<Column name="TraitType" type="text" reference="Traits(Type)"/>
+		<Column name="PromotionType" type="text" reference="UnitPromotions(Type)"/>
+		<Column name="AdjacentTerrainType" type="text" reference="Terrains(Type)" default="NULL"/>
+	</Table>
+	<Table name="Trait_LekmodBuildingClassFreeExperience">
+		<Column name="TraitType" type="text" reference="Traits(Type)"/>
+		<Column name="BuildingClassType" type="text" reference="BuildingClasses(Type)"/>
+		<Column name="Experience" type="integer" default="0"/>
+	</Table>
+	<Table name="Improvement_LekmodIsolatedYields">
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)"/>
+		<Column name="TechType" type="text" reference="Technologies(Type)" default="NULL"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+	</Table>
 	<Table name="Building_LekmodConditionalYields">
 		<Column name="BuildingType" type="text" reference="Buildings(Type)"/>
 		<Column name="YieldType" type="text" reference="Yields(Type)"/>
@@ -211425,6 +211442,8 @@
 		<Column name="FreeUnitPrereqTech2" type="text" reference="Technologies(Type)" default="NULL"/>
 		<Column name="NoPledgeProtection" type="boolean" default="false"/>
 		<Column name="TributeKeepsPledge" type="boolean" default="false"/>
+		<Column name="LekmodUnhappinessCap" type="integer" default="0"/>
+		<Column name="LekmodGoldModifierAtPeace" type="integer" default="0"/>
 		<Column name="FirstProphetCostMod" type="integer" default="0"/>
 		<Column name="EmbarkedUnitsFullStrength" type="boolean" default="false"/>
 		<Column name="CityStateUnitGiftExtraExperience" type="integer"  default="0"/>
@@ -287041,4 +287060,86 @@
 			<Yield>1</Yield>
 		</Row>
 	</Building_ImprovementYieldChanges>
+	<!-- Phase 6 C++ batch C (2026-10-14) -->
+	<!-- Chile: units trained next to a mountain get Stargazing; Tibet: Altitude Training, and no bonus for Dalai Lama cities (the capital bonus stays) -->
+	<Trait_LekmodTrainedPromotions>
+		<Row>
+			<TraitType>TRAIT_BY_REASON</TraitType>
+			<PromotionType>PROMOTION_STARGAZING</PromotionType>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_TIBET</TraitType>
+			<PromotionType>PROMOTION_ALTITUDE_TRAINING</PromotionType>
+			<AdjacentTerrainType>TERRAIN_MOUNTAIN</AdjacentTerrainType>
+		</Row>
+	</Trait_LekmodTrainedPromotions>
+	<Trait_CityEraYieldChange>
+		<Delete TraitType="TRAIT_TIBET"/>
+	</Trait_CityEraYieldChange>
+	<!-- Macedonia: +5 XP for units trained in a city with a Monument, Amphitheater or Opera House (each) -->
+	<Trait_LekmodBuildingClassFreeExperience>
+		<Row>
+			<TraitType>TRAIT_MACEDON</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MONUMENT</BuildingClassType>
+			<Experience>5</Experience>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_MACEDON</TraitType>
+			<BuildingClassType>BUILDINGCLASS_AMPHITHEATER</BuildingClassType>
+			<Experience>5</Experience>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_MACEDON</TraitType>
+			<BuildingClassType>BUILDINGCLASS_OPERA_HOUSE</BuildingClassType>
+			<Experience>5</Experience>
+		</Row>
+	</Trait_LekmodBuildingClassFreeExperience>
+	<!-- Zulu: -25% Gold in every city while not at war with another major civ -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_BUFFALO_HORNS"/>
+			<Set LekmodGoldModifierAtPeace="-25"/>
+		</Update>
+	</Traits>
+	<!-- Cuba (new UA): unaffected by ideological pressure, acts at most 9 unhappy, one Tobacco near the capital -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_UC_BATISTA"/>
+			<Set IdeologyPressureUnhappinessModifier="-100" LekmodUnhappinessCap="9"/>
+		</Update>
+	</Traits>
+	<Trait_FreeResourceCities>
+		<Row>
+			<TraitType>TRAIT_UC_BATISTA</TraitType>
+			<ResourceType>RESOURCE_TOBACCO</ResourceType>
+			<ResourceQuantity>1</ResourceQuantity>
+			<NumCities>1</NumCities>
+			<City>false</City>
+			<Found>true</Found>
+			<ClaimPlot>true</ClaimPlot>
+		</Row>
+	</Trait_FreeResourceCities>
+	<!-- Golden Horde: Yam Route +2 moves for mounted units and civilians starting the turn in the city -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_HORDE_YAM_ROUTE"/>
+			<Set StartTurnMovesMountedCivilian="2"/>
+		</Update>
+	</Buildings>
+	<!-- Netherlands: Polders +1 Production with Economics when no other Polder is adjacent -->
+	<Improvement_LekmodIsolatedYields>
+		<Row>
+			<ImprovementType>IMPROVEMENT_POLDER</ImprovementType>
+			<TechType>TECH_ECONOMICS</TechType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_WATER_POLDER</ImprovementType>
+			<TechType>TECH_ECONOMICS</TechType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_LekmodIsolatedYields>
 </GameData>

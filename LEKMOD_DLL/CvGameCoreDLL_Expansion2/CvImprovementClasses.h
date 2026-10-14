@@ -78,6 +78,9 @@ public:
 #ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
 	bool IsLekmodRequiresAdjacentMountain() const;
 #endif
+#ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
+	const std::vector<std::pair<int, std::pair<int, int> > >& GetLekmodIsolatedYields() const; // tech, (yield, amount)
+#endif
 	int GetLuxuryCopiesSiphonedFromMinor() const;
 	int GetImprovementPillage() const;
 	void SetImprovementPillage(int i);
@@ -228,6 +231,9 @@ protected:
 	int m_iResourceExtractionMod;
 #ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
 	bool m_bLekmodRequiresAdjacentMountain;
+#endif
+#ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
+	std::vector<std::pair<int, std::pair<int, int> > > m_aLekmodIsolatedYields;
 #endif
 	int m_iLuxuryCopiesSiphonedFromMinor;
 	int m_iImprovementPillage;

@@ -4981,6 +4981,9 @@ int CvCity::getProductionExperience(UnitTypes eUnit)
 #ifdef LEKMOD_UNIT_FREE_EXPERIENCE
 			iExperience += pkUnitInfo->GetLekmodFreeExperience();
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+			iExperience += kOwner.GetPlayerTraits()->GetLekmodTrainedUnitExperience(this);
+#endif
 
 			iExperience += getSpecialistFreeExperience();
 		}
@@ -5044,6 +5047,9 @@ void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
 			}
 		}
 	}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	GET_PLAYER(getOwner()).GetPlayerTraits()->LekmodApplyTrainedUnitEffects(this, pUnit);
+#endif
 
 #ifndef AUI_UNIT_TEST_PROMOTION_READY_MOVED
 	pUnit->testPromotionReady();
@@ -9573,7 +9579,11 @@ int CvCity::foodDifferenceTimes100(bool bBottom, CvString* toolTipSink) const
 
 		// Cities stop growing when empire is very unhappy
 #ifdef AUI_CITIZENS_GET_VALUE_CONSIDER_GROWTH_MODIFIERS
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		if (!GC.getGame().isOption(GAMEOPTION_NO_HAPPINESS) && GET_PLAYER(getOwner()).GetLekmodPenaltyExcessHappiness(iExtraHappiness) <= /*-10*/ GC.getVERY_UNHAPPY_THRESHOLD())
+#else
 		if (!GC.getGame().isOption(GAMEOPTION_NO_HAPPINESS) && GET_PLAYER(getOwner()).GetExcessHappiness() + iExtraHappiness <= /*-10*/ GC.getVERY_UNHAPPY_THRESHOLD())
+#endif
 #else
 		if(kPlayer.IsEmpireVeryUnhappy())
 #endif
@@ -12822,6 +12832,19 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra, CvString* to
 	iModifier += iTempMod;
 	if(toolTipSink)
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_YIELD_RESOURCES", iTempMod);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Zulu: less Gold while not at war with another major civ
+	if (eIndex == YIELD_GOLD)
+	{
+		iTempMod = kPlayer.GetPlayerTraits()->GetLekmodGoldModifierAtPeace();
+		if (iTempMod != 0 && GET_TEAM(getTeam()).getAtWarCount(true) == 0)
+		{
+			iModifier += iTempMod;
+			if(toolTipSink)
+				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_GOLD_AT_PEACE", iTempMod);
+		}
+	}
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	// Temporary Science from a policy (Scientific Revolution)
 	if (eIndex == YIELD_SCIENCE)
@@ -13091,7 +13114,11 @@ int CvCity::getHappinessModifier(YieldTypes eIndex) const
 
 	if (kPlayer.IsEmpireUnhappy())
 	{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		int iUnhappy = -1 * kPlayer.GetLekmodPenaltyExcessHappiness();
+#else
 		int iUnhappy = -1 * kPlayer.GetExcessHappiness();
+#endif
 #ifdef AUI_CITIZENS_CONSIDER_HAPPINESS_VALUE_ON_OTHER_YIELDS
 		iUnhappy -= iExtraHappiness;
 #endif

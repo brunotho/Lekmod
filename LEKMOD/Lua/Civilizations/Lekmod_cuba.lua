@@ -53,7 +53,8 @@ function lekmod_cuba_unit_unlock(player_id, policy_id)
 	end
 end
 ------------------------------------------------------------------------------------------------------------------------
-if is_active then
+-- Phase 6 (2026-10-14): Cuba's UA was rebuilt from scratch in the DLL/data; these old effects are no longer registered.
+if false and is_active then
    GameEvents.PlayerDoTurn.Add(lekmod_cuba_ua_culture)
    GameEvents.PlayerAdoptPolicy.Add(lekmod_cuba_unit_unlock)
 end

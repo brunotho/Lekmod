@@ -9182,6 +9182,31 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 		}
 	}
 
+#ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
+	// Polder: yield when no adjacent plot has the same improvement
+	if (!pImprovement->GetLekmodIsolatedYields().empty())
+	{
+		bool bIsolated = true;
+		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && bIsolated; iDirection++)
+		{
+			CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+			if (pAdjacentPlot && pAdjacentPlot->getImprovementType() == eImprovement)
+				bIsolated = false;
+		}
+		if (bIsolated)
+		{
+			const std::vector<std::pair<int, std::pair<int, int> > >& aRows = pImprovement->GetLekmodIsolatedYields();
+			for (uint i = 0; i < aRows.size(); i++)
+			{
+				if (aRows[i].second.first != eYield)
+					continue;
+				if (aRows[i].first != NO_TECH && (ePlayer == NO_PLAYER || !GET_TEAM(GET_PLAYER(ePlayer).getTeam()).GetTeamTechs()->HasTech((TechTypes)aRows[i].first)))
+					continue;
+				iYield += aRows[i].second.second;
+			}
+		}
+	}
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	// policies: yield per era and next to other improvements (Soft Power, Republic of Letters)
 	if (ePlayer != NO_PLAYER)

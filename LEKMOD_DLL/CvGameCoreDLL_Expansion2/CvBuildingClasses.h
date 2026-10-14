@@ -519,6 +519,9 @@ public:
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 	const std::vector<LekmodBuildingConditionalYield>& GetLekmodConditionalYields() const;
 #endif
+#ifdef LEKMOD_BUILDING_START_TURN_MOVES
+	int GetLekmodStartTurnMovesMountedCivilian() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -874,6 +877,9 @@ private:
 #endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 	std::vector<LekmodBuildingConditionalYield> m_aLekmodConditionalYields;
+#endif
+#ifdef LEKMOD_BUILDING_START_TURN_MOVES
+	int m_iLekmodStartTurnMovesMountedCivilian;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;

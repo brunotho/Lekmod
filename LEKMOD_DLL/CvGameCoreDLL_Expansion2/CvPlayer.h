@@ -671,6 +671,9 @@ public:
 	void SetHappiness(int iNewValue);
 
 	int GetExcessHappiness() const;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	int GetLekmodPenaltyExcessHappiness(int iExtra = 0) const;
+#endif
 	bool IsEmpireUnhappy() const;
 	bool IsEmpireVeryUnhappy() const;
 	bool IsEmpireSuperUnhappy() const;

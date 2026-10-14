@@ -2240,7 +2240,9 @@ Tags: civs, units
 - Changed: Great Generals give +30% (was +15%); Barracks, Armories and Military Academies give +1 Culture
 - Removed: +1 Food and +1 Happiness from Barracks and Armories
 - Changed: Sarissophoroi: available at Civil Service (was Philosophy), 16 Strength (was 14), costs 60 (was 58), the Pikeman's bonus against mounted units (was +100%), needs 2 Iron, starts with Envelopment and Mobility
-- Note: open: XP from Monuments, Amphitheaters and Opera Houses; the Gymnasium (two specialist types; need C++)
+- Added: units trained in a city get +5 XP each for a Monument, an Amphitheater and an Opera House there
+- Note: open: the Gymnasium (two specialist types; needs C++)
+- DLL: Trait_LekmodBuildingClassFreeExperience
 
 VENICE (CIVILIZATION_VENICE)
 ----------------------------
@@ -2264,7 +2266,8 @@ Tags: civs, units
 - Removed: Cardoen: +100% defense against ranged attacks
 - Added: Cardoen starts with +30 XP
 - Added: cities next to the coast and a mountain +1 Culture
-- Note: open: Stargazing for units trained next to mountains (needs C++)
+- Added: units trained in a city next to a mountain start with Stargazing (+1 Sight)
+- DLL: Trait_LekmodTrainedPromotions
 - Dev: per-city dummy building 285 (class 188)
 - DLL: Units.FreeExperience
 
@@ -2299,7 +2302,9 @@ Tags: civs
 - Removed: Monastery: +1 Faith with Theology
 - Changed: Monasteries can only be built next to a mountain; +1 Science when worked by a city with a University
 - Added: start bias towards hills
-- Note: open: UA and Dalai Lama abilities (need C++)
+- Removed: the yield bonus for the first city founded by the Dalai Lama (the capital keeps it)
+- Added: units trained in a city next to a mountain start with Altitude Training
+- Note: open: Dalai Lama abilities (need C++)
 
 SONGHAI (CIVILIZATION_SONGHAI)
 ------------------------------
@@ -2322,7 +2327,9 @@ NETHERLANDS (CIVILIZATION_NETHERLANDS)
 --------------------------------------
 Tags: civs
 - Changed: Polders give +1 Gold with Economics (was +2 Gold and +1 Production)
-- Note: open: +1 Production for Polders not next to another Polder, the UA changes (need C++)
+- Added: Polders +1 Production with Economics when no other Polder is next to them
+- Note: open: the UA changes (need C++)
+- DLL: Improvement_LekmodIsolatedYields
 
 JAPAN (CIVILIZATION_JAPAN)
 --------------------------
@@ -2340,7 +2347,8 @@ Tags: civs, units
 - Added: demanding tribute does not break your own pledge of protection
 - Changed: Yam Route: available at the Wheel, +3 Gold, +3 Science only while connected to the capital
 - Removed: Yam Route: airlift and its unconditional Science
-- Note: open: +2 Movement for mounted units and civilians starting the turn in a city with a Yam Route (needs C++)
+- Added: Yam Route: mounted units and civilians starting their turn in the city get +2 Movement
+- DLL: Buildings.StartTurnMovesMountedCivilian
 - DLL: Traits.TributeKeepsPledge
 
 GOTHS (CIVILIZATION_GOTH)
@@ -2464,7 +2472,10 @@ CUBA (CIVILIZATION_CUBA)
 Tags: civs, buildings
 - Changed: Dance Hall: 3 Culture (was 2), units trained in the city start with +15 XP
 - Removed: Dance Hall: +1 Happiness and +4 Culture when its slot is filled
-- Note: open: +20% city Tourism when filled, the new UA (need C++)
+- Changed: new UA: unaffected by unhappiness from ideological pressure (was -50%), unhappiness never acts worse than 9 (penalties stop growing there), one Tobacco near the capital when it is founded
+- Removed: Culture from other civilizations' capitals; free Guerrilleros with the first tenet
+- Note: open: Dance Hall +20% city Tourism when filled (needs C++)
+- DLL: Traits.LekmodUnhappinessCap; old UA Lua (Lekmod_cuba.lua) no longer registered
 
 AKSUM (CIVILIZATION_AKSUM)
 --------------------------
@@ -2526,7 +2537,9 @@ Tags: civs, units, buildings, promotions
 - Changed: Ikanda becomes the Isibaya, a unique Stable: available at Civil Service, costs 80, the Stable's bonuses, Pastures next to the city +2 Food
 - Removed: Ikanda: free Buffalo Horns and XP for trained units
 - Removed: Impi: bonus against gunpowder units
-- Note: open: Impi first strike at 60% for all units with it, -25% Gold while at peace (need C++)
+- Changed: first-strike ranged attacks (Impi, the Bulgarian and Vietnamese units with it) use 60% of the unit's Strength (was 50%)
+- Added: -25% Gold in every city while not at war with another civilization
+- DLL: LEKMOD_SUPPORT_FIRE_PERCENT, Traits.LekmodGoldModifierAtPeace
 - Dev: marker promotion PROMOTION_LEKMOD_IKANDA (387) gates the Buffalo line
 
 TURKEY (CIVILIZATION_TURKEY)

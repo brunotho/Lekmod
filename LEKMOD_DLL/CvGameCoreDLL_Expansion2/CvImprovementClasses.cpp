@@ -343,6 +343,25 @@ bool CvImprovementEntry::CacheResults(Database::Results& kResults, CvDatabaseUti
 #ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
 	m_bLekmodRequiresAdjacentMountain = kResults.GetBool("RequiresAdjacentMountain");
 #endif
+#ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
+	{
+		m_aLekmodIsolatedYields.clear();
+		std::string strKey("Improvement_LekmodIsolatedYields");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select coalesce(Technologies.ID, -1), Yields.ID, Yield from Improvement_LekmodIsolatedYields "
+				"left join Technologies on Technologies.Type = TechType "
+				"inner join Yields on Yields.Type = YieldType "
+				"where ImprovementType = ?");
+		}
+		pResults->Bind(1, GetType());
+		while(pResults->Step())
+			m_aLekmodIsolatedYields.push_back(std::make_pair(pResults->GetInt(0), std::make_pair(pResults->GetInt(1), pResults->GetInt(2))));
+		pResults->Reset();
+	}
+#endif
 	m_iLuxuryCopiesSiphonedFromMinor = kResults.GetInt("LuxuryCopiesSiphonedFromMinor");
 
 	const char* szCivilizationType = kResults.GetText("CivilizationType");
@@ -863,6 +882,13 @@ int CvImprovementEntry::GetResourceExtractionMod() const
 {
 	return m_iResourceExtractionMod;
 }
+#ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
+/// Yields when no adjacent plot has the same improvement (Improvement_LekmodIsolatedYields)
+const std::vector<std::pair<int, std::pair<int, int> > >& CvImprovementEntry::GetLekmodIsolatedYields() const
+{
+	return m_aLekmodIsolatedYields;
+}
+#endif
 #ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
 /// Can only be built next to a mountain
 bool CvImprovementEntry::IsLekmodRequiresAdjacentMountain() const
@@ -1380,6 +1406,10 @@ int CvImprovementEntry::GetImprovementAdjacentAmount(int i, int j) const
 // New method to trigger the visual changes when nessesary
 bool CvImprovementEntry::HasAnyAdjacencyYieldBonus() const
 {
+#ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
+	if (!m_aLekmodIsolatedYields.empty())
+		return true;
+#endif
 	for (int i = 0; i < GC.getNumImprovementInfos(); ++i)
 	{
 		for (int j = 0; j < NUM_YIELD_TYPES; ++j) // Yield loop

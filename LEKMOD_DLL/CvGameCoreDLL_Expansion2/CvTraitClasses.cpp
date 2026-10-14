@@ -152,6 +152,8 @@ CvTraitEntry::CvTraitEntry() :
 	m_eLekmodFreeUnitPrereqTech2(NO_TECH),
 	m_bLekmodNoPledgeProtection(false),
 	m_bLekmodTributeKeepsPledge(false),
+	m_iLekmodUnhappinessCap(0),
+	m_iLekmodGoldModifierAtPeace(0),
 #endif
 	m_bNoHillsImprovementMaintenance(false),
 	m_bTechBoostFromCapitalScienceBuildings(false),
@@ -987,6 +989,26 @@ bool CvTraitEntry::IsLekmodNoPledgeProtection() const
 bool CvTraitEntry::IsLekmodTributeKeepsPledge() const
 {
 	return m_bLekmodTributeKeepsPledge;
+}
+/// Penalties act as if unhappiness were at most this (Cuba: 9)
+int CvTraitEntry::GetLekmodUnhappinessCap() const
+{
+	return m_iLekmodUnhappinessCap;
+}
+/// % Gold in every city while not at war with another major civ (Zulu)
+int CvTraitEntry::GetLekmodGoldModifierAtPeace() const
+{
+	return m_iLekmodGoldModifierAtPeace;
+}
+/// Promotions for units trained in a city next to the terrain (-1: any city)
+const std::vector<std::pair<int, int> >& CvTraitEntry::GetLekmodTrainedPromotions() const
+{
+	return m_aLekmodTrainedPromotions;
+}
+/// XP for units trained in a city with a building of the class
+const std::vector<std::pair<int, int> >& CvTraitEntry::GetLekmodBuildingClassFreeExperience() const
+{
+	return m_aLekmodBuildingClassFreeExperience;
 }
 #endif
 bool CvTraitEntry::IsCiviliansEmbarkOneMove() const
@@ -1910,6 +1932,8 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	m_eLekmodFreeUnitPrereqTech2 = (TechTypes)GC.getInfoTypeForString(kResults.GetText("FreeUnitPrereqTech2"), true);
 	m_bLekmodNoPledgeProtection = kResults.GetBool("NoPledgeProtection");
 	m_bLekmodTributeKeepsPledge = kResults.GetBool("TributeKeepsPledge");
+	m_iLekmodUnhappinessCap = kResults.GetInt("LekmodUnhappinessCap");
+	m_iLekmodGoldModifierAtPeace = kResults.GetInt("LekmodGoldModifierAtPeace");
 #endif
 	m_bNoHillsImprovementMaintenance = kResults.GetBool("NoHillsImprovementMaintenance");
 	m_bTechBoostFromCapitalScienceBuildings = kResults.GetBool("TechBoostFromCapitalScienceBuildings");
@@ -2946,6 +2970,42 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 
 			bAllowImprovement ? m_ppiFeatureYieldChanges[iFeatureType][iYieldType] = iYield : m_ppiUnimprovedFeatureYieldChanges[iFeatureType][iYieldType] = iYield;
 		}
+		pResults->Reset();
+	}
+#endif
+
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	{
+		m_aLekmodTrainedPromotions.clear();
+		std::string strKey("Trait_LekmodTrainedPromotions");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"SELECT UnitPromotions.ID, coalesce(Terrains.ID, -1) FROM Trait_LekmodTrainedPromotions "
+				"INNER JOIN UnitPromotions ON UnitPromotions.Type = PromotionType "
+				"LEFT JOIN Terrains ON Terrains.Type = AdjacentTerrainType "
+				"WHERE TraitType = ?");
+		}
+		pResults->Bind(1, szTraitType);
+		while (pResults->Step())
+			m_aLekmodTrainedPromotions.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
+		pResults->Reset();
+	}
+	{
+		m_aLekmodBuildingClassFreeExperience.clear();
+		std::string strKey("Trait_LekmodBuildingClassFreeExperience");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"SELECT BuildingClasses.ID, Experience FROM Trait_LekmodBuildingClassFreeExperience "
+				"INNER JOIN BuildingClasses ON BuildingClasses.Type = BuildingClassType "
+				"WHERE TraitType = ?");
+		}
+		pResults->Bind(1, szTraitType);
+		while (pResults->Step())
+			m_aLekmodBuildingClassFreeExperience.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
 		pResults->Reset();
 	}
 #endif
@@ -5249,6 +5309,82 @@ bool CvPlayerTraits::IsLekmodTributeKeepsPledge() const
 			return true;
 	}
 	return false;
+}
+int CvPlayerTraits::GetLekmodUnhappinessCap() const
+{
+	int iCap = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && pkTraitInfo->GetLekmodUnhappinessCap() > 0)
+			iCap = (iCap == 0) ? pkTraitInfo->GetLekmodUnhappinessCap() : std::min(iCap, pkTraitInfo->GetLekmodUnhappinessCap());
+	}
+	return iCap;
+}
+int CvPlayerTraits::GetLekmodGoldModifierAtPeace() const
+{
+	int iMod = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			iMod += pkTraitInfo->GetLekmodGoldModifierAtPeace();
+	}
+	return iMod;
+}
+/// Trait promotions for a unit trained in pCity (Chile Stargazing, Tibet Altitude next to mountains)
+void CvPlayerTraits::LekmodApplyTrainedUnitEffects(const CvCity* pCity, CvUnit* pUnit) const
+{
+	if(pCity == NULL || pUnit == NULL)
+		return;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<std::pair<int, int> >& aRows = pkTraitInfo->GetLekmodTrainedPromotions();
+		for(uint j = 0; j < aRows.size(); j++)
+		{
+			const PromotionTypes ePromotion = (PromotionTypes)aRows[j].first;
+			const TerrainTypes eTerrain = (TerrainTypes)aRows[j].second;
+			if(eTerrain != NO_TERRAIN)
+			{
+				bool bNext = false;
+				for(int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && !bNext; iDirection++)
+				{
+					CvPlot* pAdjacentPlot = plotDirection(pCity->getX(), pCity->getY(), (DirectionTypes)iDirection);
+					if(pAdjacentPlot != NULL && pAdjacentPlot->getTerrainType() == eTerrain && !pAdjacentPlot->IsNaturalWonder())
+						bNext = true;
+				}
+				if(!bNext)
+					continue;
+			}
+			if(pUnit->IsCombatUnit() || pUnit->getDomainType() == DOMAIN_SEA || pUnit->getDomainType() == DOMAIN_AIR)
+				pUnit->setHasPromotion(ePromotion, true);
+		}
+	}
+}
+/// Trait XP for units trained in pCity from building classes there (Macedonia)
+int CvPlayerTraits::GetLekmodTrainedUnitExperience(const CvCity* pCity) const
+{
+	if(pCity == NULL)
+		return 0;
+	int iXP = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<std::pair<int, int> >& aRows = pkTraitInfo->GetLekmodBuildingClassFreeExperience();
+		for(uint j = 0; j < aRows.size(); j++)
+		{
+#ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
+			if(pCity->LekmodHasBuildingClass((BuildingClassTypes)aRows[j].first))
+				iXP += aRows[j].second;
+#endif
+		}
+	}
+	return iXP;
 }
 /// Free trait unit uiIndex is due when eTech arrives; with a second prerequisite tech both must be known
 bool CvPlayerTraits::LekmodFreeUnitMatches(uint uiIndex, TechTypes eTech) const

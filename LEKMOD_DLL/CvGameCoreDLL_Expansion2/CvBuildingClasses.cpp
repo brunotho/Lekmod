@@ -1202,6 +1202,9 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 		}
 	}
 #endif
+#ifdef LEKMOD_BUILDING_START_TURN_MOVES
+	m_iLekmodStartTurnMovesMountedCivilian = kResults.GetInt("StartTurnMovesMountedCivilian");
+#endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 	{
 		m_aLekmodConditionalYields.clear();
@@ -3311,6 +3314,13 @@ int CvBuildingEntry::GetDifferentLandMassYieldChange(int i) const
 const std::vector<BuildingFreeTerrainYields>& CvBuildingEntry::GetFreeTerrainYields() const
 {
 	return m_aFreeTerrainYields;
+}
+#endif
+#ifdef LEKMOD_BUILDING_START_TURN_MOVES
+/// Extra moves for mounted units and civilians starting the turn in the city (Yam Route)
+int CvBuildingEntry::GetLekmodStartTurnMovesMountedCivilian() const
+{
+	return m_iLekmodStartTurnMovesMountedCivilian;
 }
 #endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS

@@ -12952,7 +12952,11 @@ int CvUnit::GetUnhappinessCombatPenalty() const
 
 	if (kPlayer.IsEmpireUnhappy())
 	{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		iPenalty = (-1 * kPlayer.GetLekmodPenaltyExcessHappiness()) * GC.getVERY_UNHAPPY_COMBAT_PENALTY_PER_UNHAPPY();
+#else
 		iPenalty = (-1 * kPlayer.GetExcessHappiness()) * GC.getVERY_UNHAPPY_COMBAT_PENALTY_PER_UNHAPPY();
+#endif
 		iPenalty = max(iPenalty, GC.getVERY_UNHAPPY_MAX_COMBAT_PENALTY());
 	}
 
@@ -15510,7 +15514,11 @@ int CvUnit::GetBaseRangedCombatStrength(bool bRangedSupportFire) const
 	VALIDATE_OBJECT
 	if (bRangedSupportFire)
 	{
+#ifdef LEKMOD_SUPPORT_FIRE_PERCENT
+		return m_iBaseCombat * LEKMOD_SUPPORT_FIRE_PERCENT / 100;
+#else
 		return m_iBaseCombat / 2;
+#endif
 	}
 
 	return m_iBaseRangedCombat;

@@ -5995,6 +5995,27 @@ void CvPlayer::DoUnitReset()
 		// Hatamoto: extra moves when starting the turn next to a friendly Great General
 		if (pLoopUnit->GetMovesNearGeneralChange() > 0 && pLoopUnit->IsGreatGeneralWithinOne())
 			pLoopUnit->changeMoves(pLoopUnit->GetMovesNearGeneralChange() * GC.getMOVE_DENOMINATOR());
+#ifdef LEKMOD_BUILDING_START_TURN_MOVES
+		// Yam Route: mounted units and civilians starting the turn in the city
+		{
+			CvCity* pStartCity = pLoopUnit->plot() ? pLoopUnit->plot()->getPlotCity() : NULL;
+			const UnitCombatTypes eCombat = (UnitCombatTypes)pLoopUnit->getUnitCombatType();
+			const bool bEligible = !pLoopUnit->IsCombatUnit() || eCombat == (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_MOUNTED", true)
+				|| eCombat == (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_MOUNTED_RANGED", true);
+			if (pStartCity && pStartCity->getOwner() == GetID() && bEligible && pLoopUnit->getDomainType() == DOMAIN_LAND)
+			{
+				int iExtra = 0;
+				for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+				{
+					CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+					if (pkBuilding && pkBuilding->GetLekmodStartTurnMovesMountedCivilian() > 0 && pStartCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding) > 0)
+						iExtra = std::max(iExtra, pkBuilding->GetLekmodStartTurnMovesMountedCivilian());
+				}
+				if (iExtra > 0)
+					pLoopUnit->changeMoves(iExtra * GC.getMOVE_DENOMINATOR());
+			}
+		}
+#endif
 		if (pLoopUnit->IsGreatGeneral())
 		{
 			// NQMP GJS - fix Hakkapeliitta reducing Great General movement if they would normally have more BEGIN
@@ -15878,6 +15899,18 @@ int CvPlayer::GetExcessHappiness() const
 
 //	--------------------------------------------------------------------------------
 /// Has the player passed the Happiness limit?
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// Excess happiness as the unhappiness penalties see it: a trait can cap how unhappy the empire acts (Cuba: 9)
+int CvPlayer::GetLekmodPenaltyExcessHappiness(int iExtra) const
+{
+	int iExcess = GetExcessHappiness() + iExtra;
+	const int iCap = GetPlayerTraits()->GetLekmodUnhappinessCap();
+	if(iCap > 0)
+		iExcess = std::max(iExcess, -iCap);
+	return iExcess;
+}
+#endif
+//	--------------------------------------------------------------------------------
 bool CvPlayer::IsEmpireUnhappy() const
 {
 	if(GC.getGame().isOption(GAMEOPTION_NO_HAPPINESS))
@@ -15902,7 +15935,11 @@ bool CvPlayer::IsEmpireVeryUnhappy() const
 		return false;
 	}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if(GetLekmodPenaltyExcessHappiness() <= /*-10*/ GC.getVERY_UNHAPPY_THRESHOLD())
+#else
 	if(GetExcessHappiness() <= /*-10*/ GC.getVERY_UNHAPPY_THRESHOLD())
+#endif
 	{
 		return true;
 	}
@@ -15919,7 +15956,11 @@ bool CvPlayer::IsEmpireSuperUnhappy() const
 		return false;
 	}
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if(GetLekmodPenaltyExcessHappiness() <= /*-20*/ GC.getSUPER_UNHAPPY_THRESHOLD())
+#else
 	if(GetExcessHappiness() <= /*-20*/ GC.getSUPER_UNHAPPY_THRESHOLD())
+#endif
 	{
 		return true;
 	}

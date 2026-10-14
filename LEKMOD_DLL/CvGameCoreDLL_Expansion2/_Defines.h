@@ -1458,6 +1458,14 @@ Diversify Spain and Australia's NW Discovery bonus
 // Traits: FreeUnitPrereqTech2 (the free unit needs both techs: Babylon), NoPledgeProtection (Mongolia),
 // TributeKeepsPledge (Golden Horde, Mexico); read from the trait entries, no saved fields
 #define LEKMOD_CIV_TRAIT_FLAGS
+// Phase 6 C++ batch C: Traits.LekmodUnhappinessCap (Cuba) and LekmodGoldModifierAtPeace (Zulu), tables
+// Trait_LekmodTrainedPromotions (Chile, Tibet) and Trait_LekmodBuildingClassFreeExperience (Macedonia) are part of LEKMOD_CIV_TRAIT_FLAGS
+// Support fire (first strike) uses this % of the unit's melee strength (Impi, Bulgarian knight, Vietnam; base game 50)
+#define LEKMOD_SUPPORT_FIRE_PERCENT 60
+// Buildings.StartTurnMovesMountedCivilian: mounted units and civilians starting the turn in the city get extra moves (Yam Route)
+#define LEKMOD_BUILDING_START_TURN_MOVES
+// Improvement_LekmodIsolatedYields: yield when no adjacent plot has the same improvement, optionally needs a tech (Polder)
+#define LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
 // Buildings.TerritoryHealChange: extra healing for the owner's non-air units on all tiles of the city (Field Hospital)
 #define LEKMOD_TERRITORY_HEAL
 // Buildings.CityHealRate/AdjacentEnemyDamage/HillCityStrength/MountainCityStrength/CityAttackRangeChange (Walls, Castle, Arsenal, Command Bunker), Buildings.NukeUnitDamageFixed (Bomb Shelter);

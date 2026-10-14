@@ -217,6 +217,10 @@ public:
 	TechTypes GetLekmodFreeUnitPrereqTech2() const;
 	bool IsLekmodNoPledgeProtection() const;
 	bool IsLekmodTributeKeepsPledge() const;
+	int GetLekmodUnhappinessCap() const;
+	int GetLekmodGoldModifierAtPeace() const;
+	const std::vector<std::pair<int, int> >& GetLekmodTrainedPromotions() const;
+	const std::vector<std::pair<int, int> >& GetLekmodBuildingClassFreeExperience() const;
 #endif
 	bool IsNoHillsImprovementMaintenance() const;
 	bool IsTechBoostFromCapitalScienceBuildings() const;
@@ -507,6 +511,10 @@ protected:
 	TechTypes m_eLekmodFreeUnitPrereqTech2;
 	bool m_bLekmodNoPledgeProtection;
 	bool m_bLekmodTributeKeepsPledge;
+	int m_iLekmodUnhappinessCap;
+	int m_iLekmodGoldModifierAtPeace;
+	std::vector<std::pair<int, int> > m_aLekmodTrainedPromotions; // promotion, adjacent terrain (-1 = any city)
+	std::vector<std::pair<int, int> > m_aLekmodBuildingClassFreeExperience; // building class, XP
 #endif
 	bool m_bNoHillsImprovementMaintenance;
 	bool m_bTechBoostFromCapitalScienceBuildings;
@@ -714,6 +722,10 @@ public:
 	bool IsLekmodNoPledgeProtection() const;
 	bool IsLekmodTributeKeepsPledge() const;
 	bool LekmodFreeUnitMatches(uint uiIndex, TechTypes eTech) const;
+	int GetLekmodUnhappinessCap() const;
+	int GetLekmodGoldModifierAtPeace() const;
+	void LekmodApplyTrainedUnitEffects(const CvCity* pCity, CvUnit* pUnit) const;
+	int GetLekmodTrainedUnitExperience(const CvCity* pCity) const;
 #endif
 	int GetGreatPeopleRateModifier() const
 	{
