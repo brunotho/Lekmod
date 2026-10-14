@@ -404,6 +404,13 @@ public:
 	BeliefTypes GetSecondaryReligionPantheonBelief();
 	int GetFollowersOtherReligions(ReligionTypes eReligion);
 #endif
+#ifdef LEKMOD_EXTRA_PANTHEONS
+	// (not const: the Constify branch above is off) pantheon beliefs this city uses besides those of its majority religion
+	int LekmodGetNumExtraPantheons();
+	BeliefTypes LekmodGetExtraPantheon(int iIndex);
+	bool LekmodIsExtraPantheon(BeliefTypes eBelief);
+	void LekmodGetExtraPantheons(std::vector<BeliefTypes>& aeBeliefs);
+#endif
 	bool HasPaidAdoptionBonus() const
 	{
 		return m_bHasPaidAdoptionBonus;

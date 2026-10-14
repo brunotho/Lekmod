@@ -1465,6 +1465,10 @@ Diversify Spain and Australia's NW Discovery bonus
 // Builds.LekmodAlwaysVisible: the build button shows on every tile for units that have the build (greyed out where it can't be built,
 // the unit panel lists why); unique and Great Person improvements (2026-10-15)
 #define LEKMOD_BUILD_ALWAYS_VISIBLE
+// Cities can use the pantheon beliefs of several religions: CvCityReligions::LekmodGetNumExtraPantheons / LekmodGetExtraPantheon
+// (the secondary religion's pantheon of the Religious Tolerance policy, and for Traits.LekmodAllPantheons (Ottomans) the pantheon
+// of every religion with followers in the city); every former GetSecondaryReligionPantheonBelief() user loops over the list (2026-10-15)
+#define LEKMOD_EXTRA_PANTHEONS
 // Improvements.LekmodNoFeature: can't be built on a feature unless Improvement_ValidFeatures lists it (Kasbah: Flood Plains only)
 #define LEKMOD_IMPROVEMENT_NO_FEATURE
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,

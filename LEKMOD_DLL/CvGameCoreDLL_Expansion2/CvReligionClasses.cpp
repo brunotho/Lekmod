@@ -2557,17 +2557,22 @@ int CvGameReligions::GetBeliefYieldForKill(YieldTypes eYield, int iX, int iY, Pl
 			}
 			else
 			{
-				BeliefTypes eSecondaryPantheon = pLoopCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
-				if (eSecondaryPantheon != NO_BELIEF)
+				std::vector<BeliefTypes> aeLekmodExtra;
+				pLoopCity->GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+				bool bLekmodFound = false;
+				for (uint iLX = 0; iLX < aeLekmodExtra.size() && !bLekmodFound; iLX++)
 				{
+					const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 					iMultiplier = GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFaithFromKills();
 					if(iMultiplier > 0 && iDistance <= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMaxDistance())
 					{
 						// Just looking for one city providing this
 						iRtnValue = iMultiplier;
-						break;
-					}	
+						bLekmodFound = true;
+					}
 				}
+				if (bLekmodFound)
+					break;
 			}
 		}
 	}
@@ -3722,6 +3727,67 @@ BeliefTypes CvCityReligions::GetSecondaryReligionPantheonBelief()
 	return eRtnValue;
 }
 
+#ifdef LEKMOD_EXTRA_PANTHEONS
+/// Pantheon beliefs this city uses besides those of its majority religion: the secondary religion's (Religious Tolerance),
+/// and for the Ottomans the pantheon belief of every other religion with followers here; no duplicates, none the majority already has
+void CvCityReligions::LekmodGetExtraPantheons(std::vector<BeliefTypes>& aeBeliefs)
+{
+	aeBeliefs.clear();
+	const ReligionTypes eMajority = GetReligiousMajority();
+	const PlayerTypes eOwner = m_pCity->getOwner();
+	const CvReligion* pMajority = (eMajority != NO_RELIGION) ? GC.getGame().GetGameReligions()->GetReligion(eMajority, eOwner) : NULL;
+
+	const BeliefTypes eSecondary = GetSecondaryReligionPantheonBelief();
+	if (eSecondary != NO_BELIEF && (pMajority == NULL || !pMajority->m_Beliefs.HasBelief(eSecondary)))
+		aeBeliefs.push_back(eSecondary);
+	if (eMajority == NO_RELIGION || GET_PLAYER(eOwner).GetPlayerTraits()->GetLekmodTraitInt(LTI_ALL_PANTHEONS) <= 0)
+		return;
+
+	for (ReligionInCityList::const_iterator religionIt = m_ReligionStatus.begin(); religionIt != m_ReligionStatus.end(); ++religionIt)
+	{
+		if (religionIt->m_eReligion == eMajority || religionIt->m_eReligion < RELIGION_PANTHEON || religionIt->m_iFollowers <= 0)
+			continue;
+		const CvReligion* pReligion = GC.getGame().GetGameReligions()->GetReligion(religionIt->m_eReligion, eOwner);
+		if (pReligion == NULL)
+			continue;
+		for (int iI = 0; iI < pReligion->m_Beliefs.GetNumBeliefs(); iI++)
+		{
+			const BeliefTypes eBelief = pReligion->m_Beliefs.GetBelief(iI);
+			CvBeliefEntry* pEntry = GC.GetGameBeliefs()->GetEntry((int)eBelief);
+			if (pEntry == NULL || !pEntry->IsPantheonBelief())
+				continue;
+			if (pMajority != NULL && pMajority->m_Beliefs.HasBelief(eBelief))
+				continue;
+			if (std::find(aeBeliefs.begin(), aeBeliefs.end(), eBelief) == aeBeliefs.end())
+				aeBeliefs.push_back(eBelief);
+		}
+	}
+}
+
+int CvCityReligions::LekmodGetNumExtraPantheons()
+{
+	std::vector<BeliefTypes> aeBeliefs;
+	LekmodGetExtraPantheons(aeBeliefs);
+	return (int)aeBeliefs.size();
+}
+
+BeliefTypes CvCityReligions::LekmodGetExtraPantheon(int iIndex)
+{
+	std::vector<BeliefTypes> aeBeliefs;
+	LekmodGetExtraPantheons(aeBeliefs);
+	return (iIndex >= 0 && iIndex < (int)aeBeliefs.size()) ? aeBeliefs[iIndex] : NO_BELIEF;
+}
+
+bool CvCityReligions::LekmodIsExtraPantheon(BeliefTypes eBelief)
+{
+	if (eBelief == NO_BELIEF)
+		return false;
+	std::vector<BeliefTypes> aeBeliefs;
+	LekmodGetExtraPantheons(aeBeliefs);
+	return std::find(aeBeliefs.begin(), aeBeliefs.end(), eBelief) != aeBeliefs.end();
+}
+#endif
+
 /// How many followers are there of religions OTHER than this one?
 #ifdef AUI_CONSTIFY
 int CvCityReligions::GetFollowersOtherReligions(ReligionTypes eReligion) const
@@ -4492,6 +4558,10 @@ void CvCityReligions::ResetNumTradeRoutePressure()
 /// Calculate the number of followers for each religion
 void CvCityReligions::RecomputeFollowers(CvReligiousFollowChangeReason eReason, ReligionTypes eOldMajorityReligion, PlayerTypes eResponsibleParty)
 {
+#ifdef LEKMOD_EXTRA_PANTHEONS
+	std::vector<BeliefTypes> aeLekmodOldExtra;
+	LekmodGetExtraPantheons(aeLekmodOldExtra);
+#endif
 	int iOldFollowers = GetNumFollowers(eOldMajorityReligion);
 	int iUnassignedFollowers = m_pCity->getPopulation();
 	int iPressurePerFollower;
@@ -4579,6 +4649,19 @@ void CvCityReligions::RecomputeFollowers(CvReligiousFollowChangeReason eReason, 
 		GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
 		LogFollowersChange(eReason);
 	}
+#ifdef LEKMOD_EXTRA_PANTHEONS
+	else
+	{
+		// another religion's pantheon became active or inactive here (Ottomans, Religious Tolerance)
+		std::vector<BeliefTypes> aeLekmodNewExtra;
+		LekmodGetExtraPantheons(aeLekmodNewExtra);
+		if (aeLekmodNewExtra != aeLekmodOldExtra)
+		{
+			m_pCity->UpdateReligion(eMajority);
+			GC.GetEngineUserInterface()->setDirty(CityInfo_DIRTY_BIT, true);
+		}
+	}
+#endif
 }
 
 /// Calculate the number of followers for each religion from simulated data

@@ -154,6 +154,9 @@ enum LekmodTraitInt
 	LTI_ERA_GOLD_MOD,					// ... and cities this % more Gold
 	LTI_FREE_RESOURCE_ON_CITY_TILE,		// Trait_FreeResourceCities City=1 resources replace the city tile's resource instead of free copies (Indonesia)
 	LTI_CYCLE_GROUP_SKIP_ONE,			// one rule of each cycle group is left out per game, picked from the starting plot (Indonesia: 2 of 3 spices)
+	LTI_PASSED_PROPOSAL_EXTRA_VOTES,	// extra World Congress votes per own proposal that passed (Switzerland: +1, so 2 each)
+	LTI_NO_UNIT_COST_AT_PEACE,			// no unit maintenance while not at war with any civilization or City-State (Switzerland)
+	LTI_ALL_PANTHEONS,					// cities use the pantheon beliefs of every religion with followers in them (Ottomans)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

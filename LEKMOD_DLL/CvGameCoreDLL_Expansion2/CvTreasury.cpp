@@ -552,6 +552,17 @@ int CvTreasury::CalculateBaseNetGoldTimes100()
 /// Compute unit maintenance cost for the turn (returns component info)
 int CvTreasury::CalculateUnitCost(int& iFreeUnits, int& iPaidUnits, int& iBaseUnitCost, int& iExtraCost)
 {
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Switzerland: no unit maintenance while not at war with any civilization or City-State
+	if(m_pPlayer->GetPlayerTraits()->GetLekmodTraitInt(LTI_NO_UNIT_COST_AT_PEACE) > 0 && GET_TEAM(m_pPlayer->getTeam()).getAtWarCount(false) == 0)
+	{
+		iFreeUnits = m_pPlayer->getNumUnits();
+		iPaidUnits = 0;
+		iBaseUnitCost = 0;
+		iExtraCost = 0;
+		return 0;
+	}
+#endif
 	// If player has 0 Cities then no Unit cost
 	if(m_pPlayer->getNumCities() == 0)
 	{

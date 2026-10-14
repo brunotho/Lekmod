@@ -26905,7 +26905,7 @@ bool CvPlayer::LekmodCapitalHasBelief(BeliefTypes eBelief) const
 	const CvCity* pCapital = getCapitalCity();
 	if (pCapital == NULL)
 		return false;
-	if (pCapital->GetCityReligions()->GetSecondaryReligionPantheonBelief() == eBelief)
+	if (pCapital->GetCityReligions()->LekmodIsExtraPantheon(eBelief))
 		return true;
 	ReligionTypes eMajority = pCapital->GetCityReligions()->GetReligiousMajority();
 	if (eMajority == NO_RELIGION)

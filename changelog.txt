@@ -2214,9 +2214,9 @@ Tags: civs, units
 - Changed: Janissary starts with Charge and Zealot, and can always be bought with Faith
 - Removed: Janissary: healing on kills and the attack bonus
 - Added: Su Kemeri, a unique Aqueduct: +1 Faith and +1 Science next to fresh water or a mountain, +3 and +3 next to both
-- Changed: new UA: trade routes carry twice the religious pressure (both directions); captured cities whose majority religion isn't yours are in resistance half as long and cause half the occupation Unhappiness; Melee and Gunpowder units start with Siege
+- Changed: new UA: cities get the pantheon effects of every religion with followers in them, not only of their majority religion; trade routes carry twice the religious pressure (both directions); captured cities whose majority religion isn't yours are in resistance half as long and cause half the occupation Unhappiness; Melee and Gunpowder units start with Siege
 - Removed: Millets (+1 Happiness per religion in a city, Faith for promotions)
-- Note: open: cities get the pantheon effects of every religion with followers there (needs C++)
+- DLL: Traits.LekmodAllPantheons; LEKMOD_EXTRA_PANTHEONS: every use of the single secondary pantheon (Religious Tolerance) now loops over CvCityReligions::LekmodGetExtraPantheons; a city's religion yields also refresh when that list changes without a new majority
 - DLL: Traits.LekmodForeignFaithConquestHalf; Traits.TradeReligionModifier now also counts for incoming routes
 - Dev: building 283, icon art_sources/buildings/su_kemeri
 
@@ -2618,7 +2618,11 @@ SWITZERLAND (CIVILIZATION_SWISS)
 --------------------------------
 Tags: civs, buildings
 - Changed: Reislaeufer Post: trained units start with Altitude Training instead of the mountain combat promotion
-- Note: open: the new UA and the Ski Resort (need C++)
+- Changed: new UA: other players can't see your Gold ("?" in the trade screen, left out of the Gold row of their Demographics); each of your World Congress proposals that passed gives 2 Delegates (others 1); no unit maintenance while not at war with any civilization or City-State; Mints, Markets, Banks and Stock Exchanges +1 Culture +1 Science
+- Removed: Merchant specialists +2 Production +2 Science
+- Changed: Ski Resort (rebuilt): costs 165 (was 167), +3 Happiness, +5 Culture +5 Gold +5 Tourism for each Mountain the city owns within its working range (was +5 Tourism +2 Gold per nearby Mountain), still needs no Zoo
+- Removed: Ski Resort: the flat +5 Tourism and +3 Culture
+- DLL: Traits.LekmodPassedProposalExtraVotes, LekmodNoUnitCostAtPeace; LekmodHiddenGold (read by Lua: Demographics.lua, TradeLogic.lua)
 
 SHOSHONE (CIVILIZATION_SHOSHONE)
 --------------------------------

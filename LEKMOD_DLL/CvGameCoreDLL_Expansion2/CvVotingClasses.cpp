@@ -3995,6 +3995,10 @@ int CvLeague::CalculateStartingVotesForMember(PlayerTypes ePlayer, bool bForceUp
 		iVotes += iCapitalVotes;
 		// Own proposals that passed
 		int iPassedVotes = pMember->iLekmodPassedProposals;
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		// Switzerland: more per passed proposal
+		iPassedVotes += pMember->iLekmodPassedProposals * GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitInt(LTI_PASSED_PROPOSAL_EXTRA_VOTES);
+#endif
 		iVotes += iPassedVotes;
 		// Embargoed: -1
 		int iEmbargoVotes = 0;

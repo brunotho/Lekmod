@@ -3143,26 +3143,19 @@ void CvCity::buildWonderYieldCache()
 						const int iFollowers = GetCityReligions()->GetNumFollowers(eMajority);
 
 						int iReligionYield = pReligion->m_Beliefs.GetBuildingClassYieldChange(eBuildingClass, eYield, iFollowers);
-						BeliefTypes eSecondaryPantheon = NO_BELIEF;
-#if defined(LEKMOD_RELIGIOUS_TOLERANCE_EXTENDED)
-						eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-						if (eSecondaryPantheon != NO_BELIEF)
-						{
-							CvBeliefEntry* pkSecondaryBelief = GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon);
-							if (pkSecondaryBelief != NULL)
-							{
-								iReligionYield += pkSecondaryBelief->GetBuildingClassYieldChange(eBuildingClass, eYield);
-							}
-						}
-#endif
 						iReligionYield += pReligion->m_Beliefs.GetYieldChangeWorldWonder(eYield);
 #if defined(LEKMOD_RELIGIOUS_TOLERANCE_EXTENDED)
-						if (eSecondaryPantheon != NO_BELIEF)
 						{
-							CvBeliefEntry* pkSecondaryBelief = GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon);
-							if (pkSecondaryBelief != NULL)
+							std::vector<BeliefTypes> aeLekmodExtra;
+							GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+							for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 							{
-								iReligionYield += pkSecondaryBelief->GetYieldChangeWorldWonder(eYield);
+								CvBeliefEntry* pkSecondaryBelief = GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX]);
+								if (pkSecondaryBelief != NULL)
+								{
+									iReligionYield += pkSecondaryBelief->GetBuildingClassYieldChange(eBuildingClass, eYield);
+									iReligionYield += pkSecondaryBelief->GetYieldChangeWorldWonder(eYield);
+								}
 							}
 						}
 #endif
@@ -7174,9 +7167,11 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 						if(eEra != NO_ERA)
 						{
 							iTempMod = pReligion->m_Beliefs.GetWonderProductionModifier(eEra);
-							BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-							if (eSecondaryPantheon != NO_BELIEF)
+							std::vector<BeliefTypes> aeLekmodExtra;
+							GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+							for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 							{
+								const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 								if((int)eEra < GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetObsoleteEra())
 								{
 									iTempMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetWonderProductionModifier();
@@ -9214,13 +9209,16 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 				if (iYield != YIELD_CULTURE && iYield != YIELD_FAITH && GetCityReligions()->IsHolyCityForReligion(eNewMajority))
 					iReligionYieldChange += pReligion->m_Beliefs.GetHolyCityYieldChange((YieldTypes)iYield);
 #endif
-				BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-				if (eSecondaryPantheon != NO_BELIEF && getPopulation() >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
+				std::vector<BeliefTypes> aeLekmodExtra;
+				GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+				for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 				{
-					iReligionYieldChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityYieldChange((YieldTypes)iYield);
+					const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
+					if (getPopulation() >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
+						iReligionYieldChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityYieldChange((YieldTypes)iYield);
 				}
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
-				iReligionYieldChange += GetLekmodBeliefCityConditionYield(pReligion, eSecondaryPantheon, (YieldTypes)iYield);
+				iReligionYieldChange += GetLekmodBeliefCityConditionYield(pReligion, NO_BELIEF, (YieldTypes)iYield);
 #endif
 #if !defined(STANDARDIZE_YIELDS) // remove switch and compress stack
 				switch (iYield)
@@ -9241,11 +9239,8 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 				if (IsRouteToCapitalConnected())
 				{
 					int iReligionChange = pReligion->m_Beliefs.GetYieldChangeTradeRoute((YieldTypes)iYield);
-					//BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-					if (eSecondaryPantheon != NO_BELIEF)
-					{
-						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldChangeTradeRoute((YieldTypes)iYield);
-					}
+					for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+						iReligionChange += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetYieldChangeTradeRoute((YieldTypes)iYield);
 #if !defined(STANDARDIZE_YIELDS) // remove switch and compress stack
 					switch (iYield)
 					{
@@ -9285,10 +9280,8 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 					ChangeBaseYieldRateFromReligion((YieldTypes)iYield, pReligion->m_Beliefs.GetYieldChangeAnySpecialist((YieldTypes)iYield));
 #else
 					int iReligionChange = pReligion->m_Beliefs.GetYieldChangeAnySpecialist((YieldTypes)iYield);
-					if (eSecondaryPantheon != NO_BELIEF)
-					{
-						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldChangeAnySpecialist((YieldTypes)iYield);
-					}
+					for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+						iReligionChange += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetYieldChangeAnySpecialist((YieldTypes)iYield);
 					ChangeBaseYieldRateFromReligion((YieldTypes)iYield, iReligionChange);
 #endif
 #endif
@@ -9313,19 +9306,15 @@ void CvCity::UpdateReligion(ReligionTypes eNewMajority)
 					{
 						int iYieldFromBuilding = pReligion->m_Beliefs.GetBuildingClassYieldChange(eBuildingClass, (YieldTypes)iYield, iFollowers);
 #if defined(LEKMOD_RELIGIOUS_TOLERANCE_EXTENDED)
-						if (eSecondaryPantheon != NO_BELIEF)
-						{
-							iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetBuildingClassYieldChange(eBuildingClass, (YieldTypes)iYield);
-						}
+						for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+							iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetBuildingClassYieldChange(eBuildingClass, (YieldTypes)iYield);
 #endif
 						if (isWorldWonderClass(*pkBuildingClassInfo))
 						{
 							iYieldFromBuilding += pReligion->m_Beliefs.GetYieldChangeWorldWonder((YieldTypes)iYield);
 #if defined(LEKMOD_RELIGIOUS_TOLERANCE_EXTENDED)
-							if (eSecondaryPantheon != NO_BELIEF)
-							{
-								iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldChangeWorldWonder((YieldTypes)iYield);
-							}
+							for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+								iYieldFromBuilding += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetYieldChangeWorldWonder((YieldTypes)iYield);
 #endif
 						}
 
@@ -9703,9 +9692,10 @@ int CvCity::foodDifferenceTimes100(bool bBottom, CvString* toolTipSink) const
 			{
 				bool bAtPeace = GET_TEAM(getTeam()).getAtWarCount(false) == 0;
 				iReligionGrowthMod = pReligion->m_Beliefs.GetCityGrowthModifier(bAtPeace);
-				BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-				if (eSecondaryPantheon != NO_BELIEF)
-					iReligionGrowthMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityGrowthModifier();
+				std::vector<BeliefTypes> aeLekmodExtra;
+				GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+				for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+					iReligionGrowthMod += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetCityGrowthModifier();
 				iTotalMod += iReligionGrowthMod;
 				GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_FOODMOD_RELIGION", iReligionGrowthMod);
 			}
@@ -10664,11 +10654,10 @@ int CvCity::GetJONSCultureThreshold() const
 		{
 			iReligionMod = pReligion->m_Beliefs.GetPlotCultureCostModifier();
 #ifndef NQ_PLOT_COST_FROM_BELIEF_IS_UNIQUE
-			BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-			if (eSecondaryPantheon != NO_BELIEF)
-			{
-				iReligionMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetPlotCultureCostModifier();
-			}
+			std::vector<BeliefTypes> aeLekmodExtra;
+			GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+			for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+				iReligionMod += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetPlotCultureCostModifier();
 #endif
 		}
 	}
@@ -11171,11 +11160,10 @@ int CvCity::GetFlatFaithOnCitizenBorn() const
 		if (pReligion)
 		{
 			iValue = pReligion->m_Beliefs.GetFlatFaithPerCitizenBorn();
-			BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-			if (eSecondaryPantheon != NO_BELIEF)
-			{
-				iValue += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFlatFaithPerCitizenBorn();
-			}
+			std::vector<BeliefTypes> aeLekmodExtra;
+			GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+			for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+				iValue += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetFlatFaithPerCitizenBorn();
 		}
 	}
 	return iValue;
@@ -12188,21 +12176,23 @@ int CvCity::GetLocalHappiness() const
 	ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
 	if(eMajority != NO_RELIGION)
 	{
-		BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
+		std::vector<BeliefTypes> aeLekmodExtra;
+		GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
 		int iFollowers = GetCityReligions()->GetNumFollowers(eMajority);
 
 		const CvReligion* pReligion = pReligions->GetReligion(eMajority, kPlayer.GetID());
 		if(pReligion)
 		{
 			iHappinessFromReligion += pReligion->m_Beliefs.GetHappinessPerCity(getPopulation());
-			if (eSecondaryPantheon != NO_BELIEF && getPopulation() >= GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetMinPopulation())
-				iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetHappinessPerCity();
+			for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+				if (getPopulation() >= GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetMinPopulation())
+					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetHappinessPerCity();
 
 			if(plot()->isRiver())
 			{
 				iHappinessFromReligion += pReligion->m_Beliefs.GetRiverHappiness();
-				if (eSecondaryPantheon != NO_BELIEF)
-					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetRiverHappiness();
+				for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+					iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetRiverHappiness();
 			}
 #if !defined(LEKMOD_NONCIV_BUILDINGCLASS_YIELD_CHANGE)
 			// Buildings
@@ -12251,10 +12241,8 @@ int CvCity::GetLocalHappiness() const
 					iHappinessFromReligion += pReligion->m_Beliefs.GetBuildingClassHappiness(eBuildingClass, iFollowers);
 #if defined(LEKMOD_RELIGIOUS_TOLERANCE_EXTENDED)
 					
-					if (eSecondaryPantheon != NO_BELIEF)
-					{
-						iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetBuildingClassHappiness(eBuildingClass);
-					}
+					for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+						iHappinessFromReligion += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetBuildingClassHappiness(eBuildingClass);
 #endif
 				}
 			}
@@ -15622,7 +15610,7 @@ int CvCity::GetLekmodHealPerTurn() const
 /// is the belief active in this city (majority religion or secondary pantheon)?
 bool CvCity::LekmodCityHasBelief(BeliefTypes eBelief) const
 {
-	if (GetCityReligions()->GetSecondaryReligionPantheonBelief() == eBelief)
+	if (GetCityReligions()->LekmodIsExtraPantheon(eBelief))
 		return true;
 	ReligionTypes eMajority = GetCityReligions()->GetReligiousMajority();
 	if (eMajority == NO_RELIGION)
@@ -15722,13 +15710,17 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 			abCondition[1] = true;
 	}
 	int iYield = 0;
+	std::vector<BeliefTypes> aeLekmodExtra;
+	GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+	if (eSecondaryPantheon != NO_BELIEF && std::find(aeLekmodExtra.begin(), aeLekmodExtra.end(), eSecondaryPantheon) == aeLekmodExtra.end())
+		aeLekmodExtra.push_back(eSecondaryPantheon);
 	CvBeliefXMLEntries* pkBeliefs = GC.GetGameBeliefs();
 	for (int iBelief = 0; iBelief < pkBeliefs->GetNumBeliefs(); iBelief++)
 	{
 		CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
 		if (pkBelief == NULL || pkBelief->GetLekmodCityConditionYields().empty())
 			continue;
-		if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+		if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && std::find(aeLekmodExtra.begin(), aeLekmodExtra.end(), (BeliefTypes)iBelief) == aeLekmodExtra.end())
 			continue;
 		const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodCityConditionYields();
 		for (uint j = 0; j < aRows.size(); j++)
@@ -16380,9 +16372,10 @@ int CvCity::calculateStrengthValue(bool bForRangeStrike, CvCombatModifierList* k
 			if (pReligion)
 			{
 				iReligionMod = pReligion->m_Beliefs.GetCityRangeStrikeModifier();
-				const BeliefTypes eSecondaryPantheon = GetCityReligions()->GetSecondaryReligionPantheonBelief();
-				if (eSecondaryPantheon != NO_BELIEF)
-					iReligionMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetCityRangeStrikeModifier();
+				std::vector<BeliefTypes> aeLekmodExtra;
+				GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+				for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+					iReligionMod += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetCityRangeStrikeModifier();
 			}
 		}
 

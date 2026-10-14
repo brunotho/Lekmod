@@ -211602,6 +211602,10 @@
 		<Column name="LekmodEraGoldMod" type="integer" default="0"/>
 		<Column name="LekmodFreeResourceOnCityTile" type="integer" default="0"/>
 		<Column name="LekmodCycleGroupSkipOne" type="integer" default="0"/>
+		<Column name="LekmodPassedProposalExtraVotes" type="integer" default="0"/>
+		<Column name="LekmodNoUnitCostAtPeace" type="integer" default="0"/>
+		<Column name="LekmodAllPantheons" type="integer" default="0"/>
+		<Column name="LekmodHiddenGold" type="integer" default="0"/> <!-- Lua only: Demographics and the trade screen hide this player's Gold from others -->
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -290029,7 +290033,7 @@
 	<Traits>
 		<Update>
 			<Where Type="TRAIT_OTTOMANS"/>
-			<Set HappinessPerReligion="0" TradeReligionModifier="100" LekmodForeignFaithConquestHalf="1"/>
+			<Set HappinessPerReligion="0" TradeReligionModifier="100" LekmodForeignFaithConquestHalf="1" LekmodAllPantheons="1"/>
 		</Update>
 	</Traits>
 	<Trait_FreePromotionUnitCombats>
@@ -290734,4 +290738,103 @@
 			<Set LekmodAlwaysVisible="1"/>
 		</Update>
 	</Builds>
+	<!-- LEKMOD: Phase 6 Switzerland (2026-10-15): UA from scratch, Ski Resort from scratch -->
+	<Trait_SpecialistYieldChanges>
+		<Delete TraitType="TRAIT_SWISS_BANKS"/>
+	</Trait_SpecialistYieldChanges>
+	<Trait_AnySpecificSpecialistYieldChanges>
+		<Delete TraitType="TRAIT_SWISS_BANKS"/>
+	</Trait_AnySpecificSpecialistYieldChanges>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_SWISS_BANKS"/>
+			<Set LekmodPassedProposalExtraVotes="1" LekmodNoUnitCostAtPeace="1" LekmodHiddenGold="1"/>
+		</Update>
+	</Traits>
+	<Trait_BuildingClassYieldChanges>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MINT</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MINT</BuildingClassType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MARKET</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_MARKET</BuildingClassType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_BANK</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_BANK</BuildingClassType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_STOCK_EXCHANGE</BuildingClassType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_SWISS_BANKS</TraitType>
+			<BuildingClassType>BUILDINGCLASS_STOCK_EXCHANGE</BuildingClassType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_BuildingClassYieldChanges>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_SWISS_SKI_RESORT"/>
+			<Set Cost="247" Happiness="3" PrereqTech="TECH_ELECTRICITY"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_SWISS_SKI_RESORT"/>
+	</Building_YieldChanges>
+	<Building_NearbyTerrainFreeYields>
+		<Delete BuildingType="BUILDING_SWISS_SKI_RESORT"/>
+		<Row>
+			<BuildingType>BUILDING_SWISS_SKI_RESORT</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<RequiresOwner>true</RequiresOwner>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SWISS_SKI_RESORT</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<RequiresOwner>true</RequiresOwner>
+			<Yield>5</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_SWISS_SKI_RESORT</BuildingType>
+			<TerrainType>TERRAIN_MOUNTAIN</TerrainType>
+			<YieldType>YIELD_TOURISM</YieldType>
+			<RequiresOwner>true</RequiresOwner>
+			<Yield>5</Yield>
+		</Row>
+	</Building_NearbyTerrainFreeYields>
+	<Building_ClassesNeededInCity>
+		<Delete BuildingType="BUILDING_SWISS_SKI_RESORT"/>
+	</Building_ClassesNeededInCity>
 </GameData>

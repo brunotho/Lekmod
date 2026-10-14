@@ -7,6 +7,24 @@ include( "IconSupport" );
 include( "InstanceManager" );
 include( "SupportFunctions"  );
 
+-- LEKMOD: Switzerland hides its Gold from other players (Traits.LekmodHiddenGold)
+local function LekmodHidesGold( iPlayer )
+	if iPlayer == nil or iPlayer < 0 or iPlayer == Game.GetActivePlayer() then return false end
+	local pPlayer = Players[iPlayer]
+	if pPlayer == nil then return false end
+	local pLeader = GameInfo.Leaders[pPlayer:GetLeaderType()]
+	if pLeader == nil then return false end
+	for row in GameInfo.Leader_Traits{ LeaderType = pLeader.Type } do
+		local pTrait = GameInfo.Traits[row.TraitType]
+		if pTrait ~= nil and pTrait.LekmodHiddenGold ~= nil and pTrait.LekmodHiddenGold > 0 then return true end
+	end
+	return false
+end
+local function LekmodGoldText( iPlayer, iValue )
+	if LekmodHidesGold( iPlayer ) then return Locale.ConvertTextKey( "TXT_KEY_LEKMOD_HIDDEN_GOLD" ) end
+	return iValue
+end
+
 local g_UsTableCitiesIM     = InstanceManager:new( "CityInstance", "Button", Controls.UsTableCitiesStack );
 local g_UsPocketCitiesIM    = InstanceManager:new( "CityInstance", "Button", Controls.UsPocketCitiesStack );
 local g_ThemTableCitiesIM   = InstanceManager:new( "CityInstance", "Button", Controls.ThemTableCitiesStack );
@@ -1171,7 +1189,7 @@ function ResetDisplay()
 
 	-- Them
     iGold = g_Deal:GetGoldAvailable(g_iThem, iItemToBeChanged);
-    strGoldString = iGold .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD");
+    strGoldString = LekmodGoldText(g_iThem, iGold) .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD");
     Controls.ThemPocketGold:SetText( strGoldString );
     
     bGoldTradeAllowed = g_Deal:IsPossibleToTradeItem(g_iThem, g_iUs, TradeableItems.TRADE_ITEM_GOLD, 1);	-- 1 here is 1 Gold, which is the minimum possible
@@ -1208,7 +1226,7 @@ function ResetDisplay()
     
     -- Them
 	iGoldPerTurn = g_pThem:CalculateGoldRate();
-    strGoldString = iGoldPerTurn .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN");
+    strGoldString = LekmodGoldText(g_iThem, iGoldPerTurn) .. " " .. Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD_PER_TURN");
     Controls.ThemPocketGoldPerTurn:SetText( strGoldString );
     
     bGPTAllowed = g_Deal:IsPossibleToTradeItem(g_iThem, g_iUs, TradeableItems.TRADE_ITEM_GOLD_PER_TURN, 1, g_iDealDuration);	-- 1 here is 1 GPT, which is the minimum possible
@@ -2059,7 +2077,7 @@ function DisplayDeal()
                 
 				strString = Locale.ConvertTextKey("TXT_KEY_DIPLO_GOLD");
 				Controls.ThemTableGold:SetText( strString );
-				strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GOLD", g_Deal:GetGoldAvailable(g_iThem, iItemToBeChanged) );
+				strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GOLD", LekmodGoldText(g_iThem, g_Deal:GetGoldAvailable(g_iThem, iItemToBeChanged)) );
 				Controls.ThemTableGold:SetToolTipString( strTooltip );
             end
          
@@ -2084,7 +2102,7 @@ function DisplayDeal()
                 
 				strString = Locale.ConvertTextKey( "TXT_KEY_DIPLO_GOLD_PER_TURN" );
 				Controls.ThemTableGoldPerTurnButton:SetText( strString );
-				strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GPT", g_pThem:CalculateGoldRate() - data1 );
+				strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GPT", LekmodGoldText(g_iThem, g_pThem:CalculateGoldRate() - data1) );
 				Controls.ThemTableGoldPerTurn:SetToolTipString( strTooltip );
             end
         
@@ -2415,7 +2433,7 @@ function ChangeGoldAmount( string, control )
         g_Deal:ChangeGoldTrade( g_iThem, iGold );
         
         local iItemToBeChanged = -1;
-		local strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GOLD", g_Deal:GetGoldAvailable(g_iThem, iItemToBeChanged) );
+		local strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GOLD", LekmodGoldText(g_iThem, g_Deal:GetGoldAvailable(g_iThem, iItemToBeChanged)) );
 		Controls.ThemTableGold:SetToolTipString( strTooltip );
     end
 end
@@ -2517,7 +2535,7 @@ function ChangeGoldPerTurnAmount( string, control )
 
         g_Deal:ChangeGoldPerTurnTrade( g_iThem, iGoldPerTurn, g_iDealDuration );
 		
-		local strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GPT", g_pThem:CalculateGoldRate() - iGoldPerTurn );
+		local strTooltip = Locale.ConvertTextKey( "TXT_KEY_DIPLO_CURRENT_GPT", LekmodGoldText(g_iThem, g_pThem:CalculateGoldRate() - iGoldPerTurn) );
 		Controls.ThemTableGoldPerTurn:SetToolTipString( strTooltip );
 		
     end

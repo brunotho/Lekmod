@@ -5987,26 +5987,19 @@ int CvCityCulture::GetCultureFromWonders() const
 								{
 									const int iFollowers = m_pCity->GetCityReligions()->GetNumFollowers(eMajority);
 									int iReligionCulture = pReligion->m_Beliefs.GetBuildingClassYieldChange(eBuildingClass, YIELD_CULTURE, iFollowers);
-									BeliefTypes eSecondaryPantheon = NO_BELIEF;
-#if defined(LEKMOD_RELIGIOUS_TOLERANCE_EXTENDED)
-									eSecondaryPantheon = m_pCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
-									if (eSecondaryPantheon != NO_BELIEF)
-									{
-										CvBeliefEntry* pkSecondaryBelief = GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon);
-										if (pkSecondaryBelief != NULL)
-										{
-											iReligionCulture += pkSecondaryBelief->GetBuildingClassYieldChange(eBuildingClass, YIELD_CULTURE);
-										}
-									}
-#endif
 									iReligionCulture += pReligion->m_Beliefs.GetYieldChangeWorldWonder(YIELD_CULTURE);
 #if defined(LEKMOD_RELIGIOUS_TOLERANCE_EXTENDED)
-									if (eSecondaryPantheon != NO_BELIEF)
 									{
-										CvBeliefEntry* pkSecondaryBelief = GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon);
-										if (pkSecondaryBelief != NULL)
+										std::vector<BeliefTypes> aeLekmodExtra;
+										m_pCity->GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+										for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 										{
-											iReligionCulture += pkSecondaryBelief->GetYieldChangeWorldWonder(YIELD_CULTURE);
+											CvBeliefEntry* pkSecondaryBelief = GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX]);
+											if (pkSecondaryBelief != NULL)
+											{
+												iReligionCulture += pkSecondaryBelief->GetBuildingClassYieldChange(eBuildingClass, YIELD_CULTURE);
+												iReligionCulture += pkSecondaryBelief->GetYieldChangeWorldWonder(YIELD_CULTURE);
+											}
 										}
 									}
 #endif

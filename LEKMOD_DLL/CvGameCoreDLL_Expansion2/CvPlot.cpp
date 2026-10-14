@@ -8412,7 +8412,7 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 	ResourceTypes eResource;
 	int iYield;
 	ReligionTypes eMajority = NO_RELIGION;
-	BeliefTypes eSecondaryPantheon = NO_BELIEF;
+	std::vector<BeliefTypes> aeLekmodExtra;
 #if !defined(LEKMOD_MOUNTAINS)
 	if(isImpassable() || isMountain())
 #else
@@ -8432,7 +8432,7 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 	if(pWorkingCity)
 	{
 		eMajority = pWorkingCity->GetCityReligions()->GetReligiousMajority();
-		eSecondaryPantheon = pWorkingCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
+		pWorkingCity->GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
 	}
 
 	CvAssertMsg(getTerrainType() != NO_TERRAIN, "TerrainType is not assigned a valid value");
@@ -8465,8 +8465,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				if (pReligion)
 				{
 					iYield += pReligion->m_Beliefs.GetFeatureYieldChange(FEATURE_ICE, eYield);
-					if (eSecondaryPantheon != NO_BELIEF)
+					for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 					{
+						const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 						iYield += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFeatureYieldChange(FEATURE_ICE, eYield);
 					}
 				}
@@ -8532,8 +8533,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 #endif
 				{
 					int iReligionChange = pReligion->m_Beliefs.GetFeatureYieldChange(getFeatureType(), eYield);
-					if (eSecondaryPantheon != NO_BELIEF)
+					for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 					{
+						const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFeatureYieldChange(getFeatureType(), eYield);
 					}
 					iYieldChange += iReligionChange;
@@ -8568,15 +8570,17 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 					if(pReligion)
 					{
 						int iReligionChange = pReligion->m_Beliefs.GetYieldChangeNaturalWonder(eYield);
-						if (eSecondaryPantheon != NO_BELIEF)
+						for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 						{
+							const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 							iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldChangeNaturalWonder(eYield);
 						}
 						iYieldChange += iReligionChange;
 
 						int iReligionMod = pReligion->m_Beliefs.GetYieldModifierNaturalWonder(eYield);
-						if (eSecondaryPantheon != NO_BELIEF)
+						for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 						{
+							const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 							iReligionMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetYieldModifierNaturalWonder(eYield);
 						}
 						iMod += iReligionMod;
@@ -8650,8 +8654,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				{
 					int iIceBelief = pReligion->m_Beliefs.GetFeatureYieldChange(FEATURE_ICE, eYield);
 					int iFeatureBelief = pReligion->m_Beliefs.GetFeatureYieldChange(getFeatureType(), eYield);
-					if (eSecondaryPantheon != NO_BELIEF)
+					for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 					{
+						const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 						CvBeliefEntry* pSecondary = GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon);
 						if (pSecondary != NULL)
 						{
@@ -8713,8 +8718,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 		if(pReligion)
 		{
 			int iReligionChange = pReligion->m_Beliefs.GetTerrainYieldChange(getTerrainType(), eYield);
-			if (eSecondaryPantheon != NO_BELIEF)
+			for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 			{
+				const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 				iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetTerrainYieldChange(getTerrainType(), eYield);
 			}
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
@@ -8735,7 +8741,7 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 						CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
 						if (pkBelief == NULL || pkBelief->GetLekmodCityFeatureAdjacentYields().empty())
 							continue;
-						if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+						if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && std::find(aeLekmodExtra.begin(), aeLekmodExtra.end(), (BeliefTypes)iBelief) == aeLekmodExtra.end())
 							continue;
 						const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodCityFeatureAdjacentYields();
 						for (uint j = 0; j < aRows.size(); j++)
@@ -8765,7 +8771,7 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 					CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
 					if (pkBelief == NULL || pkBelief->GetLekmodFlatOpenTerrainYields().empty())
 						continue;
-					if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+					if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && std::find(aeLekmodExtra.begin(), aeLekmodExtra.end(), (BeliefTypes)iBelief) == aeLekmodExtra.end())
 						continue;
 					const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodFlatOpenTerrainYields();
 					for (uint j = 0; j < aRows.size(); j++)
@@ -8793,8 +8799,9 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				if(pReligion)
 				{
 					int iReligionChange = pReligion->m_Beliefs.GetResourceYieldChange(eResource, eYield);
-					if (eSecondaryPantheon != NO_BELIEF)
+					for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 					{
+						const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 						iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetResourceYieldChange(eResource, eYield);
 					}
 					iYield += iReligionChange;
@@ -9154,9 +9161,11 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 			if(pReligion)
 			{
 				int iReligionChange = pReligion->m_Beliefs.GetImprovementYieldChange(eImprovement, eYield);
-				BeliefTypes eSecondaryPantheon = pWorkingCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
-				if (eSecondaryPantheon != NO_BELIEF)
+				std::vector<BeliefTypes> aeLekmodExtra;
+				pWorkingCity->GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+				for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
 				{
+					const BeliefTypes eSecondaryPantheon = aeLekmodExtra[iLX];
 					iReligionChange += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetImprovementYieldChange(eImprovement, eYield);
 				}
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
@@ -9168,7 +9177,7 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 						CvBeliefEntry* pkBelief = pkBeliefs->GetEntry(iBelief);
 						if (pkBelief == NULL || pkBelief->GetLekmodImprovementBuildingYields().empty())
 							continue;
-						if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && eSecondaryPantheon != (BeliefTypes)iBelief)
+						if (!pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief) && std::find(aeLekmodExtra.begin(), aeLekmodExtra.end(), (BeliefTypes)iBelief) == aeLekmodExtra.end())
 							continue;
 						const std::vector<CvBeliefEntry::LekmodRow>& aRows = pkBelief->GetLekmodImprovementBuildingYields();
 						for (uint j = 0; j < aRows.size(); j++)
@@ -9194,7 +9203,7 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 							continue;
 						if (pReligion->m_Beliefs.HasBelief((BeliefTypes)iBelief))
 							iReligionChange -= pkBelief->GetImprovementYieldChange(eImprovement, eYield);
-						if (eSecondaryPantheon == (BeliefTypes)iBelief)
+						if (std::find(aeLekmodExtra.begin(), aeLekmodExtra.end(), (BeliefTypes)iBelief) != aeLekmodExtra.end())
 							iReligionChange -= pkBelief->GetImprovementYieldChange(eImprovement, eYield);
 					}
 				}

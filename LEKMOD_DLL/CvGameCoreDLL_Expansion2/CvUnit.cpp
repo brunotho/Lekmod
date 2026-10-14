@@ -6500,11 +6500,10 @@ int CvUnit::healRate(const CvPlot* pPlot) const
 			if(pReligion)
 			{
 				iReligionMod = pReligion->m_Beliefs.GetFriendlyHealChange();
-				BeliefTypes eSecondaryPantheon = pClosestCity->GetCityReligions()->GetSecondaryReligionPantheonBelief();
-				if (eSecondaryPantheon != NO_BELIEF)
-				{
-					iReligionMod += GC.GetGameBeliefs()->GetEntry(eSecondaryPantheon)->GetFriendlyHealChange();
-				}
+				std::vector<BeliefTypes> aeLekmodExtra;
+				pClosestCity->GetCityReligions()->LekmodGetExtraPantheons(aeLekmodExtra);
+				for (uint iLX = 0; iLX < aeLekmodExtra.size(); iLX++)
+					iReligionMod += GC.GetGameBeliefs()->GetEntry(aeLekmodExtra[iLX])->GetFriendlyHealChange();
 				iExtraFriendlyHeal += iReligionMod;
 			}
 		}
