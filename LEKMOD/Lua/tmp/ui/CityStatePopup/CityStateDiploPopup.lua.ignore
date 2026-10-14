@@ -1184,7 +1184,7 @@ function PopulateTakeChoices()
 	
 	-- LEKMOD: Mexico may take Influence instead of Gold (same conditions as the Gold tribute)
 	if (Controls.InfluenceTributeButton ~= nil) then
-		local iTributeInfluence = pActivePlayer:LekmodGetTributeInfluence();
+		local iTributeInfluence = (pActivePlayer.LekmodGetTributeInfluence ~= nil) and pActivePlayer:LekmodGetTributeInfluence() or 0;
 		Controls.InfluenceTributeButton:SetHide(iTributeInfluence <= 0);
 		if (iTributeInfluence > 0) then
 			buttonText = Locale.Lookup("TXT_KEY_LEKMOD_POPUP_MINOR_BULLY_INFLUENCE", iTributeInfluence);
@@ -1283,7 +1283,7 @@ Controls.UnitTributeButton:RegisterCallback( Mouse.eLClick, OnUnitTributeButtonC
 function OnInfluenceTributeButtonClicked()
 	local pPlayer = Players[g_iMinorCivID];
 	local iActivePlayer = Game.GetActivePlayer();
-	if (pPlayer:CanMajorBullyGold(iActivePlayer) and Players[iActivePlayer]:LekmodGetTributeInfluence() > 0) then
+	if (pPlayer:CanMajorBullyGold(iActivePlayer) and Players[iActivePlayer].LekmodGetTributeInfluence ~= nil and Players[iActivePlayer]:LekmodGetTributeInfluence() > 0) then
 		m_iPendingAction = kiLekmodBulliedInfluence;
 		OnBullyButtonClicked();
 		OnCloseTake();
