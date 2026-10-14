@@ -311,18 +311,13 @@ Read `art_sources/README.md` before touching any icon, portrait, flag or menu ba
 ## 9. Status (update as things change)
 ### Current state (end of session 2, 2026-10-14)
 #### Start here (next session)
-1. Routine of §0b.10. Then read the **top of "Civ tests (Phase 6)"** (the user's notes and Claude's status lines) and the indented notes under items.
-2. **Open follow-ups** (tracker rows set to Ready, OPEN notes at the start of their Notes):
-   - "Build buttons always visible (greyed out with reason)" (Interface): plan in the row's Notes; a first C++ attempt was reverted unbuilt.
-   - Indonesia: (a) the unique luxury replaces the city tile's resource (old UA behaviour) instead of free copies (`LEKMOD_FREE_RESOURCE_CITY_GRANT` branch in `CvCity::init`); (b) which 2 of the 3 spices is random per game (Pepper row currently deleted).
-   - Tonga: the +20 is lost for good when the pledge ends for any reason (set `m_iLekmodFirstPledgeMinor = -2` wherever a pledge ends).
-   - UAE: can improve Oil (Well, Offshore Platform) from Archaeology without Biology (per-civ build tech override).
-3. **Phase 6 left:** Switzerland, Portugal, Tibet (all need UI: Demographics/trade screen, trade route preview marker, Dalai Lama unit actions), Ottoman pantheon part (pantheons of every religion in a city: hooks in every belief-yield path).
-4. **Waiting for the user's tests:** Shoshone, Tunisia, Mexico, Ottomans (partial), Sioux retest (first-turn Settler move fixed twice), and the older batch items on the test page; New Zealand on "Multiplayer test sessions".
-5. **"Specs to Refine"**: all civ defaults of batches I and J were answered on 2026-10-14 and are applied or listed above; the page keeps only the older Phase 5 defaults and the user's own idea for the civ selection screen (a placeholder building per civ so unique non-replacing buildings show; tracker row "Civ selection screen: show all unique items").
-6. Then the POST rows (Phase 10) only when Phases 1–9 are done or the user asks.
+1. Routine of §0b.10. Then read the **top of "Civ tests (Phase 6)"** (user notes, Claude status lines) and the indented notes under items.
+2. **Phase 6: only Portugal is left.** The full implementation plan is in its tracker row's Notes (UA first-route bonus table + saved partner bits + route-list marker, Feitoria via gated building columns, Nau aura promotion). Open questions to put on "Specs to refine" when starting: Feitoria "1 gold in the capital" reading; which promotion "Exploration" means.
+3. Session 3 (2026-10-15) did: Chile/mountain fix (mountains are a plot type: `CvPlot::LekmodIsTerrain`), MI6 Gold, coup level-up, failed full-tech notification, treatise floating text, ruin trade offers without no-brainers, Tonga/UAE/Indonesia follow-ups, always-visible build buttons, Switzerland, Ottoman pantheons (`LEKMOD_EXTRA_PANTHEONS`), Tibet (`LEKMOD_SPREAD_ABILITIES`), and fixes for Lekmod hooks in compiled-out branches (see §4: commented-out defines). All Implemented, awaiting the user's tests (items on the test page). Ski Resort default reading is on "Specs to refine".
+4. Waiting for the user's tests: everything from sessions 2 and 3 on the test page; New Zealand on "Multiplayer test sessions".
+5. Then Phase 9 rows, then POST rows (Phase 10).
 
-- `dev` = v35.4 (`201df6c5`) + ~500 of our commits. **Not pushed** (the user hasn't asked). Installed DLL = commit `3c3e52fc` (md5 `69c48633...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
+- `dev` = v35.4 (`201df6c5`) + ~500 of our commits. **Not pushed** (the user hasn't asked). Installed DLL = commit `193f60f9` (md5 `f1ed4d8b...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
 - **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start. Audited and synced on 2026-10-13.
 - **Phases 1–4 done** (left: Cyrillic and 6/7/8-player lobby, postponed; Mandate of God belief).
