@@ -2287,7 +2287,7 @@ INDIA (CIVILIZATION_INDIA)
 Tags: civs, buildings
 - Removed: Mughal Fort: +2 Tourism with Flight
 - Changed: War Elephant renamed Gajarata: costs 50 (was 46), needs 3 Iron, starts with Feared Elephant, upgrades to the Gajasena
-- Added: Gajasena, elephant cavalry that can only be reached by upgrading a Gajarata (Chivalry): 22 Strength, 3 Movement, costs 90, needs 3 Iron, Feared Elephant (the Gajarata's Swift Charge is lost on upgrade); upgrades to the Cavalry, which loses Feared Elephant
+- Added: Gajasena, elephant cavalry that can only be reached by upgrading a Gajarata (Chivalry): 22 Strength, 3 Movement, costs 90, needs 3 Iron, Feared Elephant and Swift Charge (kept from the Gajarata); upgrades to the Cavalry, which loses Feared Elephant
 - Dev: the Gajasena and the Barcid Elephant showed in every civ's tech tree; now only for the civ whose unit upgrades into them
 - DLL: Units.UpgradeOnly (unit ID 274, class 119)
 
