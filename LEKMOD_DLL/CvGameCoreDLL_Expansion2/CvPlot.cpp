@@ -2696,6 +2696,10 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible,
 	// Route
 	if(eRoute != NO_ROUTE)
 	{
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		if (getFeatureType() != NO_FEATURE && !isCity() && GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitType(LTI_NO_ROUTE_FEATURE) == (int)getFeatureType())
+			return false;
+#endif
 #if defined(LEKMOD_WATER_WALK_IMPROVEMENT_RULES)
 		// Water-walk improvements act as roads themselves — no real routes on top
 		if (IsAllowsWalkWater())
@@ -9768,6 +9772,10 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 	iYield += GetLekmodAdjacentCityBuildingYield(eYield, ePlayer, (IsImprovementPillaged() ? NO_IMPROVEMENT : eImprovement));
 #endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+	if (ePlayer != NO_PLAYER && getOwner() == ePlayer && getWorkingCity() != NULL && getWorkingCity()->getOwner() == ePlayer)
+		iYield += getWorkingCity()->GetLekmodBuildingPlotYield(this, eYield);
+#endif
 #ifdef LEKMOD_TRAIT_PLOT_YIELDS
 	if (ePlayer != NO_PLAYER && getOwner() == ePlayer)
 		iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitPlotYield(this, eYield, (IsImprovementPillaged() ? NO_IMPROVEMENT : eImprovement));
@@ -10493,6 +10501,9 @@ bool CvPlot::setRevealed(TeamTypes eTeam, bool bNewValue, bool bTerrainOnly, Tea
 									if(playerI.getTeam() == eTeam)
 									{
 										iFinderGold += playerI.GetPlayerTraits()->GetNaturalWonderFirstFinderGold();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+										iFinderGold += playerI.GetPlayerTraits()->GetLekmodTraitInt(LTI_NW_FINDER_GOLD_PER_ERA) * ((int)GET_TEAM(eTeam).GetCurrentEra() + 1);
+#endif
 									}
 								}
 							}
@@ -10524,6 +10535,9 @@ bool CvPlot::setRevealed(TeamTypes eTeam, bool bNewValue, bool bTerrainOnly, Tea
 									if(playerI.getTeam() == eTeam)
 									{
 										iFinderGold += playerI.GetPlayerTraits()->GetNaturalWonderSubsequentFinderGold();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+										iFinderGold += playerI.GetPlayerTraits()->GetLekmodTraitInt(LTI_NW_FINDER_GOLD_PER_ERA) * ((int)GET_TEAM(eTeam).GetCurrentEra() + 1);
+#endif
 
 									}
 								}
@@ -11277,6 +11291,13 @@ bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, PlayerTypes ePl
 						GET_PLAYER(pCity->getOwner()).ChangeNumChops(iProduction);
 #endif
 						pCity->changeFeatureProduction(iProduction);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+						if (GET_PLAYER(pCity->getOwner()).GetPlayerTraits()->GetLekmodTraitInt(LTI_CHOP_FAITH_COST) > 0)
+						{
+							CvPlayer& kChopper = GET_PLAYER(pCity->getOwner());
+							kChopper.ChangeFaith(-std::min(iProduction, kChopper.GetFaith()));
+						}
+#endif
 						if(pCity->getOwner() == GC.getGame().getActivePlayer())
 						{
 							strBuffer = GetLocalizedText("TXT_KEY_MISC_CLEARING_FEATURE_RESOURCE", GC.getFeatureInfo(getFeatureType())->GetTextKey(), iProduction, pCity->getNameKey());

@@ -5218,7 +5218,11 @@ void CvPlayer::doTurn()
 	LekmodResolvePendingRuins();
 #endif
 #ifdef LEKMOD_TRAIT_PLOT_YIELDS
-	if (GetPlayerTraits()->HasLekmodPlotYields())
+	if (GetPlayerTraits()->HasLekmodPlotYields()
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+		|| CvCity::LekmodHasBuildingPlotYields(*this)
+#endif
+		)
 		updateYield();
 #endif
 
@@ -6019,6 +6023,19 @@ void CvPlayer::DoUnitReset()
 					pLoopUnit->changeMoves(iExtra * GC.getMOVE_DENOMINATOR());
 			}
 		}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		// Goths: melee and gunpowder units starting the turn on a Harjis
+		{
+			const int eImprovement = GetPlayerTraits()->GetLekmodTraitType(LTI_START_MOVES_IMPROVEMENT);
+			CvPlot* pUnitPlot = pLoopUnit->plot();
+			const UnitCombatTypes eCombat = (UnitCombatTypes)pLoopUnit->getUnitCombatType();
+			if (eImprovement != -1 && pUnitPlot && pUnitPlot->getImprovementType() == (ImprovementTypes)eImprovement && !pUnitPlot->IsImprovementPillaged()
+				&& (eCombat == (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_MELEE", true) || eCombat == (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_GUN", true)))
+			{
+				pLoopUnit->changeMoves(GetPlayerTraits()->GetLekmodTraitInt(LTI_START_MOVES_IMPROVEMENT_CHANGE) * GC.getMOVE_DENOMINATOR());
+			}
+		}
+#endif
 #endif
 		if (pLoopUnit->IsGreatGeneral())
 		{
@@ -9784,6 +9801,29 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 		getCapitalCity()->plot()->updateYield();
 #endif
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Spain: founding a city other than the first reveals the area and gives a free unit
+	if (getNumCities() > 1)
+	{
+		const int iRadius = GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_CITY_REVEAL_RADIUS);
+		for (int iDX = -iRadius; iDX <= iRadius && iRadius > 0; iDX++)
+		{
+			for (int iDY = -iRadius; iDY <= iRadius; iDY++)
+			{
+				CvPlot* pRevealPlot = plotXYWithRangeCheck(iX, iY, iDX, iDY, iRadius);
+				if (pRevealPlot)
+					pRevealPlot->setRevealed(getTeam(), true);
+			}
+		}
+		const int eFreeClass = GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_CITY_FREE_UNIT_CLASS);
+		if (eFreeClass != -1)
+		{
+			const UnitTypes eFreeUnit = (UnitTypes)getCivilizationInfo().getCivilizationUnits(eFreeClass);
+			if (eFreeUnit != NO_UNIT)
+				initUnit(eFreeUnit, iX, iY);
+		}
+	}
+#endif
 	int iExtraTerritoryClaim = GetPlayerTraits()->GetExtraFoundedCityTerritoryClaimRange();
 	iExtraTerritoryClaim += GetPlayerPolicies()->GetNumericModifier(POLICYMOD_EXTRA_TERRITORY_CLAIM); // NQMP GJS - Colonialism
 	for (int i = 0; i < iExtraTerritoryClaim; i++)

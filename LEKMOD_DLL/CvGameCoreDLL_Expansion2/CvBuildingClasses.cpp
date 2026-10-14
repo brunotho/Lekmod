@@ -1211,6 +1211,45 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 #ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
 	m_iLekmodGreatWorkFilledTourismModifier = kResults.GetInt("GreatWorkFilledTourismModifier");
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	m_bLekmodFreePlotPurchase = kResults.GetBool("FreePlotPurchase");
+#endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+	{
+		m_aLekmodPlotYields.clear();
+		std::string strKey("Building_LekmodPlotYields");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if(pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey,
+				"select Yields.ID, Yield, coalesce(Terrains.ID, -1), coalesce(Features.ID, -1), coalesce(Resources.ID, -1), AdjacentLake, "
+				"coalesce(CityTerrains.ID, -1), coalesce(CityFeatures.ID, -1), CityAdjacentCount "
+				"from Building_LekmodPlotYields "
+				"inner join Yields on Yields.Type = YieldType "
+				"left join Terrains on Terrains.Type = TerrainType "
+				"left join Features on Features.Type = FeatureType "
+				"left join Resources on Resources.Type = ResourceType "
+				"left join Terrains as CityTerrains on CityTerrains.Type = CityAdjacentTerrainType "
+				"left join Features as CityFeatures on CityFeatures.Type = CityAdjacentFeatureType "
+				"where BuildingType = ?");
+		}
+		pResults->Bind(1, szBuildingType);
+		while(pResults->Step())
+		{
+			LekmodBuildingPlotYield kEntry;
+			kEntry.m_eYield = (YieldTypes)pResults->GetInt(0);
+			kEntry.m_iYield = pResults->GetInt(1);
+			kEntry.m_eTerrain = (TerrainTypes)pResults->GetInt(2);
+			kEntry.m_eFeature = (FeatureTypes)pResults->GetInt(3);
+			kEntry.m_eResource = (ResourceTypes)pResults->GetInt(4);
+			kEntry.m_bAdjacentLake = pResults->GetInt(5) != 0;
+			kEntry.m_eCityAdjacentTerrain = (TerrainTypes)pResults->GetInt(6);
+			kEntry.m_eCityAdjacentFeature = (FeatureTypes)pResults->GetInt(7);
+			kEntry.m_iCityAdjacentCount = std::max(1, pResults->GetInt(8));
+			m_aLekmodPlotYields.push_back(kEntry);
+		}
+	}
+#endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 	{
 		m_aLekmodConditionalYields.clear();
@@ -3343,6 +3382,20 @@ int CvBuildingEntry::GetLekmodRequiredCivilization() const
 int CvBuildingEntry::GetLekmodStartTurnMovesMountedCivilian() const
 {
 	return m_iLekmodStartTurnMovesMountedCivilian;
+}
+#endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+/// Yields on the city's tiles with conditions (Building_LekmodPlotYields)
+const std::vector<LekmodBuildingPlotYield>& CvBuildingEntry::GetLekmodPlotYields() const
+{
+	return m_aLekmodPlotYields;
+}
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// The city's next tile purchase is free; the building is removed after it (Goths)
+bool CvBuildingEntry::IsLekmodFreePlotPurchase() const
+{
+	return m_bLekmodFreePlotPurchase;
 }
 #endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS

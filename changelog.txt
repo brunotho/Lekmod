@@ -2177,7 +2177,12 @@ SPAIN (CIVILIZATION_SPAIN)
 --------------------------
 Tags: civs, units
 - Changed: Tercio costs 100 (was 107), the same as a Musketman
-- Note: open: the new UA (needs C++)
+- Changed: new UA: natural wonders yield +3 Culture (were doubled); discovering one gives 50 Gold per era (was 100)
+- Removed: doubled Happiness from natural wonders
+- Added: +10% Production towards Settlers and Conquistadors
+- Added: founding a city (not the capital) reveals the tiles within 6 and gives a free Scout
+- Added: cities other than the capital +1 Production; the capital -1 Production per other city (not below 0)
+- DLL: Traits.LekmodNaturalWonderFinderGoldPerEra, LekmodFoundCity*, LekmodExpansionProduction, LekmodCapitalProductionPerExpansion; Trait_LekmodPlotYields.NaturalWonder
 
 OTTOMANS (CIVILIZATION_OTTOMAN)
 -------------------------------
@@ -2210,7 +2215,10 @@ Tags: civs, units, promotions
 - Changed: Pictish Warrior now replaces the Warrior (so the Celts start with one): 9 Strength, upgrades to the Swordsman, starts with Zealot and Woodsman
 - Removed: Pictish Warrior: foreign lands bonus, free pillaging, bonus against mounted units
 - Added: unimproved Forest next to your cities +1 Culture each for a pantheon, a religion, Drama and Poetry and the National Epic (first part of the new UA)
-- Note: open: the rest of the new UA (chopping costs Faith, no roads in Forest, Classical Era forest rules; needs C++); the old forest Faith stays until then
+- Added: chopping Forest costs Faith equal to the Production gained; no Roads or Railroads on Forest
+- Changed: from the Classical Era, cities get +1 Faith per adjacent unimproved Forest (was +1 Faith with any adjacent unimproved Forest, +2 with 3 or more, from the start)
+- Added: from the Classical Era, cities with 3 or more adjacent unimproved Forest tiles have -20% Production towards buildings and wonders
+- DLL: Traits.LekmodChopFaithCost, LekmodNoRouteFeature, LekmodForestCity*
 - DLL: Trait_LekmodPlotYields
 
 JERUSALEM (CIVILIZATION_JERUSALEM)
@@ -2369,7 +2377,10 @@ GOTHS (CIVILIZATION_GOTH)
 Tags: civs, units
 - Changed: Gadrauht now replaces the Swordsman: 15 Strength, costs 62, needs 4 Iron, starts with Cover I
 - Removed: Gadrauht: healing on kills
-- Note: open: the Gadrauht aura and the new UA (need C++)
+- Changed: new UA: the first tile purchase of each city is free; melee and gunpowder units starting their turn on a Harjis get +2 Movement
+- Removed: +1 Movement for melee and gunpowder units
+- Added: Gadrauht: Shield Wall: adjacent melee and gunpowder units +25% when attacking a wounded unit (does not stack, lost on upgrade)
+- DLL: Buildings.FreePlotPurchase (marker building 289, class 193), Traits.LekmodStartMovesImprovement*, UnitPromotions.AuraVsWoundedMod (promotion 388)
 
 MOROCCO (CIVILIZATION_MOROCCO)
 ------------------------------
@@ -2591,7 +2602,9 @@ FINLAND (CIVILIZATION_FINLAND)
 ------------------------------
 Tags: civs
 - Removed: the 50% stronger flanking bonus for melee, gunpowder, mounted, armor, recon, naval melee and paratrooper units
+- Added: Sauna: Snow tiles of the city next to a lake +2 Food and +2 Culture
 - Note: open: the new shared Hakkapeliitta unit (later spec)
+- DLL: Building_LekmodPlotYields
 
 GARRISON YIELDS FROM BUILDINGS
 ------------------------------

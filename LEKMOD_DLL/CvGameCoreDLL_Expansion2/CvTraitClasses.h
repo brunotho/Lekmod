@@ -73,6 +73,26 @@ struct MayaBonusChoice
 //!  - Populated from XML\Civilizations\CIV5Traits.xml
 //!  - Array of these contained in CvTraitXMLEntries class
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+// Traits.Lekmod* integer / type columns read by name (types: -1 = none). Add one = enum entry + name + bType in s_aLekmodTraitInts.
+enum LekmodTraitInt
+{
+	LTI_CHOP_FAITH_COST,				// chopping costs Faith equal to the Production (Celts)
+	LTI_NO_ROUTE_FEATURE,				// type: no routes on this feature (Celts: Forest)
+	LTI_FOREST_CITY_ERA,				// type: forest city rules from this era (Celts)
+	LTI_FOREST_CITY_PRODUCTION_MOD,		// % Production towards buildings and wonders with enough adjacent unimproved forest
+	LTI_FOREST_CITY_COUNT,				// adjacent unimproved forest tiles needed for the production modifier
+	LTI_FOREST_CITY_FAITH_PER_FOREST,	// city Faith per adjacent unimproved forest tile
+	LTI_NW_FINDER_GOLD_PER_ERA,			// natural wonder discovery Gold x (era + 1) (Spain)
+	LTI_FOUND_CITY_REVEAL_RADIUS,		// founding a non-capital city reveals this radius (Spain)
+	LTI_FOUND_CITY_FREE_UNIT_CLASS,		// type: a free unit of this class when founding a non-capital city (Spain)
+	LTI_EXPANSION_PRODUCTION,			// non-capital cities + Production (Spain)
+	LTI_CAPITAL_PRODUCTION_PER_EXPANSION,	// capital Production per other city (negative; can't push the capital below 0) (Spain)
+	LTI_START_MOVES_IMPROVEMENT,		// type: melee/gunpowder units starting the turn on this improvement get extra moves (Goths: Harjis)
+	LTI_START_MOVES_IMPROVEMENT_CHANGE,	// those extra moves
+	NUM_LEKMOD_TRAIT_INTS
+};
+#endif
 class CvTraitEntry: public CvBaseInfo
 {
 public:
@@ -225,6 +245,7 @@ public:
 	bool IsLekmodGoldenAgeGreatPeople() const;
 	bool IsLekmodGoldenAgeWLTKD() const;
 	int GetLekmodExcessHappinessGAModifier() const;
+	int GetLekmodTraitInt(LekmodTraitInt eCol) const;
 	bool IsLekmodFasterInHillsCiviliansOnly() const;
 	int GetLekmodEarlyBuildingImprovement() const;
 	int GetLekmodEarlyBuildingProductionMod() const;
@@ -236,7 +257,7 @@ public:
 	struct LekmodPlotYield
 	{
 		int m_eYield, m_iYield, m_eTerrain, m_eFeature, m_eResourceClass, m_eImprovement, m_eTech, m_eBuildingClass;
-		bool m_bNoImprovement, m_bAdjacentNaturalWonder, m_bAdjacentOwnCity, m_bPantheon, m_bReligion;
+		bool m_bNoImprovement, m_bAdjacentNaturalWonder, m_bAdjacentOwnCity, m_bPantheon, m_bReligion, m_bNaturalWonder;
 	};
 	const std::vector<LekmodPlotYield>& GetLekmodPlotYields() const;
 #endif
@@ -537,6 +558,7 @@ protected:
 	bool m_bLekmodGoldenAgeGreatPeople;
 	bool m_bLekmodGoldenAgeWLTKD;
 	int m_iLekmodExcessHappinessGAModifier;
+	int m_aiLekmodTraitInts[NUM_LEKMOD_TRAIT_INTS];
 	bool m_bLekmodFasterInHillsCiviliansOnly;
 	int m_iLekmodEarlyBuildingImprovement;
 	int m_iLekmodEarlyBuildingProductionMod;
@@ -759,6 +781,8 @@ public:
 	int GetLekmodTrainedUnitExperience(const CvCity* pCity) const;
 	bool IsLekmodTraitFlag(int iFlag) const; // 0 GA happiness yields, 1 GA great people, 2 GA WLTKD
 	int GetLekmodExcessHappinessGAModifier() const;
+	int GetLekmodTraitInt(LekmodTraitInt eCol) const; // sum over active traits
+	int GetLekmodTraitType(LekmodTraitInt eCol) const; // first active trait's type, -1 = none
 	bool IsLekmodFasterInHillsCiviliansOnly() const;
 	int GetLekmodEarlyBuildingProductionMod(const CvCity* pCity, BuildingTypes eBuilding) const;
 	int GetLekmodClosestMinorAnchor() const;

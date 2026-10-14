@@ -14697,6 +14697,16 @@ int CvUnit::GetGenericMaxStrengthModifier(const CvCombatInfo& kInfo, CvCombatMod
 			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_ADJACENT_ENEMIES", iTempModifier, iNumEnemies);
 		}
 	}
+	// Gadrauht: bonus for adjacent melee/gunpowder units attacking a wounded unit
+	if (bIsAttacker && pOtherUnit != NULL)
+	{
+		iTempModifier = GetLekmodAuraVsWoundedMod(pOtherUnit);
+		iModifier += iTempModifier;
+		if (kModifierList && iTempModifier)
+		{
+			GC.getGame().BuildCombatModHelpText(*kModifierList, "TXT_KEY_LEKMOD_COMBATMOD_AURA_VS_WOUNDED", iTempModifier);
+		}
+	}
 	// Mandekalu Cavalry: bonus far from own cities
 	iTempModifier = GetLekmodFarFromCityMod();
 	iModifier += iTempModifier;
@@ -17593,6 +17603,34 @@ int CvUnit::GetLekmodMovesAfterKill() const
 }
 //	--------------------------------------------------------------------------------
 /// Bonus when more than the promotion's distance away from the nearest city of the owner
+/// Bonus when attacking a wounded unit next to a friendly unit with the aura (Gadrauht); melee and gunpowder attackers only, no stacking
+int CvUnit::GetLekmodAuraVsWoundedMod(const CvUnit* pDefender) const
+{
+	if (pDefender == NULL || pDefender->getDamage() <= 0 || plot() == NULL)
+		return 0;
+	const UnitCombatTypes eCombat = (UnitCombatTypes)getUnitCombatType();
+	if (eCombat != (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_MELEE", true) && eCombat != (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_GUN", true))
+		return 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	int iBest = 0;
+	for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+	{
+		CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+		if (pAdjacentPlot == NULL)
+			continue;
+		for (int iUnit = 0; iUnit < (int)pAdjacentPlot->getNumUnits(); iUnit++)
+		{
+			const CvUnit* pAdjacentUnit = pAdjacentPlot->getUnitByIndex(iUnit);
+			if (pAdjacentUnit == NULL || pAdjacentUnit == this || pAdjacentUnit->getOwner() != getOwner())
+				continue;
+			for (uint i = 0; i < aPromotions.size(); i++)
+				if (pAdjacentUnit->isHasPromotion(aPromotions[i]))
+					iBest = std::max(iBest, GC.getPromotionInfo(aPromotions[i])->GetLekmodAuraVsWoundedMod());
+		}
+	}
+	return iBest;
+}
+//	--------------------------------------------------------------------------------
 int CvUnit::GetLekmodFarFromCityMod() const
 {
 	int iMod = 0;

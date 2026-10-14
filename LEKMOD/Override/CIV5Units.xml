@@ -43417,6 +43417,7 @@
     	<Column name="StartTurnMovesMountedCivilian" type="integer" default="0"/>
     	<Column name="RequiredCivilization" type="text" reference="Civilizations(Type)" default="NULL"/>
     	<Column name="GreatWorkFilledTourismModifier" type="integer" default="0"/>
+    	<Column name="FreePlotPurchase" type="boolean" default="false"/>
     	<Column name="LekmodPolicyGranted" type="boolean" default="false"/> <!-- LEKMOD: given and removed by Policy_BuildingClassFreeBuildings -->
 	</Table>
 	<!-- NOTE: This table is organized, but don't feel like you need to follow it as it uses manually assigned IDs which can be combersome to change. Just add to the end. 
@@ -110087,6 +110088,19 @@
 		<Column name="RequiresPantheon" type="boolean" default="false"/>
 		<Column name="RequiresReligion" type="boolean" default="false"/>
 		<Column name="RequiresBuildingClass" type="text" reference="BuildingClasses(Type)" default="NULL"/>
+		<Column name="NaturalWonder" type="boolean" default="false"/>
+	</Table>
+	<Table name="Building_LekmodPlotYields">
+		<Column name="BuildingType" type="text" reference="Buildings(Type)"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)"/>
+		<Column name="Yield" type="integer" default="0"/>
+		<Column name="TerrainType" type="text" reference="Terrains(Type)" default="NULL"/>
+		<Column name="FeatureType" type="text" reference="Features(Type)" default="NULL"/>
+		<Column name="ResourceType" type="text" reference="Resources(Type)" default="NULL"/>
+		<Column name="AdjacentLake" type="boolean" default="false"/>
+		<Column name="CityAdjacentTerrainType" type="text" reference="Terrains(Type)" default="NULL"/>
+		<Column name="CityAdjacentFeatureType" type="text" reference="Features(Type)" default="NULL"/>
+		<Column name="CityAdjacentCount" type="integer" default="1"/>
 	</Table>
 	<Table name="Trait_LekmodBuildingClassDefense">
 		<Column name="TraitType" type="text" reference="Traits(Type)"/>
@@ -211483,6 +211497,19 @@
 		<Column name="LekmodEarlyBuildingProductionMod" type="integer" default="0"/>
 		<Column name="LekmodEarlyBuildingEra" type="text" reference="Eras(Type)" default="NULL"/>
 		<Column name="LekmodClosestMinorAnchor" type="integer" default="0"/>
+		<Column name="LekmodChopFaithCost" type="integer" default="0"/>
+		<Column name="LekmodNoRouteFeature" type="text" reference="Features(Type)" default="NULL"/>
+		<Column name="LekmodForestCityEra" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="LekmodForestCityProductionMod" type="integer" default="0"/>
+		<Column name="LekmodForestCityCount" type="integer" default="0"/>
+		<Column name="LekmodForestCityFaithPerForest" type="integer" default="0"/>
+		<Column name="LekmodNaturalWonderFinderGoldPerEra" type="integer" default="0"/>
+		<Column name="LekmodFoundCityRevealRadius" type="integer" default="0"/>
+		<Column name="LekmodFoundCityFreeUnitClass" type="text" reference="UnitClasses(Type)" default="NULL"/>
+		<Column name="LekmodExpansionProduction" type="integer" default="0"/>
+		<Column name="LekmodCapitalProductionPerExpansion" type="integer" default="0"/>
+		<Column name="LekmodStartMovesImprovement" type="text" reference="Improvements(Type)" default="NULL"/>
+		<Column name="LekmodStartMovesImprovementChange" type="integer" default="0"/>
 		<Column name="FirstProphetCostMod" type="integer" default="0"/>
 		<Column name="EmbarkedUnitsFullStrength" type="boolean" default="false"/>
 		<Column name="CityStateUnitGiftExtraExperience" type="integer"  default="0"/>
@@ -214903,6 +214930,7 @@
 		<Column name="MovesAfterKill" type="integer" default="0"/>
 		<Column name="FarFromCityMod" type="integer" default="0"/>
 		<Column name="FarFromCityDistance" type="integer" default="0"/>
+		<Column name="AuraVsWoundedMod" type="integer" default="0"/>
 	</Table>
 	<UnitPromotions>
 		<Delete />
@@ -256861,6 +256889,20 @@
 			<PediaType>PEDIA_ATTRIBUTES</PediaType>
 			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_IKANDA</PediaEntry>
 		</Row>
+		<Row>
+			<ID>388</ID>
+			<Type>PROMOTION_LEKMOD_GADRAUHT_AURA</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_GADRAUHT_AURA</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_GADRAUHT_AURA_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<AuraVsWoundedMod>25</AuraVsWoundedMod>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_GADRAUHT_AURA</PediaEntry>
+		</Row>
 	</UnitPromotions>
 
 	<Table name="UnitPromotions_KillYieldValidEras">
@@ -287686,4 +287728,106 @@
 			<Set GreatWorkMilitaryProductionModifier="0"/>
 		</Update>
 	</Buildings>
+	<!-- Phase 6 C++ batch F (2026-10-14) -->
+	<!-- Celts (rest of the new UA): chopping costs Faith, no routes in Forest, from the Classical Era -20% Production towards buildings and wonders with 3+ adjacent unimproved Forest and +1 Faith per adjacent unimproved Forest (replaces the old forest Faith) -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_FAITH_FROM_NATURE"/>
+			<Set FaithFromUnimprovedForest="false" LekmodChopFaithCost="1" LekmodNoRouteFeature="FEATURE_FOREST" LekmodForestCityEra="ERA_CLASSICAL" LekmodForestCityProductionMod="-20" LekmodForestCityCount="3" LekmodForestCityFaithPerForest="1"/>
+		</Update>
+	</Traits>
+	<!-- Spain (new UA): natural wonders +3 Culture, discovery 50 Gold x era, no doubled yields or Happiness; +10% Production towards Settlers and Conquistadors; new cities reveal 6 tiles and get a Scout; expansions +1 Production, the capital -1 per expansion -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_SEVEN_CITIES"/>
+			<Set NaturalWonderFirstFinderGold="0" NaturalWonderSubsequentFinderGold="0" NaturalWonderYieldModifier="0" NaturalWonderHappinessModifier="0" LekmodNaturalWonderFinderGoldPerEra="50" LekmodFoundCityRevealRadius="6" LekmodFoundCityFreeUnitClass="UNITCLASS_SCOUT" LekmodExpansionProduction="1" LekmodCapitalProductionPerExpansion="-1"/>
+		</Update>
+	</Traits>
+	<Trait_LekmodPlotYields>
+		<Row>
+			<TraitType>TRAIT_SEVEN_CITIES</TraitType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>3</Yield>
+			<NaturalWonder>true</NaturalWonder>
+		</Row>
+	</Trait_LekmodPlotYields>
+	<Unit_ProductionTraits>
+		<Row>
+			<UnitType>UNIT_SETTLER</UnitType>
+			<TraitType>TRAIT_SEVEN_CITIES</TraitType>
+			<Trait>10</Trait>
+		</Row>
+		<Row>
+			<UnitType>UNIT_CONQUISTADOR_SHARED</UnitType>
+			<TraitType>TRAIT_SEVEN_CITIES</TraitType>
+			<Trait>10</Trait>
+		</Row>
+	</Unit_ProductionTraits>
+	<!-- Goths (new UA): each city's first tile purchase is free (marker building), melee/gunpowder units starting the turn on a Harjis +2 moves; no more +1 move -->
+	<Trait_FreePromotionUnitCombats>
+		<Delete TraitType="TRAIT_GOTHS"/>
+	</Trait_FreePromotionUnitCombats>
+	<BuildingClasses>
+		<Row>
+			<ID>193</ID>
+			<Type>BUILDINGCLASS_LEKMOD_GOTH_FREE_TILE</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_GOTH_FREE_TILE</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>289</ID>
+			<Type>BUILDING_LEKMOD_GOTH_FREE_TILE</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_GOTH_FREE_TILE</BuildingClass>
+			<Description>Trait Goths</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+			<FreePlotPurchase>true</FreePlotPurchase>
+		</Row>
+	</Buildings>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_GOTHS"/>
+			<Set FreeBuilding="BUILDING_LEKMOD_GOTH_FREE_TILE" LekmodStartMovesImprovement="IMPROVEMENT_GOTH" LekmodStartMovesImprovementChange="2"/>
+		</Update>
+	</Traits>
+	<!-- Goths: Gadrauht aura (adjacent melee/gunpowder units +25% attacking wounded units, lost on upgrade) -->
+	<Unit_FreePromotions>
+		<Row>
+			<UnitType>UNIT_GADRAUGHT</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_GADRAUHT_AURA</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<!-- Finland: Sauna Snow tiles next to a lake +2 Food +2 Culture -->
+	<Building_LekmodPlotYields>
+		<Row>
+			<BuildingType>BUILDING_FINNISH_SAUNA</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<AdjacentLake>true</AdjacentLake>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_FINNISH_SAUNA</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>2</Yield>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+			<AdjacentLake>true</AdjacentLake>
+		</Row>
+	</Building_LekmodPlotYields>
 </GameData>

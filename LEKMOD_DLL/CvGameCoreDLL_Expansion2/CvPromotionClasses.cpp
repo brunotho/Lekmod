@@ -233,6 +233,7 @@ CvPromotionEntry::CvPromotionEntry():
 	m_iLekmodMovesAfterKill(0),
 	m_iLekmodFarFromCityMod(0),
 	m_iLekmodFarFromCityDistance(0),
+	m_iLekmodAuraVsWoundedMod(0),
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod(0),
@@ -909,6 +910,7 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_iLekmodMovesAfterKill = kResults.GetInt("MovesAfterKill");
 	m_iLekmodFarFromCityMod = kResults.GetInt("FarFromCityMod");
 	m_iLekmodFarFromCityDistance = kResults.GetInt("FarFromCityDistance");
+	m_iLekmodAuraVsWoundedMod = kResults.GetInt("AuraVsWoundedMod");
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	m_iAdjacentRangedAttackMod = kResults.GetInt("AdjacentRangedAttackMod");
@@ -2266,11 +2268,16 @@ int CvPromotionEntry::GetLekmodFarFromCityDistance() const
 {
 	return m_iLekmodFarFromCityDistance;
 }
+/// Adjacent friendly melee/gunpowder units get this % when attacking a wounded unit (Gadrauht; the strongest source counts)
+int CvPromotionEntry::GetLekmodAuraVsWoundedMod() const
+{
+	return m_iLekmodAuraVsWoundedMod;
+}
 /// Any of the Phase 6 promotion effects (for the CvUnit lookup list)
 bool CvPromotionEntry::HasLekmodCivEffect() const
 {
 	return m_bLekmodFightWellDamaged || m_bLekmodNoFortify || m_iLekmodStrongerEnemyMod != 0 || m_iLekmodAdjacentEnemiesMod != 0
-		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0;
+		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0 || m_iLekmodAuraVsWoundedMod != 0;
 }
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS

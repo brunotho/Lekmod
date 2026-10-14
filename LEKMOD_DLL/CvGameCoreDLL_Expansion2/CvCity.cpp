@@ -7025,6 +7025,16 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 		iMultiplier += iTempMod;
 		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_BUILDING_TRAIT", iTempMod);
 	}
+	// trait: % Production towards buildings and wonders with enough adjacent unimproved forest (Celts, from an era)
+	if (GetLekmodForestCityCount() >= std::max(1, GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodTraitInt(LTI_FOREST_CITY_COUNT)))
+	{
+		iTempMod = GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodTraitInt(LTI_FOREST_CITY_PRODUCTION_MOD);
+		if (iTempMod != 0)
+		{
+			iMultiplier += iTempMod;
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_LEKMOD_PRODMOD_FOREST_CITY", iTempMod);
+		}
+	}
 #endif
 #ifdef LEKMOD_CONGRESS_CYCLE
 	// World Congress (Climate Change Reparations: power plants)
@@ -8797,6 +8807,10 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 			}
 #ifdef LEKMOD_BUILDING_TECH_TERRAIN_YIELDS
 			if (eYield == 0 && !pBuildingInfo->GetLekmodTechTerrainYields().empty())
+				updateYield();
+#endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+			if (eYield == 0 && !pBuildingInfo->GetLekmodPlotYields().empty())
 				updateYield();
 #endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
@@ -13290,6 +13304,21 @@ int CvCity::getBaseYieldRate(YieldTypes eIndex) const
 	iValue += GetBaseYieldRateFromPolicies(eIndex);
 	iValue += GetBaseYieldRateFromThemedBuildings(eIndex);
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Spain: expansions +Production, the capital loses Production per expansion (not below 0 from this)
+	if (eIndex == YIELD_PRODUCTION)
+	{
+		const CvPlayerTraits* pTraits = GET_PLAYER(getOwner()).GetPlayerTraits();
+		if (!isCapital())
+			iValue += pTraits->GetLekmodTraitInt(LTI_EXPANSION_PRODUCTION);
+		else
+		{
+			const int iPenalty = pTraits->GetLekmodTraitInt(LTI_CAPITAL_PRODUCTION_PER_EXPANSION) * (GET_PLAYER(getOwner()).getNumCities() - 1);
+			if (iPenalty < 0)
+				iValue = std::max(iValue + iPenalty, std::min(iValue, 0));
+		}
+	}
+#endif
 	iValue += m_pCityBuildings->GetYieldFromLandmarks(eIndex);
 
 	return iValue;
@@ -13771,6 +13800,14 @@ int CvCity::GetBaseYieldRateFromTraits(YieldTypes eIndex) const
 				iRtnValue = 1;
 		}
 	}
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if (eIndex == YIELD_FAITH) // Celts (new): Faith per adjacent unimproved forest from an era
+	{
+		const int iPerForest = GET_PLAYER(m_eOwner).GetPlayerTraits()->GetLekmodTraitInt(LTI_FOREST_CITY_FAITH_PER_FOREST);
+		if (iPerForest != 0)
+			iRtnValue += iPerForest * std::max(0, GetLekmodForestCityCount());
+	}
+#endif
 	if (eIndex == YIELD_CULTURE) // Sumer :)
 	{
 		iRtnValue = GET_PLAYER(m_eOwner).GetPlayerTraits()->GetCityCultureBonus();
@@ -15428,6 +15465,132 @@ int CvCity::GetLekmodBeliefCityConditionYield(const CvReligion* pReligion, Belie
 }
 #endif
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+//	--------------------------------------------------------------------------------
+/// Adjacent unimproved forest tiles once the owner's forest city rules are active (Celts); -1 when they are not
+int CvCity::GetLekmodForestCityCount() const
+{
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	const int eEra = kOwner.GetPlayerTraits()->GetLekmodTraitType(LTI_FOREST_CITY_ERA);
+	if (eEra == -1 || (int)kOwner.GetCurrentEra() < eEra)
+		return -1;
+	int iCount = 0;
+	for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+	{
+		CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+		if (pAdjacentPlot && pAdjacentPlot->getFeatureType() == FEATURE_FOREST && pAdjacentPlot->getImprovementType() == NO_IMPROVEMENT)
+			iCount++;
+	}
+	return iCount;
+}
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+/// A building in this city that makes the next tile purchase free (Buildings.FreePlotPurchase), or NO_BUILDING
+BuildingTypes CvCity::GetLekmodFreePlotPurchaseBuilding() const
+{
+	static std::vector<int> s_aiBuildings;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding && pkBuilding->IsLekmodFreePlotPurchase())
+				s_aiBuildings.push_back(iBuilding);
+		}
+		s_bInit = true;
+	}
+	for (uint i = 0; i < s_aiBuildings.size(); i++)
+		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)s_aiBuildings[i]) > 0)
+			return (BuildingTypes)s_aiBuildings[i];
+	return NO_BUILDING;
+}
+#endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+//	--------------------------------------------------------------------------------
+static const std::vector<int>& LekmodBuildingPlotYieldBuildings()
+{
+	static std::vector<int> s_aiBuildings;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			if (pkBuilding && !pkBuilding->GetLekmodPlotYields().empty())
+				s_aiBuildings.push_back(iBuilding);
+		}
+		s_bInit = true;
+	}
+	return s_aiBuildings;
+}
+/// Does the player have any building with Building_LekmodPlotYields (they need a per-turn plot refresh)
+bool CvCity::LekmodHasBuildingPlotYields(const CvPlayer& kPlayer)
+{
+	const std::vector<int>& aiBuildings = LekmodBuildingPlotYieldBuildings();
+	for (uint i = 0; i < aiBuildings.size(); i++)
+		if (kPlayer.getBuildingClassCount((BuildingClassTypes)GC.getBuildingInfo((BuildingTypes)aiBuildings[i])->GetBuildingClassType()) > 0)
+			return true;
+	return false;
+}
+/// Yield on one of this city's tiles from its buildings (Building_LekmodPlotYields)
+int CvCity::GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) const
+{
+	const std::vector<int>& aiBuildings = LekmodBuildingPlotYieldBuildings();
+	if (pPlot == NULL || aiBuildings.empty())
+		return 0;
+	int iYield = 0;
+	for (uint i = 0; i < aiBuildings.size(); i++)
+	{
+		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)aiBuildings[i]) <= 0)
+			continue;
+		const std::vector<LekmodBuildingPlotYield>& aRows = GC.getBuildingInfo((BuildingTypes)aiBuildings[i])->GetLekmodPlotYields();
+		for (uint j = 0; j < aRows.size(); j++)
+		{
+			const LekmodBuildingPlotYield& kRow = aRows[j];
+			if (kRow.m_eYield != eYield)
+				continue;
+			if (kRow.m_eTerrain != NO_TERRAIN && pPlot->getTerrainType() != kRow.m_eTerrain)
+				continue;
+			if (kRow.m_eFeature != NO_FEATURE && pPlot->getFeatureType() != kRow.m_eFeature)
+				continue;
+			if (kRow.m_eResource != NO_RESOURCE && pPlot->getResourceType(getTeam()) != kRow.m_eResource)
+				continue;
+			if (kRow.m_bAdjacentLake)
+			{
+				bool bLake = false;
+				for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && !bLake; iDirection++)
+				{
+					CvPlot* pAdjacentPlot = plotDirection(pPlot->getX(), pPlot->getY(), (DirectionTypes)iDirection);
+					if (pAdjacentPlot && pAdjacentPlot->isLake())
+						bLake = true;
+				}
+				if (!bLake)
+					continue;
+			}
+			if (kRow.m_eCityAdjacentTerrain != NO_TERRAIN || kRow.m_eCityAdjacentFeature != NO_FEATURE)
+			{
+				int iCount = 0;
+				for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; iDirection++)
+				{
+					CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+					if (pAdjacentPlot == NULL)
+						continue;
+					if (kRow.m_eCityAdjacentTerrain != NO_TERRAIN && pAdjacentPlot->getTerrainType() != kRow.m_eCityAdjacentTerrain)
+						continue;
+					if (kRow.m_eCityAdjacentFeature != NO_FEATURE && pAdjacentPlot->getFeatureType() != kRow.m_eCityAdjacentFeature)
+						continue;
+					iCount++;
+				}
+				if (iCount < kRow.m_iCityAdjacentCount)
+					continue;
+			}
+			iYield += kRow.m_iYield;
+		}
+	}
+	return iYield;
+}
+#endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 //	--------------------------------------------------------------------------------
 /// Any building of the class (CvCityBuildings::HasBuildingClass is broken, see CLAUDE.md)
@@ -16986,6 +17149,11 @@ int CvCity::GetBuyPlotCost(int iPlotX, int iPlotY) const
 	const int iMaxRange = /*3*/ GC.getMAXIMUM_BUY_PLOT_DISTANCE();
 	if(plotDistance(iPlotX, iPlotY, getX(), getY()) > iMaxRange)
 		return 9999; // Critical hit!
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Goths: the first tile purchase of each city is free (marker building)
+	if (GetLekmodFreePlotPurchaseBuilding() != NO_BUILDING)
+		return 0;
+#endif
 
 	int iPLOT_INFLUENCE_BASE_MULTIPLIER = /*100*/ GC.getPLOT_INFLUENCE_BASE_MULTIPLIER();
 	int iPLOT_INFLUENCE_DISTANCE_MULTIPLIER = /*100*/ GC.getPLOT_INFLUENCE_DISTANCE_MULTIPLIER();
@@ -17047,6 +17215,17 @@ void CvCity::BuyPlot(int iPlotX, int iPlotY)
 	thisPlayer.ChangeGoldSpentBuys(iCost);
 #endif
 	thisPlayer.ChangeNumPlotsBought(1);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	{
+		// the marker is a trait free building (or a real one): clear both
+		const BuildingTypes eFreePlotBuilding = GetLekmodFreePlotPurchaseBuilding();
+		if (eFreePlotBuilding != NO_BUILDING)
+		{
+			GetCityBuildings()->SetNumFreeBuilding(eFreePlotBuilding, 0);
+			GetCityBuildings()->SetNumRealBuilding(eFreePlotBuilding, 0);
+		}
+	}
+#endif
 
 	// See if there's anyone else nearby that could get upset by this action
 	CvCity* pNearbyCity;

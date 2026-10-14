@@ -148006,6 +148006,34 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_CL_UC_DANCE_HALL_HELP">
 			<Text>Unique building for Cuba. Replaces the Opera House. It is cheaper.[NEWLINE]+3 [ICON_CULTURE] Culture.[NEWLINE]Units trained in this city start with +15 XP.[NEWLINE][NEWLINE]When its Great Work slot is filled: +20% [ICON_TOURISM] Tourism in the city.[NEWLINE][NEWLINE]Great Works in this city yield +1 [ICON_TOURISM] Tourism.</Text>
 		</Replace>
+		<!-- Phase 6 C++ batch F -->
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_GADRAUHT_AURA">
+			<Text>Shield Wall</Text>
+		</Row>
+		<Row Tag="TXT_KEY_PROMOTION_LEKMOD_GADRAUHT_AURA_HELP">
+			<Text>Adjacent friendly Melee and Gunpowder units get +25% [ICON_STRENGTH] Combat Strength when attacking a wounded unit (does not stack).</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_AURA_VS_WOUNDED">
+			<Text>Shield Wall (wounded target): {1_Num}%</Text>
+		</Row>
+		<Row Tag="TXT_KEY_LEKMOD_PRODMOD_FOREST_CITY">
+			<Text>[NEWLINE][ICON_BULLET]Surrounded by forest: {1_Num}%</Text>
+		</Row>
+		<Replace Tag="TXT_KEY_TRAIT_FAITH_FROM_NATURE">
+			<Text>Unimproved Forest next to your cities yields +1 [ICON_CULTURE] Culture for each of these you have: a Pantheon, a Religion, [ICON_TECH_DRAMA] Drama and Poetry, the National Epic.[NEWLINE][NEWLINE]Chopping Forest costs [ICON_PEACE] Faith equal to the [ICON_PRODUCTION] Production gained (not below 0).[NEWLINE]Roads and Railroads can't be built on Forest.[NEWLINE][NEWLINE]From the Classical Era:[NEWLINE]Cities yield +1 [ICON_PEACE] Faith for each adjacent unimproved Forest.[NEWLINE]Cities with 3 or more adjacent unimproved Forest tiles have -20% [ICON_PRODUCTION] Production towards buildings and wonders.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_SEVEN_CITIES">
+			<Text>[COLOR_GREEN]Natural Wonders[ENDCOLOR] yield +3 [ICON_CULTURE] Culture.[NEWLINE]Discovering a [COLOR_GREEN]Natural Wonder[ENDCOLOR] gives 50 [ICON_GOLD] Gold per Era.[NEWLINE][NEWLINE]+10% [ICON_PRODUCTION] Production towards Settlers and Conquistadors.[NEWLINE]Founding a city (not the capital) reveals the tiles within 6 and gives a free Scout.[NEWLINE][NEWLINE]Cities other than the [ICON_CAPITAL] Capital yield +1 [ICON_PRODUCTION] Production.[NEWLINE]The [ICON_CAPITAL] Capital yields -1 [ICON_PRODUCTION] Production for each other city (not below 0).</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_GOTHS">
+			<Text>The first tile purchase of each city is free.[NEWLINE][COLOR_POSITIVE_TEXT]Melee[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Gunpowder[ENDCOLOR] units that start their turn on a Harjis get +2 [ICON_MOVES] Movement.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_UNIT_HELP_GOTH_GADRAUGHT">
+			<Text>Replaces the [ICON_UNIT_SWORDSMAN] Swordsman. Stronger, but needs 4 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Cover I.[NEWLINE][NEWLINE]Shield Wall: adjacent friendly Melee and Gunpowder units get +25% [ICON_STRENGTH] Combat Strength when attacking a wounded unit (lost on upgrade).</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_FINNISH_SAUNA_HELP">
+			<Text>Finnish unique building replacing the Shrine. The Sauna gives 2 [ICON_CULTURE] Culture for every Lake tile worked by the city.[NEWLINE]Snow tiles of the city next to a lake yield +2 [ICON_FOOD] Food and +2 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE][COLOR_GREEN]Land[ENDCOLOR] and [COLOR_GREEN]Naval[ENDCOLOR] units built in a city with Sauna heal +10 HP per turn within Finnish borders. Costs no [ICON_GOLD] Maintenance.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

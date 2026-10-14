@@ -1035,6 +1035,11 @@ int CvTraitEntry::GetLekmodExcessHappinessGAModifier() const
 {
 	return m_iLekmodExcessHappinessGAModifier;
 }
+/// Traits.Lekmod* integer / type column (see LekmodTraitInt)
+int CvTraitEntry::GetLekmodTraitInt(LekmodTraitInt eCol) const
+{
+	return m_aiLekmodTraitInts[eCol];
+}
 /// Only civilians ignore the hill movement cost (Inca; military units get Altitude Training instead)
 bool CvTraitEntry::IsLekmodFasterInHillsCiviliansOnly() const
 {
@@ -2003,6 +2008,16 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	m_bLekmodGoldenAgeGreatPeople = kResults.GetBool("LekmodGoldenAgeGreatPeople");
 	m_bLekmodGoldenAgeWLTKD = kResults.GetBool("LekmodGoldenAgeWLTKD");
 	m_iLekmodExcessHappinessGAModifier = kResults.GetInt("LekmodExcessHappinessGAModifier");
+	{
+		// Traits.Lekmod* columns by name (see LekmodTraitInt)
+		static const char* s_aszNames[NUM_LEKMOD_TRAIT_INTS] = { "LekmodChopFaithCost", "LekmodNoRouteFeature", "LekmodForestCityEra",
+			"LekmodForestCityProductionMod", "LekmodForestCityCount", "LekmodForestCityFaithPerForest", "LekmodNaturalWonderFinderGoldPerEra",
+			"LekmodFoundCityRevealRadius", "LekmodFoundCityFreeUnitClass", "LekmodExpansionProduction", "LekmodCapitalProductionPerExpansion",
+			"LekmodStartMovesImprovement", "LekmodStartMovesImprovementChange" };
+		static const bool s_abType[NUM_LEKMOD_TRAIT_INTS] = { false, true, true, false, false, false, false, false, true, false, false, true, false };
+		for (int i = 0; i < NUM_LEKMOD_TRAIT_INTS; i++)
+			m_aiLekmodTraitInts[i] = s_abType[i] ? GC.getInfoTypeForString(kResults.GetText(s_aszNames[i]), true) : kResults.GetInt(s_aszNames[i]);
+	}
 	m_bLekmodFasterInHillsCiviliansOnly = kResults.GetBool("LekmodFasterInHillsCiviliansOnly");
 	m_iLekmodEarlyBuildingImprovement = GC.getInfoTypeForString(kResults.GetText("LekmodEarlyBuildingImprovement"), true);
 	m_iLekmodEarlyBuildingProductionMod = kResults.GetInt("LekmodEarlyBuildingProductionMod");
@@ -3057,7 +3072,7 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 		{
 			pResults = kUtility.PrepareResults(strKey,
 				"SELECT Yields.ID, Yield, coalesce(Terrains.ID, -1), coalesce(Features.ID, -1), coalesce(ResourceClasses.ID, -1), coalesce(Improvements.ID, -1), "
-				"coalesce(Technologies.ID, -1), coalesce(BuildingClasses.ID, -1), NoImprovement, AdjacentNaturalWonder, AdjacentOwnCity, RequiresPantheon, RequiresReligion "
+				"coalesce(Technologies.ID, -1), coalesce(BuildingClasses.ID, -1), NoImprovement, AdjacentNaturalWonder, AdjacentOwnCity, RequiresPantheon, RequiresReligion, NaturalWonder "
 				"FROM Trait_LekmodPlotYields "
 				"INNER JOIN Yields ON Yields.Type = YieldType "
 				"LEFT JOIN Terrains ON Terrains.Type = TerrainType "
@@ -3085,6 +3100,7 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 			kRow.m_bAdjacentOwnCity = pResults->GetInt(10) != 0;
 			kRow.m_bPantheon = pResults->GetInt(11) != 0;
 			kRow.m_bReligion = pResults->GetInt(12) != 0;
+			kRow.m_bNaturalWonder = pResults->GetInt(13) != 0;
 			m_aLekmodPlotYields.push_back(kRow);
 		}
 		pResults->Reset();
@@ -5520,6 +5536,27 @@ int CvPlayerTraits::GetLekmodExcessHappinessGAModifier() const
 	}
 	return iMod;
 }
+int CvPlayerTraits::GetLekmodTraitInt(LekmodTraitInt eCol) const
+{
+	int iValue = 0;
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			iValue += pkTraitInfo->GetLekmodTraitInt(eCol);
+	}
+	return iValue;
+}
+int CvPlayerTraits::GetLekmodTraitType(LekmodTraitInt eCol) const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && pkTraitInfo->GetLekmodTraitInt(eCol) != -1)
+			return pkTraitInfo->GetLekmodTraitInt(eCol);
+	}
+	return -1;
+}
 bool CvPlayerTraits::IsLekmodFasterInHillsCiviliansOnly() const
 {
 	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
@@ -5628,6 +5665,8 @@ int CvPlayerTraits::GetLekmodTraitPlotYield(const CvPlot* pPlot, YieldTypes eYie
 			if(kRow.m_eImprovement != -1 && eImprovement != kRow.m_eImprovement)
 				continue;
 			if(kRow.m_bNoImprovement && eImprovement != NO_IMPROVEMENT)
+				continue;
+			if(kRow.m_bNaturalWonder && !pPlot->IsNaturalWonder())
 				continue;
 			if(kRow.m_eResourceClass != -1)
 			{

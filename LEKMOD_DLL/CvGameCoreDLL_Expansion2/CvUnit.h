@@ -718,6 +718,7 @@ public:
 	int GetLekmodAdjacentEnemiesMod(int* piNumEnemies = NULL) const;
 	int GetLekmodMovesAfterKill() const;
 	int GetLekmodFarFromCityMod() const;
+	int GetLekmodAuraVsWoundedMod(const CvUnit* pDefender) const;
 #endif
 	int GetLekmodWoundedDamageMod() const;
 	int GetLekmodAdjacentRangedAttackMod() const;

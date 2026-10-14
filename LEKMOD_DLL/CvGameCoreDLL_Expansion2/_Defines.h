@@ -1474,6 +1474,12 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_BUILDING_FILLED_SLOT_TOURISM
 // Unit_LekmodIdeologyPromotions: promotions for the unit when trained, by the owner's ideology (Yugoslavia)
 #define LEKMOD_UNIT_IDEOLOGY_PROMOTIONS
+// Phase 6 C++ batch F: Building_LekmodPlotYields (yields on the city's tiles with plot and city conditions: Finland Sauna, Tonga)
+#define LEKMOD_BUILDING_PLOT_YIELDS
+// Batch F trait ints (Traits.Lekmod*, generic list LekmodTraitInt in CvTraitClasses.h; part of LEKMOD_CIV_TRAIT_FLAGS):
+// Celts forest rules, Spain founding/production/natural wonder gold, Goths start-turn moves on an improvement;
+// Buildings.FreePlotPurchase (Goths: the city's first tile purchase is free; the marker building is removed after it),
+// UnitPromotions.AuraVsWoundedMod (Gadrauht), Trait_LekmodPlotYields.NaturalWonder (Spain)
 // Batch E trait columns (part of LEKMOD_CIV_TRAIT_FLAGS): LekmodFasterInHillsCiviliansOnly, LekmodEarlyBuilding* (Inca),
 // LekmodClosestMinorAnchor (Siam), table Trait_LekmodBuildingClassDefense (Normandy)
 // Buildings.TerritoryHealChange: extra healing for the owner's non-air units on all tiles of the city (Field Hospital)

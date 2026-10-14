@@ -253,6 +253,7 @@ public:
 	int GetLekmodMovesAfterKill() const;
 	int GetLekmodFarFromCityMod() const;
 	int GetLekmodFarFromCityDistance() const;
+	int GetLekmodAuraVsWoundedMod() const;
 	bool HasLekmodCivEffect() const;
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
@@ -555,6 +556,7 @@ protected:
 	int m_iLekmodMovesAfterKill;
 	int m_iLekmodFarFromCityMod;
 	int m_iLekmodFarFromCityDistance;
+	int m_iLekmodAuraVsWoundedMod;
 #endif
 #ifdef LEKMOD_NAVAL_PENALTY_PROMOTIONS
 	int m_iAdjacentRangedAttackMod;

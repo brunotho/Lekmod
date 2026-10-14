@@ -64,6 +64,24 @@ struct LekmodBuildingConditionalYield
 	bool m_bBordersForeignCityOtherReligion;
 };
 #endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+// Building_LekmodPlotYields: yield on the city's tiles; plot conditions (terrain, feature, resource, next to a lake) and a city
+// condition (at least CityAdjacentCount tiles next to the city with the terrain/feature); -1 = no condition
+struct LekmodBuildingPlotYield
+{
+	LekmodBuildingPlotYield() : m_eYield(NO_YIELD), m_iYield(0), m_eTerrain(NO_TERRAIN), m_eFeature(NO_FEATURE), m_eResource(NO_RESOURCE),
+		m_bAdjacentLake(false), m_eCityAdjacentTerrain(NO_TERRAIN), m_eCityAdjacentFeature(NO_FEATURE), m_iCityAdjacentCount(1) {};
+	YieldTypes m_eYield;
+	int m_iYield;
+	TerrainTypes m_eTerrain;
+	FeatureTypes m_eFeature;
+	ResourceTypes m_eResource;
+	bool m_bAdjacentLake;
+	TerrainTypes m_eCityAdjacentTerrain;
+	FeatureTypes m_eCityAdjacentFeature;
+	int m_iCityAdjacentCount;
+};
+#endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS
 // Building_AdjacentCityPlotYieldChanges: yield on plots next to the city; each condition is optional (-1 = any)
 struct LekmodBuildingAdjacentYield
@@ -530,6 +548,12 @@ public:
 #ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
 	int GetLekmodGreatWorkFilledTourismModifier() const;
 #endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+	const std::vector<LekmodBuildingPlotYield>& GetLekmodPlotYields() const;
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	bool IsLekmodFreePlotPurchase() const;
+#endif
 #endif
 
 	int GetResourceYieldChange(int i, int j) const;
@@ -894,6 +918,12 @@ private:
 #endif
 #ifdef LEKMOD_BUILDING_FILLED_SLOT_TOURISM
 	int m_iLekmodGreatWorkFilledTourismModifier;
+#endif
+#ifdef LEKMOD_BUILDING_PLOT_YIELDS
+	std::vector<LekmodBuildingPlotYield> m_aLekmodPlotYields;
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	bool m_bLekmodFreePlotPurchase;
 #endif
 	int** m_ppaiFeatureYieldChange;
 	std::map<int, std::map<int, int>> m_ppiResourceYieldChangeGlobal;
