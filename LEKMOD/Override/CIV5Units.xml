@@ -211587,6 +211587,8 @@
 		<Column name="LekmodImprovementHillsOnly" type="text"/>
 		<Column name="LekmodBuildingFreeUnitBuilding" type="text"/>
 		<Column name="LekmodBuildingFreeUnitClass" type="text"/>
+		<Column name="LekmodDesertFoundFood" type="integer" default="0"/>
+		<Column name="LekmodDesertFoundFoodTech" type="text"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -289478,13 +289480,6 @@
 			<EnhancedYieldTech>TECH_THE_WHEEL</EnhancedYieldTech>
 		</Row>
 	</Buildings>
-	<Building_TechEnhancedYieldChanges>
-		<Row>
-			<BuildingType>BUILDING_LEKMOD_MOROCCO_DESERT</BuildingType>
-			<YieldType>YIELD_FOOD</YieldType>
-			<Yield>1</Yield>
-		</Row>
-	</Building_TechEnhancedYieldChanges>
 	<Traits>
 		<Update>
 			<Where Type="TRAIT_GATEWAY_AFRICA"/>
@@ -290331,4 +290326,23 @@
 	<Trait_ImprovementYieldChanges>
 		<Delete TraitType="TRAIT_MALAGASY"/>
 	</Trait_ImprovementYieldChanges>
+	<!-- LEKMOD: playtest notes 2026-10-14: Kampong Ayer hidden in the tech tree, Moroccan desert Food as a civ line, Port of Adulis visible -->
+	<Builds>
+		<Update>
+			<Where Type="BUILD_AYER"/>
+			<Set ShowInTechTree="0"/>
+		</Update>
+	</Builds>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_GATEWAY_AFRICA"/>
+			<Set LekmodDesertFoundFood="1" LekmodDesertFoundFoodTech="TECH_THE_WHEEL"/>
+		</Update>
+	</Traits>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_LEKMOD_PORT_OF_ADULIS"/>
+			<Set GreatWorkCount="0" Help="TXT_KEY_BUILDING_LEKMOD_PORT_OF_ADULIS_HELP" Civilopedia="TXT_KEY_BUILDING_LEKMOD_PORT_OF_ADULIS_HELP" IconAtlas="BW_ATLAS_1" PortraitIndex="26"/>
+		</Update>
+	</Buildings>
 </GameData>

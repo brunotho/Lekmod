@@ -2421,6 +2421,7 @@ Tags: civs, units, game mechanics
 - Removed: Gateway to Africa (Gold and Culture per trade partner, Gold for incoming trade routes)
 - Changed: Kasbah: available at Currency (was Guilds), on any land terrain (was Desert only), must be next to a luxury resource and not next to another Kasbah, not on features except Flood Plains; +1 Food +1 Production +1 Gold (was +2 Food), +1 more Food on Desert; +25% defense (was +50%)
 - DLL: Traits.LekmodDesertFound*, LekmodFoundOnImprovement*, LekmodFastRouteImprovement; Improvements.LekmodNoFeature; dummy building 300 (class 201)
+- Dev: the desert city Food shows as the civilization ability line of the Food tooltip instead of "from buildings" (user, 2026-10-14)
 
 PHILIPPINES (CIVILIZATION_PHILIPPINES)
 --------------------------------------
@@ -2547,6 +2548,7 @@ Tags: civs, buildings, naval
 - Removed: naval units healing outside friendly territory, naval melee units building improvements, -33% naval unit maintenance
 - Changed: Kampong Ayer can no longer be built by units; it connects luxuries and Oil on its tile and may stand on Ocean
 - DLL: Traits.LekmodGrowthImprovement*, LekmodFirstUnitClassDouble; dummy building 302 (class 203); refinery class 204
+- Dev: Kampong Ayer no longer shows in the tech tree; Brunei's refinery, the Dojo and the Convict Penitentiary (civ-only buildings in their own class) no longer show in other civs' tech trees (user, 2026-10-14)
 
 UAE (CIVILIZATION_UAE)
 ----------------------
@@ -2576,6 +2578,7 @@ Tags: civs, buildings, religion
 - Changed: Rock-Hewn Church (rebuilt) replaces the Quarry: available at Mining, improves Stone, Marble and Obsidian with the Quarry's yields (also Chemistry, Stone Circles, Five-Year Plan), +2 Faith
 - Removed: Rock-Hewn Church: building anywhere, +1 Faith with Theology, Faith when a unit heals on it, Faith for next-door Quarries
 - DLL: Traits.LekmodFirstCoastalCity*, LekmodFoundReligionFaith, LekmodFoundResource*; Improvements.LekmodReplacesImprovement; Building_LekmodPlotYields.ResourceClassType/RequiresImprovement; dummy building 301 (class 202)
+- Dev: the Port of Adulis is visible in the city screen with the Harbor icon and a help text (user, 2026-10-14)
 
 FRANCE (CIVILIZATION_FRANCE)
 ----------------------------

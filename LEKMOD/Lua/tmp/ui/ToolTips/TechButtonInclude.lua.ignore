@@ -79,6 +79,13 @@ function GatherInfoAboutUniqueStuff( civType )
  		end
 	end
 	
+	-- LEKMOD: civ-only buildings in their own class (Buildings.RequiredCivilization) show only for that civ
+	for thisBuilding in GameInfo.Buildings() do
+		if thisBuilding.RequiredCivilization ~= nil and thisBuilding.RequiredCivilization ~= civType and validBuildingBuilds[thisBuilding.BuildingClass] == thisBuilding.Type then
+			validBuildingBuilds[thisBuilding.BuildingClass] = nil;
+		end
+	end
+
 	-- add in support for unique improvements
 	for thisImprovement in GameInfo.Improvements() do
 

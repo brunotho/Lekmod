@@ -139,6 +139,8 @@ enum LekmodTraitInt
 	LTI_IMPROVEMENT_HILLS_ONLY,			// type: this improvement can only be built on Hills (Malagasy: Holy Site)
 	LTI_BUILDING_FREE_UNIT_BUILDING,	// type: completing a building of this class ... (Malagasy: Heroic Epic)
 	LTI_BUILDING_FREE_UNIT_CLASS,		// type: ... gives the civ's unit of this class
+	LTI_DESERT_FOUND_FOOD,				// cities founded on Desert (they have the desert building) yield this much Food ... (Morocco)
+	LTI_DESERT_FOUND_FOOD_TECH,			// type: ... with this tech (shown as the civilization ability line)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

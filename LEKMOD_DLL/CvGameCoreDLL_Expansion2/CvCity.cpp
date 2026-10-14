@@ -14005,6 +14005,15 @@ int CvCity::GetBaseYieldRateFromTraits(YieldTypes eIndex) const
 		}
 	}
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
+	if (eIndex == YIELD_FOOD) // Morocco: Food in cities founded on Desert, as a civilization ability line (user 2026-10-14)
+	{
+		const CvPlayerTraits* pTraits = GET_PLAYER(m_eOwner).GetPlayerTraits();
+		const int eDesertBuilding = pTraits->GetLekmodTraitType(LTI_DESERT_FOUND_BUILDING);
+		const int eTech = pTraits->GetLekmodTraitType(LTI_DESERT_FOUND_FOOD_TECH);
+		if (eDesertBuilding != -1 && m_pCityBuildings->GetNumBuilding((BuildingTypes)eDesertBuilding) > 0
+			&& (eTech == -1 || GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)eTech)))
+			iRtnValue += pTraits->GetLekmodTraitInt(LTI_DESERT_FOUND_FOOD);
+	}
 	if (false && eIndex == YIELD_FAITH) // Celts: moved onto the forest tiles (CvPlot::calculateYield, user 2026-10-14)
 	{
 		const int iPerForest = GET_PLAYER(m_eOwner).GetPlayerTraits()->GetLekmodTraitInt(LTI_FOREST_CITY_FAITH_PER_FOREST);

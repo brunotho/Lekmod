@@ -148126,10 +148126,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Tunisia's Privateer moves faster along the Coast and hits harder there. Use it to raid coastal waters and trade routes close to land.</Text>
 		</Replace>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_MOROCCO_DESERT">
-			<Text>Desert Settlement (+1 [ICON_FOOD] Food after The Wheel)</Text>
+			<Text>Desert Settlement</Text>
 		</Row>
 		<Row Tag="TXT_KEY_BUILDING_LEKMOD_PORT_OF_ADULIS">
 			<Text>Port of Adulis</Text>
+		</Row>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_PORT_OF_ADULIS_HELP">
+			<Text>Aksum's first coastal city.[NEWLINE]+33% [ICON_PRODUCTION] Production towards Caravans and Cargo Ships.[NEWLINE]Improved luxury resources worked by this city yield +2 [ICON_GOLD] Gold.</Text>
 		</Row>
 		<Row Tag="TXT_KEY_CITY_NAME_LEKMOD_ADULIS">
 			<Text>Adulis</Text>
