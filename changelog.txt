@@ -1661,6 +1661,12 @@ Tags: civs, ui
 - Removed: three joke-length city names (the long Maori, Welsh and Boer place names)
 - Fixed: ten city names without a text (Turkey, Khmer, Armenia, Venezuela) no longer show up as raw text keys
 
+NEW BUILDING AND UNIT ICONS (art)
+---------------------------------
+Tags: art, ui
+- Changed: the icons of the new buildings and wonders and the Vanguard Corps portrait fill their round frame like the original icons (before, a dark rim looked like a gap inside the ring)
+- Dev: art_sources/tools/round_icon.py (replaces round_building_icon.py) crops each source to its picture and draws the circle 4 px wider than the base layout
+
 TOURISM ON TILES (ui)
 ---------------------
 Tags: ui, art
@@ -2119,8 +2125,8 @@ LITHUANIA (CIVILIZATION_LITHUANIA)
 ----------------------------------
 Tags: civs, units
 - Removed: Pestininkas (unique Pikeman)
-- Added: Bajoras, a unique Knight: 21 Strength, needs 2 Horses and 1 Iron, starts with Woodsman and Ambush Formation I
-- Dev: the Bajoras reuses the UNIT_PESTININKAS row (now Knight class, Knight model and icon)
+- Added: Bajoras, a unique Knight with its own portrait: 21 Strength, needs 2 Horses and 1 Iron, starts with Woodsman and Ambush Formation I
+- Dev: the Bajoras reuses the old Pestininkas row (now Knight class, Knight model), renamed UNIT_BAJORAS
 
 ISRAEL (CIVILIZATION_ISRAEL)
 ----------------------------
@@ -2454,8 +2460,8 @@ TIMURIDS (CIVILIZATION_TIMURIDS)
 --------------------------------
 Tags: civs, units
 - Removed: Marathi (air-like unique Horseman)
-- Added: Gurkani Guard, a unique Knight: 22 Strength, costs 90, needs 3 Horses and 3 Iron, starts with Blitz
-- Dev: rebuilt from the UNIT_MARATHI row (Sipahi model)
+- Added: Barlas Cavalry, a unique Knight with its own portrait: 22 Strength, costs 90, needs 3 Horses and 3 Iron, starts with Blitz
+- Dev: rebuilt from the old Marathi row (Sipahi model), renamed UNIT_BARLAS_CAVALRY; first named Gurkani Guard
 - Changed: Serai: available at the Wheel, costs 60 (was 67), +1 Food per other Serai within 4 tiles, +3 Culture if no other Serai is within 5
 - Removed: Serai: Gold per population, airlift and air unit slot
 - Added: Serai: borders grow 15% faster while no other Serai is within 5 tiles

@@ -12,9 +12,9 @@ game files. It is not part of the mod download (players only get `LEKMOD/`). The
 | `promotions/original_ai_2026-04/` | The April 2026 AI-made icons (256 px, opaque dark background), recovered from git (`fde09fce^`). Amphibious I-III here are superseded by the user art. |
 | `promotions/user_art/` | Art the user supplied later: Envelopment and Bunker Busting (2026-10-05, 256 px), Sitting Ducks (64 px), Amphibious I-III and Nuke Resistance (45 px PNG, 2026-10-10). |
 | `promotions/superseded/` | Earlier user versions that were replaced (kept for reference). |
-| `units/vanguard_corps/` | Vanguard Corps portrait (user, square, 256 px) and map flag source (`White Fortress Watchtower Icon.png`). |
+| `units/<name>/` | Unit portrait sources: Vanguard Corps (square, 256 px, plus the map flag source `White Fortress Watchtower Icon.png`), Barlas Cavalry and Bajoras (ringed 1254 px pictures). |
 | `menu_backgrounds/` | The 11 main menu paintings (PNG) and the original Great Wall background (already a DDS). |
-| `tools/` | `build_promotion_icons.py` (the whole promotion pipeline), `reshape_icons.py` (background key-out). |
+| `tools/` | `build_promotion_icons.py` (the whole promotion pipeline), `reshape_icons.py` (background key-out), `round_icon.py` (building and unit portraits). |
 
 ## Promotion icons
 
@@ -52,20 +52,29 @@ e.g. `LEKMOD_NUKE_RESISTANCE_PROMOTION_ATLAS`) and the promotion's `IconAtlas`/`
 Change the tool, run `--preview` for all icons, compare with the current files, then build all. The build always starts
 from the sources, so it can be run any number of times (nothing gets shifted or evened twice).
 
-## Unit art (Vanguard Corps)
-- **Portrait** (unit panel, Civilopedia): the square source is resized to a 173 px circle at (41,42) in a 256 px cell (the layout of all Lekmod unit portraits), then 256/128/80/64/45/32 px, BC3. Built by a one-off script on 2026-10-10 (see the session notes in CLAUDE.md §7); the source is in `units/vanguard_corps/`.
-- **Map flag**: a white silhouette on transparency, scaled to 18 px tall, placed at x = centre + 2 px, y = 4 px in a 32 px canvas (it must stay inside the tapering flag shape), BC3 with one mip. The game tints it in the player's colours.
+## Unit art
+- Sources: `units/<name>/` (Vanguard Corps: square portrait + map flag source; Barlas Cavalry and Bajoras: 1254 px
+  pictures with a gold ring painted on, user 2026-10-14).
+- **Portrait** (unit panel, Civilopedia): `python art_sources/tools/round_icon.py units <name>` writes a circle
+  177 px wide at (39,40) in a 256 px cell (the old 173 px layout at (41,42), 4 px wider; see the building icons),
+  256/128/80/64/45/32 px, BC3, to `LEKMOD/Art/Units/`. The painted gold ring of the two UU pictures is cut off
+  (fixed radius in the tool's `RADIUS`); the game draws its own frame.
+- **Map flag**: a white silhouette on transparency, scaled to 18 px tall, placed at x = centre + 2 px, y = 4 px in a 32 px canvas (it must stay inside the tapering flag shape), BC3 with one mip. The game tints it in the player's colours. (Barlas Cavalry and Bajoras keep the Sipahi/Knight flags.)
 
 ## Building icons
-- Sources: `buildings/<name>/<name>_<size>.dds` as delivered by the user (OneDrive art inbox, see CLAUDE.md section 7).
-- Base-game layout (measured on `BuildingPortraits3_*_Exp2Patch.dds`): a circle 171 px wide at (43,42) in a 256 px cell
-  (128: 22..107, 64: 11..54, 45: 8..38), transparent around it, no frame. The city screen draws its bronze ring
-  (`IconFrame64.dds`) around that circle; the production list shows the bare circle.
-- `python art_sources/tools/round_building_icon.py <name>`: trims 5% of the source's dark border, scales it into that
-  circle, masks it (anti-aliased) and writes 32/45/64/80/128/214/256 to `LEKMOD/Art/Lekmod (v 1)/Art/Buildings/`.
-  Used for Sanctuary, Stupa and the Uranium Mapping Project (2026-10-11), Ministry of Truth and Extraordinary Session
-  (2026-10-13). Sources delivered as a cut-out on white get their white background (connected to the edges) replaced by
-  a dark colour first: list them in `WHITE_BACKGROUND` in the tool (Ministry of Truth).
+- Sources: `buildings/<name>/<name>_<size>.dds` as delivered by the user (OneDrive art inbox, see CLAUDE.md section 7):
+  rounded-square pictures on black, darker towards the edge; a few are an object on black (Jongmyo, MI6).
+- Base-game layout (measured on `BuildingPortraits3_*_Exp2Patch.dds` and `WonderAtlas`): a circle 171 px wide at
+  (43,42) in a 256 px cell (128: 22..107, 64: 11..54, 45: 8..38), transparent around it, no frame. The city screen
+  and the city banner (45 px) draw their ring around that circle.
+- `python art_sources/tools/round_icon.py buildings <name> [...]`: crops the source to its picture (bounding box of
+  the non-black pixels, 5% inside its nearest edge, radius 0.38-0.47 of the width), scales it into a circle 4 px
+  wider than the base layout (175 px at 41,40) and writes 32/45/64/80/128/214/256 to `LEKMOD/Art/Lekmod (v 1)/Art/Buildings/`.
+  Sources delivered as a cut-out on white get their white background replaced by a dark colour first
+  (`WHITE_BACKGROUND`: Ministry of Truth).
+- Why (2026-10-14): the first version cut a fixed 5% off the source and drew exactly the base circle. The size matched
+  the base icons, but the art's dark edge sat right inside the ring and looked like a gap in the city banner
+  (user screenshot, Fulling Mill vs a base icon). All icons were rebuilt.
 - Atlases: one 1x1 atlas per icon.
 
 ## Espionage screen icons

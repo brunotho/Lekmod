@@ -142570,12 +142570,12 @@ The ship has weather'd every rack; the prize we sought is won."
 				Unique units that replaces the Knight. Has a major combat bonus against Melee (50) and Gunpowder (25) units, but slightly more expensive.
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_MARATHI"> 
+		<Replace Tag="TXT_KEY_UNIT_BARLAS_CAVALRY"> 
 			<Text>
 				Timurid Rider
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_HELP_MARATHI"> 
+		<Replace Tag="TXT_KEY_UNIT_HELP_BARLAS_CAVALRY"> 
 			<Text>
 				Unique Unit for Timurids. Replaces the Horsemen. Available at Chivalry with increased strength. Behaves like an Air unit with 5 range.
 			</Text>
@@ -142880,12 +142880,12 @@ The ship has weather'd every rack; the prize we sought is won."
 				The Immortal is the Persian unique unit, replacing the Spearman. It is slightly more powerful than the Spearman, and it heals twice as quickly. It is quite deadly against mounted units.
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_PESTININKAS"> 
+		<Replace Tag="TXT_KEY_UNIT_BAJORAS"> 
 			<Text>
 				Pestininkas
 			</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_HELP_PESTININKAS"> 
+		<Replace Tag="TXT_KEY_UNIT_HELP_BAJORAS"> 
 			<Text>
 				Unique unit which replaces the Pikemen. Much cheaper to construct.
 			</Text>
@@ -147521,10 +147521,10 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_ALCAZABA_HELP">
 			<Text>Replaces the Castle. Provides 3 [ICON_RES_HORSE] Horses.[NEWLINE][NEWLINE]+1 [ICON_RESEARCH] Science from Forts and +5 [ICON_RESEARCH] Science from Citadels worked by this City.[NEWLINE]+5 [ICON_RESEARCH] Science for every city of another civilization within 4 tiles (not City-States).[NEWLINE][NEWLINE]City must have Walls.</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_PESTININKAS">
+		<Replace Tag="TXT_KEY_UNIT_BAJORAS">
 			<Text>Bajoras</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_HELP_PESTININKAS">
+		<Replace Tag="TXT_KEY_UNIT_HELP_BAJORAS">
 			<Text>Replaces the Knight. Higher [ICON_STRENGTH] Combat Strength.[NEWLINE]Starts with Woodsman and Ambush Formation I.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_PROMISED_LAND">
@@ -147718,10 +147718,10 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_TUNISIA_CASTLE_HELP">
 			<Text>Tunisian replacement for the [ICON_BUILDING_CASTLE] Castle. 20% cheaper and does not require [ICON_BUILDING_WALLS] Walls.[NEWLINE]4 [ICON_GOLD] Gold maintenance.[NEWLINE][NEWLINE]With a garrison: +4 [ICON_PEACE] Faith and +4 [ICON_CULTURE] Culture.</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_MARATHI">
-			<Text>Gurkani Guard</Text>
+		<Replace Tag="TXT_KEY_UNIT_BARLAS_CAVALRY">
+			<Text>Barlas Cavalry</Text>
 		</Replace>
-		<Replace Tag="TXT_KEY_UNIT_HELP_MARATHI">
+		<Replace Tag="TXT_KEY_UNIT_HELP_BARLAS_CAVALRY">
 			<Text>Replaces the Knight. Stronger, but costs more and needs 3 [ICON_RES_HORSE] Horses and 3 [ICON_RES_IRON] Iron.[NEWLINE]Starts with Blitz (attacks more than once per turn).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_MC_OMANI_BAGHLAH_HELP">

@@ -77339,7 +77339,7 @@
 		<Row> 
 			<CivilizationType>CIVILIZATION_TIMURIDS</CivilizationType> 
 			<UnitClassType>UNITCLASS_HORSEMAN</UnitClassType> 
-			<UnitType>UNIT_MARATHI</UnitType> 
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType> 
 		</Row>
 		<Row> 
 			<CivilizationType>CIVILIZATION_NORMANDY</CivilizationType> 
@@ -77374,7 +77374,7 @@
 		<Row> 
 			<CivilizationType>CIVILIZATION_LITHUANIA</CivilizationType> 
 			<UnitClassType>UNITCLASS_PIKEMAN</UnitClassType> 
-			<UnitType>UNIT_PESTININKAS</UnitType> 
+			<UnitType>UNIT_BAJORAS</UnitType> 
 		</Row>
 		<Row> 
 			<CivilizationType>CIVILIZATION_KHMER</CivilizationType> 
@@ -263989,7 +263989,7 @@
 			<UnitClassType>UNITCLASS_KNIGHT</UnitClassType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_MARATHI</UnitType> 
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType> 
 			<UnitClassType>UNITCLASS_WWI_BOMBER</UnitClassType> 
 		</Row>
 		<Row> 
@@ -264013,7 +264013,7 @@
 			<UnitClassType>UNITCLASS_KNIGHT</UnitClassType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_PESTININKAS</UnitType> 
+			<UnitType>UNIT_BAJORAS</UnitType> 
 			<UnitClassType>UNITCLASS_LANCER</UnitClassType> 
 		</Row>
 		<Row> 
@@ -268387,7 +268387,7 @@
 			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_PESTININKAS</UnitType> 
+			<UnitType>UNIT_BAJORAS</UnitType> 
 			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
 		<Row> 
@@ -269747,7 +269747,7 @@
 			<Cost>2</Cost>
 		</Row>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<ResourceType>RESOURCE_HORSE</ResourceType>
 			<Cost>2</Cost>
 		</Row>
@@ -277663,11 +277663,11 @@
 		</Row>
 		<Row>
 			<ID>168</ID>
-			<Type>UNIT_MARATHI</Type>
-			<Description>TXT_KEY_UNIT_MARATHI</Description>
+			<Type>UNIT_BARLAS_CAVALRY</Type>
+			<Description>TXT_KEY_UNIT_BARLAS_CAVALRY</Description>
 			<Civilopedia>TXT_KEY_CIVILOPEDIA_UNITS_MEDIEVAL_KNIGHT_TEXT</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_KNIGHT_STRATEGY</Strategy>
-			<Help>TXT_KEY_UNIT_HELP_MARATHI</Help>
+			<Help>TXT_KEY_UNIT_HELP_BARLAS_CAVALRY</Help>
 			<Combat>22</Combat>
 			<Cost>135</Cost>
 			<FaithCost>270</FaithCost>
@@ -277893,11 +277893,11 @@
 		</Row>
 		<Row>
 			<ID>176</ID>
-			<Type>UNIT_PESTININKAS</Type>
-			<Description>TXT_KEY_UNIT_PESTININKAS</Description>
+			<Type>UNIT_BAJORAS</Type>
+			<Description>TXT_KEY_UNIT_BAJORAS</Description>
 			<Civilopedia>TXT_KEY_CIVILOPEDIA_UNITS_MEDIEVAL_PIKEMAN_TEXT</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_PIKEMAN_STRATEGY</Strategy>
-			<Help>TXT_KEY_UNIT_HELP_PESTININKAS</Help>
+			<Help>TXT_KEY_UNIT_HELP_BAJORAS</Help>
 			<Combat>16</Combat>
 			<Cost>60</Cost>
 			<FaithCost>90</FaithCost>
@@ -284197,93 +284197,93 @@
 	<!-- Lithuania: the Pestininkas row becomes the Bajoras (NEW), a Knight replacement with the Knight's model: 21 strength, 2 Horses 1 Iron, Woodsman, Ambush Formation I -->
 	<Civilization_UnitClassOverrides>
 		<Update>
-			<Where CivilizationType="CIVILIZATION_LITHUANIA" UnitType="UNIT_PESTININKAS"/>
+			<Where CivilizationType="CIVILIZATION_LITHUANIA" UnitType="UNIT_BAJORAS"/>
 			<Set UnitClassType="UNITCLASS_KNIGHT"/>
 		</Update>
 	</Civilization_UnitClassOverrides>
 	<Units>
 		<Update>
-			<Where Type="UNIT_PESTININKAS"/>
+			<Where Type="UNIT_BAJORAS"/>
 			<Set Class="UNITCLASS_KNIGHT" CombatClass="UNITCOMBAT_MOUNTED" DefaultUnitAI="UNITAI_FAST_ATTACK" Combat="21" Cost="120" FaithCost="240" Moves="4" PrereqTech="TECH_CHIVALRY" ObsoleteTech="TECH_MILITARY_SCIENCE" GoodyHutUpgradeUnitClass="UNITCLASS_CAVALRY" AdvancedStartCost="25" Conscription="0" Civilopedia="TXT_KEY_CIVILOPEDIA_UNITS_MEDIEVAL_KNIGHT_TEXT" Strategy="TXT_KEY_UNIT_KNIGHT_STRATEGY" UnitArtInfo="ART_DEF_UNIT_KNIGHT" MoveRate="QUADRUPED" UnitFlagAtlas="UNIT_FLAG_ATLAS" UnitFlagIconOffset="25" IconAtlas="UNIT_ATLAS_1" PortraitIndex="26"/>
 		</Update>
 	</Units>
 	<Unit_ClassUpgrades>
-		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Delete UnitType="UNIT_BAJORAS"/>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<UnitClassType>UNITCLASS_CAVALRY</UnitClassType>
 		</Row>
 	</Unit_ClassUpgrades>
 	<Unit_AITypes>
-		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Delete UnitType="UNIT_BAJORAS"/>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<UnitAIType>UNITAI_DEFENSE</UnitAIType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<UnitAIType>UNITAI_FAST_ATTACK</UnitAIType>
 		</Row>
 	</Unit_AITypes>
 	<Unit_Flavors>
-		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Delete UnitType="UNIT_BAJORAS"/>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<FlavorType>FLAVOR_OFFENSE</FlavorType>
 			<Flavor>9</Flavor>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<FlavorType>FLAVOR_DEFENSE</FlavorType>
 			<Flavor>3</Flavor>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<FlavorType>FLAVOR_MOBILE</FlavorType>
 			<Flavor>5</Flavor>
 		</Row>
 	</Unit_Flavors>
 	<UnitGameplay2DScripts>
-		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Delete UnitType="UNIT_BAJORAS"/>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<SelectionSound>AS2D_SELECT_KNIGHT</SelectionSound>
 			<FirstSelectionSound>AS2D_BIRTH_KNIGHT</FirstSelectionSound>
 		</Row>
 	</UnitGameplay2DScripts>
 	<Unit_ResourceQuantityRequirements>
-		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Delete UnitType="UNIT_BAJORAS"/>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<ResourceType>RESOURCE_HORSE</ResourceType>
 			<Cost>2</Cost>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<ResourceType>RESOURCE_IRON</ResourceType>
 			<Cost>1</Cost>
 		</Row>
 	</Unit_ResourceQuantityRequirements>
 	<Unit_FreePromotions>
-		<Delete UnitType="UNIT_PESTININKAS"/>
+		<Delete UnitType="UNIT_BAJORAS"/>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<PromotionType>PROMOTION_WOODSMAN</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_PESTININKAS</UnitType>
+			<UnitType>UNIT_BAJORAS</UnitType>
 			<PromotionType>PROMOTION_AMBUSH_FORMATION_1</PromotionType>
 		</Row>
 	</Unit_FreePromotions>
@@ -285558,67 +285558,67 @@
 			<Yield>4</Yield>
 		</Row>
 	</Building_GarrisonYieldChanges>
-	<!-- Timurids: Gurkani Guard (NEW knight UU, rebuilt from the Marathi row, Sipahi model): 22 strength, 90 Production on quick, 3 Horses 3 Iron, Blitz -->
+	<!-- Timurids: Barlas Cavalry (was Gurkani Guard; NEW knight UU, rebuilt from the Marathi row, Sipahi model): 22 strength, 90 Production on quick, 3 Horses 3 Iron, Blitz -->
 	<Civilization_UnitClassOverrides>
 		<Update>
-			<Where CivilizationType="CIVILIZATION_TIMURIDS" UnitType="UNIT_MARATHI"/>
+			<Where CivilizationType="CIVILIZATION_TIMURIDS" UnitType="UNIT_BARLAS_CAVALRY"/>
 			<Set UnitClassType="UNITCLASS_KNIGHT"/>
 		</Update>
 	</Civilization_UnitClassOverrides>
 	<Unit_ClassUpgrades>
-		<Delete UnitType="UNIT_MARATHI"/>
+		<Delete UnitType="UNIT_BARLAS_CAVALRY"/>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<UnitClassType>UNITCLASS_CAVALRY</UnitClassType>
 		</Row>
 	</Unit_ClassUpgrades>
 	<Unit_ResourceQuantityRequirements>
-		<Delete UnitType="UNIT_MARATHI"/>
+		<Delete UnitType="UNIT_BARLAS_CAVALRY"/>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<ResourceType>RESOURCE_HORSE</ResourceType>
 			<Cost>3</Cost>
 		</Row>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<ResourceType>RESOURCE_IRON</ResourceType>
 			<Cost>3</Cost>
 		</Row>
 	</Unit_ResourceQuantityRequirements>
 	<Unit_FreePromotions>
-		<Delete UnitType="UNIT_MARATHI"/>
+		<Delete UnitType="UNIT_BARLAS_CAVALRY"/>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<PromotionType>PROMOTION_BLITZ</PromotionType>
 		</Row>
 	</Unit_FreePromotions>
 	<Unit_AITypes>
-		<Delete UnitType="UNIT_MARATHI"/>
+		<Delete UnitType="UNIT_BARLAS_CAVALRY"/>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<UnitAIType>UNITAI_DEFENSE</UnitAIType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<UnitAIType>UNITAI_FAST_ATTACK</UnitAIType>
 		</Row>
 	</Unit_AITypes>
 	<UnitGameplay2DScripts>
-		<Delete UnitType="UNIT_MARATHI"/>
+		<Delete UnitType="UNIT_BARLAS_CAVALRY"/>
 		<Row>
-			<UnitType>UNIT_MARATHI</UnitType>
+			<UnitType>UNIT_BARLAS_CAVALRY</UnitType>
 			<SelectionSound>AS2D_SELECT_KNIGHT</SelectionSound>
 			<FirstSelectionSound>AS2D_BIRTH_KNIGHT</FirstSelectionSound>
 		</Row>
@@ -289026,4 +289026,29 @@
 			<Set LekmodSpreadCapitalReligionOnBuild="true" FreeBuildingThisCity="BUILDINGCLASS_LEKMOD_OUTREMER_MUSTER"/>
 		</Update>
 	</Buildings>
+	<!-- Unit portraits (user art 2026-10-14, art_sources/units): Barlas Cavalry (Timurids), Bajoras (Lithuania) -->
+	<IconTextureAtlases>
+		<Row><Atlas>LEKMOD_BARLAS_CAVALRY_ATLAS</Atlas><IconSize>256</IconSize><Filename>barlas_cavalry_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BARLAS_CAVALRY_ATLAS</Atlas><IconSize>128</IconSize><Filename>barlas_cavalry_128.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BARLAS_CAVALRY_ATLAS</Atlas><IconSize>80</IconSize><Filename>barlas_cavalry_80.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BARLAS_CAVALRY_ATLAS</Atlas><IconSize>64</IconSize><Filename>barlas_cavalry_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BARLAS_CAVALRY_ATLAS</Atlas><IconSize>45</IconSize><Filename>barlas_cavalry_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BARLAS_CAVALRY_ATLAS</Atlas><IconSize>32</IconSize><Filename>barlas_cavalry_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BAJORAS_ATLAS</Atlas><IconSize>256</IconSize><Filename>bajoras_256.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BAJORAS_ATLAS</Atlas><IconSize>128</IconSize><Filename>bajoras_128.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BAJORAS_ATLAS</Atlas><IconSize>80</IconSize><Filename>bajoras_80.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BAJORAS_ATLAS</Atlas><IconSize>64</IconSize><Filename>bajoras_64.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BAJORAS_ATLAS</Atlas><IconSize>45</IconSize><Filename>bajoras_45.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+		<Row><Atlas>LEKMOD_BAJORAS_ATLAS</Atlas><IconSize>32</IconSize><Filename>bajoras_32.dds</Filename><IconsPerRow>1</IconsPerRow><IconsPerColumn>1</IconsPerColumn></Row>
+	</IconTextureAtlases>
+	<Units>
+		<Update>
+			<Where Type="UNIT_BARLAS_CAVALRY"/>
+			<Set IconAtlas="LEKMOD_BARLAS_CAVALRY_ATLAS" PortraitIndex="0"/>
+		</Update>
+		<Update>
+			<Where Type="UNIT_BAJORAS"/>
+			<Set IconAtlas="LEKMOD_BAJORAS_ATLAS" PortraitIndex="0"/>
+		</Update>
+	</Units>
 </GameData>
