@@ -13,6 +13,7 @@ Run them from this folder (`python tools/dev/q.py ...` also works for the standa
 | `civdump.py CIVILIZATION_X` | A civ's trait, unique units/buildings/improvements and all their sub-table rows from the loaded DB. |
 | `q.py "select ..."` | SQL against the loaded DB (`Civ5DebugDatabase.db`, written when a game starts; it can be older than the files). |
 | `txt.py TAG [TAG%]` | Text lookup in `Localization-Merged.db` (also stale until a game starts; the newest `<Replace>` in `CIV5Units_Mongol.xml` wins). |
+| `sqlcheck.py` | Prepares every SQL query of the DLL against the schema of `CIV5Units.xml` (plus the cache for other tables). Run after any C++ query change: an invalid live query (e.g. an ambiguous column after a new JOIN) crashes the game before the main menu. The 4 known failures are compiled out. |
 | `examples/` | The batch H scripts as a pattern: C++ edits, data + texts appended at the end of the Override files, changelog edits inside a civ's section. |
 
-Batch routine: C++ script → `balance` + `ifstack` → build in the background (CLAUDE.md §5) → data script → `xmlcheck` + `refcheck` → changelog → check Civ V is closed → back up and install the DLL → commit code/data, then the DLL separately → tracker rows, "Specs to refine" defaults, "Civ tests (Phase 6)" items → CLAUDE.md.
+Batch routine: C++ script → `balance` + `ifstack` + `sqlcheck` → build in the background (CLAUDE.md §5) → data script → `xmlcheck` + `refcheck` → changelog → check Civ V is closed → back up and install the DLL → commit code/data, then the DLL separately → tracker rows, "Specs to refine" defaults, "Civ tests (Phase 6)" items → CLAUDE.md.
