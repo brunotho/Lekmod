@@ -21944,14 +21944,10 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_KASBAH_HELP"> 
-			<Text>
-				Constructs a Kasbah, which increases the amount of [ICON_FOOD] Food, [ICON_PRODUCTION] Production, and [ICON_GOLD] Gold provided by this tile. Also provides a defensive bonus.
-			</Text>
+			<Text>Constructs a Kasbah: +1 [ICON_FOOD] Food, [ICON_PRODUCTION] Production and [ICON_GOLD] Gold, and a defensive bonus. Must be next to a luxury resource.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_KASBAH_REC"> 
-			<Text>
-				It will increase the amount of [ICON_FOOD] Food, [ICON_PRODUCTION] Production, and [ICON_GOLD] Gold provided by this tile. Also provides a defensive bonus.
-			</Text>
+			<Text>It will increase the [ICON_FOOD] Food, [ICON_PRODUCTION] Production and [ICON_GOLD] Gold of this tile. A city founded on it later gets a large bonus.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILD_LANDMARK"> 
 			<Text>
@@ -45078,9 +45074,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_KASBAH_HELP"> 
-			<Text>
-				A Kasbah can only be built on a Desert tile. It provides 2 additional [ICON_FOOD] Food, one additional [ICON_PRODUCTION] Production, and [ICON_GOLD] Gold. It also provides the same +50% defense bonus as a Fort. Must be built in Moroccan territory.
-			</Text>
+			<Text>+1 [ICON_FOOD] Food, +1 [ICON_PRODUCTION] Production, +1 [ICON_GOLD] Gold; +1 more [ICON_FOOD] Food on Desert.[NEWLINE]+25% defense for units on it.[NEWLINE][NEWLINE]Must be next to a luxury resource and not next to another Kasbah. Not on resources or features (Flood Plains are fine).[NEWLINE]Founding a city on it gives a large bonus (see the Moroccan ability).</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CIV5_IMPROVEMENTS_KASBAH_TEXT"> 
 			<Text>
@@ -139117,14 +139111,10 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_GATEWAY_AFRICA"> 
-			<Text>
-				+4 [ICON_GOLD] Gold and +2 [ICON_CULTURE] Culture for each Trade Route with a Unique civ or [ICON_CITY_STATE] City-State, increasing by +1 [ICON_GOLD] Gold and +1 [ICON_CULTURE] Culture each Era. Other civs gain +2 [ICON_GOLD] Gold for each Trade Route sent to Morocco.
-			</Text>
+			<Text>Cities founded on Desert (also Flood Plains) start with 3 additional tiles and get +1 [ICON_FOOD] Food after The Wheel.[NEWLINE][NEWLINE]Founding a city on a Kasbah gives it +4 [ICON_CITIZEN] Population, a Monument and a Granary, plus a Worker and 150 [ICON_GOLD] Gold.[NEWLINE][NEWLINE]Roads on a Kasbah are built in 1 turn and cost no maintenance.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_GATEWAY_AFRICA_SHORT"> 
-			<Text>
-				Gateway to Africa
-			</Text>
+			<Text>Children of the Desert</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_GREAT_ANDEAN_ROAD"> 
 			<Text>
@@ -148145,6 +148135,9 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_UNIT_TUNISIA_PRIVATEER_STRATEGY">
 			<Text>Tunisia's Privateer moves faster along the Coast and hits harder there. Use it to raid coastal waters and trade routes close to land.</Text>
 		</Replace>
+		<Row Tag="TXT_KEY_BUILDING_LEKMOD_MOROCCO_DESERT">
+			<Text>Desert Settlement (+1 [ICON_FOOD] Food after The Wheel)</Text>
+		</Row>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

@@ -1460,6 +1460,8 @@ Diversify Spain and Australia's NW Discovery bonus
 #define LEKMOD_CIV_PROMOTION_EFFECTS_J
 // Buildings.CityVisionChange: the city sees this many tiles further, ignoring terrain (Tunisia's Castle)
 #define LEKMOD_CITY_VISION_BUILDINGS
+// Improvements.LekmodNoFeature: can't be built on a feature unless Improvement_ValidFeatures lists it (Kasbah: Flood Plains only)
+#define LEKMOD_IMPROVEMENT_NO_FEATURE
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,
 // Terrain and Feature conditions; Fulling Mill, Isibaya, Australia)
 #define LEKMOD_BUILDING_ADJACENT_CITY_YIELDS

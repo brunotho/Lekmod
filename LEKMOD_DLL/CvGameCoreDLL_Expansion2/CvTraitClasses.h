@@ -105,6 +105,15 @@ enum LekmodTraitInt
 	LTI_GREAT_ARTS_RATE,				// % faster Great Writers, Artists and Musicians (Venice)
 	LTI_MEET_MINOR_GOLD,				// extra Gold for meeting a City-State (Mexico)
 	LTI_FIRST_PLEDGE_ANCHOR,			// resting Influence with the first City-State pledged to, lost for good on war with it (Tonga)
+	LTI_DESERT_FOUND_CLAIM,				// founding on Desert claims this many extra tiles (Morocco)
+	LTI_DESERT_FOUND_BUILDING,			// type: founding on Desert gives the city this building (Morocco: +1 Food after the Wheel)
+	LTI_FOUND_ON_IMPROVEMENT,			// type: founding on a tile with this improvement gives the bonuses below (Morocco: Kasbah)
+	LTI_FOUND_ON_IMPROVEMENT_POP,		// ... extra population
+	LTI_FOUND_ON_IMPROVEMENT_GOLD,		// ... Gold
+	LTI_FOUND_ON_IMPROVEMENT_UNIT_CLASS,	// type: ... a unit of this class
+	LTI_FOUND_ON_IMPROVEMENT_BUILDING_CLASS_1,	// type: ... the civ's building of this class
+	LTI_FOUND_ON_IMPROVEMENT_BUILDING_CLASS_2,	// type: ... and of this class
+	LTI_FAST_ROUTE_IMPROVEMENT,			// type: routes on tiles with this improvement build in 1 turn and cost no maintenance (Morocco: Kasbah)
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

@@ -853,6 +853,22 @@ int CvTreasury::GetImprovementGoldMaintenance() const
 {
 	int iMaintenance = m_iBaseImprovementGoldMaintenance;
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Morocco: routes on a Kasbah cost no maintenance
+	const int eFastRouteImprovement = m_pPlayer->GetPlayerTraits()->GetLekmodTraitType(LTI_FAST_ROUTE_IMPROVEMENT);
+	if (eFastRouteImprovement != -1)
+	{
+		const int iNumPlots = GC.getMap().numPlots();
+		for (int iPlot = 0; iPlot < iNumPlots; iPlot++)
+		{
+			const CvPlot* pPlot = GC.getMap().plotByIndexUnchecked(iPlot);
+			if (pPlot->getImprovementType() == (ImprovementTypes)eFastRouteImprovement && pPlot->getRouteType() != NO_ROUTE
+				&& pPlot->GetPlayerResponsibleForRoute() == m_pPlayer->GetID() && GC.getRouteInfo(pPlot->getRouteType()))
+				iMaintenance -= GC.getRouteInfo(pPlot->getRouteType())->GetGoldMaintenance();
+		}
+		iMaintenance = std::max(0, iMaintenance);
+	}
+#endif
 	// Player modifier
 	iMaintenance *= (100 + m_pPlayer->GetRouteGoldMaintenanceMod());
 	iMaintenance /= 100;

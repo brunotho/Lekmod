@@ -2411,10 +2411,13 @@ Tags: civs, units
 
 MOROCCO (CIVILIZATION_MOROCCO)
 ------------------------------
-Tags: civs, units
+Tags: civs, units, game mechanics
 - Changed: Berber Cavalry needs 3 Horses (was 2 Horses and 1 Iron), starts with Shock I, Drill I and Mobility
 - Removed: Berber Cavalry: desert and home territory bonuses
-- Note: open: the new UA and Kasbah (need C++)
+- Changed: new UA Children of the Desert: cities founded on Desert (also Flood Plains) start with 3 extra tiles and get +1 Food after the Wheel; a city founded on a Kasbah gets +4 Population, a Monument, a Granary, a Worker and 150 Gold; Roads on a Kasbah take 1 turn and cost no maintenance
+- Removed: Gateway to Africa (Gold and Culture per trade partner, Gold for incoming trade routes)
+- Changed: Kasbah: available at Currency (was Guilds), on any land terrain (was Desert only), must be next to a luxury resource and not next to another Kasbah, not on features except Flood Plains; +1 Food +1 Production +1 Gold (was +2 Food), +1 more Food on Desert; +25% defense (was +50%)
+- DLL: Traits.LekmodDesertFound*, LekmodFoundOnImprovement*, LekmodFastRouteImprovement; Improvements.LekmodNoFeature; dummy building 300 (class 201)
 
 PHILIPPINES (CIVILIZATION_PHILIPPINES)
 --------------------------------------

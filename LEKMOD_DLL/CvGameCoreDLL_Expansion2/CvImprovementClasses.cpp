@@ -85,6 +85,9 @@ CvImprovementEntry::CvImprovementEntry(void):
 #ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
 	m_bLekmodRequiresAdjacentMountain(false),
 #endif
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	m_bLekmodNoFeature(false),
+#endif
 	m_iLuxuryCopiesSiphonedFromMinor(0),
 	m_iImprovementPillage(NO_IMPROVEMENT),
 	m_iImprovementUpgrade(NO_IMPROVEMENT),
@@ -342,6 +345,9 @@ bool CvImprovementEntry::CacheResults(Database::Results& kResults, CvDatabaseUti
 	m_iResourceExtractionMod = kResults.GetInt("ResourceExtractionMod");
 #ifdef LEKMOD_IMPROVEMENT_ADJACENT_MOUNTAIN
 	m_bLekmodRequiresAdjacentMountain = kResults.GetBool("RequiresAdjacentMountain");
+#endif
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	m_bLekmodNoFeature = kResults.GetBool("LekmodNoFeature");
 #endif
 #ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
 	{
@@ -894,6 +900,13 @@ const std::vector<std::pair<int, std::pair<int, int> > >& CvImprovementEntry::Ge
 bool CvImprovementEntry::IsLekmodRequiresAdjacentMountain() const
 {
 	return m_bLekmodRequiresAdjacentMountain;
+}
+#endif
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+/// Can't be built on a feature unless Improvement_ValidFeatures lists it
+bool CvImprovementEntry::IsLekmodNoFeature() const
+{
+	return m_bLekmodNoFeature;
 }
 #endif
 

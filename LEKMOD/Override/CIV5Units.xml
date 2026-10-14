@@ -142237,6 +142237,7 @@
 		<Column name="PillageGold" type="integer" default="0" />
 		<Column name="ResourceExtractionMod" type="integer" default="0" />
 		<Column name="RequiresAdjacentMountain" type="boolean" default="false"/>
+		<Column name="LekmodNoFeature" type="boolean" default="false"/> <!-- LEKMOD: not on a feature unless Improvement_ValidFeatures lists it (Kasbah) -->
 		<Column name="LuxuryCopiesSiphonedFromMinor" type="integer" default="0" />
 		<Column name="GoldMaintenance" type="integer" default="0" />
 		<Column name="CultureBombRadius" type="integer" default="0" />
@@ -211549,6 +211550,15 @@
 		<Column name="LekmodGreatArtsRateModifier" type="integer" default="0"/>
 		<Column name="LekmodMeetMinorGold" type="integer" default="0"/>
 		<Column name="LekmodFirstPledgeAnchor" type="integer" default="0"/>
+		<Column name="LekmodDesertFoundClaim" type="integer" default="0"/>
+		<Column name="LekmodDesertFoundBuilding" type="text"/>
+		<Column name="LekmodFoundOnImprovement" type="text"/>
+		<Column name="LekmodFoundOnImprovementPop" type="integer" default="0"/>
+		<Column name="LekmodFoundOnImprovementGold" type="integer" default="0"/>
+		<Column name="LekmodFoundOnImprovementUnitClass" type="text"/>
+		<Column name="LekmodFoundOnImprovementBuildingClass1" type="text"/>
+		<Column name="LekmodFoundOnImprovementBuildingClass2" type="text"/>
+		<Column name="LekmodFastRouteImprovement" type="text"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -289406,4 +289416,129 @@
 			<Set CityVisionChange="2"/>
 		</Update>
 	</Buildings>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Morocco UA Children of the Desert (new) and Kasbah rework -->
+	<BuildingClasses>
+		<Row>
+			<ID>201</ID>
+			<Type>BUILDINGCLASS_LEKMOD_MOROCCO_DESERT</Type>
+			<DefaultBuilding>BUILDING_LEKMOD_MOROCCO_DESERT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>-1</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Row>
+			<ID>300</ID>
+			<Type>BUILDING_LEKMOD_MOROCCO_DESERT</Type>
+			<BuildingClass>BUILDINGCLASS_LEKMOD_MOROCCO_DESERT</BuildingClass>
+			<Description>TXT_KEY_BUILDING_LEKMOD_MOROCCO_DESERT</Description>
+			<Civilopedia>Trait</Civilopedia>
+			<Strategy>Trait</Strategy>
+			<Help>Trait</Help>
+			<NeverCapture>true</NeverCapture>
+			<NukeImmune>true</NukeImmune>
+			<Cost>-1</Cost>
+			<HurryCostModifier>-1</HurryCostModifier>
+			<ArtDefineTag>MONUMENT</ArtDefineTag>
+			<GreatWorkCount>-1</GreatWorkCount>
+			<PortraitIndex>2</PortraitIndex>
+			<IconAtlas>LEKMOD_AKKAD_ATLAS</IconAtlas>
+			<EnhancedYieldTech>TECH_THE_WHEEL</EnhancedYieldTech>
+		</Row>
+	</Buildings>
+	<Building_TechEnhancedYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_LEKMOD_MOROCCO_DESERT</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_TechEnhancedYieldChanges>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_GATEWAY_AFRICA"/>
+			<Set LekmodDesertFoundClaim="3" LekmodDesertFoundBuilding="BUILDING_LEKMOD_MOROCCO_DESERT" LekmodFoundOnImprovement="IMPROVEMENT_KASBAH" LekmodFoundOnImprovementPop="4" LekmodFoundOnImprovementGold="150" LekmodFoundOnImprovementUnitClass="UNITCLASS_WORKER" LekmodFoundOnImprovementBuildingClass1="BUILDINGCLASS_MONUMENT" LekmodFoundOnImprovementBuildingClass2="BUILDINGCLASS_GRANARY" LekmodFastRouteImprovement="IMPROVEMENT_KASBAH"/>
+		</Update>
+	</Traits>
+	<Trait_IncomingTradeConnectionYieldChange>
+		<Delete TraitType="TRAIT_GATEWAY_AFRICA"/>
+	</Trait_IncomingTradeConnectionYieldChange>
+	<Trait_YieldChangesPerTradePartner>
+		<Delete TraitType="TRAIT_GATEWAY_AFRICA"/>
+	</Trait_YieldChangesPerTradePartner>
+	<Trait_YieldChangesIncomingTradeRoute>
+		<Delete TraitType="TRAIT_GATEWAY_AFRICA"/>
+	</Trait_YieldChangesIncomingTradeRoute>
+	<Improvements>
+		<Update>
+			<Where Type="IMPROVEMENT_KASBAH"/>
+			<Set DefenseModifier="25" NoTwoAdjacent="1" AdjacentLuxury="1" LekmodNoFeature="1"/>
+		</Update>
+	</Improvements>
+	<Improvement_ValidTerrains>
+		<Delete ImprovementType="IMPROVEMENT_KASBAH"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<TerrainType>TERRAIN_GRASS</TerrainType>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<TerrainType>TERRAIN_PLAINS</TerrainType>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<TerrainType>TERRAIN_DESERT</TerrainType>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<TerrainType>TERRAIN_TUNDRA</TerrainType>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<TerrainType>TERRAIN_SNOW</TerrainType>
+		</Row>
+	</Improvement_ValidTerrains>
+	<Improvement_ValidFeatures>
+		<Delete ImprovementType="IMPROVEMENT_KASBAH"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<FeatureType>FEATURE_FLOOD_PLAINS</FeatureType>
+		</Row>
+	</Improvement_ValidFeatures>
+	<Improvement_Yields>
+		<Delete ImprovementType="IMPROVEMENT_KASBAH"/>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Improvement_Yields>
+	<Trait_LekmodPlotYields>
+		<Row>
+			<TraitType>TRAIT_GATEWAY_AFRICA</TraitType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+			<TerrainType>TERRAIN_DESERT</TerrainType>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+		</Row>
+	</Trait_LekmodPlotYields>
+	<Builds>
+		<Update>
+			<Where Type="BUILD_KASBAH"/>
+			<Set PrereqTech="TECH_CURRENCY"/>
+		</Update>
+	</Builds>
 </GameData>

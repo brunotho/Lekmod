@@ -2234,6 +2234,12 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	{
 		return false;
 	}
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	if (pkImprovementInfo->IsLekmodNoFeature() && getFeatureType() != NO_FEATURE && !pkImprovementInfo->GetFeatureMakesValid(getFeatureType()))
+	{
+		return false;
+	}
+#endif
 
 	if(pkImprovementInfo->IsRequiresImprovement())
 	{
@@ -2780,6 +2786,12 @@ int CvPlot::getBuildTime(BuildTypes eBuild, PlayerTypes ePlayer) const
 	CvAssertMsg(getTerrainType() != NO_TERRAIN, "TerrainType is not assigned a valid value");
 
 	iTime = GC.getBuildInfo(eBuild)->getTime();
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Morocco: routes on a Kasbah are built in one turn
+	if (ePlayer != NO_PLAYER && GC.getBuildInfo(eBuild)->getRoute() != NO_ROUTE && getImprovementType() != NO_IMPROVEMENT
+		&& GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitType(LTI_FAST_ROUTE_IMPROVEMENT) == (int)getImprovementType())
+		return 1;
+#endif
 #ifdef LEKMOD_BUILD_TIME_OVERRIDE
 	// catch the base build time and override it
 	int iOverrideTime = -1;

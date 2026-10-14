@@ -9866,6 +9866,11 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 
 	SetTurnsSinceSettledLastCity(0);
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// read before initCity, which removes the improvement (Morocco: settling on a Kasbah)
+	const ImprovementTypes eLekmodFoundImprovement = GC.getMap().plot(iX, iY) ? GC.getMap().plot(iX, iY)->getImprovementType() : NO_IMPROVEMENT;
+	const bool bLekmodFoundDesert = GC.getMap().plot(iX, iY) && GC.getMap().plot(iX, iY)->getTerrainType() == (TerrainTypes)GC.getInfoTypeForString("TERRAIN_DESERT", true);
+#endif
 	CvCity* pCity = initCity(iX, iY);
 	CvAssertMsg(pCity != NULL, "City is not assigned a valid value");
 	if(pCity == NULL)
@@ -9897,6 +9902,37 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 	// Timurids: the first city gets a building too (both are real buildings, so they stay with the city when captured)
 	if (getNumCities() == 1 && GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING) != -1)
 		pCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING), 1);
+	// Morocco: settling on Desert claims extra tiles and gives a building
+	if (bLekmodFoundDesert)
+	{
+		for (int i = 0; i < GetPlayerTraits()->GetLekmodTraitInt(LTI_DESERT_FOUND_CLAIM); i++)
+		{
+			CvPlot* pPlotToAcquire = pCity->GetNextBuyablePlot();
+			if (pPlotToAcquire)
+				pCity->DoAcquirePlot(pPlotToAcquire->getX(), pPlotToAcquire->getY());
+		}
+		if (GetPlayerTraits()->GetLekmodTraitType(LTI_DESERT_FOUND_BUILDING) != -1)
+			pCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_DESERT_FOUND_BUILDING), 1);
+	}
+	// Morocco: settling on a Kasbah: population, buildings, a unit and Gold
+	if (eLekmodFoundImprovement != NO_IMPROVEMENT && GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_ON_IMPROVEMENT) == (int)eLekmodFoundImprovement)
+	{
+		if (GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_ON_IMPROVEMENT_POP) > 0)
+			pCity->changePopulation(GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_ON_IMPROVEMENT_POP));
+		GetTreasury()->ChangeGold(GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_ON_IMPROVEMENT_GOLD));
+		const LekmodTraitInt aeClasses[2] = { LTI_FOUND_ON_IMPROVEMENT_BUILDING_CLASS_1, LTI_FOUND_ON_IMPROVEMENT_BUILDING_CLASS_2 };
+		for (int i = 0; i < 2; i++)
+		{
+			const int eClass = GetPlayerTraits()->GetLekmodTraitType(aeClasses[i]);
+			const BuildingTypes eBuilding = (eClass != -1) ? (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(eClass) : NO_BUILDING;
+			if (eBuilding != NO_BUILDING && pCity->GetCityBuildings()->GetNumBuilding(eBuilding) <= 0)
+				pCity->GetCityBuildings()->SetNumRealBuilding(eBuilding, 1);
+		}
+		const int eUnitClass = GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_ON_IMPROVEMENT_UNIT_CLASS);
+		const UnitTypes eUnit = (eUnitClass != -1) ? (UnitTypes)getCivilizationInfo().getCivilizationUnits(eUnitClass) : NO_UNIT;
+		if (eUnit != NO_UNIT)
+			initUnit(eUnit, iX, iY);
+	}
 	// Spain: founding a city other than the first reveals the area and gives a free unit
 	if (getNumCities() > 1)
 	{
