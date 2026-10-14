@@ -4391,6 +4391,10 @@ CvUnit* CvPlayer::initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI,
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 		pUnit->LekmodApplySpawnRandomPromotions();
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		// Sioux: starting settlers get their extra move at once (the first turn's unit reset doesn't reach them)
+		LekmodApplyFounderStartMoves(pUnit);
+#endif
 		// slewis - added for the tutorial
 		if(pUnit->getUnitInfo().GetWorkRate() > 0 && pUnit->getUnitInfo().GetDomainType() == DOMAIN_LAND)
 		{
@@ -4441,6 +4445,10 @@ CvUnit* CvPlayer::initUnitWithNameOffset(UnitTypes eUnit, int nameOffset, int iX
 
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 		pUnit->LekmodApplySpawnRandomPromotions();
+#endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		// Sioux: starting settlers get their extra move at once (the first turn's unit reset doesn't reach them)
+		LekmodApplyFounderStartMoves(pUnit);
 #endif
 		// slewis - added for the tutorial
 		if(pUnit->getUnitInfo().GetWorkRate() > 0 && pUnit->getUnitInfo().GetDomainType() == DOMAIN_LAND)
@@ -6112,12 +6120,7 @@ void CvPlayer::DoUnitReset()
 				pLoopUnit->changeMoves(iRouteMoves * GC.getMOVE_DENOMINATOR());
 		}
 		// Sioux: city founders on the first turn
-		if (pLoopUnit->isFound() && GC.getGame().getGameTurn() == GC.getGame().getStartTurn())
-		{
-			const int iFounderMoves = GetPlayerTraits()->GetLekmodTraitInt(LTI_START_TURN_FOUNDER_MOVES);
-			if (iFounderMoves != 0)
-				pLoopUnit->changeMoves(iFounderMoves * GC.getMOVE_DENOMINATOR());
-		}
+		LekmodApplyFounderStartMoves(pLoopUnit);
 #endif
 #endif
 		if (pLoopUnit->IsGreatGeneral())
@@ -29365,6 +29368,15 @@ bool CvPlayer::IsLekmodForeignFaithConquestHalf(const CvCity* pCity) const
 	if (eOurs == NO_RELIGION && getCapitalCity() != NULL)
 		eOurs = getCapitalCity()->GetCityReligions()->GetReligiousMajority();
 	return eCityReligion != eOurs;
+}
+/// Sioux: city founders have extra moves on the first turn (sets the moves, so applying it twice changes nothing)
+void CvPlayer::LekmodApplyFounderStartMoves(CvUnit* pUnit)
+{
+	if (pUnit == NULL || !pUnit->isFound() || GC.getGame().getGameTurn() != GC.getGame().getStartTurn())
+		return;
+	const int iFounderMoves = GetPlayerTraits()->GetLekmodTraitInt(LTI_START_TURN_FOUNDER_MOVES);
+	if (iFounderMoves != 0)
+		pUnit->setMoves(pUnit->maxMoves() + iFounderMoves * GC.getMOVE_DENOMINATOR());
 }
 /// Tunisia: % discount on buying a military unit from an era before the trait's era
 int CvPlayer::GetLekmodEarlyMilitaryPurchaseDiscount(UnitTypes eUnit) const

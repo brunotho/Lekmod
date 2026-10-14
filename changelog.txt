@@ -2177,6 +2177,7 @@ Tags: civs, units
 - Changed: new UA: the starting Settler +1 Movement on the first turn; the starting Warrior and all recon and archer units start with Scouting I
 - Removed: the combat bonus (Prairie promotion)
 - DLL: Traits.LekmodStartTurnFounderMoves, LekmodStartMeleePromotion
+- Dev: the starting Settler's extra move is applied when the unit is created (the first turn's unit reset didn't reach it; user, 2026-10-14)
 
 GREECE (CIVILIZATION_GREECE)
 ----------------------------
