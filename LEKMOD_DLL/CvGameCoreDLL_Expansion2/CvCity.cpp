@@ -15776,6 +15776,14 @@ int CvCity::GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) c
 				continue;
 			if (kRow.m_eResource != NO_RESOURCE && pPlot->getResourceType(getTeam()) != kRow.m_eResource)
 				continue;
+			if (kRow.m_eResourceClass != NO_RESOURCECLASS)
+			{
+				const ResourceTypes eResource = pPlot->getResourceType(getTeam());
+				if (eResource == NO_RESOURCE || GC.getResourceInfo(eResource)->getResourceClassType() != (int)kRow.m_eResourceClass)
+					continue;
+			}
+			if (kRow.m_bRequiresImprovement && (pPlot->getImprovementType() == NO_IMPROVEMENT || pPlot->IsImprovementPillaged()))
+				continue;
 			if (kRow.m_bAdjacentLake)
 			{
 				bool bLake = false;

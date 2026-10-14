@@ -70,7 +70,8 @@ struct LekmodBuildingConditionalYield
 struct LekmodBuildingPlotYield
 {
 	LekmodBuildingPlotYield() : m_eYield(NO_YIELD), m_iYield(0), m_eTerrain(NO_TERRAIN), m_eFeature(NO_FEATURE), m_eResource(NO_RESOURCE),
-		m_bAdjacentLake(false), m_eCityAdjacentTerrain(NO_TERRAIN), m_eCityAdjacentFeature(NO_FEATURE), m_iCityAdjacentCount(1) {};
+		m_bAdjacentLake(false), m_eCityAdjacentTerrain(NO_TERRAIN), m_eCityAdjacentFeature(NO_FEATURE), m_iCityAdjacentCount(1),
+		m_eResourceClass(NO_RESOURCECLASS), m_bRequiresImprovement(false) {};
 	YieldTypes m_eYield;
 	int m_iYield;
 	TerrainTypes m_eTerrain;
@@ -80,6 +81,8 @@ struct LekmodBuildingPlotYield
 	TerrainTypes m_eCityAdjacentTerrain;
 	FeatureTypes m_eCityAdjacentFeature;
 	int m_iCityAdjacentCount;
+	ResourceClassTypes m_eResourceClass;
+	bool m_bRequiresImprovement;
 };
 #endif
 #ifdef LEKMOD_BUILDING_ADJACENT_CITY_YIELDS

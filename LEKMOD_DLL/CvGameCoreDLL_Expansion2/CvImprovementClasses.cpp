@@ -349,6 +349,9 @@ bool CvImprovementEntry::CacheResults(Database::Results& kResults, CvDatabaseUti
 #ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
 	m_bLekmodNoFeature = kResults.GetBool("LekmodNoFeature");
 #endif
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	m_strLekmodReplacesImprovement = kResults.GetText("LekmodReplacesImprovement");
+#endif
 #ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
 	{
 		m_aLekmodIsolatedYields.clear();

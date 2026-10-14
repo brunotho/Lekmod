@@ -9869,6 +9869,7 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	// read before initCity, which removes the improvement (Morocco: settling on a Kasbah)
 	const ImprovementTypes eLekmodFoundImprovement = GC.getMap().plot(iX, iY) ? GC.getMap().plot(iX, iY)->getImprovementType() : NO_IMPROVEMENT;
+	const ResourceTypes eLekmodFoundResource = GC.getMap().plot(iX, iY) ? GC.getMap().plot(iX, iY)->getResourceType(getTeam()) : NO_RESOURCE;
 	const bool bLekmodFoundDesert = GC.getMap().plot(iX, iY) && GC.getMap().plot(iX, iY)->getTerrainType() == (TerrainTypes)GC.getInfoTypeForString("TERRAIN_DESERT", true);
 #endif
 	CvCity* pCity = initCity(iX, iY);
@@ -9902,6 +9903,35 @@ void CvPlayer::found(int iX, int iY, UnitTypes eSettlerUnit)
 	// Timurids: the first city gets a building too (both are real buildings, so they stay with the city when captured)
 	if (getNumCities() == 1 && GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING) != -1)
 		pCity->GetCityBuildings()->SetNumRealBuilding((BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_CITY_BUILDING), 1);
+	// Aksum: the first coastal city gets the Port of Adulis, its name, and reveals the coast around it
+	if (GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_COASTAL_CITY_BUILDING) != -1 && pCity->isCoastal())
+	{
+		const BuildingTypes ePort = (BuildingTypes)GetPlayerTraits()->GetLekmodTraitType(LTI_FIRST_COASTAL_CITY_BUILDING);
+		CvBuildingEntry* pkPort = GC.getBuildingInfo(ePort);
+		if (pkPort && getBuildingClassCount((BuildingClassTypes)pkPort->GetBuildingClassType()) == 0 && !IsLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_COASTAL_CITY))
+		{
+			SetLekmodCivFlag(LEKMOD_CIV_FLAG_FIRST_COASTAL_CITY);
+			pCity->GetCityBuildings()->SetNumRealBuilding(ePort, 1);
+			pCity->setName(GetLocalizedText("TXT_KEY_CITY_NAME_LEKMOD_ADULIS").c_str());
+			const int iRadius = GetPlayerTraits()->GetLekmodTraitInt(LTI_FIRST_COASTAL_CITY_REVEAL);
+			for (int iDX = -iRadius; iDX <= iRadius; iDX++)
+				for (int iDY = -iRadius; iDY <= iRadius; iDY++)
+				{
+					CvPlot* pRevealPlot = plotXYWithRangeCheck(iX, iY, iDX, iDY, iRadius);
+					if (pRevealPlot && (pRevealPlot->isShallowWater() || pRevealPlot->isCoastalLand()))
+						pRevealPlot->setRevealed(getTeam(), true);
+				}
+		}
+	}
+	// Aksum: settling on Stone with Masonry gives a free Stone Works
+	if (eLekmodFoundResource != NO_RESOURCE && GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_RESOURCE) == (int)eLekmodFoundResource)
+	{
+		const int eTech = GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_RESOURCE_TECH);
+		const int eClass = GetPlayerTraits()->GetLekmodTraitType(LTI_FOUND_RESOURCE_BUILDING_CLASS);
+		const BuildingTypes eFree = (eClass != -1) ? (BuildingTypes)getCivilizationInfo().getCivilizationBuildings(eClass) : NO_BUILDING;
+		if (eFree != NO_BUILDING && (eTech == -1 || GET_TEAM(getTeam()).GetTeamTechs()->HasTech((TechTypes)eTech)))
+			pCity->GetCityBuildings()->SetNumFreeBuilding(eFree, 1);
+	}
 	// Morocco: settling on Desert claims extra tiles and gives a building
 	if (bLekmodFoundDesert)
 	{
@@ -12266,8 +12296,38 @@ int CvPlayer::GetBuildingClassYieldChange(BuildingClassTypes eBuildingClass, Yie
 }
 //	--------------------------------------------------------------------------------
 /// Can we eBuild on pPlot?
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+//	--------------------------------------------------------------------------------
+/// A unique improvement of this civ replaces eImprovement (Improvements.LekmodReplacesImprovement: Aksum's quarry)
+bool CvPlayer::IsLekmodImprovementReplaced(ImprovementTypes eImprovement) const
+{
+	static std::vector<std::pair<int, int> > s_aReplacements; // (civilization, replaced improvement)
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		s_bInit = true;
+		for (int i = 0; i < GC.getNumImprovementInfos(); i++)
+		{
+			CvImprovementEntry* pkEntry = GC.getImprovementInfo((ImprovementTypes)i);
+			if (pkEntry == NULL || !pkEntry->IsSpecificCivRequired() || pkEntry->GetLekmodReplacesImprovement()[0] == 0)
+				continue;
+			const int eReplaced = GC.getInfoTypeForString(pkEntry->GetLekmodReplacesImprovement(), true);
+			if (eReplaced != -1)
+				s_aReplacements.push_back(std::make_pair((int)pkEntry->GetRequiredCivilization(), eReplaced));
+		}
+	}
+	for (uint i = 0; i < s_aReplacements.size(); i++)
+		if (s_aReplacements[i].second == (int)eImprovement && s_aReplacements[i].first == (int)getCivilizationType())
+			return true;
+	return false;
+}
+#endif
 bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, bool bTestVisible, bool bTestGold, bool bTestPlotOwner) const
 {
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	if (GC.getBuildInfo(eBuild) && GC.getBuildInfo(eBuild)->getImprovement() != NO_IMPROVEMENT && IsLekmodImprovementReplaced((ImprovementTypes)GC.getBuildInfo(eBuild)->getImprovement()))
+		return false;
+#endif
 #ifdef LEKMOD_CANAL_RULES
 	// Builds that need a building (Great Engineer canal) show on every tile once the building exists; invalid tiles grey the button out
 	if (bTestVisible && GC.getBuildInfo(eBuild) && GC.getBuildInfo(eBuild)->getPrereqBuildingClass() != NO_BUILDINGCLASS)

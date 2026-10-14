@@ -356,6 +356,9 @@ public:
 	int GetBuildingClassYieldChange(BuildingClassTypes eBuildingClass, YieldTypes eYieldType);
 
 	bool canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra = false, bool bTestVisible = false, bool bTestGold = true, bool bTestPlotOwner = true) const;
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	bool IsLekmodImprovementReplaced(ImprovementTypes eImprovement) const;
+#endif
 #ifdef LEKMOD_NEW_ANCIENT_RUIN_REWARDS
 	bool canBuildNoTech(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisible = false, bool bTestGold = true, bool bTestPlotOwner = true) const;
 #endif

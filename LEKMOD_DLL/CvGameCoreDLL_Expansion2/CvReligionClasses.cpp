@@ -925,6 +925,11 @@ void CvGameReligions::FoundPantheon(PlayerTypes ePlayer, BeliefTypes eBelief)
 /// Create a new religion
 void CvGameReligions::FoundReligion(PlayerTypes ePlayer, ReligionTypes eReligion, const char* szCustomName, BeliefTypes eBelief1, BeliefTypes eBelief2, BeliefTypes eBelief3, BeliefTypes eBelief4, CvCity* pkHolyCity)
 {
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Aksum: Faith for founding a religion
+	if (ePlayer != NO_PLAYER && GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_RELIGION_FAITH) > 0)
+		GET_PLAYER(ePlayer).ChangeFaith(GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitInt(LTI_FOUND_RELIGION_FAITH));
+#endif
 	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
 
 	CvReligion kReligion(eReligion, ePlayer, pkHolyCity, false);

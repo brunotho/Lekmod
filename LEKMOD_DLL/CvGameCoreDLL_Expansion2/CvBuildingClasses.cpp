@@ -1265,7 +1265,8 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 		{
 			pResults = kUtility.PrepareResults(strKey,
 				"select Yields.ID, Yield, coalesce(Terrains.ID, -1), coalesce(Features.ID, -1), coalesce(Resources.ID, -1), AdjacentLake, "
-				"coalesce(CityTerrains.ID, -1), coalesce(CityFeatures.ID, -1), CityAdjacentCount "
+				"coalesce(CityTerrains.ID, -1), coalesce(CityFeatures.ID, -1), CityAdjacentCount, "
+				"coalesce(ResourceClasses.ID, -1), Building_LekmodPlotYields.RequiresImprovement "
 				"from Building_LekmodPlotYields "
 				"inner join Yields on Yields.Type = YieldType "
 				"left join Terrains on Terrains.Type = TerrainType "
@@ -1273,6 +1274,7 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 				"left join Resources on Resources.Type = ResourceType "
 				"left join Terrains as CityTerrains on CityTerrains.Type = CityAdjacentTerrainType "
 				"left join Features as CityFeatures on CityFeatures.Type = CityAdjacentFeatureType "
+				"left join ResourceClasses on ResourceClasses.Type = Building_LekmodPlotYields.ResourceClassType "
 				"where BuildingType = ?");
 		}
 		pResults->Bind(1, szBuildingType);
@@ -1288,6 +1290,8 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 			kEntry.m_eCityAdjacentTerrain = (TerrainTypes)pResults->GetInt(6);
 			kEntry.m_eCityAdjacentFeature = (FeatureTypes)pResults->GetInt(7);
 			kEntry.m_iCityAdjacentCount = std::max(1, pResults->GetInt(8));
+			kEntry.m_eResourceClass = (ResourceClassTypes)pResults->GetInt(9);
+			kEntry.m_bRequiresImprovement = pResults->GetInt(10) != 0;
 			m_aLekmodPlotYields.push_back(kEntry);
 		}
 	}

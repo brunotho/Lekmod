@@ -81,6 +81,9 @@ public:
 #ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
 	bool IsLekmodNoFeature() const;
 #endif
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	const char* GetLekmodReplacesImprovement() const { return m_strLekmodReplacesImprovement.c_str(); }
+#endif
 #ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
 	const std::vector<std::pair<int, std::pair<int, int> > >& GetLekmodIsolatedYields() const; // tech, (yield, amount)
 #endif
@@ -237,6 +240,9 @@ protected:
 #endif
 #ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
 	bool m_bLekmodNoFeature;
+#endif
+#ifdef LEKMOD_IMPROVEMENT_NO_FEATURE
+	CvString m_strLekmodReplacesImprovement; // its civ can't build this improvement (resolved late: the replaced one may load later)
 #endif
 #ifdef LEKMOD_IMPROVEMENT_ISOLATED_YIELDS
 	std::vector<std::pair<int, std::pair<int, int> > > m_aLekmodIsolatedYields;

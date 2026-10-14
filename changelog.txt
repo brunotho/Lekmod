@@ -2558,9 +2558,13 @@ Tags: civs, buildings
 
 AKSUM (CIVILIZATION_AKSUM)
 --------------------------
-Tags: civs, buildings
+Tags: civs, buildings, religion
 - Removed: their National Epic's Culture
-- Note: open: the new UA and the quarry UI (need C++)
+- Changed: new UA Pillars of Aksum: the first coastal city is named Adulis and gets the Port of Adulis (on founding it reveals the Coast and coastal land within 8 tiles; +33% Production towards Caravans and Cargo Ships; improved luxuries of the city +2 Gold); founding a religion gives 100 Faith; a city founded on Stone gets a free Stone Works with Masonry
+- Removed: Saint Elesbaan's Blessing (no religious pressure on foreign cities; all cities convert when founding a religion)
+- Changed: Rock-Hewn Church (rebuilt) replaces the Quarry: available at Mining, improves Stone, Marble and Obsidian with the Quarry's yields (also Chemistry, Stone Circles, Five-Year Plan), +2 Faith
+- Removed: Rock-Hewn Church: building anywhere, +1 Faith with Theology, Faith when a unit heals on it, Faith for next-door Quarries
+- DLL: Traits.LekmodFirstCoastalCity*, LekmodFoundReligionFaith, LekmodFoundResource*; Improvements.LekmodReplacesImprovement; Building_LekmodPlotYields.ResourceClassType/RequiresImprovement; dummy building 301 (class 202)
 
 FRANCE (CIVILIZATION_FRANCE)
 ----------------------------

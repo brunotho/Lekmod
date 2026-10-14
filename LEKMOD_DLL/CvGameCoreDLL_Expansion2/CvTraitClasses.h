@@ -114,6 +114,12 @@ enum LekmodTraitInt
 	LTI_FOUND_ON_IMPROVEMENT_BUILDING_CLASS_1,	// type: ... the civ's building of this class
 	LTI_FOUND_ON_IMPROVEMENT_BUILDING_CLASS_2,	// type: ... and of this class
 	LTI_FAST_ROUTE_IMPROVEMENT,			// type: routes on tiles with this improvement build in 1 turn and cost no maintenance (Morocco: Kasbah)
+	LTI_FIRST_COASTAL_CITY_BUILDING,	// type: the first coastal city gets this building and the name below (Aksum: Port of Adulis)
+	LTI_FIRST_COASTAL_CITY_REVEAL,		// ... and reveals Coast and coastal land within this radius
+	LTI_FOUND_RELIGION_FAITH,			// Faith for founding a religion (Aksum)
+	LTI_FOUND_RESOURCE,					// type: settling on this resource ... (Aksum: Stone)
+	LTI_FOUND_RESOURCE_TECH,			// type: ... with this tech ...
+	LTI_FOUND_RESOURCE_BUILDING_CLASS,	// type: ... gives the civ's building of this class for free
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

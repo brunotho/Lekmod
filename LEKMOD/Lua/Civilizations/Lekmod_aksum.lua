@@ -52,8 +52,9 @@ function lekmod_aksum_ui_faith_on_heal(player_id, unit_id, _, x, y)
 
 end
 ------------------------------------------------------------------------------------------------------------------------
-if is_active then
+-- 2026-10-14: old UA and Rock-Hewn effects replaced by the new UA (C++) and the quarry improvement
+if false and is_active then
 	GameEvents.ReligionFounded.Add(lekmod_aksum_ua_follow_religion)
 end
 -- Note: UnitHealed is a Lekmod Event! Not available in the base game
-GameEvents.UnitHealed.Add(lekmod_aksum_ui_faith_on_heal)
+if false then GameEvents.UnitHealed.Add(lekmod_aksum_ui_faith_on_heal) end
