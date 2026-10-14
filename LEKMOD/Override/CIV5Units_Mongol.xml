@@ -139341,9 +139341,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_MALAGASY"> 
-			<Text>
-				[ICON_PEACE] Faith cost of purchasing [COLOR_POSITIVE_TEXT]Buildings[ENDCOLOR] and [COLOR_POSITIVE_TEXT]Religious Units[ENDCOLOR] is reduced by 25%. [ICON_BUILD_HOLY_SITE] Holy Sites yield +1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith, which increases by +1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith for every adjacent [ICON_BUILD_HOLY_SITE] Holy Site.
-			</Text>
+			<Text>Tiles next to a city that has a Holy Site next to it yield +1 [ICON_CULTURE] Culture.[NEWLINE]Holy Sites can only be built on Hills.[NEWLINE][NEWLINE]Completing the Heroic Epic gives a free Mpiambina.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_TRAIT_MALAGASY_SHORT"> 
 			<Text>
@@ -141920,9 +141918,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MPIAMBINA"> 
-			<Text>
-				Is a combat unit an receives a unique promotion after engaging in combat, unlike the Inquisitor it replaces.
-			</Text>
+			<Text>Replaces the Great General.[NEWLINE][NEWLINE]Besides the Great General's abilities, it can build a Holy Site, found a religion or enhance your religion.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_HELP_MUSKETEER"> 
 			<Text>
@@ -148146,6 +148142,12 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_COMBATMOD_DOF_BETRAYAL">
 			<Text>Broken Friendship</Text>
+		</Row>
+		<Row Tag="TXT_KEY_CIV5_LEKMOD_MPIAMBINA_TEXT">
+			<Text>Malagasy replacement for the Great General that also carries out a Great Prophet's religious work.</Text>
+		</Row>
+		<Row Tag="TXT_KEY_UNIT_LEKMOD_MPIAMBINA_STRATEGY">
+			<Text>Use it like a Great General, or spend it on a Holy Site (Hills only for the Malagasy), to found a religion or to enhance it.</Text>
 		</Row>
 	</Language_en_US>
 	<Language_de_DE>

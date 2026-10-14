@@ -7811,6 +7811,20 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 	if(pBuildingInfo == NULL)
 		return;
 
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Malagasy: completing the Heroic Epic gives a Mpiambina
+	if (iChange > 0 && bFirst && !bObsolete && GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodTraitType(LTI_BUILDING_FREE_UNIT_BUILDING) == pBuildingInfo->GetBuildingClassType())
+	{
+		const int eUnitClass = GET_PLAYER(getOwner()).GetPlayerTraits()->GetLekmodTraitType(LTI_BUILDING_FREE_UNIT_CLASS);
+		const UnitTypes eFreeUnit = (eUnitClass != -1) ? (UnitTypes)GET_PLAYER(getOwner()).getCivilizationInfo().getCivilizationUnits(eUnitClass) : NO_UNIT;
+		if (eFreeUnit != NO_UNIT)
+		{
+			CvUnit* pFreeUnit = GET_PLAYER(getOwner()).initUnit(eFreeUnit, getX(), getY());
+			if (pFreeUnit && !pFreeUnit->jumpToNearestValidPlot())
+				pFreeUnit->kill(false);
+		}
+	}
+#endif
 #ifdef LEKMOD_CITY_VISION_BUILDINGS
 	// Extra city vision, ignoring terrain: every plot within the range counts as seen while the building stands
 	if (pBuildingInfo->GetCityVisionChange() > 0 && iChange != 0)

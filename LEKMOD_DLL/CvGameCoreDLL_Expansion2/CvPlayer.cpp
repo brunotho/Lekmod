@@ -5256,6 +5256,9 @@ void CvPlayer::doTurn()
 #ifdef LEKMOD_BUILDING_PLOT_YIELDS
 		|| CvCity::LekmodHasBuildingPlotYields(*this)
 #endif
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+		|| GetPlayerTraits()->GetLekmodTraitType(LTI_RING_IMPROVEMENT) != -1
+#endif
 		)
 		updateYield();
 #endif

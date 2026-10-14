@@ -2656,6 +2656,14 @@ Tags: civs, ui
 - Note: the Influence option is in the standard UI only (EUI keeps its own City-State screen)
 - DLL: Traits.LekmodMeetMinorGold, LekmodTributeInfluence; network command -24; Lua Player:LekmodGetTributeInfluence()
 
+MALAGASY (CIVILIZATION_MADAGASCAR)
+----------------------------------
+Tags: civs, units, religion
+- Changed: new UA: tiles next to a city that has a Holy Site next to it +1 Culture; Holy Sites only on Hills; completing the Heroic Epic gives a free Mpiambina
+- Removed: -25% Faith costs; +1 Culture and +1 Faith from Holy Sites
+- Changed: Mpiambina (rebuilt) replaces the Great General (was a ranged Inquisitor): all Great General abilities, and it can build a Holy Site, found a religion or enhance it
+- DLL: Traits.LekmodRingImprovement*, LekmodImprovementHillsOnly, LekmodBuildingFreeUnit*
+
 CHINA (CIVILIZATION_CHINA)
 --------------------------
 Tags: civs

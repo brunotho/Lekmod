@@ -211582,6 +211582,11 @@
 		<Column name="LekmodDoFPartnerBonus" type="integer" default="0"/>
 		<Column name="LekmodDoFBetrayalCombat" type="integer" default="0"/>
 		<Column name="LekmodNoStartWar" type="integer" default="0"/>
+		<Column name="LekmodRingImprovement" type="text"/>
+		<Column name="LekmodRingImprovementCulture" type="integer" default="0"/>
+		<Column name="LekmodImprovementHillsOnly" type="text"/>
+		<Column name="LekmodBuildingFreeUnitBuilding" type="text"/>
+		<Column name="LekmodBuildingFreeUnitClass" type="text"/>
 		<Column name="LekmodOceanWithoutAstronomy" type="integer" default="0"/>
 		<Column name="LekmodFoundClaimResource" type="text" reference="Resources(Type)" default="NULL"/>
 		<Column name="LekmodFoundClaimResourceRange" type="integer" default="0"/>
@@ -290037,4 +290042,293 @@
 			<Set LekmodDoFOwnBonus="5" LekmodDoFPartnerBonus="7" LekmodDoFBetrayalCombat="10" LekmodNoStartWar="1"/>
 		</Update>
 	</Traits>
+	<!-- LEKMOD: Phase 6 C++ batch J (2026-10-14): Malagasy UA (from scratch), Mpiambina = Great General with religious abilities (from scratch) -->
+	<Units>
+		<Delete Type="UNIT_MPIAMBINA"/>
+	</Units>
+	<Units>
+		<Row>
+			<ID>195</ID>
+			<Type>UNIT_MPIAMBINA</Type>
+			<Description>TXT_KEY_UNIT_MPIAMBINA</Description>
+			<Civilopedia>TXT_KEY_CIV5_LEKMOD_MPIAMBINA_TEXT</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_LEKMOD_MPIAMBINA_STRATEGY</Strategy>
+			<Cost>-1</Cost>
+			<Moves>4</Moves>
+			<Class>UNITCLASS_GREAT_GENERAL</Class>
+			<Special>SPECIALUNIT_PEOPLE</Special>
+			<Domain>DOMAIN_LAND</Domain>
+			<CivilianAttackPriority>CIVILIAN_ATTACK_PRIORITY_HIGH</CivilianAttackPriority>
+			<DefaultUnitAI>UNITAI_GENERAL</DefaultUnitAI>
+			<AdvancedStartCost>-1</AdvancedStartCost>
+			<WorkRate>1</WorkRate>
+			<CombatLimit>0</CombatLimit>
+			<UnitArtInfo>ART_DEF_UNIT_JFD_MBURICHI</UnitArtInfo>
+			<DontShowYields>1</DontShowYields>
+			<MoveRate>BIPED</MoveRate>
+			<UnitFlagIconOffset>0</UnitFlagIconOffset>
+			<PortraitIndex>1</PortraitIndex>
+			<IconAtlas>JFD_NRI_ATLAS</IconAtlas>
+			<Help>TXT_KEY_UNIT_HELP_MPIAMBINA</Help>
+			<UnitFlagAtlas>JFD_UNIT_FLAG_MBURICHI_ATLAS</UnitFlagAtlas>
+			<FoundReligion>1</FoundReligion>
+		</Row>
+	</Units>
+	<UnitGameplay2DScripts>
+		<Delete UnitType="UNIT_MPIAMBINA"/>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<SelectionSound>AS2D_BUILD_UNIT</SelectionSound>
+			<FirstSelectionSound>AS2D_BUILD_UNIT</FirstSelectionSound>
+		</Row>
+	</UnitGameplay2DScripts>
+	<Unit_AITypes>
+		<Delete UnitType="UNIT_MPIAMBINA"/>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UnitAIType>UNITAI_GENERAL</UnitAIType>
+		</Row>
+	</Unit_AITypes>
+	<Unit_Builds>
+		<Delete UnitType="UNIT_MPIAMBINA"/>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<BuildType>BUILD_CITADEL</BuildType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<BuildType>BUILD_HOLY_SITE</BuildType>
+		</Row>
+	</Unit_Builds>
+	<Unit_Flavors>
+		<Delete UnitType="UNIT_MPIAMBINA"/>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<FlavorType>FLAVOR_OFFENSE</FlavorType>
+			<Flavor>1</Flavor>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<FlavorType>FLAVOR_DEFENSE</FlavorType>
+			<Flavor>1</Flavor>
+		</Row>
+	</Unit_Flavors>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_MPIAMBINA"/>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<PromotionType>PROMOTION_GREAT_GENERAL</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Unit_UniqueNames>
+		<Delete UnitType="UNIT_MPIAMBINA"/>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_SARGON</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_SUN_TZU</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_LEONIDAS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_LYSANDER</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_CHANDRAGUPTA_MAURYA</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_HAMILCAR_BARCA</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_GAIUS_MARIUS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_SCIPIO_AFRICANUS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_VERCINGETORIX</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_ARMINIUS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_CAO_CAO</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_ZHUGE_LIANG</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_BELISARIUS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_KHALED_IBN_AL_WALID</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_CHARLES_MARTEL</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_EL_CID</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_WILLIAM_THE_CONQUEROR</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_SUBUTAI</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_TIMUR</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_JEANNE_DARC</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_AUITZOTL</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_HERNAN_CORTES</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_FRANCISCO_PIZARRO</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_IVAN_THE_TERRIBLE</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_AKBAR</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_CROMWELL</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_EUGENE_OF_SAVOY</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_GERONIMO</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_ROBERT_LEE</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_PATTON</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_MONTGOMERY</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_GUERDIAN</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_ROMMEL</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_ZHUKOV</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_EPAMINONDAS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_MAURICE_OF_NASSAU</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_POMPEY</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_PYRRHUS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_WINFIELD_SCOTT</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_SITTING_BULL</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_SPARTACUS</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_JOHANN_TSERCLAES</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_WALLENSTEIN</UniqueName>
+		</Row>
+		<Row>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+			<UniqueName>TXT_KEY_GREAT_PERSON_HANNIBAL</UniqueName>
+		</Row>
+	</Unit_UniqueNames>
+	<UnitPromotions_CivilianUnitType>
+		<Delete UnitType="UNIT_MPIAMBINA"/>
+		<Row>
+			<PromotionType>PROMOTION_FAST_GENERAL</PromotionType>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_MAORI_CIVILIAN</PromotionType>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_VIETNAM_CIVILIAN</PromotionType>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+		</Row>
+	</UnitPromotions_CivilianUnitType>
+	<Civilization_UnitClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_MADAGASCAR" UnitClassType="UNITCLASS_INQUISITOR"/>
+		<Row>
+			<CivilizationType>CIVILIZATION_MADAGASCAR</CivilizationType>
+			<UnitClassType>UNITCLASS_GREAT_GENERAL</UnitClassType>
+			<UnitType>UNIT_MPIAMBINA</UnitType>
+		</Row>
+	</Civilization_UnitClassOverrides>
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_MALAGASY"/>
+			<Set FaithCostModifier="0" LekmodRingImprovement="IMPROVEMENT_HOLY_SITE" LekmodRingImprovementCulture="1" LekmodImprovementHillsOnly="IMPROVEMENT_HOLY_SITE" LekmodBuildingFreeUnitBuilding="BUILDINGCLASS_HEROIC_EPIC" LekmodBuildingFreeUnitClass="UNITCLASS_GREAT_GENERAL"/>
+		</Update>
+	</Traits>
+	<Trait_ImprovementYieldChanges>
+		<Delete TraitType="TRAIT_MALAGASY"/>
+	</Trait_ImprovementYieldChanges>
 </GameData>

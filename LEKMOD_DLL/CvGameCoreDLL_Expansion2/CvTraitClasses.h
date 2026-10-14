@@ -134,6 +134,11 @@ enum LekmodTraitInt
 	LTI_DOF_PARTNER_BONUS,				// ... and the partner this much (7)
 	LTI_DOF_BETRAYAL_COMBAT,			// % combat strength against players who declared war on us during a Declaration of Friendship
 	LTI_NO_START_WAR,					// not included in the 'start at war' lobby option (New Zealand)
+	LTI_RING_IMPROVEMENT,				// type: tiles next to an own city that has this improvement next to it ... (Malagasy: Holy Site)
+	LTI_RING_IMPROVEMENT_CULTURE,		// ... yield this much Culture
+	LTI_IMPROVEMENT_HILLS_ONLY,			// type: this improvement can only be built on Hills (Malagasy: Holy Site)
+	LTI_BUILDING_FREE_UNIT_BUILDING,	// type: completing a building of this class ... (Malagasy: Heroic Epic)
+	LTI_BUILDING_FREE_UNIT_CLASS,		// type: ... gives the civ's unit of this class
 	NUM_LEKMOD_TRAIT_INTS
 };
 #endif

@@ -2439,6 +2439,12 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible,
 
 	// Repairing an Improvement that's been pillaged
 	CvBuildInfo& thisBuildInfo = *GC.getBuildInfo(eBuild);
+#ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Malagasy: Holy Sites only on Hills
+	if (thisBuildInfo.getImprovement() != NO_IMPROVEMENT && !isHills()
+		&& GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitType(LTI_IMPROVEMENT_HILLS_ONLY) == thisBuildInfo.getImprovement())
+		return false;
+#endif
 	if(thisBuildInfo.isRepair())
 	{
 		if(IsImprovementPillaged() || IsRoutePillaged())
@@ -9793,6 +9799,27 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay)
 		iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitPlotYield(this, eYield, (IsImprovementPillaged() ? NO_IMPROVEMENT : eImprovement));
 #endif
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
+	// Malagasy: tiles next to an own city that has a Holy Site next to it yield Culture
+	if (eYield == YIELD_CULTURE && ePlayer != NO_PLAYER && getOwner() == ePlayer && !isCity()
+		&& GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitType(LTI_RING_IMPROVEMENT) != -1)
+	{
+		const ImprovementTypes eRing = (ImprovementTypes)GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitType(LTI_RING_IMPROVEMENT);
+		bool bFound = false;
+		for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES && !bFound; iDirection++)
+		{
+			CvPlot* pCityPlot = plotDirection(getX(), getY(), (DirectionTypes)iDirection);
+			if (pCityPlot == NULL || !pCityPlot->isCity() || pCityPlot->getOwner() != ePlayer)
+				continue;
+			for (int iInner = 0; iInner < NUM_DIRECTION_TYPES && !bFound; iInner++)
+			{
+				CvPlot* pSitePlot = plotDirection(pCityPlot->getX(), pCityPlot->getY(), (DirectionTypes)iInner);
+				if (pSitePlot && pSitePlot->getImprovementType() == eRing && !pSitePlot->IsImprovementPillaged())
+					bFound = true;
+			}
+		}
+		if (bFound)
+			iYield += GET_PLAYER(ePlayer).GetPlayerTraits()->GetLekmodTraitInt(LTI_RING_IMPROVEMENT_CULTURE);
+	}
 	// Celts: from their era, unimproved forest next to an own city yields Faith (on the tile, user 2026-10-14)
 	if (eYield == YIELD_FAITH && ePlayer != NO_PLAYER && getOwner() == ePlayer && getFeatureType() == FEATURE_FOREST && getImprovementType() == NO_IMPROVEMENT)
 	{
