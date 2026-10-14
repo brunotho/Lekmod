@@ -101779,13 +101779,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>Mobility for this unit</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_TECH">
-			<Text>Free technology: {1_Tech}</Text>
+			<Text>Free technology: [COLOR_RESEARCH_STORED]{1_Tech}[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_FOOD">
-			<Text>+{1_Num} [ICON_FOOD] Food in your capital; the unit gets Glutton</Text>
+			<Text>[COLOR_YIELD_FOOD]+{1_Num} [ICON_FOOD] Food[ENDCOLOR] in your capital; the unit gets Glutton</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_CULTURE">
-			<Text>+{1_Num} [ICON_CULTURE] Culture</Text>
+			<Text>[COLOR_CULTURE_STORED]+{1_Num} [ICON_CULTURE] Culture[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_FAITH_HEAL">
 			<Text>+{1_Num} [ICON_PEACE] Faith; the unit is fully healed</Text>
@@ -101794,13 +101794,13 @@ The ship has weather'd every rack; the prize we sought is won."
 			<Text>+{1_Num} [ICON_PEACE] Faith</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_GOLD">
-			<Text>+{1_Num} [ICON_GOLD] Gold</Text>
+			<Text>[COLOR_YIELD_GOLD]+{1_Num} [ICON_GOLD] Gold[ENDCOLOR]</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_GOLD_BARBARIAN">
-			<Text>+{1_Num} [ICON_GOLD] Gold; a barbarian appears</Text>
+			<Text>[COLOR_YIELD_GOLD]+{1_Num} [ICON_GOLD] Gold[ENDCOLOR]; a barbarian appears</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_SCIENCE">
-			<Text>+{1_Num} [ICON_RESEARCH] Science and +{2_Num} [ICON_GOLD] Gold; the unit takes {3_Num} damage</Text>
+			<Text>[COLOR_RESEARCH_STORED]+{1_Num} [ICON_RESEARCH] Science[ENDCOLOR] and [COLOR_YIELD_GOLD]+{2_Num} [ICON_GOLD] Gold[ENDCOLOR]; the unit takes {3_Num} damage</Text>
 		</Row>
 		<Row Tag="TXT_KEY_LEKMOD_RUIN_OFFER_UPGRADE">
 			<Text>Upgrade to {1_Unit}; the unit takes {2_Num} damage</Text>

@@ -790,6 +790,7 @@ ANCIENT RUINS OVERHAUL (GOODY_*)
 Tags: ruins, religion, game mechanics
 Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshone ability), with the exact amounts shown. Rewards scale with the era (ancient = 1, classical = 2, ...) and the turn.
 - Added: popping a ruin offers 2 different random rewards to choose from (3 with Native Tongue); the reward you chose at your previous ruin is not offered again, and rewards you can't use right now are left out
+- Changed: the choices show Food, Culture, Gold and Science amounts in their yield colors
 - Added: new reward "Trade": pay 5-8 Food from your capital, 40-70 Gold or 5-8 Culture for 70-100 Gold, 25-35 Science, (turn + 8-12) Culture, the location of the 3 nearest city-states you haven't seen, or Mobility for the unit; a bigger price comes with a bigger reward; only offered when you can pay. Gold for Gold and Culture for Culture never come up. All amounts x era
 - Added: new reward "Free technology": a random ancient era technology you can research
 - Changed: if you don't choose before the turn ends, one of the offers is picked at random
@@ -2587,7 +2588,6 @@ Tags: civs, units
 - Removed: Comanche Riders: +1 Movement
 - Added: Comanche Riders: Plains Rider (flat terrain costs 33% less movement; heals every turn in friendly territory, even after acting), lost on upgrade
 - DLL: UnitPromotions.FlatMoveCostMod, AlwaysHealFriendly (promotion 389)
-- Note: open: Native Tongue menu values (needs Lua)
 
 PRUSSIA (CIVILIZATION_PRUSSIA)
 ------------------------------
