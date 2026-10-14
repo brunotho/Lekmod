@@ -2425,7 +2425,11 @@ TONGA (CIVILIZATION_TONGA)
 --------------------------
 Tags: civs
 - Removed: +5 resting Influence with City-States
-- Note: open: smaller reveal, first pledge bonus, Fale Koloa (need C++)
+- Changed: the coast and islands explored at the start reach 6 tiles (was 12)
+- Changed: Fale Koloa (rebuilt, replaces the Granary): needs Sailing and Bronze Working, +2 Food and +1 Culture, the Granary's resource Food; with 3+ Coast tiles next to the city Fish +1 Gold +1 Culture +1 Faith; with 3+ Jungle tiles next to the city Jungle +1 Production
+- Removed: Malae: +1 Faith and the coast Food/Culture
+- Note: open: +20 resting Influence with the first City-State you pledge to (needs C++)
+- DLL: Building_LekmodPlotYields (CityAdjacent conditions)
 
 TUNISIA (CIVILIZATION_TUNISIA)
 ------------------------------

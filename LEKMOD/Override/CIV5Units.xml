@@ -287830,4 +287830,101 @@
 			<AdjacentLake>true</AdjacentLake>
 		</Row>
 	</Building_LekmodPlotYields>
+	<!-- Tonga (2026-10-14): Fale Koloa (from scratch, Granary UB): Granary effects, Sailing + Bronze Working, +1 Culture; 3+ coast next to the city: Fish +1 Gold +1 Culture +1 Faith; 3+ jungle next to the city: Jungle +1 Production -->
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_MC_TONGAN_MALAE"/>
+			<Set PrereqTech="TECH_SAILING" Cost="60" GoldMaintenance="1"/>
+		</Update>
+	</Buildings>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_MC_TONGAN_MALAE"/>
+	</Building_YieldChanges>
+	<Building_NearbyTerrainFreeYields>
+		<Delete BuildingType="BUILDING_MC_TONGAN_MALAE"/>
+	</Building_NearbyTerrainFreeYields>
+	<Building_ResourceYieldChanges>
+		<Delete BuildingType="BUILDING_MC_TONGAN_MALAE"/>
+	</Building_ResourceYieldChanges>
+	<Building_TechAndPrereqs>
+		<Delete BuildingType="BUILDING_MC_TONGAN_MALAE"/>
+	</Building_TechAndPrereqs>
+	<Building_YieldChanges>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>2</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_YieldChanges>
+	<Building_ResourceYieldChanges>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<ResourceType>RESOURCE_WHEAT</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<ResourceType>RESOURCE_BANANA</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<ResourceType>RESOURCE_DEER</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<ResourceType>RESOURCE_BISON</ResourceType>
+			<YieldType>YIELD_FOOD</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Building_ResourceYieldChanges>
+	<Building_TechAndPrereqs>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<TechType>TECH_BRONZE_WORKING</TechType>
+		</Row>
+	</Building_TechAndPrereqs>
+	<Building_LekmodPlotYields>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>1</Yield>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<CityAdjacentTerrainType>TERRAIN_COAST</CityAdjacentTerrainType>
+			<CityAdjacentCount>3</CityAdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<CityAdjacentTerrainType>TERRAIN_COAST</CityAdjacentTerrainType>
+			<CityAdjacentCount>3</CityAdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+			<ResourceType>RESOURCE_FISH</ResourceType>
+			<CityAdjacentTerrainType>TERRAIN_COAST</CityAdjacentTerrainType>
+			<CityAdjacentCount>3</CityAdjacentCount>
+		</Row>
+		<Row>
+			<BuildingType>BUILDING_MC_TONGAN_MALAE</BuildingType>
+			<YieldType>YIELD_PRODUCTION</YieldType>
+			<Yield>1</Yield>
+			<FeatureType>FEATURE_JUNGLE</FeatureType>
+			<CityAdjacentFeatureType>FEATURE_JUNGLE</CityAdjacentFeatureType>
+			<CityAdjacentCount>3</CityAdjacentCount>
+		</Row>
+	</Building_LekmodPlotYields>
 </GameData>

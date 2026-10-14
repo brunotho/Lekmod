@@ -148034,6 +148034,16 @@ The ship has weather'd every rack; the prize we sought is won."
 		<Replace Tag="TXT_KEY_BUILDING_FINNISH_SAUNA_HELP">
 			<Text>Finnish unique building replacing the Shrine. The Sauna gives 2 [ICON_CULTURE] Culture for every Lake tile worked by the city.[NEWLINE]Snow tiles of the city next to a lake yield +2 [ICON_FOOD] Food and +2 [ICON_CULTURE] Culture.[NEWLINE][NEWLINE][COLOR_GREEN]Land[ENDCOLOR] and [COLOR_GREEN]Naval[ENDCOLOR] units built in a city with Sauna heal +10 HP per turn within Finnish borders. Costs no [ICON_GOLD] Maintenance.</Text>
 		</Replace>
+		<!-- Tonga Fale Koloa -->
+		<Replace Tag="TXT_KEY_BUILDING_MC_TONGAN_MALAE">
+			<Text>Fale Koloa</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_BUILDING_MC_TONGAN_MALAE_HELP">
+			<Text>Replaces the Granary. Needs Sailing and Bronze Working instead of Pottery.[NEWLINE]+2 [ICON_FOOD] Food and +1 [ICON_CULTURE] Culture. +1 [ICON_FOOD] Food from Wheat, Bananas, Deer and Bison.[NEWLINE][NEWLINE]If 3 or more Coast tiles are next to the city: Fish yield +1 [ICON_GOLD] Gold, +1 [ICON_CULTURE] Culture and +1 [ICON_PEACE] Faith.[NEWLINE]If 3 or more Jungle tiles are next to the city: Jungle yields +1 [ICON_PRODUCTION] Production.</Text>
+		</Replace>
+		<Replace Tag="TXT_KEY_TRAIT_ISLANDS">
+			<Text>Start the game with Coast tiles and Islands within 6 tiles already explored.</Text>
+		</Replace>
 	</Language_en_US>
 	<Language_de_DE>
 	</Language_de_DE>

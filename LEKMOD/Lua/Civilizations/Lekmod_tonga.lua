@@ -13,7 +13,7 @@ function lekmod_tonga_explore(player)
    local team = player:GetTeam()
    local start_plot = player:GetStartingPlot()
 
-   local explore_radius = 12
+   local explore_radius = 6
    for loop_plot in PlotAreaSpiralIterator(start_plot, explore_radius, SECTOR_NORTH, DIRECTION_CLOCKWISE, DIRECTION_OUTWARDS, CENTRE_EXCLUDE) do
 
       if loop_plot:Area() ~= start_plot:Area() and loop_plot:IsCoastalLand() and not loop_plot:IsLake() then
