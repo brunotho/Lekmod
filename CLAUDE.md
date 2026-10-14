@@ -311,12 +311,14 @@ Read `art_sources/README.md` before touching any icon, portrait, flag or menu ba
 ### Current state (end of session 2, 2026-10-14)
 #### Start here (next session)
 1. Routine of §0b.10. Then read the **top of "Civ tests (Phase 6)"** (the user's notes and Claude's status lines) and the indented notes under items.
-2. **Open follow-ups from playtests** (tracker rows, both Ready):
+2. **Open follow-ups** (tracker rows set to Ready, OPEN notes at the start of their Notes):
    - "Build buttons always visible (greyed out with reason)" (Interface): plan in the row's Notes; a first C++ attempt was reverted unbuilt.
-   - Indonesia: the unique luxury should replace the city tile's resource (old UA behaviour) instead of free copies (`LEKMOD_FREE_RESOURCE_CITY_GRANT` branch in `CvCity::init`).
+   - Indonesia: (a) the unique luxury replaces the city tile's resource (old UA behaviour) instead of free copies (`LEKMOD_FREE_RESOURCE_CITY_GRANT` branch in `CvCity::init`); (b) which 2 of the 3 spices is random per game (Pepper row currently deleted).
+   - Tonga: the +20 is lost for good when the pledge ends for any reason (set `m_iLekmodFirstPledgeMinor = -2` wherever a pledge ends).
+   - UAE: can improve Oil (Well, Offshore Platform) from Archaeology without Biology (per-civ build tech override).
 3. **Phase 6 left:** Switzerland, Portugal, Tibet (all need UI: Demographics/trade screen, trade route preview marker, Dalai Lama unit actions), Ottoman pantheon part (pantheons of every religion in a city: hooks in every belief-yield path).
 4. **Waiting for the user's tests:** Shoshone, Tunisia, Mexico, Ottomans (partial), Sioux retest (first-turn Settler move fixed twice), and the older batch items on the test page; New Zealand on "Multiplayer test sessions".
-5. **Defaults waiting on "Specs to Refine":** Kampong Ayer may replace Fishing Boats; UAE Oil node 8; Indonesia drops Pepper; Privateer attack bonus = target on Coast, Privateer/Comanche effects lost on upgrade, Comanche flat terrain definition; plus the older Phase 5 defaults.
+5. **"Specs to Refine"**: all civ defaults of batches I and J were answered on 2026-10-14 and are applied or listed above; the page keeps only the older Phase 5 defaults and the user's own idea for the civ selection screen (a placeholder building per civ so unique non-replacing buildings show; tracker row "Civ selection screen: show all unique items").
 6. Then the POST rows (Phase 10) only when Phases 1–9 are done or the user asks.
 
 - `dev` = v35.4 (`201df6c5`) + ~500 of our commits. **Not pushed** (the user hasn't asked). Installed DLL = commit `3c3e52fc` (md5 `69c48633...`). Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
