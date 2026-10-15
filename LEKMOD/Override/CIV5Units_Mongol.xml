@@ -59901,7 +59901,7 @@ The second sack of Ulundi is considered by historians to be the definitive end o
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_MERCANTILE_SUMMARY"> 
-			<Text>A Mercantile City-State gives [ICON_HAPPINESS_1] Happiness to its Friends and its Ally.[NEWLINE][NEWLINE]Ancient and Classical Era: 2 [ICON_HAPPINESS_1] Happiness.[NEWLINE]Medieval to Renaissance Era: 3.[NEWLINE]Industrial Era and later: 4.[NEWLINE][NEWLINE]Mercantile City-States also own a special luxury resource that only they have.[NEWLINE]Like all of a City-State's luxury and strategic resources, it goes to their Ally.</Text>
+			<Text>A Mercantile City-State gives [ICON_HAPPINESS_1] Happiness to its Friends and its Ally.[NEWLINE][NEWLINE]Ancient and Classical Era: 2 [ICON_HAPPINESS_1] Happiness.[NEWLINE]Medieval to Renaissance Era: 3.[NEWLINE]Industrial Era and later: 4.[NEWLINE][NEWLINE]Mercantile City-States also own a special luxury resource that only they have (Jewelry, Porcelain or Glass), on their city tile.[NEWLINE]It gives 2 [ICON_HAPPINESS_1] Happiness instead of the usual 4, and +2 [ICON_GOLD] Gold on the city tile.[NEWLINE]Like all of a City-State's luxury and strategic resources, it goes to their Ally.[NEWLINE]Whoever conquers the city keeps the resource.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_CONCEPT_CITY_STATE_MERCANTILE_TOPIC"> 
 			<Text>
@@ -125294,7 +125294,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCE_GLASS_HELP"> 
 			<Text>
-				Glass is only available through a Mercantile City-State.
+				Glass only exists on the city tile of a Mercantile City-State.[NEWLINE]It gives 2 [ICON_HAPPINESS_1] Happiness (other luxuries give 4) and +2 [ICON_GOLD] Gold on its tile.[NEWLINE]Whoever owns the city keeps it, also after a conquest.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCE_GOLD"> 
@@ -125368,7 +125368,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCE_JEWELRY_HELP"> 
 			<Text>
-				Jewelry is only available through a Mercantile City-State.
+				Jewelry only exists on the city tile of a Mercantile City-State.[NEWLINE]It gives 2 [ICON_HAPPINESS_1] Happiness (other luxuries give 4) and +2 [ICON_GOLD] Gold on its tile.[NEWLINE]Whoever owns the city keeps it, also after a conquest.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCE_LAPIS"> 
@@ -125449,7 +125449,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCE_PORCELAIN_HELP"> 
 			<Text>
-				Porcelain is only available through a Mercantile City-State.
+				Porcelain only exists on the city tile of a Mercantile City-State.[NEWLINE]It gives 2 [ICON_HAPPINESS_1] Happiness (other luxuries give 4) and +2 [ICON_GOLD] Gold on its tile.[NEWLINE]Whoever owns the city keeps it, also after a conquest.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_RESOURCE_SALT"> 

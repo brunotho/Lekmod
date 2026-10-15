@@ -2881,3 +2881,11 @@ Tags: game mechanics, ui
 The year shown on quick speed now follows the usual pace of the tech tree: about 500 AD at turn 55, 1750 AD at turn 90, 1900 AD at turn 105, 1945 AD at turn 135 and 2025 AD at turn 160.
 - Changed: only the displayed year; turns, costs and the turn limit are unchanged
 - Dev: GameSpeed_Turns quick rows (months per turn x turns): 900x40, 1200x15, 400x15, 480x15, 360x5, 120x15, 15x20, 24x10, 30x10, 48x10, 36x10, 12x165 (330 turns as before)
+
+MERCANTILE CITY-STATE LUXURIES (RESOURCE_JEWELRY, RESOURCE_PORCELAIN, RESOURCE_GLASS)
+--------------------------------------------------------------------------------------
+Tags: game mechanics
+The special luxury of a Mercantile City-State sits on its city tile and stays there when the city is conquered.
+- Changed: Jewelry, Porcelain and Glass give 2 Happiness (was 4); still +2 Gold on the city tile
+- Changed: conquering a Mercantile City-State keeps its luxury on the city tile (it used to disappear)
+- Dev: define MINOR_CIV_MERCANTILE_RESOURCES_KEEP_ON_CAPTURE_DISABLED 1 -> 0; the luxury was already placed on the city tile by the base game

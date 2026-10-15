@@ -99338,7 +99338,7 @@
 		</Row>
 		<Row> 
 			<Name>MINOR_CIV_MERCANTILE_RESOURCES_KEEP_ON_CAPTURE_DISABLED</Name> 
-			<Value>1</Value> 
+			<Value>0</Value> 
 		</Row>
 		<Row> 
 			<Name>QUEST_DISABLED_ROUTE</Name> 
@@ -291695,4 +291695,19 @@
 			<Set SpecialistType="SPECIALIST_ARTIST" GreatPeopleRateChange="2"/>
 		</Update>
 	</Buildings>
+	<!-- POST (2026-10-15): Mercantile City-State luxuries give 2 Happiness (was 4); they stay on the city tile when it is captured (define above) -->
+	<Resources>
+		<Update>
+			<Where Type="RESOURCE_JEWELRY"/>
+			<Set Happiness="2"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_PORCELAIN"/>
+			<Set Happiness="2"/>
+		</Update>
+		<Update>
+			<Where Type="RESOURCE_GLASS"/>
+			<Set Happiness="2"/>
+		</Update>
+	</Resources>
 </GameData>
