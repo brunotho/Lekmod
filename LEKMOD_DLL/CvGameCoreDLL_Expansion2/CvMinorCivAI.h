@@ -195,6 +195,9 @@ public:
 #endif
 
 	MinorCivTraitTypes GetTrait() const;
+#ifdef LEKMOD_POST_CHANGES
+	void LekmodDoBuildImprovements();
+#endif
 
 	bool IsHasUniqueUnit() const;
 	UnitTypes GetUniqueUnit() const;
@@ -641,6 +644,10 @@ private:
 	UnitTypes m_eUniqueUnit;
 
 	int m_iTurnsSinceThreatenedByBarbarians;
+#ifdef LEKMOD_POST_CHANGES
+	int m_iLekmodImprovementRow;      // row of Lekmod_MinorCivImprovements this City-State builds; -2 not rolled yet, -1 none
+	int m_iLekmodImprovementNextTurn; // earliest turn for its next one
+#endif
 	int m_iGlobalQuestCountdown;
 
 	bool m_abWarQuestAgainstMajor[MAX_MAJOR_CIVS];

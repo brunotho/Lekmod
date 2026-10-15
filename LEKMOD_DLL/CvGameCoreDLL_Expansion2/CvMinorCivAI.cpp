@@ -1665,6 +1665,10 @@ void CvMinorCivAI::Reset()
 	m_eUniqueUnit = NO_UNIT;
 
 	m_iTurnsSinceThreatenedByBarbarians = -1;
+#ifdef LEKMOD_POST_CHANGES
+	m_iLekmodImprovementRow = -2;
+	m_iLekmodImprovementNextTurn = 0;
+#endif
 	m_iGlobalQuestCountdown = -1;
 
 	m_eAlly = NO_PLAYER;
@@ -1880,6 +1884,10 @@ void CvMinorCivAI::Read(FDataStream& kStream)
 	kStream >> m_aiAlienatedLevel;
 	kStream >> m_aiWarDeclarationsByMajor;
 #endif
+#ifdef LEKMOD_POST_CHANGES
+	kStream >> m_iLekmodImprovementRow;
+	kStream >> m_iLekmodImprovementNextTurn;
+#endif
 }
 
 /// Serialization write
@@ -1968,6 +1976,10 @@ void CvMinorCivAI::Write(FDataStream& kStream) const
 	kStream << m_aiWaryLevel;
 	kStream << m_aiAlienatedLevel;
 	kStream << m_aiWarDeclarationsByMajor;
+#endif
+#ifdef LEKMOD_POST_CHANGES
+	kStream << m_iLekmodImprovementRow;
+	kStream << m_iLekmodImprovementNextTurn;
 #endif
 }
 
@@ -2493,8 +2505,130 @@ void CvMinorCivAI::DoTurn()
 #endif
 
 		DoIntrusion();
+#ifdef LEKMOD_POST_CHANGES
+		LekmodDoBuildImprovements();
+#endif
 	}
 }
+
+#ifdef LEKMOD_POST_CHANGES
+namespace
+{
+struct LekmodCSImprovementRow
+{
+	int iTrait, iImprovement, iEra, iMax, iMinMountains;
+	bool bNextToCity;
+};
+/// Lekmod_MinorCivImprovements: improvements a City-State of a type may build (POST list, user 2026-10-11)
+const std::vector<LekmodCSImprovementRow>& LekmodCSImprovementRows()
+{
+	static std::vector<LekmodCSImprovementRow> s_aRows;
+	static bool s_bInit = false;
+	if (!s_bInit)
+	{
+		s_bInit = true;
+		static const char* aszTraits[NUM_MINOR_CIV_TRAIT_TYPES] = { "MINOR_CIV_TRAIT_CULTURED", "MINOR_CIV_TRAIT_MILITARISTIC", "MINOR_CIV_TRAIT_MARITIME", "MINOR_CIV_TRAIT_MERCANTILE", "MINOR_CIV_TRAIT_RELIGIOUS" };
+		Database::Connection* db = GC.GetGameDatabase();
+		Database::Results kResults;
+		if (db != NULL && db->Execute(kResults, "SELECT Lekmod_MinorCivImprovements.MinorCivTrait, Lekmod_MinorCivImprovements.ImprovementType, Lekmod_MinorCivImprovements.EraType, Lekmod_MinorCivImprovements.MaxCount, Lekmod_MinorCivImprovements.MinMountainsWithin2, Lekmod_MinorCivImprovements.NextToCity FROM Lekmod_MinorCivImprovements ORDER BY Lekmod_MinorCivImprovements.rowid"))
+		{
+			while (kResults.Step())
+			{
+				LekmodCSImprovementRow kRow;
+				kRow.iTrait = -1;
+				const char* szTrait = kResults.GetText(0);
+				for (int iTrait = 0; iTrait < NUM_MINOR_CIV_TRAIT_TYPES; iTrait++)
+					if (szTrait != NULL && strcmp(szTrait, aszTraits[iTrait]) == 0)
+						kRow.iTrait = iTrait;
+				kRow.iImprovement = GC.getInfoTypeForString(kResults.GetText(1), true);
+				const char* szEra = kResults.GetText(2);
+				kRow.iEra = (szEra != NULL && szEra[0] != 0) ? GC.getInfoTypeForString(szEra, true) : -1;
+				kRow.iMax = kResults.GetInt(3);
+				kRow.iMinMountains = kResults.GetInt(4);
+				kRow.bNextToCity = kResults.GetBool(5);
+				if (kRow.iTrait != -1 && kRow.iImprovement != -1)
+					s_aRows.push_back(kRow);
+			}
+		}
+	}
+	return s_aRows;
+}
+}
+
+/// A City-State may build one improvement type of its kind: rolled once (LEKMOD_CS_IMPROVEMENT_CHANCE %), then it places one
+/// on a fitting tile inside its borders every few turns from the row's era, up to the row's maximum
+void CvMinorCivAI::LekmodDoBuildImprovements()
+{
+	const std::vector<LekmodCSImprovementRow>& aRows = LekmodCSImprovementRows();
+	if (m_iLekmodImprovementRow == -2)
+	{
+		m_iLekmodImprovementRow = -1;
+		std::vector<int> aiCandidates;
+		for (uint i = 0; i < aRows.size(); i++)
+			if (aRows[i].iTrait == (int)GetTrait())
+				aiCandidates.push_back((int)i);
+		if (!aiCandidates.empty() && GC.getGame().getJonRandNum(100, "Lekmod: City-State improvement chance") < LEKMOD_CS_IMPROVEMENT_CHANCE)
+			m_iLekmodImprovementRow = aiCandidates[GC.getGame().getJonRandNum((int)aiCandidates.size(), "Lekmod: City-State improvement pick")];
+	}
+	if (m_iLekmodImprovementRow < 0 || m_iLekmodImprovementRow >= (int)aRows.size())
+		return;
+	if (GC.getGame().getGameTurn() < m_iLekmodImprovementNextTurn)
+		return;
+	const LekmodCSImprovementRow& kRow = aRows[m_iLekmodImprovementRow];
+	if (kRow.iEra != -1 && GetPlayer()->GetCurrentEra() < kRow.iEra)
+		return;
+	CvCity* pCapital = GetPlayer()->getCapitalCity();
+	if (pCapital == NULL)
+		return;
+	const ImprovementTypes eImprovement = (ImprovementTypes)kRow.iImprovement;
+
+	int iCount = 0;
+	CvPlot* pBest = NULL;
+	int iBestScore = -100000;
+	for (int iPlot = 0; iPlot < NUM_CITY_PLOTS; iPlot++)
+	{
+		CvPlot* pPlot = plotCity(pCapital->getX(), pCapital->getY(), iPlot);
+		if (pPlot == NULL || pPlot->getOwner() != GetPlayer()->GetID())
+			continue;
+		if (pPlot->getImprovementType() == eImprovement)
+		{
+			iCount++;
+			continue;
+		}
+		if (pPlot->isCity() || pPlot->getImprovementType() != NO_IMPROVEMENT || pPlot->IsImprovementPillaged())
+			continue;
+		const int iDistance = plotDistance(pPlot->getX(), pPlot->getY(), pCapital->getX(), pCapital->getY());
+		if (kRow.bNextToCity && iDistance != 1)
+			continue;
+		if (!pPlot->canHaveImprovement(eImprovement, GetPlayer()->getTeam()))
+			continue;
+		if (kRow.iMinMountains > 0)
+		{
+			int iMountains = 0;
+			for (int iDX = -2; iDX <= 2; iDX++)
+				for (int iDY = -2; iDY <= 2; iDY++)
+				{
+					CvPlot* pNear = plotXYWithRangeCheck(pPlot->getX(), pPlot->getY(), iDX, iDY, 2);
+					if (pNear != NULL && pNear != pPlot && pNear->isMountain())
+						iMountains++;
+				}
+			if (iMountains < kRow.iMinMountains)
+				continue;
+		}
+		// prefer tiles without a resource, close to the city
+		const int iScore = (pPlot->getResourceType() == NO_RESOURCE ? 100 : 0) - iDistance * 10;
+		if (iScore > iBestScore)
+		{
+			iBestScore = iScore;
+			pBest = pPlot;
+		}
+	}
+	if (iCount >= kRow.iMax || pBest == NULL)
+		return;
+	pBest->setImprovementType(eImprovement, GetPlayer()->GetID());
+	m_iLekmodImprovementNextTurn = GC.getGame().getGameTurn() + LEKMOD_CS_IMPROVEMENT_TURNS;
+}
+#endif
 
 
 /// Minor is now dead or alive (haha, get it?)

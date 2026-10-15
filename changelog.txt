@@ -2889,3 +2889,14 @@ The special luxury of a Mercantile City-State sits on its city tile and stays th
 - Changed: Jewelry, Porcelain and Glass give 2 Happiness (was 4); still +2 Gold on the city tile
 - Changed: conquering a Mercantile City-State keeps its luxury on the city tile (it used to disappear)
 - Dev: define MINOR_CIV_MERCANTILE_RESOURCES_KEEP_ON_CAPTURE_DISABLED 1 -> 0; the luxury was already placed on the city tile by the base game
+
+CITY-STATE IMPROVEMENTS (Lekmod_MinorCivImprovements)
+-----------------------------------------------------
+Tags: game mechanics
+One in five City-States builds a special improvement of its type inside its borders.
+- Added: each City-State has a 20% chance to get one improvement type of its kind, picked at random; it then builds one on a fitting tile every 5 turns, from the listed era (the City-State's own era), up to the maximum
+- Added: Maritime (up to 2): Terrace Farm (needs 2+ mountains within 2 tiles), Tipi, Pa (Classical), Polder (Medieval)
+- Added: Militaristic (up to 2): Caer, Motte and Bailey (Medieval)
+- Added: Mercantile (up to 2): Chateau, Kasbah, Brazilwood Camp (Medieval)
+- Added: Religious (1, Medieval): Holy Site next to the city
+- DLL: CvMinorCivAI::LekmodDoBuildImprovements (LEKMOD_POST_CHANGES; defines LEKMOD_CS_IMPROVEMENT_CHANCE 20, LEKMOD_CS_IMPROVEMENT_TURNS 5); saved fields m_iLekmodImprovementRow / m_iLekmodImprovementNextTurn (appended to the City-State save data); the improvement is placed directly, not by a Worker; the usual placement rules of the improvement apply

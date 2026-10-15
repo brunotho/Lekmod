@@ -1487,6 +1487,9 @@ Diversify Spain and Australia's NW Discovery bonus
 // POST list items done in cloud session 6 (2026-10-15): no strategic resource City-State quests, 3-ruin reward cooldown,
 // Expanded ZOC promotion, overflow-to-Gold floating text, altitude promotions for civilians, militaristic City-State capture
 #define LEKMOD_POST_CHANGES
+// City-States: chance to build one improvement type of their kind (Lekmod_MinorCivImprovements), turns between two of them
+#define LEKMOD_CS_IMPROVEMENT_CHANCE 20
+#define LEKMOD_CS_IMPROVEMENT_TURNS 5
 // Improvements.LekmodNoFeature: can't be built on a feature unless Improvement_ValidFeatures lists it (Kasbah: Flood Plains only)
 #define LEKMOD_IMPROVEMENT_NO_FEATURE
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,

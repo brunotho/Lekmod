@@ -291710,4 +291710,72 @@
 			<Set Happiness="2"/>
 		</Update>
 	</Resources>
+	<!-- POST (2026-10-15): City-States build an improvement of their type (20% chance per City-State, one type each, see LEKMOD_CS_IMPROVEMENT_*) -->
+	<Table name="Lekmod_MinorCivImprovements">
+		<Column name="MinorCivTrait" type="text"/>
+		<Column name="ImprovementType" type="text" reference="Improvements(Type)"/>
+		<Column name="EraType" type="text" reference="Eras(Type)" default="NULL"/>
+		<Column name="MaxCount" type="integer" default="1"/>
+		<Column name="MinMountainsWithin2" type="integer" default="0"/>
+		<Column name="NextToCity" type="boolean" default="false"/>
+	</Table>
+	<Lekmod_MinorCivImprovements>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MARITIME</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_TERRACE_FARM</ImprovementType>
+			<MaxCount>2</MaxCount>
+			<MinMountainsWithin2>2</MinMountainsWithin2>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MARITIME</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_TEPE</ImprovementType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MARITIME</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_MC_MAORI_PA</ImprovementType>
+			<EraType>ERA_CLASSICAL</EraType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MARITIME</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_POLDER</ImprovementType>
+			<EraType>ERA_MEDIEVAL</EraType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MILITARISTIC</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_MC_SCOTTISH_CLAN_CASTLE</ImprovementType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MILITARISTIC</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_MOTTE</ImprovementType>
+			<EraType>ERA_MEDIEVAL</EraType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MERCANTILE</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_CHATEAU</ImprovementType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MERCANTILE</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_MERCANTILE</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_BRAZILWOOD_CAMP</ImprovementType>
+			<EraType>ERA_MEDIEVAL</EraType>
+			<MaxCount>2</MaxCount>
+		</Row>
+		<Row>
+			<MinorCivTrait>MINOR_CIV_TRAIT_RELIGIOUS</MinorCivTrait>
+			<ImprovementType>IMPROVEMENT_HOLY_SITE</ImprovementType>
+			<EraType>ERA_MEDIEVAL</EraType>
+			<MaxCount>1</MaxCount>
+			<NextToCity>true</NextToCity>
+		</Row>
+	</Lekmod_MinorCivImprovements>
 </GameData>
