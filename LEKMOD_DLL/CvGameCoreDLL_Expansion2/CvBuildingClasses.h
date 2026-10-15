@@ -306,6 +306,10 @@ public:
 	int GetLekmodTradeToCapitalGoldPerEra() const;
 	int GetLekmodTradeFromCapitalFood() const;
 #endif
+#ifdef LEKMOD_POST_CHANGES
+	int GetLekmodBuildingProductionPerCity() const;
+	int GetLekmodInstantSciencePerPop() const;
+#endif
 	bool IsNearRiver() const;
 	bool IsNoMaintenanceOnRiver() const;
 	int GetRevealResource() const;
@@ -727,6 +731,10 @@ private:
 	int m_iLekmodCapitalYield;
 	int m_iLekmodTradeToCapitalGoldPerEra;
 	int m_iLekmodTradeFromCapitalFood;
+#endif
+#ifdef LEKMOD_POST_CHANGES
+	int m_iLekmodBuildingProductionPerCity;
+	int m_iLekmodInstantSciencePerPop;
 #endif
 	bool m_bNearRiver;
 	bool m_bNoMaintenanceOnRiver;

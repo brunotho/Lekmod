@@ -610,6 +610,19 @@ void CvUnit::initWithNameOffset(int iID, UnitTypes eUnit, int iNameOffset, UnitA
 			}
 		}
 	}
+#ifdef LEKMOD_POST_CHANGES
+	else if (!IsCombatUnit() && getDomainType() == DOMAIN_LAND)
+	{
+		// land civilians: promotions the traits give to land military units, if flagged for civilians (Inca: Altitude Training)
+		const UnitCombatTypes eMelee = (UnitCombatTypes)GC.getInfoTypeForString("UNITCOMBAT_MELEE", true);
+		for (int iCivPromo = 0; iCivPromo < GC.getNumPromotionInfos(); iCivPromo++)
+		{
+			const PromotionTypes eCivPromo = (PromotionTypes)iCivPromo;
+			if (eMelee != NO_UNITCOMBAT && IsLekmodCivilianFor(eCivPromo) && kPlayer.GetPlayerTraits()->HasFreePromotionUnitCombat(eCivPromo, eMelee))
+				setHasPromotion(eCivPromo, true);
+		}
+	}
+#endif
 
 #ifdef LEKMOD_CAPITAL_PANTHEON_EFFECTS
 	// Beliefs.NewUnitPromotion: new units get it while the capital has the belief; units keep it afterwards
@@ -17938,6 +17951,25 @@ int CvUnit::LekmodGetNauAura(int iKind) const
 	return iBest;
 }
 #endif
+#ifdef LEKMOD_POST_CHANGES
+//	--------------------------------------------------------------------------------
+/// A land civilian that gets this promotion wherever land military units would (UnitPromotions.LekmodCiviliansToo)
+bool CvUnit::IsLekmodCivilianFor(PromotionTypes ePromotion) const
+{
+	if (ePromotion == NO_PROMOTION || IsCombatUnit() || getDomainType() != DOMAIN_LAND)
+		return false;
+	CvPromotionEntry* pkPromotion = GC.getPromotionInfo(ePromotion);
+	return pkPromotion != NULL && pkPromotion->IsLekmodCiviliansToo();
+}
+bool CvUnit::IsLekmodExpandedZOC() const
+{
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	for (uint i = 0; i < aPromotions.size(); i++)
+		if (isHasPromotion(aPromotions[i]) && GC.getPromotionInfo(aPromotions[i])->IsLekmodExpandedZOC())
+			return true;
+	return false;
+}
+#endif
 #endif
 //	--------------------------------------------------------------------------------
 int CvUnit::GetLekmodFarFromCityMod() const
@@ -18906,6 +18938,12 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 						{
 							setHasPromotion(ePromotion, true);
 						}
+#ifdef LEKMOD_POST_CHANGES
+						else if (IsLekmodCivilianFor(ePromotion))
+						{
+							setHasPromotion(ePromotion, true);
+						}
+#endif
 					}
 				}
 			}

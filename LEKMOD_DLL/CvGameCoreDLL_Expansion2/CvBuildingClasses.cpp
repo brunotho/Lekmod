@@ -112,6 +112,10 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iLekmodTradeToCapitalGoldPerEra(0),
 	m_iLekmodTradeFromCapitalFood(0),
 #endif
+#ifdef LEKMOD_POST_CHANGES
+	m_iLekmodBuildingProductionPerCity(0),
+	m_iLekmodInstantSciencePerPop(0),
+#endif
 	m_bNearRiver(false),
 	m_bNoMaintenanceOnRiver(false),
 	m_iRevealResource(-1),
@@ -555,6 +559,10 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iLekmodCapitalYield = kResults.GetInt("LekmodCapitalYield");
 	m_iLekmodTradeToCapitalGoldPerEra = kResults.GetInt("LekmodTradeToCapitalGoldPerEra");
 	m_iLekmodTradeFromCapitalFood = kResults.GetInt("LekmodTradeFromCapitalFood");
+#endif
+#ifdef LEKMOD_POST_CHANGES
+	m_iLekmodBuildingProductionPerCity = kResults.GetInt("LekmodBuildingProductionPerCity");
+	m_iLekmodInstantSciencePerPop = kResults.GetInt("LekmodInstantSciencePerPop");
 #endif
 	m_bNearRiver = kResults.GetBool("NearRiver");
 	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
@@ -2223,6 +2231,18 @@ int CvBuildingEntry::GetLekmodTradeToCapitalGoldPerEra() const
 int CvBuildingEntry::GetLekmodTradeFromCapitalFood() const
 {
 	return m_iLekmodTradeFromCapitalFood;
+}
+#endif
+#ifdef LEKMOD_POST_CHANGES
+/// % Production towards buildings in this city per city of the owner (Ziggurat)
+int CvBuildingEntry::GetLekmodBuildingProductionPerCity() const
+{
+	return m_iLekmodBuildingProductionPerCity;
+}
+/// One-time Science on completion: this much per citizen of the city (Ziggurat)
+int CvBuildingEntry::GetLekmodInstantSciencePerPop() const
+{
+	return m_iLekmodInstantSciencePerPop;
 }
 #endif
 

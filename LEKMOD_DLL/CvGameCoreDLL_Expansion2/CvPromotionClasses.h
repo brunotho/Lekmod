@@ -267,6 +267,10 @@ public:
 	int GetLekmodSameTileEmbarkedHeal() const;
 	bool IsLekmodSameTileDisembark() const;
 #endif
+#ifdef LEKMOD_POST_CHANGES
+	bool IsLekmodExpandedZOC() const;
+	bool IsLekmodCiviliansToo() const;
+#endif
 	int GetLekmodAttackFullHPMod() const;
 	bool IsLekmodPostCombatOnSpawn() const;
 #endif
@@ -585,6 +589,10 @@ protected:
 	bool m_bLekmodAdjacentAlwaysHeal;
 	int m_iLekmodSameTileEmbarkedHeal;
 	bool m_bLekmodSameTileDisembark;
+#endif
+#ifdef LEKMOD_POST_CHANGES
+	bool m_bLekmodExpandedZOC;
+	bool m_bLekmodCiviliansToo;
 #endif
 	int m_iLekmodAttackFullHPMod;
 	bool m_bLekmodPostCombatOnSpawn;

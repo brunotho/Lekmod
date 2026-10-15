@@ -5380,6 +5380,13 @@ ResourceTypes CvMinorCivAI::GetNearbyResourceForQuest(PlayerTypes ePlayer)
 			{
 				continue;
 			}
+#ifdef LEKMOD_POST_CHANGES
+			// No strategic resource quests: City-States only ask for luxuries (user, POST list)
+			if(pkResourceInfo->getResourceUsage() == RESOURCEUSAGE_STRATEGIC)
+			{
+				continue;
+			}
+#endif
 
 			// Minor can't already have this Resource
 			if(GetPlayer()->getNumResourceTotal(eResource, /*bIncludeImport*/ true) > 0)

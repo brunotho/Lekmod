@@ -1246,7 +1246,8 @@ TXT_KEY_LEAGUE_OVERVIEW_MEMBER_DETAILS_TRAIT_VOTES
 // Changes made to CS quests
 #define LEKMOD_CITYSTATE_QUEST_CHANGES
 // Data-driven city-state personalities loaded from Minor_Civ_Personalities tables
-#define LEKMOD_MINOR_CIV_PERSONALITIES
+// Off since 2026-10-15 (POST list): City-States are back to the v34.11 personalities (Friendly, Neutral, Hostile, Irrational)
+//#define LEKMOD_MINOR_CIV_PERSONALITIES
 // Alters the Parameters for the Merchant of Venice buyout
 #define LEKMOD_MERCHANT_BUYOUT_NOT_NOANNEXING
 // Unlinks Repair for Improvements time and Route build time.
@@ -1483,6 +1484,9 @@ Diversify Spain and Australia's NW Discovery bonus
 // origin), LekmodTradeFromCapitalFood (route from the capital: Food for this city); UnitPromotions.LekmodAdjacentAlwaysHeal,
 // LekmodSameTileEmbarkedHeal, LekmodSameTileDisembark (Nau aura)
 #define LEKMOD_PORTUGAL
+// POST list items done in cloud session 6 (2026-10-15): no strategic resource City-State quests, 3-ruin reward cooldown,
+// Expanded ZOC promotion, overflow-to-Gold floating text, altitude promotions for civilians, militaristic City-State capture
+#define LEKMOD_POST_CHANGES
 // Improvements.LekmodNoFeature: can't be built on a feature unless Improvement_ValidFeatures lists it (Kasbah: Flood Plains only)
 #define LEKMOD_IMPROVEMENT_NO_FEATURE
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,

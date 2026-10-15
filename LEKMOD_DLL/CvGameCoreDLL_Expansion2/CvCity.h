@@ -914,6 +914,9 @@ public:
 #endif
 #ifdef LEKMOD_BUILDING_PLOT_YIELDS
 	int GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) const;
+#ifdef LEKMOD_POST_CHANGES
+	void LekmodShowOverflowGold(int iLostProductionTimes100, int iGoldTimes100);
+#endif
 #ifdef LEKMOD_PORTUGAL
 	bool LekmodIsBuildingEffectActive(const CvBuildingEntry& kBuilding) const;
 #endif

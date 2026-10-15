@@ -5094,6 +5094,12 @@ void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
 				{
 					pUnit->setHasPromotion(ePromotion, true);
 				}
+#ifdef LEKMOD_POST_CHANGES
+				else if (pUnit->IsLekmodCivilianFor(ePromotion))
+				{
+					pUnit->setHasPromotion(ePromotion, true);
+				}
+#endif
 			}
 		}
 	}
@@ -7197,6 +7203,15 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 		{
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_BUILDING_CITY", iTempMod);
 		}
+#ifdef LEKMOD_POST_CHANGES
+		// Ziggurat: % per city of the owner
+		iTempMod = GetLekmodBuildingStat(12, false) * GET_PLAYER(getOwner()).getNumCities();
+		iMultiplier += iTempMod;
+		if(toolTipSink && iTempMod)
+		{
+			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_LEKMOD_BUILDING_PER_CITY", iTempMod);
+		}
+#endif
 	}
 
 	// From policies
@@ -7919,6 +7934,24 @@ void CvCity::processBuilding(BuildingTypes eBuilding, int iChange, bool bFirst, 
 		// One-shot items
 		if(bFirst && iChange > 0)
 		{
+#ifdef LEKMOD_POST_CHANGES
+			// One-time Science per citizen (Ziggurat)
+			if (pBuildingInfo->GetLekmodInstantSciencePerPop() > 0)
+			{
+				const int iScience = pBuildingInfo->GetLekmodInstantSciencePerPop() * getPopulation();
+				TechTypes eCurrentTech = owningPlayer.GetPlayerTechs()->GetCurrentResearch();
+				if (eCurrentTech != NO_TECH)
+					GET_TEAM(getTeam()).GetTeamTechs()->ChangeResearchProgress(eCurrentTech, iScience, getOwner());
+				else
+					owningPlayer.changeOverflowResearch(iScience);
+				if (getOwner() == GC.getGame().getActivePlayer() && iScience > 0)
+				{
+					char szText[64] = { 0 };
+					sprintf_s(szText, "[COLOR_BLUE]+%d[ENDCOLOR][ICON_RESEARCH]", iScience);
+					GC.GetEngineUserInterface()->AddPopupText(getX(), getY(), szText, 0.0f);
+				}
+			}
+#endif
 #ifdef LEKMOD_BELIEF_EXTRA_TABLES
 			// Belief_BuildingClassFreeUnits: the owner's founded religion grants units when this building is finished (Grand Temple)
 			{
@@ -15598,6 +15631,9 @@ int CvCity::GetLekmodBuildingStat(int iStat, bool bMax) const
 		case 10: iValue = pkBuilding->GetLekmodTradeToCapitalGoldPerEra(); break;
 		case 11: iValue = pkBuilding->GetLekmodTradeFromCapitalFood(); break;
 #endif
+#ifdef LEKMOD_POST_CHANGES
+		case 12: iValue = pkBuilding->GetLekmodBuildingProductionPerCity(); break;
+#endif
 		}
 		if (iValue == 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
 			continue;
@@ -18145,6 +18181,17 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 
 
 //	--------------------------------------------------------------------------------
+#ifdef LEKMOD_POST_CHANGES
+/// Floating text on the city when production beyond the overflow cap turns into Gold (both in hundredths)
+void CvCity::LekmodShowOverflowGold(int iLostProductionTimes100, int iGoldTimes100)
+{
+	if (getOwner() != GC.getGame().getActivePlayer() || iGoldTimes100 < 100)
+		return;
+	char text[256] = { 0 };
+	sprintf_s(text, "[COLOR_YIELD_GOLD]+%d[ENDCOLOR][ICON_GOLD]  [COLOR_NEGATIVE_TEXT]-%d[ENDCOLOR][ICON_PRODUCTION]", iGoldTimes100 / 100, iLostProductionTimes100 / 100);
+	GC.GetEngineUserInterface()->AddPopupText(getX(), getY(), text, GC.getPOST_COMBAT_TEXT_DELAY() * 2);
+}
+#endif
 void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 {
 	VALIDATE_OBJECT
@@ -18300,6 +18347,9 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 				if(iProductionGold > 0)
 				{
 					kOwner.GetTreasury()->ChangeGoldTimes100(iProductionGold);
+					#ifdef LEKMOD_POST_CHANGES
+					LekmodShowOverflowGold(iLostProduction, iProductionGold);
+#endif
 				}
 			}
 			else
@@ -18370,6 +18420,9 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 				if(iProductionGold > 0)
 				{
 					kOwner.GetTreasury()->ChangeGoldTimes100(iProductionGold);
+					#ifdef LEKMOD_POST_CHANGES
+					LekmodShowOverflowGold(iLostProduction, iProductionGold);
+#endif
 				}
 
 				if(GC.getLogging() && GC.getAILogging())
@@ -18445,6 +18498,9 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			if(iProductionGold > 0)
 			{
 				kOwner.GetTreasury()->ChangeGoldTimes100(iProductionGold);
+				#ifdef LEKMOD_POST_CHANGES
+				LekmodShowOverflowGold(iLostProduction, iProductionGold);
+#endif
 			}
 		}
 		break;

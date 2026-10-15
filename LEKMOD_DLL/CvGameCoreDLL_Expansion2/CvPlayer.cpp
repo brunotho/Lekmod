@@ -1414,6 +1414,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 #if defined(LEKMOD_RUIN_CHOICE)
 	m_aiLekmodPendingRuins.clear();
 	m_iLekmodLastRuinGoody = -1;
+#ifdef LEKMOD_POST_CHANGES
+	m_iLekmodLastRuinGoody = 0;
+	m_iLekmodRecentRuinMasks = 0;
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	m_iLekmodIdeologyTurn = -1;
 	m_iLekmodEarlierIdeologyPolicyTurn = -1;
@@ -7996,7 +8000,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 	kGoodyInfo.CacheResult(kResult);
 
 	CvGoodyHuts::DoPlayerReceivedGoody(GetID(), eGoody);
-#if defined(LEKMOD_RUIN_CHOICE)
+#if defined(LEKMOD_RUIN_CHOICE) && !defined(LEKMOD_POST_CHANGES)
 	m_iLekmodLastRuinGoody = eGoody;
 #endif
 
@@ -9597,6 +9601,15 @@ void CvPlayer::LekmodApplyRuinRecord(int iRecord, int iChosen)
 		m_iLekmodGoodyPay = aiRecord[iBase + 2];
 		m_iLekmodGoodyGain = aiRecord[iBase + 3];
 		receiveGoody(pPlot, eGoody, pUnit);
+#ifdef LEKMOD_POST_CHANGES
+		// remember the reward for the 3-ruin cooldown: its yield mask (a trade counts by what it gains) and its type
+		{
+			static GoodyTypes eTradeGoodyRecent = LekmodLookupGoody("GOODY_LEKMOD_TRADE");
+			const int iMask = (eGoody == eTradeGoodyRecent) ? LekmodRuinTradeMask(-1, m_iLekmodGoodyGain) : LekmodRuinGoodyMask(eGoody);
+			m_iLekmodRecentRuinMasks = ((m_iLekmodRecentRuinMasks << 8) | (iMask & 0xFF)) & 0xFFFFFF;
+			m_iLekmodLastRuinGoody = ((m_iLekmodLastRuinGoody << 8) | ((eGoody + 1) & 0xFF)) & 0xFFFFFF;
+		}
+#endif
 		m_iLekmodGoodyForcedRoll = -1;
 		m_iLekmodGoodyPay = -1;
 		m_iLekmodGoodyGain = -1;
@@ -9608,6 +9621,29 @@ void CvPlayer::LekmodCreateRuinOffers(CvPlot* pPlot, CvUnit* pUnit, const std::v
 {
 	static GoodyTypes eTradeGoody = LekmodLookupGoody("GOODY_LEKMOD_TRADE");
 
+#ifdef LEKMOD_POST_CHANGES
+	// Rewards of the last 3 ruins aren't offered again (user, POST list): yields by yield (a Food ruin also blocks a trade that
+	// gains Food), other rewards (map, upgrade...) by type; the trade itself is filtered by its pairs below
+	const int iRecentMask = (m_iLekmodRecentRuinMasks | (m_iLekmodRecentRuinMasks >> 8) | (m_iLekmodRecentRuinMasks >> 16)) & 0xFF;
+	std::vector<GoodyTypes> aePool;
+	for (uint i = 0; i < avValidGoodies.size(); i++)
+	{
+		const GoodyTypes eValid = avValidGoodies[i];
+		if (eValid == eTradeGoody)
+		{
+			aePool.push_back(eValid);
+			continue;
+		}
+		const int iMask = LekmodRuinGoodyMask(eValid);
+		bool bRecentType = false;
+		for (int iShift = 0; iShift < 24; iShift += 8)
+			if (((m_iLekmodLastRuinGoody >> iShift) & 0xFF) == ((eValid + 1) & 0xFF))
+				bRecentType = true;
+		if ((iMask != 0 && (iMask & iRecentMask) != 0) || (iMask == 0 && bRecentType))
+			continue;
+		aePool.push_back(eValid);
+	}
+#else
 	// The reward chosen at the previous ruin isn't offered again
 	std::vector<GoodyTypes> aePool;
 	for (uint i = 0; i < avValidGoodies.size(); i++)
@@ -9615,6 +9651,7 @@ void CvPlayer::LekmodCreateRuinOffers(CvPlot* pPlot, CvUnit* pUnit, const std::v
 		if (avValidGoodies[i] != (GoodyTypes)m_iLekmodLastRuinGoody)
 			aePool.push_back(avValidGoodies[i]);
 	}
+#endif
 	if (aePool.empty())
 		aePool = avValidGoodies;
 
@@ -9662,7 +9699,12 @@ void CvPlayer::LekmodCreateRuinOffers(CvPlot* pPlot, CvUnit* pUnit, const std::v
 				std::vector<int> aiAll;
 				LekmodGetRuinTradePairs(pPlot, pUnit, iRoll, aiAll);
 				for (uint iPair = 0; iPair < aiAll.size(); iPair++)
+#ifdef LEKMOD_POST_CHANGES
+					if ((LekmodRuinTradeMask(aiAll[iPair] / 10, aiAll[iPair] % 10) & iOtherMask) == 0
+						&& (LekmodRuinTradeMask(-1, aiAll[iPair] % 10) & iRecentMask) == 0)
+#else
 					if ((LekmodRuinTradeMask(aiAll[iPair] / 10, aiAll[iPair] % 10) & iOtherMask) == 0)
+#endif
 						aiPairs.push_back(aiAll[iPair]);
 			}
 			if (aiPairs.empty())
@@ -10383,7 +10425,12 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 		UnitTypes eThisPlayersUnitType = (UnitTypes) getCivilizationInfo().getCivilizationUnits(eUnitClass);
 
 		// If the player isn't allowed to train this Unit (via XML) then return false
+#ifdef LEKMOD_POST_CHANGES
+		// ... unless it is the unique unit of a Militaristic City-State whose city we hold
+		if(eThisPlayersUnitType != eUnit && !LekmodHasCapturedMilitaristicUU(eUnit))
+#else
 		if(eThisPlayersUnitType != eUnit)
+#endif
 		{
 			return false;
 		}
@@ -29520,6 +29567,26 @@ int CvPlayer::GetLekmodAllyUUPurchaseMod() const
 	}
 	return iValue;
 }
+#ifdef LEKMOD_POST_CHANGES
+/// Do we hold a city founded by a Militaristic City-State whose unique unit this is? Then we may train it (POST list)
+bool CvPlayer::LekmodHasCapturedMilitaristicUU(UnitTypes eUnit) const
+{
+	if (eUnit == NO_UNIT || isMinorCiv() || isBarbarian())
+		return false;
+	const CvCity* pLoopCity;
+	int iLoop;
+	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+	{
+		const PlayerTypes eOriginal = pLoopCity->getOriginalOwner();
+		if (eOriginal < MAX_MAJOR_CIVS || eOriginal >= MAX_CIV_PLAYERS || eOriginal == GetID())
+			continue;
+		CvMinorCivAI* pMinorAI = GET_PLAYER(eOriginal).GetMinorCivAI();
+		if (GET_PLAYER(eOriginal).isMinorCiv() && pMinorAI->GetTrait() == MINOR_CIV_TRAIT_MILITARISTIC && pMinorAI->GetUniqueUnit() == eUnit)
+			return true;
+	}
+	return false;
+}
+#endif
 /// Is this the unique unit of an allied Militaristic City-State that we may buy (Treaty of Arms)?
 bool CvPlayer::LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const
 {
@@ -31763,6 +31830,9 @@ void CvPlayer::Read(FDataStream& kStream)
 #if defined(LEKMOD_RUIN_CHOICE)
 	kStream >> m_aiLekmodPendingRuins;
 	kStream >> m_iLekmodLastRuinGoody;
+#ifdef LEKMOD_POST_CHANGES
+	kStream >> m_iLekmodRecentRuinMasks;
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	kStream >> m_iLekmodIdeologyTurn;
 	kStream >> m_iLekmodEarlierIdeologyPolicyTurn;
@@ -32353,6 +32423,9 @@ void CvPlayer::Write(FDataStream& kStream) const
 #if defined(LEKMOD_RUIN_CHOICE)
 	kStream << m_aiLekmodPendingRuins;
 	kStream << m_iLekmodLastRuinGoody;
+#ifdef LEKMOD_POST_CHANGES
+	kStream << m_iLekmodRecentRuinMasks;
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	kStream << m_iLekmodIdeologyTurn;
 	kStream << m_iLekmodEarlierIdeologyPolicyTurn;

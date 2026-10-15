@@ -572,6 +572,13 @@ bool CvUnitMovement::IsSlowedByZOC(const CvUnit* pUnit, const CvPlot* pFromPlot,
 						{
 							continue;
 						}
+#ifdef LEKMOD_POST_CHANGES
+						// Expanded ZOC: any move away from a tile next to this unit ends the move (an attack is not a move)
+						if(!bIsVisibleEnemyUnit && pLoopUnit->IsLekmodExpandedZOC())
+						{
+							return true;
+						}
+#endif
 
 						// Loop through plots adjacent to the enemy unit and see if it's the same as our unit's Destination Plot
 						for(int iDirection2 = 0; iDirection2 < NUM_DIRECTION_TYPES; iDirection2++)

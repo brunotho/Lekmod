@@ -5618,6 +5618,10 @@ void CvPlayerTraits::LekmodApplyTrainedUnitEffects(const CvCity* pCity, CvUnit* 
 			}
 			if(pUnit->IsCombatUnit() || pUnit->getDomainType() == DOMAIN_SEA || pUnit->getDomainType() == DOMAIN_AIR)
 				pUnit->setHasPromotion(ePromotion, true);
+#ifdef LEKMOD_POST_CHANGES
+			else if(pUnit->IsLekmodCivilianFor(ePromotion))
+				pUnit->setHasPromotion(ePromotion, true);
+#endif
 		}
 	}
 }
@@ -6309,6 +6313,27 @@ void CvPlayerTraits::ComputeMayaDate()
 {
 	float fCalendarStart = CALENDAR_START;
 	int iYear = GC.getGame().getGameTurnYear();
+#ifdef LEKMOD_POST_CHANGES
+	// Quick speed got a new calendar (POST list); the Maya Long Count keeps the old quick calendar so its
+	// great people still arrive on the same turns as before (turn-based, not year-based)
+	if (GC.getGame().getGameSpeedType() == (GameSpeedTypes)GC.getInfoTypeForString("GAMESPEED_QUICK", true))
+	{
+		static const int aiOldQuick[][2] = { {720, 50}, {480, 30}, {360, 20}, {240, 30}, {120, 25}, {60, 40}, {24, 65}, {12, 70} };
+		const int iNumSegments = sizeof(aiOldQuick) / sizeof(aiOldQuick[0]);
+		const int iGameTurn = GC.getGame().getGameTurn();
+		int iMonth = GC.getGame().getStartYear() * 12;
+		int iCount = 0;
+		for (int iSeg = 0; iSeg < iNumSegments && iCount < iGameTurn; iSeg++)
+		{
+			const int iTurns = std::min(aiOldQuick[iSeg][1], iGameTurn - iCount);
+			iMonth += aiOldQuick[iSeg][0] * iTurns;
+			iCount += iTurns;
+		}
+		if (iGameTurn > iCount)
+			iMonth += aiOldQuick[iNumSegments - 1][0] * (iGameTurn - iCount);
+		iYear = iMonth / 12;
+	}
+#endif
 	float fYear = (float)iYear;
 
 	if(fYear >= fCalendarStart)

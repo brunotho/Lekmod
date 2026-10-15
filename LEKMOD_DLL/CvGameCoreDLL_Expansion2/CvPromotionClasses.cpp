@@ -248,6 +248,10 @@ CvPromotionEntry::CvPromotionEntry():
 	m_iLekmodSameTileEmbarkedHeal(0),
 	m_bLekmodSameTileDisembark(false),
 #endif
+#ifdef LEKMOD_POST_CHANGES
+	m_bLekmodExpandedZOC(false),
+	m_bLekmodCiviliansToo(false),
+#endif
 #endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 	m_iLekmodAttackFullHPMod(0),
@@ -942,6 +946,10 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_bLekmodAdjacentAlwaysHeal = kResults.GetBool("LekmodAdjacentAlwaysHeal");
 	m_iLekmodSameTileEmbarkedHeal = kResults.GetInt("LekmodSameTileEmbarkedHeal");
 	m_bLekmodSameTileDisembark = kResults.GetBool("LekmodSameTileDisembark");
+#endif
+#ifdef LEKMOD_POST_CHANGES
+	m_bLekmodExpandedZOC = kResults.GetBool("LekmodExpandedZOC");
+	m_bLekmodCiviliansToo = kResults.GetBool("LekmodCiviliansToo");
 #endif
 #endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
@@ -2353,6 +2361,18 @@ bool CvPromotionEntry::IsLekmodSameTileDisembark() const
 	return m_bLekmodSameTileDisembark;
 }
 #endif
+#ifdef LEKMOD_POST_CHANGES
+/// Enemy units next to this unit lose all their moves when they move (Expanded ZOC)
+bool CvPromotionEntry::IsLekmodExpandedZOC() const
+{
+	return m_bLekmodExpandedZOC;
+}
+/// Sources that give this promotion to land military units give it to land civilians too (Altitude Training)
+bool CvPromotionEntry::IsLekmodCiviliansToo() const
+{
+	return m_bLekmodCiviliansToo;
+}
+#endif
 /// Combat modifier attacking a unit at full health (Kris Swordsman: Ambition)
 int CvPromotionEntry::GetLekmodAttackFullHPMod() const
 {
@@ -2374,6 +2394,9 @@ bool CvPromotionEntry::HasLekmodCivEffect() const
 #endif
 #ifdef LEKMOD_PORTUGAL
 		|| m_bLekmodAdjacentAlwaysHeal || m_iLekmodSameTileEmbarkedHeal != 0 || m_bLekmodSameTileDisembark
+#endif
+#ifdef LEKMOD_POST_CHANGES
+		|| m_bLekmodExpandedZOC
 #endif
 #ifdef LEKMOD_SPREAD_ABILITIES
 		|| m_iLekmodHealRateMod != 0

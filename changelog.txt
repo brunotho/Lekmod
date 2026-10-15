@@ -26,6 +26,8 @@ Hills cost 10% less movement (1.8 instead of 2).
 - Changed: was double movement in hills, now a 10% movement discount in hills
 - Removed: +10% attack and defense in hills
 - Dev: new promotion column HillsMovementDiscountPercent
+- Added: civilian units get it too where military units do: all Inca land civilians, civilians trained in a Swiss city with a Reislaeufer Post, Tibetan civilians trained next to a mountain, and civilians passing Mount Kilimanjaro
+- DLL: UnitPromotions.LekmodCiviliansToo (CvUnit::IsLekmodCivilianFor); hooks in CvUnit init (Inca, Kilimanjaro), CvCity trained promotions (Swiss), CvPlayerTraits::LekmodApplyTrainedUnitEffects (Tibet)
 
 
 FAST SWIMMER (PROMOTION_PHIL_MARINE)
@@ -768,6 +770,7 @@ NEW. Each bomber attack also deals 20% of its damage to all enemy and neutral la
 - Added: hitting a city-state's unit declares war on it; hitting a major civilization you are not at war with does not
 - Dev: new column CarpetBombing; splash in ResolveAirUnitVsCombat uses the interception-reduced damage. Air units' MISSION_RANGE_ATTACK now goes through CvUnitCombat::AttackAir (the "declare war?" popup skipped all air logic before).
 - Note: the spec includes friendly units; no friendly fire is kept for now (user, 2026-10-07)
+- Dev: tooltip/Civilopedia rewritten to cover every case (unit target, city target, neighbouring cities, interception, City-States, civilizations at peace)
 
 
 SUPPLY SHIP (PROMOTION_SUPPLY_SHIP)
@@ -834,7 +837,7 @@ ANCIENT RUINS OVERHAUL (GOODY_*)
 ---------------------------------
 Tags: ruins, religion, game mechanics
 Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshone ability), with the exact amounts shown. Rewards scale with the era (ancient = 1, classical = 2, ...) and the turn.
-- Added: popping a ruin offers 2 different random rewards to choose from (3 with Native Tongue); the reward you chose at your previous ruin is not offered again, and rewards you can't use right now are left out
+- Added: popping a ruin offers 2 different random rewards to choose from (3 with Native Tongue); rewards of your previous 3 ruins are not offered again (counted by what they give: a Food ruin also blocks trades that gain Food), and rewards you can't use right now are left out
 - Changed: the choices show Food, Culture, Gold and Science amounts in their yield colors
 - Added: new reward "Trade": pay 5-8 Food from your capital, 40-70 Gold or 5-8 Culture for 70-100 Gold, 25-35 Science, (turn + 8-12) Culture, the location of the 3 nearest city-states you haven't seen, or Mobility for the unit; a bigger price comes with a bigger reward; only offered when you can pay. Gold for Gold and Culture for Culture never come up. All amounts x era
 - Changed: a Trade offer never pays or gains something another offer of the same ruin gives (no "Mobility" next to "Trade 50 Gold for Mobility", no "+13 Food" next to a trade paying Food); if no such trade fits, another reward is offered instead
@@ -849,12 +852,13 @@ Every ruin lets you choose between 2 rewards (3 with Native Tongue / the Shoshon
 - Changed: Gold: 45 + 5 x (1-10) x era gold; 80 or more also spawns an era-appropriate barbarian next to the ruin
 - Changed: Mobility: ancient era only; scouts (including the Shoshone Pathfinder) can now get it
 - Removed: the Prophet faith ruin
-- Changed: short choice texts with the exact numbers (e.g. "Trade 40 Gold for 30 Science"), and new result texts
+- Changed: short choice texts with the exact numbers, "Gain" marked green and "Lose" red (e.g. "Lose 40 Gold - Gain 30 Science"), and new result texts
 - Changed: Civilopedia ruin pages rewritten with the current rewards and numbers
 - Dev: new GoodyHuts columns (BeforeEra, UnitDamage, GoldEraFactor, EraBarbarianSpawn, ScienceEraRuin, CultureEraTurn, FaithEraTurn, FoodEraScale, FaithZeroOnly); ruin data moved out of the unloaded Art/No Quitters Mod XML. The popup shows the DLL-computed amount (Data2).
 - Dev: LEKMOD_RUIN_CHOICE: offers rolled with the synced RNG in CvPlayer::doGoody (one roll 0-999 per offer sets all its numbers), stored per plot in CvPlayer (saved), chosen via Network.SendGoodyChoice, AIs pick at random, leftovers resolved in CvPlayer::doTurn. New GoodyHuts columns LekmodTrade / LekmodAncientTech, rows GOODY_LEKMOD_TRADE (pool weight 2) and GOODY_LEKMOD_ANCIENT_TECH (weight 1). Lua: Player:GetLekmodRuinOffers(plotIndex); ChooseGoodyHutReward.lua override
 - Dev: the food, faith and science ruins gave nothing when no unit was involved (e.g. a ruin inside a new city's borders); now only the unit part (promotion, healing, damage) is skipped
 - Dev: choosing a ruin reward crashed the game when the ruin's unit no longer existed (a Conquistador or Settler that founded the city and so popped the ruin); receiveGoody now checks the unit (crash dump 2026-10-10 16:03, traced with a relinked map file)
+- Dev: 3-ruin cooldown (LEKMOD_POST_CHANGES): saved m_iLekmodRecentRuinMasks (yield masks of the last 3 rewards, 8 bits each) and m_iLekmodLastRuinGoody now packs their goody types; recorded after receiveGoody in LekmodChooseRuinOffer
 
 
 GLUTTON (PROMOTION_GLUTTON)
@@ -2049,7 +2053,9 @@ Tags: civs, units
 SUMERIA (CIVILIZATION_SUMERIA)
 ------------------------------
 Tags: civs, units, buildings
-- Changed: Ziggurat costs no Gold maintenance (was 1)
+- Changed: Ziggurat (rebuilt) no longer replaces the Temple: Mathematics, costs 67, at most 3 per empire, no maintenance, no Shrine needed; +2% Production towards buildings in its city for each city you own; when completed, Science equal to 5 x the city's population
+- Removed: Ziggurat: +2 Faith, +10% Science
+- DLL: Buildings.LekmodBuildingProductionPerCity, LekmodInstantSciencePerPop; new building class 205
 - Changed: Phalanx starts with Envelopment instead of its +50% flanking bonus
 
 PERSIA (CIVILIZATION_PERSIA)
@@ -2156,6 +2162,8 @@ Tags: civs, units, buildings, promotions
 - Changed: Atlatlist now replaces the Composite Bowman (with its strength, cost and Construction requirement) instead of the Archer
 - Added: Atlatlist starts with Woodsman and Point Blank (+30% Ranged Strength when attacking an adjacent target; lost on upgrade)
 - Dev: new promotion PROMOTION_LEKMOD_POINT_BLANK (ID 379, AdjacentRangedAttackMod 30, the Blind Spot mechanism)
+- Changed: Long Count tooltip lists the turns its cycles end (42, 48, 57, 67, 77, 88, 102, 122, 152); they stay on the same turns as before the calendar change
+- DLL: CvPlayerTraits::ComputeMayaDate uses the old quick calendar on quick speed
 
 MUGHALS (CIVILIZATION_MUGHALS)
 ------------------------------
@@ -2575,6 +2583,7 @@ Tags: civs, buildings
 - Changed: start bias avoids jungle instead of desert (tundra bias kept)
 - Added: strategic resources on Snow +3 Production
 - Removed: gifting a Great Person to a City-State no longer gives 100 Influence and 200 Gold
+- Added: Hakkapeliitta (replaces the Lancer, shared with Finland): same cost, Strength and movement as the Lancer, needs 2 Horses, starts with Envelopment and Great Generals II
 - DLL: Trait_LekmodPlotYields
 
 MAURYA (CIVILIZATION_MAURYA)
@@ -2800,10 +2809,69 @@ FINLAND (CIVILIZATION_FINLAND)
 Tags: civs
 - Removed: the 50% stronger flanking bonus for melee, gunpowder, mounted, armor, recon, naval melee and paratrooper units
 - Added: Sauna: Snow tiles of the city next to a lake +2 Food and +2 Culture
-- Note: open: the new shared Hakkapeliitta unit (later spec)
+- Added: Hakkapeliitta (replaces the Lancer, shared with Sweden): same cost, Strength and movement as the Lancer, needs 2 Horses, starts with Envelopment and Great Generals II
 - DLL: Building_LekmodPlotYields
 
 GARRISON YIELDS FROM BUILDINGS
 ------------------------------
 Tags: game mechanics, buildings
 - Changed: from turn 80, building yields that need a garrison (Mughal Caravansary, Tunisian Castle) count in every city, like the policy garrison effects
+
+PAPAL STATES (CIVILIZATION_VATICAN)
+-----------------------------------
+Tags: civs, buildings, religion
+- Changed: new UA part: +1 Faith and +1 Culture from every Great Work and every Great Person tile improvement
+- Removed: Great Person tile improvements +2 Food, +1 Gold, +1 Culture
+- Changed: Faith from kills replaced by the Zealot promotion on all military units (Faith equal to the killed unit's Strength, max 40)
+- Changed: St. Peter's no longer needs Temples and no longer gives a Great Prophet; +2 Great Artist points
+- Dev: Trait_GreatWorkYieldChanges, Trait_FreePromotionUnitCombats (all military unit combats)
+
+CITY-STATE QUEST TYPES (MINOR_CIV_QUEST_*)
+-------------------------------------------
+Tags: game mechanics
+City-States no longer ask you to demand tribute from another City-State or to connect a strategic resource.
+- Removed: the "demand tribute from a City-State" quest
+- Removed: the "connect a resource" quest no longer asks for strategic resources (luxuries only)
+- Dev: QUEST_DISABLED_BULLY_CITY_STATE = 1; CvMinorCivAI::GetNearbyResourceForQuest skips strategic resources (LEKMOD_POST_CHANGES)
+
+CITY-STATE PERSONALITIES (MINOR_CIV_PERSONALITY_*)
+--------------------------------------------------
+Tags: game mechanics
+City-States are back to the four personalities of LEKMOD v34.11: Friendly, Neutral, Hostile and Irrational.
+- Removed: Wealthy, Impoverished, Pirate Republic, Theocratic, Pacifistic and Isolationist City-States
+- Changed: Friendly City-States never ask you to conquer another City-State and ask for road connections more often; they no longer slow Influence decay or give more quest Influence
+- Changed: Hostile City-States: Influence drops by 1.5 per turn, more conquest quests, fewer quests overall, harder to demand tribute from
+- Changed: personality tooltips and the Civilopedia page describe the actual rules
+- DLL: LEKMOD_MINOR_CIV_PERSONALITIES switched off (the v35 data-driven personalities); the v34.11 code paths are its #else branches
+
+MILITARISTIC CITY-STATES: UNIQUE UNIT ON CAPTURE (MINOR_CIV_TRAIT_MILITARISTIC)
+----------------------------------------------------------------------------------
+Tags: game mechanics, units
+- Added: while you hold a city founded by a Militaristic City-State, all your cities can train its unique unit; when you lose the city, that unit can no longer be built and Production on it is lost (the normal version stays available)
+- DLL: CvPlayer::LekmodHasCapturedMilitaristicUU, checked in CvPlayer::canTrain
+
+EXPANDED ZOC (PROMOTION_LEKMOD_EXPANDED_ZOC)
+--------------------------------------------
+Tags: promotions, movement, combat
+NEW. An enemy unit that moves away from a tile next to this unit loses its remaining movement. Attacks don't count as moves.
+- Added: can be picked by gunpowder, mounted, armored and naval melee units
+- DLL: UnitPromotions.LekmodExpandedZOC (CvUnitMovement::IsSlowedByZOC); promotion ID 393
+- Note: uses a placeholder icon (ABILITY_ATLAS 59)
+
+TOURISM BUILDING TOOLTIPS (BUILDING_HOTEL, BUILDING_AIRPORT, BUILDING_TOURIST_CENTER)
+-------------------------------------------------------------------------------------
+Tags: buildings, ui, bugfix
+- Fixed: the Hotel, Airport and National Visitor Center tooltips now say what their Tourism bonus counts: the Culture from World Wonders, Natural Wonders and all worked tiles with an improvement in the city
+
+PRODUCTION OVERFLOW TO GOLD (FLOATING TEXT)
+-------------------------------------------
+Tags: ui
+- Added: when a city's extra Production is turned into Gold, the Gold gained and the Production spent float over the city
+- DLL: CvCity::LekmodShowOverflowGold, called from popOrder for units, buildings and projects
+
+QUICK SPEED CALENDAR (GAMESPEED_QUICK)
+--------------------------------------
+Tags: game mechanics, ui
+The year shown on quick speed now follows the usual pace of the tech tree: about 500 AD at turn 55, 1750 AD at turn 90, 1900 AD at turn 105, 1945 AD at turn 135 and 2025 AD at turn 160.
+- Changed: only the displayed year; turns, costs and the turn limit are unchanged
+- Dev: GameSpeed_Turns quick rows (months per turn x turns): 900x40, 1200x15, 400x15, 480x15, 360x5, 120x15, 15x20, 24x10, 30x10, 48x10, 36x10, 12x165 (330 turns as before)

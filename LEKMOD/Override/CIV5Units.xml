@@ -43426,6 +43426,8 @@
     	<Column name="LekmodCapitalYield" type="integer" default="0"/>
     	<Column name="LekmodTradeToCapitalGoldPerEra" type="integer" default="0"/>
     	<Column name="LekmodTradeFromCapitalFood" type="integer" default="0"/>
+    	<Column name="LekmodBuildingProductionPerCity" type="integer" default="0"/>
+    	<Column name="LekmodInstantSciencePerPop" type="integer" default="0"/>
     	<Column name="GreatWorkFilledTourismModifier" type="integer" default="0"/>
     	<Column name="FreePlotPurchase" type="boolean" default="false"/>
     	<Column name="LekmodTimedBuilding" type="text" reference="Buildings(Type)" default="NULL"/>
@@ -99396,7 +99398,7 @@
 		</Row>
 		<Row> 
 			<Name>QUEST_DISABLED_BULLY_CITY_STATE</Name> 
-			<Value>0</Value> 
+			<Value>1</Value> 
 		</Row>
 		<Row> 
 			<Name>QUEST_DISABLED_DENOUNCE_MAJOR</Name> 
@@ -111297,45 +111299,66 @@
 			<MonthIncrement>6</MonthIncrement> 
 			<TurnsPerIncrement>60</TurnsPerIncrement> 
 		</Row>
+		<!-- LEKMOD POST (2026-10-15): quick-speed calendar rebalanced to the tech pace (T55 = 500 AD, T90 = 1750, T105 = 1900, T160 = 2025); same 330 turns -->
 		<Row> 
 			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
-			<MonthIncrement>720</MonthIncrement> 
-			<TurnsPerIncrement>50</TurnsPerIncrement> 
-		</Row>
-		<Row> 
-			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
-			<MonthIncrement>480</MonthIncrement> 
-			<TurnsPerIncrement>30</TurnsPerIncrement> 
-		</Row>
-		<Row> 
-			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
-			<MonthIncrement>360</MonthIncrement> 
-			<TurnsPerIncrement>20</TurnsPerIncrement> 
-		</Row>
-		<Row> 
-			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
-			<MonthIncrement>240</MonthIncrement> 
-			<TurnsPerIncrement>30</TurnsPerIncrement> 
-		</Row>
-		<Row> 
-			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
-			<MonthIncrement>120</MonthIncrement> 
-			<TurnsPerIncrement>25</TurnsPerIncrement> 
-		</Row>
-		<Row> 
-			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
-			<MonthIncrement>60</MonthIncrement> 
+			<MonthIncrement>900</MonthIncrement> 
 			<TurnsPerIncrement>40</TurnsPerIncrement> 
 		</Row>
 		<Row> 
 			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>1200</MonthIncrement> 
+			<TurnsPerIncrement>15</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>400</MonthIncrement> 
+			<TurnsPerIncrement>15</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>480</MonthIncrement> 
+			<TurnsPerIncrement>15</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>360</MonthIncrement> 
+			<TurnsPerIncrement>5</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>120</MonthIncrement> 
+			<TurnsPerIncrement>15</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>15</MonthIncrement> 
+			<TurnsPerIncrement>20</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
 			<MonthIncrement>24</MonthIncrement> 
-			<TurnsPerIncrement>65</TurnsPerIncrement> 
+			<TurnsPerIncrement>10</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>30</MonthIncrement> 
+			<TurnsPerIncrement>10</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>48</MonthIncrement> 
+			<TurnsPerIncrement>10</TurnsPerIncrement> 
+		</Row>
+		<Row> 
+			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
+			<MonthIncrement>36</MonthIncrement> 
+			<TurnsPerIncrement>10</TurnsPerIncrement> 
 		</Row>
 		<Row> 
 			<GameSpeedType>GAMESPEED_QUICK</GameSpeedType> 
 			<MonthIncrement>12</MonthIncrement> 
-			<TurnsPerIncrement>70</TurnsPerIncrement> 
+			<TurnsPerIncrement>165</TurnsPerIncrement> 
 		</Row>
 		<Row> 
 			<GameSpeedType>GAMESPEED_ONLINE</GameSpeedType> 
@@ -215056,6 +215079,8 @@
 		<Column name="LekmodAdjacentAlwaysHeal" type="boolean" default="false"/>
 		<Column name="LekmodSameTileEmbarkedHeal" type="integer" default="0"/>
 		<Column name="LekmodSameTileDisembark" type="boolean" default="false"/>
+		<Column name="LekmodExpandedZOC" type="boolean" default="false"/>
+		<Column name="LekmodCiviliansToo" type="boolean" default="false"/>
 	</Table>
 	<UnitPromotions>
 		<Delete />
@@ -291360,4 +291385,338 @@
 			<Yield>5</Yield>
 		</Row>
 	</Building_TerrainYieldChanges>
+	<!-- POST (2026-10-15): Hakkapeliitta for Sweden and Finland: a Lancer (same cost, Strength, moves, 2 Horses) with Envelopment and Great Generals II -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_SWEDISH_HAKKAPELIITTA"/>
+			<Set Combat="26" Moves="4" ObsoleteTech="TECH_RAILROAD" GoodyHutUpgradeUnitClass="UNITCLASS_ANTI_TANK_RIFLE"/>
+		</Update>
+	</Units>
+	<Unit_ClassUpgrades>
+		<Delete UnitType="UNIT_SWEDISH_HAKKAPELIITTA"/>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<UnitClassType>UNITCLASS_ANTI_TANK_RIFLE</UnitClassType>
+		</Row>
+	</Unit_ClassUpgrades>
+	<Unit_ResourceQuantityRequirements>
+		<Delete UnitType="UNIT_SWEDISH_HAKKAPELIITTA"/>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<ResourceType>RESOURCE_HORSE</ResourceType>
+			<Cost>2</Cost>
+		</Row>
+	</Unit_ResourceQuantityRequirements>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_SWEDISH_HAKKAPELIITTA"/>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<PromotionType>PROMOTION_NO_DEFENSIVE_BONUSES</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<PromotionType>PROMOTION_CAN_MOVE_AFTER_ATTACKING</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<PromotionType>PROMOTION_ANTI_MOUNTED_WEAK</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<PromotionType>PROMOTION_ENVELOPMENT</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+			<PromotionType>PROMOTION_SPAWN_GENERALS_II</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<Civilization_UnitClassOverrides>
+		<Row>
+			<CivilizationType>CIVILIZATION_SWEDEN</CivilizationType>
+			<UnitClassType>UNITCLASS_LANCER</UnitClassType>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+		</Row>
+		<Row>
+			<CivilizationType>CIVILIZATION_FINLAND</CivilizationType>
+			<UnitClassType>UNITCLASS_LANCER</UnitClassType>
+			<UnitType>UNIT_SWEDISH_HAKKAPELIITTA</UnitType>
+		</Row>
+	</Civilization_UnitClassOverrides>
+	<!-- POST (2026-10-15): NEW promotion Expanded ZOC (393): enemy units next to this unit lose all their moves when they move; pickable for gunpowder, mounted, armor, naval melee -->
+	<UnitPromotions>
+		<Row>
+			<ID>393</ID>
+			<Type>PROMOTION_LEKMOD_EXPANDED_ZOC</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_EXPANDED_ZOC</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_EXPANDED_ZOC_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>59</PortraitIndex>
+			<IconAtlas>ABILITY_ATLAS</IconAtlas>
+			<LekmodExpandedZOC>true</LekmodExpandedZOC>
+			<PediaType>PEDIA_SHARED</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_EXPANDED_ZOC</PediaEntry>
+		</Row>
+	</UnitPromotions>
+	<UnitPromotions_UnitCombats>
+		<Row>
+			<PromotionType>PROMOTION_LEKMOD_EXPANDED_ZOC</PromotionType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_LEKMOD_EXPANDED_ZOC</PromotionType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_LEKMOD_EXPANDED_ZOC</PromotionType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+		</Row>
+		<Row>
+			<PromotionType>PROMOTION_LEKMOD_EXPANDED_ZOC</PromotionType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+		</Row>
+	</UnitPromotions_UnitCombats>
+	<!-- POST (2026-10-15): Altitude Training also for land civilians (Inca trait, Swiss Reislaeufer Post, Tibet, Kilimanjaro) -->
+	<UnitPromotions>
+		<Update>
+			<Where Type="PROMOTION_ALTITUDE_TRAINING"/>
+			<Set LekmodCiviliansToo="true"/>
+		</Update>
+	</UnitPromotions>
+	<!-- POST (2026-10-15): Sumeria's Ziggurat from scratch: own class (no longer a Temple), max 3, Mathematics, 67 quick,
+	     +2% building Production per city owned, one-time Science = 5 x population -->
+	<BuildingClasses>
+		<Row>
+			<ID>205</ID>
+			<Type>BUILDINGCLASS_LEKMOD_ZIGGURAT</Type>
+			<DefaultBuilding>BUILDING_ZIGGURAT</DefaultBuilding>
+			<MaxGlobalInstances>-1</MaxGlobalInstances>
+			<MaxTeamInstances>-1</MaxTeamInstances>
+			<MaxPlayerInstances>3</MaxPlayerInstances>
+			<ExtraPlayerInstances>0</ExtraPlayerInstances>
+			<NoLimit>false</NoLimit>
+			<Monument>false</Monument>
+		</Row>
+	</BuildingClasses>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_ZIGGURAT"/>
+			<Set BuildingClass="BUILDINGCLASS_LEKMOD_ZIGGURAT" RequiredCivilization="CIVILIZATION_SUMERIA" PrereqTech="TECH_MATHEMATICS" Cost="100" GoldMaintenance="0" LekmodBuildingProductionPerCity="2" LekmodInstantSciencePerPop="5"/>
+		</Update>
+	</Buildings>
+	<Building_ClassesNeededInCity>
+		<Delete BuildingType="BUILDING_ZIGGURAT"/>
+	</Building_ClassesNeededInCity>
+	<Building_YieldChanges>
+		<Delete BuildingType="BUILDING_ZIGGURAT"/>
+	</Building_YieldChanges>
+	<Building_YieldModifiers>
+		<Delete BuildingType="BUILDING_ZIGGURAT"/>
+	</Building_YieldModifiers>
+	<Civilization_BuildingClassOverrides>
+		<Delete CivilizationType="CIVILIZATION_SUMERIA" BuildingClassType="BUILDINGCLASS_TEMPLE"/>
+	</Civilization_BuildingClassOverrides>
+	<!-- POST (2026-10-15): Papal States: UA +1 Faith +1 Culture from Great Works and Great Person improvements (old GP tile yields removed), Zealot on all units instead of Faith from kills; St. Peter's: no Temples needed, no Great Prophet, 2 Great Artist points -->
+	<Trait_ImprovementYieldChanges>
+		<Delete TraitType="TRAIT_VATICAN"/>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_HOLY_SITE</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_HOLY_SITE</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_MANUFACTORY</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_ACADEMY</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_CUSTOMS_HOUSE</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_CUSTOMS_HOUSE</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_DOCK</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_CONCERT</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>1</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<ImprovementType>IMPROVEMENT_CITADEL</ImprovementType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>1</Yield>
+		</Row>
+	</Trait_ImprovementYieldChanges>
+	<Trait_GreatWorkYieldChanges>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<YieldChange>1</YieldChange>
+		</Row>
+	</Trait_GreatWorkYieldChanges>
+	<Trait_YieldFromKills>
+		<Delete TraitType="TRAIT_VATICAN"/>
+	</Trait_YieldFromKills>
+	<Trait_FreePromotionUnitCombats>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_RECON</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARCHER</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_ARMOR</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_HELICOPTER</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_NAVALRANGED</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_FIGHTER</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_BOMBER</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_NAVALMELEE</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_SUBMARINE</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_CARRIER</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_PARADROPPER</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_VATICAN</TraitType>
+			<UnitCombatType>UNITCOMBAT_MOUNTED_RANGED</UnitCombatType>
+			<PromotionType>PROMOTION_ZEALOT</PromotionType>
+		</Row>
+	</Trait_FreePromotionUnitCombats>
+	<Building_ClassesNeededInCity>
+		<Delete BuildingType="BUILDING_STPETERS"/>
+	</Building_ClassesNeededInCity>
+	<Building_PrereqBuildingClasses>
+		<Delete BuildingType="BUILDING_STPETERS"/>
+	</Building_PrereqBuildingClasses>
+	<Building_FreeUnits>
+		<Delete BuildingType="BUILDING_STPETERS"/>
+	</Building_FreeUnits>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_STPETERS"/>
+			<Set SpecialistType="SPECIALIST_ARTIST" GreatPeopleRateChange="2"/>
+		</Update>
+	</Buildings>
 </GameData>

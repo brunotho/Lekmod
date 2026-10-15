@@ -287,6 +287,9 @@ public:
 	bool IsLekmodForeignFaithConquestHalf(const CvCity* pCity) const;
 #endif
 	bool LekmodIsAllyMilitaristicUU(UnitTypes eUnit) const;
+#ifdef LEKMOD_POST_CHANGES
+	bool LekmodHasCapturedMilitaristicUU(UnitTypes eUnit) const;
+#endif
 	bool LekmodCanGoldPurchaseGreatPerson(UnitTypes eUnit) const;
 	int GetLekmodGreatPersonGoldCost() const;
 	int GetLekmodExternalTradeRangeModifier() const;
@@ -2461,6 +2464,9 @@ protected:
 #if defined(LEKMOD_RUIN_CHOICE)
 	std::vector<int> m_aiLekmodPendingRuins; // per ruin: plot index, unit ID, number of offers, then (goody, roll, pay, gain) per offer
 	int m_iLekmodLastRuinGoody;
+#ifdef LEKMOD_POST_CHANGES
+	int m_iLekmodRecentRuinMasks; // yield masks of the last 3 ruin rewards (8 bits each, newest lowest); m_iLekmodLastRuinGoody packs their goody types + 1
+#endif
 	int m_iLekmodGoodyForcedRoll; // only set while an offer is applied
 	int m_iLekmodGoodyPay;
 	int m_iLekmodGoodyGain;

@@ -733,6 +733,10 @@ public:
 #ifdef LEKMOD_PORTUGAL
 	int LekmodGetNauAura(int iKind) const;
 #endif
+#ifdef LEKMOD_POST_CHANGES
+	bool IsLekmodExpandedZOC() const;
+	bool IsLekmodCivilianFor(PromotionTypes ePromotion) const;
+#endif
 	int GetLekmodAttackFullHPMod(const CvUnit* pDefender) const;
 	void LekmodApplySpawnRandomPromotions();
 #endif
