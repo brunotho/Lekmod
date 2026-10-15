@@ -116,7 +116,9 @@ This file records what has been **verified** about how this mod works, and how t
 
 Repo layout (GitHub): `LEKMOD/` (the mod), `LEKMOD_DLL/` (C++ source), `Lekmap/` (map script, a separate download into `Assets\Maps`), `LekmodInstaller/`, `docs/`, `.github/workflows/ci.yaml` (upstream's automated DLL build).
 
-This file lives at the **repo root** (`civ-tools\lek\CLAUDE.md`), so it doesn't ship to players. Start Claude sessions in `civ-tools\lek`. A session started in the game folder won't see this file.
+This file lives at the **repo root** (`civ-tools\lek\CLAUDE.md`), so it doesn't ship to players.
+
+**Cloud sessions (claude.ai/code) see only what is pushed to `origin`.** They don't have: the game, its `cache\` DB and `Logs\`, VS2008 (no DLL builds), `civ-tools\` (lekbuild old branches, texconv, backups), the OneDrive art inbox. Notion works if the account's connector is enabled there. So cloud sessions suit data/text/Lua/C++ edits and planning; DB verification, DLL builds and installs need the local PC. Start Claude sessions in `civ-tools\lek`. A session started in the game folder won't see this file.
 
 **Generated UI:** `ui_check.bat` writes `LEKMOD/Lua/UI/` and `LEKMOD/*.bak`. Always run it **through the junction** (`DLC\WIP_LEKMOD\ui_check.bat`): it looks for EUI in the folder above itself. From Claude's shells, `cmd /c ui_check.bat` with the game folder as working directory failed ("not recognized", probably the apostrophe in `Sid Meier's`); a scratchpad batch with `cd /d "%LINK%"` and `call "%LINK%\ui_check.bat" < nul`, run via `cmd //c <path>`, works. The copies keep the template's timestamp, so check content, not dates.
 - Most of `Lua/UI/` is git-ignored, but upstream **tracks about a dozen files there** (`FrontEnd.lua`, `StagingRoom.lua`, `MainMenu.lua`…).
@@ -318,7 +320,7 @@ Read `art_sources/README.md` before touching any icon, portrait, flag or menu ba
 5. Then Phase 9 rows, then POST rows (Phase 10).
 6. Session 4 (2026-10-15, short, weekly limit): Ski Resort answer applied, and the small data POST items (`6b2ce698`): Artemis/Zeus, Temple/Shrine/luxury costs, two beliefs removed, Hubble XP (empire-wide: `Building_LekmodGlobalUnitCombatFreeExperiences`, `f1b7f6f2`), Stone Mason, Sweden gifting, Glutton -30%, Maize hill farms (`Resources.ImprovementIgnoresFreshWater`). Defaults on "Specs to refine". Not DB-verified yet: run `tools/dev/dbcheck.py 6b2ce698` after the next game start. Portugal is next (user, next week).
 
-- `dev` = v35.4 (`201df6c5`) + ~500 of our commits. **Not pushed** (the user hasn't asked). Installed DLL = commit `cb6964f0`. Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
+- `dev` = v35.4 (`201df6c5`) + ~500 of our commits. **Pushed to `origin/dev` on 2026-10-15** (user's request, for cloud sessions); push again only when asked. Installed DLL = commit `cb6964f0`. Working tree clean except `Lua/UI/FrontEnd.lua` (expected, §2).
 - **The port is live.** The game's `WIP_LEKMOD` is a junction to `lek\LEKMOD`, and its DLL is this repo's build. The old fork's game folder is backed up in `civ-tools\WIP_LEKMOD_backup_2026-10-07`.
 - **Item status, playtest results and open design questions live in the tracker (§0b.9), not here.** Query it at session start. Audited and synced on 2026-10-13.
 - **Phases 1–4 done** (left: Cyrillic and 6/7/8-player lobby, postponed; Mandate of God belief).
