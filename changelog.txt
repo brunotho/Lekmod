@@ -2760,9 +2760,9 @@ Tags: civs, buildings, units, naval
 - Added: the trade route screen marks civilizations and City-States whose first-route bonus you already received, and shows the bonus for the others
 - Changed: Feitoria (rebuilt) needs no coast and no Lighthouse; +1 Gold in your Capital; with a Courthouse or Crown Office in the city: luxury resources +2 Gold, trade routes from the city to your Capital +1 Gold per era, trade routes from your Capital to the city +3 Food
 - Removed: Feitoria: +15 XP for naval units, +1 Gold from sea resources, +1 Gold on international sea trade routes
-- Changed: Nau: 19 Strength (was 20), costs 86 (was 80), loses the exotic goods ability; gets Supply Ship
+- Changed: Nau: 19 Strength (was 20), costs 86 (was 80), loses the exotic goods ability; gets Exploration (+1 Movement, +1 Sight; replaces its old +1 Sight) and Supply Ship
 - Added: Nau Escort: friendly non-air units on or next to the Nau heal every turn even after acting; embarked units on its tile heal 15 HP per turn even after acting and disembark like with Amphibious I
-- Note: Feitoria keeps the Harbor's water connection and +50% sea trade range; "Exploration" read as the Nau's existing +1 Sight; both defaults are on Specs to refine
+- Note: Feitoria keeps the Harbor's water connection and +50% sea trade range (default, on Specs to refine)
 - DLL: Trait_LekmodFirstTradeRouteBonuses (saved player fields m_iLekmodTradePartnerUsed0/1); Buildings.LekmodEffectsNeedClass1/2, LekmodCapitalYieldType/LekmodCapitalYield, LekmodTradeToCapitalGoldPerEra, LekmodTradeFromCapitalFood; UnitPromotions.LekmodAdjacentAlwaysHeal, LekmodSameTileEmbarkedHeal, LekmodSameTileDisembark (promotion 392); Lua Player:LekmodIsTradePartnerUsed(), LekmodHasFirstTradeRouteBonus()
 
 CHINA (CIVILIZATION_CHINA)

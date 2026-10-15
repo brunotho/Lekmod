@@ -291307,7 +291307,7 @@
 			<ResourceClassType>RESOURCECLASS_LUXURY</ResourceClassType>
 		</Row>
 	</Building_LekmodPlotYields>
-	<!-- Nau: Strength 19, Caravel movement, +25% cost; no exotic goods; Supply Ship and +1 Sight kept on upgrade; aura (promotion 392) -->
+	<!-- Nau: Strength 19, Caravel movement, +25% cost; no exotic goods; Exploration (Naval Tradition: +1 Movement +1 Sight, replaces its old +1 Sight) and Supply Ship, kept on upgrade; aura (promotion 392) -->
 	<Units>
 		<Update>
 			<Where Type="UNIT_PORTUGUESE_NAU"/>
@@ -291316,6 +291316,11 @@
 	</Units>
 	<Unit_FreePromotions>
 		<Delete UnitType="UNIT_PORTUGUESE_NAU" PromotionType="PROMOTION_SELL_EXOTIC_GOODS"/>
+		<Delete UnitType="UNIT_PORTUGUESE_NAU" PromotionType="PROMOTION_EXTRA_SIGHT_I"/>
+		<Row>
+			<UnitType>UNIT_PORTUGUESE_NAU</UnitType>
+			<PromotionType>PROMOTION_NAVAL_TRADITION</PromotionType>
+		</Row>
 		<Row>
 			<UnitType>UNIT_PORTUGUESE_NAU</UnitType>
 			<PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType>
