@@ -2338,7 +2338,9 @@ void CvMinorCivAI::DoTestPersonalityEraTransform()
 		DoPickPersonality(/*bEraTransformRepick*/ true);
 	}
 }
+#endif
 
+// Naval spawn helper: also called by the gift code outside LEKMOD_MINOR_CIV_PERSONALITIES (compile fix 2026-10-15)
 namespace
 {
 UnitTypes GetCompetitiveSpawnNavalUnitType(PlayerTypes ePlayer, bool bIncludeUUs, bool bIncludeRanged)
@@ -2407,7 +2409,6 @@ UnitTypes GetCompetitiveSpawnNavalUnitType(PlayerTypes ePlayer, bool bIncludeUUs
 	return veUnitRankings.ChooseFromTopChoices(GC.getUNIT_SPAWN_NUM_CHOICES(), &randFn, "Choosing competitive naval unit from top choices");
 }
 }
-#endif
 
 /// What is this civ's trait?
 MinorCivTraitTypes CvMinorCivAI::GetTrait() const
