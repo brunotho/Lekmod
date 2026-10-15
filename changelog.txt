@@ -823,6 +823,7 @@ Tags: civs, buildings
 - Changed: needs an improved Stone, Marble or Obsidian, like the Stone Works
 - Added: +2 City Defense; Stone, Marble and Obsidian +2 Culture
 - Removed: +2 Culture with Masonry
+- Added: +1 Happiness, like the Stone Works
 MAIZE (RESOURCE_MAIZE)
 ----------------------
 Tags: game mechanics
@@ -1132,7 +1133,7 @@ A new mobile siege unit that does not need to set up.
 - Added: Self-Propelled Artillery: Ballistics, 1 Iron and 1 Oil, 225 Production, 30 Strength, 40 Ranged Strength, range 3, 2 movement
 - Added: Indirect Fire, +200% vs cities, Sitting Ducks; cannot melee attack, no defensive terrain bonuses, limited sight; no set-up needed
 - Changed: the Artillery (and the Rocket Corps) becomes obsolete with Ballistics and upgrades to the Self-Propelled Artillery; the Self-Propelled Artillery becomes obsolete with Rocketry and upgrades to the Rocket Artillery
-- Note: uses the Artillery's look as a placeholder (user decision)
+- Note: uses the Rocket Artillery's look and icon as a placeholder (user decision)
 
 VANGUARD CORPS (UNIT_VANGUARD_CORPS, BUILDING_LEKMOD_FIELD_HOSPITAL)
 --------------------------------------------------------------------
@@ -1145,6 +1146,7 @@ A late-game settler that founds ready-made frontier cities.
 - Changed: Settlers (and their unique replacements) become obsolete with Railroad and upgrade to the Vanguard Corps
 - Note: unit art from the user (portrait and map flag) and the late Great General model
 - DLL: Units.FoundCityPopulation / FoundCityExtraPlots, Unit_FoundCityBuildingClasses / Unit_FoundCityUnitClasses (LEKMOD_FOUNDING_UNIT_EFFECTS, CvPlayer::found); Buildings.TerritoryHealChange (LEKMOD_TERRITORY_HEAL, CvUnit::healRate); unit ID 271, class 117, building 269, class 176
+- Dev: the 2026-10-14 icon rebuild took the map flag source (the largest picture in the folder) for the portrait, so the tech tree and unit panel showed the flag silhouette; rebuilt from the portrait, flag source moved to a subfolder
 
 CONQUISTADOR (UNIT_SPANISH_CONQUISTADOR, UNIT_CONQUISTADOR_SHARED)
 -----------------------------------------------------------------
@@ -1178,6 +1180,7 @@ Spears are a bit weaker against horses, but stronger when they charge horse arch
 - Changed: vs Mounted Ranged units: +66% when attacking, +33% when defending (was +50% both)
 - Note: Landsknecht, Tercio and the Siamese War Elephant keep the old +50% Bonus vs Mounted; the Sarissophoros keeps its +100%
 - DLL: UnitPromotions_UnitCombatMods.Attack/Defense are now read (they were defined but ignored) (LEKMOD_UNIT_COMBAT_ATTACK_DEFENSE_MODS)
+- Dev: duplicate free-promotion rows removed: Anti-Mounted on the Pikeman, Anti-Tank (weak) on the Colorado
 
 WORKER (UNIT_WORKER)
 --------------------
@@ -1199,6 +1202,7 @@ New upgrade paths, a buildable Quinquereme, the Ship of the Line for everyone, t
 - Changed: Quinquereme: buildable by all civs at Compass (cost 53, was only from the Great Lighthouse), 13 Strength, 5 movement, cannot enter Ocean, can pillage and plunder trade routes, starts with Boarding Party I; upgrades to Privateer; obsolete at Navigation
 - Changed: Caravel: 16 Strength (was 20), 6 movement (was 5), cost 80 -> 68, sight 4 (was 3; no longer kept on upgrade); Caravels (and unique replacements) upgrade to the Privateer
 - Changed: Privateer and its unique replacements: 3 less Strength, 15% cheaper (Privateer 27 -> 24, cost 100 -> 85), no longer heal when they destroy a unit, start with Marauder
+- Removed: the Privateer no longer starts with Coastal Raider I
 - Added: Quinquereme, Caravel, Privateer (and their unique replacements): -25% when attacking cities
 - Changed: Frigate: obsolete at Steam Power (was Electronics), upgrades to Dreadnought
 - Changed: Ship of the Line is no longer English: all civs can build it at Navigation alongside the Frigate. 25 Strength, 33 Ranged Strength, 5 movement, cost 167, 4 Iron, +33% vs cities (Broadside, lost on upgrade); obsolete at Steam Power, upgrades to Dreadnought
@@ -1210,6 +1214,7 @@ New upgrade paths, a buildable Quinquereme, the Ship of the Line for everyone, t
 - Removed: England no longer has the Ship of the Line as a unique unit (civ changes come later)
 - Note: unique replacements of the named classes get the same promotions; the Quinquereme's and Dreadnought's obsolete techs (Navigation, Electronics) were not in the spec
 - DLL: UnitPromotions.AdjacentRangedAttackMod / NoAdjacentRangedAttack / NoAttackFromCity (LEKMOD_NAVAL_PENALTY_PROMOTIONS); promotion IDs 368-371
+- Dev: the Ship of the Line had Blind Spot, Docked and Swift Transport twice (duplicate rows); the doubles were removed
 
 DEFENSE BUILDINGS (BUILDING_WALLS, BUILDING_CASTLE, BUILDING_ARSENAL, BUILDING_MILITARY_BASE)
 --------------------------------------------------------------------------------------------
@@ -1539,7 +1544,7 @@ Tags: buildings
 WORLD WONDERS (BUILDING_HUBBLE, BUILDING_GREAT_LIGHTHOUSE, BUILDING_ANGKOR_WAT, BUILDING_CHICHEN_ITZA, BUILDING_ALTHING, BUILDING_ARSENAL_OF_VENICE)
 ------------------------------------------------------------------------------------------------------------------------------------------------
 Tags: buildings
-- Changed: Hubble Space Telescope: costs 1050 (was 837); 5 Scientist points (was 3); no Science and no free Recycling Center; keeps +100% Production toward Spaceship Parts; Spaceship Parts built in any of your cities start with 15 XP
+- Changed: Hubble Space Telescope: costs 1050 (was 837); 5 Scientist points (was 3); no Science and no free Recycling Center; keeps +100% Production toward Spaceship Parts; Spaceship Parts built in any of your cities start with 15 XP (tooltip says both apply in all your cities)
 - Changed: Great Lighthouse: naval units trained in the city start with +15 XP; when built, the closest coastal city-state that could give you a trade route quest (met, at peace, reachable by a trade route, not yet connected) asks you for one. Removed: +1 movement and +1 sight for naval units, the free Quinquereme. Keeps the free Lighthouse and +1 Gold on water tiles
 - Changed: Angkor Wat (rebuilt): 1 Culture, 1 Engineer point, a free Garden, farms with fresh water worked by the city yield +1 Faith, 2 Great Work slots that come filled. Removed: the free University, 5 Culture and 5 Science, the Scientist point
 - Changed: Chichen Itza: its city loses 1 Population whenever you enter a Golden Age; 1 Scientist point instead of 1 Engineer point. Removed: its 4 Happiness
@@ -2639,11 +2644,12 @@ CUBA (CIVILIZATION_CUBA)
 Tags: civs, buildings
 - Changed: Dance Hall: 3 Culture (was 2), units trained in the city start with +15 XP
 - Removed: Dance Hall: +1 Happiness, +4 Culture and +15% military Production when its slot is filled
-- Changed: new UA: unaffected by unhappiness from ideological pressure (was -50%), unhappiness never acts worse than 9 (penalties stop growing there), one Tobacco near the capital when it is founded
+- Changed: new UA: unaffected by unhappiness from ideological pressure (was -50%), unhappiness never acts worse than 9 (penalties stop growing there), one Tobacco next to the capital when it is founded (never on the city tile, at most 3 tiles away)
 - Removed: Culture from other civilizations' capitals; free Guerrilleros with the first tenet
 - Added: Dance Hall: +20% Tourism in the city while its slot is filled
 - DLL: Buildings.GreatWorkFilledTourismModifier
 - DLL: Traits.LekmodUnhappinessCap; old UA Lua (Lekmod_cuba.lua) no longer registered
+- DLL: CvCity::addResourceLocally never places a resource on a city tile, stays within 3 tiles and prefers a fitting tile next to the city (LEKMOD_POST_CHANGES); also used for relocated hidden resources
 
 AKSUM (CIVILIZATION_AKSUM)
 --------------------------

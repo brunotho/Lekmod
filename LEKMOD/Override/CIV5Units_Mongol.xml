@@ -21125,7 +21125,7 @@ strongest around the Gulf of Bothnia, where land steadily rises about 1 cm a yea
 			</Text>
 		</Replace>
 			<Replace Tag="TXT_KEY_BUILDING_STONE_MASON_HELP"> 
-			<Text>Replaces the Stone Works. Needs an improved Stone, Marble or Obsidian near the city, like the Stone Works.[NEWLINE][NEWLINE]+1 [ICON_PRODUCTION] Production, and +1 [ICON_PRODUCTION] Production and +2 [ICON_CULTURE] Culture from each worked Stone, Marble and Obsidian.[NEWLINE]+2 [ICON_STRENGTH] City Defense.[NEWLINE][NEWLINE]Provides no [ICON_HAPPINESS_1] Happiness.</Text>
+			<Text>Replaces the Stone Works. Needs an improved Stone, Marble or Obsidian near the city, like the Stone Works.[NEWLINE][NEWLINE]+1 [ICON_PRODUCTION] Production, and +1 [ICON_PRODUCTION] Production and +2 [ICON_CULTURE] Culture from each worked Stone, Marble and Obsidian.[NEWLINE]+2 [ICON_STRENGTH] City Defense.[NEWLINE]+1 [ICON_HAPPINESS_1] Happiness.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_BUILDING_STONE_MASON"> 
 			<Text>
@@ -142910,7 +142910,7 @@ The ship has weather'd every rack; the prize we sought is won."
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PRIVATEER_STRATEGY"> 
 			<Text>
-				Naval Unit that attacks as a melee unit. Starts with the first Coastal Raider promotion allowing it to earn gold from attacking coastal cities.
+				Naval Unit that attacks as a melee unit.
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_UNIT_PROMOTION"> 
@@ -145043,7 +145043,7 @@ The ship has weather'd every rack; the prize we sought is won."
 			</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_HUBBLE_HELP"> 
-			<Text>+100% [ICON_PRODUCTION] Production when building Spaceship Parts.[NEWLINE]Spaceship Parts built in any of your cities start with 15 Experience.</Text>
+			<Text>In all your cities:[NEWLINE]+100% [ICON_PRODUCTION] Production when building Spaceship Parts.[NEWLINE]Spaceship Parts start with 15 Experience.</Text>
 		</Replace>
 		<Replace Tag="TXT_KEY_WONDER_HUBBLE_QUOTE"> 
 			<Text>

@@ -268039,10 +268039,6 @@
 		</Row>
 
 		<Row> 
-			<UnitType>UNIT_PRIVATEER</UnitType> 
-			<PromotionType>PROMOTION_COASTAL_RAIDER_1</PromotionType> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_QASIMI_RAIDER</UnitType> 
 			<PromotionType>PROMOTION_COASTAL_RAIDER_1</PromotionType> 
 		</Row>
@@ -268530,10 +268526,6 @@
 			<PromotionType>PROMOTION_CITY_PENALTY</PromotionType> 
 		</Row>
 		<Row> 
-			<UnitType>UNIT_PIKEMAN</UnitType> 
-			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
-		</Row>
-		<Row> 
 			<UnitType>UNIT_BAJORAS</UnitType> 
 			<PromotionType>PROMOTION_ANTI_MOUNTED_SPEAR</PromotionType> 
 		</Row>
@@ -268812,10 +268804,6 @@
 		<Row> 
 			<UnitType>UNIT_NUBIAN_BOW</UnitType> 
 			<PromotionType>PROMOTION_NO_FORTIFY_VS_RANGED</PromotionType> 
-		</Row>
-		<Row>
-			<UnitType>UNIT_COLORADO</UnitType>
-			<PromotionType>PROMOTION_ANTI_TANK_WEAK</PromotionType>
 		</Row>
 		<!-- Finland Sissi -->
 		<Row>
@@ -269236,10 +269224,6 @@
 			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
 		</Row>
 		<Row>
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
-			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
-		</Row>
-		<Row>
 			<UnitType>UNIT_DREADNOUGHT</UnitType>
 			<PromotionType>PROMOTION_BLIND_SPOT</PromotionType>
 		</Row>
@@ -269261,10 +269245,6 @@
 		</Row>
 		<Row>
 			<UnitType>UNIT_FRIGATE</UnitType>
-			<PromotionType>PROMOTION_DOCKED</PromotionType>
-		</Row>
-		<Row>
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
 			<PromotionType>PROMOTION_DOCKED</PromotionType>
 		</Row>
 		<Row>
@@ -269329,10 +269309,6 @@
 		</Row>
 		<Row>
 			<UnitType>UNIT_FRIGATE</UnitType>
-			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
-		</Row>
-		<Row>
-			<UnitType>UNIT_ENGLISH_SHIPOFTHELINE</UnitType>
 			<PromotionType>PROMOTION_SWIFT_TRANSPORT</PromotionType>
 		</Row>
 		<Row>
@@ -280513,7 +280489,7 @@
 			<IconAtlas>TECH_ATLAS_DLC_03</IconAtlas>
 			<UnitFlagAtlas>KAMEHAMEHA_CIV_COLOR_ATLAS</UnitFlagAtlas>
 		</Row>
-		<!-- LEKMOD Self-Propelled Artillery (2026-10-10): Artillery art as a placeholder -->
+		<!-- LEKMOD Self-Propelled Artillery (2026-10-10): Rocket Artillery art and icon as a placeholder (user, 2026-10-15) -->
 		<Row>
 			<ID>270</ID>
 			<Type>UNIT_SELF_PROPELLED_ARTILLERY</Type>
@@ -280543,11 +280519,11 @@
 			<CombatLimit>100</CombatLimit>
 			<XPValueAttack>3</XPValueAttack>
 			<XPValueDefense>3</XPValueDefense>
-			<UnitArtInfo>ART_DEF_UNIT_ARTILLERY</UnitArtInfo>
+			<UnitArtInfo>ART_DEF_UNIT_ROCKET_ARTILLERY</UnitArtInfo>
 			<ShowInPedia>true</ShowInPedia>
 			<MoveRate>ARTILLERY</MoveRate>
-			<UnitFlagIconOffset>56</UnitFlagIconOffset>
-			<PortraitIndex>12</PortraitIndex>
+			<UnitFlagIconOffset>72</UnitFlagIconOffset>
+			<PortraitIndex>25</PortraitIndex>
 			<IconAtlas>UNIT_ATLAS_2</IconAtlas>
 			<UnitFlagAtlas>UNIT_FLAG_ATLAS</UnitFlagAtlas>
 		</Row>
@@ -291045,7 +291021,7 @@
 		</Update>
 		<Update>
 			<Where Type="BUILDING_STONE_MASON"/>
-			<Set Defense="200"/>
+			<Set Defense="200" Happiness="1"/>
 		</Update>
 	</Buildings>
 	<Building_NearbyTerrainFreeYields>

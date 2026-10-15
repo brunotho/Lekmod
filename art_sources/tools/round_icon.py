@@ -15,10 +15,11 @@ fixed radius in RADIUS (fraction of the source width).
 Usage (from the repo root):
     python art_sources/tools/round_icon.py buildings <name> [<name> ...]
     python art_sources/tools/round_icon.py units <name> [<name> ...]
-Reads the largest image (.dds or .png) in art_sources/<kind>/<name>/ and writes <name>_<size>.dds (BC3, one mip)
-to the kind's output folder. The sources stay untouched, so this can be rerun.
+Reads the largest image (.dds or .png) directly in art_sources/<kind>/<name>/ (subfolders such as flag/ are ignored)
+and writes <name>_<size>.dds (BC3, one mip) to the kind's output folder. The sources stay untouched, so this can be
+rerun. Without texconv.exe (e.g. a Linux cloud session) Pillow writes the BC3 file instead.
 """
-import os, subprocess, sys, tempfile
+import os, struct, subprocess, sys, tempfile
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -97,6 +98,16 @@ def largest_source(folder):
     return best[1]
 
 
+def write_bc3(img, out_path):
+    """BC3 (DXT5) with one mip level, like texconv -f BC3_UNORM -m 1, using Pillow"""
+    img.convert('RGBA').save(out_path, pixel_format='DXT5')
+    b = bytearray(open(out_path, 'rb').read())
+    flags = struct.unpack_from('<I', b, 8)[0] | 0x20000  # DDSD_MIPMAPCOUNT
+    struct.pack_into('<I', b, 8, flags)
+    struct.pack_into('<I', b, 28, 1)
+    open(out_path, 'wb').write(bytes(b))
+
+
 def build(kind, name):
     out_dir, sizes, layout = KINDS[kind]
     src = Image.open(largest_source(os.path.join(REPO, 'art_sources', kind, name))).convert('RGBA')
@@ -108,7 +119,11 @@ def build(kind, name):
     tmp = tempfile.mkdtemp()
     for sz in sizes:
         p = os.path.join(tmp, '%s_%d.png' % (name, sz))
-        icon(src, sz, layout).save(p)
+        img = icon(src, sz, layout)
+        if not os.path.exists(TEXCONV):
+            write_bc3(img, os.path.join(out_dir, '%s_%d.dds' % (name, sz)))
+            continue
+        img.save(p)
         subprocess.check_call([TEXCONV, '-nologo', '-y', '-f', 'BC3_UNORM', '-m', '1', '-o', out_dir, p],
                               stdout=subprocess.DEVNULL)
     print('built %s %s (picture radius %.3f)' % (kind, name, r))

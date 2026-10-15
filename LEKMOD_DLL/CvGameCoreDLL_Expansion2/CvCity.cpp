@@ -14749,6 +14749,11 @@ CvPlot* CvCity::addResourceLocally(CvPlot* pFromPlot, ResourceTypes eResource, i
 			// no overriding
 			if (resource != NO_RESOURCE)
 				continue;
+#ifdef LEKMOD_POST_CHANGES
+			// never under a city, and at most 3 tiles away (Cuba's Tobacco, user 2026-10-15)
+			if (plot == this->plot() || plot->isCity() || plotDistance(plot->getX(), plot->getY(), getX(), getY()) > 3)
+				continue;
+#endif
 			// no giving to other players
 			if(plot->getOwner() != NO_PLAYER && plot->getOwner() != getOwner())
 				continue;
@@ -14785,6 +14790,11 @@ CvPlot* CvCity::addResourceLocally(CvPlot* pFromPlot, ResourceTypes eResource, i
 			weight += plot->isHills() && info->isHills() ? 15 : -10; // Hills
 			weight += plot->isRiver() && info->isNoRiverSide() ? -15 : 5; // River
 			weight += plot->isFlatlands() && info->isFlatlands() ? 15 : -10; // Flatlands
+#ifdef LEKMOD_POST_CHANGES
+			// a fitting tile right next to the city is preferred (Cuba's Tobacco, user 2026-10-15)
+			if (iDistance == 1 && info->isTerrain(terrain))
+				weight += 100;
+#endif
 			potentialPlots.push_back(plot, weight);
 		}
 	}

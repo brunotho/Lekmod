@@ -12,7 +12,7 @@ game files. It is not part of the mod download (players only get `LEKMOD/`). The
 | `promotions/original_ai_2026-04/` | The April 2026 AI-made icons (256 px, opaque dark background), recovered from git (`fde09fce^`). Amphibious I-III here are superseded by the user art. |
 | `promotions/user_art/` | Art the user supplied later: Envelopment and Bunker Busting (2026-10-05, 256 px), Sitting Ducks (64 px), Amphibious I-III and Nuke Resistance (45 px PNG, 2026-10-10). |
 | `promotions/superseded/` | Earlier user versions that were replaced (kept for reference). |
-| `units/<name>/` | Unit portrait sources: Vanguard Corps (square, 256 px, plus the map flag source `White Fortress Watchtower Icon.png`), Barlas Cavalry and Bajoras (ringed 1254 px pictures). |
+| `units/<name>/` | Unit portrait sources: Vanguard Corps (square, 256 px, plus the map flag source `flag/vanguard_corps_watchtower_flag_v1.png`), Barlas Cavalry and Bajoras (ringed 1254 px pictures). |
 | `menu_backgrounds/` | The 11 main menu paintings (PNG) and the original Great Wall background (already a DDS). |
 | `tools/` | `build_promotion_icons.py` (the whole promotion pipeline), `reshape_icons.py` (background key-out), `round_icon.py` (building and unit portraits). |
 
@@ -59,6 +59,7 @@ from the sources, so it can be run any number of times (nothing gets shifted or 
   177 px wide at (39,40) in a 256 px cell (the old 173 px layout at (41,42), 4 px wider; see the building icons),
   256/128/80/64/45/32 px, BC3, to `LEKMOD/Art/Units/`. The painted gold ring of the two UU pictures is cut off
   (fixed radius in the tool's `RADIUS`); the game draws its own frame.
+- The tool takes the **largest** picture directly in the unit's folder, so other pictures (e.g. a map flag source) go in a subfolder (`flag/`). Until 2026-10-15 the 1254 px flag source sat next to the 256 px Vanguard Corps portrait, and the 2026-10-14 rebuild turned every portrait size into the flag silhouette (user saw it in the tech tree). Without texconv (cloud session) the tool writes BC3 with Pillow.
 - **Map flag**: a white silhouette on transparency, scaled to 18 px tall, placed at x = centre + 2 px, y = 4 px in a 32 px canvas (it must stay inside the tapering flag shape), BC3 with one mip. The game tints it in the player's colours. (Barlas Cavalry and Bajoras keep the Sipahi/Knight flags.)
 
 ## Building icons
