@@ -547,6 +547,9 @@ CvPlayer::CvPlayer() :
 	, m_iLekmodTourismModPerAlliedCS(0)
 	, m_bLekmodNoExternalTrade(false)
 	, m_bLekmodGreatWorkFromPolicy(false)
+#ifdef LEKMOD_PORTUGAL
+	, m_bLekmodGreatWorkFromTrade(false)
+#endif
 	, m_iLekmodGreatWorkHappiness(0)
 	, m_iLekmodUnitDeathCulture(0)
 	, m_iLekmodMusicianBlastMod(0)
@@ -1423,6 +1426,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iLekmodCoupGoldUsed0 = 0;
 	m_iLekmodCoupGoldUsed1 = 0;
 	m_iLekmodDoFBetrayers = 0;
+#ifdef LEKMOD_PORTUGAL
+	m_iLekmodTradePartnerUsed0 = 0;
+	m_iLekmodTradePartnerUsed1 = 0;
+#endif
 #endif
 	m_iLekmodGoodyForcedRoll = -1;
 	m_iLekmodGoodyPay = -1;
@@ -6015,12 +6022,26 @@ void CvPlayer::DoUnitReset()
 #else
 		const bool bEmbarkedBlocksHeal = pLoopUnit->isEmbarked() && !pLoopUnit->IsHealWhileEmbarked();
 #endif
+#ifdef LEKMOD_PORTUGAL
+		// Nau: embarked units on its tile heal a flat amount every turn, even after acting (instead of the normal healing)
+		const int iLekmodNauEmbarkedHeal = pLoopUnit->isEmbarked() ? pLoopUnit->LekmodGetNauAura(1) : 0;
+		if (iLekmodNauEmbarkedHeal > 0)
+		{
+			if (pLoopUnit->IsHurt())
+				pLoopUnit->changeDamage(-std::min(iLekmodNauEmbarkedHeal, pLoopUnit->getDamage()));
+		}
+		else
+#endif
 		if (!bEmbarkedBlocksHeal)
 		{
 			if (pLoopUnit->hasMoved())
 			{
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
-				if (pLoopUnit->isAlwaysHeal() || (pLoopUnit->IsLekmodAlwaysHealFriendly() && pLoopUnit->plot()->IsFriendlyTerritory(pLoopUnit->getOwner())))
+				if (pLoopUnit->isAlwaysHeal() || (pLoopUnit->IsLekmodAlwaysHealFriendly() && pLoopUnit->plot()->IsFriendlyTerritory(pLoopUnit->getOwner()))
+#ifdef LEKMOD_PORTUGAL
+					|| pLoopUnit->LekmodGetNauAura(0) > 0
+#endif
+					)
 #else
 				if (pLoopUnit->isAlwaysHeal())
 #endif
@@ -15734,6 +15755,89 @@ void CvPlayer::LekmodGrantGreatWorks(CvCity* pNearCity, int iCount)
 		DoGreatWorkFromCityConquer(pNearCity);
 	m_bLekmodGreatWorkFromPolicy = false;
 }
+#ifdef LEKMOD_PORTUGAL
+/// Portugal: one-time bonus for the first trade route to each civilization or City-State (Trait_LekmodFirstTradeRouteBonuses, by the current era)
+void CvPlayer::LekmodDoFirstTradeRouteBonus(PlayerTypes eDestPlayer, CvCity* pOriginCity)
+{
+	if (eDestPlayer == GetID() || eDestPlayer < 0 || eDestPlayer >= MAX_CIV_PLAYERS || pOriginCity == NULL || IsLekmodTradePartnerUsed(eDestPlayer))
+		return;
+	if (!GetPlayerTraits()->LekmodHasFirstTradeRouteBonuses())
+		return;
+	SetLekmodTradePartnerUsed(eDestPlayer);
+	std::vector<CvTraitEntry::LekmodFirstTradeRouteBonus> aBonuses;
+	GetPlayerTraits()->LekmodGetFirstTradeRouteBonuses(GetCurrentEra(), aBonuses);
+	CvString strYields;
+	int iGreatWorks = 0;
+	for (uint i = 0; i < aBonuses.size(); i++)
+	{
+		iGreatWorks += aBonuses[i].m_iGreatWorks;
+		const int iValue = aBonuses[i].m_iYield;
+		if (iValue == 0 || aBonuses[i].m_eYield < 0)
+			continue;
+		const YieldTypes eYield = (YieldTypes)aBonuses[i].m_eYield;
+		switch (eYield)
+		{
+		case YIELD_GOLD:
+			GetTreasury()->ChangeGold(iValue);
+			break;
+		case YIELD_CULTURE:
+			changeJONSCulture(iValue);
+#if defined(UPDATE_CULTURE_NOTIFICATION_DURING_TURN)
+			if (isAlive() && isHuman() && getNumCities() > 0)
+				TestMidTurnPolicyNotification();
+#endif
+			break;
+		case YIELD_FAITH:
+			ChangeFaith(iValue);
+			break;
+		case YIELD_SCIENCE:
+		{
+			TechTypes eCurrentTech = GetPlayerTechs()->GetCurrentResearch();
+			if (eCurrentTech == NO_TECH)
+				changeOverflowResearch(iValue);
+			else
+				GET_TEAM(getTeam()).GetTeamTechs()->ChangeResearchProgress(eCurrentTech, iValue, GetID());
+		}
+		break;
+		default:
+			continue;
+		}
+		CvYieldInfo* pkYieldInfo = GC.getYieldInfo(eYield);
+		if (pkYieldInfo == NULL)
+			continue;
+		CvString strPart;
+		strPart.Format("%s+%d %s %s", strYields.empty() ? "" : ", ", iValue, pkYieldInfo->getIconString().c_str(), pkYieldInfo->GetDescription());
+		strYields += strPart;
+	}
+	if (iGreatWorks > 0)
+	{
+		m_bLekmodGreatWorkFromTrade = true;
+		LekmodGrantGreatWorks(pOriginCity, iGreatWorks);
+		m_bLekmodGreatWorkFromTrade = false;
+	}
+	if (!strYields.empty() && GetNotifications())
+	{
+		CvString strText = GetLocalizedText("TXT_KEY_LEKMOD_FIRST_TRADE_ROUTE_BONUS", GET_PLAYER(eDestPlayer).getCivilizationShortDescriptionKey(), strYields.c_str());
+		CvString strSummary = GetLocalizedText("TXT_KEY_LEKMOD_FIRST_TRADE_ROUTE_BONUS_SUMMARY");
+		GetNotifications()->Add(NOTIFICATION_GENERIC, strText.c_str(), strSummary.c_str(), pOriginCity->getX(), pOriginCity->getY(), -1);
+	}
+}
+/// Yield in the capital from buildings with LekmodCapitalYield, per building anywhere in the empire (Feitoria)
+int CvPlayer::GetLekmodCapitalBuildingYield(YieldTypes eYield)
+{
+	int iTotal = 0;
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+	{
+		CvBuildingEntry* pkBuilding = GC.getBuildingInfo((BuildingTypes)iBuilding);
+		if (pkBuilding == NULL || pkBuilding->GetLekmodCapitalYield() == 0 || pkBuilding->GetLekmodCapitalYieldType() != (int)eYield)
+			continue;
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+			iTotal += pkBuilding->GetLekmodCapitalYield() * pLoopCity->GetCityBuildings()->GetNumBuilding((BuildingTypes)iBuilding);
+	}
+	return iTotal;
+}
+#endif
 int CvPlayer::GetLekmodBuildingClassGreatWorks(BuildingClassTypes eClass) const
 {
 	int iCount = 0;
@@ -15835,6 +15939,10 @@ void CvPlayer::DoGreatWorkFromCityConquer(CvCity* pConqueredCity)
 				{
 #ifdef LEKMOD_POLICY_REWORK
 					localizedText = Localization::Lookup(m_bLekmodGreatWorkFromPolicy ? "TXT_KEY_LEKMOD_GREAT_WORK_FROM_POLICY" : "TXT_KEY_GREAT_WORK_FROM_CONQUEST");
+#ifdef LEKMOD_PORTUGAL
+					if (m_bLekmodGreatWorkFromTrade)
+						localizedText = Localization::Lookup("TXT_KEY_LEKMOD_GREAT_WORK_FROM_TRADE");
+#endif
 #else
 					localizedText = Localization::Lookup("TXT_KEY_GREAT_WORK_FROM_CONQUEST");
 #endif
@@ -31666,6 +31774,10 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iLekmodCoupGoldUsed0;
 	kStream >> m_iLekmodCoupGoldUsed1;
 	kStream >> m_iLekmodDoFBetrayers;
+#ifdef LEKMOD_PORTUGAL
+	kStream >> m_iLekmodTradePartnerUsed0;
+	kStream >> m_iLekmodTradePartnerUsed1;
+#endif
 	m_eLekmodExtractionIgnorePolicy = NO_POLICY;
 #endif
 #endif
@@ -32252,6 +32364,10 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iLekmodCoupGoldUsed0;
 	kStream << m_iLekmodCoupGoldUsed1;
 	kStream << m_iLekmodDoFBetrayers;
+#ifdef LEKMOD_PORTUGAL
+	kStream << m_iLekmodTradePartnerUsed0;
+	kStream << m_iLekmodTradePartnerUsed1;
+#endif
 #endif
 #endif
 }

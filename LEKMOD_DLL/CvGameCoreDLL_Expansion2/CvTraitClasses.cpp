@@ -1045,6 +1045,13 @@ const std::vector<std::pair<int, int> >& CvTraitEntry::GetLekmodFreeUnits() cons
 {
 	return m_aLekmodFreeUnits;
 }
+#ifdef LEKMOD_PORTUGAL
+/// One-time bonus for the first trade route to each civilization or City-State, by era (Trait_LekmodFirstTradeRouteBonuses: Portugal)
+const std::vector<CvTraitEntry::LekmodFirstTradeRouteBonus>& CvTraitEntry::GetLekmodFirstTradeRouteBonuses() const
+{
+	return m_aLekmodFirstTradeRouteBonuses;
+}
+#endif
 /// Traits.Lekmod* integer / type column (see LekmodTraitInt)
 int CvTraitEntry::GetLekmodTraitInt(LekmodTraitInt eCol) const
 {
@@ -3180,6 +3187,32 @@ inner join BuildingClasses on BuildingClasses.Type = BuildingClassType inner joi
 			m_aLekmodFreeUnits.push_back(std::make_pair(pResults->GetInt(0), pResults->GetInt(1)));
 		pResults->Reset();
 	}
+#ifdef LEKMOD_PORTUGAL
+	{
+		m_aLekmodFirstTradeRouteBonuses.clear();
+		std::string strKey("Trait_LekmodFirstTradeRouteBonuses");
+		Database::Results* pResults = kUtility.GetResults(strKey);
+		if (pResults == NULL)
+		{
+			pResults = kUtility.PrepareResults(strKey, "SELECT Eras.ID, coalesce(Yields.ID, -1), Trait_LekmodFirstTradeRouteBonuses.Yield, "
+				"Trait_LekmodFirstTradeRouteBonuses.GreatWorks FROM Trait_LekmodFirstTradeRouteBonuses "
+				"INNER JOIN Eras ON Eras.Type = Trait_LekmodFirstTradeRouteBonuses.EraType "
+				"LEFT JOIN Yields ON Yields.Type = Trait_LekmodFirstTradeRouteBonuses.YieldType "
+				"WHERE Trait_LekmodFirstTradeRouteBonuses.TraitType = ?");
+		}
+		pResults->Bind(1, szTraitType);
+		while (pResults->Step())
+		{
+			LekmodFirstTradeRouteBonus kRow;
+			kRow.m_eEra = pResults->GetInt(0);
+			kRow.m_eYield = pResults->GetInt(1);
+			kRow.m_iYield = pResults->GetInt(2);
+			kRow.m_iGreatWorks = pResults->GetInt(3);
+			m_aLekmodFirstTradeRouteBonuses.push_back(kRow);
+		}
+		pResults->Reset();
+	}
+#endif
 #endif
 #ifdef LEKMOD_CIV_TRAIT_FLAGS
 	{
@@ -5654,6 +5687,31 @@ bool CvPlayerTraits::IsLekmodBuildingNoPolicyNeeded(BuildingClassTypes eClass) c
 	}
 	return false;
 }
+#ifdef LEKMOD_PORTUGAL
+bool CvPlayerTraits::LekmodHasFirstTradeRouteBonuses() const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo && HasTrait(m_vPotentiallyActiveLeaderTraits[iI]) && !pkTraitInfo->GetLekmodFirstTradeRouteBonuses().empty())
+			return true;
+	}
+	return false;
+}
+void CvPlayerTraits::LekmodGetFirstTradeRouteBonuses(EraTypes eEra, std::vector<CvTraitEntry::LekmodFirstTradeRouteBonus>& aBonuses) const
+{
+	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)
+	{
+		CvTraitEntry* pkTraitInfo = GC.getTraitInfo(m_vPotentiallyActiveLeaderTraits[iI]);
+		if(pkTraitInfo == NULL || !HasTrait(m_vPotentiallyActiveLeaderTraits[iI]))
+			continue;
+		const std::vector<CvTraitEntry::LekmodFirstTradeRouteBonus>& aRows = pkTraitInfo->GetLekmodFirstTradeRouteBonuses();
+		for(uint j = 0; j < aRows.size(); j++)
+			if(aRows[j].m_eEra == (int)eEra)
+				aBonuses.push_back(aRows[j]);
+	}
+}
+#endif
 void CvPlayerTraits::LekmodGetFreeUnitsForTech(TechTypes eTech, std::vector<int>& aiUnitClasses) const
 {
 	for(uint iI = 0; iI < m_vPotentiallyActiveLeaderTraits.size(); iI++)

@@ -43420,6 +43420,12 @@
     	<Column name="LekmodPrereqTechOr" type="text" reference="Technologies(Type)" default="NULL"/>
     	<Column name="LekmodTradeRecipientGoldPerEra" type="integer" default="0"/>
     	<Column name="LekmodInternalTradePerPartnerMod" type="integer" default="0"/>
+    	<Column name="LekmodEffectsNeedClass1" type="text" reference="BuildingClasses(Type)" default="NULL"/>
+    	<Column name="LekmodEffectsNeedClass2" type="text" reference="BuildingClasses(Type)" default="NULL"/>
+    	<Column name="LekmodCapitalYieldType" type="text" reference="Yields(Type)" default="NULL"/>
+    	<Column name="LekmodCapitalYield" type="integer" default="0"/>
+    	<Column name="LekmodTradeToCapitalGoldPerEra" type="integer" default="0"/>
+    	<Column name="LekmodTradeFromCapitalFood" type="integer" default="0"/>
     	<Column name="GreatWorkFilledTourismModifier" type="integer" default="0"/>
     	<Column name="FreePlotPurchase" type="boolean" default="false"/>
     	<Column name="LekmodTimedBuilding" type="text" reference="Buildings(Type)" default="NULL"/>
@@ -110124,6 +110130,13 @@
 		<Column name="PrereqTech" type="text" reference="Technologies(Type)" default="NULL"/>
 		<Column name="NoClassesNeeded" type="boolean" default="false"/>
 		<Column name="NoPolicyNeeded" type="boolean" default="false"/>
+	</Table>
+	<Table name="Trait_LekmodFirstTradeRouteBonuses">
+		<Column name="TraitType" type="text" reference="Traits(Type)"/>
+		<Column name="EraType" type="text" reference="Eras(Type)"/>
+		<Column name="YieldType" type="text" reference="Yields(Type)" default="NULL"/>
+		<Column name="Yield" type="integer" default="0"/>
+		<Column name="GreatWorks" type="integer" default="0"/>
 	</Table>
 	<Table name="Trait_LekmodFreeUnits">
 		<Column name="TraitType" type="text" reference="Traits(Type)"/>
@@ -215040,6 +215053,9 @@
 		<Column name="AlwaysHealFriendly" type="boolean" default="false"/>
 		<Column name="AttackFullHPMod" type="integer" default="0"/>
 		<Column name="PostCombatPromotionOnSpawn" type="boolean" default="false"/>
+		<Column name="LekmodAdjacentAlwaysHeal" type="boolean" default="false"/>
+		<Column name="LekmodSameTileEmbarkedHeal" type="integer" default="0"/>
+		<Column name="LekmodSameTileDisembark" type="boolean" default="false"/>
 	</Table>
 	<UnitPromotions>
 		<Delete />
@@ -291175,4 +291191,156 @@
 			<Experience>15</Experience>
 		</Row>
 	</Building_LekmodGlobalUnitCombatFreeExperiences>
+	<!-- Portugal (2026-10-15, cloud session) -->
+	<!-- UA Descobrimentos (new): the first trade route to each civilization and City-State gives a one-time bonus by era; resource diversity bonus removed -->
+	<Traits>
+		<Update>
+			<Where Type="TRAIT_EXTRA_TRADE"/>
+			<Set TradeRouteResourceModifier="0"/>
+		</Update>
+	</Traits>
+	<Trait_LekmodFirstTradeRouteBonuses>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_ANCIENT</EraType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>10</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_ANCIENT</EraType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>20</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_ANCIENT</EraType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>30</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_CLASSICAL</EraType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>20</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_CLASSICAL</EraType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>40</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_CLASSICAL</EraType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>60</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_MEDIEVAL</EraType>
+			<YieldType>YIELD_FAITH</YieldType>
+			<Yield>40</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_MEDIEVAL</EraType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>80</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_MEDIEVAL</EraType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>120</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_RENAISSANCE</EraType>
+			<GreatWorks>1</GreatWorks>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_INDUSTRIAL</EraType>
+			<GreatWorks>1</GreatWorks>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_MODERN</EraType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>700</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_POSTMODERN</EraType>
+			<YieldType>YIELD_CULTURE</YieldType>
+			<Yield>700</Yield>
+		</Row>
+		<Row>
+			<TraitType>TRAIT_EXTRA_TRADE</TraitType>
+			<EraType>ERA_FUTURE</EraType>
+			<YieldType>YIELD_SCIENCE</YieldType>
+			<Yield>700</Yield>
+		</Row>
+	</Trait_LekmodFirstTradeRouteBonuses>
+	<!-- Feitoria (from scratch): no coast or Lighthouse needed; +1 Gold in the capital; with a Courthouse or Crown Office: luxuries +2 Gold, routes to the capital +1 Gold per era, routes from the capital +3 Food. Keeps the Harbor's city connection and sea trade range (default, on Specs to refine) -->
+	<Building_TradeConnectionOriginYieldChanges>
+		<Delete BuildingType="BUILDING_FEITORIA"/>
+	</Building_TradeConnectionOriginYieldChanges>
+	<Building_DomainFreeExperiences>
+		<Delete BuildingType="BUILDING_FEITORIA"/>
+	</Building_DomainFreeExperiences>
+	<Building_SeaResourceYieldChanges>
+		<Delete BuildingType="BUILDING_FEITORIA"/>
+	</Building_SeaResourceYieldChanges>
+	<Buildings>
+		<Update>
+			<Where Type="BUILDING_FEITORIA"/>
+			<Set Water="false" LekmodEffectsNeedClass1="BUILDINGCLASS_COURTHOUSE" LekmodEffectsNeedClass2="BUILDINGCLASS_LEKMOD_CROWN_OFFICE" LekmodCapitalYieldType="YIELD_GOLD" LekmodCapitalYield="1" LekmodTradeToCapitalGoldPerEra="1" LekmodTradeFromCapitalFood="3"/>
+		</Update>
+	</Buildings>
+	<Building_LekmodPlotYields>
+		<Row>
+			<BuildingType>BUILDING_FEITORIA</BuildingType>
+			<YieldType>YIELD_GOLD</YieldType>
+			<Yield>2</Yield>
+			<ResourceClassType>RESOURCECLASS_LUXURY</ResourceClassType>
+		</Row>
+	</Building_LekmodPlotYields>
+	<!-- Nau: Strength 19, Caravel movement, +25% cost; no exotic goods; Supply Ship and +1 Sight kept on upgrade; aura (promotion 392) -->
+	<Units>
+		<Update>
+			<Where Type="UNIT_PORTUGUESE_NAU"/>
+			<Set Combat="19" Moves="6" Cost="128" NumExoticGoods="0"/>
+		</Update>
+	</Units>
+	<Unit_FreePromotions>
+		<Delete UnitType="UNIT_PORTUGUESE_NAU" PromotionType="PROMOTION_SELL_EXOTIC_GOODS"/>
+		<Row>
+			<UnitType>UNIT_PORTUGUESE_NAU</UnitType>
+			<PromotionType>PROMOTION_SUPPLY_SHIP</PromotionType>
+		</Row>
+		<Row>
+			<UnitType>UNIT_PORTUGUESE_NAU</UnitType>
+			<PromotionType>PROMOTION_LEKMOD_NAU_AURA</PromotionType>
+		</Row>
+	</Unit_FreePromotions>
+	<UnitPromotions>
+		<Row>
+			<ID>392</ID>
+			<Type>PROMOTION_LEKMOD_NAU_AURA</Type>
+			<Description>TXT_KEY_PROMOTION_LEKMOD_NAU_AURA</Description>
+			<Help>TXT_KEY_PROMOTION_LEKMOD_NAU_AURA_HELP</Help>
+			<Sound>AS2D_IF_LEVELUP</Sound>
+			<PortraitIndex>0</PortraitIndex>
+			<IconAtlas>LEKMOD_SUPPLY_SHIP_PROMOTION_ATLAS</IconAtlas>
+			<CannotBeChosen>true</CannotBeChosen>
+			<LostWithUpgrade>true</LostWithUpgrade>
+			<LekmodAdjacentAlwaysHeal>true</LekmodAdjacentAlwaysHeal>
+			<LekmodSameTileEmbarkedHeal>15</LekmodSameTileEmbarkedHeal>
+			<LekmodSameTileDisembark>true</LekmodSameTileDisembark>
+			<PediaType>PEDIA_ATTRIBUTES</PediaType>
+			<PediaEntry>TXT_KEY_PROMOTION_LEKMOD_NAU_AURA</PediaEntry>
+		</Row>
+	</UnitPromotions>
 </GameData>

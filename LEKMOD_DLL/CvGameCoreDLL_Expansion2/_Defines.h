@@ -1476,6 +1476,13 @@ Diversify Spain and Australia's NW Discovery bonus
 // Units.LekmodBlessPromotion/LekmodBlessSpreadCost (MISSION_LEKMOD_BLESS: a unit on the same tile gets the promotion),
 // Units.LekmodMinorConvertInfluence (Influence when a spread converts a City-State), UnitPromotions.LekmodHealRateMod (% healing)
 #define LEKMOD_SPREAD_ABILITIES
+// Portugal (2026-10-15): Trait_LekmodFirstTradeRouteBonuses (one-time yields / Great Works, by era, for the first trade route to each
+// civilization and City-State; saved bits m_iLekmodTradePartnerUsed0/1), Buildings.LekmodEffectsNeedClass1/2 (the building's
+// Lekmod plot yields and Feitoria trade effects need one of these classes in the city), LekmodCapitalYieldType/LekmodCapitalYield
+// (yield in the capital per such building), LekmodTradeToCapitalGoldPerEra (internal route to the capital: Gold per era for the
+// origin), LekmodTradeFromCapitalFood (route from the capital: Food for this city); UnitPromotions.LekmodAdjacentAlwaysHeal,
+// LekmodSameTileEmbarkedHeal, LekmodSameTileDisembark (Nau aura)
+#define LEKMOD_PORTUGAL
 // Improvements.LekmodNoFeature: can't be built on a feature unless Improvement_ValidFeatures lists it (Kasbah: Flood Plains only)
 #define LEKMOD_IMPROVEMENT_NO_FEATURE
 // Building_AdjacentCityPlotYieldChanges: yields on plots next to a city with the building (optional Improvement, Resource,

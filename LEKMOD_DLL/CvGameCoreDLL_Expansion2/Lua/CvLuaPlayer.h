@@ -1045,6 +1045,10 @@ protected:
 	static int lLekmodGetTradeRangePreview(lua_State* L);
 	static int lLekmodIsPolicyPickPending(lua_State* L);
 	static int lLekmodGetTributeInfluence(lua_State* L);
+#ifdef LEKMOD_PORTUGAL
+	static int lLekmodIsTradePartnerUsed(lua_State* L);
+	static int lLekmodHasFirstTradeRouteBonus(lua_State* L);
+#endif
 #endif
 #if !defined(TRADE_REFACTOR)
 	static int lGetInternationalTradeRouteBaseBonus(lua_State* L);

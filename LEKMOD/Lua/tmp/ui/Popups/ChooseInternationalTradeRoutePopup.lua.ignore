@@ -102,8 +102,39 @@ Controls.CloseButton:RegisterCallback( Mouse.eLClick, OnClose );
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
+-- LEKMOD: Portugal (Descobrimentos): the one-time bonus for the first route to this civilization / City-State, or a marker if it was used
+function LekmodFirstRouteBonusText(pPlayer, iTarget)
+	if pPlayer.LekmodHasFirstTradeRouteBonus == nil or iTarget == pPlayer:GetID() or not pPlayer:LekmodHasFirstTradeRouteBonus() then
+		return nil;
+	end
+	if pPlayer:LekmodIsTradePartnerUsed(iTarget) then
+		return Locale.ConvertTextKey("TXT_KEY_LEKMOD_FIRST_ROUTE_USED");
+	end
+	local era = GameInfo.Eras[pPlayer:GetCurrentEra()];
+	local leader = GameInfo.Leaders[pPlayer:GetLeaderType()];
+	if era == nil or leader == nil then
+		return nil;
+	end
+	local parts = {};
+	for leaderTrait in GameInfo.Leader_Traits{LeaderType = leader.Type} do
+		for row in GameInfo.Trait_LekmodFirstTradeRouteBonuses{TraitType = leaderTrait.TraitType, EraType = era.Type} do
+			if row.GreatWorks > 0 then
+				table.insert(parts, Locale.ConvertTextKey("TXT_KEY_LEKMOD_FIRST_ROUTE_GREAT_WORKS", row.GreatWorks));
+			end
+			local yieldInfo = row.YieldType and GameInfo.Yields[row.YieldType];
+			if yieldInfo ~= nil and row.Yield ~= 0 then
+				table.insert(parts, "+" .. row.Yield .. " " .. yieldInfo.IconString .. " " .. Locale.ConvertTextKey(yieldInfo.Description));
+			end
+		end
+	end
+	if #parts == 0 then
+		return nil;
+	end
+	return Locale.ConvertTextKey("TXT_KEY_LEKMOD_FIRST_ROUTE_AVAILABLE", table.concat(parts, ", "));
+end
+
 function RefreshData()
-	
+
 	local iActivePlayer = Game.GetActivePlayer();
 	local pPlayer = Players[iActivePlayer];
 	local pUnit = pPlayer:GetUnitByID(g_iUnitIndex);
@@ -206,6 +237,10 @@ function RefreshData()
 		end
 		
 		tradeRoute.Bonuses = strOutput;
+		local strFirstRoute = LekmodFirstRouteBonusText(pPlayer, iTargetOwner);
+		if strFirstRoute ~= nil then
+			tradeRoute.Bonuses = tradeRoute.Bonuses .. "[NEWLINE]" .. strFirstRoute;
+		end
 		tradeRoute.TargetPlayerId = pTargetPlayer:GetID();
 		tradeRoute.ToolTip = BuildTradeRouteToolTipString( pPlayer, pOriginCity, pTargetCity, v.TradeConnectionType, eDomain);
 		tradeRoute.eDomain = eDomain;

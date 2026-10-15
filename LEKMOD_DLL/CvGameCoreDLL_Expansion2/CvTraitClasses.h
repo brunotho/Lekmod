@@ -320,6 +320,13 @@ public:
 	};
 	const std::vector<LekmodBuildingClassOverride>& GetLekmodBuildingClassOverrides() const;
 	const std::vector<std::pair<int, int> >& GetLekmodFreeUnits() const; // unit class, tech
+#ifdef LEKMOD_PORTUGAL
+	struct LekmodFirstTradeRouteBonus
+	{
+		int m_eEra, m_eYield, m_iYield, m_iGreatWorks;
+	};
+	const std::vector<LekmodFirstTradeRouteBonus>& GetLekmodFirstTradeRouteBonuses() const;
+#endif
 	int GetLekmodTraitInt(LekmodTraitInt eCol) const;
 	bool IsLekmodFasterInHillsCiviliansOnly() const;
 	int GetLekmodEarlyBuildingImprovement() const;
@@ -636,6 +643,9 @@ protected:
 	int m_aiLekmodTraitInts[NUM_LEKMOD_TRAIT_INTS];
 	std::vector<LekmodBuildingClassOverride> m_aLekmodBuildingClassOverrides;
 	std::vector<std::pair<int, int> > m_aLekmodFreeUnits;
+#ifdef LEKMOD_PORTUGAL
+	std::vector<LekmodFirstTradeRouteBonus> m_aLekmodFirstTradeRouteBonuses;
+#endif
 	bool m_bLekmodFasterInHillsCiviliansOnly;
 	int m_iLekmodEarlyBuildingImprovement;
 	int m_iLekmodEarlyBuildingProductionMod;
@@ -862,6 +872,10 @@ public:
 	bool IsLekmodBuildingNoClassesNeeded(BuildingClassTypes eClass) const;
 	bool IsLekmodBuildingNoPolicyNeeded(BuildingClassTypes eClass) const;
 	void LekmodGetFreeUnitsForTech(TechTypes eTech, std::vector<int>& aiUnitClasses) const;
+#ifdef LEKMOD_PORTUGAL
+	bool LekmodHasFirstTradeRouteBonuses() const;
+	void LekmodGetFirstTradeRouteBonuses(EraTypes eEra, std::vector<CvTraitEntry::LekmodFirstTradeRouteBonus>& aBonuses) const;
+#endif
 	int GetLekmodTraitInt(LekmodTraitInt eCol) const; // sum over active traits
 	int GetLekmodTraitType(LekmodTraitInt eCol) const; // first active trait's type, -1 = none
 	bool IsLekmodFasterInHillsCiviliansOnly() const;

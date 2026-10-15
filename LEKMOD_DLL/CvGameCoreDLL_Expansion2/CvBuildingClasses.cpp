@@ -104,6 +104,14 @@ CvBuildingEntry::CvBuildingEntry(void):
 	m_iLekmodTradeRecipientGoldPerEra(0),
 	m_iLekmodInternalTradePerPartnerMod(0),
 #endif
+#ifdef LEKMOD_PORTUGAL
+	m_iLekmodEffectsNeedClass1(NO_BUILDINGCLASS),
+	m_iLekmodEffectsNeedClass2(NO_BUILDINGCLASS),
+	m_iLekmodCapitalYieldType(NO_YIELD),
+	m_iLekmodCapitalYield(0),
+	m_iLekmodTradeToCapitalGoldPerEra(0),
+	m_iLekmodTradeFromCapitalFood(0),
+#endif
 	m_bNearRiver(false),
 	m_bNoMaintenanceOnRiver(false),
 	m_iRevealResource(-1),
@@ -539,6 +547,14 @@ bool CvBuildingEntry::CacheResults(Database::Results& kResults, CvDatabaseUtilit
 	m_iTradeRouteOriginYieldModifier = kResults.GetInt("TradeRouteOriginYieldModifier");
 	m_iLekmodTradeRecipientGoldPerEra = kResults.GetInt("LekmodTradeRecipientGoldPerEra");
 	m_iLekmodInternalTradePerPartnerMod = kResults.GetInt("LekmodInternalTradePerPartnerMod");
+#endif
+#ifdef LEKMOD_PORTUGAL
+	m_iLekmodEffectsNeedClass1 = GC.getInfoTypeForString(kResults.GetText("LekmodEffectsNeedClass1"), true);
+	m_iLekmodEffectsNeedClass2 = GC.getInfoTypeForString(kResults.GetText("LekmodEffectsNeedClass2"), true);
+	m_iLekmodCapitalYieldType = GC.getInfoTypeForString(kResults.GetText("LekmodCapitalYieldType"), true);
+	m_iLekmodCapitalYield = kResults.GetInt("LekmodCapitalYield");
+	m_iLekmodTradeToCapitalGoldPerEra = kResults.GetInt("LekmodTradeToCapitalGoldPerEra");
+	m_iLekmodTradeFromCapitalFood = kResults.GetInt("LekmodTradeFromCapitalFood");
 #endif
 	m_bNearRiver = kResults.GetBool("NearRiver");
 	m_bNoMaintenanceOnRiver = kResults.GetBool("NoMaintenanceOnRiver");
@@ -2177,6 +2193,36 @@ int CvBuildingEntry::GetLekmodTradeRecipientGoldPerEra() const
 int CvBuildingEntry::GetLekmodInternalTradePerPartnerMod() const
 {
 	return m_iLekmodInternalTradePerPartnerMod;
+}
+#endif
+#ifdef LEKMOD_PORTUGAL
+/// The building's Lekmod plot yields and trade effects need one of these classes in the city (-1 = none needed; Feitoria: Courthouse or Crown Office)
+int CvBuildingEntry::GetLekmodEffectsNeedClass1() const
+{
+	return m_iLekmodEffectsNeedClass1;
+}
+int CvBuildingEntry::GetLekmodEffectsNeedClass2() const
+{
+	return m_iLekmodEffectsNeedClass2;
+}
+/// Yield in the owner's capital for each of these buildings (Feitoria: +1 Gold)
+int CvBuildingEntry::GetLekmodCapitalYieldType() const
+{
+	return m_iLekmodCapitalYieldType;
+}
+int CvBuildingEntry::GetLekmodCapitalYield() const
+{
+	return m_iLekmodCapitalYield;
+}
+/// Internal trade routes from this city to the capital: Gold per era (Ancient = 1) for this city (Feitoria)
+int CvBuildingEntry::GetLekmodTradeToCapitalGoldPerEra() const
+{
+	return m_iLekmodTradeToCapitalGoldPerEra;
+}
+/// Trade routes from the capital to this city: Food for this city (Feitoria)
+int CvBuildingEntry::GetLekmodTradeFromCapitalFood() const
+{
+	return m_iLekmodTradeFromCapitalFood;
 }
 #endif
 

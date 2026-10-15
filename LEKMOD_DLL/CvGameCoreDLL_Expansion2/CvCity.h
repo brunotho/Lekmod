@@ -914,6 +914,9 @@ public:
 #endif
 #ifdef LEKMOD_BUILDING_PLOT_YIELDS
 	int GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) const;
+#ifdef LEKMOD_PORTUGAL
+	bool LekmodIsBuildingEffectActive(const CvBuildingEntry& kBuilding) const;
+#endif
 	static bool LekmodHasBuildingPlotYields(const CvPlayer& kPlayer);
 #endif
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS

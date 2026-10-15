@@ -299,6 +299,12 @@ public:
 	bool IsLekmodCoupGoldUsed(PlayerTypes eMinor) const { const int i = (int)eMinor - MAX_MAJOR_CIVS; if (i < 0 || i >= 64) return true; return ((i < 32 ? m_iLekmodCoupGoldUsed0 : m_iLekmodCoupGoldUsed1) & (1 << (i % 32))) != 0; }
 	bool IsLekmodDoFBetrayer(PlayerTypes ePlayer) const { return ePlayer >= 0 && ePlayer < MAX_MAJOR_CIVS && (m_iLekmodDoFBetrayers & (1 << (int)ePlayer)) != 0; }
 	void SetLekmodDoFBetrayer(PlayerTypes ePlayer) { if (ePlayer >= 0 && ePlayer < MAX_MAJOR_CIVS) m_iLekmodDoFBetrayers |= (1 << (int)ePlayer); }
+#ifdef LEKMOD_PORTUGAL
+	bool IsLekmodTradePartnerUsed(PlayerTypes ePlayer) const { const int i = (int)ePlayer; if (i < 0 || i >= 64) return true; return ((i < 32 ? m_iLekmodTradePartnerUsed0 : m_iLekmodTradePartnerUsed1) & (1 << (i % 32))) != 0; }
+	void SetLekmodTradePartnerUsed(PlayerTypes ePlayer) { const int i = (int)ePlayer; if (i < 0 || i >= 64) return; if (i < 32) m_iLekmodTradePartnerUsed0 |= (1 << i); else m_iLekmodTradePartnerUsed1 |= (1 << (i - 32)); }
+	void LekmodDoFirstTradeRouteBonus(PlayerTypes eDestPlayer, CvCity* pOriginCity);
+	int GetLekmodCapitalBuildingYield(YieldTypes eYield);
+#endif
 	void SetLekmodCoupGoldUsed(PlayerTypes eMinor) { const int i = (int)eMinor - MAX_MAJOR_CIVS; if (i < 0 || i >= 64) return; if (i < 32) m_iLekmodCoupGoldUsed0 |= (1 << i); else m_iLekmodCoupGoldUsed1 |= (1 << (i - 32)); }
 	void SetLekmodIdeologyTurn(int iTurn) { m_iLekmodIdeologyTurn = iTurn; }
 #endif
@@ -666,6 +672,9 @@ public:
 	void LekmodGrantGreatWorks(CvCity* pNearCity, int iCount);
 	int GetLekmodBuildingClassGreatWorks(BuildingClassTypes eClass) const;
 	bool m_bLekmodGreatWorkFromPolicy;
+#ifdef LEKMOD_PORTUGAL
+	bool m_bLekmodGreatWorkFromTrade;
+#endif
 #endif
 #endif
 	void DoTechFromCityConquer(CvCity* pConqueredCity);
@@ -2468,6 +2477,10 @@ protected:
 	int m_iLekmodCoupGoldUsed0; // MI6 coup Gold already paid: bit per City-State (minor index 0-31)
 	int m_iLekmodCoupGoldUsed1; // minor index 32-63
 	int m_iLekmodDoFBetrayers; // New Zealand: bit per major player who declared war on us during a Declaration of Friendship
+#ifdef LEKMOD_PORTUGAL
+	int m_iLekmodTradePartnerUsed0; // Portugal: bit per player (0-31) that already got our first trade route (bonus used)
+	int m_iLekmodTradePartnerUsed1; // ... players 32-63
+#endif
 #endif
 	std::vector<int> m_aiGreatWorkYieldChange;
 #if defined(LEKMOD_CITY_YIELDS_TRAITS) && defined(LEKMOD_TRACK_CITY_SETTLER_UNITTYPE) && defined(LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX) && (LEKMOD_YIELD_SETTLE_UNIT_NON_CAP_MAX > 0)

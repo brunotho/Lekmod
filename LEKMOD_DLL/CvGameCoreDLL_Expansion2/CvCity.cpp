@@ -13597,6 +13597,10 @@ int CvCity::GetBaseYieldRateFromBuildings(YieldTypes eIndex) const
 #ifdef LEKMOD_CONDITIONAL_BUILDING_YIELDS
 	iLekmodConditional = GetLekmodConditionalBuildingYield(eIndex);
 #endif
+#ifdef LEKMOD_PORTUGAL
+	if (isCapital())
+		iLekmodConditional += GET_PLAYER(getOwner()).GetLekmodCapitalBuildingYield(eIndex);
+#endif
 #ifdef LEKMOD_POLICY_REWORK
 	if (eIndex == YIELD_GOLD)
 	{
@@ -15590,9 +15594,17 @@ int CvCity::GetLekmodBuildingStat(int iStat, bool bMax) const
 		case 8: iValue = pkBuilding->GetLekmodTradeRecipientGoldPerEra(); break;
 		case 9: iValue = pkBuilding->GetLekmodInternalTradePerPartnerMod(); break;
 #endif
+#ifdef LEKMOD_PORTUGAL
+		case 10: iValue = pkBuilding->GetLekmodTradeToCapitalGoldPerEra(); break;
+		case 11: iValue = pkBuilding->GetLekmodTradeFromCapitalFood(); break;
+#endif
 		}
 		if (iValue == 0 || m_pCityBuildings->GetNumBuilding((BuildingTypes)iBuilding) <= 0)
 			continue;
+#ifdef LEKMOD_PORTUGAL
+		if (iStat >= 10 && !LekmodIsBuildingEffectActive(*pkBuilding))
+			continue;
+#endif
 		iTotal = bMax ? std::max(iTotal, iValue) : iTotal + iValue;
 	}
 	return iTotal;
@@ -15884,6 +15896,18 @@ bool CvCity::LekmodHasBuildingPlotYields(const CvPlayer& kPlayer)
 			return true;
 	return false;
 }
+#ifdef LEKMOD_PORTUGAL
+/// Buildings.LekmodEffectsNeedClass1/2: the building's Lekmod plot yields and trade effects need one of these classes in the city (Feitoria)
+bool CvCity::LekmodIsBuildingEffectActive(const CvBuildingEntry& kBuilding) const
+{
+	const int eNeed1 = kBuilding.GetLekmodEffectsNeedClass1();
+	const int eNeed2 = kBuilding.GetLekmodEffectsNeedClass2();
+	if (eNeed1 == NO_BUILDINGCLASS && eNeed2 == NO_BUILDINGCLASS)
+		return true;
+	return (eNeed1 != NO_BUILDINGCLASS && LekmodHasBuildingClass((BuildingClassTypes)eNeed1))
+		|| (eNeed2 != NO_BUILDINGCLASS && LekmodHasBuildingClass((BuildingClassTypes)eNeed2));
+}
+#endif
 /// Yield on one of this city's tiles from its buildings (Building_LekmodPlotYields)
 int CvCity::GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) const
 {
@@ -15895,6 +15919,10 @@ int CvCity::GetLekmodBuildingPlotYield(const CvPlot* pPlot, YieldTypes eYield) c
 	{
 		if (m_pCityBuildings->GetNumBuilding((BuildingTypes)aiBuildings[i]) <= 0)
 			continue;
+#ifdef LEKMOD_PORTUGAL
+		if (!LekmodIsBuildingEffectActive(*GC.getBuildingInfo((BuildingTypes)aiBuildings[i])))
+			continue;
+#endif
 		const std::vector<LekmodBuildingPlotYield>& aRows = GC.getBuildingInfo((BuildingTypes)aiBuildings[i])->GetLekmodPlotYields();
 		for (uint j = 0; j < aRows.size(); j++)
 		{

@@ -17892,6 +17892,52 @@ bool CvUnit::IsLekmodAlwaysHealFriendly() const
 			return true;
 	return false;
 }
+#ifdef LEKMOD_PORTUGAL
+//	--------------------------------------------------------------------------------
+/// Nau aura from another unit of our team: iKind 0 = on this tile or next to it, one has LekmodAdjacentAlwaysHeal (1/0);
+/// 1 = the largest LekmodSameTileEmbarkedHeal on this tile; 2 = on this tile, one has LekmodSameTileDisembark (1/0). Never for air units.
+int CvUnit::LekmodGetNauAura(int iKind) const
+{
+	CvPlot* pPlot = plot();
+	if (pPlot == NULL || getDomainType() == DOMAIN_AIR)
+		return 0;
+	const std::vector<PromotionTypes>& aPromotions = LekmodCivPromotions();
+	if (aPromotions.empty())
+		return 0;
+	int iBest = 0;
+	const int iRange = (iKind == 0) ? 1 : 0;
+	for (int iDX = -iRange; iDX <= iRange; iDX++)
+	{
+		for (int iDY = -iRange; iDY <= iRange; iDY++)
+		{
+			CvPlot* pLoopPlot = plotXYWithRangeCheck(getX(), getY(), iDX, iDY, iRange);
+			if (pLoopPlot == NULL)
+				continue;
+			for (int iUnit = 0; iUnit < pLoopPlot->getNumUnits(); iUnit++)
+			{
+				const CvUnit* pAuraUnit = pLoopPlot->getUnitByIndex(iUnit);
+				if (pAuraUnit == NULL || pAuraUnit == this || pAuraUnit->getTeam() != getTeam())
+					continue;
+				for (uint i = 0; i < aPromotions.size(); i++)
+				{
+					if (!pAuraUnit->isHasPromotion(aPromotions[i]))
+						continue;
+					const CvPromotionEntry* pkPromotion = GC.getPromotionInfo(aPromotions[i]);
+					int iValue = 0;
+					if (iKind == 0)
+						iValue = pkPromotion->IsLekmodAdjacentAlwaysHeal() ? 1 : 0;
+					else if (iKind == 1)
+						iValue = pkPromotion->GetLekmodSameTileEmbarkedHeal();
+					else
+						iValue = pkPromotion->IsLekmodSameTileDisembark() ? 1 : 0;
+					iBest = std::max(iBest, iValue);
+				}
+			}
+		}
+	}
+	return iBest;
+}
+#endif
 #endif
 //	--------------------------------------------------------------------------------
 int CvUnit::GetLekmodFarFromCityMod() const
@@ -21794,6 +21840,11 @@ void CvUnit::ChangeEmbarkFlatCostCount(int iChange)
 //	--------------------------------------------------------------------------------
 bool CvUnit::IsDisembarkFlatCost() const
 {
+#ifdef LEKMOD_PORTUGAL
+	// Nau: land units on its tile disembark like Amphibious I
+	if (m_iDisembarkFlatCostCount <= 0 && getDomainType() == DOMAIN_LAND && plot() != NULL && plot()->isWater() && LekmodGetNauAura(2) > 0)
+		return true;
+#endif
 	return m_iDisembarkFlatCostCount > 0;
 }
 
@@ -21806,6 +21857,11 @@ void CvUnit::ChangeDisembarkFlatCostCount(int iChange)
 //	--------------------------------------------------------------------------------
 int CvUnit::GetMaxMovesAfterDomainChange() const
 {
+#ifdef LEKMOD_PORTUGAL
+	// Nau: at most 1 Movement left after disembarking from its tile (Amphibious I)
+	if (m_iMaxMovesAfterDomainChange < 1 && getDomainType() == DOMAIN_LAND && plot() != NULL && plot()->isWater() && LekmodGetNauAura(2) > 0)
+		return 1;
+#endif
 	return m_iMaxMovesAfterDomainChange;
 }
 

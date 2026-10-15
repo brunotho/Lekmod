@@ -298,6 +298,14 @@ public:
 	int GetLekmodTradeRecipientGoldPerEra() const;
 	int GetLekmodInternalTradePerPartnerMod() const;
 #endif
+#ifdef LEKMOD_PORTUGAL
+	int GetLekmodEffectsNeedClass1() const;
+	int GetLekmodEffectsNeedClass2() const;
+	int GetLekmodCapitalYieldType() const;
+	int GetLekmodCapitalYield() const;
+	int GetLekmodTradeToCapitalGoldPerEra() const;
+	int GetLekmodTradeFromCapitalFood() const;
+#endif
 	bool IsNearRiver() const;
 	bool IsNoMaintenanceOnRiver() const;
 	int GetRevealResource() const;
@@ -711,6 +719,14 @@ private:
 	int m_iTradeRouteOriginYieldModifier;
 	int m_iLekmodTradeRecipientGoldPerEra;
 	int m_iLekmodInternalTradePerPartnerMod;
+#endif
+#ifdef LEKMOD_PORTUGAL
+	int m_iLekmodEffectsNeedClass1;
+	int m_iLekmodEffectsNeedClass2;
+	int m_iLekmodCapitalYieldType;
+	int m_iLekmodCapitalYield;
+	int m_iLekmodTradeToCapitalGoldPerEra;
+	int m_iLekmodTradeFromCapitalFood;
 #endif
 	bool m_bNearRiver;
 	bool m_bNoMaintenanceOnRiver;

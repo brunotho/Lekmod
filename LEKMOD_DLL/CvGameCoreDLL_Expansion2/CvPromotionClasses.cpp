@@ -243,6 +243,11 @@ CvPromotionEntry::CvPromotionEntry():
 	m_iLekmodCoastMoveCostMod(0),
 	m_iLekmodCoastAttackMod(0),
 	m_bLekmodAlwaysHealFriendly(false),
+#ifdef LEKMOD_PORTUGAL
+	m_bLekmodAdjacentAlwaysHeal(false),
+	m_iLekmodSameTileEmbarkedHeal(0),
+	m_bLekmodSameTileDisembark(false),
+#endif
 #endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 	m_iLekmodAttackFullHPMod(0),
@@ -933,6 +938,11 @@ bool CvPromotionEntry::CacheResults(Database::Results& kResults, CvDatabaseUtili
 	m_iLekmodCoastMoveCostMod = kResults.GetInt("CoastMoveCostMod");
 	m_iLekmodCoastAttackMod = kResults.GetInt("CoastAttackMod");
 	m_bLekmodAlwaysHealFriendly = kResults.GetBool("AlwaysHealFriendly");
+#ifdef LEKMOD_PORTUGAL
+	m_bLekmodAdjacentAlwaysHeal = kResults.GetBool("LekmodAdjacentAlwaysHeal");
+	m_iLekmodSameTileEmbarkedHeal = kResults.GetInt("LekmodSameTileEmbarkedHeal");
+	m_bLekmodSameTileDisembark = kResults.GetBool("LekmodSameTileDisembark");
+#endif
 #endif
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 	m_iLekmodAttackFullHPMod = kResults.GetInt("AttackFullHPMod");
@@ -2326,6 +2336,23 @@ bool CvPromotionEntry::IsLekmodAlwaysHealFriendly() const
 {
 	return m_bLekmodAlwaysHealFriendly;
 }
+#ifdef LEKMOD_PORTUGAL
+/// Friendly non-air units on this tile and next to it heal every turn, even after acting (Nau)
+bool CvPromotionEntry::IsLekmodAdjacentAlwaysHeal() const
+{
+	return m_bLekmodAdjacentAlwaysHeal;
+}
+/// Friendly embarked units on this tile heal this much every turn, even after acting (Nau)
+int CvPromotionEntry::GetLekmodSameTileEmbarkedHeal() const
+{
+	return m_iLekmodSameTileEmbarkedHeal;
+}
+/// Friendly embarked units on this tile disembark like Amphibious I: 1 Movement, at most 1 left afterwards (Nau)
+bool CvPromotionEntry::IsLekmodSameTileDisembark() const
+{
+	return m_bLekmodSameTileDisembark;
+}
+#endif
 /// Combat modifier attacking a unit at full health (Kris Swordsman: Ambition)
 int CvPromotionEntry::GetLekmodAttackFullHPMod() const
 {
@@ -2344,6 +2371,9 @@ bool CvPromotionEntry::HasLekmodCivEffect() const
 		|| m_iLekmodMovesAfterKill != 0 || m_iLekmodFarFromCityMod != 0 || m_iLekmodAuraVsWoundedMod != 0
 #ifdef LEKMOD_CIV_PROMOTION_EFFECTS_J
 		|| m_iLekmodFlatMoveCostMod != 0 || m_iLekmodCoastMoveCostMod != 0 || m_iLekmodCoastAttackMod != 0 || m_bLekmodAlwaysHealFriendly || m_iLekmodAttackFullHPMod != 0
+#endif
+#ifdef LEKMOD_PORTUGAL
+		|| m_bLekmodAdjacentAlwaysHeal || m_iLekmodSameTileEmbarkedHeal != 0 || m_bLekmodSameTileDisembark
 #endif
 #ifdef LEKMOD_SPREAD_ABILITIES
 		|| m_iLekmodHealRateMod != 0

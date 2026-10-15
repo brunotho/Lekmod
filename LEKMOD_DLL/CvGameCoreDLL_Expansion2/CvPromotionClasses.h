@@ -262,6 +262,11 @@ public:
 	int GetLekmodCoastMoveCostMod() const;
 	int GetLekmodCoastAttackMod() const;
 	bool IsLekmodAlwaysHealFriendly() const;
+#ifdef LEKMOD_PORTUGAL
+	bool IsLekmodAdjacentAlwaysHeal() const;
+	int GetLekmodSameTileEmbarkedHeal() const;
+	bool IsLekmodSameTileDisembark() const;
+#endif
 	int GetLekmodAttackFullHPMod() const;
 	bool IsLekmodPostCombatOnSpawn() const;
 #endif
@@ -576,6 +581,11 @@ protected:
 	int m_iLekmodCoastMoveCostMod;
 	int m_iLekmodCoastAttackMod;
 	bool m_bLekmodAlwaysHealFriendly;
+#ifdef LEKMOD_PORTUGAL
+	bool m_bLekmodAdjacentAlwaysHeal;
+	int m_iLekmodSameTileEmbarkedHeal;
+	bool m_bLekmodSameTileDisembark;
+#endif
 	int m_iLekmodAttackFullHPMod;
 	bool m_bLekmodPostCombatOnSpawn;
 #endif

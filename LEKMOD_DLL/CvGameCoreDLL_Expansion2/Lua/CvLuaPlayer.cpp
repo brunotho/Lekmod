@@ -1043,6 +1043,10 @@ void CvLuaPlayer::PushMethods(lua_State* L, int t)
 	Method(LekmodIsPolicyPickPending);
 #endif
 	Method(LekmodGetTributeInfluence);
+#ifdef LEKMOD_PORTUGAL
+	Method(LekmodIsTradePartnerUsed);
+	Method(LekmodHasFirstTradeRouteBonus);
+#endif
 #if !defined(TRADE_REFACTOR)
 	Method(GetInternationalTradeRouteBaseBonus);
 	Method(GetInternationalTradeRouteGPTBonus);
@@ -3506,6 +3510,23 @@ int CvLuaPlayer::lLekmodGetTributeInfluence(lua_State* L)
 #endif
 	return 1;
 }
+#ifdef LEKMOD_PORTUGAL
+/// LEKMOD: did this player already get the first-trade-route bonus for iPlayer (Portugal)?
+int CvLuaPlayer::lLekmodIsTradePartnerUsed(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	const PlayerTypes eOther = (PlayerTypes)lua_tointeger(L, 2);
+	lua_pushboolean(L, pkPlayer->IsLekmodTradePartnerUsed(eOther));
+	return 1;
+}
+/// LEKMOD: does this player get a bonus for the first trade route to each civilization and City-State (Portugal)?
+int CvLuaPlayer::lLekmodHasFirstTradeRouteBonus(lua_State* L)
+{
+	CvPlayerAI* pkPlayer = GetInstance(L);
+	lua_pushboolean(L, pkPlayer->GetPlayerTraits()->LekmodHasFirstTradeRouteBonuses());
+	return 1;
+}
+#endif
 /// LEKMOD: is a policy pick pending (yields freeze at turn end until it is made)?
 int CvLuaPlayer::lLekmodIsPolicyPickPending(lua_State* L)
 {

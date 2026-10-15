@@ -430,6 +430,10 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 
 	pOriginCity->GetCityReligions()->UpdateNumTradeRouteConnections(pDestCity);
 	pDestCity->GetCityReligions()->UpdateNumTradeRouteConnections(pOriginCity);
+#ifdef LEKMOD_PORTUGAL
+	// Portugal: bonus for the first trade route to this civilization or City-State
+	GET_PLAYER(eOriginPlayer).LekmodDoFirstTradeRouteBonus(eDestPlayer, pOriginCity);
+#endif
 
 	CreateVis(iNewTradeRouteIndex);
 	MoveUnit(iNewTradeRouteIndex);
@@ -3046,6 +3050,25 @@ int CvPlayerTrade::GetTradeConnectionValueTimes100(const TradeConnection& kTrade
 		const int iPerEra = pHanseCity ? pHanseCity->GetLekmodBuildingStat(8, false) : 0;
 		if (iPerEra != 0)
 			iTotalValue += iPerEra * (GET_PLAYER(kTradeConnection.m_eOriginOwner).GetCurrentEra() + 1) * 100;
+	}
+#endif
+#ifdef LEKMOD_PORTUGAL
+	// Feitoria: an internal route to the capital gives its origin Gold per era; a route from the capital gives its destination Food
+	if (!GC.getGame().GetGameTrade()->IsConnectionInternational(kTradeConnection) && (eYield == YIELD_GOLD || eYield == YIELD_FOOD))
+	{
+		CvCity* pFeitoriaOrigin = CvGameTrade::GetOriginCity(kTradeConnection);
+		CvCity* pFeitoriaDest = CvGameTrade::GetDestCity(kTradeConnection);
+		if (pFeitoriaOrigin != NULL && pFeitoriaDest != NULL)
+		{
+			if (bAsOriginPlayer && eYield == YIELD_GOLD && pFeitoriaDest->isCapital())
+			{
+				const int iPerEra = pFeitoriaOrigin->GetLekmodBuildingStat(10, false);
+				if (iPerEra != 0)
+					iTotalValue += iPerEra * (GET_PLAYER(kTradeConnection.m_eOriginOwner).GetCurrentEra() + 1) * 100;
+			}
+			if (!bAsOriginPlayer && eYield == YIELD_FOOD && pFeitoriaOrigin->isCapital())
+				iTotalValue += pFeitoriaDest->GetLekmodBuildingStat(11, false) * 100;
+		}
 	}
 #endif
 	// Modifiers
