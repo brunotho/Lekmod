@@ -291723,12 +291723,14 @@
 		<Row>
 			<MinorCivTrait>MINOR_CIV_TRAIT_MARITIME</MinorCivTrait>
 			<ImprovementType>IMPROVEMENT_TERRACE_FARM</ImprovementType>
+			<EraType>ERA_CLASSICAL</EraType>
 			<MaxCount>2</MaxCount>
 			<MinMountainsWithin2>2</MinMountainsWithin2>
 		</Row>
 		<Row>
 			<MinorCivTrait>MINOR_CIV_TRAIT_MARITIME</MinorCivTrait>
 			<ImprovementType>IMPROVEMENT_TEPE</ImprovementType>
+			<EraType>ERA_CLASSICAL</EraType>
 			<MaxCount>2</MaxCount>
 		</Row>
 		<Row>
@@ -291746,6 +291748,7 @@
 		<Row>
 			<MinorCivTrait>MINOR_CIV_TRAIT_MILITARISTIC</MinorCivTrait>
 			<ImprovementType>IMPROVEMENT_MC_SCOTTISH_CLAN_CASTLE</ImprovementType>
+			<EraType>ERA_MEDIEVAL</EraType>
 			<MaxCount>2</MaxCount>
 		</Row>
 		<Row>
@@ -291757,11 +291760,13 @@
 		<Row>
 			<MinorCivTrait>MINOR_CIV_TRAIT_MERCANTILE</MinorCivTrait>
 			<ImprovementType>IMPROVEMENT_CHATEAU</ImprovementType>
+			<EraType>ERA_MEDIEVAL</EraType>
 			<MaxCount>2</MaxCount>
 		</Row>
 		<Row>
 			<MinorCivTrait>MINOR_CIV_TRAIT_MERCANTILE</MinorCivTrait>
 			<ImprovementType>IMPROVEMENT_KASBAH</ImprovementType>
+			<EraType>ERA_MEDIEVAL</EraType>
 			<MaxCount>2</MaxCount>
 		</Row>
 		<Row>
