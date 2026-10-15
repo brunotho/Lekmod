@@ -2667,7 +2667,7 @@ Tags: civs, buildings
 - Changed: Reislaeufer Post: trained units start with Altitude Training instead of the mountain combat promotion
 - Changed: new UA: other players can't see your Gold ("?" in the trade screen, left out of the Gold row of their Demographics); each of your World Congress proposals that passed gives 2 Delegates (others 1); no unit maintenance while not at war with any civilization or City-State; Mints, Markets, Banks and Stock Exchanges +1 Culture +1 Science
 - Removed: Merchant specialists +2 Production +2 Science
-- Changed: Ski Resort (rebuilt): costs 165 (was 167), +3 Happiness, Mountain tiles worked by the city +5 Culture +5 Gold, +5 Tourism for each Mountain the city owns within its working range (was +5 Tourism +2 Gold per nearby Mountain), still needs no Zoo
+- Changed: Ski Resort (rebuilt): costs 165 (was 167), +3 Happiness, Mountain tiles worked by the city +5 Culture +5 Gold +5 Tourism (was +5 Tourism +2 Gold per nearby Mountain), still needs no Zoo
 - Removed: Ski Resort: the flat +5 Tourism and +3 Culture
 - DLL: Traits.LekmodPassedProposalExtraVotes, LekmodNoUnitCostAtPeace; LekmodHiddenGold (read by Lua: Demographics.lua, TradeLogic.lua)
 
