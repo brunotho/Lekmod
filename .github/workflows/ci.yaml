@@ -53,7 +53,14 @@ jobs:
       - name: Build Project
         shell: pwsh
         run: |
-          C:\Program` Files` `(x86`)\Microsoft` Visual` Studio` 9.0\VC\vcpackages\vcbuild.exe "LEKMOD_DLL\CvGameCoreDLL_Expansion2\CvGameCoreDLL_Expansion2.vcproj" ${{ matrix.config }}
+          $out = & C:\Program` Files` `(x86`)\Microsoft` Visual` Studio` 9.0\VC\vcpackages\vcbuild.exe "LEKMOD_DLL\CvGameCoreDLL_Expansion2\CvGameCoreDLL_Expansion2.vcproj" ${{ matrix.config }} 2>&1
+          $code = $LASTEXITCODE
+          $out | Write-Output
+          if ($code -ne 0) {
+            # compiler/linker errors as annotations: readable through the API without the log download (cloud sessions)
+            $out | Select-String -Pattern ": (fatal )?error " | Select-Object -First 40 | ForEach-Object { Write-Output "::error::$($_.Line.Trim())" }
+            exit $code
+          }
 
       - name: Prepare Artifact
         if: ${{ github.event_name != 'pull_request' }}
